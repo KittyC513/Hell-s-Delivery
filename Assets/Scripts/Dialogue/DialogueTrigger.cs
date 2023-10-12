@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
-using Yarn.Unity.ActionAnalyser;
+//using Yarn.Unity.ActionAnalyser;
 
 public class DialogueTrigger : MonoBehaviour
 {
