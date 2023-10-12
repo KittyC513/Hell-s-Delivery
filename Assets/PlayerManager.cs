@@ -52,7 +52,7 @@ public class PlayerManager : MonoBehaviour
 
         playerParent.GetComponentInChildren<CinemachineFreeLook>().gameObject.layer = layerToAdd;
         playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
-        //playerParent.GetComponentInChildren<InputHandler>().horizontal = player.actions.FindAction("Look");
+        playerParent.GetComponentInChildren<InputHandler>().horizontal = player.actions.FindAction("Look");
 
 
     }

@@ -14,7 +14,7 @@ public class TestPickDrop : MonoBehaviour
 
     private ObjectGrabbable objectGrabbable;
     [SerializeField]
-    private bool slotFull;
+    public bool slotFull;
     [SerializeField]
     private InputActionReference pickControl;
 
@@ -25,6 +25,8 @@ public class TestPickDrop : MonoBehaviour
     public GameObject combatCam;
     public GameObject topDownCam;
     public GameObject aimCursor;
+    TestCube testCube;
+    bool withinRange;
 
 
     public enum CameraStyle
@@ -36,12 +38,17 @@ public class TestPickDrop : MonoBehaviour
 
     private void OnEnable()
     {
-        pickControl.action.Enable();
+        //pickControl.action.Enable();
     }
 
     private void OnDisable()
     {
-        pickControl.action.Disable();
+        //pickControl.action.Disable();
+    }
+    private void Awake()
+    {
+        testCube = GetComponent<TestCube>();
+        player = this.transform;
     }
 
     // Start is called before the first frame update
@@ -49,15 +56,17 @@ public class TestPickDrop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         //press "E" to pick the item when player facing the pickable items
         if (pickControl.action.triggered)
         {
             Debug.Log("pick");
             if(objectGrabbable == null)
             {
-                float pickDistance = 2f;
-                if (Physics.Raycast(player.position, player.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
+                float pickDistance = 10f;
+                if (withinRange = Physics.Raycast(player.position, player.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
                 {
+
                     if (raycastHit.transform.TryGetComponent(out objectGrabbable))
                     {
                         //transform the item
@@ -76,6 +85,7 @@ public class TestPickDrop : MonoBehaviour
             }
             
         }
+        */
     }
 
 
@@ -103,6 +113,30 @@ public class TestPickDrop : MonoBehaviour
         }
 
         currentStyle = newStyle;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (testCube.isPicking)
+        {
+            if (other.tag == ("pickable"))
+            {
+                if (objectGrabbable == null)
+                {
+                    //transform the item
+                    objectGrabbable.Grab(itemContainer);
+                    slotFull = true;
+                }
+                else
+                {
+                    objectGrabbable.Drop();
+                    objectGrabbable = null;
+                    slotFull = false;
+                    testCube.isPicking = false;
+                }
+            }
+        }
+
     }
 
 }

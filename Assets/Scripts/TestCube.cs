@@ -13,9 +13,10 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player;
-    [SerializeField] private InputAction move,pick;
+    [SerializeField] private InputAction move,cameraLook;
+    [SerializeField] public bool isPicking;
+    [SerializeField] InputActionReference pickControl;
 
- 
 
     [SerializeField]
     private float movementForce = 1f;
@@ -28,19 +29,23 @@ public class TestCube : MonoBehaviour
 
     [SerializeField]
     private Camera playerCamera;
-
+    [SerializeField]
+    TestPickDrop testPickDrop;
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
         player = inputAsset.FindActionMap("Cube");
         rb = this.GetComponent<Rigidbody>();
+        testPickDrop = GetComponent<TestPickDrop>();
     }
 
     private void OnEnable()
     {
         //player.FindAction("Move").started += DoMove;
         move = player.FindAction("Move");
-        //pick = player.FindAction("Pick");
+        //player.FindAction("Pick").started += DoPick;
+        cameraLook= player.FindAction("CameraLook");
+        pickControl.action.Enable();
 
         player.Enable();
 
@@ -49,9 +54,11 @@ public class TestCube : MonoBehaviour
     private void OnDisable()
     {
         //player.FindAction("Move").started -= DoMove;
-       // player.FindAction("MoveUp").started -= MoveUp;
+        // player.FindAction("MoveUp").started -= MoveUp;
         //player.FindAction("MoveDown").started -= MoveDown;
+        //player.FindAction("Pick").started -= DoPick;
         player.Disable();
+        pickControl.action.Disable();
     }
     
     // Start is called before the first frame update
@@ -63,7 +70,8 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // Move();
+        // Move();
+
 
     }
     private void FixedUpdate()
@@ -108,6 +116,19 @@ public class TestCube : MonoBehaviour
         Vector3 right = playerCamera.transform.right;
         right.y = 0;
         return right.normalized;
+    }
+
+    private void DoPick()
+    {
+        if (!testPickDrop.slotFull)
+        {
+            if (pickControl.action.triggered)
+            {
+                isPicking = true;
+                Debug.Log("is picking");
+            }
+        }
+
     }
 
     /*
