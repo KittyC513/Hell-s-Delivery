@@ -10,7 +10,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform player;
     public Transform playerObj;
     public Rigidbody rb;
-    private Transform player1Cam;
+    //private Camera cam;
+    private Transform playerCam;
+    //private Vector3 playerCamPos;
     private Vector3 faceDir;
 
     [SerializeField]
@@ -28,6 +30,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private InputActionReference runControl;
     [SerializeField]
     private InputActionReference aimControl;
+    [SerializeField]
+    private InputActionReference grappleControl;
 
 
     [Header("Movement Variables")]
@@ -78,6 +82,22 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField]
     private Vector3 velocityToSet;
 
+    [Header("Pick and Drop")]
+    [SerializeField]
+    private LayerMask pickableMask;
+    [SerializeField]
+    private Transform playerPos;
+    [SerializeField]
+    private Transform itemContainer;
+    [SerializeField]
+    private ObjectGrabbable objectGrabbable;
+    [SerializeField]
+    private bool slotFull;
+
+    [SerializeField] private InputActionAsset inputAsset;
+    [SerializeField] private InputActionMap playerMap;
+
+
 
     public bool isFreeze;
 
@@ -97,7 +117,11 @@ public class ThirdPersonMovement : MonoBehaviour
         air
     }
 
-
+    private void Awake()
+    {
+        inputAsset = this.GetComponent<PlayerInput>().actions;
+        playerMap = inputAsset.FindActionMap("Player");
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -110,10 +134,13 @@ public class ThirdPersonMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
-        player1Cam = Camera.main.transform;
         faceDir = Vector3.zero;
 
         gT = GetComponent<GrapplingTail>();
+
+        //playerCam = transform.Find("Camera");
+        playerCam = Camera.main.transform;
+
     }
 
     private void OnEnable()
@@ -122,6 +149,9 @@ public class ThirdPersonMovement : MonoBehaviour
         jumpControl.action.Enable();
         runControl.action.Enable();
         aimControl.action.Enable();
+        grappleControl.action.Enable();
+
+        playerMap.Enable();
     }
 
     private void OnDisable()
@@ -130,6 +160,8 @@ public class ThirdPersonMovement : MonoBehaviour
         jumpControl.action.Disable();
         runControl.action.Disable();
         aimControl.action.Disable();
+        grappleControl.action.Disable();
+        playerMap.Disable();
     }
 
 
@@ -140,7 +172,8 @@ public class ThirdPersonMovement : MonoBehaviour
         SpeedControl();
         MoveInput();
         CheckGound();
-        
+        PickandDrop();
+
     }
 
     private void FixedUpdate()
@@ -156,6 +189,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         Rotate();
+
     }
 
 
@@ -194,7 +228,7 @@ public class ThirdPersonMovement : MonoBehaviour
     void MovePlayer()
     {
         //rotate orientation
-        Vector3 viewDir = player1Cam.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+        Vector3 viewDir = playerCam.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
         orientation.forward = viewDir.normalized;
        
         move.y = 0;
@@ -212,13 +246,13 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         else if(currentStyle == CameraStyle.Combat)
         {
-            Vector3 dirToCombatLookAt = player1Cam.position - new Vector3(transform.position.x, combatLookAt.position.y, transform.position.z);
+            Vector3 dirToCombatLookAt = playerCam.position - new Vector3(transform.position.x, combatLookAt.position.y, transform.position.z);
             orientation.forward = dirToCombatLookAt.normalized;
          
             combatDir  = orientation.forward * move.z + orientation.right * move.x;
             //player1Cam.forward = dirToCombatLookAt.normalized;
 
-            playerObj.forward = -dirToCombatLookAt.normalized;
+            playerObj.forward = dirToCombatLookAt.normalized;
             Debug.Log("dirToCombatLookAt" + dirToCombatLookAt);
             Debug.Log("playerObj" + playerObj.forward);
 
@@ -368,6 +402,41 @@ public class ThirdPersonMovement : MonoBehaviour
     private void SetVelocity()
     {
         rb.velocity = velocityToSet;
+    }
+    #endregion
+
+    #region Pick and drop function
+    void PickandDrop()
+    {
+        //press "E" to pick the item when player facing the pickable items
+        if (grappleControl.action.triggered)
+        {
+            Debug.Log("pick triggered");
+            if (objectGrabbable == null)
+            {
+                float pickDistance = 5f;
+                Debug.Log("pick range:" + Physics.Raycast(playerPos.position, playerPos.forward, out RaycastHit Hit, pickDistance, pickableMask));
+                if (Physics.Raycast(playerPos.position, playerPos.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
+                {
+                    if (raycastHit.transform.TryGetComponent(out objectGrabbable))
+                    {
+                        //transform the item
+                        objectGrabbable.Grab(itemContainer);
+                        Debug.Log("pick sucessfully");
+
+                    }
+
+                }
+            }
+            else
+            {
+                objectGrabbable.Drop();
+                objectGrabbable = null;
+                Debug.Log("Drop");
+
+            }
+
+        }
     }
     #endregion
 

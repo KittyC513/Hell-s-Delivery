@@ -11,6 +11,8 @@ public class ObjectGrabbable : MonoBehaviour
     private float dropForce, dropUpForce;
     public GameObject player;
     public Transform playerDir;
+    public GameObject player2;
+    public Transform player2Dir;
 
     public Item item;
 
@@ -44,9 +46,14 @@ public class ObjectGrabbable : MonoBehaviour
             //smooth moving
             Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabpo.position, Time.deltaTime * lerpspeed); ;
             rb.MovePosition(newPosition);
-
-
         }
+        
+        player = GameObject.FindGameObjectWithTag("Player1");
+        playerDir = GameObject.FindGameObjectWithTag("Player1Dir").transform;
+        /*
+        player2 = GameObject.FindGameObjectWithTag("Player2");
+        player2Dir = GameObject.FindGameObjectWithTag("Player2Dir").transform;
+        */
     }
 
 
