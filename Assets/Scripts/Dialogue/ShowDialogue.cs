@@ -98,15 +98,16 @@ public class ShowDialogue : MonoBehaviour
     [YarnCommand("PlayerShow")]
     public static void PlayerShow()
     {
-        LVPlayers.SetActive(true);
         LVNPC.SetActive(false);
+        LVPlayers.SetActive(true);
     }
 
     [YarnCommand("NPCShow")]
     public static void NPCShow()
     {
-        LVNPC.SetActive(true);
         LVPlayers.SetActive(false);
+        LVNPC.SetActive(true);
+
     }
 
 
