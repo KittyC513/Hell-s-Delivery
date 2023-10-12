@@ -28,6 +28,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private InputActionReference runControl;
     [SerializeField]
     private InputActionReference aimControl;
+    [SerializeField]
+    private InputActionReference grappleControl;
 
 
     [Header("Movement Variables")]
@@ -78,6 +80,19 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField]
     private Vector3 velocityToSet;
 
+    [Header("Pick and Drop")]
+    [SerializeField]
+    private LayerMask pickableMask;
+    [SerializeField]
+    private Transform playerPos;
+    [SerializeField]
+    private Transform itemContainer;
+
+    private ObjectGrabbable objectGrabbable;
+    [SerializeField]
+    private bool slotFull;
+
+
 
     public bool isFreeze;
 
@@ -122,6 +137,7 @@ public class ThirdPersonMovement : MonoBehaviour
         jumpControl.action.Enable();
         runControl.action.Enable();
         aimControl.action.Enable();
+        grappleControl.action.Enable();
     }
 
     private void OnDisable()
@@ -130,6 +146,7 @@ public class ThirdPersonMovement : MonoBehaviour
         jumpControl.action.Disable();
         runControl.action.Disable();
         aimControl.action.Disable();
+        grappleControl.action.Disable();
     }
 
 
@@ -140,7 +157,8 @@ public class ThirdPersonMovement : MonoBehaviour
         SpeedControl();
         MoveInput();
         CheckGound();
-        
+        PickandDrop();
+
     }
 
     private void FixedUpdate()
@@ -156,6 +174,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         Rotate();
+
     }
 
 
@@ -368,6 +387,41 @@ public class ThirdPersonMovement : MonoBehaviour
     private void SetVelocity()
     {
         rb.velocity = velocityToSet;
+    }
+    #endregion
+
+    #region Pick and drop function
+    void PickandDrop()
+    {
+        //press "E" to pick the item when player facing the pickable items
+        if (grappleControl.action.triggered)
+        {
+            Debug.Log("pick triggered");
+            if (objectGrabbable == null)
+            {
+                float pickDistance = 2f;
+                Debug.Log("pick range:" + Physics.Raycast(player.position, player.forward, out RaycastHit Hit, pickDistance, pickableMask));
+                if (Physics.Raycast(player.position, player.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
+                {
+                    if (raycastHit.transform.TryGetComponent(out objectGrabbable))
+                    {
+                        //transform the item
+                        objectGrabbable.Grab(itemContainer);
+                        Debug.Log("pick sucessfully");
+
+                    }
+
+                }
+            }
+            else
+            {
+                objectGrabbable.Drop();
+                objectGrabbable = null;
+                Debug.Log("Drop");
+
+            }
+
+        }
     }
     #endregion
 
