@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TestPickDrop : MonoBehaviour
 {
@@ -14,9 +15,34 @@ public class TestPickDrop : MonoBehaviour
     private ObjectGrabbable objectGrabbable;
     [SerializeField]
     private bool slotFull;
+    [SerializeField]
+    private InputActionReference pickControl;
 
 
+    [Header("Camera Control")]
+    public CameraStyle currentStyle;
+    public GameObject thirdPersonCam;
+    public GameObject combatCam;
+    public GameObject topDownCam;
+    public GameObject aimCursor;
 
+
+    public enum CameraStyle
+    {
+        Basic,
+        Combat,
+        Topdown
+    }
+
+    private void OnEnable()
+    {
+        pickControl.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        pickControl.action.Disable();
+    }
 
     // Start is called before the first frame update
 
@@ -24,8 +50,9 @@ public class TestPickDrop : MonoBehaviour
     void Update()
     {
         //press "E" to pick the item when player facing the pickable items
-        if (Input.GetKeyDown(KeyCode.E))
+        if (pickControl.action.triggered)
         {
+            Debug.Log("pick");
             if(objectGrabbable == null)
             {
                 float pickDistance = 2f;
@@ -49,6 +76,33 @@ public class TestPickDrop : MonoBehaviour
             }
             
         }
+    }
+
+
+    void SwitchCameraStyle(CameraStyle newStyle)
+    {
+        combatCam.SetActive(false);
+        thirdPersonCam.SetActive(false);
+        topDownCam.SetActive(false);
+        aimCursor.SetActive(false);
+
+        if (newStyle == CameraStyle.Basic)
+        {
+            thirdPersonCam.SetActive(true);
+        }
+
+        if (newStyle == CameraStyle.Combat)
+        {
+            combatCam.SetActive(true);
+            aimCursor.SetActive(true);
+        }
+
+        if (newStyle == CameraStyle.Topdown)
+        {
+            topDownCam.SetActive(true);
+        }
+
+        currentStyle = newStyle;
     }
 
 }

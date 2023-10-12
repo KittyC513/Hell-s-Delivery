@@ -11,22 +11,37 @@ public class TestCube : MonoBehaviour
     Vector3 movement;
     float moveSpeed = 10f;
 
-    private InputActionAsset inputAsset;
-    InputActionMap player;
-    InputAction move;
+    [SerializeField] private InputActionAsset inputAsset;
+    [SerializeField] private InputActionMap player;
+    [SerializeField] private InputAction move,pick;
 
-    /*
+ 
+
+    [SerializeField]
+    private float movementForce = 1f;
+
+    private Vector3 forceDirection = Vector3.zero;
+
+    private Rigidbody rb;
+    [SerializeField]
+    private float maxSpeed = 5f;
+
+    [SerializeField]
+    private Camera playerCamera;
+
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
-        player = inputAsset.FindActionMap("Test");
+        player = inputAsset.FindActionMap("Cube");
+        rb = this.GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
     {
         //player.FindAction("Move").started += DoMove;
-        player.FindAction("MoveUp").started += DoMoveUp;
-        player.FindAction("MoveDown").started += DoMoveDown;
+        move = player.FindAction("Move");
+        //pick = player.FindAction("Pick");
+
         player.Enable();
 
     }
@@ -34,11 +49,11 @@ public class TestCube : MonoBehaviour
     private void OnDisable()
     {
         //player.FindAction("Move").started -= DoMove;
-        player.FindAction("MoveUp").started -= DoMoveUp;
-        player.FindAction("MoveDown").started -= DoMoveDown;
+       // player.FindAction("MoveUp").started -= MoveUp;
+        //player.FindAction("MoveDown").started -= MoveDown;
         player.Disable();
     }
-    */
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -48,29 +63,75 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+       // Move();
+
+    }
+    private void FixedUpdate()
+    {
+        forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
+        forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
+
+        rb.AddForce(forceDirection, ForceMode.Impulse);
+        forceDirection = Vector3.zero;
+
+        if (rb.velocity.y < 0f)
+            rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
+
+        Vector3 horizontalVelocity = rb.velocity;
+        horizontalVelocity.y = 0;
+        if (horizontalVelocity.sqrMagnitude > maxSpeed * maxSpeed)
+            rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
+
+        LookAt();
     }
 
+    private void LookAt()
+    {
+        Vector3 direction = rb.velocity;
+        direction.y = 0f;
+
+        if (move.ReadValue<Vector2>().sqrMagnitude > 0.1f && direction.sqrMagnitude > 0.1f)
+            this.rb.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        else
+            rb.angularVelocity = Vector3.zero;
+    }
+
+    private Vector3 GetCameraForward(Camera playerCamera)
+    {
+        Vector3 forward = playerCamera.transform.forward;
+        forward.y = 0;
+        return forward.normalized;
+    }
+
+    private Vector3 GetCameraRight(Camera playerCamera)
+    {
+        Vector3 right = playerCamera.transform.right;
+        right.y = 0;
+        return right.normalized;
+    }
+
+    /*
     private void Move()
     {
-        movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
+        Vector3 movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
         transform.Translate(movement);
     }
 
-    private void DoMove(InputValue value)
+    private void Move(InputValue value)
     {
-
+        i_movement = value.Get<Vector2> ();
         Debug.Log("Moving");
     }
-    private void DoMoveDown()
+    private void MoveDown(InputAction.CallbackContext obj)
     {
         transform.Translate(transform.up);
         Debug.Log("Moving");
     }
-    private void DoMoveUp()
+    private void MoveUp(InputAction.CallbackContext obj)
     {
         transform.Translate(-transform.up);
         Debug.Log("Moving");
     }
+    */
 
 }
