@@ -87,7 +87,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private Transform playerPos;
     [SerializeField]
     private Transform itemContainer;
-
+    [SerializeField]
     private ObjectGrabbable objectGrabbable;
     [SerializeField]
     private bool slotFull;
@@ -399,9 +399,9 @@ public class ThirdPersonMovement : MonoBehaviour
             Debug.Log("pick triggered");
             if (objectGrabbable == null)
             {
-                float pickDistance = 2f;
-                Debug.Log("pick range:" + Physics.Raycast(player.position, player.forward, out RaycastHit Hit, pickDistance, pickableMask));
-                if (Physics.Raycast(player.position, player.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
+                float pickDistance = 5f;
+                Debug.Log("pick range:" + Physics.Raycast(playerPos.position, playerPos.forward, out RaycastHit Hit, pickDistance, pickableMask));
+                if (Physics.Raycast(playerPos.position, playerPos.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
                 {
                     if (raycastHit.transform.TryGetComponent(out objectGrabbable))
                     {

@@ -7,11 +7,36 @@ using Cinemachine;
 public class TestCube : MonoBehaviour
 {
     Vector2 i_movement;
+    Vector3 movement;
     float moveSpeed = 10f;
-    [SerializeField]
-    private List<LayerMask> playerLayers;
-    private List<PlayerInput> players = new List<PlayerInput>();
 
+    private InputActionAsset inputAsset;
+    InputActionMap player;
+    InputAction move;
+
+
+    private void Awake()
+    {
+        inputAsset = this.GetComponent<PlayerInput>().actions;
+        player = inputAsset.FindActionMap("Test");
+    }
+
+    private void OnEnable()
+    {
+        //player.FindAction("Move").started += DoMove;
+        player.FindAction("MoveUp").started += DoMoveUp;
+        player.FindAction("MoveDown").started += DoMoveDown;
+        player.Enable();
+
+    }
+
+    private void OnDisable()
+    {
+        //player.FindAction("Move").started -= DoMove;
+        player.FindAction("MoveUp").started -= DoMoveUp;
+        player.FindAction("MoveDown").started -= DoMoveDown;
+        player.Disable();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -21,42 +46,32 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+       
     }
 
     private void Move()
     {
-        Vector3 movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
-        transform.Translate(movement);
+
     }
 
-    private void OnMove(InputValue value)
+    private void DoMove(InputAction.CallbackContext obj)
     {
-        i_movement = value.Get<Vector2>();
+        movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
+        transform.Translate(movement);
+
+        Vector3 doMove = new Vector3(movement.x, 0, movement.y);
+
         Debug.Log("Moving");
     }
-    private void OnMoveDown()
+    private void DoMoveDown(InputAction.CallbackContext obj)
     {
         transform.Translate(transform.up);
         Debug.Log("Moving");
     }
-    private void OnMoveUp()
+    private void DoMoveUp(InputAction.CallbackContext obj)
     {
         transform.Translate(-transform.up);
         Debug.Log("Moving");
     }
 
-    void AddPlayer(PlayerInput player)
-    {
-        players.Add(player);
-
-        Transform playerParent = player.transform.parent;
-
-        int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
-
-        playerParent.GetComponentInChildren<CinemachineBrain>().gameObject.layer = layerToAdd;
-        playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
-
-
-    }
 }
