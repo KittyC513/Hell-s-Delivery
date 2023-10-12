@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class TestCube : MonoBehaviour
     InputActionMap player;
     InputAction move;
 
-
+    /*
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -37,6 +38,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("MoveDown").started -= DoMoveDown;
         player.Disable();
     }
+    */
     // Start is called before the first frame update
     void Start()
     {
@@ -46,29 +48,26 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        Move();
     }
 
     private void Move()
     {
-
-    }
-
-    private void DoMove(InputAction.CallbackContext obj)
-    {
         movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
         transform.Translate(movement);
+    }
 
-        Vector3 doMove = new Vector3(movement.x, 0, movement.y);
+    private void DoMove(InputValue value)
+    {
 
         Debug.Log("Moving");
     }
-    private void DoMoveDown(InputAction.CallbackContext obj)
+    private void DoMoveDown()
     {
         transform.Translate(transform.up);
         Debug.Log("Moving");
     }
-    private void DoMoveUp(InputAction.CallbackContext obj)
+    private void DoMoveUp()
     {
         transform.Translate(-transform.up);
         Debug.Log("Moving");
