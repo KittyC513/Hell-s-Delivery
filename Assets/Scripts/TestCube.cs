@@ -45,6 +45,7 @@ public class TestCube : MonoBehaviour
 
 
 
+
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
