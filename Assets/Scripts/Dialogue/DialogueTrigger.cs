@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Yarn.Unity;
 //using Yarn.Unity.ActionAnalyser;
 
@@ -45,6 +46,7 @@ public class DialogueTrigger : MonoBehaviour
             dialogueRunner.Stop();
             //dialogueRunner.StartDialogue("Repeat");
             PlayRandomDiaglogue();
+            GoToLevelScene();
         }
     }
 
@@ -61,5 +63,10 @@ public class DialogueTrigger : MonoBehaviour
         System.Random rnd = new System.Random();
         int index = rnd.Next(nodeNames.Count);
         dialogueRunner.StartDialogue(nodeNames[index]);
+    }
+
+    public void GoToLevelScene()
+    {
+        SceneManager.LoadScene("PrototypeLevel");
     }
 }

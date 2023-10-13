@@ -10,7 +10,6 @@ using Yarn.Unity.Example;
 public class ShowDialogue : MonoBehaviour
 {
     private static GameObject LVPlayers;
-    private static GameObject LVNPC;
 
     [SerializeField] DialogueRunner runner;
 
@@ -83,10 +82,8 @@ public class ShowDialogue : MonoBehaviour
     void Start()
     {
         LVPlayers = GameObject.Find("Line View Players");
-        LVNPC = GameObject.Find("Line View NPC");
 
         LVPlayers.SetActive(false);
-        LVNPC.SetActive(false);
     }
 
     // Update is called once per frame
@@ -98,19 +95,8 @@ public class ShowDialogue : MonoBehaviour
     [YarnCommand("PlayerShow")]
     public static void PlayerShow()
     {
-        LVNPC.SetActive(false);
         LVPlayers.SetActive(true);
     }
-
-    [YarnCommand("NPCShow")]
-    public static void NPCShow()
-    {
-        LVPlayers.SetActive(false);
-        LVNPC.SetActive(true);
-
-    }
-
-
 
     /*[YarnCommand("ShowDevilOnPlayerDeath")]
     public static void Show()

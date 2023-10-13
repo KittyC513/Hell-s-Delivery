@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Yarn.Unity;
 
 public class NPCTrigger : MonoBehaviour
@@ -31,8 +32,14 @@ public class NPCTrigger : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == true)
         {
+            GoToLevelScene();
             dialogueRunner.Stop();
-            dialogueRunner.StartDialogue("Repeat");
+            //dialogueRunner.StartDialogue("Repeat");
         }
+    }
+
+    public void GoToLevelScene()
+    {
+        SceneManager.LoadScene("PrototypeLevel");
     }
 }
