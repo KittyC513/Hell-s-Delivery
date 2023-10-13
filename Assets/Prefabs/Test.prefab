@@ -1452,7 +1452,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8445169039440354731}
   - component: {fileID: 7634624140726475826}
-  - component: {fileID: 7357872982465539647}
   m_Layer: 0
   m_Name: TopDownCam
   m_TagString: Untagged
@@ -1583,22 +1582,6 @@ MonoBehaviour:
   - {fileID: 3014911072460529831}
   - {fileID: 2084731359473753998}
   - {fileID: 6042902174674908206}
---- !u!114 &7357872982465539647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5922669522122511283}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb7194dc27b9df64c8beca7482ee8e0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerIndex: -1
-  AutoEnableInputs: 1
-  XYAxis: {fileID: 507554307876814747, guid: 4edb1691d151a0a4084f6bc320d88613, type: 3}
-  ZAxis: {fileID: 0}
 --- !u!1 &5971816270935518704
 GameObject:
   m_ObjectHideFlags: 3
@@ -1767,7 +1750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1644491824089526460}
   - component: {fileID: 5935711546814801641}
-  - component: {fileID: 5614296042865576399}
+  - component: {fileID: 8776964758459664650}
   m_Layer: 0
   m_Name: ThirdPersonCam
   m_TagString: Untagged
@@ -1898,7 +1881,7 @@ MonoBehaviour:
   - {fileID: 6547877376092048362}
   - {fileID: 2602780648590246307}
   - {fileID: 4480989327375796387}
---- !u!114 &5614296042865576399
+--- !u!114 &8776964758459664650
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1907,13 +1890,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 7231244782024356411}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb7194dc27b9df64c8beca7482ee8e0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 84867209a0bac4040b6991f122d9525d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerIndex: -1
-  AutoEnableInputs: 1
-  XYAxis: {fileID: 507554307876814747, guid: 4edb1691d151a0a4084f6bc320d88613, type: 3}
-  ZAxis: {fileID: 0}
+  horizontal:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  vertical:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &7615607133425105075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2521,7 +2518,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2328177314585349164}
   - component: {fileID: 1415823282082645507}
-  - component: {fileID: 472971356222631127}
   m_Layer: 0
   m_Name: Combat
   m_TagString: Untagged
@@ -2652,22 +2648,6 @@ MonoBehaviour:
   - {fileID: 508691547113543901}
   - {fileID: 7278743497294045160}
   - {fileID: 6615080207308416732}
---- !u!114 &472971356222631127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8433833297185990865}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb7194dc27b9df64c8beca7482ee8e0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerIndex: -1
-  AutoEnableInputs: 1
-  XYAxis: {fileID: 507554307876814747, guid: 4edb1691d151a0a4084f6bc320d88613, type: 3}
-  ZAxis: {fileID: 0}
 --- !u!1 &8685068126282114766
 GameObject:
   m_ObjectHideFlags: 3
