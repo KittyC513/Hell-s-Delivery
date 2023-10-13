@@ -13,7 +13,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player;
-    [SerializeField] private InputAction move,cameraLook;
+    [SerializeField] private InputAction move,pick;
     [SerializeField] public bool isPicking;
     [SerializeField] InputActionReference pickControl;
 
@@ -31,21 +31,37 @@ public class TestCube : MonoBehaviour
     private Camera playerCamera;
     [SerializeField]
     TestPickDrop testPickDrop;
+
+
+    [SerializeField]
+    private LayerMask pickableMask;
+    [SerializeField]
+    private Transform playerPos;
+    [SerializeField]
+    private Transform itemContainer;
+    private ObjectGrabbable objectGrabbable;
+    [SerializeField]
+    public bool slotFull;
+
+
+
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
         player = inputAsset.FindActionMap("Cube");
         rb = this.GetComponent<Rigidbody>();
         testPickDrop = GetComponent<TestPickDrop>();
+        playerPos = this.transform;
     }
 
     private void OnEnable()
     {
         //player.FindAction("Move").started += DoMove;
+        player.FindAction("Pick").started += DoPick;
         move = player.FindAction("Move");
         //player.FindAction("Pick").started += DoPick;
-        cameraLook= player.FindAction("CameraLook");
-        pickControl.action.Enable();
+        //cameraLook= player.FindAction("CameraLook");
+        //pickControl.action.Enable();
 
         player.Enable();
 
@@ -58,7 +74,8 @@ public class TestCube : MonoBehaviour
         //player.FindAction("MoveDown").started -= MoveDown;
         //player.FindAction("Pick").started -= DoPick;
         player.Disable();
-        pickControl.action.Disable();
+        //pickControl.action.Disable();
+        player.FindAction("Pick").started -= DoPick;
     }
     
     // Start is called before the first frame update
@@ -70,7 +87,7 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Move();
+        //DoPick();
 
 
     }
@@ -118,18 +135,41 @@ public class TestCube : MonoBehaviour
         return right.normalized;
     }
 
-    private void DoPick()
+    private void DoPick(InputAction.CallbackContext obj)
     {
-        if (!testPickDrop.slotFull)
+        if (objectGrabbable == null)
         {
-            if (pickControl.action.triggered)
+            float pickDistance = 10f;
+            if (Physics.Raycast(playerPos.position, playerPos.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
             {
-                isPicking = true;
-                Debug.Log("is picking");
+
+                if (raycastHit.transform.TryGetComponent(out objectGrabbable))
+                {
+                    //transform the item
+                    objectGrabbable.Grab(itemContainer);
+
+
+                }
+
             }
+        }
+        else
+        {
+            if (this.gameObject.layer == LayerMask.NameToLayer("P1Collider"))
+            {
+                objectGrabbable.P1Drop();
+            }
+
+            if (this.gameObject.layer == LayerMask.NameToLayer("P2Collider"))
+            {
+                objectGrabbable.P2Drop();
+            }
+            objectGrabbable = null;
+
         }
 
     }
+}
 
     /*
     private void Move()
@@ -155,4 +195,4 @@ public class TestCube : MonoBehaviour
     }
     */
 
-}
+

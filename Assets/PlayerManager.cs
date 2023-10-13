@@ -7,10 +7,13 @@ using UnityEngine.InputSystem;
 public class PlayerManager : MonoBehaviour
 {
     private List<PlayerInput> players = new List<PlayerInput>();
+
     [SerializeField]
     private List<Transform> startingPoints;
     [SerializeField]
     private List<LayerMask> playerLayers;
+    [SerializeField]
+    private List<LayerMask> playerColliderLayers;
 
     private PlayerInputManager playerInputManager;
 
@@ -48,10 +51,13 @@ public class PlayerManager : MonoBehaviour
         playerParent.position = startingPoints[players.Count - 1].position;
 
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
+        int colliderLayerToAdd = (int)Mathf.Log(playerColliderLayers[players.Count - 1].value, 2);
 
 
         playerParent.GetComponentInChildren<CinemachineFreeLook>().gameObject.layer = layerToAdd;
+        playerParent.GetComponentInChildren<CapsuleCollider>().gameObject.layer =colliderLayerToAdd;
         playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
+        playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << colliderLayerToAdd;
         playerParent.GetComponentInChildren<InputHandler>().horizontal = player.actions.FindAction("CameraLook");
 
 

@@ -172,7 +172,7 @@ public class ThirdPersonMovement : MonoBehaviour
         SpeedControl();
         MoveInput();
         CheckGound();
-        PickandDrop();
+        //PickandDrop();
 
     }
 
@@ -404,7 +404,7 @@ public class ThirdPersonMovement : MonoBehaviour
         rb.velocity = velocityToSet;
     }
     #endregion
-
+    /*
     #region Pick and drop function
     void PickandDrop()
     {
@@ -439,5 +439,5 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
     #endregion
-
+    */
 }

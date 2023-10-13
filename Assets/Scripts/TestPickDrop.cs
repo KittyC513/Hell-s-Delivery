@@ -9,8 +9,10 @@ public class TestPickDrop : MonoBehaviour
     private LayerMask pickableMask;
     [SerializeField]
     private Transform player;
+
     [SerializeField]
     private Transform itemContainer;
+
 
     private ObjectGrabbable objectGrabbable;
     [SerializeField]
@@ -55,8 +57,7 @@ public class TestPickDrop : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        /*
+    {   
         //press "E" to pick the item when player facing the pickable items
         if (pickControl.action.triggered)
         {
@@ -64,7 +65,7 @@ public class TestPickDrop : MonoBehaviour
             if(objectGrabbable == null)
             {
                 float pickDistance = 10f;
-                if (withinRange = Physics.Raycast(player.position, player.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
+                if (Physics.Raycast(player.position, player.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
                 {
 
                     if (raycastHit.transform.TryGetComponent(out objectGrabbable))
@@ -79,13 +80,21 @@ public class TestPickDrop : MonoBehaviour
             }
             else
             {
-                objectGrabbable.Drop();
+                if (this.gameObject.layer == LayerMask.NameToLayer("P1Collider"))
+                {
+                    objectGrabbable.P1Drop();
+                }
+
+                if (this.gameObject.layer == LayerMask.NameToLayer("P2Collider"))
+                {
+                    objectGrabbable.P2Drop();
+                }
                 objectGrabbable = null;
 
             }
             
         }
-        */
+        
     }
 
 
@@ -115,6 +124,8 @@ public class TestPickDrop : MonoBehaviour
         currentStyle = newStyle;
     }
 
+
+    /*
     private void OnTriggerStay(Collider other)
     {
         if (testCube.isPicking)
@@ -137,6 +148,6 @@ public class TestPickDrop : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
 }
