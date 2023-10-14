@@ -7,9 +7,15 @@ using Cinemachine;
 using UnityEngine.ProBuilder.Shapes;
 using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
+using Yarn.Unity;
 
 public class TestCube : MonoBehaviour
 {
+
+    [SerializeField]
+    public GameObject dialogueRunner;
+    public string layerNameToFind = "DialogueSystem";
+    public DialogueRunner dR;
     Vector2 i_movement;
     Vector3 movement;
     float moveSpeed = 10f;
@@ -81,6 +87,8 @@ public class TestCube : MonoBehaviour
     string curSceneName;
     string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
+    [SerializeField]
+    bool withinDialogueRange;
 
 
 
@@ -105,6 +113,7 @@ public class TestCube : MonoBehaviour
         move = player.FindAction("Move");
         player.FindAction("Jump").started += DoJump;
         run = player.FindAction("Run");
+        player.FindAction("Join").started += DoTalk;
         //cameraLook= player.FindAction("CameraLook");
         //pickControl.action.Enable();
 
@@ -121,6 +130,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("Pick").started -= DoPick;
         player.FindAction("Jump").started -= DoJump;
         player.Disable();
+        player.FindAction("Join").started -= DoTalk;
         //pickControl.action.Disable();
 
     }
@@ -133,14 +143,19 @@ public class TestCube : MonoBehaviour
         curSceneName = currentScene.name;
         Debug.Log("Current scene" + curSceneName);
 
+
+
+        withinDialogueRange = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        FindDialogueSystem();
         CheckGrounded();
         SpeedControl();
-        CheckCamera();
+        //CheckCamera();
 
 
     }
@@ -151,7 +166,7 @@ public class TestCube : MonoBehaviour
 
     private void Move()
     {
-        if(camTurnoff == true)
+        if (curSceneName == scene1)
         {
             forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
             forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
@@ -189,7 +204,7 @@ public class TestCube : MonoBehaviour
             rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
             Debug.Log("maxSpeed =" + maxSpeed);
         }
-           
+
 
         LookAt();
     }
@@ -254,6 +269,7 @@ public class TestCube : MonoBehaviour
 
         }
 
+
     }
 
     //When player is on the ground and button is pressed, the Jump is triggered
@@ -271,7 +287,7 @@ public class TestCube : MonoBehaviour
         {
             isRunning = true;
         }
-        else if(run.ReadValue<float>() == 0)
+        else if (run.ReadValue<float>() == 0)
         {
             isRunning = false;
         }
@@ -311,24 +327,21 @@ public class TestCube : MonoBehaviour
             }
 
             cameraComponent = cam.GetComponent<Camera>();
-
-            if (cameraComponent != null)
-            {
-                if (curSceneName == scene1)
-                {
-                    cameraComponent.enabled = false;
-                    camTurnoff = true;
-                }
-                else if (curSceneName == scene2)
-                {
-                    cameraComponent.enabled = true;
-                    camTurnoff = false;
-                }
-            }
-
         }
 
-
+        if (cameraComponent != null)
+        {
+            if (curSceneName == scene1)
+            {
+                cameraComponent.enabled = false;
+                camTurnoff = true;
+            }
+            else if (curSceneName == scene2)
+            {
+                cameraComponent.enabled = true;
+                camTurnoff = false;
+            }
+        }
 
 
 
@@ -338,6 +351,40 @@ public class TestCube : MonoBehaviour
     public void Respawn(Vector3 respawnPos)
     {
         transform.position = respawnPos;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "NPC1")
+        {
+            withinDialogueRange = true;
+        }
+    }
+
+
+    void FindDialogueSystem()
+    {
+        int layerToFind = LayerMask.NameToLayer(layerNameToFind);
+        GameObject[] objectsInLayer = GameObject.FindObjectsOfType<GameObject>();
+        foreach (GameObject obj in objectsInLayer)
+        {
+            if (obj.layer == layerToFind && obj == null)
+            {
+                dialogueRunner = obj;
+                dR = obj.GetComponent<DialogueRunner>();
+
+            }
+        }
+    }
+    void DoTalk(InputAction.CallbackContext obj)
+    {
+
+
+        if (withinDialogueRange)
+        {
+            dR.StartDialogue("HubStart");
+        }
+
     }
 
 }

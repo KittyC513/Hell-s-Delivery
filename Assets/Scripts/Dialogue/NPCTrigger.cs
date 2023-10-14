@@ -43,11 +43,5 @@ public class NPCTrigger : MonoBehaviour
         SceneManager.LoadScene("PrototypeLevel");
     }
 
-    private void OnTriggerEnter (Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            dialogueRunner.StartDialogue("HubStart");
-        }
-    }
+
 }
