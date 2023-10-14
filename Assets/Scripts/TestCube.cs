@@ -16,6 +16,8 @@ public class TestCube : MonoBehaviour
     public DialogueRunner dR;
     [SerializeField]
     public LineView lineView;
+    public bool sceneChange;
+
     Vector2 i_movement;
     Vector3 movement;
     float moveSpeed = 10f;
@@ -362,10 +364,10 @@ public class TestCube : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "NPC1" && !conversationStart)
+        if (other.gameObject.tag == "NPC1")
         {
             withinDialogueRange = true;
-
+                    
         }
     }
 
@@ -376,11 +378,16 @@ public class TestCube : MonoBehaviour
 
         if (withinDialogueRange)
         {
-            dR.StartDialogue("HubStart");
-            conversationStart = true;
-            lineView = FindObjectOfType<LineView>();
-        }
+            if (!conversationStart)
+            {
+                dR.StartDialogue("HubStart");
+                conversationStart = true;
+                lineView = FindObjectOfType<LineView>();
 
+            }
+
+
+        }
     }
 
     void DoContinue(InputAction.CallbackContext obj)
@@ -388,7 +395,11 @@ public class TestCube : MonoBehaviour
         lineView.OnContinueClicked();
     }
 
-}
+    [YarnCommand("ChangeScene")]
+    public static void GoToLevelScene()
+    {
+            SceneManager.LoadScene("PrototypeLevel");
+    }
 
     /*
     private void Move()
@@ -414,4 +425,4 @@ public class TestCube : MonoBehaviour
     }
     */
 
-
+}
