@@ -14,6 +14,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField]
     public DialogueRunner dR;
+    [SerializeField]
     public LineView lineView;
     Vector2 i_movement;
     Vector3 movement;
@@ -147,7 +148,8 @@ public class TestCube : MonoBehaviour
         curSceneName = currentScene.name;
         Debug.Log("Current scene" + curSceneName);
         dR = Object.FindAnyObjectByType<DialogueRunner>();
-        lineView = FindAnyObjectByType<LineView>();
+        //lineView = FindAnyObjectByType<LineView>();
+
 
 
         withinDialogueRange = false;
@@ -376,6 +378,7 @@ public class TestCube : MonoBehaviour
         {
             dR.StartDialogue("HubStart");
             conversationStart = true;
+            lineView = FindObjectOfType<LineView>();
         }
 
     }
