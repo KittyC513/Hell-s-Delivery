@@ -888,8 +888,8 @@ GameObject:
   - component: {fileID: 581664679}
   - component: {fileID: 581664682}
   - component: {fileID: 581664681}
-  - component: {fileID: 581664680}
   - component: {fileID: 581664683}
+  - component: {fileID: 581664680}
   - component: {fileID: 581664684}
   m_Layer: 12
   m_Name: NPC
@@ -906,8 +906,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 581664678}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.93, y: 0.93, z: 0.5586996}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.93, y: 0.92999995, z: 0.5586996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -928,12 +928,12 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 3
+  m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &581664681
@@ -986,7 +986,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 581664678}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!136 &581664683
+--- !u!114 &581664683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581664678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7e50db78cd0dd43a3e4e044359d0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueRunner: {fileID: 8234583170500384629}
+  hasTalkedBefore: 0
+--- !u!136 &581664684
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1001,28 +1015,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.6545625
-  m_Height: 3.309125
+  m_Radius: 0.50000006
+  m_Height: 1.9999999
   m_Direction: 1
-  m_Center: {x: -0.03744683, y: 0, z: 0.029833455}
---- !u!114 &581664684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 581664678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa7e50db78cd0dd43a3e4e044359d0c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueRunner: {fileID: 8234583170500384629}
-  hasTalkedBefore: 0
+  m_Center: {x: -0.00000047683716, y: 0, z: 0}
 --- !u!1 &614233232
 GameObject:
   m_ObjectHideFlags: 0
@@ -3628,19 +3628,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueView: {fileID: 2889187981854663457}
-  continueActionType: 1
+  continueActionType: 2
   continueActionKeyCode: 32
   continueActionReference: {fileID: 0}
   continueAction:
     m_Name: Skip
     m_Type: 1
     m_ExpectedControlType: 
-    m_Id: 
+    m_Id: dacf599a-c3b2-4975-8319-169d80723cea
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 
+      m_Id: 80af227f-a475-44f9-a7f6-fd8d6d21ad50
       m_Path: Submit
       m_Interactions: 
       m_Processors: 
