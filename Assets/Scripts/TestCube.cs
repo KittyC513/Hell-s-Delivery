@@ -52,6 +52,8 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private Camera playerCamera;
     [SerializeField]
+    Camera mainCam;
+    [SerializeField]
     TestPickDrop testPickDrop;
 
 
@@ -66,6 +68,16 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool slotFull;
 
+    [SerializeField]
+    GameManager gM;
+    [SerializeField]
+    public string tagToFindCam = "Camera";
+    Transform cam;
+    [SerializeField]
+    public bool camTurnoff;
+    Camera cameraComponent;
+
+
 
 
 
@@ -76,7 +88,9 @@ public class TestCube : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         testPickDrop = GetComponent<TestPickDrop>();
         playerPos = this.transform;
-        maxSpeed = walkSpeed; 
+        maxSpeed = walkSpeed;
+        mainCam = Camera.main;
+        //gM = GetComponent<GameManager>();
     }
 
     private void OnEnable()
@@ -126,9 +140,10 @@ public class TestCube : MonoBehaviour
 
     private void Move()
     {
-        forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
-        forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
-
+        //forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
+        //forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
+        forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
+        forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
         rb.AddForce(forceDirection, ForceMode.Impulse);
         forceDirection = Vector3.zero;
 
@@ -172,6 +187,7 @@ public class TestCube : MonoBehaviour
 
     private Vector3 GetCameraForward(Camera playerCamera)
     {
+
         Vector3 forward = playerCamera.transform.forward;
         forward.y = 0;
         return forward.normalized;
@@ -258,6 +274,29 @@ public class TestCube : MonoBehaviour
             isGrounded = false;
             //Debug.Log("isGrounded" + isGrounded);
 
+        }
+    }
+
+
+    void CheckCamera()
+    {
+        Transform parentTransform = this.transform;
+
+        foreach (Transform child in parentTransform)
+        {
+            if (child.CompareTag(tagToFindCam) && child == null)
+            {
+                cam = child;
+                Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+            }
+
+        }
+        cameraComponent = cam.GetComponent<Camera>();
+
+        if (cameraComponent != null)
+        {
+            cameraComponent.enabled = false;
+            camTurnoff = true;
         }
     }
 }
