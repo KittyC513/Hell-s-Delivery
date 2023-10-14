@@ -827,8 +827,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790931724609759169}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.036324974, y: 0.000000020280662, z: 7.3718076e-10, w: 0.99934006}
-  m_LocalPosition: {x: 0, y: -5.000001, z: -2}
+  m_LocalRotation: {x: 0.014636001, y: 0.96883076, z: -0.2401376, w: 0.05904868}
+  m_LocalPosition: {x: -0.00000011920929, y: 0, z: 0.0000019073486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1591,6 +1591,37 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 6967565340630800023}
+--- !u!1 &4158222894240150974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5649439438241810064}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5649439438241810064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4158222894240150974}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.709, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5651904090368527511}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4516074710670123496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1619,8 +1650,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516074710670123496}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.27568254, y: -0, z: -0, w: 0.96124876}
-  m_LocalPosition: {x: 0, y: 5, z: -8}
+  m_LocalRotation: {x: 0.0167713, y: 0.95946836, z: -0.2751719, w: 0.058478102}
+  m_LocalPosition: {x: -0.9715653, y: 5, z: 7.9407845}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2454,7 +2485,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6715688338489921252}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25815228, y: 0.000000017706915, z: -0.000000004731457, w: 0.96610427}
+  m_LocalRotation: {x: 0.015704822, y: 0.9643149, z: -0.25767413, w: 0.05877343}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2535,7 +2566,7 @@ Transform:
   m_GameObject: {fileID: 7231244782024356411}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -8}
+  m_LocalPosition: {x: -0.9715653, y: 5, z: 7.9407845}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2844,6 +2875,7 @@ Transform:
   m_Children:
   - {fileID: 8419582107820691319}
   - {fileID: 7935187663911269875}
+  - {fileID: 5649439438241810064}
   m_Father: {fileID: 2618575627546304545}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2036607986024859999
@@ -2928,7 +2960,7 @@ Rigidbody:
   m_GameObject: {fileID: 7636394438553627759}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 3
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -2974,19 +3006,29 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  pick:
-    m_Name: Pick
+  run:
+    m_Name: Run
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 8394818d-85e4-4dcb-a384-10bde4ff3cb8
+    m_Id: d427483d-d6c9-4179-b73e-2d0b80fd67e6
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
   isPicking: 0
-  pickControl: {fileID: 931966379516540633, guid: 4edb1691d151a0a4084f6bc320d88613, type: 3}
   movementForce: 1
   maxSpeed: 5
+  walkSpeed: 5
+  runSpeed: 12
+  jumpForce: 8
+  groundCheck: {fileID: 5649439438241810064}
+  isGrounded: 0
+  groundCheckRadius: 0.1
+  groundCheckDist: 0.83
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  isRunning: 0
   playerCamera: {fileID: 8039368589211168344}
   testPickDrop: {fileID: 0}
   pickableMask:
@@ -3702,7 +3744,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2756825, y: 5.857618e-31, z: -2.9242893e-31, w: 0.96124876}
+  m_LocalRotation: {x: 0.0167713, y: 0.95946836, z: -0.2751719, w: 0.0584781}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

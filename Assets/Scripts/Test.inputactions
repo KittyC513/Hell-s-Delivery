@@ -58,6 +58,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "PassThrough",
+                    "id": "9b4943a2-433f-4fad-8356-55eaf4c8115b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Run",
+                    "type": "Value",
+                    "id": "d88b1745-82bd-4e81-b0bb-5c2511900197",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -108,7 +126,7 @@
                 {
                     "name": "",
                     "id": "fa92c473-4441-4bd7-b53c-a645186eedef",
-                    "path": "<XInputController>/buttonSouth",
+                    "path": "<XInputController>/buttonWest",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -225,6 +243,28 @@
                     "action": "CameraLook",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "2e67206c-4f09-4228-b3c4-a2bcd4c59177",
+                    "path": "<XInputController>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1096b6df-2246-492e-abdb-321235d90a8d",
+                    "path": "<XInputController>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

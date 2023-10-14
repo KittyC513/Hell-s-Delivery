@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.ProBuilder.Shapes;
+using System.Runtime.CompilerServices;
 
 public class TestCube : MonoBehaviour
 {
@@ -13,9 +15,10 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player;
-    [SerializeField] private InputAction move,pick;
+    [SerializeField] private InputAction move, run;
     [SerializeField] public bool isPicking;
-    [SerializeField] InputActionReference pickControl;
+
+
 
 
     [SerializeField]
@@ -23,14 +26,34 @@ public class TestCube : MonoBehaviour
 
     private Vector3 forceDirection = Vector3.zero;
 
+
     private Rigidbody rb;
     [SerializeField]
     private float maxSpeed = 5f;
+    [SerializeField]
+    private float walkSpeed = 5f;
+    [SerializeField]
+    private float runSpeed = 12f;
+    [SerializeField]
+    private float jumpForce = 5f;
+    [SerializeField]
+    private Transform groundCheck;
+    [SerializeField]
+    public bool isGrounded;
+    [SerializeField]
+    private float groundCheckRadius = 0.33f;
+    [SerializeField]
+    private float groundCheckDist = 0.75f;
+    [SerializeField]
+    LayerMask groundLayer;
+    [SerializeField]
+    private bool isRunning;
 
     [SerializeField]
     private Camera playerCamera;
     [SerializeField]
     TestPickDrop testPickDrop;
+
 
 
     [SerializeField]
@@ -53,6 +76,7 @@ public class TestCube : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         testPickDrop = GetComponent<TestPickDrop>();
         playerPos = this.transform;
+        maxSpeed = walkSpeed; 
     }
 
     private void OnEnable()
@@ -60,7 +84,8 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Move").started += DoMove;
         player.FindAction("Pick").started += DoPick;
         move = player.FindAction("Move");
-        //player.FindAction("Pick").started += DoPick;
+        player.FindAction("Jump").started += DoJump;
+        run = player.FindAction("Run");
         //cameraLook= player.FindAction("CameraLook");
         //pickControl.action.Enable();
 
@@ -74,11 +99,13 @@ public class TestCube : MonoBehaviour
         // player.FindAction("MoveUp").started -= MoveUp;
         //player.FindAction("MoveDown").started -= MoveDown;
         //player.FindAction("Pick").started -= DoPick;
+        player.FindAction("Pick").started -= DoPick;
+        player.FindAction("Jump").started -= DoJump;
         player.Disable();
         //pickControl.action.Disable();
-        player.FindAction("Pick").started -= DoPick;
+
     }
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,11 +115,16 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //DoPick();
-
+        CheckGrounded();
+        SpeedControl();
 
     }
     private void FixedUpdate()
+    {
+        Move();
+    }
+
+    private void Move()
     {
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
         forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
@@ -101,12 +133,28 @@ public class TestCube : MonoBehaviour
         forceDirection = Vector3.zero;
 
         if (rb.velocity.y < 0f)
-            rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
+        {
+            rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime * 2;
+        }
+
 
         Vector3 horizontalVelocity = rb.velocity;
         horizontalVelocity.y = 0;
         if (horizontalVelocity.sqrMagnitude > maxSpeed * maxSpeed)
+        {
+            if (isRunning)
+            {
+                maxSpeed = runSpeed;
+            }
+            else
+            {
+                maxSpeed = walkSpeed;
+            }
+
             rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
+            Debug.Log("maxSpeed =" + maxSpeed);
+        }
+           
 
         LookAt();
     }
@@ -138,6 +186,7 @@ public class TestCube : MonoBehaviour
 
     private void DoPick(InputAction.CallbackContext obj)
     {
+        //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
         if (objectGrabbable == null)
         {
             float pickDistance = 10f;
@@ -169,6 +218,47 @@ public class TestCube : MonoBehaviour
 
         }
 
+    }
+
+    //When player is on the ground and button is pressed, the Jump is triggered
+    void DoJump(InputAction.CallbackContext obj)
+    {
+        if (isGrounded)
+        {
+            forceDirection += Vector3.up * jumpForce;
+        }
+    }
+
+    void SpeedControl()
+    {
+        if (run.ReadValue<float>() == 1)
+        {
+            isRunning = true;
+        }
+        else if(run.ReadValue<float>() == 0)
+        {
+            isRunning = false;
+        }
+
+    }
+
+    private void CheckGrounded()
+    {
+        //send a spherecast downwards and check for ground, if theres ground we are grounded
+        RaycastHit hit;
+        if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
+        {
+            isGrounded = true;
+
+            //Debug.Log("isGrounded" + isGrounded);
+
+        }
+        else
+        {
+            isGrounded = false;
+            //Debug.Log("isGrounded" + isGrounded);
+
+        }
     }
 }
 

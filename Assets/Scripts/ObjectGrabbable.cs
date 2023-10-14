@@ -118,7 +118,7 @@ public class ObjectGrabbable : MonoBehaviour
         GameObject[] objectsInLayer = GameObject.FindObjectsOfType<GameObject>();
         foreach(GameObject obj in objectsInLayer)
         {
-            if(obj.layer == layerToFind1)
+            if(obj.layer == layerToFind1 && obj == null)
             {
                 player = obj;
                 Debug.Log("Found GameObject on layer: " + obj.name);
@@ -141,7 +141,7 @@ public class ObjectGrabbable : MonoBehaviour
 
             }
 
-            if (obj.layer == layerToFind2)
+            if (obj.layer == layerToFind2 && obj == null)
             {
                 player2 = obj;
                 Debug.Log("Found GameObject on layer: " + obj.name);
