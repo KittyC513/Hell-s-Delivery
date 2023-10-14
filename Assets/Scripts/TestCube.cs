@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.ProBuilder.Shapes;
 using System.Runtime.CompilerServices;
+using UnityEngine.SceneManagement;
 
 public class TestCube : MonoBehaviour
 {
@@ -76,7 +77,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool camTurnoff;
     Camera cameraComponent;
-
+    [SerializeField]
+    string curSceneName;
+    string scene1 = "HubStart";
 
 
 
@@ -123,7 +126,9 @@ public class TestCube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        // Get the currently active scene
+        Scene currentScene = SceneManager.GetActiveScene();
+        curSceneName = currentScene.name;
     }
 
     // Update is called once per frame
@@ -140,8 +145,17 @@ public class TestCube : MonoBehaviour
 
     private void Move()
     {
-        //forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
-        //forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
+        if(curSceneName == scene1)
+        {
+            forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
+            forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
+        }
+        else
+        {
+            forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(cameraComponent) * movementForce;
+            forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(cameraComponent) * movementForce;
+        }
+
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
         forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
         rb.AddForce(forceDirection, ForceMode.Impulse);
