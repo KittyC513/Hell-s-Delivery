@@ -80,6 +80,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     string curSceneName;
     string scene1 = "HubStart";
+    string scene2 = "PrototypeLevel";
 
 
 
@@ -93,6 +94,7 @@ public class TestCube : MonoBehaviour
         playerPos = this.transform;
         maxSpeed = walkSpeed;
         mainCam = Camera.main;
+
         //gM = GetComponent<GameManager>();
     }
 
@@ -129,6 +131,8 @@ public class TestCube : MonoBehaviour
         // Get the currently active scene
         Scene currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
+        Debug.Log("Current scene" + curSceneName);
+
     }
 
     // Update is called once per frame
@@ -136,6 +140,8 @@ public class TestCube : MonoBehaviour
     {
         CheckGrounded();
         SpeedControl();
+        CheckCamera();
+
 
     }
     private void FixedUpdate()
@@ -145,7 +151,7 @@ public class TestCube : MonoBehaviour
 
     private void Move()
     {
-        if(curSceneName == scene1)
+        if(camTurnoff == true)
         {
             forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
             forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
@@ -304,15 +310,36 @@ public class TestCube : MonoBehaviour
                 Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
             }
 
-        }
-        cameraComponent = cam.GetComponent<Camera>();
+            cameraComponent = cam.GetComponent<Camera>();
 
-        if (cameraComponent != null)
-        {
-            cameraComponent.enabled = false;
-            camTurnoff = true;
+            if (cameraComponent != null)
+            {
+                if (curSceneName == scene1)
+                {
+                    cameraComponent.enabled = false;
+                    camTurnoff = true;
+                }
+                else if (curSceneName == scene2)
+                {
+                    cameraComponent.enabled = true;
+                    camTurnoff = false;
+                }
+            }
+
         }
+
+
+
+
+
     }
+
+
+    public void Respawn(Vector3 respawnPos)
+    {
+        transform.position = respawnPos;
+    }
+
 }
 
     /*
