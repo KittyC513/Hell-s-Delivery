@@ -13,15 +13,14 @@ public class TestCube : MonoBehaviour
 {
 
     [SerializeField]
-    public GameObject dialogueRunner;
-    public string layerNameToFind = "DialogueSystem";
     public DialogueRunner dR;
+    public LineView lineView;
     Vector2 i_movement;
     Vector3 movement;
     float moveSpeed = 10f;
 
     [SerializeField] private InputActionAsset inputAsset;
-    [SerializeField] private InputActionMap player;
+    [SerializeField] private InputActionMap player, dialogue;
     [SerializeField] private InputAction move, run;
     [SerializeField] public bool isPicking;
 
@@ -89,6 +88,8 @@ public class TestCube : MonoBehaviour
     string scene2 = "PrototypeLevel";
     [SerializeField]
     bool withinDialogueRange;
+    [SerializeField]
+    bool conversationStart;
 
 
 
@@ -97,6 +98,7 @@ public class TestCube : MonoBehaviour
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
         player = inputAsset.FindActionMap("Cube");
+        dialogue = inputAsset.FindActionMap("Dialogue");
         rb = this.GetComponent<Rigidbody>();
         testPickDrop = GetComponent<TestPickDrop>();
         playerPos = this.transform;
@@ -114,6 +116,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("Jump").started += DoJump;
         run = player.FindAction("Run");
         player.FindAction("Join").started += DoTalk;
+        dialogue.FindAction("ContinueDialogue").started += DoContinue;
         //cameraLook= player.FindAction("CameraLook");
         //pickControl.action.Enable();
 
@@ -131,6 +134,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("Jump").started -= DoJump;
         player.Disable();
         player.FindAction("Join").started -= DoTalk;
+        dialogue.FindAction("ContinueDialogue").started -= DoContinue;
         //pickControl.action.Disable();
 
     }
@@ -142,7 +146,8 @@ public class TestCube : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
         Debug.Log("Current scene" + curSceneName);
-
+        dR = Object.FindAnyObjectByType<DialogueRunner>();
+        lineView = FindAnyObjectByType<LineView>();
 
 
         withinDialogueRange = false;
@@ -152,7 +157,7 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FindDialogueSystem();
+
         CheckGrounded();
         SpeedControl();
         //CheckCamera();
@@ -355,27 +360,14 @@ public class TestCube : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "NPC1")
+        if (other.gameObject.tag == "NPC1" && !conversationStart)
         {
             withinDialogueRange = true;
+
         }
     }
 
 
-    void FindDialogueSystem()
-    {
-        int layerToFind = LayerMask.NameToLayer(layerNameToFind);
-        GameObject[] objectsInLayer = GameObject.FindObjectsOfType<GameObject>();
-        foreach (GameObject obj in objectsInLayer)
-        {
-            if (obj.layer == layerToFind && obj == null)
-            {
-                dialogueRunner = obj;
-                dR = obj.GetComponent<DialogueRunner>();
-
-            }
-        }
-    }
     void DoTalk(InputAction.CallbackContext obj)
     {
 
@@ -383,8 +375,14 @@ public class TestCube : MonoBehaviour
         if (withinDialogueRange)
         {
             dR.StartDialogue("HubStart");
+            conversationStart = true;
         }
 
+    }
+
+    void DoContinue(InputAction.CallbackContext obj)
+    {
+        lineView.OnContinueClicked();
     }
 
 }
