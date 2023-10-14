@@ -93,6 +93,8 @@ public class TestCube : MonoBehaviour
     bool withinDialogueRange;
     [SerializeField]
     bool conversationStart;
+    [SerializeField]
+    bool isFreeze;
 
 
 
@@ -201,13 +203,16 @@ public class TestCube : MonoBehaviour
         horizontalVelocity.y = 0;
         if (horizontalVelocity.sqrMagnitude > maxSpeed * maxSpeed)
         {
-            if (isRunning)
+            if (!isFreeze)
             {
-                maxSpeed = runSpeed;
-            }
-            else
-            {
-                maxSpeed = walkSpeed;
+                if (isRunning)
+                {
+                    maxSpeed = runSpeed;
+                }
+                else
+                {
+                    maxSpeed = walkSpeed;
+                }
             }
 
             rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
@@ -383,7 +388,10 @@ public class TestCube : MonoBehaviour
                 dR.StartDialogue("HubStart");
                 conversationStart = true;
                 lineView = FindObjectOfType<LineView>();
-
+                isFreeze = true;
+                maxSpeed = 0;
+                jumpForce = 0;
+                
             }
 
 
@@ -398,7 +406,7 @@ public class TestCube : MonoBehaviour
     [YarnCommand("ChangeScene")]
     public static void GoToLevelScene()
     {
-            SceneManager.LoadScene("PrototypeLevel");
+        SceneManager.LoadScene("PrototypeLevel");
     }
 
     /*

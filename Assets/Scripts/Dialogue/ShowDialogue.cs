@@ -7,7 +7,7 @@ using Yarn.Unity.Example;
 
 //using UnityEngine.ProBuilder.Shapes;
 
-public class ShowDialogue : MonoBehaviour
+public class ShowDialogue :DialogueViewBase
 {
     private static GameObject LVPlayers;
 
@@ -43,8 +43,11 @@ public class ShowDialogue : MonoBehaviour
 
     static Vector2 screenSize = new Vector2(1280f, 720f); // needed for position calcuations, e.g. what does "left" mean?
 
-    private void Awake()
+    void Awake()
     {
+        // manually add all Yarn command handlers, so that we don't
+        // have to type out game object names in Yarn scripts (also
+        // gives us a performance increase by avoiding GameObject.Find)
         runner.AddCommandHandler<string>("Scene", DoSceneChange);
         runner.AddCommandHandler<string, string, string, string, string>("Act", SetActor);
         runner.AddCommandHandler<string, string, string>("Draw", SetSpriteYarn);
@@ -459,7 +462,7 @@ public class ShowDialogue : MonoBehaviour
 
     #region Utility
 
-    public  void RunLine(LocalizedLine dialogueLine, System.Action onDialogueLineFinished)
+    public override void RunLine(LocalizedLine dialogueLine, System.Action onDialogueLineFinished)
     {
         var actorName = dialogueLine.CharacterName;
 
