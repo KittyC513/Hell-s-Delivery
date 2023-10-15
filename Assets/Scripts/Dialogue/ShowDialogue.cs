@@ -503,14 +503,14 @@ public class ShowDialogue :DialogueViewBase
                 Vector3 regularScalePreserveXFlip = new Vector3(Mathf.Sign(spr.transform.localScale.x), 1f, 1f);
                 if (spr != highlightedSprite)
                 { // set back to normal
-                    spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip, Time.deltaTime);
-                    spr.color = Color.Lerp(spr.color, defaultTint, Time.deltaTime * 100f);
+                    spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip, 1f);
+                    spr.color = Color.Lerp(spr.color, defaultTint, 1f);
                     Debug.Log("Base" + spr.color);
                 }
                 else
                 { // a little bit bigger / brighter
-                    spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip * 100f, Time.deltaTime);
-                    spr.color = Color.Lerp(spr.color, highlightTint, Time.deltaTime * 100f);
+                    spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip * 1.2f,1f);
+                    spr.color = Color.Lerp(spr.color, highlightTint, 1f);
                     Debug.Log("Hightlight" + spr.color);
                     spr.transform.SetAsLastSibling();
                 }
