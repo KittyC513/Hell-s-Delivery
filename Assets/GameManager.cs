@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     private TestCube p1;
     [SerializeField]
     private TestCube p2;
+    [SerializeField]
+    private GameObject player1;
+    [SerializeField]
+    private GameObject player2;
 
     private void Start()
     {
@@ -35,11 +39,13 @@ public class GameManager : MonoBehaviour
         {
             if (obj.layer == layerToFind1 && p1 == null)
             {
+                player1 = obj;
                 p1 = obj.GetComponent<TestCube>();
             }
 
             if (obj.layer == layerToFind2 && p2 == null)
             {
+                player2 = obj;
                 p2 = obj.GetComponent<TestCube>();
             }
         }
@@ -81,6 +87,25 @@ public class GameManager : MonoBehaviour
         if (p1 == null && p2 != null)
         {
             p2.isFreeze = false;
+        }
+    }
+
+    public void DestroyObject()
+    {
+        if (player != null && player2 != null)
+        {
+            Destroy(player1);
+            Destroy(player2);
+        }
+
+        if (player1 != null && player2 == null)
+        {
+            Destroy(player1);
+        }
+
+        if (player1 == null && player2 != null)
+        {
+            Destroy(player2);
         }
     }
 
