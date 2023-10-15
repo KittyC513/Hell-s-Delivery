@@ -465,10 +465,12 @@ public class ShowDialogue :DialogueViewBase
     public override void RunLine(LocalizedLine dialogueLine, System.Action onDialogueLineFinished)
     {
         var actorName = dialogueLine.CharacterName;
+  
 
         if (string.IsNullOrEmpty(actorName) == false && actors.ContainsKey(actorName))
         {
             HighlightSprite(actors[actorName].actorImage);
+            Debug.Log("HighlightSprite" + actors[actorName].actorImage);
             nameplateBG.color = actors[actorName].actorColor;
             nameplateBG.gameObject.SetActive(true);
         }
@@ -482,8 +484,9 @@ public class ShowDialogue :DialogueViewBase
 
     public void HighlightSprite(Image sprite)
     {
-        StopCoroutine("HighlightSpriteCoroutine"); // use StartCoroutine(string) overload so that we can Stop and Start the coroutine (it doesn't work otherwise?)
         StartCoroutine("HighlightSpriteCoroutine", sprite);
+        StopCoroutine("HighlightSpriteCoroutine"); // use StartCoroutine(string) overload so that we can Stop and Start the coroutine (it doesn't work otherwise?)
+
     }
 
     // called by HighlightSprite
@@ -501,12 +504,14 @@ public class ShowDialogue :DialogueViewBase
                 if (spr != highlightedSprite)
                 { // set back to normal
                     spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip, Time.deltaTime);
-                    spr.color = Color.Lerp(spr.color, defaultTint, Time.deltaTime * 5f);
+                    spr.color = Color.Lerp(spr.color, defaultTint, Time.deltaTime * 100f);
+                    Debug.Log("Base" + spr.color);
                 }
                 else
                 { // a little bit bigger / brighter
-                    spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip * 1.05f, Time.deltaTime);
-                    spr.color = Color.Lerp(spr.color, highlightTint, Time.deltaTime * 5f);
+                    spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip * 100f, Time.deltaTime);
+                    spr.color = Color.Lerp(spr.color, highlightTint, Time.deltaTime * 100f);
+                    Debug.Log("Hightlight" + spr.color);
                     spr.transform.SetAsLastSibling();
                 }
             }
