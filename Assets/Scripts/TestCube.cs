@@ -17,6 +17,8 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public LineView lineView;
     public bool sceneChange;
+    [SerializeField]
+    private InputActionReference continueControl;
 
     Vector2 i_movement;
     Vector3 movement;
@@ -94,7 +96,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     bool conversationStart;
     [SerializeField]
-    bool isFreeze;
+    public bool isFreeze;
 
 
 
@@ -121,9 +123,10 @@ public class TestCube : MonoBehaviour
         player.FindAction("Jump").started += DoJump;
         run = player.FindAction("Run");
         player.FindAction("Join").started += DoTalk;
-        dialogue.FindAction("ContinueDialogue").started += DoContinue;
+        //dialogue.FindAction("ContinueDialogue").started += DoContinue;
         //cameraLook= player.FindAction("CameraLook");
         //pickControl.action.Enable();
+        continueControl.action.Enable();
 
         player.Enable();
 
@@ -139,7 +142,8 @@ public class TestCube : MonoBehaviour
         player.FindAction("Jump").started -= DoJump;
         player.Disable();
         player.FindAction("Join").started -= DoTalk;
-        dialogue.FindAction("ContinueDialogue").started -= DoContinue;
+        continueControl.action.Disable();
+        // dialogue.FindAction("ContinueDialogue").started -= DoContinue;
         //pickControl.action.Disable();
 
     }
@@ -166,13 +170,18 @@ public class TestCube : MonoBehaviour
 
         CheckGrounded();
         SpeedControl();
+        ContinueBottonControl();
         //CheckCamera();
 
 
     }
     private void FixedUpdate()
     {
-        Move();
+        if (!isFreeze)
+        {
+            Move();
+        }
+
     }
 
     private void Move()
@@ -289,7 +298,7 @@ public class TestCube : MonoBehaviour
     //When player is on the ground and button is pressed, the Jump is triggered
     void DoJump(InputAction.CallbackContext obj)
     {
-        if (isGrounded)
+        if (isGrounded && !isFreeze)
         {
             forceDirection += Vector3.up * jumpForce;
         }
@@ -379,8 +388,6 @@ public class TestCube : MonoBehaviour
 
     void DoTalk(InputAction.CallbackContext obj)
     {
-
-
         if (withinDialogueRange)
         {
             if (!conversationStart)
@@ -388,9 +395,6 @@ public class TestCube : MonoBehaviour
                 dR.StartDialogue("HubStart");
                 conversationStart = true;
                 lineView = FindObjectOfType<LineView>();
-                isFreeze = true;
-                maxSpeed = 0;
-                jumpForce = 0;
                 
             }
 
@@ -398,9 +402,17 @@ public class TestCube : MonoBehaviour
         }
     }
 
-    void DoContinue(InputAction.CallbackContext obj)
+    //void DoContinue(InputAction.CallbackContext obj)
+    //{
+    //    lineView.OnContinueClicked();
+    //}
+
+    void ContinueBottonControl()
     {
-        lineView.OnContinueClicked();
+        if (continueControl.action.triggered && conversationStart)
+        {
+            lineView.OnContinueClicked();
+        }
     }
 
     [YarnCommand("ChangeScene")]
@@ -408,6 +420,7 @@ public class TestCube : MonoBehaviour
     {
         SceneManager.LoadScene("PrototypeLevel");
     }
+
 
     /*
     private void Move()
