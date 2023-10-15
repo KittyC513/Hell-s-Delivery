@@ -171,7 +171,7 @@ public class TestCube : MonoBehaviour
         CheckGrounded();
         SpeedControl();
         ContinueBottonControl();
-        //CheckCamera();
+        CheckCamera();
 
 
     }
@@ -191,7 +191,7 @@ public class TestCube : MonoBehaviour
             forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
             forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
         }
-        else
+        else if(curSceneName == scene2)
         {
             forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(cameraComponent) * movementForce;
             forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(cameraComponent) * movementForce;
@@ -347,22 +347,20 @@ public class TestCube : MonoBehaviour
             {
                 cam = child;
                 Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
-            }
 
-            cameraComponent = cam.GetComponent<Camera>();
+                cameraComponent = cam.GetComponent<Camera>();
+            }
         }
 
         if (cameraComponent != null)
         {
             if (curSceneName == scene1)
-            {
+            {   
                 cameraComponent.enabled = false;
-                camTurnoff = true;
             }
             else if (curSceneName == scene2)
             {
                 cameraComponent.enabled = true;
-                camTurnoff = false;
             }
         }
 
