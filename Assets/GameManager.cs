@@ -16,10 +16,12 @@ public class GameManager : MonoBehaviour
     private GameObject player1;
     [SerializeField]
     private GameObject player2;
+    [SerializeField]
+    public bool sceneChanged;
 
     private void Start()
     {
-
+        sceneChanged = false;
 
     }
 
