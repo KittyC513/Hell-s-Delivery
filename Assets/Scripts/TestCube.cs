@@ -99,6 +99,9 @@ public class TestCube : MonoBehaviour
     public bool isFreeze;
     [SerializeField]
     Scene currentScene;
+    [SerializeField]
+    private GameObject playerObj;
+
 
 
 
@@ -189,14 +192,14 @@ public class TestCube : MonoBehaviour
     {
         if (curSceneName == scene1)
         {
-            Debug.Log("Camera: " + curSceneName == scene1);
+            //Debug.Log("Camera: " + curSceneName == scene1);
             playerCamera.enabled = false;
             forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
             forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
         }
         else if(curSceneName == scene2)
         {
-            Debug.Log("Camera: " + curSceneName == scene2);
+            //Debug.Log("Camera: " + curSceneName == scene2);
             playerCamera.enabled = true;
             forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
             forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
@@ -341,18 +344,6 @@ public class TestCube : MonoBehaviour
         }
     }
 
-
-    void CheckCamera()
-    {
-
-
-    }
-
-
-    public void Respawn(Vector3 respawnPos)
-    {
-        transform.position = respawnPos;
-    }
 
     private void OnTriggerEnter(Collider other)
     {

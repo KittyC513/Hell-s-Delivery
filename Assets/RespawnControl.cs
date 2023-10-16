@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class RespawnControl : MonoBehaviour
 {
-    TestCube testCube;
+
+    [SerializeField]
     Vector3 respawnPoint;
+
+    [SerializeField]
+    private GameObject player;
+
+
 
 
     private void Start()
     {
-        testCube = GetComponent<TestCube>();
+
         respawnPoint = this.transform.position;
+    }
+
+    public void Respawn(Vector3 respawnPos)
+    {
+        player.transform.position = respawnPos;
     }
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == ("Hazard"))
         {
-            testCube.Respawn(respawnPoint);
-        } else if(other.tag == "Checkpoint")
+           Respawn(respawnPoint);
+        } else if(other.tag == "CheckPoint")
         {
-            respawnPoint = this.transform.position;
+            respawnPoint = other.transform.position;
         }
     }
 
