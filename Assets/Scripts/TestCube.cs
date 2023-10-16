@@ -97,7 +97,8 @@ public class TestCube : MonoBehaviour
     bool conversationStart;
     [SerializeField]
     public bool isFreeze;
-
+    [SerializeField]
+    Scene currentScene;
 
 
 
@@ -152,7 +153,7 @@ public class TestCube : MonoBehaviour
     void Start()
     {
         // Get the currently active scene
-        Scene currentScene = SceneManager.GetActiveScene();
+        currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
         Debug.Log("Current scene" + curSceneName);
         dR = Object.FindAnyObjectByType<DialogueRunner>();
@@ -171,7 +172,7 @@ public class TestCube : MonoBehaviour
         CheckGrounded();
         SpeedControl();
         ContinueBottonControl();
-        CheckCamera();
+        //CheckCamera();
 
 
     }
@@ -188,17 +189,21 @@ public class TestCube : MonoBehaviour
     {
         if (curSceneName == scene1)
         {
+            Debug.Log("Camera: " + curSceneName == scene1);
+            playerCamera.enabled = false;
             forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
             forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
         }
         else if(curSceneName == scene2)
         {
-            forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(cameraComponent) * movementForce;
-            forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(cameraComponent) * movementForce;
+            Debug.Log("Camera: " + curSceneName == scene2);
+            playerCamera.enabled = true;
+            forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
+            forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
         }
 
-        forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
-        forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
+        //forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
+        //forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
         rb.AddForce(forceDirection, ForceMode.Impulse);
         forceDirection = Vector3.zero;
 
@@ -339,31 +344,6 @@ public class TestCube : MonoBehaviour
 
     void CheckCamera()
     {
-        Transform parentTransform = this.transform;
-
-        foreach (Transform child in parentTransform)
-        {
-            if (child.CompareTag(tagToFindCam) && child == null)
-            {
-                cam = child;
-                Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
-
-                cameraComponent = cam.GetComponent<Camera>();
-            }
-        }
-
-        if (cameraComponent != null)
-        {
-            if (curSceneName == scene1)
-            {   
-                cameraComponent.enabled = false;
-            }
-            else if (curSceneName == scene2)
-            {
-                cameraComponent.enabled = true;
-            }
-        }
-
 
 
     }
@@ -417,6 +397,7 @@ public class TestCube : MonoBehaviour
     public static void GoToLevelScene()
     {
         SceneManager.LoadScene("PrototypeLevel");
+
     }
 
 
