@@ -80,12 +80,13 @@ public class ObjectGrabbable : MonoBehaviour
     {
         FindGameObject();
         FindItemContainer();
+        Move();
 
     }
 
     private void FixedUpdate()
     {
-        Move();
+        
 
     }
 
