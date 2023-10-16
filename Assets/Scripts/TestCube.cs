@@ -363,7 +363,7 @@ public class TestCube : MonoBehaviour
         {
             if (!conversationStart)
             {
-                dR.StartDialogue("HubStart");
+                dR.StartDialogue("BoomerQuest");
                 conversationStart = true;
                 lineView = FindObjectOfType<LineView>();
                 

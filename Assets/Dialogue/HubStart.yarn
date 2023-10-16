@@ -1,31 +1,44 @@
 ﻿title: HubStart
 tags:
+position: -186,56
 ---
 <<PlayerShow>>
-<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped 1.25 center white>>
-<<Act Shmonk Shmonk 0.75 center blue>>
-<<Act Shmink Shmink 0.50 center red>>
-Boomer: Deliver my package!
-<<Flip Boomer>>
-Shmink: Aye-aye cap'n!
-Shmonk: You disgust me.
-Shmink: What did I do?
-Boomer: I need to fart. Y'all better scram.
-Shmonk: Old people make me uncomfortable D:
+<<Act Player1 Shmonk 0.75 center blue>>
+<<Act Player2 Shmink 1.25 center red>>
+<<Act Devil TheDevil 5 center red>>
 
-<<Move Shmink -1 center 0.1>>
+Player1: Hehehe... I know you only wear that hat because you're bald. 
+Player1: I can count with all zero of my fingers how many strands of hair you have.
+Player2: *Gasp!* First of all, I have a solid three strands!
+Player1: I wouldn't be surprised if your lack of hair is what landed you in Hell. 
+Player1: Manslaughter by blinding drivers with your bald head.
+Player2: There's no way you weren't a bully in your previous life.
+Player1: Just your bully. Comes with dental coverage and a pension plan, baby.
+
+Devil: You know what else comes with dental coverage and a pension plan?
+<<Move TheDevil 1.25 center 0.1>>
+<<Move Shmink 0.50 center 0.1>>
+<<Flip Shmink>>
+
+Devil: Kekeke...
+Player2: GAH!
+Devil: Your actual jobs, my little delivery demons. Keke.
+Player1: ...Wait. No, it doesn't.
+Devil: You demons better get off your tails and start delivering.
+Devil: You already have your first client at the receptionist desk over there. Keke.
+Player1: And what's it to you if we don't do it?
+Devil: Tell you what. Whoever can successfully deliver the most packages will receive a promotion.
+Player2: !!!
+Devil: I am only expecting positive reviews on Yelp. Keke.
+
+<<Move TheDevil 5 center 0.1>>
+<<Move Shmink 1.25 center 0.1>>
+<<Flip Shmink>>
+<<wait  0.5>>
+
+Player2: Off to work then!
+Player1: Ugh.
+
+<<Move Shmink 2 center 0.1>>
 <<Move Shmonk -1 center 0.1>>
-<<Move Boomer 2 center 0.1>>
-<<ChangeScene>>
-===
-
-title: Repeat
-tags:
-position: 220,-3
----
-<<PlayerShow>>
-<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped 1.25 center white>>
-Boomer: I said scram!
-
-<<Move Boomer 2 center 0.1>>
 ===
