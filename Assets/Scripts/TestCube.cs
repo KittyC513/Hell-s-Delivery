@@ -394,11 +394,6 @@ public class TestCube : MonoBehaviour
     }
 
 
-    void RespawnPackage()
-    {
-
-    }
-
 
     /*
     private void Move()
