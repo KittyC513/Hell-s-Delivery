@@ -509,7 +509,7 @@ public class ShowDialogue :DialogueViewBase
                 }
                 else
                 { // a little bit bigger / brighter
-                    spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip * 1.2f,1f);
+                    spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip * 1.1f,1f);
                     spr.color = Color.Lerp(spr.color, highlightTint, 1f);
                     Debug.Log("Hightlight" + spr.color);
                     spr.transform.SetAsLastSibling();
