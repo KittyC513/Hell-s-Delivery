@@ -75,6 +75,7 @@ public class TestCube : MonoBehaviour
     private Transform playerPos;
     [SerializeField]
     private Transform itemContainer;
+    [SerializeField]
     private ObjectGrabbable objectGrabbable;
     [SerializeField]
     public bool slotFull;
@@ -115,6 +116,8 @@ public class TestCube : MonoBehaviour
         playerPos = this.transform;
         maxSpeed = walkSpeed;
         mainCam = Camera.main;
+
+
 
         //gM = GetComponent<GameManager>();
     }
@@ -162,7 +165,7 @@ public class TestCube : MonoBehaviour
         dR = Object.FindAnyObjectByType<DialogueRunner>();
         //lineView = FindAnyObjectByType<LineView>();
 
-
+        //objectGrabbable = Object.FindAnyObjectByType<ObjectGrabbable>();
 
         withinDialogueRange = false;
 
@@ -280,7 +283,6 @@ public class TestCube : MonoBehaviour
                     //transform the item
                     objectGrabbable.Grab(itemContainer);
 
-
                 }
 
             }
@@ -388,6 +390,12 @@ public class TestCube : MonoBehaviour
     public static void GoToLevelScene()
     {
         SceneManager.LoadScene("PrototypeLevel");
+
+    }
+
+
+    void RespawnPackage()
+    {
 
     }
 

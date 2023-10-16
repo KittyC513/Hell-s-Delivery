@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder.Shapes;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -13,7 +14,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private List<LayerMask> playerLayers;
     [SerializeField]
+    private List<LayerMask> itemContainer;
+    [SerializeField]
     private List<LayerMask> playerColliderLayers;
+    [SerializeField]
+    private List<LayerMask> playerRespawnLayer;
 
     private PlayerInputManager playerInputManager;
 
@@ -52,10 +57,13 @@ public class PlayerManager : MonoBehaviour
 
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
         int colliderLayerToAdd = (int)Mathf.Log(playerColliderLayers[players.Count - 1].value, 2);
-
+        int itemContainerLayerToAdd = (int)Mathf.Log(itemContainer[players.Count - 1].value, 2);
+        int playerRespawnLayerToAdd = (int)Mathf.Log(playerRespawnLayer[players.Count - 1].value, 2);
 
         playerParent.GetComponentInChildren<CinemachineFreeLook>().gameObject.layer = layerToAdd;
         playerParent.GetComponentInChildren<CapsuleCollider>().gameObject.layer =colliderLayerToAdd;
+        playerParent.GetComponentInChildren<BoxCollider>().gameObject.layer = itemContainerLayerToAdd;
+        playerParent.GetComponentInChildren<RespawnControl>().gameObject.layer = playerRespawnLayerToAdd;
         playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
         playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << colliderLayerToAdd;
         playerParent.GetComponentInChildren<InputHandler>().horizontal = player.actions.FindAction("CameraLook");
