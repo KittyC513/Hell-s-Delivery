@@ -29,8 +29,8 @@ public class TestCube : MonoBehaviour
     [SerializeField] private InputAction move, run;
     [SerializeField] public bool isPicking;
 
-
-
+    private bool isOnCircle;
+    private GameObject activeCircle;
 
     [SerializeField]
     private float movementForce = 1f;
@@ -193,7 +193,7 @@ public class TestCube : MonoBehaviour
         MovementCalcs();
         //CheckCamera();
 
-
+      
     }
     private void FixedUpdate()
     {
@@ -201,6 +201,7 @@ public class TestCube : MonoBehaviour
         {
             Move();
         }
+
 
     }
 
@@ -235,20 +236,28 @@ public class TestCube : MonoBehaviour
     private void Move()
     {
         float forceAdd = timeToWalk;
-        if (curSceneName == scene1)
+        if (!isOnCircle)
         {
-            //Debug.Log("Camera: " + curSceneName == scene1);
-            playerCamera.enabled = false;
-            forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
-            forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+            if (curSceneName == scene1)
+            {
+                //Debug.Log("Camera: " + curSceneName == scene1);
+                playerCamera.enabled = false;
+                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+            }
+            else if (curSceneName == scene2)
+            {
+                //Debug.Log("Camera: " + curSceneName == scene2);
+                playerCamera.enabled = true;
+                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+            }
         }
-        else if(curSceneName == scene2)
+        else
         {
-            //Debug.Log("Camera: " + curSceneName == scene2);
-            playerCamera.enabled = true;
-            forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-            forceDirection +=faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+            //rb.velocity = new Vector3(-(transform.position.x - activeCircle.transform.position.x) * 3 * Time.deltaTime, 0, -(transform.position.z - activeCircle.transform.position.z) * 3 *Time.deltaTime);
         }
+       
 
         //forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
         //forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
@@ -435,6 +444,30 @@ public class TestCube : MonoBehaviour
     {
         SceneManager.LoadScene("PrototypeLevel");
 
+    }
+
+    public bool ReadActionButton()
+    {
+        if (run.ReadValue<float>() == 1) return true;
+        else return false;
+    }
+
+    public void OnSummoningEnter(GameObject circle)
+    {
+        //player can't move unless they let go of running
+        //player is now in the summoning animation
+        //the summoning circle is active
+        //move player towards
+        isOnCircle = true;
+        activeCircle = circle;
+    }
+
+    public void OnSummoningExit()
+    {
+        //player can now move and summoning circle is not active
+        //player is no longer in the summoning animation
+        isOnCircle = false;
+        activeCircle = null;
     }
 
 
