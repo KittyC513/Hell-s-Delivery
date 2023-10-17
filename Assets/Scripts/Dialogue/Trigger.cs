@@ -25,5 +25,9 @@ public class Trigger : MonoBehaviour
         {
             dR.StartDialogue("HubStart");
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
