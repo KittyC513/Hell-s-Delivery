@@ -42,9 +42,21 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float maxSpeed = 5f;
     [SerializeField]
-    private float walkSpeed = 5f;
+    private float walkSpeed = 4f;
     [SerializeField]
-    private float runSpeed = 12f;
+    private float runSpeed = 9f;
+    
+    private float currentSpeed;
+
+    private Vector3 faceDir;
+
+    [SerializeField]
+    private float timeToRun = 0.16f;
+    [SerializeField]
+    private float timeToWalk = 0.1f;
+    [SerializeField]
+    private float timeToZero = 0.083f;
+
     [SerializeField]
     private float jumpForce = 5f;
     [SerializeField]
@@ -178,6 +190,7 @@ public class TestCube : MonoBehaviour
         CheckGrounded();
         SpeedControl();
         ContinueBottonControl();
+        MovementCalcs();
         //CheckCamera();
 
 
@@ -191,21 +204,50 @@ public class TestCube : MonoBehaviour
 
     }
 
+    private void MovementCalcs()
+    {
+        if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
+        {
+            faceDir = new Vector3 (move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
+            if (isRunning)
+            {
+                float accel = (maxSpeed / timeToRun);
+                currentSpeed += accel * Time.deltaTime;
+
+            }
+            else
+            {
+                float accel = (maxSpeed / timeToWalk);
+                currentSpeed += accel * Time.deltaTime;
+            }
+
+            
+        }
+        else
+        {
+            float deccel = (-maxSpeed / timeToZero);
+            currentSpeed += deccel * Time.deltaTime;
+        }
+        Debug.Log(rb.velocity);
+        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
+    }
+
     private void Move()
     {
+        float forceAdd = timeToWalk;
         if (curSceneName == scene1)
         {
             //Debug.Log("Camera: " + curSceneName == scene1);
             playerCamera.enabled = false;
-            forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
-            forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
+            forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+            forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
         }
         else if(curSceneName == scene2)
         {
             //Debug.Log("Camera: " + curSceneName == scene2);
             playerCamera.enabled = true;
-            forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
-            forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
+            forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+            forceDirection +=faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
         }
 
         //forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
@@ -235,8 +277,10 @@ public class TestCube : MonoBehaviour
                 }
             }
 
-            rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
-            Debug.Log("maxSpeed =" + maxSpeed);
+            rb.velocity = horizontalVelocity.normalized * currentSpeed + Vector3.up * rb.velocity.y;
+            //rb.velocity = new Vector3((forceDirection.x * currentSpeed) * Time.deltaTime, rb.velocity.y, (forceDirection.z * currentSpeed) * Time.deltaTime);
+            //Debug.Log("maxSpeed =" + maxSpeed);
+          
         }
 
 
