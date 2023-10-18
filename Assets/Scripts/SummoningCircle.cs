@@ -6,9 +6,9 @@ using UnityEngine.Events;
 public class SummoningCircle : MonoBehaviour
 {
     [SerializeField]
-    private PlayerController[] players;
+    private TestCube[] players;
 
-    private PlayerController activePlayer;
+    private TestCube activePlayer;
 
     [SerializeField]
     private float radius = 1f;
@@ -27,7 +27,7 @@ public class SummoningCircle : MonoBehaviour
 
     private void Start()
     {
-        players = new PlayerController[4];
+        players = new TestCube[4];
     }
 
     private void Update()
@@ -90,7 +90,7 @@ public class SummoningCircle : MonoBehaviour
             for (int i = 0; i < playerCollider.Length - 1; i++)
             {
                 GameObject playerObj = playerCollider[i].gameObject;
-                players[i] = playerObj.GetComponent<PlayerController>();
+                players[i] = playerObj.GetComponent<TestCube>();
                 
             }
         }

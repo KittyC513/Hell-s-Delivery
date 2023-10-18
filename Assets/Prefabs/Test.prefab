@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 6586379375218265399}
   m_Layer: 15
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: FindScript
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290153270093134455}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47fc495f78354314c945e50c1b62ec91, type: 3}
   m_Name: 
@@ -458,6 +458,13 @@ MonoBehaviour:
   isDead: 0
   objectGrabbable: {fileID: 0}
   package: {fileID: 0}
+  isPlayer1: 0
+  isPlayer2: 0
+  Player1Die: 0
+  Player2Die: 0
+  curSceneName: 
+  Player1isCarrying: 0
+  Player2isCarrying: 0
 --- !u!1 &307637956170343215
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,7 +959,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790931724609759169}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24058327, y: 0.000000016701, z: -0.0000000041395665, w: 0.97062856}
+  m_LocalRotation: {x: 0.19490868, y: -1e-45, z: -0, w: 0.98082143}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -988,7 +995,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 80
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -1775,7 +1782,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516074710670123496}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24058329, y: 0.00000003340201, z: -0.000000008279135, w: 0.97062856}
+  m_LocalRotation: {x: 0.19490871, y: -0.00000001461538, z: 0.0000000029043663, w: 0.98082143}
   m_LocalPosition: {x: 0, y: 5, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1815,7 +1822,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 80
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -2610,7 +2617,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6715688338489921252}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25815228, y: 0.000000016623162, z: -0.0000000044418673, w: 0.96610427}
+  m_LocalRotation: {x: 0.23521785, y: 0.000000018697575, z: -0.0000000045249613, w: 0.9719427}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2646,7 +2653,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 80
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -2723,7 +2730,7 @@ MonoBehaviour:
   m_Follow: {fileID: 5651904090368527511}
   m_CommonLens: 1
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 80
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -3183,12 +3190,24 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  jump:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 641f76e9-56f1-4402-8e0d-35671bc6ebc4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   isPicking: 0
   movementForce: 1
   maxSpeed: 5
-  walkSpeed: 5
-  runSpeed: 12
-  jumpForce: 15
+  walkSpeed: 4
+  runSpeed: 7
+  timeToRun: 0.2
+  timeToWalk: 0.1
+  timeToZero: 0.083
+  jumpForce: 5
   groundCheck: {fileID: 5649439438241810064}
   isGrounded: 0
   groundCheckRadius: 0.1
@@ -3217,6 +3236,26 @@ MonoBehaviour:
   currentScene:
     m_Handle: 0
   playerObj: {fileID: 8842892317421973126}
+  jumpSpeed: 0
+  isJumping: 0
+  jumpDeaccel: 20
+  minJumpForce: 3
+  maxFall: -10
+  isWalking: 0
+  isPlayer1: 0
+  isPlayer2: 0
+  package: {fileID: 0}
+  pickDistance: 10
+  isCast: 0
+  rC: {fileID: 6586379375218265399}
+  raycastDistance: 5
+  isCarrying: 0
+  tG: {fileID: 0}
+  trigger: {fileID: 0}
+  p2: {fileID: 0}
+  p1: {fileID: 0}
+  p2TC: {fileID: 0}
+  p1TC: {fileID: 0}
 --- !u!114 &4895904256865648347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3924,7 +3963,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2756825, y: 2.2e-44, z: -7e-45, w: 0.96124876}
+  m_LocalRotation: {x: 0.2756825, y: 1e-45, z: -0, w: 0.96124876}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3960,7 +3999,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 80
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -3993,7 +4032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2618575627546304545
 Transform:
   m_ObjectHideFlags: 0

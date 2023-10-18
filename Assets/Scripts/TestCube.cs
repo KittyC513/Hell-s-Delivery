@@ -26,11 +26,11 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue;
-    [SerializeField] private InputAction move, run;
+    [SerializeField] private InputAction move, run,jump;
     [SerializeField] public bool isPicking;
 
-
-
+    private bool isOnCircle;
+    private GameObject activeCircle;
 
     [SerializeField]
     private float movementForce = 1f;
@@ -42,9 +42,21 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float maxSpeed = 5f;
     [SerializeField]
-    private float walkSpeed = 5f;
+    private float walkSpeed = 4f;
     [SerializeField]
-    private float runSpeed = 12f;
+    private float runSpeed = 9f;
+    
+    private float currentSpeed;
+
+    private Vector3 faceDir;
+
+    [SerializeField]
+    private float timeToRun = 0.16f;
+    [SerializeField]
+    private float timeToWalk = 0.1f;
+    [SerializeField]
+    private float timeToZero = 0.083f;
+
     [SerializeField]
     private float jumpForce = 5f;
     [SerializeField]
@@ -102,7 +114,44 @@ public class TestCube : MonoBehaviour
     Scene currentScene;
     [SerializeField]
     private GameObject playerObj;
+    [SerializeField]
+    private float jumpSpeed;
+    [SerializeField]
+    private bool isJumping;
+    [SerializeField]
+    private float jumpDeaccel = 12f;
+    [SerializeField]
+    private float minJumpForce = 6;
+    [SerializeField]
+    private float maxFall = -35;
+    [SerializeField]
+    bool isWalking;
+    bool isInAir = false;
 
+    [SerializeField]
+    bool isPlayer1;
+    [SerializeField]
+    bool isPlayer2;
+    [SerializeField]
+    private GameObject package;
+    [SerializeField]
+    private float pickDistance;
+    [SerializeField]
+    private RaycastHit raycastHit;
+    [SerializeField]
+    private bool isCast;
+    [SerializeField]
+    private RespawnControl rC;
+    [SerializeField]
+    private float raycastDistance = 5.0f;
+    [SerializeField]
+    bool isCarrying;
+    [SerializeField]
+    private Trigger tG;
+    [SerializeField]
+    private GameObject trigger;
+    [SerializeField]
+    private RespawnControl p2rc,p1rc;
 
 
 
@@ -127,12 +176,13 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Move").started += DoMove;
         player.FindAction("Pick").started += DoPick;
         move = player.FindAction("Move");
-        player.FindAction("Jump").started += DoJump;
+        //player.FindAction("Jump").started += DoJump;
         run = player.FindAction("Run");
         player.FindAction("Join").started += DoTalk;
         //dialogue.FindAction("ContinueDialogue").started += DoContinue;
         //cameraLook= player.FindAction("CameraLook");
         //pickControl.action.Enable();
+        jump = player.FindAction("Jump");
         continueControl.action.Enable();
 
         player.Enable();
@@ -146,7 +196,7 @@ public class TestCube : MonoBehaviour
         //player.FindAction("MoveDown").started -= MoveDown;
         //player.FindAction("Pick").started -= DoPick;
         player.FindAction("Pick").started -= DoPick;
-        player.FindAction("Jump").started -= DoJump;
+        //player.FindAction("Jump").started -= DoJump;
         player.Disable();
         player.FindAction("Join").started -= DoTalk;
         continueControl.action.Disable();
@@ -168,7 +218,9 @@ public class TestCube : MonoBehaviour
         //objectGrabbable = Object.FindAnyObjectByType<ObjectGrabbable>();
 
         withinDialogueRange = false;
-
+        package = GameObject.FindGameObjectWithTag("Package");
+        //trigger = GameObject.FindGameObjectWithTag("Trigger");
+        //tG = trigger.GetComponent<Trigger>();
     }
 
     // Update is called once per frame
@@ -178,45 +230,99 @@ public class TestCube : MonoBehaviour
         CheckGrounded();
         SpeedControl();
         ContinueBottonControl();
+        MovementCalcs();
         //CheckCamera();
+        PlayerDetector();
+        ItemDetector();
+        CameraSwitch();
 
-
+      
     }
     private void FixedUpdate()
     {
         if (!isFreeze)
         {
             Move();
+            Jump();
         }
+
 
     }
 
+    private void MovementCalcs()
+    {
+        if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
+        {
+            faceDir = new Vector3 (move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
+            isWalking = true;
+            if (isRunning)
+            {
+                float accel = (maxSpeed / timeToRun);
+                currentSpeed += accel * Time.deltaTime;
+
+            }
+            else
+            {
+                float accel = (maxSpeed / timeToWalk);
+                currentSpeed += accel * Time.deltaTime;
+            }
+
+            
+        }
+        else
+        {
+            float deccel = (-maxSpeed / timeToZero);
+            currentSpeed += deccel * Time.deltaTime;
+            isWalking = false;
+
+        }
+        //Debug.Log(rb.velocity);
+        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
+    }
+
+
+    void CameraSwitch()
+    {
+        if(curSceneName == scene1)
+        {
+            playerCamera.enabled = false;
+        }
+        else if (curSceneName == scene2)
+        {
+            playerCamera.enabled = true;
+        }
+    }
     private void Move()
     {
-        if (curSceneName == scene1)
+        float forceAdd = timeToWalk;
+        if (!isOnCircle)
         {
-            //Debug.Log("Camera: " + curSceneName == scene1);
-            playerCamera.enabled = false;
-            forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
-            forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
+            if (curSceneName == scene1)
+            {              
+                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+            }
+            else if (curSceneName == scene2)
+            {                
+                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+            }
         }
-        else if(curSceneName == scene2)
+        else
         {
-            //Debug.Log("Camera: " + curSceneName == scene2);
-            playerCamera.enabled = true;
-            forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
-            forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
+            //rb.velocity = new Vector3(-(transform.position.x - activeCircle.transform.position.x) * 3 * Time.deltaTime, 0, -(transform.position.z - activeCircle.transform.position.z) * 3 *Time.deltaTime);
         }
+       
 
         //forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
         //forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
         rb.AddForce(forceDirection, ForceMode.Impulse);
         forceDirection = Vector3.zero;
 
-        if (rb.velocity.y < 0f)
-        {
-            rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime * 2;
-        }
+        //if (rb.velocity.y < 0f)
+        //{
+        //    rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime * 2;
+        //}
 
 
         Vector3 horizontalVelocity = rb.velocity;
@@ -235,10 +341,12 @@ public class TestCube : MonoBehaviour
                 }
             }
 
-            rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
-            Debug.Log("maxSpeed =" + maxSpeed);
-        }
+            rb.velocity = horizontalVelocity.normalized * currentSpeed + Vector3.up * rb.velocity.y;
 
+            //rb.velocity = new Vector3((forceDirection.x * currentSpeed) * Time.deltaTime, rb.velocity.y, (forceDirection.z * currentSpeed) * Time.deltaTime);
+            //Debug.Log("maxSpeed =" + maxSpeed);
+          
+        }
 
         LookAt();
     }
@@ -274,27 +382,45 @@ public class TestCube : MonoBehaviour
         //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
         if (objectGrabbable == null)
         {
-            float pickDistance = 10f;
-            if (Physics.Raycast(playerPos.position, playerPos.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
+            if (Physics.Raycast(playerPos.position, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
-
-                if (raycastHit.transform.TryGetComponent(out objectGrabbable))
+           
+                if (isPlayer1)
                 {
-                    //transform the item
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
                     objectGrabbable.Grab(itemContainer);
-
                 }
 
+                if (isPlayer2)
+                {
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                    objectGrabbable.Grab(itemContainer);
+                }
+
+                //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer1)
+                //{
+                //    objectGrabbable.Grab(itemContainer);
+
+                //}
+
+                //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer2)
+                //{
+
+                //    objectGrabbable.Grab(itemContainer);
+                //}
+
             }
+
         }
         else
         {
-            if (this.gameObject.layer == LayerMask.NameToLayer("P1Collider"))
+            if (isPlayer1)
             {
                 objectGrabbable.P1Drop();
+
             }
 
-            if (this.gameObject.layer == LayerMask.NameToLayer("P2Collider"))
+            if (isPlayer2)
             {
                 objectGrabbable.P2Drop();
             }
@@ -302,15 +428,179 @@ public class TestCube : MonoBehaviour
 
         }
 
+    }
+
+
+    void ItemDetector()
+    {
+        if (isPlayer1)
+        {
+            if (p2rc.Player2Die && rC.Player2isCarrying)
+            {
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                p2rc.Player2Die = false;
+
+            }
+            else if (rC.Player1Die && rC.Player2isCarrying)
+            {
+                Debug.Log("Player1die" + rC.Player1Die);
+                objectGrabbable = null;
+                rC.Player1Die = false;
+
+            }
+        } else if (isPlayer2)
+        {
+            if (p1rc.Player1Die && rC.Player1isCarrying)
+            {
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                p1rc.Player1Die = false;
+            }
+            else if (rC.Player2Die && rC.Player1isCarrying)
+            {
+                Debug.Log("Player2die" + rC.Player2Die);
+                objectGrabbable = null;
+                rC.Player2Die = false;
+            }
+        }
+
+        //if (isPlayer2)
+        //{
+        //    if (p1rc.Player1Die)
+        //    {
+        //        objectGrabbable = package.GetComponent<ObjectGrabbable>();
+        //        p1rc.Player1Die = false;
+        //    }
+        //    else if (rC.Player2Die)
+        //    {
+        //        Debug.Log("Player2die" + rC.Player2Die);
+        //        objectGrabbable = null;
+        //        rC.Player2Die = false;
+        //    }
+        //}
+
+
+
+    }
+    void PlayerDetector()
+    {
+        string layerNameToFind1 = "P1Collider";
+        string layerNameToFind2 = "P2Collider";
+        string tagToFind = "FindScript";
+        int layerToFind1 = LayerMask.NameToLayer(layerNameToFind1);
+        int layerToFind2 = LayerMask.NameToLayer(layerNameToFind2);
+
+        if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind1) && !isPlayer1)
+        {
+            isPlayer1 = true;
+        }
+        if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind2) && !isPlayer2)
+        {
+            isPlayer2 = true;
+        }
+       
+        GameObject[] objectsInScene = GameObject.FindObjectsOfType<GameObject>();
+        if (isPlayer1 && p2rc == null)
+        {
+            Debug.Log("Trigger1");
+            foreach (GameObject obj in objectsInScene)
+            {
+                if (obj.layer == layerToFind2)
+                {
+                    Debug.Log("Found GameObject on layer: " + obj.name);
+                    Transform parentTransform = obj.transform;
+
+                    foreach (Transform child in parentTransform)
+                    {
+                        if (child.CompareTag(tagToFind))
+                        {
+                            p2rc = child.gameObject.GetComponent<RespawnControl>();
+                            Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+                        }
+                    }
+                }
+
+            }
+        
+        }
+
+        if (isPlayer2 && p1rc == null)
+        {
+            Debug.Log("Trigger1");
+            foreach (GameObject obj in objectsInScene)
+            {
+
+                if (obj.layer == layerToFind1)
+                {
+                    Debug.Log("Found GameObject on layer: " + obj.name);
+                    Transform parentTransform = obj.transform;
+
+                    foreach (Transform child in parentTransform)
+                    {
+                        if (child.CompareTag(tagToFind))
+                        {
+                            p1rc = child.gameObject.GetComponent<RespawnControl>();
+                            Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+
 
     }
 
     //When player is on the ground and button is pressed, the Jump is triggered
-    void DoJump(InputAction.CallbackContext obj)
+    //void DoJump(InputAction.CallbackContext obj)
+    //{
+    //    if (isGrounded && !isFreeze)
+    //    {
+    //        forceDirection += Vector3.up * jumpForce;
+    //    }
+    //}
+
+    void Jump()
     {
-        if (isGrounded && !isFreeze)
+        if (isGrounded && jump.ReadValue<float>() == 1)
         {
-            forceDirection += Vector3.up * jumpForce;
+            jumpSpeed = jumpForce;
+            isJumping = true;
+
+
+        }
+
+        if (isJumping && jump.ReadValue<float>() == 0 && jumpSpeed <= minJumpForce)
+        {
+            //rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
+            Debug.Log(jumpSpeed);
+            if (jumpSpeed > 0)
+            {
+                jumpSpeed = jumpSpeed / 2;
+            }
+
+            isJumping = false;
+        }
+
+        //apply gravity
+        if (jumpSpeed > maxFall)
+        {
+            jumpSpeed += -jumpDeaccel * Time.deltaTime;
+
+        }
+        else
+        {
+            jumpSpeed = maxFall;
+        }
+
+        //forceDirection += Vector3.up * jumpForce;
+
+        //if we have started to move downwards we are not longer jumping
+        if (jumpSpeed <= 0) isJumping = false;
+        if (isInAir || isJumping)
+        {
+            forceDirection += Vector3.up * jumpSpeed;
         }
     }
 
@@ -334,12 +624,14 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
         {
             isGrounded = true;
-
+            isInAir = false;
+            
             //Debug.Log("isGrounded" + isGrounded);
 
         }
         else
         {
+            isInAir = true;
             isGrounded = false;
             //Debug.Log("isGrounded" + isGrounded);
 
@@ -365,8 +657,8 @@ public class TestCube : MonoBehaviour
             {
                 dR.StartDialogue("BoomerQuest");
                 conversationStart = true;
-                lineView = FindObjectOfType<LineView>();
-                
+
+                //lineView = FindObjectOfType<LineView>();
             }
 
 
@@ -380,8 +672,10 @@ public class TestCube : MonoBehaviour
 
     void ContinueBottonControl()
     {
-        if (continueControl.action.triggered && conversationStart)
+        if (continueControl.action.triggered)
         {
+            Debug.Log("Hello");
+            lineView = FindObjectOfType<LineView>();
             lineView.OnContinueClicked();
         }
     }
@@ -391,6 +685,30 @@ public class TestCube : MonoBehaviour
     {
         SceneManager.LoadScene("PrototypeLevel");
 
+    }
+
+    public bool ReadActionButton()
+    {
+        if (run.ReadValue<float>() == 1) return true;
+        else return false;
+    }
+
+    public void OnSummoningEnter(GameObject circle)
+    {
+        //player can't move unless they let go of running
+        //player is now in the summoning animation
+        //the summoning circle is active
+        //move player towards
+        isOnCircle = true;
+        activeCircle = circle;
+    }
+
+    public void OnSummoningExit()
+    {
+        //player can now move and summoning circle is not active
+        //player is no longer in the summoning animation
+        isOnCircle = false;
+        activeCircle = null;
     }
 
 

@@ -99,12 +99,12 @@ public class ObjectGrabbable : MonoBehaviour
             Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabpo.position, Time.deltaTime * lerpspeed); ;
             rb.MovePosition(newPosition);
 
-            if (newPosition == p1ItemC.transform.position)
+            if (objectGrabpo.position == p1ItemC.transform.position)
             {
                 P1TakePackage = true;
                 P2TakePackage = false;
             }
-            else if (newPosition == p2ItemC.transform.position)
+            else if (objectGrabpo.position == p2ItemC.transform.position)
             {
                 P1TakePackage = false;
                 P2TakePackage = true;
@@ -202,7 +202,7 @@ public class ObjectGrabbable : MonoBehaviour
                 player2 = obj;
                 Debug.Log("Found GameObject on layer: " + obj.name);
 
-                Transform parentTransform = player.transform;
+                Transform parentTransform = player2.transform;
 
                 foreach (Transform child in parentTransform)
                 {
