@@ -430,6 +430,7 @@ public class TestCube : MonoBehaviour
             }
             else if (rC.Player1Die)
             {
+                Debug.Log("Player1die" + rC.Player1Die);
                 objectGrabbable = null;
                 rC.Player1Die = false;
             }
@@ -444,6 +445,7 @@ public class TestCube : MonoBehaviour
             }
             else if (rC.Player2Die)
             {
+                Debug.Log("Player2die" + rC.Player2Die);
                 objectGrabbable = null;
                 rC.Player2Die = false;
             }

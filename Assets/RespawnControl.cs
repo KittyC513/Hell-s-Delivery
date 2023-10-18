@@ -88,23 +88,37 @@ public class RespawnControl : MonoBehaviour
     {
         if(other.gameObject.tag == ("Hazard"))
         {
-           Respawn(respawnPoint);
-           if(Player1isCarrying)
-           {
+            Respawn(respawnPoint);
+            if (isPlayer1)
+            {
+                ScoreCount.instance.AddPointToP1(-1);
+            }
+
+            if (isPlayer2)
+            {
+                ScoreCount.instance.AddPointToP2(-1);
+            }
+
+            if (Player1isCarrying)
+            {
                 objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
                 objectGrabbable.P2TakePackage = true;
                 objectGrabbable.P1TakePackage = false;
                 Player1Die = true;
-           }
-
-           if (Player2isCarrying)
-           {
+                //Debug.Log("Player1Die");
+            } 
+            else if(Player2isCarrying)
+            {
                 objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
                 objectGrabbable.P2TakePackage = false;
                 objectGrabbable.P1TakePackage = true;
                 Player2Die = true;
+                //Debug.Log("Player2Die");
 
             }
+
+
+
 
         } else if(other.tag == "CheckPoint")
         {
