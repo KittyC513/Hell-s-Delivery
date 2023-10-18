@@ -11,9 +11,6 @@ public class ShowDialogue :DialogueViewBase
 {
     private static GameObject LVPlayers;
 
-    public Animator anim;
-    public GameObject babyOnesie;
-
     [SerializeField] DialogueRunner runner;
 
     [Header("Assets"), Tooltip("you can manually assign various assets here if you don't want to use /Resources/ folder")]
@@ -102,20 +99,6 @@ public class ShowDialogue :DialogueViewBase
     public static void PlayerShow()
     {
         LVPlayers.SetActive(true);
-    }
-
-    [YarnCommand("PlayOnesieAppear")]
-    public void PlayOnesieAppear()
-    {
-        babyOnesie.SetActive(true);
-        anim.Play("DemonBabyOnesieAppear");
-    }
-
-
-    [YarnCommand("PlayOnesieDisappear")]
-    public void PlayOnesieDisappear()
-    {
-        anim.Play("DemonBabyOnesieDisappear");
     }
 
     /*[YarnCommand("ShowDevilOnPlayerDeath")]
