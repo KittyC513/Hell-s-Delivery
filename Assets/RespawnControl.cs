@@ -149,7 +149,35 @@ public class RespawnControl : MonoBehaviour
         if (other.gameObject.tag == ("TriggerStart"))
         {
             LevelDialogue.ShowDevilAll();
-            dR.StartDialogue("AllPlayers"); 
+            dR.StartDialogue("StartLevel"); 
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == ("TriggerFirstLevel"))
+        {
+            LevelDialogue.ShowDevilAll();
+            dR.StartDialogue("FirstLevel");
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == ("TriggerSecondLevel"))
+        {
+            LevelDialogue.ShowDevilAll();
+            dR.StartDialogue("SecondLevel");
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == ("TriggerThirdLevel"))
+        {
+            LevelDialogue.ShowDevilAll();
+            dR.StartDialogue("ThirdLevel");
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == ("TriggerEnd"))
+        {
+            LevelDialogue.ShowDevilAll();
+            dR.StartDialogue("EndLevel");
             Destroy(other.gameObject);
         }
     }
