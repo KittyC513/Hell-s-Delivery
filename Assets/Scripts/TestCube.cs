@@ -145,9 +145,14 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float raycastDistance = 5.0f;
     [SerializeField]
-    bool isPlayer1Package;
+    bool isCarrying;
     [SerializeField]
-    bool isPlayer2Package;
+    private Trigger tG;
+    [SerializeField]
+    private GameObject trigger;
+    [SerializeField]
+    private RespawnControl p2rc,p1rc;
+
 
 
     private void Awake()
@@ -214,7 +219,8 @@ public class TestCube : MonoBehaviour
 
         withinDialogueRange = false;
         package = GameObject.FindGameObjectWithTag("Package");
-
+        //trigger = GameObject.FindGameObjectWithTag("Trigger");
+        //tG = trigger.GetComponent<Trigger>();
     }
 
     // Update is called once per frame
@@ -228,6 +234,7 @@ public class TestCube : MonoBehaviour
         //CheckCamera();
         PlayerDetector();
         ItemDetector();
+        CameraSwitch();
 
       
     }
@@ -273,22 +280,30 @@ public class TestCube : MonoBehaviour
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
 
+
+    void CameraSwitch()
+    {
+        if(curSceneName == scene1)
+        {
+            playerCamera.enabled = false;
+        }
+        else if (curSceneName == scene2)
+        {
+            playerCamera.enabled = true;
+        }
+    }
     private void Move()
     {
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
             if (curSceneName == scene1)
-            {
-                //Debug.Log("Camera: " + curSceneName == scene1);
-                playerCamera.enabled = false;
+            {              
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
             else if (curSceneName == scene2)
-            {
-                //Debug.Log("Camera: " + curSceneName == scene2);
-                playerCamera.enabled = true;
+            {                
                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
             }
@@ -365,21 +380,20 @@ public class TestCube : MonoBehaviour
     private void DoPick(InputAction.CallbackContext obj)
     {
         //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
-        if (objectGrabbable == null && !isPlayer1Package && !isPlayer2Package)
+        if (objectGrabbable == null)
         {
             if (Physics.Raycast(playerPos.position, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
 
                 if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer1)
                 {
-                    isPlayer1Package = true;
                     objectGrabbable.Grab(itemContainer);
 
                 }
 
                 if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer2)
                 {
-                    isPlayer2Package = true;
+
                     objectGrabbable.Grab(itemContainer);
                 }
 
@@ -391,13 +405,12 @@ public class TestCube : MonoBehaviour
             if (isPlayer1)
             {
                 objectGrabbable.P1Drop();
-                isPlayer1Package = false;
+
             }
 
             if (isPlayer2)
             {
                 objectGrabbable.P2Drop();
-                isPlayer2Package = false;
             }
             objectGrabbable = null;
 
@@ -408,57 +421,106 @@ public class TestCube : MonoBehaviour
 
     void ItemDetector()
     {
-        if (rC.isDead)
+        if (isPlayer1)
         {
-            if (isPlayer1Package && isPlayer2)
+            if (p2rc.Player2Die)
             {
-                Ray ray = new Ray(playerPos.position, Vector3.up);
-                if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, pickableMask))
-                {
-                    Debug.Log(Physics.Raycast(ray, out hit, raycastDistance));
-                    Debug.Log("gameobject" + hit.transform.TryGetComponent(out objectGrabbable));
-                    if (hit.transform.TryGetComponent(out objectGrabbable))
-                    {
-                        
-                        //objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
-                        rC.isDead = false;
-                        isPlayer1Package = false;
-                        isPlayer2Package = true;
-
-                    }
-                }
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                p2rc.Player2Die = false;
             }
-
-            if (isPlayer2Package && isPlayer1)
+            else if (rC.Player1Die)
             {
-                Ray ray = new Ray(playerPos.position, Vector3.down);
-                if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
-                {
-                    Debug.Log(Physics.Raycast(ray, out hit, raycastDistance));
-                    if (hit.transform.TryGetComponent(out objectGrabbable))
-                    {
-                        //objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
-                        rC.isDead = false;
-                        isPlayer1Package = true;
-                        isPlayer2Package = false;
-                    }
-                }
+                objectGrabbable = null;
+                rC.Player1Die = false;
             }
         }
+
+        if (isPlayer2)
+        {
+            if (p1rc.Player1Die)
+            {
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                p1rc.Player1Die = false;
+            }
+            else if (rC.Player2Die)
+            {
+                objectGrabbable = null;
+                rC.Player2Die = false;
+            }
+        }
+
+
 
     }
     void PlayerDetector()
     {
-        
-        if (this.gameObject.layer == LayerMask.NameToLayer("P1Collider"))
+        string layerNameToFind1 = "P1Collider";
+        string layerNameToFind2 = "P2Collider";
+        string tagToFind = "FindScript";
+        int layerToFind1 = LayerMask.NameToLayer(layerNameToFind1);
+        int layerToFind2 = LayerMask.NameToLayer(layerNameToFind2);
+
+        if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind1) && !isPlayer1)
         {
             isPlayer1 = true;
         }
-        if (this.gameObject.layer == LayerMask.NameToLayer("P2Collider"))
+        if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind2) && !isPlayer2)
         {
             isPlayer2 = true;
         }
-             
+       
+        GameObject[] objectsInScene = GameObject.FindObjectsOfType<GameObject>();
+        if (isPlayer1 && p2rc == null)
+        {
+            Debug.Log("Trigger1");
+            foreach (GameObject obj in objectsInScene)
+            {
+                if (obj.layer == layerToFind2)
+                {
+                    Debug.Log("Found GameObject on layer: " + obj.name);
+                    Transform parentTransform = obj.transform;
+
+                    foreach (Transform child in parentTransform)
+                    {
+                        if (child.CompareTag(tagToFind))
+                        {
+                            p2rc = child.gameObject.GetComponent<RespawnControl>();
+                            Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+                        }
+                    }
+                }
+
+            }
+        
+        }
+
+        if (isPlayer2 && p1rc == null)
+        {
+            Debug.Log("Trigger1");
+            foreach (GameObject obj in objectsInScene)
+            {
+
+                if (obj.layer == layerToFind1)
+                {
+                    Debug.Log("Found GameObject on layer: " + obj.name);
+                    Transform parentTransform = obj.transform;
+
+                    foreach (Transform child in parentTransform)
+                    {
+                        if (child.CompareTag(tagToFind))
+                        {
+                            p1rc = child.gameObject.GetComponent<RespawnControl>();
+                            Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+
+
     }
 
     //When player is on the ground and button is pressed, the Jump is triggered
@@ -566,8 +628,8 @@ public class TestCube : MonoBehaviour
             {
                 dR.StartDialogue("BoomerQuest");
                 conversationStart = true;
-                lineView = FindObjectOfType<LineView>();
-                
+
+                //lineView = FindObjectOfType<LineView>();
             }
 
 
@@ -581,8 +643,10 @@ public class TestCube : MonoBehaviour
 
     void ContinueBottonControl()
     {
-        if (continueControl.action.triggered && conversationStart)
+        if (continueControl.action.triggered)
         {
+            Debug.Log("Hello");
+            lineView = FindObjectOfType<LineView>();
             lineView.OnContinueClicked();
         }
     }

@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 6586379375218265399}
   m_Layer: 15
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: FindScript
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -458,6 +458,13 @@ MonoBehaviour:
   isDead: 0
   objectGrabbable: {fileID: 0}
   package: {fileID: 0}
+  isPlayer1: 0
+  isPlayer2: 0
+  Player1Die: 0
+  Player2Die: 0
+  curSceneName: 
+  Player1isCarrying: 0
+  Player2isCarrying: 0
 --- !u!1 &307637956170343215
 GameObject:
   m_ObjectHideFlags: 0
@@ -3241,6 +3248,14 @@ MonoBehaviour:
   pickDistance: 10
   isCast: 0
   rC: {fileID: 6586379375218265399}
+  raycastDistance: 5
+  isCarrying: 0
+  tG: {fileID: 0}
+  trigger: {fileID: 0}
+  p2: {fileID: 0}
+  p1: {fileID: 0}
+  p2TC: {fileID: 0}
+  p1TC: {fileID: 0}
 --- !u!114 &4895904256865648347
 MonoBehaviour:
   m_ObjectHideFlags: 0

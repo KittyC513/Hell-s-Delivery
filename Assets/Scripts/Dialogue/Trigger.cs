@@ -10,8 +10,12 @@ public class Trigger : MonoBehaviour
     private LayerMask layer1;
     [SerializeField]
     private LayerMask layer2;
+    [SerializeField]
+    public bool conversationStart;
 
-    public bool isTriggered, canDestroy;
+    [SerializeField]
+    private List<Collider> colliderInTriggerZone = new List<Collider>();
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,34 +25,26 @@ public class Trigger : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if( other.gameObject.layer ==layer1)
+        if (!colliderInTriggerZone.Contains(other))
         {
-            Debug.Log("Other gameobject1 = " + other.gameObject);
-            //dR.StartDialogue("HubStart");
-            isTriggered = true;
+            if((other.gameObject.layer == layer1))
+            {
+                colliderInTriggerZone.Add(other);
+            }
+            if ((other.gameObject.layer == layer2))
+            {
+                dR.StartDialogue("HubStart");
+                conversationStart = true;
+                Destroy(this.gameObject);
+            }
         }
 
-        if (other.gameObject.layer == layer2 && isTriggered)
-        {
-            Debug.Log("Other gameobject2 = " + other.gameObject);
-            dR.StartDialogue("HubStart");
-            canDestroy = true;
-
-        }
     }
 
-    public void DestroyThis()
-    {
-        if (canDestroy)
-        {
-            Destroy(this.gameObject);
-        }
-    }
+
 }
