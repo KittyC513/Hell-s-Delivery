@@ -12,7 +12,7 @@ public class RespawnControl : MonoBehaviour
     private GameObject player;
 
     [SerializeField]
-    private bool isDead;
+    public bool isDead;
 
     [SerializeField]
     private ObjectGrabbable objectGrabbable;

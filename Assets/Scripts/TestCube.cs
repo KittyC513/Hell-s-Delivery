@@ -126,8 +126,28 @@ public class TestCube : MonoBehaviour
     private float maxFall = -35;
     [SerializeField]
     bool isWalking;
-    bool isInAir = false; 
+    bool isInAir = false;
 
+    [SerializeField]
+    bool isPlayer1;
+    [SerializeField]
+    bool isPlayer2;
+    [SerializeField]
+    private GameObject package;
+    [SerializeField]
+    private float pickDistance;
+    [SerializeField]
+    private RaycastHit raycastHit;
+    [SerializeField]
+    private bool isCast;
+    [SerializeField]
+    private RespawnControl rC;
+    [SerializeField]
+    private float raycastDistance = 5.0f;
+    [SerializeField]
+    bool isPlayer1Package;
+    [SerializeField]
+    bool isPlayer2Package;
 
 
     private void Awake()
@@ -193,6 +213,7 @@ public class TestCube : MonoBehaviour
         //objectGrabbable = Object.FindAnyObjectByType<ObjectGrabbable>();
 
         withinDialogueRange = false;
+        package = GameObject.FindGameObjectWithTag("Package");
 
     }
 
@@ -205,6 +226,8 @@ public class TestCube : MonoBehaviour
         ContinueBottonControl();
         MovementCalcs();
         //CheckCamera();
+        PlayerDetector();
+        ItemDetector();
 
       
     }
@@ -342,37 +365,100 @@ public class TestCube : MonoBehaviour
     private void DoPick(InputAction.CallbackContext obj)
     {
         //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
-        if (objectGrabbable == null)
+        if (objectGrabbable == null && !isPlayer1Package && !isPlayer2Package)
         {
-            float pickDistance = 10f;
-            if (Physics.Raycast(playerPos.position, playerPos.forward, out RaycastHit raycastHit, pickDistance, pickableMask))
+            if (Physics.Raycast(playerPos.position, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
 
-                if (raycastHit.transform.TryGetComponent(out objectGrabbable))
+                if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer1)
                 {
-                    //transform the item
+                    isPlayer1Package = true;
                     objectGrabbable.Grab(itemContainer);
 
                 }
 
+                if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer2)
+                {
+                    isPlayer2Package = true;
+                    objectGrabbable.Grab(itemContainer);
+                }
+
             }
+
         }
         else
         {
-            if (this.gameObject.layer == LayerMask.NameToLayer("P1Collider"))
+            if (isPlayer1)
             {
                 objectGrabbable.P1Drop();
+                isPlayer1Package = false;
             }
 
-            if (this.gameObject.layer == LayerMask.NameToLayer("P2Collider"))
+            if (isPlayer2)
             {
                 objectGrabbable.P2Drop();
+                isPlayer2Package = false;
             }
             objectGrabbable = null;
 
         }
 
+    }
 
+
+    void ItemDetector()
+    {
+        if (rC.isDead)
+        {
+            if (isPlayer1Package && isPlayer2)
+            {
+                Ray ray = new Ray(playerPos.position, Vector3.up);
+                if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, pickableMask))
+                {
+                    Debug.Log(Physics.Raycast(ray, out hit, raycastDistance));
+                    Debug.Log("gameobject" + hit.transform.TryGetComponent(out objectGrabbable));
+                    if (hit.transform.TryGetComponent(out objectGrabbable))
+                    {
+                        
+                        //objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
+                        rC.isDead = false;
+                        isPlayer1Package = false;
+                        isPlayer2Package = true;
+
+                    }
+                }
+            }
+
+            if (isPlayer2Package && isPlayer1)
+            {
+                Ray ray = new Ray(playerPos.position, Vector3.down);
+                if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
+                {
+                    Debug.Log(Physics.Raycast(ray, out hit, raycastDistance));
+                    if (hit.transform.TryGetComponent(out objectGrabbable))
+                    {
+                        //objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
+                        rC.isDead = false;
+                        isPlayer1Package = true;
+                        isPlayer2Package = false;
+                    }
+                }
+            }
+        }
+
+    }
+    void PlayerDetector()
+    {
+        
+        if (this.gameObject.layer == LayerMask.NameToLayer("P1Collider"))
+        {
+            isPlayer1 = true;
+        }
+        if (this.gameObject.layer == LayerMask.NameToLayer("P2Collider"))
+        {
+            isPlayer2 = true;
+        }
+             
     }
 
     //When player is on the ground and button is pressed, the Jump is triggered
