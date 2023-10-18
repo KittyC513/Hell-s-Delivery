@@ -104,10 +104,12 @@ public class TestCube : MonoBehaviour
     string curSceneName;
     string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
+    string scene3 = "HubEnd";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
     bool conversationStart;
+    bool hubStart, hubEnd;
     [SerializeField]
     public bool isFreeze;
     [SerializeField]
@@ -283,7 +285,7 @@ public class TestCube : MonoBehaviour
 
     void CameraSwitch()
     {
-        if(curSceneName == scene1)
+        if(curSceneName == scene1 || curSceneName == scene3)
         {
             playerCamera.enabled = false;
         }
@@ -644,7 +646,12 @@ public class TestCube : MonoBehaviour
         if (other.gameObject.tag == "NPC1")
         {
             withinDialogueRange = true;
+            hubStart = true;
                     
+        } else if (other.gameObject.tag == "NPC2")
+        {
+            withinDialogueRange = true;
+            hubEnd = true;
         }
     }
 
@@ -653,12 +660,22 @@ public class TestCube : MonoBehaviour
     {
         if (withinDialogueRange)
         {
-            if (!conversationStart)
+            if (!conversationStart && hubStart == true)
             {
                 dR.StartDialogue("BoomerQuest");
                 conversationStart = true;
 
-                //lineView = FindObjectOfType<LineView>();
+                lineView = FindObjectOfType<LineView>();
+                withinDialogueRange = false;
+            }
+
+            if (!conversationStart && hubEnd == true)
+            {
+                dR.StartDialogue("HubEnd");
+                conversationStart = true;
+
+                lineView = FindObjectOfType<LineView>();
+                withinDialogueRange = false;
             }
 
 
