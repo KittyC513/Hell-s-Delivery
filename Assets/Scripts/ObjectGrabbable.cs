@@ -202,7 +202,7 @@ public class ObjectGrabbable : MonoBehaviour
                 player2 = obj;
                 Debug.Log("Found GameObject on layer: " + obj.name);
 
-                Transform parentTransform = player.transform;
+                Transform parentTransform = player2.transform;
 
                 foreach (Transform child in parentTransform)
                 {
