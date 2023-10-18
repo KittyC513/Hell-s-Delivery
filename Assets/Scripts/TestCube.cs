@@ -8,6 +8,7 @@ using UnityEngine.ProBuilder.Shapes;
 using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
 using Yarn.Unity;
+using UnityEditor.SearchService;
 
 public class TestCube : MonoBehaviour
 {
@@ -113,7 +114,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool isFreeze;
     [SerializeField]
-    Scene currentScene;
+    UnityEngine.SceneManagement.Scene currentScene;
     [SerializeField]
     private GameObject playerObj;
     [SerializeField]
@@ -285,11 +286,12 @@ public class TestCube : MonoBehaviour
 
     void CameraSwitch()
     {
-        if(curSceneName == scene1 || curSceneName == scene3)
+        if(curSceneName == scene1 || curSceneName == scene3 && curSceneName != scene2)
         {
             playerCamera.enabled = false;
+            
         }
-        else if (curSceneName == scene2)
+        else if (curSceneName == scene2 && curSceneName != scene1 || curSceneName != scene3)
         {
             playerCamera.enabled = true;
         }
@@ -299,7 +301,7 @@ public class TestCube : MonoBehaviour
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
-            if (curSceneName == scene1)
+            if (curSceneName == scene1 || curSceneName == scene3)
             {              
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
