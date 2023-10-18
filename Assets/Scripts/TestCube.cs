@@ -384,18 +384,30 @@ public class TestCube : MonoBehaviour
         {
             if (Physics.Raycast(playerPos.position, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
-
-                if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer1)
+           
+                if (isPlayer1)
                 {
-                    objectGrabbable.Grab(itemContainer);
-
-                }
-
-                if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer2)
-                {
-
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
                     objectGrabbable.Grab(itemContainer);
                 }
+
+                if (isPlayer2)
+                {
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                    objectGrabbable.Grab(itemContainer);
+                }
+
+                //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer1)
+                //{
+                //    objectGrabbable.Grab(itemContainer);
+
+                //}
+
+                //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer2)
+                //{
+
+                //    objectGrabbable.Grab(itemContainer);
+                //}
 
             }
 
@@ -423,33 +435,48 @@ public class TestCube : MonoBehaviour
     {
         if (isPlayer1)
         {
-            if (p2rc.Player2Die)
+            if (p2rc.Player2Die && rC.Player2isCarrying)
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 p2rc.Player2Die = false;
+
             }
-            else if (rC.Player1Die)
+            else if (rC.Player1Die && rC.Player2isCarrying)
             {
                 Debug.Log("Player1die" + rC.Player1Die);
                 objectGrabbable = null;
                 rC.Player1Die = false;
-            }
-        }
 
-        if (isPlayer2)
+            }
+        } else if (isPlayer2)
         {
-            if (p1rc.Player1Die)
+            if (p1rc.Player1Die && rC.Player1isCarrying)
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 p1rc.Player1Die = false;
             }
-            else if (rC.Player2Die)
+            else if (rC.Player2Die && rC.Player1isCarrying)
             {
                 Debug.Log("Player2die" + rC.Player2Die);
                 objectGrabbable = null;
                 rC.Player2Die = false;
             }
         }
+
+        //if (isPlayer2)
+        //{
+        //    if (p1rc.Player1Die)
+        //    {
+        //        objectGrabbable = package.GetComponent<ObjectGrabbable>();
+        //        p1rc.Player1Die = false;
+        //    }
+        //    else if (rC.Player2Die)
+        //    {
+        //        Debug.Log("Player2die" + rC.Player2Die);
+        //        objectGrabbable = null;
+        //        rC.Player2Die = false;
+        //    }
+        //}
 
 
 
