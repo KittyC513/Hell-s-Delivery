@@ -21,20 +21,22 @@ public class SummoningCircle : MonoBehaviour
     private UnityEvent onSummon;
     [SerializeField]
     private UnityEvent onExit;
+    [SerializeField]
+    private bool playerIsFull;
 
     private bool summoningActive = false;
 
 
     private void Start()
     {
-        players = new TestCube[4];
+        players = new TestCube[2];
     }
 
     private void Update()
     {
         //detect the player
         //if the player is detected read its run input, if the run input is active we want to set the player to a hold button state
-        DetectPlayer();
+
         //if we detect the player in our circle
         for (int i = 0; i < players.Length - 1; i++)
         {
@@ -72,6 +74,10 @@ public class SummoningCircle : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        DetectPlayer();
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
@@ -80,31 +86,60 @@ public class SummoningCircle : MonoBehaviour
 
     private void DetectPlayer()
     {
+       
         //check a circular area for a collider with the player layermask
         Collider[] playerCollider = Physics.OverlapSphere(origin.position, radius, playerMask);
 
-        //if we detect a player grab our player object and script for use otherwise exit the player from their summoning state if they are in it and get rid of our player reference
+
         if (playerCollider.Length > 0)
         {
-            Debug.Log(playerCollider.Length);
-            for (int i = 0; i < playerCollider.Length - 1; i++)
+            
+            for (int i = 0; i < playerCollider.Length; i++)
             {
                 GameObject playerObj = playerCollider[i].gameObject;
                 players[i] = playerObj.GetComponent<TestCube>();
-                
+ 
             }
         }
-        else
+        else if(playerCollider.Length <= 0)
         {
             for (int i = 0; i < players.Length - 1; i++)
             {
                 if (players[i] != null)
                 {
+                    //Debug.Log("player! =" + players[i]);
                     players[i].OnSummoningExit();
                 }
                 players[i] = null;
+                Debug.Log("player =" + players[i]);
             }
+       
         }
+        
+            //if we detect a player grab our player object and script for use otherwise exit the player from their summoning state if they are in it and get rid of our player reference
+        //    if (playerCollider.Length > 0)
+        //{
+        //    Debug.Log(playerCollider.Length);
+        //    for (int i = 0; i < playerCollider.Length; i++)
+        //    {
+        //        GameObject playerObj = playerCollider[i].gameObject;
+        //        players[i] = playerObj.GetComponent<TestCube>();
+                
+        //    }
+        //}
+        //else
+        //{
+        //    for (int i = 0; i < players.Length - 1; i++)
+        //    {
+        //        if (players[i] != null)
+        //        {
+        //            Debug.Log("player! =" + players[i]);
+        //            players[i].OnSummoningExit();
+        //        }
+        //        players[i] = null;
+        //        Debug.Log("player =" + players[i]);
+        //    }
+        //}
        
         //check if we are still colliding with target player
         //if we aren't get rid of the reference
