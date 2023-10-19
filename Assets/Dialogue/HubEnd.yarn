@@ -3,27 +3,31 @@ tags:
 ---
 <<PlayerShow>>
 <<Act Boomer Boomer_Demon_Rough_Sketch_Flipped 1.25 center white>>
-<<Act Player1 Shmonk 0.75 center blue>>
-<<Act Player2 Shmink 0.50 center red>>
+<<Act Player1 ShmonkPNG 0.75 center blue>>
+<<Act Player2 ShminkPNG 0.50 center red>>
 
 Boomer: Oh! back so soon! I barely got up!
 Boomer: Has my package been delivered?
 
-<<Act ShminkHappy>>
+<<Hide ShminkPNG>>
+<<Act Player2 ShminkHappy>>
 Player2: Aye-aye, captain.
+<<Act Player2 ShminkPNG>>
 
-<<Act ShmonkAnnoyed>>
+<<Hide ShmonkPNG>>
+<<Act Player1 ShmonkAnnoyed 0.75 center blue>>
 Player1: *scoff*
-<<Act ShmonkPNG>>
-<<Act ShminkPNG>>
+<<Act Player1 ShmonkPNG>>
 
-Boomer: Splendid. Thank you very much. The quality of you service is quite impressive!
+Boomer: Splendid. Thank you very much. The quality of your service is quite impressive!
 Boomer: Postal services in Hell are almost on par with stoning.
 Player1: What the...?
 
-<<Act ShminkHappy>>
+<<Hide ShminkPNG>>
+<<Act Player2 ShminkHappy>>
 Player2: Thank you for your kind words.
 Player2: We would appreciate if you could write a positive review on Screech for us.
+<<Act Player2 ShminkPNG>>
 
 <<Shake Boomer>>
 
@@ -32,15 +36,15 @@ Boomer: Is it that time of the decade already?
 Boomer: I'm sorry to cut my time here short, dears. Please take care!
 
 <<Move Boomer 2 center 0.1>>
-<<Flip Shmink>>
-<<Move Shmink 1.25 center 0.1>>
+<<Flip ShminkPNG>>
+<<Move ShminkPNG 1.25 center 0.1>>
 
 Player1: Nice work, baldie.
 
-<<Act ShminkAnnoyed>>
+//<<Act ShminkAnnoyed>>
 Player2: Why are you like this?
 Player1: Hehehe...
 
-<<Move Shmink 2 center 0.1>>
-<<Move Shmonk -1 center 0.1>>
+<<Move ShminkPNG 2 center 0.1>>
+<<Move ShmonkPNG -1 center 0.1>>
 ===
