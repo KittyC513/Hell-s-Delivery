@@ -20,7 +20,7 @@ public class NPCTrigger : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == false)
         {
-            dialogueRunner.StartDialogue("HubStart");
+            dialogueRunner.StartDialogue("HubEnd");
             hasTalkedBefore = true;
         }
         else
