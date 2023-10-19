@@ -106,7 +106,7 @@ public class OnTouchButton : MonoBehaviour
             numOfPlayer = 2;
         }
 
-        //Debug.Log("numOfPlayer = " + numOfPlayer);
+        //Debug.Log("numOfPlayer = " + numOfPlayer);itgoi
         //Debug.Log("playerCollider = " + playerCollider.Length);
 
         if (numOfPlayer <= playerCollider.Length)
