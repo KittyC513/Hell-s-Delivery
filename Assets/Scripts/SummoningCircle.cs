@@ -58,12 +58,21 @@ public class SummoningCircle : MonoBehaviour
                 if (players[i].ReadActionButton() && !summoningActive)
                 {
                     //activate summoning for this script at the player script
-                    summoningActive = true;
-                    players[i].OnSummoningEnter(this.gameObject);
+                    summoningActive = true;         
                     activePlayer = players[i];
+                    players[i].OnSummoningEnter(this.gameObject);
                     matChange.material = onPush;
+              
                 }
 
+            }
+            else
+            {
+                summoningActive = false;
+                activePlayer.OnSummoningExit();
+                onExit.Invoke();
+                activePlayer = null;
+                matChange.material = Default;
             }
 
         }
@@ -78,6 +87,17 @@ public class SummoningCircle : MonoBehaviour
             activePlayer = null;
             matChange.material = Default;
         }
+
+        //if(numOfPlayer == 0)
+        //{
+        //    summoningActive = false;
+        //    activePlayer.OnSummoningExit();
+        //    onExit.Invoke();
+        //    activePlayer = null;
+        //    matChange.material = Default;
+        //}
+
+
 
 
         //if summoning is active run functions
@@ -144,6 +164,7 @@ public class SummoningCircle : MonoBehaviour
                     //Debug.Log("player! =" + players[i]);
                 }
                 players[i] = null;
+                //activePlayer = null;
 
                 //Debug.Log("Number = " + i);
                 //if (players[i] != null)
@@ -154,6 +175,7 @@ public class SummoningCircle : MonoBehaviour
                 //players[i] = null;
             }
         }
+     
     }
 }
 
