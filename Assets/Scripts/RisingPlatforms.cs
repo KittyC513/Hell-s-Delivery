@@ -9,7 +9,7 @@ public class RisingPlatforms : MonoBehaviour
     private List<GameObject> platforms;
     [SerializeField]
     private GameObject platformParent;
-    private bool active = false;
+    public bool active = false;
 
     [SerializeField]
     private float riseDuration = 3;

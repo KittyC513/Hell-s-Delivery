@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Yarn.Unity;
 
 public class RespawnControl : MonoBehaviour
 {
@@ -37,7 +38,14 @@ public class RespawnControl : MonoBehaviour
     [SerializeField]
     public bool Player2isCarrying;
 
+    public DialogueRunner dR;
 
+    List<string> nodeNames = new List<string>
+    {
+        "MeantToDoThat",
+        "GottaHurt",
+        "Yikes"
+    };
 
     private void Start()
     {
@@ -45,7 +53,7 @@ public class RespawnControl : MonoBehaviour
         curSceneName = currentScene.name;
 
         respawnPoint = this.transform.position;
-
+        dR = Object.FindAnyObjectByType<DialogueRunner>();
 
     }
 
@@ -86,17 +94,31 @@ public class RespawnControl : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == ("Hazard"))
+        if (other.gameObject.tag == ("Hazard"))
         {
             Respawn(respawnPoint);
             if (isPlayer1)
             {
                 ScoreCount.instance.AddPointToP1(-1);
+                LevelDialogue.ShowDevilPlayer2();
+                dR.Stop();
+                PlayRandomDialogue();
+            }
+            else
+            {
+                dR.Stop();
             }
 
             if (isPlayer2)
             {
                 ScoreCount.instance.AddPointToP2(-1);
+                LevelDialogue.ShowDevilPlayer1();
+                dR.Stop();
+                PlayRandomDialogue();
+            }
+            else
+            {
+                dR.Stop();
             }
 
             if (Player1isCarrying)
@@ -106,8 +128,8 @@ public class RespawnControl : MonoBehaviour
                 objectGrabbable.P1TakePackage = false;
                 Player1Die = true;
                 //Debug.Log("Player1Die");
-            } 
-            else if(Player2isCarrying)
+            }
+            else if (Player2isCarrying)
             {
                 objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
                 objectGrabbable.P2TakePackage = false;
@@ -116,14 +138,57 @@ public class RespawnControl : MonoBehaviour
                 //Debug.Log("Player2Die");
 
             }
+            else if (other.tag == "CheckPoint")
+            {
+                respawnPoint = other.transform.position;
+            }
 
-
-
-
-        } else if(other.tag == "CheckPoint")
-        {
-            respawnPoint = other.transform.position;
+ 
         }
+
+        if (other.gameObject.tag == ("TriggerStart"))
+        {
+            LevelDialogue.ShowDevilAll();
+            dR.StartDialogue("StartLevel"); 
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == ("TriggerFirstLevel"))
+        {
+            LevelDialogue.ShowDevilAll();
+            dR.StartDialogue("FirstLevel");
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == ("TriggerSecondLevel"))
+        {
+            LevelDialogue.ShowDevilAll();
+            dR.StartDialogue("SecondLevel");
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == ("TriggerThirdLevel"))
+        {
+            LevelDialogue.ShowDevilAll();
+            dR.StartDialogue("ThirdLevel");
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == ("TriggerEnd"))
+        {
+            LevelDialogue.ShowDevilAll();
+            dR.StartDialogue("EndLevel");
+            Destroy(other.gameObject);
+        }
+    }
+
+    
+
+    public void PlayRandomDialogue()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(nodeNames.Count);
+        dR.StartDialogue(nodeNames[index]);
     }
 
 }
