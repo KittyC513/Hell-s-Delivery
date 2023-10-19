@@ -22,11 +22,14 @@ public class SummoningCircle : MonoBehaviour
     [SerializeField]
     private UnityEvent onExit;
     [SerializeField]
-    private bool playerIsFull;
+    private bool hasPlayer;
     [SerializeField]
     private bool summoningActive = false;
     [SerializeField]
     private Collider[] playerCollider;
+    [SerializeField]
+    private int numOfPlayer;
+
 
 
     private void Start()
@@ -36,6 +39,7 @@ public class SummoningCircle : MonoBehaviour
 
     private void Update()
     {
+        DetectPlayer();
         //detect the player
         //if the player is detected read its run input, if the run input is active we want to set the player to a hold button state
 
@@ -78,7 +82,7 @@ public class SummoningCircle : MonoBehaviour
 
     private void FixedUpdate()
     {
-        DetectPlayer();
+
     }
     private void OnDrawGizmosSelected()
     {
@@ -90,27 +94,57 @@ public class SummoningCircle : MonoBehaviour
     {
         playerCollider = Physics.OverlapSphere(origin.position, radius, playerMask);
 
-        if (playerCollider.Length > 0)
+        if (players[0] == null && players[0] == null)
         {
+            numOfPlayer = 0;
+        }
+        else if (players[0] == null && players[0] != null)
+        {
+            numOfPlayer = 1;
+        }
+        else if (players[0] != null && players[0] == null)
+        {
+            numOfPlayer = 1;
+        } 
+        else if(players[0] != null && players[0] != null)
+        {
+            numOfPlayer = 2;
+        }
 
+        Debug.Log("numOfPlayer = " + numOfPlayer);
+        Debug.Log("playerCollider = " + playerCollider.Length);
+
+        if (numOfPlayer <= playerCollider.Length)
+        {
+  
             for (int i = 0; i < playerCollider.Length; i++)
             {
                 GameObject playerObj = playerCollider[i].gameObject;
-                players[i] = playerObj.GetComponent<TestCube>();
+                players[i] = playerObj.GetComponent<TestCube>();   
 
             }
+
+
         }
-        else if (playerCollider.Length <= 0)
+        else if (numOfPlayer > playerCollider.Length)
         {
             for (int i = 0; i < players.Length; i++)
             {
+
                 if (players[i] != null)
                 {
-                    //Debug.Log("player! =" + players[i]);
                     players[i].OnSummoningExit();
+                    //Debug.Log("player! =" + players[i]);
                 }
                 players[i] = null;
-                Debug.Log("player =" + players[i]);
+
+                //Debug.Log("Number = " + i);
+                //if (players[i] != null)
+                //{
+                //    Debug.Log("player! =" + players[i]);
+                //    players[i].OnSummoningExit();
+                //}
+                //players[i] = null;
             }
         }
     }
