@@ -38,6 +38,8 @@ public class TestCube : MonoBehaviour
 
     private Vector3 forceDirection = Vector3.zero;
 
+    [SerializeField]
+    private Animator playerAnimator;
 
     private Rigidbody rb;
     [SerializeField]
@@ -267,6 +269,7 @@ public class TestCube : MonoBehaviour
 
     private void MovementCalcs()
     {
+        playerAnimator.SetFloat("speed", currentSpeed);
         if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
         {
             faceDir = new Vector3 (move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
