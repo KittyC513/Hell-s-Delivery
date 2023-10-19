@@ -49,15 +49,9 @@ public class OnTouchButton : MonoBehaviour
             //and just a double check that we have a player script attached to our player
             if (players[i] != null)
             {
-                //if the player presses the action button (run)
-                //if (players[i].ReadActionButton() && !summoningActive)
-                //{
-                    //activate summoning for this script at the player script
+                    //activate summoning
                     summoningActive = true;
-                    //players[i].OnSummoningEnter(this.gameObject);
                     activePlayer = players[i];
-                //}
-
             }
 
         }
@@ -72,7 +66,7 @@ public class OnTouchButton : MonoBehaviour
             activePlayer = null;
         }
 
-        Debug.Log(summoningActive);
+        //Debug.Log(summoningActive);
 
         //if summoning is active run functions
         if (summoningActive)
@@ -112,8 +106,8 @@ public class OnTouchButton : MonoBehaviour
             numOfPlayer = 2;
         }
 
-        Debug.Log("numOfPlayer = " + numOfPlayer);
-        Debug.Log("playerCollider = " + playerCollider.Length);
+        //Debug.Log("numOfPlayer = " + numOfPlayer);
+        //Debug.Log("playerCollider = " + playerCollider.Length);
 
         if (numOfPlayer <= playerCollider.Length)
         {

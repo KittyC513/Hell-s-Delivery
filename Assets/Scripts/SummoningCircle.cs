@@ -111,8 +111,8 @@ public class SummoningCircle : MonoBehaviour
             numOfPlayer = 2;
         }
 
-        Debug.Log("numOfPlayer = " + numOfPlayer);
-        Debug.Log("playerCollider = " + playerCollider.Length);
+       // Debug.Log("numOfPlayer = " + numOfPlayer);
+       // Debug.Log("playerCollider = " + playerCollider.Length);
 
         if (numOfPlayer <= playerCollider.Length)
         {
