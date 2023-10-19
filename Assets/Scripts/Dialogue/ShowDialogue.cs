@@ -101,6 +101,8 @@ public class ShowDialogue :DialogueViewBase
         LVPlayers.SetActive(true);
     }
 
+ 
+
     /*[YarnCommand("ShowDevilOnPlayerDeath")]
     public static void Show()
     {
@@ -161,9 +163,8 @@ public class ShowDialogue :DialogueViewBase
                 actorColor = actors[actorName].actorColor;
             }
             newActor.rectTransform.anchoredPosition = newPos;
-            // clean-up
-            Destroy(actors[actorName].gameObject);
-            actors.Remove(actorName);
+            //clean - up
+            actors[actorName].gameObject.SetActive(false);
             actors.Remove(actorName);
         }
 
@@ -503,16 +504,17 @@ public class ShowDialogue :DialogueViewBase
                 Vector3 regularScalePreserveXFlip = new Vector3(Mathf.Sign(spr.transform.localScale.x), 1f, 1f);
                 if (spr != highlightedSprite)
                 { // set back to normal
+                    //Debug.Log("Name" + spr);
                     spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip, 1f);
                     spr.color = Color.Lerp(spr.color, defaultTint, 1f);
-                    Debug.Log("Base" + spr.color);
+                    //Debug.Log("Base" + spr.color);
                 }
                 else
                 { // a little bit bigger / brighter
                     spr.transform.localScale = Vector3.MoveTowards(spr.transform.localScale, regularScalePreserveXFlip * 1.1f,1f);
                     spr.color = Color.Lerp(spr.color, highlightTint, 1f);
-                    Debug.Log("Hightlight" + spr.color);
-                    spr.transform.SetAsLastSibling();
+                    //Debug.Log("Hightlight" + spr);
+                    //spr.transform.SetAsLastSibling();
                 }
             }
             yield return 0;
@@ -558,6 +560,7 @@ public class ShowDialogue :DialogueViewBase
         sprites.Add(newSpriteObject);
         newSpriteObject.name = spriteName;
         newSpriteObject.sprite = FetchAsset<Sprite>(spriteName);
+        Debug.Log("AddSprites =" + newSpriteObject);
         newSpriteObject.SetNativeSize();
         newSpriteObject.rectTransform.anchoredPosition = Vector2.Scale(position, screenSize);
         return newSpriteObject;

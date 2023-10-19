@@ -7,55 +7,68 @@ position: -186,56
 <<Act Player2 ShminkPNG 1.25 center red>>
 <<Act Devil TheDevil 5 center red>>
 
+<<Hide ShmonkPNG>>
+<<Act Player1 ShmonkHappy 0.75 center blue>>
 Player1: Hehehe... I know you only wear that hat because you're bald. 
 Player1: I can count with all zero of my fingers how many strands of hair you have.
+<<Act Player1 ShmonkPNG>>
 
-<<Act ShminkAnnoyed>>
+<<Hide ShminkPNG>>
+<<Act Player2 ShminkAnnoyed 1.25 center red>>
 Player2: *Gasp!* First of all, I have a solid three strands!
+<<Act Player2 ShminkPNG>>
 
-<<Act ShmonkHappy>>
+<<Hide ShmonkPNG>>
+<<Act Player1 ShmonkHappy 0.75 center blue>>
 Player1: I wouldn't be surprised if your lack of hair is what landed you in Hell. 
 Player1: Manslaughter by blinding drivers with your bald head.
+<<Act Player1 ShmonkPNG>>
 
-<<Act ShminkAngry>>
+<<Hide ShminkPNG>>
+<<Act Player2 ShminkAngry 1.25 center red>>
 Player2: There's no way you weren't a bully in your previous life.
-Player1: Just your bully. Comes with dental coverage and a pension plan, baby.
+<<Act Player2 ShminkPNG>>
 
-<<Act ShminkPNG>>
-<<Act ShmonkPNG>>
+Player1: Just your bully. Comes with dental coverage and a pension plan, baby.
 
 Devil: You know what else comes with dental coverage and a pension plan?
 <<Move TheDevil 1.25 center 0.1>>
 <<Move ShminkPNG 0.50 center 0.1>>
-<<Flip ShminkPNG>>
 
 Devil: Kekeke...
 Player2: GAH!
 Devil: Your actual jobs, my little delivery demons. Keke.
 
-<<Act ShmonkAnnoyed>>
+<<Hide ShmonkPNG>>
+<<Act Player1 ShmonkAnnoyed 0.75 center blue>>
 Player1: ...Wait. No, it doesn't.
+<<Act Player1 ShmonkPNG>>
+
 Devil: You demons better get off your tails and start delivering.
 Devil: You already have your first client at the receptionist desk over there. Keke.
 
-<<Act ShmonkPNG>>
 Player1: And what's it to you if we don't do it?
 Devil: Tell you what. Whoever can successfully deliver the most packages will receive a promotion.
 Player2: !!!
 Devil: I am only expecting positive reviews on Yelp. Keke.
 
 <<Move TheDevil 5 center 0.1>>
-<<Move Shmink 1.25 center 0.1>>
-<<Flip Shmink>>
+<<Move ShminkPNG 1.25 center 0.1>>
+
 <<wait  0.5>>
 
+<<Hide ShminkPNG>>
+<<Act Player2 ShminkHappy 1.25 center red>>
 Player2: Off to work then!
+<<Act Player2 ShminkPNG>>
 
-<<Act ShmonkAnnoyed>>
+<<Hide ShmonkPNG>>
+<<Act Player1 ShmonkAnnoyed 0.75 center blue>>
 Player1: Ugh.
+<<Act Player1 ShmonkPNG>>
 
-<<Move Shmink 2 center 0.1>>
-<<Move Shmonk -1 center 0.1>>
-<<Hide Shmink>>
-<<Hide Shmonk>>
+<<Move ShminkPNG 2 center 0.1>>
+<<Move ShmonkPNG -1 center 0.1>>
+<<Hide ShminkPNG>>
+<<Hide ShmonkPNG>>
 ===

@@ -3,12 +3,21 @@ tags:
 ---
 <<PlayerShow>>
 <<Act Boomer Boomer_Demon_Rough_Sketch_Flipped 1.25 center white>>
-<<Act Player1 Shmonk 0.75 center blue>>
-<<Act Player2 Shmink 0.50 center red>>
+<<Act Player1 ShmonkPNG 0.75 center blue>>
+<<Act Player2 ShminkPNG 0.50 center red>>
 
 Boomer: Oh, thank goodness! A demon my age.
+
+<<Hide ShminkPNG>>
+<<Act Player2 ShminkAngry 0.50 center red>>
 Player2: Pardon?!
+<<Act Player2 ShminkPNG>>
+
+<<Hide ShmonkPNG>>
+<<Act Player1 ShmonkHappy 0.75 center blue>>
 Player1: Hehehe...
+<<Act Player1 ShmonkPNG>>
+
 Boomer: Now that you're here, I need you two dearies to deliver this for me.
 
 //Show the onesie, then make it disappear
@@ -24,15 +33,21 @@ Boomer: I made this for my 23rd generation newborn grandchild...
 Boomer: from the hairs found back at my hell manor.
 Boomer: Ah, some I found on the streets of the seventh circle.
 Boomer: And some back at the bathouse for Demonic Archaics--
+
+<<Hide ShmonkPNG>>
+<<Act Player1 ShmonkAnnoyed 0.75 center blue>>
 Player1: Okay, we got it grandpa.
+<<Act Player1 ShmonkPNG>>
+
 Boomer: It's such a shame. If only my femur hadn't dissolved into dust...
 Boomer: I would have tied it to a stone and delivered it myself.
+
 Player2: Then how did you get here?
 Boomer: Ah, I miss the days of stoning...
 Player2: ???
 
-<<Move Shmink -1 center 0.1>>
-<<Move Shmonk -1 center 0.1>>
+<<Move ShminkPNG -1 center 0.1>>
+<<Move ShmonkPNG -1 center 0.1>>
 <<Move Boomer 2 center 0.1>>
 
 <<Fade black 0.0 1.0 1.0>>
