@@ -2,49 +2,76 @@
 tags:
 ---
 <<PlayerShow>>
-<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped 1.25 center white>>
-<<Act Player1 ShmonkPNG 0.75 center blue>>
-<<Act Player2 ShminkPNG 0.50 center red>>
+<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped 1.25 center #d7e878>>
+<<Act Player1 ShmonkDefault 0.75 center blue>>
+<<Act Player2 ShminkDefault 0.50 center red>>
 
+<<Hide Boomer Boomer_Demon_Rough_Sketch_Flipped>>
+<<Act Boomer BoomerDemonHappy 1.25 center #d7e878>>
 Boomer: Oh! back so soon! I barely got up!
 Boomer: Has my package been delivered?
+<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped>>
 
-<<Hide ShminkPNG>>
-<<Act Player2 ShminkHappy>>
+<<Hide ShminkDefault>>
+<<Act Player2 ShminkHappy 0.50 center red>>
 Player2: Aye-aye, captain.
-<<Act Player2 ShminkPNG>>
+<<Act Player2 ShminkDefault>>
 
-<<Hide ShmonkPNG>>
+<<Hide ShmonkDefault>>
 <<Act Player1 ShmonkAnnoyed 0.75 center blue>>
 Player1: *scoff*
-<<Act Player1 ShmonkPNG>>
+<<Act Player1 ShmonkDefault>>
 
+<<Hide Boomer Boomer_Demon_Rough_Sketch_Flipped>>
+<<Act Boomer BoomerDemonHappy 1.25 center #d7e878>>
 Boomer: Splendid. Thank you very much. The quality of your service is quite impressive!
 Boomer: Postal services in Hell are almost on par with stoning.
-Player1: What the...?
+<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped>>
 
-<<Hide ShminkPNG>>
-<<Act Player2 ShminkHappy>>
+<<Hide ShmonkDefault>>
+<<Act Player1 ShmonkAnnoyed 0.75 center blue>>
+Player1: What the...?
+<<Act Player1 ShmonkDefault>>
+
+<<Hide ShminkDefault>>
+<<Act Player2 ShminkHappy 0.50 center red>>
 Player2: Thank you for your kind words.
 Player2: We would appreciate if you could write a positive review on Screech for us.
-<<Act Player2 ShminkPNG>>
+<<Act Player2 ShminkDefault>>
 
 <<Shake Boomer>>
 
+<<Hide Boomer Boomer_Demon_Rough_Sketch_Flipped>>
+<<Act Boomer BoomerDemonAngry 1.25 center #d7e878>>
 Boomer: Oh dear, I can feel the worms in my stomach doing the jiggy.
+<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped>>
+
+<<Hide Boomer Boomer_Demon_Rough_Sketch_Flipped>>
+<<Act Boomer BoomerDemonAnnoyed 1.25 center #d7e878>>
 Boomer: Is it that time of the decade already?
 Boomer: I'm sorry to cut my time here short, dears. Please take care!
+<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped>>
 
 <<Move Boomer 2 center 0.1>>
-<<Flip ShminkPNG>>
-<<Move ShminkPNG 1.25 center 0.1>>
+<<Flip ShminkDefault>>
+<<Move ShminkDefault 1.25 center 0.1>>
 
+<<Hide ShmonkDefault>>
+<<Act Player1 ShmonkHappy 0.75 center blue>>
 Player1: Nice work, baldie.
+<<Act Player1 ShmonkDefault>>
 
-//<<Act ShminkAnnoyed>>
+<<Hide ShminkDefault>>
+<<Act Player2 ShminkSadShocked 1.25 center red>>
 Player2: Why are you like this?
-Player1: Hehehe...
+<<Act Player2 ShminkDefault>>
 
-<<Move ShminkPNG 2 center 0.1>>
-<<Move ShmonkPNG -1 center 0.1>>
+<<Hide ShmonkDefault>>
+<<Act Player1 ShmonkMischevious 0.75 center blue>>
+Player1: Hehehe...
+<<Act Player1 ShmonkDefault>>
+
+
+<<Move ShminkDefault 2 center 0.1>>
+<<Move ShmonkDefault -1 center 0.1>>
 ===
