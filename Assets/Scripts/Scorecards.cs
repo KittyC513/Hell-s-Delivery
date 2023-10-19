@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class Scorecards : MonoBehaviour
 {
-    private int player1Score;
-    private int player2Score;
+    [SerializeField]
+    private float player1Score;
+    [SerializeField]
+    private float player2Score;
+    [SerializeField]
+    public SaveData sceneInfo;
 
-    [SerializeField] private int badScore = 100;
-    [SerializeField] private int neutralScore = 300;
-    [SerializeField] private int goodScore = 500;
-    [SerializeField] private int greatScore = 800;
+    [SerializeField] private float badScore = 100;
+    [SerializeField] private float neutralScore = 300;
+    [SerializeField] private float goodScore = 500;
+    [SerializeField] private float greatScore = 800;
 
     [SerializeField] private GameObject p1Circle;
     [SerializeField] private GameObject p2Circle;
@@ -19,8 +23,8 @@ public class Scorecards : MonoBehaviour
 
     private void Start()
     {
-        player1Score = 50;
-        player2Score = 600;
+        player1Score = sceneInfo.player1Score;
+        player2Score = sceneInfo.player2Score;
         //first run animation 
         StartCoroutine(AnimationCycle());
         //check our player's scores and place the circle accordingly
@@ -36,7 +40,7 @@ public class Scorecards : MonoBehaviour
         CheckScore(player2Score, p2Circle, p2Points);
     }
 
-    private void CheckScore(int score, GameObject circle, Transform[] circlePoints)
+    private void CheckScore(float score, GameObject circle, Transform[] circlePoints)
     {
         if (score <= badScore)
         {

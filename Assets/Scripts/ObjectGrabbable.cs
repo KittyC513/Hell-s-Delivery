@@ -86,6 +86,7 @@ public class ObjectGrabbable : MonoBehaviour
 
     private void FixedUpdate()
     {
+        AddScore();
         
 
     }
@@ -112,6 +113,20 @@ public class ObjectGrabbable : MonoBehaviour
         }
     }
 
+    void AddScore()
+    {
+        while (P1TakePackage)
+        {
+            ScoreCount.instance.AddPointToP1Package(1);
+        }
+        while(P2TakePackage)
+        {
+            ScoreCount.instance.AddPointToP1Package(1);
+        }
+
+
+
+    }
 
 
 
