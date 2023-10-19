@@ -59,6 +59,9 @@ public class TestCube : MonoBehaviour
     private float timeToZero = 0.083f;
 
     [SerializeField]
+    private GameObject shadowRenderer;
+
+    [SerializeField]
     private float jumpForce = 5f;
     [SerializeField]
     private Transform groundCheck;
@@ -130,6 +133,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     bool isWalking;
     bool isInAir = false;
+    private bool canJump = true;
 
     [SerializeField]
     bool isPlayer1;
@@ -229,18 +233,27 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        CastBlobShadow();
         CheckGrounded();
         SpeedControl();
+
         ContinueBottonControl();
         MovementCalcs();
         //CheckCamera();
-        PlayerDetector();
         ItemDetector();
         CameraSwitch();
 
-      
+        
+
+
     }
+
+    private void LateUpdate()
+    {
+        PlayerDetector();
+        CastBlobShadow();
+    }
+
     private void FixedUpdate()
     {
         if (!isFreeze)
@@ -248,7 +261,7 @@ public class TestCube : MonoBehaviour
             Move();
             Jump();
         }
-
+      
 
     }
 
@@ -437,7 +450,7 @@ public class TestCube : MonoBehaviour
 
     void ItemDetector()
     {
-        if (isPlayer1)
+        if (isPlayer1 && p2rc != null)
         {
             if (p2rc.Player2Die && rC.Player2isCarrying)
             {
@@ -452,7 +465,7 @@ public class TestCube : MonoBehaviour
                 rC.Player1Die = false;
 
             }
-        } else if (isPlayer2)
+        } else if (isPlayer2 && p1rc != null)
         {
             if (p1rc.Player1Die && rC.Player1isCarrying)
             {
@@ -501,27 +514,20 @@ public class TestCube : MonoBehaviour
         {
             isPlayer2 = true;
         }
-       
-        GameObject[] objectsInScene = GameObject.FindObjectsOfType<GameObject>();
+
+        GameObject[] objectsInScene = GameObject.FindGameObjectsWithTag(tagToFind);
         if (isPlayer1 && p2rc == null)
         {
-            Debug.Log("Trigger1");
+         
             foreach (GameObject obj in objectsInScene)
             {
-                if (obj.layer == layerToFind2)
-                {
-                    Debug.Log("Found GameObject on layer: " + obj.name);
-                    Transform parentTransform = obj.transform;
 
-                    foreach (Transform child in parentTransform)
-                    {
-                        if (child.CompareTag(tagToFind))
+                        if (obj.layer == layerToFind2)
                         {
-                            p2rc = child.gameObject.GetComponent<RespawnControl>();
-                            Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+                            p2rc = obj.gameObject.GetComponent<RespawnControl>();
+                            Debug.Log("p2rc found!: " + obj.gameObject.name);
                         }
-                    }
-                }
+                
 
             }
         
@@ -529,23 +535,17 @@ public class TestCube : MonoBehaviour
 
         if (isPlayer2 && p1rc == null)
         {
-            Debug.Log("Trigger1");
             foreach (GameObject obj in objectsInScene)
             {
 
                 if (obj.layer == layerToFind1)
                 {
-                    Debug.Log("Found GameObject on layer: " + obj.name);
-                    Transform parentTransform = obj.transform;
 
-                    foreach (Transform child in parentTransform)
-                    {
-                        if (child.CompareTag(tagToFind))
-                        {
-                            p1rc = child.gameObject.GetComponent<RespawnControl>();
-                            Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
-                        }
-                    }
+
+                            p1rc = obj.gameObject.GetComponent<RespawnControl>();
+                            Debug.Log("p1rc found!: " + obj.gameObject.name);
+                        
+                    
                 }
 
             }
@@ -567,11 +567,11 @@ public class TestCube : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded && jump.ReadValue<float>() == 1)
+        if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
         {
             jumpSpeed = jumpForce;
             isJumping = true;
-
+            canJump = false;
 
         }
 
@@ -585,6 +585,11 @@ public class TestCube : MonoBehaviour
             }
 
             isJumping = false;
+        }
+
+        if (jump.ReadValue<float>() == 0)
+        {
+            canJump = true;
         }
 
         //apply gravity
@@ -730,7 +735,21 @@ public class TestCube : MonoBehaviour
         activeCircle = null;
     }
 
+    private void CastBlobShadow()
+    {
+        RaycastHit hit;
 
+        if (Physics.SphereCast(transform.position, groundCheckRadius, -Vector3.up, out hit, Mathf.Infinity, groundLayer))
+        {
+            shadowRenderer.SetActive(true);
+            shadowRenderer.transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);
+        }
+        else
+        {
+            shadowRenderer.SetActive(false);
+        }
+
+    }
 
     /*
     private void Move()
