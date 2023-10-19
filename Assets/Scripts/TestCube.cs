@@ -171,7 +171,7 @@ public class TestCube : MonoBehaviour
         dialogue = inputAsset.FindActionMap("Dialogue");
         rb = this.GetComponent<Rigidbody>();
         testPickDrop = GetComponent<TestPickDrop>();
-        playerPos = this.transform;
+        //playerPos = this.transform;
         maxSpeed = walkSpeed;
         mainCam = Camera.main;
 
@@ -245,7 +245,7 @@ public class TestCube : MonoBehaviour
         ItemDetector();
         CameraSwitch();
 
-        
+        playerPos = this.transform;
 
 
     }
@@ -397,12 +397,18 @@ public class TestCube : MonoBehaviour
         return right.normalized;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(playerPos.position, pickDistance);
+    }
+
     private void DoPick(InputAction.CallbackContext obj)
     {
         //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
         if (objectGrabbable == null)
         {
-            if (Physics.Raycast(playerPos.position, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+            Debug.Log("Object in range:" + Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask));
+            if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
            
                 if (isPlayer1)
