@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ScoreCount : MonoBehaviour
 {
@@ -33,8 +34,8 @@ public class ScoreCount : MonoBehaviour
     void Update()
     {
 
-        deathCountP1.text = "Death Count :" + (int)scoreValueP1;
-        deathCountP2.text = "Death Count :" + (int)scoreValueP2;
+        deathCountP1.text = "Player1 Score: " + (int)scoreValueP1;
+        deathCountP2.text = "Player2 Score: " + (int)scoreValueP2;
         sceneInfo.player1Score = scoreValueP1;
         sceneInfo.player2Score = scoreValueP2;
 
@@ -48,25 +49,25 @@ public class ScoreCount : MonoBehaviour
     public void AddPointToP1(int value)
     {
         scoreValueP1 += value;
-        deathCountP1.text = "Death Count :" + scoreValueP1.ToString();
+        deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
     }
 
     public void AddPointToP1Package(int value)
     {
         scoreValueP1 += value * Time.fixedDeltaTime;
-        deathCountP1.text = "Death Count :" + scoreValueP1.ToString();
+        deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
     }
 
     public void AddPointToP2(int value)
     {
         scoreValueP2 += value;
-        deathCountP2.text = "Death Count :" + scoreValueP2.ToString();
+        deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
     }
 
     public void AddPointToP2Package(int value)
     {
-        scoreValueP1 += value * Time.fixedDeltaTime;
-        deathCountP1.text = "Death Count :" + scoreValueP2.ToString();
+        scoreValueP2 += value * Time.fixedDeltaTime;
+        deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
     }
 
 

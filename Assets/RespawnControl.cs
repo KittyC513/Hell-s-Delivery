@@ -96,7 +96,9 @@ public class RespawnControl : MonoBehaviour
     {
         if (other.gameObject.tag == ("Hazard"))
         {
+            Debug.Log("Hazard name =" + other.gameObject);
             Respawn(respawnPoint);
+
             if (isPlayer1)
             {
                 ScoreCount.instance.AddPointToP1(-1);
@@ -121,7 +123,7 @@ public class RespawnControl : MonoBehaviour
                 dR.Stop();
             }
 
-            if (Player1isCarrying)
+            if (Player1isCarrying && isPlayer1)
             {
                 objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
                 objectGrabbable.P2TakePackage = true;
@@ -129,7 +131,7 @@ public class RespawnControl : MonoBehaviour
                 Player1Die = true;
                 //Debug.Log("Player1Die");
             }
-            else if (Player2isCarrying)
+            else if (Player2isCarrying && isPlayer2)
             {
                 objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
                 objectGrabbable.P2TakePackage = false;
@@ -138,18 +140,18 @@ public class RespawnControl : MonoBehaviour
                 //Debug.Log("Player2Die");
 
             }
-            else if (other.tag == "CheckPoint")
-            {
-                respawnPoint = other.transform.position;
-            }
 
- 
+        }
+        else if (other.tag == "CheckPoint")
+        {
+            respawnPoint = other.transform.position;
+            Debug.Log("RespawnPoint =" + respawnPoint);
         }
 
         if (other.gameObject.tag == ("TriggerStart"))
         {
             LevelDialogue.ShowDevilAll();
-            dR.StartDialogue("StartLevel"); 
+            dR.StartDialogue("StartLevel");
             Destroy(other.gameObject);
         }
 
@@ -180,9 +182,9 @@ public class RespawnControl : MonoBehaviour
             dR.StartDialogue("EndLevel");
             Destroy(other.gameObject);
         }
-    }
 
-    
+
+    }
 
     public void PlayRandomDialogue()
     {

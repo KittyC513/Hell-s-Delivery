@@ -45,7 +45,10 @@ public class ObjectGrabbable : MonoBehaviour
     public GameObject checkPoint;
     [SerializeField]
     Vector3 respawnPoint;
-
+    [SerializeField]
+    public GameObject p1Package;
+    [SerializeField]
+    public GameObject p2Package;
 
 
 
@@ -115,13 +118,12 @@ public class ObjectGrabbable : MonoBehaviour
 
     void AddScore()
     {
-        while (P1TakePackage)
+        if (P1TakePackage)
         {
             ScoreCount.instance.AddPointToP1Package(1);
-        }
-        while(P2TakePackage)
+        } else if(P2TakePackage)
         {
-            ScoreCount.instance.AddPointToP1Package(1);
+            ScoreCount.instance.AddPointToP2Package(1);
         }
 
 

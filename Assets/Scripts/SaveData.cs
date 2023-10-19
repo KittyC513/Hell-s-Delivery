@@ -10,6 +10,12 @@ public class SaveData : ScriptableObject
     public float player1Score;
     [SerializeField]
     public float player2Score;
+    [SerializeField]
+    public bool p1Deliver;
+    [SerializeField]
+    public bool p2Deliver;
+
+
 }
 
 
