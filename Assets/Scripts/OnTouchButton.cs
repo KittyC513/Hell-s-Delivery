@@ -29,16 +29,26 @@ public class OnTouchButton : MonoBehaviour
     private Collider[] playerCollider;
     [SerializeField]
     private int numOfPlayer;
-
+    public Material onPush;
+    public Material Default;
+    Renderer matChange;
+    public bool debug;
 
 
     private void Start()
     {
+
+         matChange = GetComponent<Renderer>();
+
         players = new TestCube[2];
+        matChange.material = Default;
     }
 
     private void Update()
     {
+
+
+
         DetectPlayer();
         //detect the player
         //if the player is detected read its run input, if the run input is active we want to set the player to a hold button state
@@ -49,9 +59,11 @@ public class OnTouchButton : MonoBehaviour
             //and just a double check that we have a player script attached to our player
             if (players[i] != null)
             {
-                    //activate summoning
-                    summoningActive = true;
-                    activePlayer = players[i];
+                //activate summoning
+                summoningActive = true;
+                activePlayer = players[i];
+                matChange.material = onPush;
+
             }
 
         }
@@ -64,6 +76,7 @@ public class OnTouchButton : MonoBehaviour
             //activePlayer.OnSummoningExit();
             onExit.Invoke();
             activePlayer = null;
+            matChange.material = Default;
         }
 
         //Debug.Log(summoningActive);

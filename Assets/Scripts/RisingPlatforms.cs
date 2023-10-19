@@ -17,6 +17,8 @@ public class RisingPlatforms : MonoBehaviour
     private Transform endPosition;
     [SerializeField]
     private Transform startPosition;
+    public Material onActive;
+    Material Default;
 
     private float time;
 
@@ -31,7 +33,18 @@ public class RisingPlatforms : MonoBehaviour
         for (int i = 0; i < platformParent.transform.childCount; i++)
         {
             platforms.Add(platformParent.transform.GetChild(i).gameObject);
+            
         }
+
+      //  foreach (Transform child in platformParent.transform)
+       // {
+         //   Renderer renderer = child.GetComponent<Renderer>();
+
+          //  if (renderer != null)
+          //  {
+           //     Default = renderer.material;
+          //  }
+      //  }
 
         platformParent.transform.position = startPosition.transform.position;
     }
@@ -56,6 +69,17 @@ public class RisingPlatforms : MonoBehaviour
            //move the entire parent object giving the level designer more freedom at loss of the visual upgrade of moving each piece individually
            //could implement later
            platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+
+           // foreach (Transform child in platformParent.transform)
+           // {
+               // Renderer renderer = child.GetComponent<Renderer>();
+
+             //   if (renderer != null)
+             //   {
+              //      renderer.material = onActive;
+              //  }
+         //   }
+
         }
         else
         {
@@ -67,6 +91,17 @@ public class RisingPlatforms : MonoBehaviour
             //}
 
             platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, startPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+
+           // foreach (Transform child in platformParent.transform)
+           // {
+               //// Renderer renderer = child.GetComponent<Renderer>();
+
+              //  if (renderer != null)
+               // {
+              //      renderer.material = Default;
+              //  }
+           // }
+
         }
 
         //used for our lerp functions

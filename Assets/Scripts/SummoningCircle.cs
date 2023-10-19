@@ -29,11 +29,16 @@ public class SummoningCircle : MonoBehaviour
     private Collider[] playerCollider;
     [SerializeField]
     private int numOfPlayer;
-
+    public Material onPush;
+    public Material Default;
+    Renderer matChange;
 
 
     private void Start()
     {
+
+        matChange = GetComponent<Renderer>();
+
         players = new TestCube[2];
     }
 
@@ -56,6 +61,7 @@ public class SummoningCircle : MonoBehaviour
                     summoningActive = true;
                     players[i].OnSummoningEnter(this.gameObject);
                     activePlayer = players[i];
+                    matChange.material = onPush;
                 }
 
             }
@@ -70,6 +76,7 @@ public class SummoningCircle : MonoBehaviour
             activePlayer.OnSummoningExit();
             onExit.Invoke();
             activePlayer = null;
+            matChange.material = Default;
         }
 
 
