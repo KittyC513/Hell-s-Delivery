@@ -66,14 +66,14 @@ public class SummoningCircle : MonoBehaviour
                 }
 
             }
-            else
-            {
-                summoningActive = false;
-                activePlayer.OnSummoningExit();
-                onExit.Invoke();
-                activePlayer = null;
-                matChange.material = Default;
-            }
+            //else
+            //{
+            //    summoningActive = false;
+            //    activePlayer.OnSummoningExit();
+            //    onExit.Invoke();
+            //    activePlayer = null;
+            //    matChange.material = Default;
+            //}
 
         }
 
