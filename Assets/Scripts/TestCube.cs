@@ -19,7 +19,7 @@ public class TestCube : MonoBehaviour
     public LineView lineView;
     public bool sceneChange;
     [SerializeField]
-    //private InputActionReference continueControl;
+    private InputActionReference continueControl;
 
     Vector2 i_movement;
     Vector3 movement;
@@ -188,11 +188,11 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Jump").started += DoJump;
         run = player.FindAction("Run");
         player.FindAction("Join").started += DoTalk;
-        dialogue.FindAction("ContinueDialogue").started += DoContinue;
+        //dialogue.FindAction("ContinueDialogue").started += DoContinue;
         //cameraLook= player.FindAction("CameraLook");
         //pickControl.action.Enable();
         jump = player.FindAction("Jump");
-        //continueControl.action.Enable();
+        continueControl.action.Enable();
 
         player.Enable();
 
@@ -208,8 +208,8 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Jump").started -= DoJump;
         player.Disable();
         player.FindAction("Join").started -= DoTalk;
-        //continueControl.action.Disable();
-        dialogue.FindAction("ContinueDialogue").started -= DoContinue;
+        continueControl.action.Disable();
+        //dialogue.FindAction("ContinueDialogue").started -= DoContinue;
         //pickControl.action.Disable();
 
     }
@@ -239,13 +239,16 @@ public class TestCube : MonoBehaviour
         CheckGrounded();
         SpeedControl();
 
-        //ContinueBottonControl();
-        MovementCalcs();
+        ContinueBottonControl();
+        //MovementCalcs();
         //CheckCamera();
         ItemDetector();
         CameraSwitch();
 
         playerPos = this.transform;
+
+        MovementCalcs();
+
 
 
     }
@@ -267,10 +270,28 @@ public class TestCube : MonoBehaviour
 
     }
 
+    void ContinueBottonControl()
+    {
+        if (continueControl.action.triggered)
+        {
+            Debug.Log("Hello");
+            lineView = FindObjectOfType<LineView>();
+            lineView.OnContinueClicked();
+        }
+    }
+
 
     private void MovementCalcs()
     {
-        playerAnimator.SetFloat("speed", currentSpeed);
+        if (isFreeze)
+        {
+            playerAnimator.SetFloat("speed", 0);
+        }
+        else
+        {
+            playerAnimator.SetFloat("speed", currentSpeed);
+        }
+        
         if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
         {
             faceDir = new Vector3 (move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
@@ -441,13 +462,13 @@ public class TestCube : MonoBehaviour
         }
         else
         {
-            if (isPlayer1)
+            if (isPlayer1 && rC.Player1isCarrying)
             {
                 objectGrabbable.P1Drop();
 
             }
 
-            if (isPlayer2)
+            if (isPlayer2 && rC.Player2isCarrying)
             {
                 objectGrabbable.P2Drop();
             }
@@ -689,12 +710,12 @@ public class TestCube : MonoBehaviour
     }
 
 
-    void DoContinue(InputAction.CallbackContext obj)
-    {
+    //void DoContinue(InputAction.CallbackContext obj)
+    //{
 
-        ContinueBotton.instance.PressContinue();
+    //    ContinueBotton.instance.PressContinue();
 
-    }
+    //}
 
     void DoTalk(InputAction.CallbackContext obj)
     {
