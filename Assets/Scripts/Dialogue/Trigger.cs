@@ -27,7 +27,6 @@ public class Trigger : MonoBehaviour
     // Update is called once per frame
 
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (!colliderInTriggerZone.Contains(other))

@@ -19,7 +19,7 @@ public class TestCube : MonoBehaviour
     public LineView lineView;
     public bool sceneChange;
     [SerializeField]
-    private InputActionReference continueControl;
+    //private InputActionReference continueControl;
 
     Vector2 i_movement;
     Vector3 movement;
@@ -188,11 +188,11 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Jump").started += DoJump;
         run = player.FindAction("Run");
         player.FindAction("Join").started += DoTalk;
-        //dialogue.FindAction("ContinueDialogue").started += DoContinue;
+        dialogue.FindAction("ContinueDialogue").started += DoContinue;
         //cameraLook= player.FindAction("CameraLook");
         //pickControl.action.Enable();
         jump = player.FindAction("Jump");
-        continueControl.action.Enable();
+        //continueControl.action.Enable();
 
         player.Enable();
 
@@ -208,8 +208,8 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Jump").started -= DoJump;
         player.Disable();
         player.FindAction("Join").started -= DoTalk;
-        continueControl.action.Disable();
-        // dialogue.FindAction("ContinueDialogue").started -= DoContinue;
+        //continueControl.action.Disable();
+        dialogue.FindAction("ContinueDialogue").started -= DoContinue;
         //pickControl.action.Disable();
 
     }
@@ -239,7 +239,7 @@ public class TestCube : MonoBehaviour
         CheckGrounded();
         SpeedControl();
 
-        ContinueBottonControl();
+        //ContinueBottonControl();
         MovementCalcs();
         //CheckCamera();
         ItemDetector();
@@ -266,6 +266,7 @@ public class TestCube : MonoBehaviour
       
 
     }
+
 
     private void MovementCalcs()
     {
@@ -455,6 +456,8 @@ public class TestCube : MonoBehaviour
         }
 
     }
+
+
 
 
     void ItemDetector()
@@ -686,6 +689,13 @@ public class TestCube : MonoBehaviour
     }
 
 
+    void DoContinue(InputAction.CallbackContext obj)
+    {
+
+        ContinueBotton.instance.PressContinue();
+
+    }
+
     void DoTalk(InputAction.CallbackContext obj)
     {
         if (withinDialogueRange)
@@ -708,7 +718,6 @@ public class TestCube : MonoBehaviour
                 withinDialogueRange = false;
             }
 
-
         }
     }
 
@@ -717,20 +726,27 @@ public class TestCube : MonoBehaviour
     //    lineView.OnContinueClicked();
     //}
 
-    void ContinueBottonControl()
-    {
-        if (continueControl.action.triggered)
-        {
-            Debug.Log("Hello");
-            lineView = FindObjectOfType<LineView>();
-            lineView.OnContinueClicked();
-        }
-    }
+    //void ContinueBottonControl()
+    //{
+    //    if (continueControl.action.triggered)
+    //    {
+    //        Debug.Log("Hello");
+    //        lineView = FindObjectOfType<LineView>();
+    //        lineView.OnContinueClicked();
+    //    }
+    //}
 
     [YarnCommand("ChangeScene")]
     public static void GoToLevelScene()
     {
         SceneManager.LoadScene("PrototypeLevel");
+
+    }
+
+    [YarnCommand("SwitchToScoreCards")]
+    public static void GoToScoreCards()
+    {
+        SceneManager.LoadScene("ScoreCards");
 
     }
 

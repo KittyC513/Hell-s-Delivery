@@ -49,6 +49,10 @@ public class ObjectGrabbable : MonoBehaviour
     public GameObject p1Package;
     [SerializeField]
     public GameObject p2Package;
+    [SerializeField]
+    public GameObject PackageP1;
+    [SerializeField]
+    public GameObject PackageP2;
 
 
 
@@ -71,7 +75,6 @@ public class ObjectGrabbable : MonoBehaviour
 
         InventoryManager.Instance.Add(item);
 
-
     }
 
     private void Start()
@@ -90,8 +93,30 @@ public class ObjectGrabbable : MonoBehaviour
     private void FixedUpdate()
     {
         AddScore();
+        PackageIcon();
         
 
+    }
+
+    void PackageIcon()
+    {
+        if (P1TakePackage)
+        {
+            PackageP1.SetActive(true);
+        }
+        else
+        {
+            PackageP1.SetActive(false);
+        }
+
+        if (P2TakePackage)
+        {
+            PackageP2.SetActive(true);
+        }
+        else
+        {
+            PackageP2.SetActive(false);
+        }
     }
 
     private void Move()

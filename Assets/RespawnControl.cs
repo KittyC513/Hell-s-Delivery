@@ -70,8 +70,13 @@ public class RespawnControl : MonoBehaviour
     {
         SceneCheck();
         PlayerDetector();
-        Player1isCarrying = objectGrabbable.P1TakePackage;
-        Player2isCarrying = objectGrabbable.P2TakePackage;
+        if(curSceneName == scene2)
+        {
+            Player1isCarrying = objectGrabbable.P1TakePackage;
+            Player2isCarrying = objectGrabbable.P2TakePackage;
+        }
+
+
     }
     void PlayerDetector()
     {
