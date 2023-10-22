@@ -40,7 +40,7 @@ public class OnTouchButton : MonoBehaviour
 
          matChange = GetComponent<Renderer>();
 
-        players = new TestCube[2];
+        players = new TestCube[4];
         matChange.material = Default;
     }
 
@@ -122,7 +122,7 @@ public class OnTouchButton : MonoBehaviour
         //Debug.Log("numOfPlayer = " + numOfPlayer);
         //Debug.Log("playerCollider = " + playerCollider.Length);
 
-        if (numOfPlayer <= playerCollider.Length)
+        if (numOfPlayer < playerCollider.Length)
         {
 
             for (int i = 0; i < playerCollider.Length; i++)
