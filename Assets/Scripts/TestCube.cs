@@ -483,7 +483,7 @@ public class TestCube : MonoBehaviour
 
     void ItemDetector()
     {
-        if (isPlayer1)
+        if (isPlayer1 && p2rc!= null)
         {
             if (p2rc.Player2Die && rC.Player2isCarrying)
             {
@@ -499,7 +499,7 @@ public class TestCube : MonoBehaviour
 
             }
         }
-        else if (isPlayer2)
+        else if (isPlayer2 && p1rc != null)
         {
             if (p1rc.Player1Die && rC.Player1isCarrying)
             {
