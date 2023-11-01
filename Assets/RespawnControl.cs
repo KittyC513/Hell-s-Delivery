@@ -95,6 +95,7 @@ public class RespawnControl : MonoBehaviour
     public void Respawn(Vector3 respawnPos)
     {
         player.transform.position = respawnPos;
+        player.transform.eulerAngles = new Vector3(0, 90, 0);
        
     }
     private void OnTriggerEnter(Collider other)
