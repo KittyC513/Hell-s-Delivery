@@ -111,6 +111,7 @@ public class TestCube : MonoBehaviour
     string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
     string scene3 = "HubEnd";
+    string scene4 = "ParticleTesting";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -339,7 +340,7 @@ public class TestCube : MonoBehaviour
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
-            if (curSceneName == scene1 || curSceneName == scene3)
+            if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene4)
             {              
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
