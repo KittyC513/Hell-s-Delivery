@@ -340,12 +340,12 @@ public class TestCube : MonoBehaviour
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
-            if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene4)
+            if (curSceneName == scene1 || curSceneName == scene3)
             {              
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
-            else if (curSceneName == scene2)
+            else if (curSceneName == scene2 || curSceneName == scene4)
             {                
                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
