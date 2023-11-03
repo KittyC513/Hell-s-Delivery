@@ -33,6 +33,8 @@ public class OnTouchButton : MonoBehaviour
     public Material Default;
     Renderer matChange;
     public bool debug;
+    [SerializeField]
+    private int num;
 
 
     private void Start()
@@ -103,22 +105,17 @@ public class OnTouchButton : MonoBehaviour
     {
         playerCollider = Physics.OverlapSphere(origin.position, radius, playerMask);
 
-        if (players[0] == null && players[0] == null)
+        if (playerCollider.Length == 0)
         {
-            numOfPlayer = 0;
+            num = 0;
+            numOfPlayer = num;
         }
-        else if (players[0] == null && players[0] != null)
+        else if (num != 0)
         {
-            numOfPlayer = 1;
+            numOfPlayer = num;
         }
-        else if (players[0] != null && players[0] == null)
-        {
-            numOfPlayer = 1;
-        }
-        else if (players[0] != null && players[0] != null)
-        {
-            numOfPlayer = 2;
-        }
+
+
 
         //Debug.Log("numOfPlayer = " + numOfPlayer);
         //Debug.Log("playerCollider = " + playerCollider.Length);
@@ -130,7 +127,7 @@ public class OnTouchButton : MonoBehaviour
             {
                 GameObject playerObj = playerCollider[i].gameObject;
                 players[i] = playerObj.GetComponent<TestCube>();
-
+                num = i + 1;
             }
 
 
@@ -142,10 +139,12 @@ public class OnTouchButton : MonoBehaviour
 
                 if (players[i] != null)
                 {
+                    num = i;
                     players[i].OnSummoningExit();
                     //Debug.Log("player! =" + players[i]);
                 }
                 players[i] = null;
+                
 
                 //Debug.Log("Number = " + i);
                 //if (players[i] != null)
