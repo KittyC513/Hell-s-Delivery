@@ -32,7 +32,8 @@ public class SummoningCircle : MonoBehaviour
     public Material onPush;
     public Material Default;
     Renderer matChange;
-
+    [SerializeField]
+    private int num;
 
     private void Start()
     {
@@ -52,7 +53,7 @@ public class SummoningCircle : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             //and just a double check that we have a player script attached to our player
-            if (players[i] != null)
+            if (players[i] != null && numOfPlayer > 0 )
             {
                 //if the player presses the action button (run)
                 if (players[i].ReadActionButton() && !summoningActive)
@@ -62,6 +63,8 @@ public class SummoningCircle : MonoBehaviour
                     activePlayer = players[i];
                     players[i].OnSummoningEnter(this.gameObject);
                     matChange.material = onPush;
+
+                    //when two players trigger the button at the same time, the button is broken, need to fix!!!!
               
                 }
 
@@ -121,25 +124,18 @@ public class SummoningCircle : MonoBehaviour
     {
         playerCollider = Physics.OverlapSphere(origin.position, radius, playerMask);
 
-        if (players[0] == null && players[0] == null)
+        if (playerCollider.Length == 0)
         {
-            numOfPlayer = 0;
+            num = 0;
+            numOfPlayer = num;
         }
-        else if (players[0] == null && players[0] != null)
+        else if (num != 0)
         {
-            numOfPlayer = 1;
-        }
-        else if (players[0] != null && players[0] == null)
-        {
-            numOfPlayer = 1;
-        } 
-        else if(players[0] != null && players[0] != null)
-        {
-            numOfPlayer = 2;
+            numOfPlayer = num;
         }
 
-       // Debug.Log("numOfPlayer = " + numOfPlayer);
-       // Debug.Log("playerCollider = " + playerCollider.Length);
+        // Debug.Log("numOfPlayer = " + numOfPlayer);
+        // Debug.Log("playerCollider = " + playerCollider.Length);
 
         if (numOfPlayer <= playerCollider.Length)
         {
@@ -147,7 +143,8 @@ public class SummoningCircle : MonoBehaviour
             for (int i = 0; i < playerCollider.Length; i++)
             {
                 GameObject playerObj = playerCollider[i].gameObject;
-                players[i] = playerObj.GetComponent<TestCube>();   
+                players[i] = playerObj.GetComponent<TestCube>();
+                num = i + 1;
 
             }
 
@@ -160,6 +157,7 @@ public class SummoningCircle : MonoBehaviour
 
                 if (players[i] != null)
                 {
+                    num = i;
                     players[i].OnSummoningExit();
                     //Debug.Log("player! =" + players[i]);
                 }
