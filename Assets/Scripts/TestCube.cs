@@ -27,7 +27,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue;
-    [SerializeField] private InputAction move, run,jump;
+    [SerializeField] private InputAction move, run,jump, parachute;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -163,6 +163,13 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private RespawnControl p2rc,p1rc;
 
+    [SerializeField]
+    private float parachuteDrag = 0.1f;
+    [SerializeField]
+    private bool isGliding;
+
+
+
 
 
     private void Awake()
@@ -189,6 +196,7 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Jump").started += DoJump;
         run = player.FindAction("Run");
         player.FindAction("Join").started += DoTalk;
+        player.FindAction("Parachute").started += DoFly;
         //dialogue.FindAction("ContinueDialogue").started += DoContinue;
         //cameraLook= player.FindAction("CameraLook");
         //pickControl.action.Enable();
@@ -209,6 +217,7 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Jump").started -= DoJump;
         player.Disable();
         player.FindAction("Join").started -= DoTalk;
+        player.FindAction("Parachute").started -= DoFly;
         continueControl.action.Disable();
         //dialogue.FindAction("ContinueDialogue").started -= DoContinue;
         //pickControl.action.Disable();
@@ -620,13 +629,13 @@ public class TestCube : MonoBehaviour
             jumpSpeed = jumpForce;
             isJumping = true;
             canJump = false;
-
+          
         }
 
-        if (isJumping && jump.ReadValue<float>() == 0 && jumpSpeed <= minJumpForce)
+        if (isJumping && jump.ReadValue<float>() == 0 && jumpSpeed <= minJumpForce && !isGliding)
         {
             //rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
-            Debug.Log(jumpSpeed);
+            //Debug.Log(jumpSpeed);
             if (jumpSpeed > 0)
             {
                 jumpSpeed = jumpSpeed / 2;
@@ -638,15 +647,16 @@ public class TestCube : MonoBehaviour
         if (jump.ReadValue<float>() == 0)
         {
             canJump = true;
+
         }
 
         //apply gravity
-        if (jumpSpeed > maxFall)
+        if (jumpSpeed > maxFall && !isGliding)
         {
             jumpSpeed += -jumpDeaccel * Time.deltaTime;
 
         }
-        else
+        else if((jumpSpeed <= maxFall && !isGliding))
         {
             jumpSpeed = maxFall;
         }
@@ -655,11 +665,13 @@ public class TestCube : MonoBehaviour
 
         //if we have started to move downwards we are not longer jumping
         if (jumpSpeed <= 0) isJumping = false;
-        if (isInAir || isJumping)
+        if (isInAir || isJumping && !isGliding)
         {
             forceDirection += Vector3.up * jumpSpeed;
         }
     }
+
+
 
     void SpeedControl()
     {
@@ -682,6 +694,7 @@ public class TestCube : MonoBehaviour
         {
             isGrounded = true;
             isInAir = false;
+            isGliding = false;
             
             //Debug.Log("isGrounded" + isGrounded);
 
@@ -691,6 +704,7 @@ public class TestCube : MonoBehaviour
             isInAir = true;
             isGrounded = false;
             //Debug.Log("isGrounded" + isGrounded);
+
 
         }
     }
@@ -741,6 +755,18 @@ public class TestCube : MonoBehaviour
             }
 
         }
+    }
+
+
+    void DoFly(InputAction.CallbackContext obj)
+    {
+        if(isInAir || isJumping)
+        {
+            isGliding = true;
+            //rb.drag = parachuteDrag;
+            //rb.useGravity = false;
+            Debug.Log("FLYING");
+        } 
     }
 
     //void DoContinue(InputAction.CallbackContext obj)

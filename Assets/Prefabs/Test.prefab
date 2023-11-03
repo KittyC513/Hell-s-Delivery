@@ -3141,7 +3141,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -3198,6 +3198,15 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 641f76e9-56f1-4402-8e0d-35671bc6ebc4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  parachute:
+    m_Name: Parachute
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f5157087-a77e-492c-aa53-381a851bbc7e
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -3259,6 +3268,8 @@ MonoBehaviour:
   trigger: {fileID: 0}
   p2rc: {fileID: 0}
   p1rc: {fileID: 0}
+  parachuteDrag: 3.5
+  isGliding: 0
 --- !u!114 &4895904256865648347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4050,7 +4061,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25134102, y: -0.32455102, z: 0.0898954, w: 0.9074212}
+  m_LocalRotation: {x: 0.25134102, y: -0.324551, z: 0.08989539, w: 0.9074212}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4119,7 +4130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2618575627546304545
 Transform:
   m_ObjectHideFlags: 0
