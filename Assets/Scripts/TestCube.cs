@@ -553,7 +553,7 @@ public class TestCube : MonoBehaviour
         GameObject[] objectsInScene = GameObject.FindObjectsOfType<GameObject>();
         if (isPlayer1 && p2rc == null)
         {
-            Debug.Log("Trigger1");
+           // Debug.Log("Trigger1");
             foreach (GameObject obj in objectsInScene)
             {
                 if (obj.layer == layerToFind2)

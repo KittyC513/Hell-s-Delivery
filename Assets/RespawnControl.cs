@@ -96,7 +96,8 @@ public class RespawnControl : MonoBehaviour
     {
         player.transform.position = respawnPos;
         player.transform.eulerAngles = new Vector3(0, 90, 0);
-       
+        Debug.Log("RespawnPoint =" + respawnPos);
+
     }
     private void OnTriggerEnter(Collider other)
     {

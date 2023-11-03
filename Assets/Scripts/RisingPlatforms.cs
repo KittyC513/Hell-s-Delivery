@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RisingPlatforms : MonoBehaviour
 {
-    private List<GameObject> platforms;
+    private List <GameObject> platforms = new List <GameObject>();
     [SerializeField]
     private GameObject platformParent;
     public bool active = false;
@@ -24,15 +24,17 @@ public class RisingPlatforms : MonoBehaviour
 
     private void Awake()
     {
-        platforms = new List<GameObject>();
+
     }
     private void Start()
     {
         //put all the platforms (child objects to the parent) into an array
         //currently unused but could be used in the future to move each platform on its own for a better visual effect
-        for (int i = 0; i < platformParent.transform.childCount; i++)
+        foreach (Transform child in platformParent.transform)
         {
-            platforms.Add(platformParent.transform.GetChild(i).gameObject);
+            platforms.Add(child.gameObject);
+
+            
             
         }
 

@@ -42,6 +42,7 @@ public class OnTouchButton : MonoBehaviour
 
         players = new TestCube[4];
         matChange.material = Default;
+        onExit.Invoke();
     }
 
     private void Update()
