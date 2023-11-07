@@ -124,15 +124,8 @@ public class SummoningCircle : MonoBehaviour
     {
         playerCollider = Physics.OverlapSphere(origin.position, radius, playerMask);
 
-        if (playerCollider.Length == 0)
-        {
-            num = 0;
-            numOfPlayer = num;
-        }
-        else if (num != 0)
-        {
-            numOfPlayer = num;
-        }
+        numOfPlayer = num;
+
 
         // Debug.Log("numOfPlayer = " + numOfPlayer);
         // Debug.Log("playerCollider = " + playerCollider.Length);
@@ -172,6 +165,12 @@ public class SummoningCircle : MonoBehaviour
                 //}
                 //players[i] = null;
             }
+        }
+        else if(playerCollider.Length == 0)
+        {
+            players[0] = null;
+            players[1] = null;
+            num = 0;
         }
      
     }
