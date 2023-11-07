@@ -7,6 +7,7 @@ using UnityEngine;
 public class RisingPlatforms : MonoBehaviour
 {
     private List <GameObject> platforms = new List <GameObject>();
+
     [SerializeField]
     private GameObject platformParent;
     public bool active = false;
@@ -62,47 +63,22 @@ public class RisingPlatforms : MonoBehaviour
         if (active)
         {
             //move platforms to target
-           // for (int i = 0; i < platforms.Count; i++)
-            //{
-            //    Vector3 targetPos = new Vector3(platforms[i].transform.position.x, endPosition.transform.position.y, platforms[i].transform.position.z);
-           //    platforms[i].transform.position = Vector3.Lerp(platforms[i].transform.position, targetPos, time / (riseDuration + Random.Range(0, 20)));
-           // }
 
            //move the entire parent object giving the level designer more freedom at loss of the visual upgrade of moving each piece individually
            //could implement later
            platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
 
-           // foreach (Transform child in platformParent.transform)
-           // {
-               // Renderer renderer = child.GetComponent<Renderer>();
-
-             //   if (renderer != null)
-             //   {
-              //      renderer.material = onActive;
-              //  }
-         //   }
+            /*foreach (GameObject child in platforms)
+            {
+                child.transform.position = Vector3.Lerp(transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+            }*/
 
         }
         else
         {
             //move platforms back to starting
-            //for (int i = 0; i < platforms.Count; i++)
-            // {
-            //    Vector3 targetPos = new Vector3(platforms[i].transform.position.x, startPosition.transform.position.y, platforms[i].transform.position.z);
-            //    platforms[i].transform.position = Vector3.Lerp(platforms[i].transform.position, targetPos, time / (riseDuration + Random.Range(0, 20)));
-            //}
 
             platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, startPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
-
-           // foreach (Transform child in platformParent.transform)
-           // {
-               //// Renderer renderer = child.GetComponent<Renderer>();
-
-              //  if (renderer != null)
-               // {
-              //      renderer.material = Default;
-              //  }
-           // }
 
         }
 
