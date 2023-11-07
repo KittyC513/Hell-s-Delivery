@@ -669,7 +669,7 @@ public class TestCube : MonoBehaviour
         {
             //gliding
             print("Gliding");
-        } else if(isInAir || isJumping && isJumping && jump.ReadValue<float>() == 0)
+        } else if(isInAir || isJumping && isJumping)
         {
             forceDirection += Vector3.up * jumpSpeed;
         }
