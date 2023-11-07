@@ -7,7 +7,7 @@ public class SummoningCircle : MonoBehaviour
 {
     [SerializeField]
     private TestCube[] players;
-    [SerializeField]
+
     private TestCube activePlayer;
 
     [SerializeField]

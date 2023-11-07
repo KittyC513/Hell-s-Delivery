@@ -68,6 +68,14 @@ public class OnTouchButton : MonoBehaviour
                 matChange.material = onPush;
 
             }
+            //else
+            //{
+            //    summoningActive = false;
+
+            //    onExit.Invoke();
+            //    activePlayer = null;
+            //    matChange.material = Default;
+            //}
 
         }
 
@@ -105,16 +113,16 @@ public class OnTouchButton : MonoBehaviour
     {
         playerCollider = Physics.OverlapSphere(origin.position, radius, playerMask);
 
-        if (playerCollider.Length == 0)
-        {
-            num = 0;
-            numOfPlayer = num;
-        }
-        else if (num != 0)
-        {
-            numOfPlayer = num;
-        }
-
+        //if (playerCollider.Length == 0)
+        //{
+        //    num = 0;
+        //    numOfPlayer = num;
+        //}
+        //else if (num != 0)
+        //{
+        //    numOfPlayer = num;
+        //}
+        numOfPlayer = num;
 
 
         //Debug.Log("numOfPlayer = " + numOfPlayer);
@@ -154,6 +162,13 @@ public class OnTouchButton : MonoBehaviour
                 //}
                 //players[i] = null;
             }
+        }
+        else if (playerCollider.Length == 0)
+        {
+            players[0] = null;
+            players[1] = null;
+            num = 0;
+
         }
     }
 }
