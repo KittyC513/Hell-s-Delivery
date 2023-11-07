@@ -167,7 +167,8 @@ public class TestCube : MonoBehaviour
     private float parachuteDrag = 0.1f;
     [SerializeField]
     private bool isGliding;
-
+    [SerializeField]
+    private int numOfJumpBeingPressed;
 
 
 
@@ -624,12 +625,14 @@ public class TestCube : MonoBehaviour
 
     void Jump()
     {
+
         if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
         {
             jumpSpeed = jumpForce;
             isJumping = true;
             canJump = false;
-          
+            numOfJumpBeingPressed += 1;
+            print("numOfJumpBeingPressed " + numOfJumpBeingPressed);
         }
 
         if (isJumping && jump.ReadValue<float>() == 0 && jumpSpeed <= minJumpForce)
@@ -661,14 +664,24 @@ public class TestCube : MonoBehaviour
             jumpSpeed = maxFall;
         }
 
-        //forceDirection += Vector3.up * jumpForce;
-
-        //if we have started to move downwards we are not longer jumping
-        if (jumpSpeed <= 0) isJumping = false;
-        if (isInAir || isJumping )
+        //handle gliding
+        if(isInAir && numOfJumpBeingPressed == 1 && jump.ReadValue<float>() == 1)
+        {
+            //gliding
+            print("Gliding");
+        } else if(isInAir || isJumping && isJumping && jump.ReadValue<float>() == 0)
         {
             forceDirection += Vector3.up * jumpSpeed;
         }
+
+            //forceDirection += Vector3.up * jumpForce;
+
+            //if we have started to move downwards we are not longer jumping
+        if (jumpSpeed <= 0) isJumping = false;
+        //if (isInAir || isJumping )
+        //{
+        //    forceDirection += Vector3.up * jumpSpeed;
+        //}
     }
 
 
@@ -694,8 +707,9 @@ public class TestCube : MonoBehaviour
         {
             isGrounded = true;
             isInAir = false;
+            numOfJumpBeingPressed = 0;
             //isGliding = false;
-            
+
             //Debug.Log("isGrounded" + isGrounded);
 
         }
