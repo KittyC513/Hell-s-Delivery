@@ -7,7 +7,7 @@ public class SummoningCircle : MonoBehaviour
 {
     [SerializeField]
     private TestCube[] players;
-
+    [SerializeField]
     private TestCube activePlayer;
 
     [SerializeField]
@@ -50,10 +50,10 @@ public class SummoningCircle : MonoBehaviour
         //if the player is detected read its run input, if the run input is active we want to set the player to a hold button state
 
         //if we detect the player in our circle
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < numOfPlayer; i++)
         {
             //and just a double check that we have a player script attached to our player
-            if (players[i] != null && numOfPlayer > 0 )
+            if (players[i] != null)
             {
                 //if the player presses the action button (run)
                 if (players[i].ReadActionButton() && !summoningActive)
@@ -69,14 +69,14 @@ public class SummoningCircle : MonoBehaviour
                 }
 
             }
-            //else
-            //{
-            //    summoningActive = false;
-            //    activePlayer.OnSummoningExit();
-            //    onExit.Invoke();
-            //    activePlayer = null;
-            //    matChange.material = Default;
-            //}
+            else
+            {
+                summoningActive = false;
+                activePlayer.OnSummoningExit();
+                onExit.Invoke();
+                activePlayer = null;
+                matChange.material = Default;
+            }
 
         }
 
@@ -171,6 +171,7 @@ public class SummoningCircle : MonoBehaviour
             players[0] = null;
             players[1] = null;
             num = 0;
+  
         }
      
     }
