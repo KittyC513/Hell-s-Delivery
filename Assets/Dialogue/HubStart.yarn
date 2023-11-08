@@ -5,7 +5,7 @@ position: -186,56
 <<PlayerShow>>
 <<Act Player1 ShmonkDefault 0.75 center blue>>
 <<Act Player2 ShminkDefault 1.25 center red>>
-<<Act Devil TheDevil 5 center red>>
+<<Act Devil DevilHot 5 center red>>
 
 <<Hide ShmonkDefault>>
 <<Act Player1 ShmonkAnnoyed 0.75 center blue>>
@@ -35,7 +35,7 @@ Player1: Bothering you is my full-time job. Comes with dental coverage, baby.
 <<Act Player1 ShmonkDefault>>
 
 Devil: You know what else comes with dental coverage?
-<<Move TheDevil 1.25 center 0.1>>
+<<Move DevilHot 1.25 center 0.1>>
 <<Move ShminkDefault 0.50 center 0.1>>
 
 Devil: Huhuhu...
@@ -60,7 +60,7 @@ Devil: Tell you what. Whoever can successfully deliver the most packages will re
 Player2: !!!
 <<Act Player2 ShminkDefault>>
 
-<<Move TheDevil 5 center 0.1>>
+<<Move DevilHot 5 center 0.1>>
 <<Move ShminkDefault 1.25 center 0.1>>
 
 <<wait  0.5>>
