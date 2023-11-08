@@ -42,9 +42,10 @@ public class OnTouchButton : MonoBehaviour
 
          matChange = GetComponent<Renderer>();
 
-        players = new TestCube[4];
+        players = new TestCube[2];
         matChange.material = Default;
         onExit.Invoke();
+        num = 0;
     }
 
     private void Update()
@@ -80,7 +81,8 @@ public class OnTouchButton : MonoBehaviour
         }
 
 
-        if (numOfPlayer == 0 && summoningActive)
+
+        if (playerCollider.Length == 0 && summoningActive)
         {
             //if summoning is active and we leave the button exit the summon
             summoningActive = false;
@@ -88,6 +90,7 @@ public class OnTouchButton : MonoBehaviour
             onExit.Invoke();
             activePlayer = null;
             matChange.material = Default;
+            num = 0;
         }
 
         //Debug.Log(summoningActive);
@@ -163,13 +166,18 @@ public class OnTouchButton : MonoBehaviour
                 //players[i] = null;
             }
         }
-        else if (playerCollider.Length == 0)
-        {
-            players[0] = null;
-            players[1] = null;
-            num = 0;
+        //else if (playerCollider.Length == 0)
+        //{
+        //    players[0] = null;
+        //    players[1] = null;
+        //    num = 0;
 
-        }
+        //    summoningActive = false;
+        //    onExit.Invoke();
+        //    activePlayer = null;
+        //    matChange.material = Default;
+
+        //}
     }
 }
 
