@@ -35,7 +35,7 @@ public class OnTouchButton : MonoBehaviour
     public bool debug;
     [SerializeField]
     private int num;
-
+    public Animator Square;
 
     private void Start()
     {
@@ -67,6 +67,7 @@ public class OnTouchButton : MonoBehaviour
                 summoningActive = true;
                 activePlayer = players[i];
                 matChange.material = onPush;
+                Square.SetBool("Activate", true);
 
             }
             //else
@@ -90,6 +91,7 @@ public class OnTouchButton : MonoBehaviour
             onExit.Invoke();
             activePlayer = null;
             matChange.material = Default;
+            Square.SetBool("Activate", false);
             num = 0;
         }
 

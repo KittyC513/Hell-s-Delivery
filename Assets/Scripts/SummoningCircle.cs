@@ -34,11 +34,14 @@ public class SummoningCircle : MonoBehaviour
     Renderer matChange;
     [SerializeField]
     private int num;
+    public bool playActive;
+    public Animator circle;
 
     private void Start()
     {
 
         matChange = GetComponent<Renderer>();
+
 
         players = new TestCube[2];
     }
@@ -63,6 +66,9 @@ public class SummoningCircle : MonoBehaviour
                     activePlayer = players[i];
                     players[i].OnSummoningEnter(this.gameObject);
                     matChange.material = onPush;
+                    circle.SetBool("Activate", true);
+                    //circle.SetFloat("Multiplier", 1);
+                    //circle.SetTrigger("On");
 
                     //when two players trigger the button at the same time, the button is broken, need to fix!!!!
               
@@ -76,6 +82,9 @@ public class SummoningCircle : MonoBehaviour
                 onExit.Invoke();
                 activePlayer = null;
                 matChange.material = Default;
+                //circle.SetBool("Activate", false);
+                //circle.SetFloat("Multiplier", -1);
+                //circle.SetTrigger("On");
             }
 
         }
@@ -89,6 +98,10 @@ public class SummoningCircle : MonoBehaviour
             onExit.Invoke();
             activePlayer = null;
             matChange.material = Default;
+            circle.SetBool("Activate", false);
+            //circle.SetFloat("Multiplier", -1);
+           // circle.SetTrigger("On");
+            
         }
 
         //if(numOfPlayer == 0)
