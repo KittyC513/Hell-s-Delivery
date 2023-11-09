@@ -136,7 +136,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     bool isWalking;
     bool isInAir = false;
-    private bool canJump = true;
+    private bool canJump;
 
     [SerializeField]
     bool isPlayer1;
@@ -207,6 +207,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("Parachute").canceled += DoFall;
         continueControl.action.Enable();
 
+
         player.Enable();
 
     }
@@ -249,6 +250,8 @@ public class TestCube : MonoBehaviour
         //tG = trigger.GetComponent<Trigger>();
 
         parachuteObj.SetActive(false);
+        canJump = true;
+       
     }
 
     // Update is called once per frame
@@ -642,7 +645,6 @@ public class TestCube : MonoBehaviour
             isJumping = true;
             canJump = false;
 
-
         }
 
         if (isJumping && jump.ReadValue<float>() == 0 && jumpSpeed <= minJumpForce)
@@ -663,6 +665,9 @@ public class TestCube : MonoBehaviour
 
         }
 
+        print("jump" + jump.ReadValue<float>());
+        print("canJump" + canJump);
+             
         //apply gravity
         if (jumpSpeed > maxFall)
         {
@@ -702,6 +707,7 @@ public class TestCube : MonoBehaviour
             if (!isGliding)
             {
                 forceDirection += Vector3.up * jumpSpeed;
+                
             }
 
         }
@@ -726,6 +732,7 @@ public class TestCube : MonoBehaviour
             forceDirection += Vector3.up * parachuteSpeed;
             print("Gliding");
             isGliding = true;
+            canJump = false;
 
         }
     }
@@ -764,7 +771,6 @@ public class TestCube : MonoBehaviour
             isGliding = false;
 
 
-
             //isGliding = false;
 
             //Debug.Log("isGrounded" + isGrounded);
@@ -777,7 +783,6 @@ public class TestCube : MonoBehaviour
 
             //Debug.Log("isGrounded" + isGrounded);
         }
-        print("isInAir " + isInAir);
     }
 
 
