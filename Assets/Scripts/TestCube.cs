@@ -169,7 +169,8 @@ public class TestCube : MonoBehaviour
     private bool isGliding;
     [SerializeField]
     private int numOfButtonPressed;
-
+    [SerializeField]
+    private GameObject parachuteObj;
 
 
 
@@ -246,6 +247,8 @@ public class TestCube : MonoBehaviour
         package = GameObject.FindGameObjectWithTag("Package");
         //trigger = GameObject.FindGameObjectWithTag("Trigger");
         //tG = trigger.GetComponent<Trigger>();
+
+        parachuteObj.SetActive(false);
     }
 
     // Update is called once per frame
@@ -702,6 +705,17 @@ public class TestCube : MonoBehaviour
             }
 
         }
+
+        if (isGliding)
+        {
+            parachuteObj.SetActive(true);
+        }
+        else
+        {
+            parachuteObj.SetActive(false);
+        }
+
+   
     }
 
     void DoParachute(InputAction.CallbackContext obj)
@@ -720,6 +734,7 @@ public class TestCube : MonoBehaviour
     {
         isGliding = false;
         print("Not Gliding");
+        
     }
 
 
