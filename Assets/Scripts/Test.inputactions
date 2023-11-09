@@ -88,8 +88,17 @@
                 },
                 {
                     "name": "Parachute",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "6392f651-a767-448c-b3c6-077693a07889",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CancelParachute",
+                    "type": "Button",
+                    "id": "07eb3771-877a-4467-ae17-1af855d3e848",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -325,6 +334,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Parachute",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db630814-2fde-40fb-8ef9-2ce25126bdd2",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CancelParachute",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

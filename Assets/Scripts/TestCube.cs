@@ -27,7 +27,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue;
-    [SerializeField] private InputAction move, run,jump, parachute;
+    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -48,7 +48,7 @@ public class TestCube : MonoBehaviour
     private float walkSpeed = 4f;
     [SerializeField]
     private float runSpeed = 9f;
-    
+
     private float currentSpeed;
 
     private Vector3 faceDir;
@@ -161,14 +161,14 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private GameObject trigger;
     [SerializeField]
-    private RespawnControl p2rc,p1rc;
+    private RespawnControl p2rc, p1rc;
 
     [SerializeField]
-    private float parachuteDrag = 0.1f;
+    private float parachuteSpeed = -2f;
     [SerializeField]
     private bool isGliding;
     [SerializeField]
-    private int numOfJumpBeingPressed;
+    private int numOfButtonPressed;
 
 
 
@@ -202,6 +202,8 @@ public class TestCube : MonoBehaviour
         //cameraLook= player.FindAction("CameraLook");
         //pickControl.action.Enable();
         jump = player.FindAction("Jump");
+        player.FindAction("Parachute").started += DoParachute;
+        player.FindAction("Parachute").canceled += DoFall;
         continueControl.action.Enable();
 
         player.Enable();
@@ -218,8 +220,11 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Jump").started -= DoJump;
         player.Disable();
         player.FindAction("Join").started -= DoTalk;
-        //player.FindAction("Parachute").started -= DoFly;
+        player.FindAction("Parachute").started -= DoParachute;
+        player.FindAction("Parachute").canceled -= DoFall;
+        //player.FindAction("CancelParachute").started -= DoFall;
         continueControl.action.Disable();
+
         //dialogue.FindAction("ContinueDialogue").started -= DoContinue;
         //pickControl.action.Disable();
 
@@ -262,6 +267,7 @@ public class TestCube : MonoBehaviour
 
 
 
+
     }
 
     private void LateUpdate()
@@ -277,7 +283,8 @@ public class TestCube : MonoBehaviour
             Move();
             Jump();
         }
-      
+
+
 
     }
 
@@ -302,10 +309,10 @@ public class TestCube : MonoBehaviour
         {
             playerAnimator.SetFloat("speed", currentSpeed);
         }
-        
+
         if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
         {
-            faceDir = new Vector3 (move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
+            faceDir = new Vector3(move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
             isWalking = true;
             if (isRunning)
             {
@@ -319,7 +326,7 @@ public class TestCube : MonoBehaviour
                 currentSpeed += accel * Time.deltaTime;
             }
 
-            
+
         }
         else
         {
@@ -335,10 +342,10 @@ public class TestCube : MonoBehaviour
 
     void CameraSwitch()
     {
-        if(curSceneName == scene1 || curSceneName == scene3 && curSceneName != scene2)
+        if (curSceneName == scene1 || curSceneName == scene3 && curSceneName != scene2)
         {
             playerCamera.enabled = false;
-            
+
         }
         else if (curSceneName == scene2 && curSceneName != scene1 || curSceneName != scene3)
         {
@@ -351,12 +358,12 @@ public class TestCube : MonoBehaviour
         if (!isOnCircle)
         {
             if (curSceneName == scene1 || curSceneName == scene3)
-            {              
+            {
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
             else if (curSceneName == scene2 || curSceneName == scene4)
-            {                
+            {
                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
             }
@@ -365,7 +372,7 @@ public class TestCube : MonoBehaviour
         {
             //rb.velocity = new Vector3(-(transform.position.x - activeCircle.transform.position.x) * 3 * Time.deltaTime, 0, -(transform.position.z - activeCircle.transform.position.z) * 3 *Time.deltaTime);
         }
-       
+
 
         //forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(mainCam) * movementForce;
         //forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(mainCam) * movementForce;
@@ -398,7 +405,7 @@ public class TestCube : MonoBehaviour
 
             //rb.velocity = new Vector3((forceDirection.x * currentSpeed) * Time.deltaTime, rb.velocity.y, (forceDirection.z * currentSpeed) * Time.deltaTime);
             //Debug.Log("maxSpeed =" + maxSpeed);
-          
+
         }
 
         LookAt();
@@ -443,7 +450,7 @@ public class TestCube : MonoBehaviour
             Debug.Log("Object in range:" + Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask));
             if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
-           
+
                 if (isPlayer1)
                 {
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
@@ -494,7 +501,7 @@ public class TestCube : MonoBehaviour
 
     void ItemDetector()
     {
-        if (isPlayer1 && p2rc!= null)
+        if (isPlayer1 && p2rc != null)
         {
             if (p2rc.Player2Die && rC.Player2isCarrying)
             {
@@ -563,7 +570,7 @@ public class TestCube : MonoBehaviour
         GameObject[] objectsInScene = GameObject.FindObjectsOfType<GameObject>();
         if (isPlayer1 && p2rc == null)
         {
-           // Debug.Log("Trigger1");
+            // Debug.Log("Trigger1");
             foreach (GameObject obj in objectsInScene)
             {
                 if (obj.layer == layerToFind2)
@@ -631,8 +638,8 @@ public class TestCube : MonoBehaviour
             jumpSpeed = jumpForce;
             isJumping = true;
             canJump = false;
-            numOfJumpBeingPressed += 1;
-            print("numOfJumpBeingPressed " + numOfJumpBeingPressed);
+
+
         }
 
         if (isJumping && jump.ReadValue<float>() == 0 && jumpSpeed <= minJumpForce)
@@ -659,30 +666,62 @@ public class TestCube : MonoBehaviour
             jumpSpeed += -jumpDeaccel * Time.deltaTime;
 
         }
-        else if(jumpSpeed <= maxFall)
+        else if (jumpSpeed <= maxFall)
         {
             jumpSpeed = maxFall;
         }
 
         //handle gliding
-        if(isInAir && numOfJumpBeingPressed == 1 && jump.ReadValue<float>() == 1)
-        {
-            //gliding
-            print("Gliding");
-        } else if(isInAir || isJumping && isJumping)
-        {
-            forceDirection += Vector3.up * jumpSpeed;
-        }
-
-            //forceDirection += Vector3.up * jumpForce;
-
-            //if we have started to move downwards we are not longer jumping
-        if (jumpSpeed <= 0) isJumping = false;
-        //if (isInAir || isJumping )
+        //if(isInAir|| isJumping)
         //{
-        //    forceDirection += Vector3.up * jumpSpeed;
-        //}
+        //    if(parachute.triggered)
+        //    {
+        //        isGliding = true;
+
+        //    }
+        //    else if (cancelParachute.triggered)
+        //    {
+        //        isGliding = false;
+
+        //    }
+
+        //    print("isGliding = " + isGliding);
+        //} 
+
+
+        //forceDirection += Vector3.up * jumpForce;
+
+        //if we have started to move downwards we are not longer jumping
+        if (jumpSpeed <= 0) isJumping = false;
+
+        if (isInAir || isJumping)
+        {
+            if (!isGliding)
+            {
+                forceDirection += Vector3.up * jumpSpeed;
+            }
+
+        }
     }
+
+    void DoParachute(InputAction.CallbackContext obj)
+    {
+
+        if (isInAir || isJumping)
+        {
+            forceDirection += Vector3.up * -0.01f;
+            print("Gliding");
+            isGliding = true;
+
+        }
+    }
+
+    void DoFall(InputAction.CallbackContext obj)
+    {
+        isGliding = false;
+        print("Not Gliding");
+    }
+
 
 
 
@@ -707,7 +746,9 @@ public class TestCube : MonoBehaviour
         {
             isGrounded = true;
             isInAir = false;
-            numOfJumpBeingPressed = 0;
+            isGliding = false;
+
+
             //isGliding = false;
 
             //Debug.Log("isGrounded" + isGrounded);
@@ -718,9 +759,8 @@ public class TestCube : MonoBehaviour
             isInAir = true;
             isGrounded = false;
             //Debug.Log("isGrounded" + isGrounded);
-
-
         }
+        print("isInAir " + isInAir);
     }
 
 
@@ -730,8 +770,9 @@ public class TestCube : MonoBehaviour
         {
             withinDialogueRange = true;
             hubStart = true;
-                    
-        } else if (other.gameObject.tag == "NPC2")
+
+        }
+        else if (other.gameObject.tag == "NPC2")
         {
             withinDialogueRange = true;
             hubEnd = true;
@@ -772,18 +813,6 @@ public class TestCube : MonoBehaviour
     }
 
 
-    /*
-    void DoFly(InputAction.CallbackContext obj)
-    {
-        if(isInAir || isJumping)
-        {
-            isGliding = true;
-            rb.drag = parachuteDrag;
-            rb.useGravity = false;
-            Debug.Log("FLYING");
-        } 
-    }
-    */
     //void DoContinue(InputAction.CallbackContext obj)
     //{
     //    lineView.OnContinueClicked();
@@ -852,6 +881,10 @@ public class TestCube : MonoBehaviour
         }
 
     }
+}
+
+    
+
 
     /*
     private void Move()
@@ -877,4 +910,4 @@ public class TestCube : MonoBehaviour
     }
     */
 
-}
+
