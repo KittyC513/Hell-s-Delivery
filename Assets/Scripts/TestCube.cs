@@ -709,7 +709,7 @@ public class TestCube : MonoBehaviour
 
         if (isInAir || isJumping)
         {
-            forceDirection += Vector3.up * -0.01f;
+            forceDirection += Vector3.up * parachuteSpeed;
             print("Gliding");
             isGliding = true;
 
@@ -749,6 +749,7 @@ public class TestCube : MonoBehaviour
             isGliding = false;
 
 
+
             //isGliding = false;
 
             //Debug.Log("isGrounded" + isGrounded);
@@ -758,6 +759,7 @@ public class TestCube : MonoBehaviour
         {
             isInAir = true;
             isGrounded = false;
+
             //Debug.Log("isGrounded" + isGrounded);
         }
         print("isInAir " + isInAir);
