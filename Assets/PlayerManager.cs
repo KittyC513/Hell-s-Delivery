@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
     private List<LayerMask> playerColliderLayers;
     [SerializeField]
     private List<LayerMask> playerRespawnLayer;
+    [SerializeField]
+    private List<LayerMask> playerCameraLayer;
 
     private PlayerInputManager playerInputManager;
 
@@ -59,8 +61,11 @@ public class PlayerManager : MonoBehaviour
         int colliderLayerToAdd = (int)Mathf.Log(playerColliderLayers[players.Count - 1].value, 2);
         int itemContainerLayerToAdd = (int)Mathf.Log(itemContainer[players.Count - 1].value, 2);
         int playerRespawnLayerToAdd = (int)Mathf.Log(playerRespawnLayer[players.Count - 1].value, 2);
+        //int playerCombatCameraLayerToAdd = (int)Mathf.Log(playerCameraLayer[players.Count - 1].value, 2);
 
         playerParent.GetComponentInChildren<CinemachineFreeLook>().gameObject.layer = layerToAdd;
+
+        //playerParent.GetComponentInChildren<CinemachineVirtualCamera>().gameObject.layer = playerCombatCameraLayerToAdd;
         playerParent.GetComponentInChildren<CapsuleCollider>().gameObject.layer =colliderLayerToAdd;
         playerParent.GetComponentInChildren<BoxCollider>().gameObject.layer = itemContainerLayerToAdd;
         playerParent.GetComponentInChildren<RespawnControl>().gameObject.layer = playerRespawnLayerToAdd;

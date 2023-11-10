@@ -8,7 +8,7 @@ using UnityEngine.ProBuilder.Shapes;
 using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
 using Yarn.Unity;
-
+using Unity.VisualScripting;
 
 public class TestCube : MonoBehaviour
 {
@@ -173,6 +173,20 @@ public class TestCube : MonoBehaviour
     private GameObject parachuteObj;
 
 
+    [Header("Camera Control")]
+    public CameraStyle currentStyle;
+    public GameObject thirdPersonCam;
+    public GameObject combatCam;
+    public GameObject topDownCam;
+    public GameObject aimCursor;
+    public bool isAiming;
+
+    public enum CameraStyle
+    {
+        Basic,
+        Combat,
+        Topdown
+    }
 
     private void Awake()
     {
@@ -205,6 +219,9 @@ public class TestCube : MonoBehaviour
         jump = player.FindAction("Jump");
         player.FindAction("Parachute").started += DoParachute;
         player.FindAction("Parachute").canceled += DoFall;
+        player.FindAction("Aim").started += DoAiming;
+        player.FindAction("Aim").canceled += CancelAiming;
+
         continueControl.action.Enable();
 
 
@@ -226,6 +243,9 @@ public class TestCube : MonoBehaviour
         player.FindAction("Parachute").canceled -= DoFall;
         //player.FindAction("CancelParachute").started -= DoFall;
         continueControl.action.Disable();
+
+        player.FindAction("Aim").started -= DoAiming;
+        player.FindAction("Aim").canceled -= CancelAiming;
 
         //dialogue.FindAction("ContinueDialogue").started -= DoContinue;
         //pickControl.action.Disable();
@@ -251,7 +271,7 @@ public class TestCube : MonoBehaviour
 
         parachuteObj.SetActive(false);
         canJump = true;
-       
+
     }
 
     // Update is called once per frame
@@ -271,7 +291,7 @@ public class TestCube : MonoBehaviour
 
         MovementCalcs();
 
-
+        CameraControl();
 
 
     }
@@ -356,6 +376,7 @@ public class TestCube : MonoBehaviour
         else if (curSceneName == scene2 && curSceneName != scene1 || curSceneName != scene3)
         {
             playerCamera.enabled = true;
+
         }
     }
     private void Move()
@@ -638,7 +659,7 @@ public class TestCube : MonoBehaviour
 
     void Jump()
     {
-
+        
         if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
         {
             jumpSpeed = jumpForce;
@@ -733,7 +754,6 @@ public class TestCube : MonoBehaviour
             print("Gliding");
             isGliding = true;
             canJump = false;
-
         }
     }
 
@@ -741,7 +761,7 @@ public class TestCube : MonoBehaviour
     {
         isGliding = false;
         print("Not Gliding");
-        
+        currentStyle = CameraStyle.Basic;
     }
 
 
@@ -903,6 +923,61 @@ public class TestCube : MonoBehaviour
         }
 
     }
+
+
+
+    void SwitchCameraStyle(CameraStyle newStyle)
+    {
+        combatCam.SetActive(false);
+        thirdPersonCam.SetActive(false);
+        topDownCam.SetActive(false);
+        //aimCursor.SetActive(false);
+
+        if (newStyle == CameraStyle.Basic)
+        {
+            thirdPersonCam.SetActive(true);
+        }
+
+        if (newStyle == CameraStyle.Combat)
+        {
+            combatCam.SetActive(true);
+            aimCursor.SetActive(true);
+        }
+
+        if (newStyle == CameraStyle.Topdown)
+        {
+            topDownCam.SetActive(true);
+        }
+
+        currentStyle = newStyle;
+    }
+
+    void DoAiming(InputAction.CallbackContext obj)
+    {
+        isAiming = true;
+        print("isAiming" + isAiming);
+    }
+
+    void CancelAiming(InputAction.CallbackContext obj)
+    {
+        isAiming = false;
+        print("isAiming" + isAiming);
+    }
+
+    void CameraControl()
+    {
+        if (isAiming)
+        {
+            currentStyle = CameraStyle.Combat;
+            SwitchCameraStyle(currentStyle);
+        }
+        else
+        {
+            currentStyle = CameraStyle.Basic;
+            SwitchCameraStyle(currentStyle);
+        }
+    }
+
 }
 
     
