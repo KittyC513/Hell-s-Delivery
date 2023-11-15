@@ -2415,7 +2415,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -3443,7 +3443,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &8749953798318015332
@@ -3520,12 +3520,23 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  triggerButton:
+    m_Name: Trigger Button
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4af86682-c606-4097-b409-ddb78b7f15a4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   isPicking: 0
   movementForce: 1
   playerAnimator: {fileID: 2614810018776100227}
   maxSpeed: 5
   walkSpeed: 5
   runSpeed: 8
+  gliderSpeed: 2.5
+  currentSpeed: 0
   timeToRun: 0.2
   timeToWalk: 0.1
   timeToZero: 0.083
@@ -3539,6 +3550,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   isRunning: 0
+  jumpButtonGracePeriod: 0.2
   playerCamera: {fileID: 8039368589211168344}
   mainCam: {fileID: 0}
   testPickDrop: {fileID: 0}
@@ -3581,7 +3593,6 @@ MonoBehaviour:
   isGliding: 0
   numOfButtonPressed: 0
   parachuteObj: {fileID: 5520364453758422537}
-  currentStyle: 0
   thirdPersonCam: {fileID: 7231244782024356411}
   combatCam: {fileID: 8433833297185990865}
   topDownCam: {fileID: 5922669522122511283}
@@ -3975,7 +3986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2328177314585349164
 Transform:
   m_ObjectHideFlags: 0
@@ -4418,7 +4429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.251341, y: -0.32455102, z: 0.08989539, w: 0.90742123}
+  m_LocalRotation: {x: 0.25134102, y: -0.32455102, z: 0.0898954, w: 0.9074212}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4487,7 +4498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2618575627546304545
 Transform:
   m_ObjectHideFlags: 0

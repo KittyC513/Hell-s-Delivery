@@ -27,7 +27,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue;
-    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute;
+    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute, triggerButton;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -48,8 +48,11 @@ public class TestCube : MonoBehaviour
     private float walkSpeed = 4f;
     [SerializeField]
     private float runSpeed = 9f;
-
+    [SerializeField]
+    private float gliderSpeed = 2.5f;
+    [SerializeField]
     private float currentSpeed;
+
 
     private Vector3 faceDir;
 
@@ -77,6 +80,11 @@ public class TestCube : MonoBehaviour
     LayerMask groundLayer;
     [SerializeField]
     private bool isRunning;
+    [SerializeField]
+    private float jumpButtonGracePeriod;
+
+    private float? lastGroundedTime;
+    private float? jumpButtonPressedTime;
 
     [SerializeField]
     private Camera playerCamera;
@@ -173,20 +181,22 @@ public class TestCube : MonoBehaviour
     private GameObject parachuteObj;
 
 
+
+
     [Header("Camera Control")]
-    public CameraStyle currentStyle;
+    //public CameraStyle currentStyle;
     public GameObject thirdPersonCam;
     public GameObject combatCam;
     public GameObject topDownCam;
     public GameObject aimCursor;
     public bool isAiming;
 
-    public enum CameraStyle
-    {
-        Basic,
-        Combat,
-        Topdown
-    }
+    //public enum CameraStyle
+    //{
+    //    Basic,
+    //    Combat,
+    //    Topdown
+    //}
 
     private void Awake()
     {
@@ -206,21 +216,19 @@ public class TestCube : MonoBehaviour
 
     private void OnEnable()
     {
-        //player.FindAction("Move").started += DoMove;
+
         player.FindAction("Pick").started += DoPick;
         move = player.FindAction("Move");
-        //player.FindAction("Jump").started += DoJump;
+
         run = player.FindAction("Run");
         player.FindAction("Join").started += DoTalk;
-        //player.FindAction("Parachute").started += DoFly;
-        //dialogue.FindAction("ContinueDialogue").started += DoContinue;
-        //cameraLook= player.FindAction("CameraLook");
-        //pickControl.action.Enable();
+
         jump = player.FindAction("Jump");
+        triggerButton = player.FindAction("Trigger");
+
         player.FindAction("Parachute").started += DoParachute;
         player.FindAction("Parachute").canceled += DoFall;
-        player.FindAction("Aim").started += DoAiming;
-        player.FindAction("Aim").canceled += CancelAiming;
+
 
         continueControl.action.Enable();
 
@@ -231,21 +239,17 @@ public class TestCube : MonoBehaviour
 
     private void OnDisable()
     {
-        //player.FindAction("Move").started -= DoMove;
-        // player.FindAction("MoveUp").started -= MoveUp;
-        //player.FindAction("MoveDown").started -= MoveDown;
-        //player.FindAction("Pick").started -= DoPick;
+
         player.FindAction("Pick").started -= DoPick;
-        //player.FindAction("Jump").started -= DoJump;
+
         player.Disable();
         player.FindAction("Join").started -= DoTalk;
         player.FindAction("Parachute").started -= DoParachute;
         player.FindAction("Parachute").canceled -= DoFall;
-        //player.FindAction("CancelParachute").started -= DoFall;
+
         continueControl.action.Disable();
 
-        player.FindAction("Aim").started -= DoAiming;
-        player.FindAction("Aim").canceled -= CancelAiming;
+
 
         //dialogue.FindAction("ContinueDialogue").started -= DoContinue;
         //pickControl.action.Disable();
@@ -291,7 +295,7 @@ public class TestCube : MonoBehaviour
 
         MovementCalcs();
 
-        CameraControl();
+        //CameraControl();
 
 
     }
@@ -391,6 +395,12 @@ public class TestCube : MonoBehaviour
             }
             else if (curSceneName == scene2 || curSceneName == scene4)
             {
+                if (isGliding) 
+                {
+                    currentSpeed = gliderSpeed;
+                }
+
+
                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
             }
@@ -659,13 +669,25 @@ public class TestCube : MonoBehaviour
 
     void Jump()
     {
-        
-        if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
+        //if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
+        if (jump.ReadValue<float>() == 1)
         {
-            jumpSpeed = jumpForce;
-            isJumping = true;
-            canJump = false;
+            //jumpSpeed = jumpForce;
+            //isJumping = true;
+            //canJump = false;
+            jumpButtonPressedTime = Time.time;
 
+        }
+        if(Time.time - lastGroundedTime <= jumpButtonGracePeriod && canJump)
+        {
+            if(Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod)
+            {
+                jumpSpeed = jumpForce;
+                isJumping = true;
+                canJump = false;
+                jumpButtonPressedTime = null;
+                lastGroundedTime = null;
+            }
         }
 
         if (isJumping && jump.ReadValue<float>() == 0 && jumpSpeed <= minJumpForce)
@@ -761,7 +783,7 @@ public class TestCube : MonoBehaviour
     {
         isGliding = false;
         print("Not Gliding");
-        currentStyle = CameraStyle.Basic;
+        //currentStyle = CameraStyle.Basic;
     }
 
 
@@ -789,6 +811,7 @@ public class TestCube : MonoBehaviour
             isGrounded = true;
             isInAir = false;
             isGliding = false;
+            lastGroundedTime = Time.time;
 
 
             //isGliding = false;
@@ -886,7 +909,7 @@ public class TestCube : MonoBehaviour
 
     public bool ReadActionButton()
     {
-        if (run.ReadValue<float>() == 1) return true;
+        if (triggerButton.ReadValue<float>() == 1) return true;
         else return false;
     }
 
@@ -926,57 +949,57 @@ public class TestCube : MonoBehaviour
 
 
 
-    void SwitchCameraStyle(CameraStyle newStyle)
-    {
-        combatCam.SetActive(false);
-        thirdPersonCam.SetActive(false);
-        topDownCam.SetActive(false);
-        //aimCursor.SetActive(false);
+    //void SwitchCameraStyle(CameraStyle newStyle)
+    //{
+    //    combatCam.SetActive(false);
+    //    thirdPersonCam.SetActive(false);
+    //    topDownCam.SetActive(false);
+    //    //aimCursor.SetActive(false);
 
-        if (newStyle == CameraStyle.Basic)
-        {
-            thirdPersonCam.SetActive(true);
-        }
+    //    if (newStyle == CameraStyle.Basic)
+    //    {
+    //        thirdPersonCam.SetActive(true);
+    //    }
 
-        if (newStyle == CameraStyle.Combat)
-        {
-            combatCam.SetActive(true);
-            aimCursor.SetActive(true);
-        }
+    //    if (newStyle == CameraStyle.Combat)
+    //    {
+    //        combatCam.SetActive(true);
+    //        aimCursor.SetActive(true);
+    //    }
 
-        if (newStyle == CameraStyle.Topdown)
-        {
-            topDownCam.SetActive(true);
-        }
+    //    if (newStyle == CameraStyle.Topdown)
+    //    {
+    //        topDownCam.SetActive(true);
+    //    }
 
-        currentStyle = newStyle;
-    }
+    //    currentStyle = newStyle;
+    //}
 
-    void DoAiming(InputAction.CallbackContext obj)
-    {
-        isAiming = true;
-        print("isAiming" + isAiming);
-    }
+    //void DoAiming(InputAction.CallbackContext obj)
+    //{
+    //    isAiming = true;
+    //    print("isAiming" + isAiming);
+    //}
 
-    void CancelAiming(InputAction.CallbackContext obj)
-    {
-        isAiming = false;
-        print("isAiming" + isAiming);
-    }
+    //void CancelAiming(InputAction.CallbackContext obj)
+    //{
+    //    isAiming = false;
+    //    print("isAiming" + isAiming);
+    //}
 
-    void CameraControl()
-    {
-        if (isAiming)
-        {
-            currentStyle = CameraStyle.Combat;
-            SwitchCameraStyle(currentStyle);
-        }
-        else
-        {
-            currentStyle = CameraStyle.Basic;
-            SwitchCameraStyle(currentStyle);
-        }
-    }
+    //void CameraControl()
+    //{
+    //    if (isAiming)
+    //    {
+    //        currentStyle = CameraStyle.Combat;
+    //        SwitchCameraStyle(currentStyle);
+    //    }
+    //    else
+    //    {
+    //        currentStyle = CameraStyle.Basic;
+    //        SwitchCameraStyle(currentStyle);
+    //    }
+    //}
 
 }
 

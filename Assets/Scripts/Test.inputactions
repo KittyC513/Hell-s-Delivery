@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Trigger",
+                    "type": "Value",
+                    "id": "ba1e3798-cf6b-4047-84b5-a42ce55d0b2c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -296,7 +305,7 @@
                 {
                     "name": "",
                     "id": "2e67206c-4f09-4228-b3c4-a2bcd4c59177",
-                    "path": "<XInputController>/buttonEast",
+                    "path": "<XInputController>/buttonSouth",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -329,7 +338,7 @@
                 {
                     "name": "",
                     "id": "53486f20-0fd5-4306-8baf-9d351e6eb3bf",
-                    "path": "<XInputController>/buttonEast",
+                    "path": "<XInputController>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -345,6 +354,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7455457e-7737-4616-a1ac-19437d1d780a",
+                    "path": "<XInputController>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
