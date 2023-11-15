@@ -1,6 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}" SchemaVersion="110">
 	<AudioObjects>
-		<WorkUnit Name="Default Work Unit" ID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}" PersistMode="Standalone">
+			<ChildrenList>
+				<RandomSequenceContainer Name="Steps" ID="{B4B56DAF-C000-4CA6-AFCF-BD01D63E7F9E}" ShortID="674810995">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="Step 2 - Light" ID="{734BC886-EEAA-417D-AA8B-216748F06624}" ShortID="973413732">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Step 2 - Light" ID="{2684A62C-8D12-434A-B7C1-C88442DB2B5E}">
+									<Language>SFX</Language>
+									<AudioFile>Step 2 - Light.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="987426019"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Step 2 - Light" ID="{2684A62C-8D12-434A-B7C1-C88442DB2B5E}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Step 3 - Light" ID="{8FA077A0-6234-4C07-B807-CAC91A7D57CF}" ShortID="243043569">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Step 3 - Light" ID="{B7D77450-D6F8-4455-BE90-238BFDEF3E6E}">
+									<Language>SFX</Language>
+									<AudioFile>Step 3 - Light.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="351540226"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Step 3 - Light" ID="{B7D77450-D6F8-4455-BE90-238BFDEF3E6E}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Step 1 - Light" ID="{C370FE72-B185-4895-A6BD-6F55EA2B3E88}" ShortID="478919287">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Step 1 - Light" ID="{B4576BE9-9148-4054-8D17-01D206495B47}">
+									<Language>SFX</Language>
+									<AudioFile>Step 1 - Light.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="26740870"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Step 1 - Light" ID="{B4576BE9-9148-4054-8D17-01D206495B47}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Step 4 - Light" ID="{1F992C27-4DA2-458B-AC76-60D7BDB16045}" ShortID="678692784">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Step 4 - Light" ID="{D640D917-836A-4695-AB7E-346655FEEE0C}">
+									<Language>SFX</Language>
+									<AudioFile>Step 4 - Light.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="250775375"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Step 4 - Light" ID="{D640D917-836A-4695-AB7E-346655FEEE0C}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+			</ChildrenList>
+		</WorkUnit>
 	</AudioObjects>
 </WwiseDocument>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Mac" BasePlatform="Mac" SchemaVersion="16" SoundBankVersion="145">
+	<RootPaths>
+		<ProjectRoot>../..</ProjectRoot>
+		<SourceFilesRoot>../../.cache/Mac</SourceFilesRoot>
+		<SoundBanksRoot>.</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>.</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{F56A610C-C7C4-F874-B68B-7ADDF94EBB7A}">
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<Plugins>
+				<AudioDevices>
+					<Plugin Id="2317455096" Name="No_Output" LibName="No Output" LibId="11862023"/>
+					<Plugin Id="3859886410" Name="System" LibName="System" LibId="11403271"/>
+				</AudioDevices>
+			</Plugins>
+			<Busses>
+				<Bus Id="3803692087" Name="Master Audio Bus"/>
+			</Busses>
+		</SoundBank>
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{3BA9E2E8-644D-530E-D493-56C6DE435A9B}">
+			<ShortName>Main</ShortName>
+			<Path>Main.bnk</Path>
+			<Media>
+				<File Id="26740870" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Step 1 - Light.wav</ShortName>
+					<CachePath>SFX/Step 1 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="250775375" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Step 4 - Light.wav</ShortName>
+					<CachePath>SFX/Step 4 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="351540226" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Step 3 - Light.wav</ShortName>
+					<CachePath>SFX/Step 3 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="987426019" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Step 2 - Light.wav</ShortName>
+					<CachePath>SFX/Step 2 - Light_10C4C929.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="2600469463" Name="Play_Steps" DurationType="OneShot" DurationMin="0.23217687" DurationMax="0.24292517">
+					<MediaRefs>
+						<MediaRef Id="26740870"/>
+						<MediaRef Id="250775375"/>
+						<MediaRef Id="351540226"/>
+						<MediaRef Id="987426019"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{5DFA9423-F8C1-6220-CC28-90D756C0D284}</FileHash>
+</SoundBanksInfo>
