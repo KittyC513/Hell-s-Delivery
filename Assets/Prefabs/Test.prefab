@@ -3316,6 +3316,8 @@ GameObject:
   - component: {fileID: 8749953798318015332}
   - component: {fileID: 4895904256865648347}
   - component: {fileID: 965772886468833305}
+  - component: {fileID: 4505475051223101429}
+  - component: {fileID: 5919994858091806596}
   m_Layer: 10
   m_Name: Capsule1
   m_TagString: Player
@@ -3598,6 +3600,11 @@ MonoBehaviour:
   topDownCam: {fileID: 5922669522122511283}
   aimCursor: {fileID: 0}
   isAiming: 0
+  footstepEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 7830b9453d606734a8634428bfcc7003, type: 2}
+  footstepRate: 100
 --- !u!114 &4895904256865648347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3652,6 +3659,43 @@ MonoBehaviour:
   m_DefaultActionMap: Cube
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 8039368589211168344}
+--- !u!114 &4505475051223101429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636394438553627759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb7d7426751d0b747845667189bb53b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_listeners:
+    initialListenerList:
+    - {fileID: 5919994858091806596}
+    useDefaultListeners: 1
+  isEnvironmentAware: 1
+  isStaticObject: 0
+  m_positionOffsetData:
+    KeepMe: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+  m_posOffsetData: {fileID: 0}
+  listenerMask: 1
+--- !u!114 &5919994858091806596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636394438553627759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a4ca1055b40e944b9b7889749a039c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDefaultListener: 1
+  listenerId: 0
 --- !u!1 &7858671640099437214
 GameObject:
   m_ObjectHideFlags: 0

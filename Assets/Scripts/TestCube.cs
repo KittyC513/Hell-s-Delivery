@@ -198,6 +198,12 @@ public class TestCube : MonoBehaviour
     //    Topdown
     //}
 
+    [Space, Header("Wwise Stuff")]
+    [SerializeField] private AK.Wwise.Event footstepEvent;
+    [SerializeField] private float footstepRate = 500;
+    private bool shouldStep = true;
+    private float lastStepTime = 0;
+
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -208,7 +214,7 @@ public class TestCube : MonoBehaviour
         //playerPos = this.transform;
         maxSpeed = walkSpeed;
         mainCam = Camera.main;
-
+        
 
 
         //gM = GetComponent<GameManager>();
@@ -275,7 +281,7 @@ public class TestCube : MonoBehaviour
 
         parachuteObj.SetActive(false);
         canJump = true;
-
+        lastStepTime = Time.time;
     }
 
     // Update is called once per frame
@@ -342,8 +348,11 @@ public class TestCube : MonoBehaviour
 
         if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
         {
+            //we are moving
             faceDir = new Vector3(move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
             isWalking = true;
+
+            
             if (isRunning)
             {
                 float accel = (maxSpeed / timeToRun);
@@ -357,13 +366,26 @@ public class TestCube : MonoBehaviour
             }
 
 
+            if (shouldStep)
+            {
+                footstepEvent.Post(this.gameObject);
+                lastStepTime = Time.time;
+                shouldStep = false;
+            }
+            else if (currentSpeed > 0)
+            {
+                if (Time.time - lastStepTime > (footstepRate / currentSpeed) * Time.deltaTime)
+                {
+                    shouldStep = true;
+                }
+            }
         }
         else
         {
             float deccel = (-maxSpeed / timeToZero);
             currentSpeed += deccel * Time.deltaTime;
             isWalking = false;
-
+            shouldStep = false;
         }
         //Debug.Log(rb.velocity);
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
