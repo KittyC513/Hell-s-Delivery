@@ -693,7 +693,7 @@ public class TestCube : MonoBehaviour
     void Jump()
     {
         //if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
-        if (jump.ReadValue<float>() == 1)
+        if (jump.ReadValue<float>() == 1 && canJump)
         {
             //jumpSpeed = jumpForce;
             //isJumping = true;
@@ -701,7 +701,7 @@ public class TestCube : MonoBehaviour
             jumpButtonPressedTime = Time.time;
 
         }
-        if(Time.time - lastGroundedTime <= jumpButtonGracePeriod && canJump)
+        if(Time.time - lastGroundedTime <= jumpButtonGracePeriod)
         {
             if(Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod)
             {
