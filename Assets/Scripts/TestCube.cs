@@ -120,6 +120,7 @@ public class TestCube : MonoBehaviour
     string scene2 = "PrototypeLevel";
     string scene3 = "HubEnd";
     string scene4 = "ParticleTesting";
+    string scene5 = "MVPLevel";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -393,7 +394,7 @@ public class TestCube : MonoBehaviour
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
-            else if (curSceneName == scene2 || curSceneName == scene4)
+            else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5)
             {
                 if (isGliding) 
                 {
