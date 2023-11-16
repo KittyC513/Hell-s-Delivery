@@ -37,6 +37,7 @@ public class RespawnControl : MonoBehaviour
     public bool Player1isCarrying;
     [SerializeField]
     public bool Player2isCarrying;
+    public GameObject[] Partner;
 
     public DialogueRunner dR;
 
@@ -75,6 +76,11 @@ public class RespawnControl : MonoBehaviour
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
         }
+
+        ////if (Partner == null)
+        //{
+            Partner = GameObject.FindGameObjectsWithTag("FindScript");
+        //}
 
 
     }
@@ -188,6 +194,28 @@ public class RespawnControl : MonoBehaviour
             LevelDialogue.ShowDevilAll();
             dR.StartDialogue("EndLevel");
             Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == ("fCheckpoint"))
+        {
+
+            respawnPoint = other.transform.position;
+
+            Debug.Log("RespawnPoint =" + respawnPoint);
+
+            foreach (GameObject obj in Partner)
+            {
+                //Debug.Log(obj);
+                RespawnControl partnerScript = obj.GetComponent<RespawnControl>();
+
+                if (partnerScript != null)
+                {
+                    partnerScript.respawnPoint = respawnPoint;
+                    Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+                }
+                //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+            }
+            
         }
 
 

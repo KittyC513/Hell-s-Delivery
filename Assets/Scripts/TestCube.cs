@@ -176,7 +176,7 @@ public class TestCube : MonoBehaviour
     private RespawnControl p2rc, p1rc;
 
     [SerializeField]
-    private float parachuteSpeed = -2f;
+    private float parachuteSpeed = -5f;
     [SerializeField]
     private bool isGliding;
     [SerializeField]
@@ -743,8 +743,8 @@ public class TestCube : MonoBehaviour
 
         }
 
-        print("jump" + jump.ReadValue<float>());
-        print("canJump" + canJump);
+        //print("jump" + jump.ReadValue<float>());
+        //print("canJump" + canJump);
              
         //apply gravity
         if (jumpSpeed > maxFall)
@@ -817,7 +817,7 @@ public class TestCube : MonoBehaviour
     void DoFall(InputAction.CallbackContext obj)
     {
         isGliding = false;
-        print("Not Gliding");
+        //print("Not Gliding");
         //currentStyle = CameraStyle.Basic;
     }
 

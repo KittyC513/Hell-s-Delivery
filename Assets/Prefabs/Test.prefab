@@ -465,6 +465,7 @@ MonoBehaviour:
   curSceneName: 
   Player1isCarrying: 0
   Player2isCarrying: 0
+  Partner: []
   dR: {fileID: 0}
 --- !u!1 &307637956170343215
 GameObject:
@@ -3320,7 +3321,7 @@ GameObject:
   - component: {fileID: 5919994858091806596}
   m_Layer: 10
   m_Name: Capsule1
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3592,7 +3593,7 @@ MonoBehaviour:
   trigger: {fileID: 0}
   p2rc: {fileID: 0}
   p1rc: {fileID: 0}
-  parachuteSpeed: -5
+  parachuteSpeed: -10
   isGliding: 0
   numOfButtonPressed: 0
   parachuteObj: {fileID: 5520364453758422537}
@@ -4541,7 +4542,7 @@ GameObject:
   - component: {fileID: 2618575627546304545}
   m_Layer: 0
   m_Name: Test
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
