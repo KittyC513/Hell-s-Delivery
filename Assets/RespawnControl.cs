@@ -108,7 +108,7 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-                ScoreCount.instance.AddPointToP1(-1);
+                ScoreCount.instance.AddDeathsToP1(1);
                 LevelDialogue.ShowDevilPlayer2();
                 dR.Stop();
                 PlayRandomDialogue();
@@ -120,7 +120,7 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2)
             {
-                ScoreCount.instance.AddPointToP2(-1);
+                ScoreCount.instance.AddDeathsToP2(1);
                 LevelDialogue.ShowDevilPlayer1();
                 dR.Stop();
                 PlayRandomDialogue();
