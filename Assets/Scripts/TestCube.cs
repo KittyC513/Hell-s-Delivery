@@ -55,6 +55,8 @@ public class TestCube : MonoBehaviour
 
 
     private Vector3 faceDir;
+    [SerializeField]
+    private Transform playerDir;
 
     [SerializeField]
     private float timeToRun = 0.16f;
@@ -155,6 +157,7 @@ public class TestCube : MonoBehaviour
     private GameObject package;
     [SerializeField]
     private float pickDistance;
+
     [SerializeField]
     private RaycastHit raycastHit;
     [SerializeField]
@@ -181,8 +184,10 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private GameObject parachuteObj;
 
-
-
+    [SerializeField]
+    private float pushForce;
+    [SerializeField]
+    Rigidbody otherRigidbody;
 
     [Header("Camera Control")]
     //public CameraStyle currentStyle;
@@ -497,9 +502,16 @@ public class TestCube : MonoBehaviour
         return right.normalized;
     }
 
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(playerPos.position, pickDistance);
+    //}
+
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(playerPos.position, pickDistance);
+        // Draw a wire sphere to visualize the SphereCast
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistance, pickDistance);
     }
 
     private void DoPick(InputAction.CallbackContext obj)
@@ -969,6 +981,31 @@ public class TestCube : MonoBehaviour
         }
 
     }
+
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        print("Name" + collision.gameObject);
+    //        otherRigidbody = collision.gameObject.GetComponent<Rigidbody>();
+
+    //        if (otherRigidbody != null && ReadPushButton() == true)
+    //        {
+    //            Vector3 pushDirection = (playerDir.transform.position - collision.transform.position).normalized;
+    //            otherRigidbody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
+    //            print("Push");
+    //        }
+    //    }
+    //}
+
+    //public bool ReadPushButton()
+    //{
+    //    if (triggerButton.ReadValue<float>() == 1) return true;
+    //    else return false;
+    //}
+
 
 
 
