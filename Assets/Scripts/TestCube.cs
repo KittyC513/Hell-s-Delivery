@@ -210,6 +210,8 @@ public class TestCube : MonoBehaviour
     private bool shouldStep = true;
     private float lastStepTime = 0;
 
+    public float geiserForce;
+
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -343,6 +345,8 @@ public class TestCube : MonoBehaviour
 
     private void MovementCalcs()
     {
+        playerAnimator.SetBool("isGliding", isGliding);
+
         if (isFreeze)
         {
             playerAnimator.SetFloat("speed", 0);
@@ -980,6 +984,14 @@ public class TestCube : MonoBehaviour
             shadowRenderer.SetActive(false);
         }
 
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == ("Geiser") && isGliding)
+        {
+            rb.AddForce(Vector3.up * geiserForce);
+        }
     }
 
 
