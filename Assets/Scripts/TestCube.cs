@@ -123,6 +123,7 @@ public class TestCube : MonoBehaviour
     string scene3 = "HubEnd";
     string scene4 = "ParticleTesting";
     string scene5 = "MVPLevel";
+    string scene6 = "TitleScene";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -404,12 +405,12 @@ public class TestCube : MonoBehaviour
 
     void CameraSwitch()
     {
-        if (curSceneName == scene1 || curSceneName == scene3 && curSceneName != scene2)
+        if (curSceneName == scene1 || curSceneName == scene3)
         {
             playerCamera.enabled = false;
 
         }
-        else if (curSceneName == scene2 && curSceneName != scene1 || curSceneName != scene3)
+        else if ( curSceneName != scene1 && curSceneName != scene3)
         {
             playerCamera.enabled = true;
 
@@ -425,7 +426,7 @@ public class TestCube : MonoBehaviour
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
-            else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5)
+            else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene6)
             {
                 if (isGliding) 
                 {

@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
     private GameObject player1;
     [SerializeField]
     private GameObject player2;
+    [SerializeField]
+    private Transform startPoint1;
+    [SerializeField]
+    private Transform startPoint2;
+
 
     [SerializeField]
     private GameObject character1;
@@ -34,6 +39,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     public bool sceneChanged;
+    [SerializeField]
+    private GameObject[] popUps;
+    [SerializeField]
+    public int popUpIndex;
+
 
     private void Start()
     {
@@ -151,6 +161,38 @@ public class GameManager : MonoBehaviour
         // Destroy the GameObject this script is attached to
         Destroy(character1);
         Destroy(character2);
+    }
+
+
+    void TutorialControl()
+    {
+        for (int i = 0; i < popUps.Length; i++)
+        {
+            if(i == popUpIndex)
+            {
+                popUps[popUpIndex].SetActive(true);
+            }
+            else
+            {
+                popUps[popUpIndex].SetActive(false);
+            }
+        }
+
+        if(popUpIndex == 0)
+        {
+            if(p1.transform != startPoint1 && p1.transform != startPoint2)
+            {
+                popUpIndex++;
+
+            } else if(popUpIndex == 1)
+            {
+                //enter office
+            }
+            else if (popUpIndex == 2)
+            {
+                //pick packahge
+            }
+        }
     }
 
 }
