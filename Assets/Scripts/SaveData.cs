@@ -7,15 +7,19 @@ using UnityEngine;
 public class SaveData : ScriptableObject
 {
     [SerializeField]
-    public float player1Score;
+    public float p1Deaths;
     [SerializeField]
-    public float player2Score;
+    public float p2Deaths;
     [SerializeField]
     public bool p1Deliver;
     [SerializeField]
     public bool p2Deliver;
-
-
+    [SerializeField]
+    public float completionTime;
+    [SerializeField]
+    public float p1FinalScore;
+    [SerializeField]
+    public float p2FinalScore;
 }
 
 

@@ -16,10 +16,6 @@ public class ScoreCount : MonoBehaviour
     [SerializeField]
     public TextMeshProUGUI timeIndicatorText;
 
-    [SerializeField]
-    public SaveData sceneInfo;
-    // Start is called before the first frame update
-
     [SerializeField] private int p1Deaths = 0;
     [SerializeField] private float p1PackageTime = 0;
 
@@ -29,13 +25,38 @@ public class ScoreCount : MonoBehaviour
     [SerializeField] private float completionTime = 0;
     private bool shouldCountTime = false;
 
-    //need to calculate score
-    //each category can have a maximum number of points
-    //this lets us weight things
+    [SerializeField]
+    public LevelData lvlData;
 
-    //death should have 50 points maximum
-    //package time could have 125 points maximum
-    //completion time can have 100 points 
+    [Space, Header("Ratio Values")]
+    [SerializeField]
+    private float goodRatio = 1;
+    [SerializeField]
+    private float avgRatio = 0.7f;
+    [SerializeField]
+    private float badRatio = 0.5f;
+    [SerializeField]
+    private int totalPoints = 1200;
+    [SerializeField]
+    private float deathWeight = 0.3f;
+    [SerializeField]
+    private float packageTimeWeight = 0.4f;
+    [SerializeField]
+    private float completionWeight = 0.3f;
+
+
+    private float p1CalculatedScore;
+    private float p2CalculatedScore;
+
+
+    //need score for each value
+    //need an expected outcome for each player
+    //need a final value for each player
+
+    //deaths
+
+    //if we have deaths based on 3 values each one has a percentage attached
+    //need to input all 3 and return a percentage based on that
 
     private void Awake()
     {
@@ -51,10 +72,16 @@ public class ScoreCount : MonoBehaviour
     {
 
         timeIndicatorText.text = completionTime.ToString("f2");
- 
-        sceneInfo.player1Score = scoreValueP1;
-        sceneInfo.player2Score = scoreValueP2;
 
+        lvlData.p1Deaths = p1Deaths;
+        lvlData.p2Deaths = p2Deaths;
+        lvlData.p1Deliver = p1PackageTime;
+        lvlData.p2Deliver = p2PackageTime;
+        lvlData.completionTime = completionTime;
+        lvlData.p1FinalScore = p1CalculatedScore;
+        lvlData.p2FinalScore = p2CalculatedScore;
+
+        Debug.Log(p1CalculatedScore);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene("ScoreCards");
@@ -64,6 +91,103 @@ public class ScoreCount : MonoBehaviour
         {
             completionTime += Time.deltaTime;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        calculateScore(p1Deaths, p1PackageTime, p2Deaths, p2PackageTime, completionTime);
+    }
+
+    //return a vector 2, x is player 1 score y is player 2 score
+    private void calculateScore(int p1Death, float p1PTime, float p2Death, float p2PTime, float compTime)
+    {
+        //k factor is always 32 idk tbh 
+        float kFactor = 32;
+
+        //each point type has a weight, for example the maximum points are 1200
+        //completion points takes 0.3 or 30% of 1200
+        //meaning if you get a maximum completion points score you get 30% of 1200 for it
+        int completionPoints = Mathf.RoundToInt(completionWeight * totalPoints);
+        int packagePoints = Mathf.RoundToInt(packageTimeWeight * totalPoints);
+        int deathPoints = Mathf.RoundToInt(deathWeight * totalPoints);
+
+        int p1DeathScore = CalculateScore(p1Death, lvlData.goodDeathValue, lvlData.avgDeathValue, goodRatio, avgRatio, badRatio, deathPoints, false);
+        int p2DeathScore = CalculateScore(p2Death, lvlData.goodDeathValue, lvlData.avgDeathValue, goodRatio, avgRatio, badRatio, deathPoints, false);
+        int p1PackageScore = CalculateScore(p1PTime / (p1PTime + p2PTime), lvlData.goodPackageTime, lvlData.avgPackageTime, goodRatio, avgRatio, badRatio, packagePoints, true);
+        int p2PackageScore = CalculateScore(p2PTime / (p1PTime + p2PTime), lvlData.goodPackageTime, lvlData.avgPackageTime, goodRatio, avgRatio, badRatio, packagePoints, true);
+        int completionScore = CalculateScore(compTime/60, lvlData.goodCompletionTime, lvlData.avgCompletionTime, goodRatio, avgRatio, badRatio, completionPoints, false);
+
+        float p1Ra = p1DeathScore + p1PackageScore + completionScore;
+        float p2Ra = p2DeathScore + p2PackageScore + completionScore;
+
+        float p1Expected = 1 / (1 + 10 * (p2Ra - p1Ra) / 400);
+        float p2Expected = 1 / (1 + 10 * (p1Ra - p2Ra) / 400);
+
+        float p1Ratio = p1Ra + kFactor * (1 - p1Expected);
+        float p2Ratio = p2Ra + kFactor * (1 - p2Expected);
+
+        p1CalculatedScore = p1Ratio;
+        p2CalculatedScore = p2Ratio;
+
+    }
+
+    private int CalculateScore(float value, float goodValue, float avgValue, float goodRatio, float avgRatio, float badRatio, int totalPoints, bool higherBetter)
+    {
+        //value = your raw value
+        //good value = the level's good value standard
+        //avg value = the level's average value standard
+        //good ratio = the ratio of points you get for a good rated score
+        //avgratio = the ratio of points you get for an average rated score
+        //badRatio = the ratio of points you get for a bad rated score
+        //totalPoints = all the points available for this value
+        //higher better = is a higher score or a lower score better for this value
+
+        //the function will return your final score value based on the ratio
+        float ratio = 1;
+
+        if (higherBetter)
+        {
+            if (value >= goodValue)
+            {
+                ratio = goodRatio;
+            }
+            else if (value >= avgValue)
+            {
+                ratio = avgRatio;
+            }
+            else if (value < avgValue)
+            {
+                ratio = badRatio;
+            }
+        }
+        else
+        {
+            if (value > avgValue)
+            {
+                ratio = badRatio;
+            }
+            else if (value <= avgValue && value > goodValue)
+            {
+                ratio = avgRatio;
+            }
+            else if (value <= goodValue)
+            {
+                ratio = goodRatio;
+            }
+        }
+       
+
+        return Mathf.RoundToInt(ratio * totalPoints);
+
+    }
+
+    public void EndLevel()
+    {
+        lvlData.p1Deaths = p1Deaths;
+        lvlData.p2Deaths = p2Deaths;
+        lvlData.p1Deliver = p1PackageTime;
+        lvlData.p2Deliver = p2PackageTime;
+        lvlData.completionTime = completionTime;
     }
 
     public void StartLevelTime()

@@ -9,7 +9,7 @@ public class Scorecards : MonoBehaviour
     [SerializeField]
     private float player2Score;
     [SerializeField]
-    public SaveData sceneInfo;
+    public LevelData lvlData;
 
     [SerializeField] private float badScore = 100;
     [SerializeField] private float neutralScore = 300;
@@ -23,8 +23,8 @@ public class Scorecards : MonoBehaviour
 
     private void Start()
     {
-        player1Score = sceneInfo.player1Score;
-        player2Score = sceneInfo.player2Score;
+        player1Score = lvlData.p1FinalScore;
+        player2Score = lvlData.p2FinalScore;
         //first run animation 
         StartCoroutine(AnimationCycle());
         //check our player's scores and place the circle accordingly
