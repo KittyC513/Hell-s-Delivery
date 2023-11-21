@@ -82,7 +82,9 @@ public class ScoreCount : MonoBehaviour
         lvlData.p2FinalScore = p2CalculatedScore;
 
         Debug.Log(p1CalculatedScore);
-        if (Input.GetKeyDown(KeyCode.Space))
+
+
+        if (Input.GetKeyDown(KeyCode.C))
         {
             SceneManager.LoadScene("ScoreCards");
         }

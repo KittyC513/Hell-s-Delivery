@@ -11,10 +11,10 @@ public class Scorecards : MonoBehaviour
     [SerializeField]
     public LevelData lvlData;
 
-    [SerializeField] private float badScore = 100;
-    [SerializeField] private float neutralScore = 300;
-    [SerializeField] private float goodScore = 500;
-    [SerializeField] private float greatScore = 800;
+    [SerializeField] private float badScore = 400;
+    [SerializeField] private float neutralScore = 500;
+    [SerializeField] private float goodScore = 800;
+    [SerializeField] private float greatScore = 1200;
 
     [SerializeField] private GameObject p1Circle;
     [SerializeField] private GameObject p2Circle;
