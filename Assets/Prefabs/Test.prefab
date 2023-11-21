@@ -465,6 +465,7 @@ MonoBehaviour:
   curSceneName: 
   Player1isCarrying: 0
   Player2isCarrying: 0
+  Partner: []
   dR: {fileID: 0}
 --- !u!1 &307637956170343215
 GameObject:
@@ -3314,13 +3315,12 @@ GameObject:
   - component: {fileID: 4346010897626784134}
   - component: {fileID: 5993060672211804892}
   - component: {fileID: 8749953798318015332}
-  - component: {fileID: 4895904256865648347}
   - component: {fileID: 965772886468833305}
   - component: {fileID: 4505475051223101429}
   - component: {fileID: 5919994858091806596}
   m_Layer: 10
   m_Name: Capsule1
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3539,7 +3539,7 @@ MonoBehaviour:
   runSpeed: 8
   gliderSpeed: 8
   currentSpeed: 0
-  playerDir: {fileID: 0}
+  playerDir: {fileID: 8419582107820691319}
   timeToRun: 0.2
   timeToWalk: 0.1
   timeToZero: 0.083
@@ -3592,12 +3592,19 @@ MonoBehaviour:
   trigger: {fileID: 0}
   p2rc: {fileID: 0}
   p1rc: {fileID: 0}
-  parachuteSpeed: -5
+  parachuteSpeed: -10
   isGliding: 0
   numOfButtonPressed: 0
   parachuteObj: {fileID: 5520364453758422537}
-  pushForce: 10
-  otherRigidbody: {fileID: 0}
+  pushForce: 7
+  pushMask:
+    serializedVersion: 2
+    m_Bits: 3072
+  gameManager: {fileID: 0}
+  otherRB: {fileID: 0}
+  pushDistance: 0.5
+  pushMultiply: 10
+  lerpspeed: 3
   thirdPersonCam: {fileID: 7231244782024356411}
   combatCam: {fileID: 8433833297185990865}
   topDownCam: {fileID: 5922669522122511283}
@@ -3608,30 +3615,7 @@ MonoBehaviour:
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 7830b9453d606734a8634428bfcc7003, type: 2}
   footstepRate: 100
---- !u!114 &4895904256865648347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7636394438553627759}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ac22cddc9ac31d418d80c7afe36e039, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickableMask:
-    serializedVersion: 2
-    m_Bits: 128
-  player: {fileID: 5651904090368527511}
-  itemContainer: {fileID: 7935187663911269875}
-  slotFull: 0
-  pickControl: {fileID: 931966379516540633, guid: 4edb1691d151a0a4084f6bc320d88613, type: 3}
-  currentStyle: 0
-  thirdPersonCam: {fileID: 7231244782024356411}
-  combatCam: {fileID: 8433833297185990865}
-  topDownCam: {fileID: 5922669522122511283}
-  aimCursor: {fileID: 0}
+  geiserForce: 100
 --- !u!114 &965772886468833305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4476,7 +4460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25134102, y: -0.324551, z: 0.08989539, w: 0.9074212}
+  m_LocalRotation: {x: 0.25134104, y: -0.32455105, z: 0.08989541, w: 0.9074212}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4541,11 +4525,11 @@ GameObject:
   - component: {fileID: 2618575627546304545}
   m_Layer: 0
   m_Name: Test
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2618575627546304545
 Transform:
   m_ObjectHideFlags: 0

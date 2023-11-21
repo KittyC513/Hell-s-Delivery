@@ -123,6 +123,7 @@ public class TestCube : MonoBehaviour
     string scene3 = "HubEnd";
     string scene4 = "ParticleTesting";
     string scene5 = "MVPLevel";
+    string scene6 = "TitleScene";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -176,7 +177,7 @@ public class TestCube : MonoBehaviour
     private RespawnControl p2rc, p1rc;
 
     [SerializeField]
-    private float parachuteSpeed = -2f;
+    private float parachuteSpeed = -5f;
     [SerializeField]
     private bool isGliding;
     [SerializeField]
@@ -187,7 +188,16 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float pushForce;
     [SerializeField]
-    Rigidbody otherRigidbody;
+    private LayerMask pushMask;
+    [SerializeField]
+    GameManager gameManager;
+    [SerializeField]
+    private Rigidbody otherRB;
+    [SerializeField]
+    private float pushDistance;
+    [SerializeField]
+    private float pushMultiply;
+
 
     [Header("Camera Control")]
     //public CameraStyle currentStyle;
@@ -196,6 +206,8 @@ public class TestCube : MonoBehaviour
     public GameObject topDownCam;
     public GameObject aimCursor;
     public bool isAiming;
+
+
 
     //public enum CameraStyle
     //{
@@ -209,6 +221,8 @@ public class TestCube : MonoBehaviour
     [SerializeField] private float footstepRate = 500;
     private bool shouldStep = true;
     private float lastStepTime = 0;
+
+    public float geiserForce;
 
     private void Awake()
     {
@@ -240,7 +254,7 @@ public class TestCube : MonoBehaviour
 
         player.FindAction("Parachute").started += DoParachute;
         player.FindAction("Parachute").canceled += DoFall;
-
+        player.FindAction("Push").started += DoPush;
 
         continueControl.action.Enable();
 
@@ -258,7 +272,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("Join").started -= DoTalk;
         player.FindAction("Parachute").started -= DoParachute;
         player.FindAction("Parachute").canceled -= DoFall;
-
+        player.FindAction("Push").started -= DoPush;
         continueControl.action.Disable();
 
 
@@ -276,6 +290,7 @@ public class TestCube : MonoBehaviour
         curSceneName = currentScene.name;
         Debug.Log("Current scene" + curSceneName);
         dR = Object.FindAnyObjectByType<DialogueRunner>();
+        gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
 
         //objectGrabbable = Object.FindAnyObjectByType<ObjectGrabbable>();
@@ -309,6 +324,7 @@ public class TestCube : MonoBehaviour
 
         //CameraControl();
 
+        Debug.Log("Find player" + Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask));
 
     }
 
@@ -343,6 +359,8 @@ public class TestCube : MonoBehaviour
 
     private void MovementCalcs()
     {
+        playerAnimator.SetBool("isGliding", isGliding);
+
         if (isFreeze)
         {
             playerAnimator.SetFloat("speed", 0);
@@ -400,12 +418,12 @@ public class TestCube : MonoBehaviour
 
     void CameraSwitch()
     {
-        if (curSceneName == scene1 || curSceneName == scene3 && curSceneName != scene2)
+        if (curSceneName == scene1 || curSceneName == scene3)
         {
             playerCamera.enabled = false;
 
         }
-        else if (curSceneName == scene2 && curSceneName != scene1 || curSceneName != scene3)
+        else if ( curSceneName != scene1 && curSceneName != scene3)
         {
             playerCamera.enabled = true;
 
@@ -421,7 +439,7 @@ public class TestCube : MonoBehaviour
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
-            else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5)
+            else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene6)
             {
                 if (isGliding) 
                 {
@@ -511,15 +529,16 @@ public class TestCube : MonoBehaviour
     {
         // Draw a wire sphere to visualize the SphereCast
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistance, pickDistance);
+        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pushDistance, pushDistance);
+        //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistance, pickDistance);
+
     }
 
     private void DoPick(InputAction.CallbackContext obj)
     {
-        //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
+       //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
         if (objectGrabbable == null)
         {
-            Debug.Log("Object in range:" + Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask));
             if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
 
@@ -564,6 +583,44 @@ public class TestCube : MonoBehaviour
             }
             objectGrabbable = null;
 
+        }
+
+    }
+
+
+    private void DoPush(InputAction.CallbackContext obj)
+    {
+
+        if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
+        {
+            print("Push");
+            if (currentSpeed <= 1)
+            {
+                pushForce = 100f;
+            } else
+            {
+                pushForce = currentSpeed * pushMultiply;
+            }
+            if (isPlayer1)
+            {
+                otherRB = gameManager.player2.GetComponent<Rigidbody>();
+                otherRB.velocity = rb.velocity;
+                otherRB.AddForceAtPosition(playerDir.forward * pushForce, transform.position, ForceMode.Impulse);
+                //otherRB.AddForce(Quaternion.LookRotation(playerDir.transform.position - otherRB.transform.position).eulerAngles * pushForce,ForceMode.Acceleration);
+
+                float random = Random.Range(-1, 1);
+                otherRB.AddTorque(new Vector3(random, random, random));
+            }
+
+            if (isPlayer2)
+            {
+                otherRB = gameManager.player1.GetComponent<Rigidbody>();
+                otherRB.velocity = rb.velocity;
+                otherRB.AddForceAtPosition(playerDir.forward * pushForce, transform.position, ForceMode.Impulse);
+
+                float random = Random.Range(-1, 1);
+                otherRB.AddTorque(new Vector3(random, random, random));
+            }
         }
 
     }
@@ -743,8 +800,8 @@ public class TestCube : MonoBehaviour
 
         }
 
-        print("jump" + jump.ReadValue<float>());
-        print("canJump" + canJump);
+        //print("jump" + jump.ReadValue<float>());
+        //print("canJump" + canJump);
              
         //apply gravity
         if (jumpSpeed > maxFall)
@@ -817,7 +874,7 @@ public class TestCube : MonoBehaviour
     void DoFall(InputAction.CallbackContext obj)
     {
         isGliding = false;
-        print("Not Gliding");
+        //print("Not Gliding");
         //currentStyle = CameraStyle.Basic;
     }
 
@@ -982,6 +1039,14 @@ public class TestCube : MonoBehaviour
 
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == ("Geiser") && isGliding)
+        {
+            rb.AddForce(Vector3.up * geiserForce);
+        }
+    }
+
 
     //private void OnCollisionEnter(Collision collision)
     //{
@@ -1063,31 +1128,31 @@ public class TestCube : MonoBehaviour
 
 }
 
-    
 
 
-    /*
-    private void Move()
-    {
-        Vector3 movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
-        transform.Translate(movement);
-    }
 
-    private void Move(InputValue value)
-    {
-        i_movement = value.Get<Vector2> ();
-        Debug.Log("Moving");
-    }
-    private void MoveDown(InputAction.CallbackContext obj)
-    {
-        transform.Translate(transform.up);
-        Debug.Log("Moving");
-    }
-    private void MoveUp(InputAction.CallbackContext obj)
-    {
-        transform.Translate(-transform.up);
-        Debug.Log("Moving");
-    }
-    */
+/*
+private void Move()
+{
+    Vector3 movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
+    transform.Translate(movement);
+}
+
+private void Move(InputValue value)
+{
+    i_movement = value.Get<Vector2> ();
+    Debug.Log("Moving");
+}
+private void MoveDown(InputAction.CallbackContext obj)
+{
+    transform.Translate(transform.up);
+    Debug.Log("Moving");
+}
+private void MoveUp(InputAction.CallbackContext obj)
+{
+    transform.Translate(-transform.up);
+    Debug.Log("Moving");
+}
+*/
 
 
