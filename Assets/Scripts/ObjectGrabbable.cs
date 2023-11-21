@@ -125,7 +125,7 @@ public class ObjectGrabbable : MonoBehaviour
         {
             float lerpspeed = 30;
             //smooth moving
-            Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabpo.position, Time.deltaTime * lerpspeed); ;
+            Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabpo.position, Time.deltaTime * lerpspeed);
             rb.MovePosition(newPosition);
 
             if (objectGrabpo.position == p1ItemC.transform.position)

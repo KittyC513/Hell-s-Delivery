@@ -344,7 +344,7 @@ public class TestCube : MonoBehaviour
             Jump();
         }
 
-        if (isPushing && otherRB != null)
+        if (isPushing)
         {
             if (isPlayer1)
             {
