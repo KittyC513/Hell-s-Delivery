@@ -209,7 +209,6 @@ public class TestCube : MonoBehaviour
 
 
 
-
     //public enum CameraStyle
     //{
     //    Basic,
@@ -587,6 +586,7 @@ public class TestCube : MonoBehaviour
         }
 
     }
+
 
     private void DoPush(InputAction.CallbackContext obj)
     {
