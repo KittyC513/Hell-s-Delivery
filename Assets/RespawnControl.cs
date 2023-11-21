@@ -142,7 +142,7 @@ public class RespawnControl : MonoBehaviour
                 objectGrabbable.P2TakePackage = true;
                 objectGrabbable.P1TakePackage = false;
                 Player1Die = true;
-                //Debug.Log("Player1Die");
+                Debug.Log("Player1Die");
             }
             else if (Player2isCarrying && isPlayer2)
             {
@@ -150,7 +150,7 @@ public class RespawnControl : MonoBehaviour
                 objectGrabbable.P2TakePackage = false;
                 objectGrabbable.P1TakePackage = true;
                 Player2Die = true;
-                //Debug.Log("Player2Die");
+                Debug.Log("Player2Die");
 
             }
 
