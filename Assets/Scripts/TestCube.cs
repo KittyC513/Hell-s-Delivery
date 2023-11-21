@@ -188,7 +188,16 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float pushForce;
     [SerializeField]
-    Rigidbody otherRigidbody;
+    private LayerMask pushMask;
+    [SerializeField]
+    GameManager gameManager;
+    [SerializeField]
+    private Rigidbody otherRB;
+    [SerializeField]
+    private float pushDistance;
+    [SerializeField]
+    private float pushMultiply;
+
 
     [Header("Camera Control")]
     //public CameraStyle currentStyle;
@@ -197,6 +206,9 @@ public class TestCube : MonoBehaviour
     public GameObject topDownCam;
     public GameObject aimCursor;
     public bool isAiming;
+
+
+
 
     //public enum CameraStyle
     //{
@@ -243,7 +255,7 @@ public class TestCube : MonoBehaviour
 
         player.FindAction("Parachute").started += DoParachute;
         player.FindAction("Parachute").canceled += DoFall;
-
+        player.FindAction("Push").started += DoPush;
 
         continueControl.action.Enable();
 
@@ -261,7 +273,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("Join").started -= DoTalk;
         player.FindAction("Parachute").started -= DoParachute;
         player.FindAction("Parachute").canceled -= DoFall;
-
+        player.FindAction("Push").started -= DoPush;
         continueControl.action.Disable();
 
 
@@ -279,6 +291,7 @@ public class TestCube : MonoBehaviour
         curSceneName = currentScene.name;
         Debug.Log("Current scene" + curSceneName);
         dR = Object.FindAnyObjectByType<DialogueRunner>();
+        gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
 
         //objectGrabbable = Object.FindAnyObjectByType<ObjectGrabbable>();
@@ -312,6 +325,7 @@ public class TestCube : MonoBehaviour
 
         //CameraControl();
 
+        Debug.Log("Find player" + Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask));
 
     }
 
@@ -516,15 +530,16 @@ public class TestCube : MonoBehaviour
     {
         // Draw a wire sphere to visualize the SphereCast
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistance, pickDistance);
+        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pushDistance, pushDistance);
+        //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistance, pickDistance);
+
     }
 
     private void DoPick(InputAction.CallbackContext obj)
     {
-        //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
+       //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
         if (objectGrabbable == null)
         {
-            Debug.Log("Object in range:" + Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask));
             if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
 
@@ -569,6 +584,43 @@ public class TestCube : MonoBehaviour
             }
             objectGrabbable = null;
 
+        }
+
+    }
+
+    private void DoPush(InputAction.CallbackContext obj)
+    {
+
+        if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
+        {
+            print("Push");
+            if (currentSpeed <= 1)
+            {
+                pushForce = 100f;
+            } else
+            {
+                pushForce = currentSpeed * pushMultiply;
+            }
+            if (isPlayer1)
+            {
+                otherRB = gameManager.player2.GetComponent<Rigidbody>();
+                otherRB.velocity = rb.velocity;
+                otherRB.AddForceAtPosition(playerDir.forward * pushForce, transform.position, ForceMode.Impulse);
+                //otherRB.AddForce(Quaternion.LookRotation(playerDir.transform.position - otherRB.transform.position).eulerAngles * pushForce,ForceMode.Acceleration);
+
+                float random = Random.Range(-1, 1);
+                otherRB.AddTorque(new Vector3(random, random, random));
+            }
+
+            if (isPlayer2)
+            {
+                otherRB = gameManager.player1.GetComponent<Rigidbody>();
+                otherRB.velocity = rb.velocity;
+                otherRB.AddForceAtPosition(playerDir.forward * pushForce, transform.position, ForceMode.Impulse);
+
+                float random = Random.Range(-1, 1);
+                otherRB.AddTorque(new Vector3(random, random, random));
+            }
         }
 
     }
@@ -995,30 +1047,6 @@ public class TestCube : MonoBehaviour
         }
     }
 
-    #region Push
-    //public void P1Drop()
-    //{
-
-    //    this.objectGrabpo = null;
-    //    rb.useGravity = true;
-    //    rb.isKinematic = false;
-    //    bC.enabled = true;
-
-    //    rb.velocity = player.GetComponent<Rigidbody>().velocity;
-
-    //    rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
-    //    rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
-
-    //    float random = Random.Range(-1, 1);
-    //    rb.AddTorque(new Vector3(random, random, random));
-
-    //    P1TakePackage = false;
-    //    P2TakePackage = false;
-
-    //    InventoryManager.Instance.Remove(item);
-    //}
-
-    #endregion
 
     //private void OnCollisionEnter(Collision collision)
     //{

@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TestCube p2;
     [SerializeField]
-    private GameObject player1;
+    public GameObject player1;
     [SerializeField]
-    private GameObject player2;
+    public GameObject player2;
     [SerializeField]
     private Transform startPoint1;
     [SerializeField]
