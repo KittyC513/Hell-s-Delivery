@@ -995,6 +995,30 @@ public class TestCube : MonoBehaviour
         }
     }
 
+    #region Push
+    //public void P1Drop()
+    //{
+
+    //    this.objectGrabpo = null;
+    //    rb.useGravity = true;
+    //    rb.isKinematic = false;
+    //    bC.enabled = true;
+
+    //    rb.velocity = player.GetComponent<Rigidbody>().velocity;
+
+    //    rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
+    //    rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
+
+    //    float random = Random.Range(-1, 1);
+    //    rb.AddTorque(new Vector3(random, random, random));
+
+    //    P1TakePackage = false;
+    //    P2TakePackage = false;
+
+    //    InventoryManager.Instance.Remove(item);
+    //}
+
+    #endregion
 
     //private void OnCollisionEnter(Collision collision)
     //{
@@ -1076,31 +1100,31 @@ public class TestCube : MonoBehaviour
 
 }
 
-    
 
 
-    /*
-    private void Move()
-    {
-        Vector3 movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
-        transform.Translate(movement);
-    }
 
-    private void Move(InputValue value)
-    {
-        i_movement = value.Get<Vector2> ();
-        Debug.Log("Moving");
-    }
-    private void MoveDown(InputAction.CallbackContext obj)
-    {
-        transform.Translate(transform.up);
-        Debug.Log("Moving");
-    }
-    private void MoveUp(InputAction.CallbackContext obj)
-    {
-        transform.Translate(-transform.up);
-        Debug.Log("Moving");
-    }
-    */
+/*
+private void Move()
+{
+    Vector3 movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
+    transform.Translate(movement);
+}
+
+private void Move(InputValue value)
+{
+    i_movement = value.Get<Vector2> ();
+    Debug.Log("Moving");
+}
+private void MoveDown(InputAction.CallbackContext obj)
+{
+    transform.Translate(transform.up);
+    Debug.Log("Moving");
+}
+private void MoveUp(InputAction.CallbackContext obj)
+{
+    transform.Translate(-transform.up);
+    Debug.Log("Moving");
+}
+*/
 
 
