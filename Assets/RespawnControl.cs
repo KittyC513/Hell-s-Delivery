@@ -64,6 +64,7 @@ public class RespawnControl : MonoBehaviour
         {
             package = GameObject.FindGameObjectWithTag("Package");
             objectGrabbable = package.GetComponent<ObjectGrabbable>();
+            
         }
     }
 

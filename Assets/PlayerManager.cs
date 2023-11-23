@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class PlayerManager : MonoBehaviour
     private List<LayerMask> playerCameraLayer;
 
     private PlayerInputManager playerInputManager;
+
 
 
     private void Awake()
@@ -47,7 +49,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void AddPlayer(PlayerInput player)

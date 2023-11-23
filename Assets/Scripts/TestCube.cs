@@ -226,6 +226,8 @@ public class TestCube : MonoBehaviour
     public GameObject aimCursor;
     public bool isAiming;
 
+    private bool p1Appear;
+    private bool p2Appear;
 
 
     //public enum CameraStyle
@@ -307,7 +309,7 @@ public class TestCube : MonoBehaviour
         // Get the currently active scene
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
-        Debug.Log("Current scene" + curSceneName);
+
         dR = Object.FindAnyObjectByType<DialogueRunner>();
         gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
@@ -322,6 +324,7 @@ public class TestCube : MonoBehaviour
         parachuteObj.SetActive(false);
         canJump = true;
         lastStepTime = Time.time;
+
     }
 
     // Update is called once per frame
@@ -341,6 +344,9 @@ public class TestCube : MonoBehaviour
 
         MovementCalcs();
         DetectPushRange();
+
+        //PlayerPosition();
+
 
         //CameraControl();
 
@@ -441,7 +447,33 @@ public class TestCube : MonoBehaviour
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
 
+    void PlayerPosition()
+    {
+        currentScene = SceneManager.GetActiveScene();
+        curSceneName = currentScene.name;
+        Debug.Log("Current scene" + curSceneName);
 
+        if (curSceneName == scene2)
+        {
+            if (isPlayer1 && !p1Appear)
+            {
+                transform.position = new Vector3(-65f, 13f, 56f);
+                p1Appear = true;
+                print("p1 in the position");
+
+            }
+
+            if (isPlayer2 && !p2Appear)
+            {
+                transform.position = new Vector3(65f, -13f, 65f);
+                p2Appear = true;
+
+                print("p2 in the position");
+
+            }
+        }
+ 
+    }
     void CameraSwitch()
     {
         if (curSceneName == scene1 || curSceneName == scene3)
@@ -620,11 +652,23 @@ public class TestCube : MonoBehaviour
         {
             withinPushingRange = true;
             lastColliderTime = Time.time;
+            
         } else
         {
             withinPushingRange = false;
-            p1Anim.SetBool("beingPush", false);
-            p2Anim.SetBool("beingPush", false);
+            if (isPlayer1)
+            {
+                p2Anim.SetBool("beingPush", false);
+
+            }
+
+            if (isPlayer2)
+            {
+                p1Anim.SetBool("beingPush", false);
+              
+            }
+
+
         }
     }
     private void DoPush(InputAction.CallbackContext obj)
@@ -1079,6 +1123,7 @@ public class TestCube : MonoBehaviour
     public static void GoToScoreCards()
     {
         SceneManager.LoadScene("ScoreCards");
+
 
     }
 
