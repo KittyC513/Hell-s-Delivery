@@ -200,7 +200,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float lerpSpeed;
     [SerializeField]
-    private bool isPushing;
+    private bool withinPushingRange;
 
     [Header("Camera Control")]
     //public CameraStyle currentStyle;
@@ -324,6 +324,7 @@ public class TestCube : MonoBehaviour
         playerPos = this.transform;
 
         MovementCalcs();
+        DetectPushRange();
 
         //CameraControl();
 
@@ -344,18 +345,8 @@ public class TestCube : MonoBehaviour
             Jump();
         }
 
-        if (isPushing)
-        {
-            if (isPlayer1)
-            {
-                P1Push();
-            }
-            if (isPlayer2)
-            {
-                P2Push();
-            }
 
-        }
+
 
 
 
@@ -603,21 +594,32 @@ public class TestCube : MonoBehaviour
     }
 
 
+    void DetectPushRange()
+    {
+        if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
+        {
+            withinPushingRange = true;
+        } else
+        {
+            withinPushingRange = false;
+        }
+    }
     private void DoPush(InputAction.CallbackContext obj)
     {
 
-        if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
+        if (withinPushingRange)
         {
+            if (isPlayer1)
+            {
+                P1Push();
 
-            print("Push");
-            if (currentSpeed <= 1)
-            {
-                pushForce = 7f;
-            } else
-            {
-                pushForce = currentSpeed * pushMultiply;
             }
 
+            if (isPlayer2)
+            {
+                P2Push();
+
+            }
         }
 
     }
@@ -627,43 +629,34 @@ public class TestCube : MonoBehaviour
 
         otherRB = gameManager.player2.GetComponent<Rigidbody>();
 
-        //otherRB.velocity = rb.velocity;
+        Vector3 forcePosition = otherRB.transform.position - transform.position;
 
-        // Calculate the force position
-        Vector3 forcePosition = gameManager.player2.transform.position + playerDir.forward * pushForce;
+        otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
 
-        // Apply force at the calculated position
-        //otherRB.AddForceAtPosition(playerDir.forward * pushForce, forcePosition, ForceMode.Impulse);
+        //float randomTorque = Random.Range(-1f, 1f);
+        //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
 
-        // Add torque with a random rotation
-        float randomTorque = Random.Range(-1f, 1f);
-        otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
-
-        // Use MovePosition for smooth movement
-        Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
-        otherRB.MovePosition(newPosition);
 
     }
 
     void P2Push()
     {
         otherRB = gameManager.player1.GetComponent<Rigidbody>();
-
+        //otherRB.isKinematic = true;
         //otherRB.velocity = rb.velocity;
-
         // Calculate the force position
-        Vector3 forcePosition = gameManager.player1.transform.position + playerDir.forward * pushForce;
+        Vector3 forcePosition = otherRB.transform.position - transform.position;
 
         // Apply force at the calculated position
-        //otherRB.AddForceAtPosition(playerDir.forward * pushForce, forcePosition, ForceMode.Impulse);
+        otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
 
         // Add torque with a random rotation
-        float randomTorque = Random.Range(-1f, 1f);
-        otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
+        //float randomTorque = Random.Range(-1f, 1f);
+        //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
 
         // Use MovePosition for smooth movement
-        Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
-        otherRB.MovePosition(newPosition);
+        //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
+        //otherRB.MovePosition(newPosition);
     }
 
 
