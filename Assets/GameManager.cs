@@ -44,6 +44,18 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public int popUpIndex;
 
+    [SerializeField]
+    public Transform p1Anim;
+    [SerializeField]
+    public Transform p2Anim;
+    [SerializeField]
+    public GameObject p1Character;
+    [SerializeField]
+    public GameObject p2Character;
+    [SerializeField]
+    private bool p1AnimFound;
+    [SerializeField]
+    private bool p2AnimFound;
 
     private void Start()
     {
@@ -66,20 +78,46 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject obj in objectsInScene)
         {
-            if (obj.layer == layerToFind1 && p1 == null)
+            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound)
             {
                 player1 = obj;
                 p1 = obj.GetComponent<TestCube>();
                 character1.SetActive(true);
 
+                Transform parentTransform = player1.transform;
+
+                foreach (Transform child in parentTransform)
+                {
+                    if (child.CompareTag("Character"))
+                    {
+                        p1Anim = child;
+                        p1Character = p1Anim.gameObject;
+                        p1AnimFound = true;
+ 
+                    }
+                }
+
 
             }
 
-            if (obj.layer == layerToFind2 && p2 == null)
+            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound)
             {
                 player2 = obj;
                 p2 = obj.GetComponent<TestCube>();
                 character2.SetActive(true);
+
+                Transform parentTransform = player2.transform;
+
+                foreach (Transform child in parentTransform)
+                {
+                    if (child.CompareTag("Character"))
+                    {
+                        p2Anim = child;
+                        p2Character = p2Anim.gameObject;
+                        p2AnimFound = true;
+
+                    }
+                }
             }
         }
 

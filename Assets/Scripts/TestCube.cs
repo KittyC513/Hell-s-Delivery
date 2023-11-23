@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
 using Yarn.Unity;
 using Unity.VisualScripting;
+using TMPro;
 
 public class TestCube : MonoBehaviour
 {
@@ -82,11 +83,7 @@ public class TestCube : MonoBehaviour
     LayerMask groundLayer;
     [SerializeField]
     private bool isRunning;
-    [SerializeField]
-    private float jumpButtonGracePeriod;
 
-    private float? lastGroundedTime;
-    private float? jumpButtonPressedTime;
 
     [SerializeField]
     private Camera playerCamera;
@@ -149,6 +146,12 @@ public class TestCube : MonoBehaviour
     bool isWalking;
     bool isInAir = false;
     private bool canJump;
+    [SerializeField]
+    private float jumpButtonGracePeriod;
+
+    private float? lastGroundedTime;
+    private float? jumpButtonPressedTime;
+
 
     [SerializeField]
     bool isPlayer1;
@@ -201,6 +204,19 @@ public class TestCube : MonoBehaviour
     private float lerpSpeed;
     [SerializeField]
     private bool withinPushingRange;
+    [SerializeField]
+    private float slideTime;
+    [SerializeField]
+    private Animator p1Anim;
+    [SerializeField]
+    private Animator p2Anim;
+
+    [SerializeField]
+    private float pushButtonGracePeriod;
+
+    private float? lastColliderTime;
+    private float? pushButtonPressedTime;
+
 
     [Header("Camera Control")]
     //public CameraStyle currentStyle;
@@ -345,7 +361,11 @@ public class TestCube : MonoBehaviour
             Jump();
         }
 
-
+        if (!withinPushingRange)
+        {
+            otherRB.useGravity = true;
+            otherRB.isKinematic = false;
+        }
 
 
 
@@ -599,14 +619,17 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
         {
             withinPushingRange = true;
+            lastColliderTime = Time.time;
         } else
         {
             withinPushingRange = false;
+            p1Anim.SetBool("beingPush", false);
+            p2Anim.SetBool("beingPush", false);
         }
     }
     private void DoPush(InputAction.CallbackContext obj)
     {
-
+  
         if (withinPushingRange)
         {
             if (isPlayer1)
@@ -628,35 +651,61 @@ public class TestCube : MonoBehaviour
     {
 
         otherRB = gameManager.player2.GetComponent<Rigidbody>();
+        p2Anim = gameManager.p2Character.GetComponent<Animator>();
 
-        Vector3 forcePosition = otherRB.transform.position - transform.position;
+        otherRB.useGravity = false;
+        otherRB.isKinematic = true;
+        Vector3 forceDir = otherRB.transform.position - transform.position;
 
-        otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
+        Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
+        //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
 
-        //float randomTorque = Random.Range(-1f, 1f);
+        //float randomTorque = Random.Range(-5f, 5f);
         //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
+        //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
+        //otherRB.MovePosition(newPosition);
+        StartCoroutine(SlideToPosition(forcePosition));
 
+        p2Anim.SetBool("beingPush", true);
 
     }
 
     void P2Push()
     {
         otherRB = gameManager.player1.GetComponent<Rigidbody>();
-        //otherRB.isKinematic = true;
-        //otherRB.velocity = rb.velocity;
-        // Calculate the force position
-        Vector3 forcePosition = otherRB.transform.position - transform.position;
+        p1Anim = gameManager.p1Character.GetComponent<Animator>();
 
-        // Apply force at the calculated position
-        otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
+        otherRB.useGravity = false;
+        otherRB.isKinematic = true;
+        Vector3 forceDir = otherRB.transform.position - transform.position;
 
-        // Add torque with a random rotation
-        //float randomTorque = Random.Range(-1f, 1f);
+        Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+        //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
+
+        //float randomTorque = Random.Range(-5f, 5f);
         //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
-
-        // Use MovePosition for smooth movement
         //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
         //otherRB.MovePosition(newPosition);
+        StartCoroutine(SlideToPosition(forcePosition));
+
+        p1Anim.SetBool("beingPush", true);
+    }
+
+    IEnumerator SlideToPosition(Vector3 targetPosition)
+    {
+        float elapsedTime = 0f;
+        Vector3 startingPosition = otherRB.transform.position;
+
+        while (elapsedTime < slideTime)
+        {
+            otherRB.MovePosition(Vector3.Lerp(startingPosition, targetPosition, elapsedTime / slideTime));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the object reaches the exact target position at the end
+        otherRB.MovePosition(targetPosition);
+
     }
 
 
