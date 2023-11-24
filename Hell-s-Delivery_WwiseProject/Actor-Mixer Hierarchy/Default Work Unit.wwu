@@ -4,6 +4,13 @@
 		<WorkUnit Name="Default Work Unit" ID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}" PersistMode="Standalone">
 			<ChildrenList>
 				<RandomSequenceContainer Name="Steps" ID="{B4B56DAF-C000-4CA6-AFCF-BD01D63E7F9E}" ShortID="674810995">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
