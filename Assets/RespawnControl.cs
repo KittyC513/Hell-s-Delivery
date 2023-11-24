@@ -8,7 +8,7 @@ public class RespawnControl : MonoBehaviour
 {
 
     [SerializeField]
-    Vector3 respawnPoint;
+    public Vector3 respawnPoint;
 
     [SerializeField]
     private GameObject player;
@@ -201,6 +201,7 @@ public class RespawnControl : MonoBehaviour
         {
 
             respawnPoint = other.transform.position;
+            
 
             Debug.Log("RespawnPoint =" + respawnPoint);
 
