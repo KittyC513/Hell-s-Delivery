@@ -13,7 +13,8 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID PLAY_STEPS = 2600469463U;
+        static const AkUniqueID PLAY_APARTMENT_COMPLEX_V1 = 359343595U;
+        static const AkUniqueID PLAYER_STEPS = 4272057794U;
     } // namespace EVENTS
 
     namespace BANKS

@@ -23,13 +23,17 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{DB24F5DD-8A75-90B8-B0C9-5059FCF5989C}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{6FCB0B55-D7EA-5527-FB8A-BF6E50E89402}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
 				<File Id="26740870" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 1 - Light.wav</ShortName>
 					<CachePath>SFX/Step 1 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="71935411" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Apartment Complex v1.wav</ShortName>
+					<CachePath>SFX/Apartment Complex v1_10C4C929.wem</CachePath>
 				</File>
 				<File Id="250775375" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 4 - Light.wav</ShortName>
@@ -45,7 +49,12 @@
 				</File>
 			</Media>
 			<Events>
-				<Event Id="2600469463" Name="Play_Steps" DurationType="OneShot" DurationMin="0.15054809" DurationMax="0.1575175">
+				<Event Id="359343595" Name="Play_Apartment_Complex_v1" DurationType="OneShot" DurationMin="207.76923" DurationMax="207.76923">
+					<MediaRefs>
+						<MediaRef Id="71935411"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="4272057794" Name="Player_Steps" DurationType="OneShot" DurationMin="0.15054809" DurationMax="0.1575175">
 					<MediaRefs>
 						<MediaRef Id="26740870"/>
 						<MediaRef Id="250775375"/>
@@ -56,5 +65,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{DCDF5D4C-0FE4-4105-03FF-44A4A4980F97}</FileHash>
+	<FileHash>{DD2FCEDC-FB79-7F7F-2682-2FBC72E700DC}</FileHash>
 </SoundBanksInfo>

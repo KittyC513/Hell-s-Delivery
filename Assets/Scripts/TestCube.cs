@@ -426,7 +426,7 @@ public class TestCube : MonoBehaviour
             }
 
 
-            if (shouldStep)
+            if (shouldStep && isGrounded)
             {
                 footstepEvent.Post(this.gameObject);
                 lastStepTime = Time.time;
