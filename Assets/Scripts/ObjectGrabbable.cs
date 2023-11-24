@@ -92,6 +92,8 @@ public class ObjectGrabbable : MonoBehaviour
         FindGameObject();
         FindItemContainer();
         Move();
+        P1Steal();
+        P2Steal();
 
     }
 
@@ -166,7 +168,53 @@ public class ObjectGrabbable : MonoBehaviour
     player2Dir = GameObject.FindGameObjectWithTag("Player2Dir").transform;
     */
 
+    void P1Steal()
+    {
+        if (player2TC.p2Steal)
+        {
+            this.objectGrabpo = null;
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            bC.enabled = true;
 
+            rb.velocity = player.GetComponent<Rigidbody>().velocity;
+
+            rb.AddForce(playerDir.forward * stealForce, ForceMode.Impulse);
+            rb.AddForce(playerDir.up * stealUpForce, ForceMode.Impulse);
+
+            player2TC.p2Steal = false;
+
+            float random = Random.Range(-1, 1);
+            rb.AddTorque(new Vector3(random, random, random));
+
+            P1TakePackage = false;
+            P2TakePackage = false;
+        }
+    }
+
+    void P2Steal()
+    {
+        if (player1TC.p1Steal)
+        {
+            this.objectGrabpo = null;
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            bC.enabled = true;
+
+            rb.velocity = player2.GetComponent<Rigidbody>().velocity;
+
+            rb.AddForce(player2Dir.forward * stealForce, ForceMode.Impulse);
+            rb.AddForce(player2Dir.up * stealUpForce, ForceMode.Impulse);
+
+            player1TC.p1Steal = false;
+
+            float random = Random.Range(-1, 1);
+            rb.AddTorque(new Vector3(random, random, random));
+
+            P1TakePackage = false;
+            P2TakePackage = false;
+        }
+    }
 
 
     public void P1Drop()
@@ -179,21 +227,9 @@ public class ObjectGrabbable : MonoBehaviour
 
         rb.velocity = player.GetComponent<Rigidbody>().velocity;
 
-        if (player2TC.p2Steal)
-        {
-            
-            rb.AddForce(playerDir.forward * stealForce, ForceMode.Impulse);
-            rb.AddForce(playerDir.up * stealUpForce, ForceMode.Impulse);
-            
-            player2TC.p2Steal = false;
 
-        }
-        else
-        {
-            rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
-            rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
-        }
-
+        rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
+        rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
 
 
         float random = Random.Range(-1, 1);
@@ -214,20 +250,10 @@ public class ObjectGrabbable : MonoBehaviour
 
         rb.velocity = player2.GetComponent<Rigidbody>().velocity;
 
-        if (player1TC.p1Steal)
-        {
 
-            rb.AddForce(playerDir.forward * stealForce, ForceMode.Impulse);
-            rb.AddForce(playerDir.up * stealUpForce, ForceMode.Impulse);
+        rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
+        rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
 
-            player1TC.p1Steal = false;
-
-        }
-        else
-        {
-            rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
-            rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
-        }
 
 
         float random = Random.Range(-1, 1);

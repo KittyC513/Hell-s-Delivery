@@ -665,11 +665,6 @@ public class TestCube : MonoBehaviour
             {
                 p2Anim.SetBool("beingPush", false);
                 
-                if (rC.Player2isCarrying)
-                {
-                    p1Steal = true;
-                    objectGrabbable.P2Drop();
-                }
 
             }
 
@@ -677,12 +672,6 @@ public class TestCube : MonoBehaviour
             {
                 p1Anim.SetBool("beingPush", false);
                 
-                if (rC.Player1isCarrying)
-                {
-                    p2Steal = true;
-                    objectGrabbable.P1Drop();
-                }
-              
             }
 
 
@@ -696,14 +685,16 @@ public class TestCube : MonoBehaviour
             if (isPlayer1)
             {
                 P1Push();
-
+                objectGrabbable = null;
             }
 
             if (isPlayer2)
             {
                 P2Push();
-
+                objectGrabbable = null;
             }
+
+
         }
 
     }
@@ -729,6 +720,11 @@ public class TestCube : MonoBehaviour
 
         p2Anim.SetBool("beingPush", true);
 
+        if (rC.Player2isCarrying)
+        {
+            p1Steal = true;
+        }
+
     }
 
     void P2Push()
@@ -750,6 +746,12 @@ public class TestCube : MonoBehaviour
         StartCoroutine(SlideToPosition(forcePosition));
 
         p1Anim.SetBool("beingPush", true);
+
+                        if (rC.Player1isCarrying)
+                {
+                    p2Steal = true;
+
+                }
     }
 
     IEnumerator SlideToPosition(Vector3 targetPosition)

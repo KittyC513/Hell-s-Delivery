@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     private bool p1AnimFound;
     [SerializeField]
     private bool p2AnimFound;
+    [SerializeField]
+    private bool isDestroyed;
 
     private void Start()
     {
@@ -122,7 +124,7 @@ public class GameManager : MonoBehaviour
         }
 
         //two players join the game, it loads to the Title Scene
-        if(p1 != null && p2 != null)
+        if(p1 != null && p2 != null && !isDestroyed)
         {
             p1Ani.SetBool("GameStart", true);
             p2Ani.SetBool("GameStart", true);
@@ -199,6 +201,7 @@ public class GameManager : MonoBehaviour
         // Destroy the GameObject this script is attached to
         Destroy(character1);
         Destroy(character2);
+        isDestroyed = true;
     }
 
 
