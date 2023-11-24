@@ -210,6 +210,10 @@ public class TestCube : MonoBehaviour
     private Animator p1Anim;
     [SerializeField]
     private Animator p2Anim;
+    [SerializeField]
+    public bool p1Steal;
+    [SerializeField]
+    public bool p2Steal;
 
     [SerializeField]
     private float pushButtonGracePeriod;
@@ -653,18 +657,31 @@ public class TestCube : MonoBehaviour
             withinPushingRange = true;
             lastColliderTime = Time.time;
             
-        } else
+        } 
+        else
         {
             withinPushingRange = false;
             if (isPlayer1)
             {
                 p2Anim.SetBool("beingPush", false);
+                
+                if (rC.Player2isCarrying)
+                {
+                    p1Steal = true;
+                    objectGrabbable.P2Drop();
+                }
 
             }
 
             if (isPlayer2)
             {
                 p1Anim.SetBool("beingPush", false);
+                
+                if (rC.Player1isCarrying)
+                {
+                    p2Steal = true;
+                    objectGrabbable.P1Drop();
+                }
               
             }
 

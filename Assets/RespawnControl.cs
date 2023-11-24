@@ -33,6 +33,7 @@ public class RespawnControl : MonoBehaviour
     string curSceneName;
     string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
+    string scene3 = "TitleScene";
     [SerializeField]
     public bool Player1isCarrying;
     [SerializeField]
@@ -60,11 +61,13 @@ public class RespawnControl : MonoBehaviour
 
     void SceneCheck()
     {
-        if (curSceneName == scene2 && objectGrabbable == null)
+        if (curSceneName == scene2 || curSceneName == scene3)
         {
-            package = GameObject.FindGameObjectWithTag("Package");
-            objectGrabbable = package.GetComponent<ObjectGrabbable>();
-            
+            if(objectGrabbable == null)
+            {
+                package = GameObject.FindGameObjectWithTag("Package");
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+            }  
         }
     }
 
@@ -72,7 +75,7 @@ public class RespawnControl : MonoBehaviour
     {
         SceneCheck();
         PlayerDetector();
-        if(curSceneName == scene2)
+        if(curSceneName == scene2 || curSceneName == scene3)
         {
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
