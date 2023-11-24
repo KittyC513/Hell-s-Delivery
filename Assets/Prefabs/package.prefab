@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 1142203272400099461}
   - component: {fileID: 4416238609017372899}
   - component: {fileID: 2134547861879351998}
+  - component: {fileID: 693240545659223230}
   m_Layer: 7
   m_Name: package
-  m_TagString: Untagged
+  m_TagString: Package
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,9 +125,35 @@ MonoBehaviour:
   bC: {fileID: 6809288887673640832}
   dropForce: 15
   dropUpForce: 7
+  stealForce: 1
+  stealUpForce: 3
   player: {fileID: 0}
   playerDir: {fileID: 0}
+  player2: {fileID: 0}
+  player2Dir: {fileID: 0}
+  layerNameToFind1: P1Collider
+  layerNameToFind2: P2Collider
+  tagToFind: PlayerDir
+  tagToFindPlayer: Player
   item: {fileID: 11400000, guid: c98dd40baf1e32e4e8cda85e727b4e4e, type: 2}
+  layerNameToFind3: P1ItemContainer
+  layerNameToFind4: P2ItemContainer
+  findPlayer1: 0
+  findPlayer2: 0
+  findP1Container: 0
+  findP2Container: 0
+  p1ItemC: {fileID: 0}
+  p2ItemC: {fileID: 0}
+  P1TakePackage: 0
+  P2TakePackage: 0
+  checkPoint: {fileID: 0}
+  respawnPoint: {x: 0, y: 0, z: 0}
+  p1Package: {fileID: 0}
+  p2Package: {fileID: 0}
+  PackageP1: {fileID: 0}
+  PackageP2: {fileID: 0}
+  player1TC: {fileID: 0}
+  player2TC: {fileID: 0}
 --- !u!54 &4416238609017372899
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -151,9 +178,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 3
 --- !u!114 &2134547861879351998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,3 +194,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: c98dd40baf1e32e4e8cda85e727b4e4e, type: 2}
+--- !u!65 &693240545659223230
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135933071317343088}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

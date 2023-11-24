@@ -11,6 +11,8 @@ public class ObjectGrabbable : MonoBehaviour
     private Transform objectGrabpo;
     [SerializeField]
     private float dropForce, dropUpForce;
+    [SerializeField]
+    private float stealForce, stealUpForce;
     public GameObject player;
     public Transform playerDir;
     public GameObject player2;
@@ -53,7 +55,10 @@ public class ObjectGrabbable : MonoBehaviour
     public GameObject PackageP1;
     [SerializeField]
     public GameObject PackageP2;
-
+    [SerializeField]
+    private TestCube player1TC;
+    [SerializeField]
+    private TestCube player2TC;
 
 
     private void Awake()
@@ -87,13 +92,15 @@ public class ObjectGrabbable : MonoBehaviour
         FindGameObject();
         FindItemContainer();
         Move();
+        P1Steal();
+        P2Steal();
 
     }
 
     private void FixedUpdate()
     {
-        AddScore();
-        PackageIcon();
+        //AddScore();
+        //PackageIcon();
         
 
     }
@@ -146,12 +153,11 @@ public class ObjectGrabbable : MonoBehaviour
         if (P1TakePackage)
         {
             ScoreCount.instance.AddPointToP1Package(1);
-        } else if(P2TakePackage)
+        }
+        else if (P2TakePackage)
         {
             ScoreCount.instance.AddPointToP2Package(1);
         }
-
-
 
     }
 
@@ -162,7 +168,53 @@ public class ObjectGrabbable : MonoBehaviour
     player2Dir = GameObject.FindGameObjectWithTag("Player2Dir").transform;
     */
 
+    void P1Steal()
+    {
+        if (player2TC.p2Steal)
+        {
+            this.objectGrabpo = null;
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            bC.enabled = true;
 
+            rb.velocity = player.GetComponent<Rigidbody>().velocity;
+
+            rb.AddForce(playerDir.forward * stealForce, ForceMode.Impulse);
+            rb.AddForce(playerDir.up * stealUpForce, ForceMode.Impulse);
+
+            player2TC.p2Steal = false;
+
+            float random = Random.Range(-1, 1);
+            rb.AddTorque(new Vector3(random, random, random));
+
+            P1TakePackage = false;
+            P2TakePackage = false;
+        }
+    }
+
+    void P2Steal()
+    {
+        if (player1TC.p1Steal)
+        {
+            this.objectGrabpo = null;
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            bC.enabled = true;
+
+            rb.velocity = player2.GetComponent<Rigidbody>().velocity;
+
+            rb.AddForce(player2Dir.forward * stealForce, ForceMode.Impulse);
+            rb.AddForce(player2Dir.up * stealUpForce, ForceMode.Impulse);
+
+            player1TC.p1Steal = false;
+
+            float random = Random.Range(-1, 1);
+            rb.AddTorque(new Vector3(random, random, random));
+
+            P1TakePackage = false;
+            P2TakePackage = false;
+        }
+    }
 
 
     public void P1Drop()
@@ -175,8 +227,10 @@ public class ObjectGrabbable : MonoBehaviour
 
         rb.velocity = player.GetComponent<Rigidbody>().velocity;
 
+
         rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
         rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
+
 
         float random = Random.Range(-1, 1);
         rb.AddTorque(new Vector3(random, random, random));
@@ -196,8 +250,11 @@ public class ObjectGrabbable : MonoBehaviour
 
         rb.velocity = player2.GetComponent<Rigidbody>().velocity;
 
+
         rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
         rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
+
+
 
         float random = Random.Range(-1, 1);
         rb.AddTorque(new Vector3(random, random, random));
@@ -219,7 +276,7 @@ public class ObjectGrabbable : MonoBehaviour
             if (obj.layer == layerToFind1 && !findPlayer1)
             {
                 player = obj;
-                Debug.Log("Found GameObject on layer: " + obj.name);
+                player1TC = player.GetComponent<TestCube>();
 
                 Transform parentTransform = player.transform;
 
@@ -228,7 +285,7 @@ public class ObjectGrabbable : MonoBehaviour
                     if (child.CompareTag(tagToFind))
                     {
                         playerDir = child;
-                        Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+                      
                         findPlayer1 = true;
                     }
                 }
@@ -242,7 +299,9 @@ public class ObjectGrabbable : MonoBehaviour
             if (obj.layer == layerToFind2 && !findPlayer2)
             {
                 player2 = obj;
-                Debug.Log("Found GameObject on layer: " + obj.name);
+
+                player2TC = player2.GetComponent<TestCube>();
+
 
                 Transform parentTransform = player2.transform;
 
@@ -251,7 +310,7 @@ public class ObjectGrabbable : MonoBehaviour
                     if (child.CompareTag(tagToFind))
                     {
                         player2Dir = child;
-                        Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+                        
                         findPlayer2 = true;
                     }
 

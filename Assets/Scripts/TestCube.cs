@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
 using Yarn.Unity;
 using Unity.VisualScripting;
+using TMPro;
 
 public class TestCube : MonoBehaviour
 {
@@ -82,11 +83,7 @@ public class TestCube : MonoBehaviour
     LayerMask groundLayer;
     [SerializeField]
     private bool isRunning;
-    [SerializeField]
-    private float jumpButtonGracePeriod;
 
-    private float? lastGroundedTime;
-    private float? jumpButtonPressedTime;
 
     [SerializeField]
     private Camera playerCamera;
@@ -149,6 +146,12 @@ public class TestCube : MonoBehaviour
     bool isWalking;
     bool isInAir = false;
     private bool canJump;
+    [SerializeField]
+    private float jumpButtonGracePeriod;
+
+    private float? lastGroundedTime;
+    private float? jumpButtonPressedTime;
+
 
     [SerializeField]
     bool isPlayer1;
@@ -200,7 +203,24 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float lerpSpeed;
     [SerializeField]
-    private bool isPushing;
+    private bool withinPushingRange;
+    [SerializeField]
+    private float slideTime;
+    [SerializeField]
+    private Animator p1Anim;
+    [SerializeField]
+    private Animator p2Anim;
+    [SerializeField]
+    public bool p1Steal;
+    [SerializeField]
+    public bool p2Steal;
+
+    [SerializeField]
+    private float pushButtonGracePeriod;
+
+    private float? lastColliderTime;
+    private float? pushButtonPressedTime;
+
 
     [Header("Camera Control")]
     //public CameraStyle currentStyle;
@@ -210,6 +230,8 @@ public class TestCube : MonoBehaviour
     public GameObject aimCursor;
     public bool isAiming;
 
+    private bool p1Appear;
+    private bool p2Appear;
 
 
     //public enum CameraStyle
@@ -291,7 +313,7 @@ public class TestCube : MonoBehaviour
         // Get the currently active scene
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
-        Debug.Log("Current scene" + curSceneName);
+
         dR = Object.FindAnyObjectByType<DialogueRunner>();
         gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
@@ -306,6 +328,7 @@ public class TestCube : MonoBehaviour
         parachuteObj.SetActive(false);
         canJump = true;
         lastStepTime = Time.time;
+
     }
 
     // Update is called once per frame
@@ -324,6 +347,10 @@ public class TestCube : MonoBehaviour
         playerPos = this.transform;
 
         MovementCalcs();
+        DetectPushRange();
+
+        //PlayerPosition();
+
 
         //CameraControl();
 
@@ -344,18 +371,12 @@ public class TestCube : MonoBehaviour
             Jump();
         }
 
-        if (isPushing)
+        if (!withinPushingRange)
         {
-            if (isPlayer1)
-            {
-                P1Push();
-            }
-            if (isPlayer2)
-            {
-                P2Push();
-            }
-
+            otherRB.useGravity = true;
+            otherRB.isKinematic = false;
         }
+
 
 
 
@@ -430,7 +451,33 @@ public class TestCube : MonoBehaviour
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
 
+    void PlayerPosition()
+    {
+        currentScene = SceneManager.GetActiveScene();
+        curSceneName = currentScene.name;
+        Debug.Log("Current scene" + curSceneName);
 
+        if (curSceneName == scene2)
+        {
+            if (isPlayer1 && !p1Appear)
+            {
+                transform.position = new Vector3(-65f, 13f, 56f);
+                p1Appear = true;
+                print("p1 in the position");
+
+            }
+
+            if (isPlayer2 && !p2Appear)
+            {
+                transform.position = new Vector3(65f, -13f, 65f);
+                p2Appear = true;
+
+                print("p2 in the position");
+
+            }
+        }
+ 
+    }
     void CameraSwitch()
     {
         if (curSceneName == scene1 || curSceneName == scene3)
@@ -603,20 +650,50 @@ public class TestCube : MonoBehaviour
     }
 
 
-    private void DoPush(InputAction.CallbackContext obj)
+    void DetectPushRange()
     {
-
         if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
         {
+            withinPushingRange = true;
+            lastColliderTime = Time.time;
+            
+        } 
+        else
+        {
+            withinPushingRange = false;
+            if (isPlayer1)
+            {
+                p2Anim.SetBool("beingPush", false);
+                
 
-            print("Push");
-            if (currentSpeed <= 1)
-            {
-                pushForce = 7f;
-            } else
-            {
-                pushForce = currentSpeed * pushMultiply;
             }
+
+            if (isPlayer2)
+            {
+                p1Anim.SetBool("beingPush", false);
+                
+            }
+
+
+        }
+    }
+    private void DoPush(InputAction.CallbackContext obj)
+    {
+  
+        if (withinPushingRange)
+        {
+            if (isPlayer1)
+            {
+                P1Push();
+                objectGrabbable = null;
+            }
+
+            if (isPlayer2)
+            {
+                P2Push();
+                objectGrabbable = null;
+            }
+
 
         }
 
@@ -626,44 +703,72 @@ public class TestCube : MonoBehaviour
     {
 
         otherRB = gameManager.player2.GetComponent<Rigidbody>();
+        p2Anim = gameManager.p2Character.GetComponent<Animator>();
 
-        //otherRB.velocity = rb.velocity;
+        otherRB.useGravity = false;
+        otherRB.isKinematic = true;
+        Vector3 forceDir = otherRB.transform.position - transform.position;
 
-        // Calculate the force position
-        Vector3 forcePosition = gameManager.player2.transform.position + playerDir.forward * pushForce;
+        Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
+        //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
 
-        // Apply force at the calculated position
-        //otherRB.AddForceAtPosition(playerDir.forward * pushForce, forcePosition, ForceMode.Impulse);
+        //float randomTorque = Random.Range(-5f, 5f);
+        //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
+        //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
+        //otherRB.MovePosition(newPosition);
+        StartCoroutine(SlideToPosition(forcePosition));
 
-        // Add torque with a random rotation
-        float randomTorque = Random.Range(-1f, 1f);
-        otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
+        p2Anim.SetBool("beingPush", true);
 
-        // Use MovePosition for smooth movement
-        Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
-        otherRB.MovePosition(newPosition);
+        if (rC.Player2isCarrying)
+        {
+            p1Steal = true;
+        }
 
     }
 
     void P2Push()
     {
         otherRB = gameManager.player1.GetComponent<Rigidbody>();
+        p1Anim = gameManager.p1Character.GetComponent<Animator>();
 
-        //otherRB.velocity = rb.velocity;
+        otherRB.useGravity = false;
+        otherRB.isKinematic = true;
+        Vector3 forceDir = otherRB.transform.position - transform.position;
 
-        // Calculate the force position
-        Vector3 forcePosition = gameManager.player1.transform.position + playerDir.forward * pushForce;
+        Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+        //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
 
-        // Apply force at the calculated position
-        //otherRB.AddForceAtPosition(playerDir.forward * pushForce, forcePosition, ForceMode.Impulse);
+        //float randomTorque = Random.Range(-5f, 5f);
+        //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
+        //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
+        //otherRB.MovePosition(newPosition);
+        StartCoroutine(SlideToPosition(forcePosition));
 
-        // Add torque with a random rotation
-        float randomTorque = Random.Range(-1f, 1f);
-        otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
+        p1Anim.SetBool("beingPush", true);
 
-        // Use MovePosition for smooth movement
-        Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
-        otherRB.MovePosition(newPosition);
+                        if (rC.Player1isCarrying)
+                {
+                    p2Steal = true;
+
+                }
+    }
+
+    IEnumerator SlideToPosition(Vector3 targetPosition)
+    {
+        float elapsedTime = 0f;
+        Vector3 startingPosition = otherRB.transform.position;
+
+        while (elapsedTime < slideTime)
+        {
+            otherRB.MovePosition(Vector3.Lerp(startingPosition, targetPosition, elapsedTime / slideTime));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the object reaches the exact target position at the end
+        otherRB.MovePosition(targetPosition);
+
     }
 
 
@@ -1037,6 +1142,7 @@ public class TestCube : MonoBehaviour
     public static void GoToScoreCards()
     {
         SceneManager.LoadScene("ScoreCards");
+
 
     }
 

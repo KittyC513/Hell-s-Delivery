@@ -62,7 +62,11 @@ public class PhasingPlatforms : MonoBehaviour
 
             foreach (MeshCollider meshcol in col)
             {
-                meshcol.enabled = true;
+                if (meshcol != null)
+                {
+                    meshcol.enabled = true;
+                }
+                
 
             }
             foreach (Renderer renderer in renderers)
@@ -80,7 +84,11 @@ public class PhasingPlatforms : MonoBehaviour
 
             foreach (MeshCollider meshcol in col)
             {
-                meshcol.enabled = false;
+                if (meshcol != null)
+                {
+                    meshcol.enabled = false;
+                }
+                
 
             }
             foreach (Renderer renderer in renderers)
