@@ -197,7 +197,10 @@ public class TestCube : MonoBehaviour
     private float pushDistance;
     [SerializeField]
     private float pushMultiply;
-
+    [SerializeField]
+    private float lerpSpeed;
+    [SerializeField]
+    private bool isPushing;
 
     [Header("Camera Control")]
     //public CameraStyle currentStyle;
@@ -324,7 +327,6 @@ public class TestCube : MonoBehaviour
 
         //CameraControl();
 
-        Debug.Log("Find player" + Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask));
 
     }
 
@@ -340,6 +342,19 @@ public class TestCube : MonoBehaviour
         {
             Move();
             Jump();
+        }
+
+        if (isPushing)
+        {
+            if (isPlayer1)
+            {
+                P1Push();
+            }
+            if (isPlayer2)
+            {
+                P2Push();
+            }
+
         }
 
 
@@ -593,36 +608,62 @@ public class TestCube : MonoBehaviour
 
         if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
         {
+
             print("Push");
             if (currentSpeed <= 1)
             {
-                pushForce = 100f;
+                pushForce = 7f;
             } else
             {
                 pushForce = currentSpeed * pushMultiply;
             }
-            if (isPlayer1)
-            {
-                otherRB = gameManager.player2.GetComponent<Rigidbody>();
-                otherRB.velocity = rb.velocity;
-                otherRB.AddForceAtPosition(playerDir.forward * pushForce, transform.position, ForceMode.Impulse);
-                //otherRB.AddForce(Quaternion.LookRotation(playerDir.transform.position - otherRB.transform.position).eulerAngles * pushForce,ForceMode.Acceleration);
 
-                float random = Random.Range(-1, 1);
-                otherRB.AddTorque(new Vector3(random, random, random));
-            }
-
-            if (isPlayer2)
-            {
-                otherRB = gameManager.player1.GetComponent<Rigidbody>();
-                otherRB.velocity = rb.velocity;
-                otherRB.AddForceAtPosition(playerDir.forward * pushForce, transform.position, ForceMode.Impulse);
-
-                float random = Random.Range(-1, 1);
-                otherRB.AddTorque(new Vector3(random, random, random));
-            }
         }
 
+    }
+
+    void P1Push()
+    {
+
+        otherRB = gameManager.player2.GetComponent<Rigidbody>();
+
+        //otherRB.velocity = rb.velocity;
+
+        // Calculate the force position
+        Vector3 forcePosition = gameManager.player2.transform.position + playerDir.forward * pushForce;
+
+        // Apply force at the calculated position
+        //otherRB.AddForceAtPosition(playerDir.forward * pushForce, forcePosition, ForceMode.Impulse);
+
+        // Add torque with a random rotation
+        float randomTorque = Random.Range(-1f, 1f);
+        otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
+
+        // Use MovePosition for smooth movement
+        Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
+        otherRB.MovePosition(newPosition);
+
+    }
+
+    void P2Push()
+    {
+        otherRB = gameManager.player1.GetComponent<Rigidbody>();
+
+        //otherRB.velocity = rb.velocity;
+
+        // Calculate the force position
+        Vector3 forcePosition = gameManager.player1.transform.position + playerDir.forward * pushForce;
+
+        // Apply force at the calculated position
+        //otherRB.AddForceAtPosition(playerDir.forward * pushForce, forcePosition, ForceMode.Impulse);
+
+        // Add torque with a random rotation
+        float randomTorque = Random.Range(-1f, 1f);
+        otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
+
+        // Use MovePosition for smooth movement
+        Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
+        otherRB.MovePosition(newPosition);
     }
 
 
