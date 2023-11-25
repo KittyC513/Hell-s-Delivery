@@ -73,12 +73,14 @@ public class RisingPlatforms : MonoBehaviour
                 child.transform.position = Vector3.Lerp(transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
             }*/
 
+
         }
         else
         {
             //move platforms back to starting
 
             platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, startPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+
 
         }
 
@@ -98,8 +100,11 @@ public class RisingPlatforms : MonoBehaviour
     public void DeactivatePlatforms()
     {
         //platforms are no longer active
+        if (active) time = Time.deltaTime;
         active = false;
-        time = Time.deltaTime;
+
+
+        Debug.Log("Deactivate");
     }
 
 
