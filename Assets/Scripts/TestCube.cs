@@ -233,6 +233,8 @@ public class TestCube : MonoBehaviour
     private bool p1Appear;
     private bool p2Appear;
 
+    private bool p1Found;
+    private bool p2Found;
 
     //public enum CameraStyle
     //{
@@ -373,11 +375,11 @@ public class TestCube : MonoBehaviour
 
         if (!withinPushingRange)
         {
+
             otherRB.useGravity = true;
             otherRB.isKinematic = false;
+
         }
-
-
 
 
     }
@@ -705,6 +707,7 @@ public class TestCube : MonoBehaviour
         otherRB = gameManager.player2.GetComponent<Rigidbody>();
         p2Anim = gameManager.p2Character.GetComponent<Animator>();
 
+        p2Found = true;
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
         Vector3 forceDir = otherRB.transform.position - transform.position;
@@ -729,8 +732,11 @@ public class TestCube : MonoBehaviour
 
     void P2Push()
     {
+
         otherRB = gameManager.player1.GetComponent<Rigidbody>();
         p1Anim = gameManager.p1Character.GetComponent<Animator>();
+
+        p1Found = true;
 
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
@@ -747,11 +753,11 @@ public class TestCube : MonoBehaviour
 
         p1Anim.SetBool("beingPush", true);
 
-                        if (rC.Player1isCarrying)
-                {
-                    p2Steal = true;
+        if (rC.Player1isCarrying)
+        {
+            p2Steal = true;
 
-                }
+        }
     }
 
     IEnumerator SlideToPosition(Vector3 targetPosition)

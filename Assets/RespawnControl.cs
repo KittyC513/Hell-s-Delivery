@@ -34,11 +34,15 @@ public class RespawnControl : MonoBehaviour
     string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
     string scene3 = "TitleScene";
+    string scene4 = "MVPLevel";
     [SerializeField]
     public bool Player1isCarrying;
     [SerializeField]
     public bool Player2isCarrying;
     public GameObject[] Partner;
+
+    [SerializeField]
+    GameManager gameManager;
 
     public DialogueRunner dR;
 
@@ -57,11 +61,12 @@ public class RespawnControl : MonoBehaviour
         respawnPoint = this.transform.position;
         dR = Object.FindAnyObjectByType<DialogueRunner>();
 
+        gameManager = Object.FindAnyObjectByType<GameManager>();
     }
 
     void SceneCheck()
     {
-        if (curSceneName == scene2 || curSceneName == scene3)
+        if (curSceneName == scene2 || curSceneName == scene3 || curSceneName == scene4)
         {
             if(objectGrabbable == null)
             {
@@ -75,7 +80,7 @@ public class RespawnControl : MonoBehaviour
     {
         SceneCheck();
         PlayerDetector();
-        if(curSceneName == scene2 || curSceneName == scene3)
+        if(curSceneName == scene2 || curSceneName == scene3 || curSceneName == scene4)
         {
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
@@ -118,26 +123,37 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-                ScoreCount.instance.AddDeathsToP1(1);
-                LevelDialogue.ShowDevilPlayer2();
-                dR.Stop();
-                PlayRandomDialogue();
+                ScoreCount.instance.AddDeathsToP1(3);
+                StartCoroutine(ActivateP1UIForDuration(3f));
+                if (curSceneName == scene2)
+                {
+                    LevelDialogue.ShowDevilPlayer2();
+                    dR.Stop();
+                    PlayRandomDialogue();
+                }
+
             }
             else
             {
-                dR.Stop();
+                //dR.Stop();
             }
 
             if (isPlayer2)
             {
-                ScoreCount.instance.AddDeathsToP2(1);
-                LevelDialogue.ShowDevilPlayer1();
-                dR.Stop();
-                PlayRandomDialogue();
+                ScoreCount.instance.AddDeathsToP2(3);
+                StartCoroutine(ActivateP2UIForDuration(3f));
+                if (curSceneName == scene2)
+                {
+                    LevelDialogue.ShowDevilPlayer1();
+                    dR.Stop();
+                    PlayRandomDialogue();
+                }
+
+
             }
             else
             {
-                dR.Stop();
+                //dR.Stop();
             }
 
             if (Player1isCarrying && isPlayer1)
@@ -231,6 +247,29 @@ public class RespawnControl : MonoBehaviour
         System.Random rnd = new System.Random();
         int index = rnd.Next(nodeNames.Count);
         dR.StartDialogue(nodeNames[index]);
+    }
+
+
+    IEnumerator ActivateP1UIForDuration(float duration)
+    {
+        gameManager.p1UIMinus.SetActive(true);
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Deactivate the UI after the specified duration
+        gameManager.p1UIMinus.SetActive(false);
+    }
+
+    IEnumerator ActivateP2UIForDuration(float duration)
+    {
+        gameManager.p2UIMinus.SetActive(true);
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Deactivate the UI after the specified duration
+        gameManager.p2UIMinus.SetActive(false);
     }
 
 }

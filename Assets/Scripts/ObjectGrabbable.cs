@@ -99,7 +99,7 @@ public class ObjectGrabbable : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //AddScore();
+        AddScore();
         //PackageIcon();
         
 
@@ -152,11 +152,11 @@ public class ObjectGrabbable : MonoBehaviour
     {
         if (P1TakePackage)
         {
-            ScoreCount.instance.AddPointToP1Package(1);
+            ScoreCount.instance.AddPointToP1Package(5);
         }
         else if (P2TakePackage)
         {
-            ScoreCount.instance.AddPointToP2Package(1);
+            ScoreCount.instance.AddPointToP2Package(5);
         }
 
     }

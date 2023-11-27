@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class ScoreCount : MonoBehaviour
@@ -48,6 +49,22 @@ public class ScoreCount : MonoBehaviour
     private float p1CalculatedScore;
     private float p2CalculatedScore;
 
+    [SerializeField]
+    private Slider slider;
+    [SerializeField]
+    private RectTransform knob;
+    [SerializeField]
+    private float rotationSpeed;
+    [SerializeField]
+    private float p1Score;
+    [SerializeField]
+    private float p2Score;
+    [SerializeField]
+    private float time;
+    [SerializeField]
+    GameManager gameManager;
+
+
 
     //need score for each value
     //need an expected outcome for each player
@@ -65,13 +82,17 @@ public class ScoreCount : MonoBehaviour
     void Start()
     {
         StartLevelTime();
+        gameManager = Object.FindAnyObjectByType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        int minutes = Mathf.FloorToInt(completionTime / 60);
+        int seconds = Mathf.FloorToInt(completionTime % 60);
+        timeIndicatorText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        timeIndicatorText.text = completionTime.ToString("f2");
+        //timeIndicatorText.text = completionTime.ToString("f2");
 
         lvlData.p1Deaths = p1Deaths;
         lvlData.p2Deaths = p2Deaths;
@@ -82,7 +103,7 @@ public class ScoreCount : MonoBehaviour
         lvlData.p2FinalScore = p2CalculatedScore;
 
         Debug.Log(p1CalculatedScore);
-
+        Debug.Log(p2CalculatedScore);
 
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -98,6 +119,7 @@ public class ScoreCount : MonoBehaviour
     private void FixedUpdate()
     {
         calculateScore(p1Deaths, p1PackageTime, p2Deaths, p2PackageTime, completionTime);
+        TotalScoreCal();
     }
 
     //return a vector 2, x is player 1 score y is player 2 score
@@ -206,6 +228,8 @@ public class ScoreCount : MonoBehaviour
     {
         //when the player dies (referenced in the respawn script) add to deaths, same with p2 later
         p1Deaths += value;
+        //p1Deaths += value;
+        //p1Score += p1Deaths;
 
         //deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
     }
@@ -213,24 +237,123 @@ public class ScoreCount : MonoBehaviour
     public void AddPointToP1Package(int value)
     {
         //if player1 has the package add to their package time
-        p1PackageTime += value * Time.fixedDeltaTime;
-        
+        time += Time.deltaTime;
+        if(time >= 10)
+        {
+
+            p1PackageTime += value * Time.fixedDeltaTime;
+            p1Score += p1PackageTime;
+            time = 0;
+
+            StartCoroutine(ActivateP1UIForDuration(3f));
+        }
+
+
         //deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
     }
 
     public void AddDeathsToP2(int value)
     {
+
         p2Deaths += value;
-        
+        //p2Deaths -= value;
+        //p2Score += p2Deaths;
         //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
     }
 
     public void AddPointToP2Package(int value)
     {
+        time += Time.deltaTime;
+        if(time >= 10)
+        {
+            p2PackageTime += value * Time.fixedDeltaTime;
+            p2Score += p2PackageTime;
+            time = 0;
+            StartCoroutine(ActivateP2UIForDuration(3f));
+        }
         //add to player 2 package Time
-        p2PackageTime += value * Time.fixedDeltaTime;
 
         //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
+    }
+
+    void TotalScoreCal()
+    {
+        if (p1CalculatedScore > p2CalculatedScore)
+        {
+            float difference = (p1CalculatedScore - p2CalculatedScore)/10;
+
+            if (knob.localEulerAngles.z >= 90)
+            {
+                knob.localEulerAngles = new Vector3(0, 0, 90);
+            }
+
+            StartCoroutine(RotateToPosition(difference, 2));
+
+        } 
+        else if (p2CalculatedScore > p1CalculatedScore)
+        {
+            float difference = (p2CalculatedScore - p1CalculatedScore) / 10;
+
+            if (knob.localEulerAngles.z <= -90)
+            {
+                knob.localEulerAngles = new Vector3(0, 0, -90);
+            }
+
+            StartCoroutine(RotateToPosition(-difference, 2));
+        }
+        else if(p1CalculatedScore == p2CalculatedScore)
+        {
+            knob.localEulerAngles = new Vector3(0, 0, 0);
+        }
+    }
+
+
+    IEnumerator ActivateP1UIForDuration(float duration)
+    {
+        gameManager.p1UI.SetActive(true);
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Deactivate the UI after the specified duration
+        gameManager.p1UI.SetActive(false);
+    }
+
+    IEnumerator ActivateP2UIForDuration(float duration)
+    {
+        gameManager.p2UI.SetActive(true);
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Deactivate the UI after the specified duration
+        gameManager.p2UI.SetActive(false);
+    }
+
+
+    //float knobPosition = percentage * slider.GetComponent<RectTransform>().rect.width;
+
+    //Vector3 newPosition = knob.localPosition;
+    //newPosition.x = knobPosition;
+    //knob.localPosition = newPosition;
+    IEnumerator RotateToPosition(float targetRotation, float rotationTime)
+    {
+
+        float elapsedTime = 0f;
+        float startingRotation = knob.localEulerAngles.z;
+
+
+        while (elapsedTime < rotationTime)
+        {
+            float newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
+            knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the object reaches the exact target position at the end
+        knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, targetRotation);
+
     }
 
 

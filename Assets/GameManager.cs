@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    string curSceneName;
+    string scene1 = "HubStart";
+    string scene2 = "PrototypeLevel";
+    string scene3 = "TitleScene";
+    string scene4 = "MVPLevel";
 
     public string layerNameToFind1 = "P1Collider";
     public string layerNameToFind2 = "P2Collider";
@@ -58,12 +65,35 @@ public class GameManager : MonoBehaviour
     private bool p2AnimFound;
     [SerializeField]
     private bool isDestroyed;
+    [SerializeField]
+    public GameObject p1UI;
+    [SerializeField]
+    public GameObject p2UI;
+    [SerializeField]
+    private bool p1UIFound;
+    [SerializeField]
+    private bool p2UIFound;
+    [SerializeField]
+    public GameObject p1UIMinus;
+    [SerializeField]
+    public GameObject p2UIMinus;
+    [SerializeField]
+    private bool p1UIFound1;
+    [SerializeField]
+    private bool p2UIFound2;
 
     private void Start()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        curSceneName = currentScene.name;
+
         sceneChanged = false;
-        character1.SetActive(false);
-        character2.SetActive(false);
+        if(curSceneName == scene3)
+        {
+            character1.SetActive(false);
+            character2.SetActive(false);
+        }
+
     }
 
     private void Update()
@@ -80,11 +110,14 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject obj in objectsInScene)
         {
-            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound)
+            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1)
             {
                 player1 = obj;
                 p1 = obj.GetComponent<TestCube>();
-                character1.SetActive(true);
+                if(curSceneName == scene3)
+                {
+                    character1.SetActive(true);
+                }
 
                 Transform parentTransform = player1.transform;
 
@@ -95,18 +128,33 @@ public class GameManager : MonoBehaviour
                         p1Anim = child;
                         p1Character = p1Anim.gameObject;
                         p1AnimFound = true;
- 
+                    }
+
+                    if (child.CompareTag("InGameUI"))
+                    {
+                        p1UI = child.gameObject;
+                        p1UIFound = true;
+                    }
+                    
+                    if (child.CompareTag("Minus"))
+                    {
+                        p1UIMinus = child.gameObject;
+                        p1UIFound1 = true;
                     }
                 }
 
 
             }
 
-            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound)
+            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2)
             {
                 player2 = obj;
                 p2 = obj.GetComponent<TestCube>();
-                character2.SetActive(true);
+
+                if (curSceneName == scene3)
+                {
+                    character2.SetActive(true);
+                }
 
                 Transform parentTransform = player2.transform;
 
@@ -114,17 +162,29 @@ public class GameManager : MonoBehaviour
                 {
                     if (child.CompareTag("Character"))
                     {
+
                         p2Anim = child;
                         p2Character = p2Anim.gameObject;
                         p2AnimFound = true;
 
+                    }
+
+                    if (child.CompareTag("InGameUI"))
+                    {
+                        p2UI = child.gameObject;
+                        p2UIFound = true;
+                    }
+                    if (child.CompareTag("Minus"))
+                    {
+                        p2UIMinus = child.gameObject;
+                        p2UIFound2 = true;
                     }
                 }
             }
         }
 
         //two players join the game, it loads to the Title Scene
-        if(p1 != null && p2 != null && !isDestroyed)
+        if(p1 != null && p2 != null && !isDestroyed && curSceneName == scene3)
         {
             p1Ani.SetBool("GameStart", true);
             p2Ani.SetBool("GameStart", true);
