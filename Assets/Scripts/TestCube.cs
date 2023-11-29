@@ -373,7 +373,7 @@ public class TestCube : MonoBehaviour
             Jump();
         }
 
-        if (!withinPushingRange)
+        if (!withinPushingRange & otherRB != null)
         {
 
             otherRB.useGravity = true;
@@ -663,14 +663,14 @@ public class TestCube : MonoBehaviour
         else
         {
             withinPushingRange = false;
-            if (isPlayer1)
+            if (isPlayer1 && p1Anim != null)
             {
                 p2Anim.SetBool("beingPush", false);
                 
 
             }
 
-            if (isPlayer2)
+            if (isPlayer2 && p2Anim != null)
             {
                 p1Anim.SetBool("beingPush", false);
                 

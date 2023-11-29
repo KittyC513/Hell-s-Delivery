@@ -8,6 +8,7 @@ public class Geiser : MonoBehaviour
     public bool active;
     ParticleSystem ps;
     BoxCollider bc;
+    bool activeSwitch = true;
 
     // Start is called before the first frame update
     void Start()
@@ -24,25 +25,37 @@ public class Geiser : MonoBehaviour
     {
         if (active)
         {
-            ps.Play();
-            bc.enabled = true;
+            
         } else
         {
-            ps.Stop();
-            bc.enabled = false;
+            
         }
     }
 
     public void ActivateGeiser()
     {
-
-        active = true;
+        if (activeSwitch)
+        {
+            Debug.Log("FanActive");
+            active = true;
+            ps.Play();
+            bc.enabled = true;
+            activeSwitch = false;
+        }
+        
     }
 
     public void DeactivateGeiser()
     {
-
-        active = false;
+        if (activeSwitch == false)
+        {
+            Debug.Log("FanDeactive");
+            active = false;
+            ps.Stop();
+            bc.enabled = false;
+            activeSwitch = true;
+        }
+        
 
     }
 }

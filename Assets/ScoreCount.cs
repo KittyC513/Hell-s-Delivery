@@ -102,8 +102,8 @@ public class ScoreCount : MonoBehaviour
         lvlData.p1FinalScore = p1CalculatedScore;
         lvlData.p2FinalScore = p2CalculatedScore;
 
-        Debug.Log(p1CalculatedScore);
-        Debug.Log(p2CalculatedScore);
+        //Debug.Log(p1CalculatedScore);
+        //Debug.Log(p2CalculatedScore);
 
         if (Input.GetKeyDown(KeyCode.C))
         {
