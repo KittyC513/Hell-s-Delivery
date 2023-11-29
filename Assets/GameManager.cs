@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,11 @@ public class GameManager : MonoBehaviour
     string scene2 = "PrototypeLevel";
     string scene3 = "TitleScene";
     string scene4 = "MVPLevel";
+
+    [SerializeField]
+    Camera mainCam;
+    [SerializeField]
+    private Transform cameraPosition;
 
     public string layerNameToFind1 = "P1Collider";
     public string layerNameToFind2 = "P2Collider";
@@ -88,17 +94,20 @@ public class GameManager : MonoBehaviour
         curSceneName = currentScene.name;
 
         sceneChanged = false;
-        if(curSceneName == scene3)
-        {
-            character1.SetActive(false);
-            character2.SetActive(false);
-        }
+        //if(curSceneName == scene3)
+        //{
+        //    character1.SetActive(false);
+        //    character2.SetActive(false);
+        //}
 
     }
 
     private void Update()
     {
         FindPlayer();
+        FindCamera();
+
+
     }
 
 
@@ -116,7 +125,7 @@ public class GameManager : MonoBehaviour
                 p1 = obj.GetComponent<TestCube>();
                 if(curSceneName == scene3)
                 {
-                    character1.SetActive(true);
+
                 }
 
                 Transform parentTransform = player1.transform;
@@ -141,6 +150,7 @@ public class GameManager : MonoBehaviour
                         p1UIMinus = child.gameObject;
                         p1UIFound1 = true;
                     }
+
                 }
 
 
@@ -153,7 +163,7 @@ public class GameManager : MonoBehaviour
 
                 if (curSceneName == scene3)
                 {
-                    character2.SetActive(true);
+                    //character2.SetActive(true);
                 }
 
                 Transform parentTransform = player2.transform;
@@ -186,10 +196,10 @@ public class GameManager : MonoBehaviour
         //two players join the game, it loads to the Title Scene
         if(p1 != null && p2 != null && !isDestroyed && curSceneName == scene3)
         {
-            p1Ani.SetBool("GameStart", true);
-            p2Ani.SetBool("GameStart", true);
-            titleAni.SetBool("GameStart", true);
-            StartCoroutine(DestroyAfterDelay());
+            //p1Ani.SetBool("GameStart", true);
+            //p2Ani.SetBool("GameStart", true);
+            //titleAni.SetBool("GameStart", true);
+            //StartCoroutine(DestroyAfterDelay());
         }
     }
 
@@ -265,6 +275,31 @@ public class GameManager : MonoBehaviour
     }
 
 
+    void FindCamera()
+    {
+        if(curSceneName == scene3)
+        {
+            mainCam = Camera.main;
+            if (p1)
+            {
+                MoveCamera();
+            }
+        }
+        else
+        {
+            mainCam = null;
+            cameraPosition = null;
+        }
+    }
+
+
+
+    void MoveCamera()
+    {
+        float lerpSpeed = 5f;
+        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, cameraPosition.position, Time.deltaTime * lerpSpeed);
+        print("Camera");
+    }
     void TutorialControl()
     {
         for (int i = 0; i < popUps.Length; i++)
