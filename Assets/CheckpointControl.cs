@@ -9,12 +9,15 @@ public class CheckpointControl : MonoBehaviour
     public Animator anim;
     public bool activate;
     public ParticleSystem ps;
+    public Animator cubeAnim;
+    bool animSwitch;
 
     // Start is called before the first frame update
     void Start()
     {
         anim.SetBool("Activate", false);
         ps.Stop();
+        animSwitch = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,6 +30,12 @@ public class CheckpointControl : MonoBehaviour
             Debug.Log("Collide");
             anim.SetBool("Activate", true);
             ps.Play();
+            if (animSwitch == true)
+            {
+                cubeAnim.SetTrigger("GemActivate");
+                animSwitch = false;
+            }
+            
         }
     }
 
