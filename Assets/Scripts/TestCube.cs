@@ -482,12 +482,12 @@ public class TestCube : MonoBehaviour
     }
     void CameraSwitch()
     {
-        if (curSceneName == scene1 || curSceneName == scene3)
+        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         {
             playerCamera.enabled = false;
 
         }
-        else if ( curSceneName != scene1 && curSceneName != scene3)
+        else
         {
             playerCamera.enabled = true;
 
@@ -498,12 +498,12 @@ public class TestCube : MonoBehaviour
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
-            if (curSceneName == scene1 || curSceneName == scene3)
+            if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
             {
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
-            else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene6)
+            else
             {
                 if (isGliding) 
                 {
