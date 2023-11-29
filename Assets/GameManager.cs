@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
     Camera mainCam;
     [SerializeField]
     private Transform cameraPosition;
+    [SerializeField]
+    private Animator animTitle;
+    [SerializeField]
+    private GameObject text;
 
     public string layerNameToFind1 = "P1Collider";
     public string layerNameToFind2 = "P2Collider";
@@ -194,13 +198,25 @@ public class GameManager : MonoBehaviour
         }
 
         //two players join the game, it loads to the Title Scene
-        if(p1 != null && p2 != null && !isDestroyed && curSceneName == scene3)
+        if(p1 != null && p2 != null)
         {
+            if(curSceneName == scene3)
+            {
+                animTitle.SetBool("isEnded", true);
+                text.SetActive(false);
+            }
+            else
+            {
+                animTitle = null;
+                text = null;
+            }
             //p1Ani.SetBool("GameStart", true);
             //p2Ani.SetBool("GameStart", true);
             //titleAni.SetBool("GameStart", true);
             //StartCoroutine(DestroyAfterDelay());
+
         }
+
     }
 
  
