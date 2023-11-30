@@ -266,6 +266,7 @@ public class RespawnControl : MonoBehaviour
             {
                 gameManager.sceneChanged = true;
                 SceneManager.LoadScene(scene1);  
+
             }            
         }
         //if(other.gameObject.tag == ("TV"))

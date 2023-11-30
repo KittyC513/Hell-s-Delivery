@@ -204,13 +204,13 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float lerpSpeed;
     [SerializeField]
-    private bool withinPushingRange;
+    public bool withinPushingRange;
     [SerializeField]
     private float slideTime;
     [SerializeField]
-    private Animator p1Anim;
+    public Animator p1Anim;
     [SerializeField]
-    private Animator p2Anim;
+    public Animator p2Anim;
     [SerializeField]
     public bool p1Steal;
     [SerializeField]
@@ -242,10 +242,13 @@ public class TestCube : MonoBehaviour
 
     private bool p1Found;
     private bool p2Found;
+    [SerializeField]
+    GameObject noisy1;
+    [SerializeField]
+    GameObject noisy2;
 
 
 
-        
     //public enum CameraStyle
     //{
     //    Basic,
@@ -271,7 +274,7 @@ public class TestCube : MonoBehaviour
         //playerPos = this.transform;
         maxSpeed = walkSpeed;
         mainCam = Camera.main;
-        
+
 
 
         //gM = GetComponent<GameManager>();
@@ -359,7 +362,11 @@ public class TestCube : MonoBehaviour
         MovementCalcs();
         DetectPushRange();
 
-        DetectInteractRange();
+        if (curSceneName == scene1 || curSceneName == scene3)
+        {
+            DetectInteractRange();
+        }
+
         //PlayerPosition();
 
 
@@ -498,7 +505,7 @@ public class TestCube : MonoBehaviour
             mainCam = Camera.main;
 
         }
-        else
+        else if(curSceneName == scene5)
         {
             playerCamera.enabled = true;
             mainCam = null;
@@ -515,9 +522,9 @@ public class TestCube : MonoBehaviour
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
-            else
+            else if(curSceneName == scene5) 
             {
-                if (isGliding) 
+                if (isGliding)
                 {
                     currentSpeed = gliderSpeed;
                 }
@@ -525,7 +532,9 @@ public class TestCube : MonoBehaviour
 
                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+          
             }
+ 
         }
         else
         {
@@ -697,8 +706,11 @@ public class TestCube : MonoBehaviour
         {
             if (ReadActionButton())
             {
-                //change scene and enter tutorial level, set gameManger.sceneChanged to true
+                gameManager.sceneChanged = true;
                 print("Do interact with TV");
+                SceneManager.LoadScene("MVPLevel");
+                //change scene and enter tutorial level, set gameManger.sceneChanged to true
+
             }
         }
 
@@ -731,12 +743,15 @@ public class TestCube : MonoBehaviour
             {
                 P1Push();
                 objectGrabbable = null;
+                noisy2.SetActive(true);
+
             }
 
             if (isPlayer2)
             {
                 P2Push();
                 objectGrabbable = null;
+                noisy1.SetActive(true);
             }
 
 
@@ -768,6 +783,8 @@ public class TestCube : MonoBehaviour
 
         p2Anim.SetBool("beingPush", true);
 
+        noisy2 = gameManager.noisy2;
+
         if (rC.Player2isCarrying)
         {
             p1Steal = true;
@@ -797,6 +814,8 @@ public class TestCube : MonoBehaviour
         StartCoroutine(SlideToPosition(forcePosition));
 
         p1Anim.SetBool("beingPush", true);
+
+        noisy1 = gameManager.noisy1;
 
         if (rC.Player1isCarrying)
         {
