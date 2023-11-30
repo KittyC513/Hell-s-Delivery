@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
@@ -109,7 +109,10 @@ public class GameManager : MonoBehaviour
     private GameObject TVinstruction;
     [SerializeField]
     Canvas canvas;
-
+    [SerializeField]
+    TMP_Text TVtext;
+    [SerializeField]
+    Animator TVanim;
 
     private void Awake()
     {
@@ -176,6 +179,8 @@ public class GameManager : MonoBehaviour
             {
                 canvas = GameObject.Find("TVCanvas").GetComponent<Canvas>();
                 TVinstruction = canvas.gameObject;
+                TVtext = canvas.transform.Find("Instruction").GetComponent<TMP_Text>();
+                TVanim = canvas.GetComponent<Animator>();
             }
 
         }
@@ -404,7 +409,12 @@ public class GameManager : MonoBehaviour
                 }
                 else if (!p1.withinTVRange && !p2.withinTVRange)
                 {
-                    TVinstruction.SetActive(false);
+                    StopCoroutine(ShowIntruction());
+                    Color curColor = TVtext.color;
+                    curColor.a = 0f;
+                    TVtext.color = curColor;
+                    TVanim.enabled = false;
+                    print("End");
                 }
             }
         }
@@ -423,7 +433,11 @@ public class GameManager : MonoBehaviour
     {
         // Wait for the specified time
         yield return new WaitForSeconds(waitingTime);
-        TVinstruction.SetActive(true);
+
+        TVanim.enabled = true;
+        Color curColor = TVtext.color;
+        curColor.a = 255f;
+        TVtext.color = curColor;
         // Destroy the GameObject this script is attached to
     }
     void TutorialControl()

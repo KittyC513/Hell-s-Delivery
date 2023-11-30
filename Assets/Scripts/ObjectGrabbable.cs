@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEngine.Rendering.ReloadAttribute;
@@ -59,6 +60,7 @@ public class ObjectGrabbable : MonoBehaviour
     private TestCube player1TC;
     [SerializeField]
     private TestCube player2TC;
+
 
 
     private void Awake()
