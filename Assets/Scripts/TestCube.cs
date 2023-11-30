@@ -240,8 +240,11 @@ public class TestCube : MonoBehaviour
     private bool p1Appear;
     private bool p2Appear;
 
-    private bool p1Found;
-    private bool p2Found;
+    [SerializeField]
+    public bool p1pushed;
+    [SerializeField]
+    public bool p2pushed;
+
     [SerializeField]
     GameObject noisy1;
     [SerializeField]
@@ -679,7 +682,6 @@ public class TestCube : MonoBehaviour
         {
             withinPushingRange = true;
             lastColliderTime = Time.time;
-            
         } 
         else
         {
@@ -687,14 +689,14 @@ public class TestCube : MonoBehaviour
             if (isPlayer1 && p1Anim != null)
             {
                 p2Anim.SetBool("beingPush", false);
-                
+                //p1pushed = false;
 
             }
 
             if (isPlayer2 && p2Anim != null)
             {
                 p1Anim.SetBool("beingPush", false);
-                
+                //p2pushed = false;
             }
         }
     }
@@ -743,7 +745,8 @@ public class TestCube : MonoBehaviour
             {
                 P1Push();
                 objectGrabbable = null;
-                noisy2.SetActive(true);
+                p1pushed = true;
+                
 
             }
 
@@ -751,7 +754,7 @@ public class TestCube : MonoBehaviour
             {
                 P2Push();
                 objectGrabbable = null;
-                noisy1.SetActive(true);
+                p2pushed = true;
             }
 
 
@@ -767,7 +770,6 @@ public class TestCube : MonoBehaviour
         otherRB = gameManager.player2.GetComponent<Rigidbody>();
         p2Anim = gameManager.p2Character.GetComponent<Animator>();
 
-        p2Found = true;
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
         Vector3 forceDir = otherRB.transform.position - transform.position;
@@ -783,7 +785,7 @@ public class TestCube : MonoBehaviour
 
         p2Anim.SetBool("beingPush", true);
 
-        noisy2 = gameManager.noisy2;
+        //noisy2 = gameManager.noisy2;
 
         if (rC.Player2isCarrying)
         {
@@ -797,8 +799,6 @@ public class TestCube : MonoBehaviour
 
         otherRB = gameManager.player1.GetComponent<Rigidbody>();
         p1Anim = gameManager.p1Character.GetComponent<Animator>();
-
-        p1Found = true;
 
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
@@ -815,7 +815,7 @@ public class TestCube : MonoBehaviour
 
         p1Anim.SetBool("beingPush", true);
 
-        noisy1 = gameManager.noisy1;
+        //noisy1 = gameManager.noisy1;
 
         if (rC.Player1isCarrying)
         {

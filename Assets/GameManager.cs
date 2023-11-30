@@ -122,10 +122,7 @@ public class GameManager : MonoBehaviour
     private bool isNoisy1;
     [SerializeField]
     private bool isNoisy2;
-    [SerializeField]
-    private bool p1Noisy;
-    [SerializeField]
-    private bool p2Noisy;
+
 
     private void Awake()
     {
@@ -488,29 +485,31 @@ public class GameManager : MonoBehaviour
     {
         if(p1 != null && p2 != null)
         {
-            if (!p1.withinPushingRange)
+            if (p1.p1pushed)
             {
-                p2Ani.SetBool("beingPush", false);
+                noisy2.SetActive(true);
                 StartCoroutine(StopNoisyP2());
-                p2Noisy = true;
+                if (!p1.withinPushingRange)
+                {
+                    p2Ani.SetBool("beingPush", false);
+    
+                }
+                
             }
 
-            if (!p2.withinPushingRange)
+            if (p2.p2pushed)
             {
-                p1Ani.SetBool("beingPush", false);
+                noisy1.SetActive(true);
                 StartCoroutine(StopNoisyP1());
-                p1Noisy = true;
+
+                if (!p2.withinPushingRange)
+                {
+                    p1Ani.SetBool("beingPush", false);
+                    
+                }
             }
 
-            if (p1Noisy)
-            {
-                StopCoroutine(StopNoisyP1());
-            }
 
-            if (p2Noisy)
-            {
-                StopCoroutine(StopNoisyP2());
-            }
 
 
         }
@@ -521,11 +520,16 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitingTime);
         noisy2.SetActive(false);
+        p1.p1pushed = false;
+
     }
     IEnumerator StopNoisyP1()
     {
         yield return new WaitForSeconds(waitingTime);
         noisy1.SetActive(false);
+        p2.p2pushed = false;
+
+
     }
     void TutorialControl()
     {
