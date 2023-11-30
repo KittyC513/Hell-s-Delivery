@@ -520,6 +520,8 @@ public class TestCube : MonoBehaviour
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
+            curSceneName = currentScene.name;
+
             if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
             {
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;

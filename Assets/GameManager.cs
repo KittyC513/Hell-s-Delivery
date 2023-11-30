@@ -184,10 +184,12 @@ public class GameManager : MonoBehaviour
 
                 sceneChanged = false;
 
-            } else if(curSceneName == scene4)
+            }
+
+            if(curSceneName == scene4)
             {
-                player1.transform.position = new Vector3(-11f, 7.0f, 56f);
-                player2.transform.position = new Vector3(-11f, 7.0f, 46f);
+                player1.transform.position = new Vector3(-22f, 7.0f, 56f);
+                player2.transform.position = new Vector3(-22f, 7.0f, 42f);
                 print("Reset MVP Level");
 
                 sceneChanged = false;
