@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     string scene2 = "PrototypeLevel";
     string scene3 = "TitleScene";
     string scene4 = "MVPLevel";
+    string scene5 = "HubEnd";
 
     [SerializeField]
     Camera mainCam;
@@ -98,6 +99,17 @@ public class GameManager : MonoBehaviour
 
     Scene currentScene;
 
+    [SerializeField]
+    private Material skyboxScene1;
+    [SerializeField]
+    private Material skyboxScene2;
+    [SerializeField]
+    private float waitingTime;
+    [SerializeField]
+    private GameObject TVinstruction;
+    [SerializeField]
+    Canvas canvas;
+
 
     private void Awake()
     {
@@ -115,12 +127,32 @@ public class GameManager : MonoBehaviour
         FindPlayer();
         FindCamera();
         DetectScene();
+
     }
 
     private void FixedUpdate()
     {
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
+
+        SkyboxControl();
+
+        ShowTVInstruction();
+
+    }
+
+    void SkyboxControl()
+    {
+        // Change skybox based on the scene name
+        if (curSceneName == scene3)
+        {
+            RenderSettings.skybox = skyboxScene1;
+        }
+        else
+        {
+            RenderSettings.skybox = skyboxScene2;
+        }
+        print(RenderSettings.skybox);
     }
 
     void DetectScene()
@@ -137,6 +169,15 @@ public class GameManager : MonoBehaviour
 
                 sceneChanged = false;
             }
+        }
+        if (curSceneName == scene1 || curSceneName == scene5)
+        {
+            if(canvas == null)
+            {
+                canvas = GameObject.Find("TVCanvas").GetComponent<Canvas>();
+                TVinstruction = canvas.gameObject;
+            }
+
         }
     }
 
@@ -230,7 +271,8 @@ public class GameManager : MonoBehaviour
             {
                 animTitle.SetBool("isEnded", true);
                 text.SetActive(false);
-                instructionText.SetActive(true);
+                StartCoroutine(ShowDirection());
+
             }
             //else
             //{
@@ -320,6 +362,8 @@ public class GameManager : MonoBehaviour
     }
 
 
+
+
     void FindCamera()
     {
         if(curSceneName == scene3)
@@ -344,6 +388,43 @@ public class GameManager : MonoBehaviour
         float lerpSpeed = 5f;
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, cameraPosition.position, Time.deltaTime * lerpSpeed);
         print("Camera");
+    }
+
+
+
+    void ShowTVInstruction()
+    {
+        if(curSceneName == scene1 || curSceneName == scene5)
+        {
+            if(canvas != null)
+            {
+                if (p1.withinTVRange || p2.withinTVRange)
+                {
+                    StartCoroutine(ShowIntruction());
+                }
+                else if (!p1.withinTVRange && !p2.withinTVRange)
+                {
+                    TVinstruction.SetActive(false);
+                }
+            }
+        }
+
+    }
+    IEnumerator ShowDirection()
+    {
+        // Wait for the specified time
+        yield return new WaitForSeconds(waitingTime);
+        instructionText.SetActive(true);
+        // Destroy the GameObject this script is attached to
+    }
+
+
+    IEnumerator ShowIntruction()
+    {
+        // Wait for the specified time
+        yield return new WaitForSeconds(waitingTime);
+        TVinstruction.SetActive(true);
+        // Destroy the GameObject this script is attached to
     }
     void TutorialControl()
     {

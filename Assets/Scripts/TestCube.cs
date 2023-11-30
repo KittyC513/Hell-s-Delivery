@@ -220,7 +220,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private LayerMask interactableMask;
     [SerializeField]
-    private bool withinTVRange;
+    public bool withinTVRange;
 
     [SerializeField]
     private float pushButtonGracePeriod;
@@ -243,14 +243,8 @@ public class TestCube : MonoBehaviour
     private bool p1Found;
     private bool p2Found;
 
-    [SerializeField]
-    private float waitingTime;
-    [SerializeField]
-    private GameObject TVinstruction;
-    [SerializeField]
-    Canvas canvas;
-    [SerializeField]
-    TMP_Text text;
+
+
         
     //public enum CameraStyle
     //{
@@ -503,13 +497,6 @@ public class TestCube : MonoBehaviour
             playerCamera.enabled = false;
             mainCam = Camera.main;
 
-            if(curSceneName == scene1 || curSceneName == scene3)
-            {
-                canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-                text = canvas.transform.Find("Instruction").GetComponent<TMP_Text>();
-                TVinstruction = text.gameObject;
-            }
-
         }
         else
         {
@@ -517,7 +504,6 @@ public class TestCube : MonoBehaviour
             mainCam = null;
         }
         
-
     }
     private void Move()
     {
@@ -709,27 +695,19 @@ public class TestCube : MonoBehaviour
     {
         if (withinTVRange)
         {
-            StartCoroutine(ShowIntruction());
             if (ReadActionButton())
             {
                 //change scene and enter tutorial level, set gameManger.sceneChanged to true
-                print("interact with TV");
+                print("Do interact with TV");
             }
         }
 
     }
 
-    IEnumerator ShowIntruction()
-    {
-        // Wait for the specified time
-        yield return new WaitForSeconds(waitingTime);
-        TVinstruction.SetActive(true);
-        print("Interact with TV");
-        // Destroy the GameObject this script is attached to
-    }
 
 
-    void DetectInteractRange()
+
+    public void DetectInteractRange()
     {
         if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, interactableMask))
         {
