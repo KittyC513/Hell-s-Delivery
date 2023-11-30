@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    string curSceneName;
+    public string curSceneName;
     string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
     string scene3 = "TitleScene";
@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     private Animator animTitle;
     [SerializeField]
     private GameObject text;
+    [SerializeField]
+    private GameObject instructionText;
+
+
 
     public string layerNameToFind1 = "P1Collider";
     public string layerNameToFind2 = "P2Collider";
@@ -92,17 +96,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool p2UIFound2;
 
+    Scene currentScene;
+
+
+    private void Awake()
+    {
+        instructionText.SetActive(false);
+    }
     private void Start()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        curSceneName = currentScene.name;
 
         sceneChanged = false;
-        //if(curSceneName == scene3)
-        //{
-        //    character1.SetActive(false);
-        //    character2.SetActive(false);
-        //}
 
     }
 
@@ -110,8 +114,30 @@ public class GameManager : MonoBehaviour
     {
         FindPlayer();
         FindCamera();
+        DetectScene();
+    }
 
+    private void FixedUpdate()
+    {
+        currentScene = SceneManager.GetActiveScene();
+        curSceneName = currentScene.name;
+    }
 
+    void DetectScene()
+    {
+        if (sceneChanged)
+        {
+            curSceneName = currentScene.name;
+
+            if (curSceneName == scene1)
+            {
+                player1.transform.position = new Vector3(4.97f, 1f, 3f);
+                player2.transform.position = new Vector3(3f, 1f, 3f);
+                print("Reset");
+
+                sceneChanged = false;
+            }
+        }
     }
 
 
@@ -204,12 +230,15 @@ public class GameManager : MonoBehaviour
             {
                 animTitle.SetBool("isEnded", true);
                 text.SetActive(false);
+                instructionText.SetActive(true);
             }
-            else
-            {
-                animTitle = null;
-                text = null;
-            }
+            //else
+            //{
+            //    Destroy(animTitle.gameObject);
+            //    Destroy(text.gameObject); 
+            //    Destroy(instructionText.gameObject);
+
+            //}
             //p1Ani.SetBool("GameStart", true);
             //p2Ani.SetBool("GameStart", true);
             //titleAni.SetBool("GameStart", true);

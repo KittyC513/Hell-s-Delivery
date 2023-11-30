@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.TextCore.Text;
 using Yarn.Unity;
 
 public class RespawnControl : MonoBehaviour
@@ -12,6 +13,8 @@ public class RespawnControl : MonoBehaviour
 
     [SerializeField]
     private GameObject player;
+    [SerializeField]
+    private TestCube testCube;
 
     [SerializeField]
     public bool isDead;
@@ -35,6 +38,7 @@ public class RespawnControl : MonoBehaviour
     string scene2 = "PrototypeLevel";
     string scene3 = "TitleScene";
     string scene4 = "MVPLevel";
+    string scene5 = "TutorialLevel";
     [SerializeField]
     public bool Player1isCarrying;
     [SerializeField]
@@ -43,8 +47,12 @@ public class RespawnControl : MonoBehaviour
 
     [SerializeField]
     GameManager gameManager;
+    [SerializeField]
+    private bool isAtDoor;
 
     public DialogueRunner dR;
+
+
 
     List<string> nodeNames = new List<string>
     {
@@ -55,25 +63,32 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        curSceneName = currentScene.name;
-
         respawnPoint = this.transform.position;
         dR = Object.FindAnyObjectByType<DialogueRunner>();
 
         gameManager = Object.FindAnyObjectByType<GameManager>();
+
+        testCube = player.GetComponent<TestCube>();
     }
 
     void SceneCheck()
     {
-        if (curSceneName == scene2 || curSceneName == scene3 || curSceneName == scene4)
+        if (gameManager.sceneChanged)
         {
-            if(objectGrabbable == null)
+            if (curSceneName == scene2 || curSceneName == scene3 || curSceneName == scene4)
             {
-                package = GameObject.FindGameObjectWithTag("Package");
-                objectGrabbable = package.GetComponent<ObjectGrabbable>();
-            }  
+                if (objectGrabbable == null)
+                {
+                    package = GameObject.FindGameObjectWithTag("Package");
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                }
+            }
+            else
+            {
+                objectGrabbable = null;
+            }
         }
+
     }
 
     private void Update()
@@ -88,7 +103,7 @@ public class RespawnControl : MonoBehaviour
 
         ////if (Partner == null)
         //{
-            Partner = GameObject.FindGameObjectsWithTag("FindScript");
+         Partner = GameObject.FindGameObjectsWithTag("FindScript");
         //}
 
 
@@ -241,6 +256,32 @@ public class RespawnControl : MonoBehaviour
 
 
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == ("PostOfficeDoor") && gameManager.player1!= null && gameManager.player2 != null)
+        {
+            // when scene changed, both players reset start point
+            if (testCube.ReadActionButton())
+            {
+                gameManager.sceneChanged = true;
+                SceneManager.LoadScene(scene1);  
+            }            
+        }
+        //if(other.gameObject.tag == ("TV"))
+        //{
+        //    if (testCube.ReadActionButton())
+        //    {
+        //        print("Enter Tutorial Level");
+        //        //gameManager.sceneChanged = true;
+        //        //SceneManager.LoadScene("TutorialLevel);
+        //    }
+
+        //}
+    }
+
+
+
 
     public void PlayRandomDialogue()
     {

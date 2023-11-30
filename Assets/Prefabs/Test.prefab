@@ -455,6 +455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnPoint: {x: 0, y: 0, z: 0}
   player: {fileID: 7636394438553627759}
+  testCube: {fileID: 0}
   isDead: 0
   objectGrabbable: {fileID: 0}
   package: {fileID: 0}
@@ -467,6 +468,7 @@ MonoBehaviour:
   Player2isCarrying: 0
   Partner: []
   gameManager: {fileID: 0}
+  isAtDoor: 0
   dR: {fileID: 0}
 --- !u!1 &307637956170343215
 GameObject:
@@ -3889,12 +3891,21 @@ MonoBehaviour:
   p2Anim: {fileID: 0}
   p1Steal: 0
   p2Steal: 0
+  interactDistance: 5
+  interactableMask:
+    serializedVersion: 2
+    m_Bits: 262144
+  withinTVRange: 0
   pushButtonGracePeriod: 0
   thirdPersonCam: {fileID: 7231244782024356411}
   combatCam: {fileID: 8433833297185990865}
   topDownCam: {fileID: 5922669522122511283}
   aimCursor: {fileID: 0}
   isAiming: 0
+  waitingTime: 3
+  TVinstruction: {fileID: 0}
+  canvas: {fileID: 0}
+  text: {fileID: 0}
   footstepEvent:
     idInternal: 0
     valueGuidInternal: 
@@ -4932,6 +4943,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2618575627546304545}
+  - component: {fileID: 1723533860159853961}
   m_Layer: 0
   m_Name: Test
   m_TagString: Player
@@ -4956,6 +4968,18 @@ Transform:
   - {fileID: 671106889984876212}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1723533860159853961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8842892317421973126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a99cb9a58c7d143860c3045a6b1e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8992047435456929188
 GameObject:
   m_ObjectHideFlags: 0

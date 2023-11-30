@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using Yarn.Unity;
 using Unity.VisualScripting;
 using TMPro;
+using UnityEngine.UI;
 
 public class TestCube : MonoBehaviour
 {
@@ -214,6 +215,12 @@ public class TestCube : MonoBehaviour
     public bool p1Steal;
     [SerializeField]
     public bool p2Steal;
+    [SerializeField]
+    private float interactDistance;
+    [SerializeField]
+    private LayerMask interactableMask;
+    [SerializeField]
+    private bool withinTVRange;
 
     [SerializeField]
     private float pushButtonGracePeriod;
@@ -236,6 +243,15 @@ public class TestCube : MonoBehaviour
     private bool p1Found;
     private bool p2Found;
 
+    [SerializeField]
+    private float waitingTime;
+    [SerializeField]
+    private GameObject TVinstruction;
+    [SerializeField]
+    Canvas canvas;
+    [SerializeField]
+    TMP_Text text;
+        
     //public enum CameraStyle
     //{
     //    Basic,
@@ -312,9 +328,6 @@ public class TestCube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Get the currently active scene
-        currentScene = SceneManager.GetActiveScene();
-        curSceneName = currentScene.name;
 
         dR = Object.FindAnyObjectByType<DialogueRunner>();
         gameManager = Object.FindAnyObjectByType<GameManager>();
@@ -330,6 +343,7 @@ public class TestCube : MonoBehaviour
         parachuteObj.SetActive(false);
         canJump = true;
         lastStepTime = Time.time;
+
 
     }
 
@@ -351,6 +365,7 @@ public class TestCube : MonoBehaviour
         MovementCalcs();
         DetectPushRange();
 
+        DetectInteractRange();
         //PlayerPosition();
 
 
@@ -378,17 +393,17 @@ public class TestCube : MonoBehaviour
 
             otherRB.useGravity = true;
             otherRB.isKinematic = false;
-
         }
+        currentScene = SceneManager.GetActiveScene();
+        curSceneName = currentScene.name;
 
-
+        Interacte();
     }
 
     void ContinueBottonControl()
     {
         if (continueControl.action.triggered)
         {
-            Debug.Log("Hello");
             lineView = FindObjectOfType<LineView>();
             lineView.OnContinueClicked();
         }
@@ -453,45 +468,56 @@ public class TestCube : MonoBehaviour
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
 
-    void PlayerPosition()
-    {
-        currentScene = SceneManager.GetActiveScene();
-        curSceneName = currentScene.name;
-        Debug.Log("Current scene" + curSceneName);
+    //void PlayerPosition()
+    //{
+    //    currentScene = SceneManager.GetActiveScene();
+    //    curSceneName = currentScene.name;
+    //    Debug.Log("Current scene" + curSceneName);
 
-        if (curSceneName == scene2)
-        {
-            if (isPlayer1 && !p1Appear)
-            {
-                transform.position = new Vector3(-65f, 13f, 56f);
-                p1Appear = true;
-                print("p1 in the position");
+    //    if (curSceneName == scene2)
+    //    {
+    //        if (isPlayer1 && !p1Appear)
+    //        {
+    //            transform.position = new Vector3(-65f, 13f, 56f);
+    //            p1Appear = true;
+    //            print("p1 in the position");
 
-            }
+    //        }
 
-            if (isPlayer2 && !p2Appear)
-            {
-                transform.position = new Vector3(65f, -13f, 65f);
-                p2Appear = true;
+    //        if (isPlayer2 && !p2Appear)
+    //        {
+    //            transform.position = new Vector3(65f, -13f, 65f);
+    //            p2Appear = true;
 
-                print("p2 in the position");
+    //            print("p2 in the position");
 
-            }
-        }
+    //        }
+    //    }
  
-    }
+    //}
     void CameraSwitch()
     {
+
         if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         {
             playerCamera.enabled = false;
+            mainCam = Camera.main;
+
+            if(curSceneName == scene1 || curSceneName == scene3)
+            {
+                canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+                text = canvas.transform.Find("Instruction").GetComponent<TMP_Text>();
+                TVinstruction = text.gameObject;
+            }
 
         }
         else
         {
             playerCamera.enabled = true;
-
+            mainCam = null;
         }
+        
+
     }
     private void Move()
     {
@@ -593,7 +619,7 @@ public class TestCube : MonoBehaviour
     {
         // Draw a wire sphere to visualize the SphereCast
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pushDistance, pushDistance);
+        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactableMask);
         //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistance, pickDistance);
 
     }
@@ -675,7 +701,46 @@ public class TestCube : MonoBehaviour
                 p1Anim.SetBool("beingPush", false);
                 
             }
+        }
+    }
 
+
+    void Interacte()
+    {
+        if (withinTVRange)
+        {
+            StartCoroutine(ShowIntruction());
+            if (ReadActionButton())
+            {
+                //change scene and enter tutorial level, set gameManger.sceneChanged to true
+                print("interact with TV");
+            }
+        }
+
+    }
+
+    IEnumerator ShowIntruction()
+    {
+        // Wait for the specified time
+        yield return new WaitForSeconds(waitingTime);
+        TVinstruction.SetActive(true);
+        print("Interact with TV");
+        // Destroy the GameObject this script is attached to
+    }
+
+
+    void DetectInteractRange()
+    {
+        if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, interactableMask))
+        {
+            withinTVRange = true;
+            print("In TV Range");
+
+        }
+        else
+        {
+            withinTVRange = false;
+            print("NO In TV Range");
 
         }
     }
@@ -700,6 +765,8 @@ public class TestCube : MonoBehaviour
         }
 
     }
+
+
 
     void P1Push()
     {
