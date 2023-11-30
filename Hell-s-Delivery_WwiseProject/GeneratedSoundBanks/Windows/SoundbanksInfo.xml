@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{6FCB0B55-D7EA-5527-FB8A-BF6E50E89402}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{B111E588-F1E0-2C53-7870-6304D1F041C1}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -39,9 +39,25 @@
 					<ShortName>Step 4 - Light.wav</ShortName>
 					<CachePath>SFX/Step 4 - Light_10C4C929.wem</CachePath>
 				</File>
+				<File Id="271139115" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Summoning Circle All.wav</ShortName>
+					<CachePath>SFX/Summoning Circle All_8BD1B731.wem</CachePath>
+				</File>
 				<File Id="351540226" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 3 - Light.wav</ShortName>
 					<CachePath>SFX/Step 3 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="755542444" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Landing.wav</ShortName>
+					<CachePath>SFX/Landing_10C4C929.wem</CachePath>
+				</File>
+				<File Id="813925287" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Landing_2.wav</ShortName>
+					<CachePath>SFX/Landing_2_10C4C929.wem</CachePath>
+				</File>
+				<File Id="815243639" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Landing_3.wav</ShortName>
+					<CachePath>SFX/Landing_3_10C4C929.wem</CachePath>
 				</File>
 				<File Id="987426019" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 2 - Light.wav</ShortName>
@@ -54,6 +70,18 @@
 						<MediaRef Id="71935411"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="1019246482" Name="Play_Landings" DurationType="OneShot" DurationMin="0.2558957" DurationMax="0.2786168">
+					<MediaRefs>
+						<MediaRef Id="755542444"/>
+						<MediaRef Id="813925287"/>
+						<MediaRef Id="815243639"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2914340836" Name="Play_Summoning_Circle_All" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="271139115"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="4272057794" Name="Player_Steps" DurationType="OneShot" DurationMin="0.15054809" DurationMax="0.1575175">
 					<MediaRefs>
 						<MediaRef Id="26740870"/>
@@ -62,8 +90,9 @@
 						<MediaRef Id="987426019"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="222428266" Name="Stop_Summoning_Circle_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{DD2FCEDC-FB79-7F7F-2682-2FBC72E700DC}</FileHash>
+	<FileHash>{C829BBAA-831A-FB0F-2C6E-3796001818DB}</FileHash>
 </SoundBanksInfo>

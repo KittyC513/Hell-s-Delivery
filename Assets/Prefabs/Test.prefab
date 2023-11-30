@@ -3596,6 +3596,7 @@ GameObject:
   - component: {fileID: 965772886468833305}
   - component: {fileID: 4505475051223101429}
   - component: {fileID: 5919994858091806596}
+  - component: {fileID: 6781324528919816096}
   m_Layer: 10
   m_Name: Capsule1
   m_TagString: Untagged
@@ -3902,14 +3903,6 @@ MonoBehaviour:
   topDownCam: {fileID: 5922669522122511283}
   aimCursor: {fileID: 0}
   isAiming: 0
-  waitingTime: 3
-  TVinstruction: {fileID: 0}
-  canvas: {fileID: 0}
-  text: {fileID: 0}
-  footstepEvent:
-    idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 842609993b5312c4385507ef2cd12348, type: 2}
   footstepRate: 115
   geiserForce: 100
 --- !u!114 &965772886468833305
@@ -3979,6 +3972,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDefaultListener: 1
   listenerId: 0
+--- !u!114 &6781324528919816096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636394438553627759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef5e077e44d9a44c97dca065400d90b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steps:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 842609993b5312c4385507ef2cd12348, type: 2}
+  land:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 17bdf5b3206830348b655ae7ef6a617d, type: 2}
+  jump:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  die:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  parachuteOpen:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  glide:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &7750027859420987389
 GameObject:
   m_ObjectHideFlags: 0

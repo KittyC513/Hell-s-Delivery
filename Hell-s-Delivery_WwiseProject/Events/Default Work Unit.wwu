@@ -25,6 +25,63 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Summoning_Circle_All" ID="{6A166CE1-A2DF-4178-89D3-D3ECC8FE3D39}">
+					<ChildrenList>
+						<Action Name="" ID="{96A6CAB7-51DE-4F3F-B43D-3E3E49A52928}" ShortID="962561280">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Summoning Circle All" ID="{2ED603EC-B2B9-4879-B8B0-7D9D8D8459DE}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{43183344-286D-4F4A-9177-C469EF0F46E2}" ShortID="7948972">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Summoning Circle All" ID="{2ED603EC-B2B9-4879-B8B0-7D9D8D8459DE}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Summoning_Circle_All" ID="{F58E251D-77B0-4F2C-83F1-BCA64185DBB9}">
+					<ChildrenList>
+						<Action Name="" ID="{341EE0BA-586A-42BF-B659-685DB3FE503E}" ShortID="786254060">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="34"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Summoning Circle All" ID="{2ED603EC-B2B9-4879-B8B0-7D9D8D8459DE}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{52F09C97-1DA5-4202-9E3F-F71D6D24E14C}" ShortID="33577903">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="36"/>
+								<Property Name="SeekToMarker" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Summoning Circle All" ID="{2ED603EC-B2B9-4879-B8B0-7D9D8D8459DE}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Landings" ID="{5E955B6D-5815-4A37-9CD1-01C19828B908}">
+					<ChildrenList>
+						<Action Name="" ID="{8CC11EEC-A58D-4F6F-A3DA-9EA78C887598}" ShortID="43060098">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RandLand" ID="{5F05BB63-E6E5-4791-B467-A4FF3BE26A18}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

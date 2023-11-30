@@ -245,7 +245,7 @@ public class TestCube : MonoBehaviour
 
 
 
-        
+
     //public enum CameraStyle
     //{
     //    Basic,
@@ -254,10 +254,18 @@ public class TestCube : MonoBehaviour
     //}
 
     [Space, Header("Wwise Stuff")]
-    [SerializeField] private AK.Wwise.Event footstepEvent;
     [SerializeField] private float footstepRate = 500;
     private bool shouldStep = true;
     private float lastStepTime = 0;
+
+    private PlayerSoundbank playerSounds;
+    private AK.Wwise.Event footstepEvent;
+    private AK.Wwise.Event landEvent;
+    private AK.Wwise.Event jumpEvent;
+    private AK.Wwise.Event dieEvent;
+    private AK.Wwise.Event parachuteOpenEvent;
+    private AK.Wwise.Event glideEvent;
+
 
     public float geiserForce;
 
@@ -271,9 +279,14 @@ public class TestCube : MonoBehaviour
         //playerPos = this.transform;
         maxSpeed = walkSpeed;
         mainCam = Camera.main;
-        
 
-
+        playerSounds = GetComponent<PlayerSoundbank>();
+        footstepEvent = playerSounds.steps;
+        landEvent = playerSounds.land;
+        jumpEvent = playerSounds.jump;
+        dieEvent = playerSounds.die;
+        parachuteOpenEvent = playerSounds.parachuteOpen;
+        glideEvent = playerSounds.glide;
         //gM = GetComponent<GameManager>();
     }
 
@@ -338,6 +351,7 @@ public class TestCube : MonoBehaviour
         canJump = true;
         lastStepTime = Time.time;
 
+        
 
     }
 
@@ -1097,6 +1111,11 @@ public class TestCube : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
         {
+            if (!isGrounded)
+            {
+                landEvent.Post(this.gameObject);
+            }
+
             isGrounded = true;
             isInAir = false;
             isGliding = false;
