@@ -286,7 +286,7 @@ public class TestCube : MonoBehaviour
         jumpEvent = playerSounds.jump;
         dieEvent = playerSounds.die;
         parachuteOpenEvent = playerSounds.parachuteOpen;
-        glideEvent = playerSounds.glide;
+        glideEvent = playerSounds.parachuteClose;
         //gM = GetComponent<GameManager>();
     }
 
@@ -1075,6 +1075,11 @@ public class TestCube : MonoBehaviour
 
         if (isInAir || isJumping)
         {
+            if (!isGliding)
+            {
+                playerSounds.parachuteOpen.Post(this.gameObject);
+            }
+
             forceDirection += Vector3.up * parachuteSpeed;
             print("Gliding");
             isGliding = true;
@@ -1084,6 +1089,12 @@ public class TestCube : MonoBehaviour
 
     void DoFall(InputAction.CallbackContext obj)
     {
+        
+        if (isGliding)
+        {
+            playerSounds.parachuteClose.Post(this.gameObject);
+        }
+
         isGliding = false;
         //print("Not Gliding");
         //currentStyle = CameraStyle.Basic;
@@ -1116,6 +1127,10 @@ public class TestCube : MonoBehaviour
                 landEvent.Post(this.gameObject);
             }
 
+            if (isGliding)
+            {
+                playerSounds.parachuteClose.Post(this.gameObject);
+            }
             isGrounded = true;
             isInAir = false;
             isGliding = false;

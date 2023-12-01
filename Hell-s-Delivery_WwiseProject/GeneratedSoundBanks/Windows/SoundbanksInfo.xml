@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{B111E588-F1E0-2C53-7870-6304D1F041C1}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{5262F827-C86E-D657-6322-4FC378CC9FAE}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -47,6 +47,10 @@
 					<ShortName>Step 3 - Light.wav</ShortName>
 					<CachePath>SFX/Step 3 - Light_10C4C929.wem</CachePath>
 				</File>
+				<File Id="648574403" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Parachute Sequence.wav</ShortName>
+					<CachePath>SFX/Parachute Sequence_44906136.wem</CachePath>
+				</File>
 				<File Id="755542444" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Landing.wav</ShortName>
 					<CachePath>SFX/Landing_10C4C929.wem</CachePath>
@@ -59,6 +63,10 @@
 					<ShortName>Landing_3.wav</ShortName>
 					<CachePath>SFX/Landing_3_10C4C929.wem</CachePath>
 				</File>
+				<File Id="948208631" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>HighUpAmbience.wav</ShortName>
+					<CachePath>SFX/HighUpAmbience_10C4C929.wem</CachePath>
+				</File>
 				<File Id="987426019" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 2 - Light.wav</ShortName>
 					<CachePath>SFX/Step 2 - Light_10C4C929.wem</CachePath>
@@ -70,11 +78,21 @@
 						<MediaRef Id="71935411"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="1431564541" Name="Play_HighUpAmbience" DurationType="OneShot" DurationMin="45.818188" DurationMax="45.818188">
+					<MediaRefs>
+						<MediaRef Id="948208631"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="1019246482" Name="Play_Landings" DurationType="OneShot" DurationMin="0.2558957" DurationMax="0.2786168">
 					<MediaRefs>
 						<MediaRef Id="755542444"/>
 						<MediaRef Id="813925287"/>
 						<MediaRef Id="815243639"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="419517223" Name="Play_Parachute" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="648574403"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="2914340836" Name="Play_Summoning_Circle_All" DurationType="Infinite">
@@ -90,9 +108,10 @@
 						<MediaRef Id="987426019"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="2017739505" Name="Stop_Parachute" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="222428266" Name="Stop_Summoning_Circle_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{C829BBAA-831A-FB0F-2C6E-3796001818DB}</FileHash>
+	<FileHash>{F04AD301-F029-D1A5-DE7D-BD8FB2797709}</FileHash>
 </SoundBanksInfo>

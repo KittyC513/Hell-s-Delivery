@@ -82,6 +82,63 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Parachute" ID="{4629C52D-0E58-4C08-B226-FACE500F7CC1}">
+					<ChildrenList>
+						<Action Name="" ID="{358C25D2-FF45-4860-BF74-68F8957FA6DE}" ShortID="884763191">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Parachute Sequence" ID="{68114198-4B0F-4379-8062-952E8049A062}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{572D1776-17BC-4C18-830E-371087EC7535}" ShortID="524940940">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Parachute Sequence" ID="{68114198-4B0F-4379-8062-952E8049A062}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Parachute" ID="{598AFB2A-432F-44C5-BD9A-3D029A1B45FE}">
+					<ChildrenList>
+						<Action Name="" ID="{4A0EEC31-09DB-43F1-B9EF-A8BCC40006B5}" ShortID="573813688">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="36"/>
+								<Property Name="SeekToMarker" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Parachute Sequence" ID="{68114198-4B0F-4379-8062-952E8049A062}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{E2F60DCE-E04E-4D22-86C8-6267FC6264F9}" ShortID="81714334">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="34"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Parachute Sequence" ID="{68114198-4B0F-4379-8062-952E8049A062}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_HighUpAmbience" ID="{08E8610A-93E8-4FB0-815E-10E408499F58}">
+					<ChildrenList>
+						<Action Name="" ID="{74C1A7A1-138A-4BE8-9FBA-756AF699D6EC}" ShortID="605826131">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="HighUpAmbience" ID="{E7618C78-C398-4E58-B806-922DE751F098}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

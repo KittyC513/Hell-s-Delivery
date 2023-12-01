@@ -9,6 +9,6 @@ public class PlayerSoundbank : MonoBehaviour
     [SerializeField] public AK.Wwise.Event jump;
     [SerializeField] public AK.Wwise.Event die;
     [SerializeField] public AK.Wwise.Event parachuteOpen;
-    [SerializeField] public AK.Wwise.Event glide;
+    [SerializeField] public AK.Wwise.Event parachuteClose;
     
 }

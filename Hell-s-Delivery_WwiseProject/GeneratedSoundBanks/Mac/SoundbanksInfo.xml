@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{B111E588-F1E0-2C53-7870-6304D1F041C1}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{A82CBE98-ACA5-EDE6-AC8F-0F361422EAD9}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -46,6 +46,10 @@
 				<File Id="351540226" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 3 - Light.wav</ShortName>
 					<CachePath>SFX/Step 3 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="648574403" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Parachute Sequence.wav</ShortName>
+					<CachePath>SFX/Parachute Sequence_44906136.wem</CachePath>
 				</File>
 				<File Id="755542444" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Landing.wav</ShortName>
@@ -77,6 +81,11 @@
 						<MediaRef Id="815243639"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="419517223" Name="Play_Parachute" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="648574403"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="2914340836" Name="Play_Summoning_Circle_All" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="271139115"/>
@@ -90,9 +99,10 @@
 						<MediaRef Id="987426019"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="2017739505" Name="Stop_Parachute" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="222428266" Name="Stop_Summoning_Circle_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{7AE623B0-22B3-8EB7-C403-08A9B0F15CC2}</FileHash>
+	<FileHash>{EE064C01-39B6-7E82-B1CD-431BECDA49A0}</FileHash>
 </SoundBanksInfo>
