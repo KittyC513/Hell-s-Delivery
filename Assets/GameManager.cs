@@ -109,10 +109,7 @@ public class GameManager : MonoBehaviour
     private GameObject TVinstruction;
     [SerializeField]
     Canvas canvas;
-    [SerializeField]
-    TMP_Text TVtext;
-    [SerializeField]
-    Animator TVanim;
+
     [SerializeField]
     public GameObject noisy1;
     [SerializeField]
@@ -203,8 +200,8 @@ public class GameManager : MonoBehaviour
             {
                 canvas = GameObject.Find("TVCanvas").GetComponent<Canvas>();
                 TVinstruction = canvas.gameObject;
-                TVtext = canvas.transform.Find("Instruction").GetComponent<TMP_Text>();
-                TVanim = canvas.GetComponent<Animator>();
+                TVinstruction.SetActive(false);
+
             }
 
         }
@@ -446,16 +443,11 @@ public class GameManager : MonoBehaviour
             {
                 if (p1.withinTVRange || p2.withinTVRange)
                 {
-                    StartCoroutine(ShowIntruction());
+                    TVinstruction.SetActive(true);
                 }
                 else if (!p1.withinTVRange && !p2.withinTVRange)
                 {
-                    StopCoroutine(ShowIntruction());
-                    Color curColor = TVtext.color;
-                    curColor.a = 0f;
-                    TVtext.color = curColor;
-                    TVanim.enabled = false;
-                    print("End");
+                    TVinstruction.SetActive(false);
                 }
             }
         }
@@ -470,17 +462,16 @@ public class GameManager : MonoBehaviour
     }
 
 
-    IEnumerator ShowIntruction()
-    {
-        // Wait for the specified time
-        yield return new WaitForSeconds(waitingTime);
+    //IEnumerator ShowIntruction()
+    //{
 
-        TVanim.enabled = true;
-        Color curColor = TVtext.color;
-        curColor.a = 255f;
-        TVtext.color = curColor;
-        // Destroy the GameObject this script is attached to
-    }
+    //    // Wait for the specified time
+    //    yield return new WaitForSeconds(waitingTime);
+    //    TVinstruction = canvas.gameObject;
+    //    TVinstruction.SetActive(true);
+       
+    //}
+
 
 
     void PushCheck()
