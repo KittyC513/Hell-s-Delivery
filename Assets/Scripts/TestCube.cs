@@ -11,6 +11,7 @@ using Yarn.Unity;
 using Unity.VisualScripting;
 using TMPro;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class TestCube : MonoBehaviour
 {
@@ -251,6 +252,16 @@ public class TestCube : MonoBehaviour
     GameObject noisy1;
     [SerializeField]
     GameObject noisy2;
+    [SerializeField]
+    GameObject circle1;
+    [SerializeField]
+    GameObject circle2;
+    [SerializeField]
+    private GameObject titleCanvas;
+    [SerializeField]
+    TMP_Text titleText;
+    [SerializeField]
+    bool titleDisplayed;
 
     float horizontalVelocity;
 
@@ -349,6 +360,7 @@ public class TestCube : MonoBehaviour
         lastStepTime = Time.time;
 
 
+
     }
 
     // Update is called once per frame
@@ -373,7 +385,7 @@ public class TestCube : MonoBehaviour
         {
             DetectInteractRange();
         }
-
+        JoinGameTitle();
         //PlayerPosition();
 
 
@@ -407,6 +419,31 @@ public class TestCube : MonoBehaviour
 
         Interacte();
     }
+
+
+    void JoinGameTitle()
+    {
+        if (isPlayer1 && !titleDisplayed)
+        {
+            titleText.text = "1P";
+            StartCoroutine(StopShowTitle());
+
+        }
+        if (isPlayer2 && !titleDisplayed)
+        {
+            titleText.text = "2P";
+            StartCoroutine(StopShowTitle());
+        }
+
+
+    }
+    IEnumerator StopShowTitle()
+    {
+        yield return new WaitForSeconds(3f);
+        titleDisplayed = true;
+        titleCanvas.SetActive(false);
+    }
+
 
     void ContinueBottonControl()
     {
@@ -920,10 +957,15 @@ public class TestCube : MonoBehaviour
 
         if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind1) && !isPlayer1)
         {
+            circle1.SetActive(true);
+            circle2.SetActive(false);
             isPlayer1 = true;
+
         }
         if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind2) && !isPlayer2)
         {
+            circle1.SetActive(false);
+            circle2.SetActive(true);
             isPlayer2 = true;
         }
 
