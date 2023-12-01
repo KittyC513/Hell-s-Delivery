@@ -494,7 +494,8 @@ public class GameManager : MonoBehaviour
                 if (!p1.withinPushingRange)
                 {
                     p2Ani.SetBool("beingPush", false);
-    
+                    p1.p1pushed = false;
+
                 }
                 
             }
@@ -507,13 +508,9 @@ public class GameManager : MonoBehaviour
                 if (!p2.withinPushingRange)
                 {
                     p1Ani.SetBool("beingPush", false);
-                    
+                    p2.p2pushed = false;
                 }
             }
-
-
-
-
         }
 
     }
@@ -522,14 +519,14 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitingTime);
         noisy2.SetActive(false);
-        p1.p1pushed = false;
+
 
     }
     IEnumerator StopNoisyP1()
     {
         yield return new WaitForSeconds(waitingTime);
         noisy1.SetActive(false);
-        p2.p2pushed = false;
+
 
 
     }
