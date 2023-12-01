@@ -92,23 +92,12 @@ public class exButton : MonoBehaviour
         //numOfPlayer = num;
 
 
-        if (playerCollider.Length > 0)
-        {
-
-            summoningActive = true;
-
-
-        }
-        else
-        {
-            summoningActive = false;
-
-        }
 
         if (playerCollider.Length > 0)
         {
             if (switch1)
             {
+                summoningActive = true;
                 matChange1.material = OnPush;
                 blueActive = true;
                 Anim.SetBool("Activate", true);
@@ -121,6 +110,7 @@ public class exButton : MonoBehaviour
         {
             if (!switch1)
             {
+                summoningActive = false;
                 matChange1.material = Default;
                 Anim.SetBool("Activate", false);
                 switch1 = true;

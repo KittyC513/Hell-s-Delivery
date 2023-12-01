@@ -104,7 +104,7 @@ public class RisingPlatforms : MonoBehaviour
         active = false;
 
 
-        Debug.Log("Deactivate");
+        //Debug.Log("Deactivate");
     }
 
 

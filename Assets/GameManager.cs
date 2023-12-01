@@ -109,10 +109,17 @@ public class GameManager : MonoBehaviour
     private GameObject TVinstruction;
     [SerializeField]
     Canvas canvas;
+
     [SerializeField]
-    TMP_Text TVtext;
+    public GameObject noisy1;
     [SerializeField]
-    Animator TVanim;
+    public GameObject noisy2;
+
+    [SerializeField]
+    private bool isNoisy1;
+    [SerializeField]
+    private bool isNoisy2;
+
 
     private void Awake()
     {
@@ -130,6 +137,7 @@ public class GameManager : MonoBehaviour
         FindPlayer();
         FindCamera();
         DetectScene();
+        PushCheck();
 
     }
 
@@ -162,6 +170,7 @@ public class GameManager : MonoBehaviour
     {
         if (sceneChanged)
         {
+
             curSceneName = currentScene.name;
 
             if (curSceneName == scene1)
@@ -171,7 +180,19 @@ public class GameManager : MonoBehaviour
                 print("Reset");
 
                 sceneChanged = false;
+
             }
+
+            if(curSceneName == scene4)
+            {
+                player1.transform.position = new Vector3(-22f, 7.0f, 56f);
+                player2.transform.position = new Vector3(-22f, 7.0f, 42f);
+                print("Reset MVP Level");
+
+                sceneChanged = false;
+            }
+
+
         }
         if (curSceneName == scene1 || curSceneName == scene5)
         {
@@ -179,8 +200,8 @@ public class GameManager : MonoBehaviour
             {
                 canvas = GameObject.Find("TVCanvas").GetComponent<Canvas>();
                 TVinstruction = canvas.gameObject;
-                TVtext = canvas.transform.Find("Instruction").GetComponent<TMP_Text>();
-                TVanim = canvas.GetComponent<Animator>();
+                TVinstruction.SetActive(false);
+
             }
 
         }
@@ -195,7 +216,7 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject obj in objectsInScene)
         {
-            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1)
+            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1 &&!isNoisy1)
             {
                 player1 = obj;
                 p1 = obj.GetComponent<TestCube>();
@@ -213,6 +234,7 @@ public class GameManager : MonoBehaviour
                         p1Anim = child;
                         p1Character = p1Anim.gameObject;
                         p1AnimFound = true;
+                        p1Ani = p1Character.GetComponent<Animator>();
                     }
 
                     if (child.CompareTag("InGameUI"))
@@ -227,12 +249,19 @@ public class GameManager : MonoBehaviour
                         p1UIFound1 = true;
                     }
 
+                    if (child.CompareTag("Noisy"))
+                    {
+                        noisy1 = child.gameObject;
+                        isNoisy1 = true;
+                        noisy1.SetActive(false);
+                    }
+
                 }
 
 
             }
 
-            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2)
+            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2 && !isNoisy2)
             {
                 player2 = obj;
                 p2 = obj.GetComponent<TestCube>();
@@ -252,6 +281,7 @@ public class GameManager : MonoBehaviour
                         p2Anim = child;
                         p2Character = p2Anim.gameObject;
                         p2AnimFound = true;
+                        p2Ani = p2Character.GetComponent<Animator>();
 
                     }
 
@@ -264,6 +294,14 @@ public class GameManager : MonoBehaviour
                     {
                         p2UIMinus = child.gameObject;
                         p2UIFound2 = true;
+                    }
+
+                    if (child.CompareTag("Noisy"))
+                    {
+                        noisy2 = child.gameObject;
+                        isNoisy2 = true;
+                        noisy2.SetActive(false);
+
                     }
                 }
             }
@@ -405,16 +443,11 @@ public class GameManager : MonoBehaviour
             {
                 if (p1.withinTVRange || p2.withinTVRange)
                 {
-                    StartCoroutine(ShowIntruction());
+                    TVinstruction.SetActive(true);
                 }
                 else if (!p1.withinTVRange && !p2.withinTVRange)
                 {
-                    StopCoroutine(ShowIntruction());
-                    Color curColor = TVtext.color;
-                    curColor.a = 0f;
-                    TVtext.color = curColor;
-                    TVanim.enabled = false;
-                    print("End");
+                    TVinstruction.SetActive(false);
                 }
             }
         }
@@ -429,16 +462,64 @@ public class GameManager : MonoBehaviour
     }
 
 
-    IEnumerator ShowIntruction()
-    {
-        // Wait for the specified time
-        yield return new WaitForSeconds(waitingTime);
+    //IEnumerator ShowIntruction()
+    //{
 
-        TVanim.enabled = true;
-        Color curColor = TVtext.color;
-        curColor.a = 255f;
-        TVtext.color = curColor;
-        // Destroy the GameObject this script is attached to
+    //    // Wait for the specified time
+    //    yield return new WaitForSeconds(waitingTime);
+    //    TVinstruction = canvas.gameObject;
+    //    TVinstruction.SetActive(true);
+       
+    //}
+
+
+
+    void PushCheck()
+    {
+        if(p1 != null && p2 != null)
+        {
+            if (p1.p1pushed)
+            {
+                noisy2.SetActive(true);
+                StartCoroutine(StopNoisyP2());
+                if (!p1.withinPushingRange)
+                {
+                    p2Ani.SetBool("beingPush", false);
+                    p1.p1pushed = false;
+
+                }
+                
+            }
+
+            if (p2.p2pushed)
+            {
+                noisy1.SetActive(true);
+                StartCoroutine(StopNoisyP1());
+
+                if (!p2.withinPushingRange)
+                {
+                    p1Ani.SetBool("beingPush", false);
+                    p2.p2pushed = false;
+                }
+            }
+        }
+
+    }
+
+    IEnumerator StopNoisyP2()
+    {
+        yield return new WaitForSeconds(waitingTime);
+        noisy2.SetActive(false);
+
+
+    }
+    IEnumerator StopNoisyP1()
+    {
+        yield return new WaitForSeconds(waitingTime);
+        noisy1.SetActive(false);
+
+
+
     }
     void TutorialControl()
     {

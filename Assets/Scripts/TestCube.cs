@@ -11,6 +11,7 @@ using Yarn.Unity;
 using Unity.VisualScripting;
 using TMPro;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class TestCube : MonoBehaviour
 {
@@ -64,6 +65,8 @@ public class TestCube : MonoBehaviour
     private float timeToRun = 0.16f;
     [SerializeField]
     private float timeToWalk = 0.1f;
+    [SerializeField]
+    private float timeToGlide = 1f;
     [SerializeField]
     private float timeToZero = 0.083f;
 
@@ -204,13 +207,13 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float lerpSpeed;
     [SerializeField]
-    private bool withinPushingRange;
+    public bool withinPushingRange;
     [SerializeField]
     private float slideTime;
     [SerializeField]
-    private Animator p1Anim;
+    public Animator p1Anim;
     [SerializeField]
-    private Animator p2Anim;
+    public Animator p2Anim;
     [SerializeField]
     public bool p1Steal;
     [SerializeField]
@@ -240,8 +243,27 @@ public class TestCube : MonoBehaviour
     private bool p1Appear;
     private bool p2Appear;
 
-    private bool p1Found;
-    private bool p2Found;
+    [SerializeField]
+    public bool p1pushed;
+    [SerializeField]
+    public bool p2pushed;
+
+    [SerializeField]
+    GameObject noisy1;
+    [SerializeField]
+    GameObject noisy2;
+    [SerializeField]
+    GameObject circle1;
+    [SerializeField]
+    GameObject circle2;
+    [SerializeField]
+    private GameObject titleCanvas;
+    [SerializeField]
+    TMP_Text titleText;
+    [SerializeField]
+    bool titleDisplayed;
+
+    float horizontalVelocity;
 
 
 
@@ -353,6 +375,7 @@ public class TestCube : MonoBehaviour
 
         
 
+
     }
 
     // Update is called once per frame
@@ -373,7 +396,11 @@ public class TestCube : MonoBehaviour
         MovementCalcs();
         DetectPushRange();
 
-        DetectInteractRange();
+        if (curSceneName == scene1 || curSceneName == scene3)
+        {
+            DetectInteractRange();
+        }
+        JoinGameTitle();
         //PlayerPosition();
 
 
@@ -408,6 +435,31 @@ public class TestCube : MonoBehaviour
         Interacte();
     }
 
+
+    void JoinGameTitle()
+    {
+        if (isPlayer1 && !titleDisplayed)
+        {
+            titleText.text = "1P";
+            StartCoroutine(StopShowTitle());
+
+        }
+        if (isPlayer2 && !titleDisplayed)
+        {
+            titleText.text = "2P";
+            StartCoroutine(StopShowTitle());
+        }
+
+
+    }
+    IEnumerator StopShowTitle()
+    {
+        yield return new WaitForSeconds(3f);
+        titleDisplayed = true;
+        titleCanvas.SetActive(false);
+    }
+
+
     void ContinueBottonControl()
     {
         if (continueControl.action.triggered)
@@ -438,11 +490,16 @@ public class TestCube : MonoBehaviour
             isWalking = true;
 
             
-            if (isRunning)
+            if (isRunning && !isGliding)
             {
                 float accel = (maxSpeed / timeToRun);
                 currentSpeed += accel * Time.deltaTime;
 
+            }
+            else if (isGliding)
+            {
+                float accel = (maxSpeed / timeToGlide);
+                currentSpeed += accel * Time.deltaTime;
             }
             else
             {
@@ -512,7 +569,7 @@ public class TestCube : MonoBehaviour
             mainCam = Camera.main;
 
         }
-        else
+        else if(curSceneName == scene5)
         {
             playerCamera.enabled = true;
             mainCam = null;
@@ -524,22 +581,26 @@ public class TestCube : MonoBehaviour
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
+            curSceneName = currentScene.name;
+
             if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
             {
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
-            else
+            else if(curSceneName == scene5) 
             {
-                if (isGliding) 
+                if (isGliding)
                 {
-                    currentSpeed = gliderSpeed;
+                    //currentSpeed = gliderSpeed;
                 }
 
 
                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+          
             }
+ 
         }
         else
         {
@@ -564,9 +625,13 @@ public class TestCube : MonoBehaviour
         {
             if (!isFreeze)
             {
-                if (isRunning)
+                if (isRunning && !isGliding)
                 {
                     maxSpeed = runSpeed;
+                } 
+                else if (isGliding)
+                {
+                    maxSpeed = gliderSpeed;
                 }
                 else
                 {
@@ -684,7 +749,6 @@ public class TestCube : MonoBehaviour
         {
             withinPushingRange = true;
             lastColliderTime = Time.time;
-            
         } 
         else
         {
@@ -692,14 +756,14 @@ public class TestCube : MonoBehaviour
             if (isPlayer1 && p1Anim != null)
             {
                 p2Anim.SetBool("beingPush", false);
-                
+                //p1pushed = false;
 
             }
 
             if (isPlayer2 && p2Anim != null)
             {
                 p1Anim.SetBool("beingPush", false);
-                
+                //p2pushed = false;
             }
         }
     }
@@ -711,8 +775,11 @@ public class TestCube : MonoBehaviour
         {
             if (ReadActionButton())
             {
-                //change scene and enter tutorial level, set gameManger.sceneChanged to true
+                gameManager.sceneChanged = true;
                 print("Do interact with TV");
+                SceneManager.LoadScene("MVPLevel");
+                //change scene and enter tutorial level, set gameManger.sceneChanged to true
+
             }
         }
 
@@ -745,12 +812,16 @@ public class TestCube : MonoBehaviour
             {
                 P1Push();
                 objectGrabbable = null;
+                p1pushed = true;
+                
+
             }
 
             if (isPlayer2)
             {
                 P2Push();
                 objectGrabbable = null;
+                p2pushed = true;
             }
 
 
@@ -766,7 +837,6 @@ public class TestCube : MonoBehaviour
         otherRB = gameManager.player2.GetComponent<Rigidbody>();
         p2Anim = gameManager.p2Character.GetComponent<Animator>();
 
-        p2Found = true;
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
         Vector3 forceDir = otherRB.transform.position - transform.position;
@@ -782,6 +852,8 @@ public class TestCube : MonoBehaviour
 
         p2Anim.SetBool("beingPush", true);
 
+        //noisy2 = gameManager.noisy2;
+
         if (rC.Player2isCarrying)
         {
             p1Steal = true;
@@ -794,8 +866,6 @@ public class TestCube : MonoBehaviour
 
         otherRB = gameManager.player1.GetComponent<Rigidbody>();
         p1Anim = gameManager.p1Character.GetComponent<Animator>();
-
-        p1Found = true;
 
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
@@ -811,6 +881,8 @@ public class TestCube : MonoBehaviour
         StartCoroutine(SlideToPosition(forcePosition));
 
         p1Anim.SetBool("beingPush", true);
+
+        //noisy1 = gameManager.noisy1;
 
         if (rC.Player1isCarrying)
         {
@@ -900,10 +972,15 @@ public class TestCube : MonoBehaviour
 
         if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind1) && !isPlayer1)
         {
+            circle1.SetActive(true);
+            circle2.SetActive(false);
             isPlayer1 = true;
+
         }
         if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind2) && !isPlayer2)
         {
+            circle1.SetActive(false);
+            circle2.SetActive(true);
             isPlayer2 = true;
         }
 
@@ -1042,6 +1119,7 @@ public class TestCube : MonoBehaviour
         //    print("isGliding = " + isGliding);
         //} 
 
+        horizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.y).magnitude;
 
         //forceDirection += Vector3.up * jumpForce;
 
@@ -1054,6 +1132,12 @@ public class TestCube : MonoBehaviour
             {
                 forceDirection += Vector3.up * jumpSpeed;
                 
+            } else if (horizontalVelocity < 9)
+            {
+                forceDirection += Vector3.up * parachuteSpeed;
+            } else
+            {
+                forceDirection += Vector3.up * parachuteSpeed / 1.5f;
             }
 
         }
@@ -1075,12 +1159,16 @@ public class TestCube : MonoBehaviour
 
         if (isInAir || isJumping)
         {
+
             if (!isGliding)
             {
                 playerSounds.parachuteOpen.Post(this.gameObject);
             }
 
             forceDirection += Vector3.up * parachuteSpeed;
+
+            //forceDirection += Vector3.up * parachuteSpeed;
+
             print("Gliding");
             isGliding = true;
             canJump = false;
