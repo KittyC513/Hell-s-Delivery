@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{A82CBE98-ACA5-EDE6-AC8F-0F361422EAD9}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{067BD3AF-C2B8-FE12-ED0D-EAB9643AEBBB}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -38,6 +38,10 @@
 				<File Id="250775375" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 4 - Light.wav</ShortName>
 					<CachePath>SFX/Step 4 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="261584823" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MetalStep_2.wav</ShortName>
+					<CachePath>SFX/MetalStep_2_10C4C929.wem</CachePath>
 				</File>
 				<File Id="271139115" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Summoning Circle All.wav</ShortName>
@@ -63,6 +67,14 @@
 					<ShortName>Landing_3.wav</ShortName>
 					<CachePath>SFX/Landing_3_10C4C929.wem</CachePath>
 				</File>
+				<File Id="948208631" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>HighUpAmbience.wav</ShortName>
+					<CachePath>SFX/HighUpAmbience_10C4C929.wem</CachePath>
+				</File>
+				<File Id="954374051" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MetalStep_1.wav</ShortName>
+					<CachePath>SFX/MetalStep_1_10C4C929.wem</CachePath>
+				</File>
 				<File Id="987426019" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 2 - Light.wav</ShortName>
 					<CachePath>SFX/Step 2 - Light_10C4C929.wem</CachePath>
@@ -74,11 +86,26 @@
 						<MediaRef Id="71935411"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="1431564541" Name="Play_HighUpAmbience" DurationType="OneShot" DurationMin="45.818188" DurationMax="45.818188">
+					<MediaRefs>
+						<MediaRef Id="948208631"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="1019246482" Name="Play_Landings" DurationType="OneShot" DurationMin="0.2558957" DurationMax="0.2786168">
 					<MediaRefs>
 						<MediaRef Id="755542444"/>
 						<MediaRef Id="813925287"/>
 						<MediaRef Id="815243639"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="296643996" Name="Play_MetalSteps" DurationType="OneShot" DurationMin="0.48576596" DurationMax="0.6120268">
+					<MediaRefs>
+						<MediaRef Id="26740870"/>
+						<MediaRef Id="250775375"/>
+						<MediaRef Id="261584823"/>
+						<MediaRef Id="351540226"/>
+						<MediaRef Id="954374051"/>
+						<MediaRef Id="987426019"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="419517223" Name="Play_Parachute" DurationType="Infinite">
@@ -104,5 +131,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{EE064C01-39B6-7E82-B1CD-431BECDA49A0}</FileHash>
+	<FileHash>{955C28EC-BEF2-AF57-1FB5-D9AF16E57EC4}</FileHash>
 </SoundBanksInfo>

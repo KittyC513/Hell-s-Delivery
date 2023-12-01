@@ -16,6 +16,7 @@ namespace AK
         static const AkUniqueID PLAY_APARTMENT_COMPLEX_V1 = 359343595U;
         static const AkUniqueID PLAY_HIGHUPAMBIENCE = 1431564541U;
         static const AkUniqueID PLAY_LANDINGS = 1019246482U;
+        static const AkUniqueID PLAY_METALSTEPS = 296643996U;
         static const AkUniqueID PLAY_PARACHUTE = 419517223U;
         static const AkUniqueID PLAY_SUMMONING_CIRCLE_ALL = 2914340836U;
         static const AkUniqueID PLAYER_STEPS = 4272057794U;

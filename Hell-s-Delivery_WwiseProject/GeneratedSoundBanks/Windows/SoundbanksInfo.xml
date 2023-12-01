@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{5262F827-C86E-D657-6322-4FC378CC9FAE}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{067BD3AF-C2B8-FE12-ED0D-EAB9643AEBBB}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -38,6 +38,10 @@
 				<File Id="250775375" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 4 - Light.wav</ShortName>
 					<CachePath>SFX/Step 4 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="261584823" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MetalStep_2.wav</ShortName>
+					<CachePath>SFX/MetalStep_2_10C4C929.wem</CachePath>
 				</File>
 				<File Id="271139115" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Summoning Circle All.wav</ShortName>
@@ -67,6 +71,10 @@
 					<ShortName>HighUpAmbience.wav</ShortName>
 					<CachePath>SFX/HighUpAmbience_10C4C929.wem</CachePath>
 				</File>
+				<File Id="954374051" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MetalStep_1.wav</ShortName>
+					<CachePath>SFX/MetalStep_1_10C4C929.wem</CachePath>
+				</File>
 				<File Id="987426019" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 2 - Light.wav</ShortName>
 					<CachePath>SFX/Step 2 - Light_10C4C929.wem</CachePath>
@@ -88,6 +96,16 @@
 						<MediaRef Id="755542444"/>
 						<MediaRef Id="813925287"/>
 						<MediaRef Id="815243639"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="296643996" Name="Play_MetalSteps" DurationType="OneShot" DurationMin="0.48576596" DurationMax="0.6120268">
+					<MediaRefs>
+						<MediaRef Id="26740870"/>
+						<MediaRef Id="250775375"/>
+						<MediaRef Id="261584823"/>
+						<MediaRef Id="351540226"/>
+						<MediaRef Id="954374051"/>
+						<MediaRef Id="987426019"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="419517223" Name="Play_Parachute" DurationType="Infinite">
@@ -113,5 +131,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{F04AD301-F029-D1A5-DE7D-BD8FB2797709}</FileHash>
+	<FileHash>{2B314AC8-892E-DDE9-09A7-33120488FDEF}</FileHash>
 </SoundBanksInfo>

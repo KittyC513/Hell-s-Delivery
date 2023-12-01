@@ -430,7 +430,12 @@ public class TestCube : MonoBehaviour
             otherRB.isKinematic = false;
         }
         currentScene = SceneManager.GetActiveScene();
-        curSceneName = currentScene.name;
+
+        if (curSceneName == null)
+        {
+            curSceneName = currentScene.name;
+        }
+        
 
         Interacte();
     }
