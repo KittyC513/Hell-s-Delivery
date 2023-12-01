@@ -1250,7 +1250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790931724609759169}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.007334833, y: 0.98178816, z: -0.1858406, w: 0.03874961}
+  m_LocalRotation: {x: -0.021132557, y: 0.9761893, z: -0.18478064, w: -0.11164252}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1527,7 +1527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8013442692335565479
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2329,8 +2329,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516074710670123496}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.007334831, y: 0.98178816, z: -0.18584062, w: 0.038749605}
-  m_LocalPosition: {x: -0.39406967, y: 3, z: 4.9844437}
+  m_LocalRotation: {x: -0.021132557, y: 0.97618926, z: -0.18478069, w: -0.1116425}
+  m_LocalPosition: {x: 1.128891, y: 3, z: 4.870894}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3395,7 +3395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6715688338489921252}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.008927651, y: 0.9732828, z: -0.2261974, w: 0.03841392}
+  m_LocalRotation: {x: -0.02572167, y: 0.9677325, z: -0.22490731, w: -0.11067534}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3477,7 +3477,7 @@ Transform:
   m_GameObject: {fileID: 7231244782024356411}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.39406967, y: 3, z: 4.9844437}
+  m_LocalPosition: {x: 1.128891, y: 3, z: 4.870894}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4017,11 +4017,12 @@ MonoBehaviour:
   maxSpeed: 5
   walkSpeed: 5
   runSpeed: 8
-  gliderSpeed: 8
+  gliderSpeed: 12
   currentSpeed: 0
   playerDir: {fileID: 8419582107820691319}
   timeToRun: 0.2
   timeToWalk: 0.1
+  timeToGlide: 1
   timeToZero: 0.083
   shadowRenderer: {fileID: 8281716036767929258}
   jumpForce: 6.5
@@ -4072,7 +4073,7 @@ MonoBehaviour:
   trigger: {fileID: 0}
   p2rc: {fileID: 0}
   p1rc: {fileID: 0}
-  parachuteSpeed: -10
+  parachuteSpeed: -0.75
   isGliding: 0
   numOfButtonPressed: 0
   parachuteObj: {fileID: 5520364453758422537}
@@ -4102,6 +4103,8 @@ MonoBehaviour:
   topDownCam: {fileID: 5922669522122511283}
   aimCursor: {fileID: 0}
   isAiming: 0
+  p1pushed: 0
+  p2pushed: 0
   noisy1: {fileID: 0}
   noisy2: {fileID: 0}
   footstepEvent:
@@ -5078,7 +5081,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.010527235, y: 0.9629652, z: -0.26672602, w: 0.038006652}
+  m_LocalRotation: {x: -0.030330312, y: 0.9574737, z: -0.26520485, w: -0.10950207}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

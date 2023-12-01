@@ -65,6 +65,8 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float timeToWalk = 0.1f;
     [SerializeField]
+    private float timeToGlide = 1f;
+    [SerializeField]
     private float timeToZero = 0.083f;
 
     [SerializeField]
@@ -250,6 +252,8 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     GameObject noisy2;
 
+    float horizontalVelocity;
+
 
 
     //public enum CameraStyle
@@ -434,11 +438,16 @@ public class TestCube : MonoBehaviour
             isWalking = true;
 
             
-            if (isRunning)
+            if (isRunning && !isGliding)
             {
                 float accel = (maxSpeed / timeToRun);
                 currentSpeed += accel * Time.deltaTime;
 
+            }
+            else if (isGliding)
+            {
+                float accel = (maxSpeed / timeToGlide);
+                currentSpeed += accel * Time.deltaTime;
             }
             else
             {
@@ -531,7 +540,7 @@ public class TestCube : MonoBehaviour
             {
                 if (isGliding)
                 {
-                    currentSpeed = gliderSpeed;
+                    //currentSpeed = gliderSpeed;
                 }
 
 
@@ -564,9 +573,13 @@ public class TestCube : MonoBehaviour
         {
             if (!isFreeze)
             {
-                if (isRunning)
+                if (isRunning && !isGliding)
                 {
                     maxSpeed = runSpeed;
+                } 
+                else if (isGliding)
+                {
+                    maxSpeed = gliderSpeed;
                 }
                 else
                 {
@@ -1049,6 +1062,7 @@ public class TestCube : MonoBehaviour
         //    print("isGliding = " + isGliding);
         //} 
 
+        horizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.y).magnitude;
 
         //forceDirection += Vector3.up * jumpForce;
 
@@ -1061,6 +1075,12 @@ public class TestCube : MonoBehaviour
             {
                 forceDirection += Vector3.up * jumpSpeed;
                 
+            } else if (horizontalVelocity < 9)
+            {
+                forceDirection += Vector3.up * parachuteSpeed;
+            } else
+            {
+                forceDirection += Vector3.up * parachuteSpeed / 1.5f;
             }
 
         }
@@ -1082,7 +1102,7 @@ public class TestCube : MonoBehaviour
 
         if (isInAir || isJumping)
         {
-            forceDirection += Vector3.up * parachuteSpeed;
+            //forceDirection += Vector3.up * parachuteSpeed;
             print("Gliding");
             isGliding = true;
             canJump = false;
