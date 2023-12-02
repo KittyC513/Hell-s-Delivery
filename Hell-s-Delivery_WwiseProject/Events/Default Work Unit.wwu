@@ -157,6 +157,60 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_MetalLanding" ID="{2D82BAB1-1E17-4751-A70A-816A251DABD8}">
+					<ChildrenList>
+						<Action Name="" ID="{F9086847-EC8B-4F6D-8615-E8B52C149E9C}" ShortID="754485072">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RandMetalLand" ID="{03AA8888-5552-4DBD-B2AE-93C10609E5F1}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{C7612E33-490D-4F9C-BB43-31C3EA9CF081}" ShortID="502379550">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RandLand" ID="{5F05BB63-E6E5-4791-B467-A4FF3BE26A18}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_WoodSteps" ID="{E44F059A-CD08-4F73-9D1F-CB9AEAD80347}">
+					<ChildrenList>
+						<Action Name="" ID="{0D14852C-1E8F-4CA8-82CF-4767E8EEA7EC}" ShortID="798662534">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WoodSteps" ID="{3EB63C6C-60EF-4B97-A90E-2C0750CC37F6}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{33EDE48A-6B99-4EB9-8501-429F04BC9B8B}" ShortID="163518824">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Steps" ID="{B4B56DAF-C000-4CA6-AFCF-BD01D63E7F9E}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_RandWoodLand" ID="{8AD3FAF2-2094-4EEA-9D9B-1BFA0F099BC7}">
+					<ChildrenList>
+						<Action Name="" ID="{85649AF2-E5C0-4A3B-826C-D3E315AEE6BC}" ShortID="127069398">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RandWoodLand" ID="{FE77FE71-2641-4D9E-B9C1-7905F777FA3B}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{F22C0CE1-4025-4DE9-B83E-6107D5FEB84B}" ShortID="261821792">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RandLand" ID="{5F05BB63-E6E5-4791-B467-A4FF3BE26A18}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

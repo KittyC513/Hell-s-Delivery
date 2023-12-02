@@ -280,6 +280,8 @@ public class TestCube : MonoBehaviour
     private bool shouldStep = true;
     private float lastStepTime = 0;
 
+    [SerializeField] private string groundMaterial = "nothing";
+
     private PlayerSoundbank playerSounds;
     private AK.Wwise.Event footstepEvent;
     private AK.Wwise.Event landEvent;
@@ -429,13 +431,14 @@ public class TestCube : MonoBehaviour
             otherRB.useGravity = true;
             otherRB.isKinematic = false;
         }
-        currentScene = SceneManager.GetActiveScene();
-
+        
         if (curSceneName == null)
         {
             curSceneName = currentScene.name;
+            currentScene = SceneManager.GetActiveScene();
+
         }
-        
+
 
         Interacte();
     }
@@ -515,7 +518,7 @@ public class TestCube : MonoBehaviour
 
             if (shouldStep && isGrounded)
             {
-                footstepEvent.Post(this.gameObject);
+                PlayGroundSound(groundMaterial);
                 lastStepTime = Time.time;
                 shouldStep = false;
             }
@@ -586,7 +589,8 @@ public class TestCube : MonoBehaviour
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
-            curSceneName = currentScene.name;
+            if (curSceneName == null) curSceneName = currentScene.name;
+
 
             if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
             {
@@ -1215,9 +1219,13 @@ public class TestCube : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
         {
+            groundMaterial = hit.transform.tag;
+
             if (!isGrounded)
             {
-                landEvent.Post(this.gameObject);
+                if (groundMaterial == "Metal") playerSounds.metalLand.Post(this.gameObject);
+                else if (groundMaterial == "Wood") playerSounds.woodLand.Post(this.gameObject);
+                else landEvent.Post(this.gameObject);
             }
 
             if (isGliding)
@@ -1229,7 +1237,7 @@ public class TestCube : MonoBehaviour
             isGliding = false;
             lastGroundedTime = Time.time;
 
-
+            
             //isGliding = false;
 
             //Debug.Log("isGrounded" + isGrounded);
@@ -1239,7 +1247,7 @@ public class TestCube : MonoBehaviour
         {
             isInAir = true;
             isGrounded = false;
-
+            groundMaterial = "nothing";
             //Debug.Log("isGrounded" + isGrounded);
         }
     }
@@ -1371,6 +1379,24 @@ public class TestCube : MonoBehaviour
             rb.AddForce(Vector3.up * geiserForce);
         }
     }
+
+    private void PlayGroundSound(string material)
+    {
+        if (material == "Metal")
+        {
+            playerSounds.metalStep.Post(this.gameObject);
+        }
+        else if (material == "Wood")
+        {
+            playerSounds.woodStep.Post(this.gameObject);
+        }
+        else
+        {
+            playerSounds.steps.Post(this.gameObject);
+        }
+    }
+
+
 
 
     //private void OnCollisionEnter(Collision collision)

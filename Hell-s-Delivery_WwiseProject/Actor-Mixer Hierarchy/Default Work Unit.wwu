@@ -254,6 +254,13 @@
 				</Sound>
 				<RandomSequenceContainer Name="RandLand" ID="{5F05BB63-E6E5-4791-B467-A4FF3BE26A18}" ShortID="217661739">
 					<PropertyList>
+						<Property Name="Pitch" Type="int32">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{27911D49-3C21-4543-B774-DB6CFD5D6EE7}"/>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
 								<Value>-8</Value>
@@ -432,20 +439,62 @@
 				</Sound>
 				<RandomSequenceContainer Name="MetalSteps" ID="{8C586778-2194-4B65-A29F-B2403AB88C11}" ShortID="161121246">
 					<PropertyList>
+						<Property Name="Highpass" Type="int16">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{7A79069A-87F5-4C78-9CDC-B924F7912A5B}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="15"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Lowpass" Type="int16">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{E75C76DD-C809-4D16-B65B-E58789F4A109}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="20"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
 						<Property Name="Pitch" Type="int32">
 							<ValueList>
 								<Value>-100</Value>
 							</ValueList>
 							<ModifierList>
 								<ModifierInfo>
-									<Modifier Name="" ID="{7F7E74B2-0807-4A0D-A62F-19E2F58FB385}"/>
+									<Modifier Name="" ID="{7F7E74B2-0807-4A0D-A62F-19E2F58FB385}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="50"/>
+											<Property Name="Min" Type="Real64" Value="-200"/>
+										</PropertyList>
+									</Modifier>
 								</ModifierInfo>
 							</ModifierList>
 						</Property>
+						<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
 								<Value>-4</Value>
 							</ValueList>
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{390D9E1E-29F9-4159-94EC-C1D152F24461}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="1"/>
+											<Property Name="Min" Type="Real64" Value="-1"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
 						</Property>
 					</PropertyList>
 					<ReferenceList>
@@ -475,11 +524,6 @@
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
 										<Value>-1</Value>
-									</ValueList>
-								</Property>
-								<Property Name="Weight" Type="Real64">
-									<ValueList>
-										<Value>40</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -519,11 +563,6 @@
 										</ModifierInfo>
 									</ModifierList>
 								</Property>
-								<Property Name="Weight" Type="Real64">
-									<ValueList>
-										<Value>60</Value>
-									</ValueList>
-								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -535,6 +574,9 @@
 							</ReferenceList>
 							<ChildrenList>
 								<AudioFileSource Name="MetalStep_1" ID="{DDC59048-BF8E-401E-BCDD-48873D403264}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.01"/>
+									</PropertyList>
 									<Language>SFX</Language>
 									<AudioFile>MetalStep_1.wav</AudioFile>
 									<MediaIDList>
@@ -544,6 +586,353 @@
 							</ChildrenList>
 							<ActiveSourceList>
 								<ActiveSource Name="MetalStep_1" ID="{DDC59048-BF8E-401E-BCDD-48873D403264}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+				<RandomSequenceContainer Name="RandMetalLand" ID="{03AA8888-5552-4DBD-B2AE-93C10609E5F1}" ShortID="858293700">
+					<PropertyList>
+						<Property Name="Highpass" Type="int16">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{494AF38F-10D4-4B5E-BE4D-572B51BAA8AF}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="15"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Lowpass" Type="int16">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{A4062742-BD73-4A1C-90B4-C296EB5AEECF}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="20"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Pitch" Type="int32">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{0BD8C734-8702-492A-8922-FE28EFC3A19E}"/>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-2</Value>
+							</ValueList>
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{16016088-1C0E-47A8-9758-B5B2974D7112}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Min" Type="Real64" Value="-1"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="MetalLand_1" ID="{F46FB6D9-0A74-4B1D-889F-41D03A1C7E0B}" ShortID="470713361">
+							<PropertyList>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{27AD92E9-0F17-4D06-B604-0FCD43FCA91B}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-400"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="MetalLand_1" ID="{ABB2D512-CE9E-4A44-A613-3B958ECCC4BC}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.01"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>MetalLand_1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="634520690"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="MetalLand_1" ID="{ABB2D512-CE9E-4A44-A613-3B958ECCC4BC}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="MetalLand_2" ID="{94DFEA16-98F2-4D07-AF29-E95DB90DB7CE}" ShortID="317742427">
+							<PropertyList>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{FE3F507D-9174-4269-A27A-8BD3969B03CE}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-300"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="MetalLand_2" ID="{09279FB1-6F81-427A-993F-7ED3FB7970AA}">
+									<Language>SFX</Language>
+									<AudioFile>MetalLand_2.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="496788715"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="MetalLand_2" ID="{09279FB1-6F81-427A-993F-7ED3FB7970AA}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+				<RandomSequenceContainer Name="WoodSteps" ID="{3EB63C6C-60EF-4B97-A90E-2C0750CC37F6}" ShortID="844265472">
+					<PropertyList>
+						<Property Name="Highpass" Type="int16">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{C3FF5393-C175-4E9C-9E84-907D6F09464C}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="15"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Lowpass" Type="int16">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{F2D1EDE4-1600-4926-9333-F85E11C1394C}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="20"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Pitch" Type="int32">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{D7329A98-BAD3-4B7A-9BCC-11BC062F659F}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="250"/>
+											<Property Name="Min" Type="Real64" Value="-400"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-4</Value>
+							</ValueList>
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{31816BF2-D0AB-4C37-ACF1-E253C6060068}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="1"/>
+											<Property Name="Min" Type="Real64" Value="-1"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="WoodStep_1" ID="{9459B5D3-506F-464F-B2E5-7F9333D822F3}" ShortID="70519827">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="WoodStep_1" ID="{D39749DB-05CF-4C4C-A6C3-6BB36D2D5FCC}">
+									<Language>SFX</Language>
+									<AudioFile>WoodStep_1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="151202581"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="WoodStep_1" ID="{D39749DB-05CF-4C4C-A6C3-6BB36D2D5FCC}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="WoodStep_2" ID="{4CF9D68A-06BF-4729-A756-06C2AE988DB0}" ShortID="988449019">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="WoodStep_2" ID="{3F488A19-D8F3-4E37-B7A6-AFF558E3BB8F}">
+									<Language>SFX</Language>
+									<AudioFile>WoodStep_2.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="675843431"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="WoodStep_2" ID="{3F488A19-D8F3-4E37-B7A6-AFF558E3BB8F}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+				<RandomSequenceContainer Name="RandWoodLand" ID="{FE77FE71-2641-4D9E-B9C1-7905F777FA3B}" ShortID="287653278">
+					<PropertyList>
+						<Property Name="Highpass" Type="int16">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{913D0B45-0A9F-4402-9040-FB99D4D95E65}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="15"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Lowpass" Type="int16">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{A2EE9F20-B821-4905-9D41-267E8EDBCD5D}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="20"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Pitch" Type="int32">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{DC3E1996-29C3-4256-AD25-421F85EF8564}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="400"/>
+											<Property Name="Min" Type="Real64" Value="-400"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-5</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="WoodLanding_1" ID="{599E3888-6911-4AD5-A31A-7750EAF61912}" ShortID="927061341">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="WoodLanding_1" ID="{E43B8746-8ECC-4B93-9AD3-5EAB93841166}">
+									<Language>SFX</Language>
+									<AudioFile>WoodLanding_1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="473084078"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="WoodLanding_1" ID="{E43B8746-8ECC-4B93-9AD3-5EAB93841166}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="WoodLanding_2" ID="{BEAD7645-3F61-4880-B267-41EE3A830199}" ShortID="497696594">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="WoodLanding_2" ID="{98311756-1401-4F4A-A34D-135D65A1FE27}">
+									<Language>SFX</Language>
+									<AudioFile>WoodLanding_2.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="1049211099"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="WoodLanding_2" ID="{98311756-1401-4F4A-A34D-135D65A1FE27}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
