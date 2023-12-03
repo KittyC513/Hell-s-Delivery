@@ -434,8 +434,9 @@ public class TestCube : MonoBehaviour
         
         if (curSceneName == null)
         {
-            curSceneName = currentScene.name;
             currentScene = SceneManager.GetActiveScene();
+            curSceneName = currentScene.name;
+            
 
         }
 
@@ -577,7 +578,7 @@ public class TestCube : MonoBehaviour
             mainCam = Camera.main;
 
         }
-        else if(curSceneName == scene5)
+        else
         {
             playerCamera.enabled = true;
             mainCam = null;
@@ -586,31 +587,34 @@ public class TestCube : MonoBehaviour
     }
     private void Move()
     {
+        Debug.Log(curSceneName);
+
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
             if (curSceneName == null) curSceneName = currentScene.name;
 
 
-            if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
-            {
-                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
-                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
-            }
-            else if(curSceneName == scene5) 
-            {
-                if (isGliding)
+                if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
                 {
-                    //currentSpeed = gliderSpeed;
+                    forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                   forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
                 }
+                else 
+                {
+                    if (isGliding)
+                    {
+                        //currentSpeed = gliderSpeed;
+                    }
 
+                    Debug.Log("working");
 
-                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+                    forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                    forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
           
-            }
+                }
  
-        }
+            }
         else
         {
             //rb.velocity = new Vector3(-(transform.position.x - activeCircle.transform.position.x) * 3 * Time.deltaTime, 0, -(transform.position.z - activeCircle.transform.position.z) * 3 *Time.deltaTime);
