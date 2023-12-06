@@ -432,13 +432,10 @@ public class TestCube : MonoBehaviour
             otherRB.isKinematic = false;
         }
         
-        if (curSceneName == null)
-        {
-            currentScene = SceneManager.GetActiveScene();
-            curSceneName = currentScene.name;
-            
 
-        }
+
+        
+
 
 
         Interacte();
@@ -571,50 +568,52 @@ public class TestCube : MonoBehaviour
     //}
     void CameraSwitch()
     {
+        currentScene = SceneManager.GetActiveScene();
+        curSceneName = currentScene.name;
 
         if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         {
             playerCamera.enabled = false;
             mainCam = Camera.main;
+            //print("1");
 
         }
-        else
+        else if(curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5)
         {
             playerCamera.enabled = true;
             mainCam = null;
+            //print("2");
         }
         
     }
     private void Move()
     {
-        Debug.Log(curSceneName);
 
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
-            if (curSceneName == null) curSceneName = currentScene.name;
+            //if (curSceneName == null) curSceneName = currentScene.name;
 
-
-                if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
-                {
-                    forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
-                   forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
-                }
-                else 
-                {
-                    if (isGliding)
-                    {
-                        //currentSpeed = gliderSpeed;
-                    }
-
-                    Debug.Log("working");
-
-                    forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-                    forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
-          
-                }
- 
+            if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+            {
+                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
+            else 
+            {
+                if (isGliding)
+                {
+                    //currentSpeed = gliderSpeed;
+                }
+
+                Debug.Log("working");
+
+                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+          
+            }
+ 
+        }
         else
         {
             //rb.velocity = new Vector3(-(transform.position.x - activeCircle.transform.position.x) * 3 * Time.deltaTime, 0, -(transform.position.z - activeCircle.transform.position.z) * 3 *Time.deltaTime);
@@ -789,6 +788,7 @@ public class TestCube : MonoBehaviour
             if (ReadActionButton())
             {
                 gameManager.sceneChanged = true;
+                print("sceneChanged: " + gameManager.sceneChanged);
                 print("Do interact with TV");
                 SceneManager.LoadScene("MVPLevel");
                 //change scene and enter tutorial level, set gameManger.sceneChanged to true

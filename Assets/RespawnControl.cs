@@ -265,6 +265,7 @@ public class RespawnControl : MonoBehaviour
             if (testCube.ReadActionButton())
             {
                 gameManager.sceneChanged = true;
+                print("sceneChanged: " + gameManager.sceneChanged);
                 SceneManager.LoadScene(scene1);  
 
             }            

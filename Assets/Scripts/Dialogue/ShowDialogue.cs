@@ -560,7 +560,7 @@ public class ShowDialogue :DialogueViewBase
         sprites.Add(newSpriteObject);
         newSpriteObject.name = spriteName;
         newSpriteObject.sprite = FetchAsset<Sprite>(spriteName);
-        Debug.Log("AddSprites =" + newSpriteObject);
+        //Debug.Log("AddSprites =" + newSpriteObject);
         newSpriteObject.SetNativeSize();
         newSpriteObject.rectTransform.anchoredPosition = Vector2.Scale(position, screenSize);
         return newSpriteObject;
