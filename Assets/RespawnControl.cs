@@ -12,6 +12,13 @@ public class RespawnControl : MonoBehaviour
     public Vector3 respawnPoint;
 
     [SerializeField]
+    private List<GameObject> cps = new List<GameObject>();
+    [SerializeField]
+    private List<CheckpointControl> cpc = new List<CheckpointControl>();
+
+    public GameObject cpParent;
+
+    [SerializeField]
     private GameObject player;
     [SerializeField]
     private TestCube testCube;
@@ -52,6 +59,8 @@ public class RespawnControl : MonoBehaviour
 
     public DialogueRunner dR;
 
+    public GameObject currentActive;
+    //CheckpointControl activateFCP;
 
 
     List<string> nodeNames = new List<string>
@@ -63,12 +72,22 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
+        cpParent = GameObject.FindWithTag("cpParent");
+
         respawnPoint = this.transform.position;
         dR = Object.FindAnyObjectByType<DialogueRunner>();
 
         gameManager = Object.FindAnyObjectByType<GameManager>();
 
         testCube = player.GetComponent<TestCube>();
+
+        foreach (Transform child in cpParent.transform)
+        {
+            cps.Add(child.gameObject);
+
+            CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
+            cpc.Add(checkpc);
+        }
     }
 
     void SceneCheck()
@@ -235,7 +254,13 @@ public class RespawnControl : MonoBehaviour
         {
 
             respawnPoint = other.transform.position;
-            
+
+            foreach (CheckpointControl checkpc in cpc)
+            {
+
+                checkpc.deActivate = true;
+
+            }
 
             Debug.Log("RespawnPoint =" + respawnPoint);
 

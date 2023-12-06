@@ -454,6 +454,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnPoint: {x: 0, y: 0, z: 0}
+  cps: []
+  cpc: []
+  cpParent: {fileID: 0}
   player: {fileID: 7636394438553627759}
   testCube: {fileID: 0}
   isDead: 0
@@ -470,6 +473,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   isAtDoor: 0
   dR: {fileID: 0}
+  currentActive: {fileID: 0}
 --- !u!1 &307637956170343215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,7 +1378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790931724609759169}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.007225095, y: 0.9818109, z: -0.18584473, w: 0.03816991}
+  m_LocalRotation: {x: -0.084657215, y: 0.8748626, z: -0.16560048, w: -0.44724163}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2587,8 +2591,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516074710670123496}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.007225099, y: 0.9818109, z: -0.1858448, w: 0.038169935}
-  m_LocalPosition: {x: -0.3881836, y: 3, z: 4.984909}
+  m_LocalRotation: {x: -0.08465723, y: 0.8748627, z: -0.16560051, w: -0.44724163}
+  m_LocalPosition: {x: 4.052948, y: 3, z: 2.9280853}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3653,7 +3657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6715688338489921252}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.008794079, y: 0.97330534, z: -0.22620249, w: 0.037839215}
+  m_LocalRotation: {x: -0.10304126, y: 0.86728364, z: -0.20156206, w: -0.44336718}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3819,7 +3823,7 @@ Transform:
   m_GameObject: {fileID: 7231244782024356411}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3881836, y: 3, z: 4.984909}
+  m_LocalPosition: {x: 4.052948, y: 3, z: 2.9280853}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4457,6 +4461,7 @@ MonoBehaviour:
   titleText: {fileID: 1213970573531324709}
   titleDisplayed: 0
   footstepRate: 115
+  groundMaterial: nothing
   geiserForce: 100
 --- !u!114 &965772886468833305
 MonoBehaviour:
@@ -4561,6 +4566,22 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 63d69b0acb92e574d8df3012ac837843, type: 2}
+  metalStep:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  woodStep:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  metalLand:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  woodLand:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &7750027859420987389
 GameObject:
   m_ObjectHideFlags: 0
@@ -5548,7 +5569,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.010369746, y: 0.9629875, z: -0.26673207, w: 0.037438072}
+  m_LocalRotation: {x: -0.121503584, y: 0.8580897, z: -0.23767678, w: -0.43866706}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
