@@ -588,7 +588,7 @@ public class GameManager : MonoBehaviour
             if (!projectileToIndicator.ContainsKey(player2))
             {
                 //GameObject newIndicator = Instantiate(p2UIIndicator, Vector3.zero, Quaternion.identity);
-                projectileToIndicator.Add(player2, newIndicator);
+               // projectileToIndicator.Add(player2, newIndicator);
             }
         }
     }
