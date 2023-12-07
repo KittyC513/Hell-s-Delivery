@@ -109,8 +109,9 @@ public class GameManager : MonoBehaviour
     private float waitingTime;
     [SerializeField]
     private GameObject TVinstruction;
+
     [SerializeField]
-    Canvas canvas;
+    public bool showTVInstruction;
 
     [SerializeField]
     public GameObject noisy1;
@@ -176,15 +177,19 @@ public class GameManager : MonoBehaviour
     void SkyboxControl()
     {
         // Change skybox based on the scene name
-        if (curSceneName == scene3)
+        if (GameManager.instance.sceneChanged)
         {
-            RenderSettings.skybox = skyboxScene1;
+            if(curSceneName == scene3)
+            {
+                RenderSettings.skybox = skyboxScene1;
+            }
+            else
+            {
+                RenderSettings.skybox = skyboxScene2;
+            }
+            
         }
-        else
-        {
-            RenderSettings.skybox = skyboxScene2;
-        }
-        print(RenderSettings.skybox);
+
     }
 
     void DetectScene()
@@ -423,20 +428,17 @@ public class GameManager : MonoBehaviour
 
 
 
-    void ShowTVInstruction()
+    public void ShowTVInstruction()
     {
         if(curSceneName == scene1 || curSceneName == scene5)
         {
-            if(canvas != null)
+            if (p1.withinTVRange || p2.withinTVRange)
             {
-                if (p1.withinTVRange || p2.withinTVRange)
-                {
-                    TVinstruction.SetActive(true);
-                }
-                else if (!p1.withinTVRange && !p2.withinTVRange)
-                {
-                    TVinstruction.SetActive(false);
-                }
+                showTVInstruction = true;
+            }
+            else if (!p1.withinTVRange && !p2.withinTVRange)
+            {
+                showTVInstruction = false;
             }
         }
 
@@ -450,15 +452,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //IEnumerator ShowIntruction()
-    //{
-
-    //    // Wait for the specified time
-    //    yield return new WaitForSeconds(waitingTime);
-    //    TVinstruction = canvas.gameObject;
-    //    TVinstruction.SetActive(true);
-       
-    //}
 
 
 

@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class SceneControl : MonoBehaviour
 {
+    public static SceneControl instance;
+   
     [SerializeField]
-    private Transform P1StartPoint;
+    public Transform P1StartPoint;
     [SerializeField]
-    private Transform P2StartPoint;
+    public Transform P2StartPoint;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         GameManager.instance.Reposition(P1StartPoint, P2StartPoint);

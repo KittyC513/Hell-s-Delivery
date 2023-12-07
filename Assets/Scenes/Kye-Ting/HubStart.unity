@@ -853,7 +853,7 @@ MonoBehaviour:
   skyboxScene2: {fileID: 0}
   waitingTime: 0
   TVinstruction: {fileID: 0}
-  canvas: {fileID: 0}
+  showTVInstruction: 0
   noisy1: {fileID: 0}
   noisy2: {fileID: 0}
   isNoisy1: 0
@@ -966,6 +966,7 @@ GameObject:
   - component: {fileID: 385874900}
   - component: {fileID: 385874899}
   - component: {fileID: 385874898}
+  - component: {fileID: 385874901}
   m_Layer: 18
   m_Name: TV
   m_TagString: Untagged
@@ -1060,6 +1061,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 385874896}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &385874901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385874896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e96cc24189c8a4fa18f93cecd45d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1593554171}
 --- !u!1 &581664678
 GameObject:
   m_ObjectHideFlags: 0

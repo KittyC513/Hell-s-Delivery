@@ -74,7 +74,8 @@ public class RespawnControl : MonoBehaviour
     {
         cpParent = GameObject.FindWithTag("cpParent");
 
-        respawnPoint = this.transform.position;
+        
+
         dR = Object.FindAnyObjectByType<DialogueRunner>();
 
         gameManager = Object.FindAnyObjectByType<GameManager>();
@@ -92,9 +93,10 @@ public class RespawnControl : MonoBehaviour
 
     void SceneCheck()
     {
-        if (gameManager.sceneChanged)
+        if (GameManager.instance.sceneChanged)
         {
-            if (curSceneName == scene2 || curSceneName == scene3 || curSceneName == scene4)
+            curSceneName = GameManager.instance.curSceneName;
+            if (curSceneName == scene4)
             {
                 if (objectGrabbable == null)
                 {
@@ -102,24 +104,35 @@ public class RespawnControl : MonoBehaviour
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
             }
-            else
-            {
-                objectGrabbable = null;
-            }
         }
 
+    }
+
+    void ResetInitialRespawnPoint()
+    {
+        if(respawnPoint == null && curSceneName == scene4)
+        {
+            if (isPlayer1)
+            {
+                respawnPoint = SceneControl.instance.P1StartPoint.position;
+            }
+            if (isPlayer2)
+            {
+                respawnPoint = SceneControl.instance.P2StartPoint.position;
+            }
+        }
     }
 
     private void Update()
     {
         SceneCheck();
         PlayerDetector();
-        if(curSceneName == scene2 || curSceneName == scene3 || curSceneName == scene4)
+        if(objectGrabbable != null)
         {
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
         }
-
+        ResetInitialRespawnPoint();
         ////if (Partner == null)
         //{
          Partner = GameObject.FindGameObjectsWithTag("FindScript");
@@ -157,7 +170,7 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-                ScoreCount.instance.AddDeathsToP1(3);
+                ScoreCount.instance.AddDeathsToP1(-3);
                 StartCoroutine(ActivateP1UIForDuration(3f));
                 if (curSceneName == scene2)
                 {
@@ -174,7 +187,7 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2)
             {
-                ScoreCount.instance.AddDeathsToP2(3);
+                ScoreCount.instance.AddDeathsToP2(-3);
                 StartCoroutine(ActivateP2UIForDuration(3f));
                 if (curSceneName == scene2)
                 {
@@ -211,6 +224,7 @@ public class RespawnControl : MonoBehaviour
         }
         else if (other.tag == "CheckPoint")
         {
+            
             respawnPoint = other.transform.position;
             Debug.Log("RespawnPoint =" + respawnPoint);
         }

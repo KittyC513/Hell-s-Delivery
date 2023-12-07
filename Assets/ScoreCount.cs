@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 
 public class ScoreCount : MonoBehaviour
@@ -60,9 +61,13 @@ public class ScoreCount : MonoBehaviour
     [SerializeField]
     private float p2Score;
     [SerializeField]
-    private float time;
+    private float InitialScore;
+    [SerializeField]
+    public float time;
     [SerializeField]
     GameManager gameManager;
+    [SerializeField]
+    public float knobValue;
 
 
 
@@ -81,9 +86,13 @@ public class ScoreCount : MonoBehaviour
     }
     void Start()
     {
+        knobValue = 0;
         StartLevelTime();
         gameManager = Object.FindAnyObjectByType<GameManager>();
-    }
+
+        p1Score = InitialScore;
+        p2Score = p1Score;
+    }   
 
     // Update is called once per frame
     void Update()
@@ -119,7 +128,7 @@ public class ScoreCount : MonoBehaviour
     private void FixedUpdate()
     {
         calculateScore(p1Deaths, p1PackageTime, p2Deaths, p2PackageTime, completionTime);
-        TotalScoreCal();
+        //TotalScoreCal();
     }
 
     //return a vector 2, x is player 1 score y is player 2 score
@@ -227,7 +236,14 @@ public class ScoreCount : MonoBehaviour
     public void AddDeathsToP1(int value)
     {
         //when the player dies (referenced in the respawn script) add to deaths, same with p2 later
-        p1Deaths += value;
+        //p1Score += value;
+        knobValue += value;
+        if (knobValue >= 90)
+        {
+            knobValue = 90;
+        }
+        StartCoroutine(RotateToPosition(knobValue, 2));
+
         //p1Deaths += value;
         //p1Score += p1Deaths;
 
@@ -237,25 +253,53 @@ public class ScoreCount : MonoBehaviour
     public void AddPointToP1Package(int value)
     {
         //if player1 has the package add to their package time
-        time += Time.deltaTime;
-        if(time >= 10)
+
+        knobValue += value;
+        if (knobValue >= 90)
         {
-
-            p1PackageTime += value * Time.fixedDeltaTime;
-            p1Score += p1PackageTime;
-            time = 0;
-
-            StartCoroutine(ActivateP1UIForDuration(3f));
+            knobValue = 90;
         }
-
-
-        //deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
+        StartCoroutine(RotateToPosition(knobValue, 2));
+        
     }
+
+
+    //IEnumerator P1PackageTimer(int value)
+    //{
+    //    time += Time.deltaTime;
+    //    if (time >= 10)
+    //    {
+    //        p1Score += value;
+    //        time = 0;
+    //        StartCoroutine(ActivateP1UIForDuration(3));
+    //    }
+
+    //    yield return null;
+    //}
+    //IEnumerator P2PackageTimer(int value)
+    //{
+    //    time += Time.deltaTime;
+    //    if (time >= 10)
+    //    {
+    //        p2Score += value;
+    //        time = 0;
+    //        StartCoroutine(ActivateP2UIForDuration(3));
+    //    }
+
+    //    yield return null;
+    //}
 
     public void AddDeathsToP2(int value)
     {
 
-        p2Deaths += value;
+        knobValue += value;
+        if (knobValue <= -90)
+        {
+            knobValue = -90;
+        }
+        //p2Score += value;
+        StartCoroutine(RotateToPosition(knobValue, 2));
+        
         //p2Deaths -= value;
         //p2Score += p2Deaths;
         //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
@@ -263,72 +307,58 @@ public class ScoreCount : MonoBehaviour
 
     public void AddPointToP2Package(int value)
     {
-        time += Time.deltaTime;
-        if(time >= 10)
+        knobValue += value;
+
+        if (knobValue <= -90)
         {
-            p2PackageTime += value * Time.fixedDeltaTime;
-            p2Score += p2PackageTime;
-            time = 0;
-            StartCoroutine(ActivateP2UIForDuration(3f));
+            knobValue = -90;
         }
-        //add to player 2 package Time
 
-        //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
+        StartCoroutine(RotateToPosition(knobValue, 2));
     }
 
-    void TotalScoreCal()
-    {
-        if (p1CalculatedScore > p2CalculatedScore)
-        {
-            float difference = (p1CalculatedScore - p2CalculatedScore)/10;
+    //void TotalScoreCal()
+    //{
+    //    if (p1Score > p2Score)
+    //    {
+    //        float difference = (p1Score - p2Score) * 10;
+    //        print("p1Score:" + p1Score);
+    //        print("p2Score:" + p2Score);
 
-            if (knob.localEulerAngles.z >= 90)
-            {
-                knob.localEulerAngles = new Vector3(0, 0, 90);
-            }
+    //        //float radiansValue = difference * Mathf.Deg2Rad;
+    //        if (knob.localEulerAngles.z >= 90)
+    //        {
+    //            knob.localEulerAngles = new Vector3(0, 0, 90);
+    //        }
 
-            StartCoroutine(RotateToPosition(difference, 2));
+    //        int multiple = 180;
 
-        } 
-        else if (p2CalculatedScore > p1CalculatedScore)
-        {
-            float difference = (p2CalculatedScore - p1CalculatedScore) / 10;
+    //        StartCoroutine(RotateToPosition(difference, 2));
 
-            if (knob.localEulerAngles.z <= -90)
-            {
-                knob.localEulerAngles = new Vector3(0, 0, -90);
-            }
+    //    } 
+    //    else if (p2Score > p1Score)
+    //    {
+    //        print("p1Score:" + p1Score);
+    //        print("p2Score:" + p2Score);
 
-            StartCoroutine(RotateToPosition(-difference, 2));
-        }
-        else if(p1CalculatedScore == p2CalculatedScore)
-        {
-            knob.localEulerAngles = new Vector3(0, 0, 0);
-        }
-    }
+    //        if (knob.localEulerAngles.z <= -90)
+    //        {
+    //            knob.localEulerAngles = new Vector3(0, 0, -90);
+    //        }
+
+    //        int multiple = 180;
+
+    //        StartCoroutine(RotateToPosition(-Mathf.Abs(p2Score) / multiple, 2));
+    //    }
+    //    else if(p1Score == p2Score)
+    //    {
+    //        knob.localEulerAngles = new Vector3(0, 0, 0);
+    //    }
+    //}
 
 
-    IEnumerator ActivateP1UIForDuration(float duration)
-    {
-        gameManager.p1UI.SetActive(true);
 
-        // Wait for the specified duration
-        yield return new WaitForSeconds(duration);
 
-        // Deactivate the UI after the specified duration
-        gameManager.p1UI.SetActive(false);
-    }
-
-    IEnumerator ActivateP2UIForDuration(float duration)
-    {
-        gameManager.p2UI.SetActive(true);
-
-        // Wait for the specified duration
-        yield return new WaitForSeconds(duration);
-
-        // Deactivate the UI after the specified duration
-        gameManager.p2UI.SetActive(false);
-    }
 
 
     //float knobPosition = percentage * slider.GetComponent<RectTransform>().rect.width;
@@ -351,9 +381,10 @@ public class ScoreCount : MonoBehaviour
             yield return null;
         }
 
-        // Ensure the object reaches the exact target position at the end
+            // Ensure the object reaches the exact target position at the end
         knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, targetRotation);
 
+        print("Moving" + targetRotation);
     }
 
 
