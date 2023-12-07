@@ -788,7 +788,8 @@ public class TestCube : MonoBehaviour
                 print("sceneChanged: " + gameManager.sceneChanged);
                 print("Do interact with TV");
 
-                SceneControl.instance.LoadScene("MVPLevel");
+                Loader.Load(Loader.Scene.MVPLevel);
+                //SceneControl.instance.LoadScene("MVPLevel");
                 //change scene and enter tutorial level, set gameManger.sceneChanged to true
 
             }

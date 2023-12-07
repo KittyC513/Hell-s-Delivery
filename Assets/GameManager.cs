@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -137,11 +138,6 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<GameObject, GameObject> projectileToIndicator = new Dictionary<GameObject, GameObject>();
 
-    [Header("Loading Screen")]
-    [SerializeField]
-    private GameObject loadingScreen;
-    [SerializeField]
-    private Slider loadingSlider;
 
 
     private void Awake()
@@ -176,27 +172,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void LoadScene(string sceneToLoad)
-    {
-        loadingScreen.SetActive(true);
-        //Run the A sync
-        StartCoroutine(LoadSceneAsync(sceneToLoad));
-
-    }
-
-    IEnumerator LoadSceneAsync(string sceneToLoad)
-    {
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
-
-        while (!loadOperation.isDone)
-        {
-            float progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
-            loadingSlider.value = progressValue;
-            yield return null;
-        }
-
-
-    }
 
     void SkyboxControl()
     {
@@ -216,60 +191,20 @@ public class GameManager : MonoBehaviour
     {
         if (sceneChanged)
         {
-            StartCoroutine(CheckScene());
+
         }
 
-            //if(curSceneName == scene4)
-            //{
-            //    p1StartPoint = GameObject.FindWithTag("P1StartPoint").transform;
-            //    p2StartPoint = GameObject.FindWithTag("P2StartPoint").transform;
 
-            //    player1.transform.position = p1StartPoint.position;
-            //    player2.transform.position = p2StartPoint.position;
-            //    print("Reset MVP Level");
-
-            //    sceneChanged = false;
-            //}
-      
-
+   
     }
-    IEnumerator CheckScene()
+    public void Reposition(Transform P1position, Transform P2position)
     {
-        yield return new WaitForSeconds(1);
-
-        if (curSceneName == scene1)
-        {
-            player1.transform.position = new Vector3(4.97f, 1f, 3f);
-            player2.transform.position = new Vector3(3f, 1f, 3f);
-            print("Reset");
-            print("gameManager " + curSceneName);
-            sceneChanged = false;
-
-        }
-        else if (curSceneName == scene4)
-        {
-            p1StartPoint = GameObject.FindWithTag("P1StartPoint").transform;
-            p2StartPoint = GameObject.FindWithTag("P2StartPoint").transform;
-
-            player1.transform.position = p1StartPoint.position;
-            player2.transform.position = p2StartPoint.position;
-            print("Reset MVP Level");
-            print("gameManager " + curSceneName);
-            sceneChanged = false;
-        }
-        if (curSceneName == scene1 || curSceneName == scene5)
-        {
-            if (canvas == null)
-            {
-                canvas = GameObject.Find("TVCanvas").GetComponent<Canvas>();
-                TVinstruction = canvas.gameObject;
-                TVinstruction.SetActive(false);
-
-            }
-
-        }
-
+        player1.transform.position = P1position.position;
+        player2.transform.position = P2position.position;
     }
+
+
+
 
 
     void FindPlayer()
