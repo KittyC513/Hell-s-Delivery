@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     [SerializeField]
     public string curSceneName;
     string scene1 = "HubStart";
@@ -136,9 +137,17 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<GameObject, GameObject> projectileToIndicator = new Dictionary<GameObject, GameObject>();
 
+    [Header("Loading Screen")]
+    [SerializeField]
+    private GameObject loadingScreen;
+    [SerializeField]
+    private Slider loadingSlider;
+
+
     private void Awake()
     {
         instructionText.SetActive(false);
+        instance = this;
     }
     private void Start()
     {
@@ -164,6 +173,28 @@ public class GameManager : MonoBehaviour
         SkyboxControl();
 
         ShowTVInstruction();
+
+    }
+
+    public void LoadScene(string sceneToLoad)
+    {
+        loadingScreen.SetActive(true);
+        //Run the A sync
+        StartCoroutine(LoadSceneAsync(sceneToLoad));
+
+    }
+
+    IEnumerator LoadSceneAsync(string sceneToLoad)
+    {
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
+
+        while (!loadOperation.isDone)
+        {
+            float progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
+            loadingSlider.value = progressValue;
+            yield return null;
+        }
+
 
     }
 
@@ -204,7 +235,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator CheckScene()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         if (curSceneName == scene1)
         {
@@ -253,10 +284,7 @@ public class GameManager : MonoBehaviour
             {
                 player1 = obj;
                 p1 = obj.GetComponent<TestCube>();
-                if(curSceneName == scene3)
-                {
 
-                }
 
                 Transform parentTransform = player1.transform;
 
@@ -299,10 +327,7 @@ public class GameManager : MonoBehaviour
                 player2 = obj;
                 p2 = obj.GetComponent<TestCube>();
 
-                if (curSceneName == scene3)
-                {
-                    //character2.SetActive(true);
-                }
+
 
                 Transform parentTransform = player2.transform;
 

@@ -291,7 +291,9 @@ public class RespawnControl : MonoBehaviour
             {
                 gameManager.sceneChanged = true;
                 print("sceneChanged: " + gameManager.sceneChanged);
-                SceneManager.LoadScene(scene1);  
+
+                GameManager.instance.LoadScene(scene1);
+                
 
             }            
         }

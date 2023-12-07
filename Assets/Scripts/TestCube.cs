@@ -432,11 +432,7 @@ public class TestCube : MonoBehaviour
             otherRB.useGravity = true;
             otherRB.isKinematic = false;
         }
-        
-
-
-        
-
+               
 
 
         Interacte();
@@ -791,7 +787,8 @@ public class TestCube : MonoBehaviour
                 gameManager.sceneChanged = true;
                 print("sceneChanged: " + gameManager.sceneChanged);
                 print("Do interact with TV");
-                SceneManager.LoadScene("MVPLevel");
+
+                SceneControl.instance.LoadScene("MVPLevel");
                 //change scene and enter tutorial level, set gameManger.sceneChanged to true
 
             }
