@@ -340,6 +340,14 @@ public class ScoreCount : MonoBehaviour
 
         float elapsedTime = 0f;
         float startingRotation = knob.localEulerAngles.z;
+        if(startingRotation > 180)
+        {
+            startingRotation -= 360;
+        } 
+        else if(startingRotation < -180)
+        {
+            startingRotation += 360;
+        }
 
 
 
@@ -362,33 +370,14 @@ public class ScoreCount : MonoBehaviour
                 if (knobValue > -90)
                 {
                     newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
+                    print("startingRotation" + startingRotation);
                     knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
   
                 }
 
             }
 
-            //if (knob.localEulerAngles.z >= 90)
-            //{
-            //    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, 90);
-      
-            //    print("Moving to " + targetRotation);
-            //}
-            //else if(knob.localEulerAngles.z <= -90)
-            //{
-            //    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, -90);
-            //    print("Moving to " + targetRotation);
-            //}
-            //else if(knob.localEulerAngles.z < 90)
-            //{
-            //    if(knob.localEulerAngles.z > -90)
-            //    {
-            //        newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
-            //        knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
-            //        print("Moving to " + targetRotation);
-            //    }
 
-            //}
 
             elapsedTime += Time.deltaTime;
 
@@ -420,25 +409,6 @@ public class ScoreCount : MonoBehaviour
         print("Moving" + targetRotation);
 
 
-        //if (knob.localEulerAngles.z >= 90)
-        //{
-        //    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, 90);
-        //    print("1");
-        //}
-        //else if (knob.localEulerAngles.z <= -90)
-        //{
-        //    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, -90);
-        //    print("2");
-        //}
-        //else if (knob.localEulerAngles.z < 90 || knob.localEulerAngles.z > -90)
-        //{
-        //    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, targetRotation);
-        //    print("3");
-        //}
-
-
-        // Ensure the object reaches the exact target position at the end
-
 
     }
 
@@ -465,27 +435,6 @@ public class ScoreCount : MonoBehaviour
         while (elapsedTime < rotationTime)
         {
 
-            //if (shortestRotation >= 90 && knobValue >= 90)
-            //{
-            //    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, 90);
-            //    print("1");
-            //    print("Moving to " + targetRotation);
-            //}
-            //else if (shortestRotation <= -90 && knobValue <= -90)
-            //{
-            //    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, -90);
-            //    print("Moving to " + targetRotation);
-            //}
-            //else if (shortestRotation < 90)
-            //{
-            //    if(shortestRotation > -90)
-            //    {
-            //        float currentRotation = Mathf.Lerp(startingRotation, startingRotation + shortestRotation, elapsedTime / rotationTime);
-            //        knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, currentRotation);
-            //        print("Moving to " + targetRotation);
-            //    }
-
-            //}
 
             if ( knobValue >= 90)
             {
@@ -536,55 +485,12 @@ public class ScoreCount : MonoBehaviour
             }
 
         }
-        //float finalRotation = Mathf.Clamp(targetRotation, -90f, float.MaxValue);
-        //knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, finalRotation);
-        // Ensure the object reaches the exact target position at the end
+
 
         p2AddScore = false;
         
     }
 
-    //IEnumerator RotateToPositionP2(float targetRotation, float rotationTime)
-    //{
-
-    //    float elapsedTime = 0f;
-    //    float startingRotation = knob.localEulerAngles.z;
-
-
-    //    while (elapsedTime < rotationTime )
-    //    {
-
-    //        if (knob.localEulerAngles.z <= -90)
-    //        {
-    //            knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, -90);
-
-    //        }
-    //        else
-    //        {
-    //            float clockwiseRotation = (targetRotation - startingRotation + 360) % 360;
-    //            newRotation = Mathf.Lerp(startingRotation, startingRotation + clockwiseRotation, elapsedTime / rotationTime);
-    //            knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
-    //        }
-
-
-    //        elapsedTime += Time.deltaTime;
-
-    //        yield return null;
-    //    }
-
-    //    if (knob.localEulerAngles.z <= -90)
-    //    {
-    //        knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, -90);
-    //    }
-    //    else
-    //    {
-
-    //        knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, targetRotation);
-    //    }
-
-
-    //    print("Moving" + targetRotation);
-    //}
 
 
 
