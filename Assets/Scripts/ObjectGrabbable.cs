@@ -195,7 +195,7 @@ public class ObjectGrabbable : MonoBehaviour
         time += Time.deltaTime;
         if (time >= 10)
         {
-            ScoreCount.instance.AddPointToP2Package(-3);
+            ScoreCount.instance.AddPointToP2Package(3);
             StartCoroutine(ActivateP2UIForDuration(3));
             time = 0;
         }

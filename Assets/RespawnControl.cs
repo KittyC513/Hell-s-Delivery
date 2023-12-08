@@ -170,7 +170,7 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-                ScoreCount.instance.AddDeathsToP1(-5);
+                ScoreCount.instance.AddDeathsToP1(5);
                 StartCoroutine(ActivateP1UIForDuration(3f));
                 if (curSceneName == scene2)
                 {

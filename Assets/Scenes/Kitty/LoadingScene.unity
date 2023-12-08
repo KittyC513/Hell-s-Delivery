@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -44,7 +44,6 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -67,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -97,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -138,6 +134,22 @@ PrefabInstance:
     - target: {fileID: 3564103417747765946, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_Name
       value: LoadingScreen_canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276777676285033781, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: m_text
+      value: '    LOADING...'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276777676285033781, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: m_margin.x
+      value: -553.8212
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276777676285033781, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: m_margin.z
+      value: -604.8828
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276777676285033781, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 5228470330574713654, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -237,7 +249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7188019877002740652, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 319.52515
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 7188019877002740652, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -245,11 +257,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7188019877002740652, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 29
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7551782862383142444, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962792358704462308, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 933
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962792358704462308, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 9138003806270712804, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -290,9 +310,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363444404}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
