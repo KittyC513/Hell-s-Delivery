@@ -292,9 +292,17 @@ public class ScoreCount : MonoBehaviour
     public void AddDeathsToP2(int value)
     {
 
+<<<<<<< Updated upstream
         
         knobValue += value;
 
+=======
+        knobValue -= value;
+        if (knobValue <= -90)
+        {
+            knobValue = -90;
+        }
+>>>>>>> Stashed changes
         //p2Score += value;
         StartCoroutine(RotateToPosition(knobValue, 2));
         
@@ -305,9 +313,13 @@ public class ScoreCount : MonoBehaviour
 
     public void AddPointToP2Package(int value)
     {
+<<<<<<< Updated upstream
         
 
         knobValue += value;
+=======
+        knobValue -= value;
+>>>>>>> Stashed changes
 
 
         StartCoroutine(RotateToPosition(knobValue, 2));
