@@ -68,8 +68,10 @@ public class ScoreCount : MonoBehaviour
     GameManager gameManager;
     [SerializeField]
     public float knobValue;
-
-
+    [SerializeField]
+    public float newRotation;
+    [SerializeField]
+    public float lastKnobValue;
 
     //need score for each value
     //need an expected outcome for each player
@@ -86,6 +88,7 @@ public class ScoreCount : MonoBehaviour
     }
     void Start()
     {
+        lastKnobValue = 0;
         knobValue = 0;
         StartLevelTime();
         gameManager = Object.FindAnyObjectByType<GameManager>();
@@ -237,11 +240,10 @@ public class ScoreCount : MonoBehaviour
     {
         //when the player dies (referenced in the respawn script) add to deaths, same with p2 later
         //p1Score += value;
+        
+
         knobValue += value;
-        if (knobValue >= 90)
-        {
-            knobValue = 90;
-        }
+
         StartCoroutine(RotateToPosition(knobValue, 2));
 
         //p1Deaths += value;
@@ -254,11 +256,9 @@ public class ScoreCount : MonoBehaviour
     {
         //if player1 has the package add to their package time
 
+
         knobValue += value;
-        if (knobValue >= 90)
-        {
-            knobValue = 90;
-        }
+
         StartCoroutine(RotateToPosition(knobValue, 2));
         
     }
@@ -292,11 +292,9 @@ public class ScoreCount : MonoBehaviour
     public void AddDeathsToP2(int value)
     {
 
+        
         knobValue += value;
-        if (knobValue <= -90)
-        {
-            knobValue = -90;
-        }
+
         //p2Score += value;
         StartCoroutine(RotateToPosition(knobValue, 2));
         
@@ -307,12 +305,10 @@ public class ScoreCount : MonoBehaviour
 
     public void AddPointToP2Package(int value)
     {
+        
+
         knobValue += value;
 
-        if (knobValue <= -90)
-        {
-            knobValue = -90;
-        }
 
         StartCoroutine(RotateToPosition(knobValue, 2));
     }
@@ -375,8 +371,46 @@ public class ScoreCount : MonoBehaviour
 
         while (elapsedTime < rotationTime)
         {
-            float newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
-            knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
+            if(lastKnobValue > knobValue )
+            {
+                newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
+                if (targetRotation >= 90)
+                {
+                    targetRotation = 90;
+                }
+                knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
+            }
+            if(lastKnobValue < knobValue)
+            {   
+                float clockwiseRotation = (targetRotation - startingRotation + 360) % 360;
+                newRotation = Mathf.Lerp(startingRotation, startingRotation + clockwiseRotation, elapsedTime / rotationTime);
+                if (clockwiseRotation <= -90)
+                {
+                    newRotation = 90;
+                }
+                knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
+            }
+
+            //if(knobValue > 0)
+            //{
+            //    newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
+            //    if(targetRotation >= 90)
+            //    {
+            //        targetRotation = 90;
+            //    }
+            //    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
+            //}
+            //else if(knobValue < 0)
+            //{
+            //    float clockwiseRotation = (targetRotation - startingRotation + 360) % 360;
+            //    newRotation = Mathf.Lerp(startingRotation, startingRotation + clockwiseRotation, elapsedTime / rotationTime);
+            //    if(clockwiseRotation <= -90)
+            //    {
+            //        newRotation = 90;
+            //    }
+            //    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
+            //}
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
