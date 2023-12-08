@@ -48,7 +48,7 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     public GameObject checkPoint;
     [SerializeField]
-    Vector3 respawnPoint;
+    public Vector3 respawnPoint;
     [SerializeField]
     public GameObject p1Package;
     [SerializeField]
@@ -424,10 +424,7 @@ public class ObjectGrabbable : MonoBehaviour
         {
             respawnPoint = other.transform.position;
         }
-        if (other.CompareTag("Player"))
-        {
 
-        }
     }
 
     IEnumerator ActivateP1UIForDuration(float duration)

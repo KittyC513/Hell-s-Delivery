@@ -60,6 +60,12 @@ public class RespawnControl : MonoBehaviour
     public DialogueRunner dR;
 
     public GameObject currentActive;
+    [SerializeField]
+    private GameObject p1DeadScreen;
+    [SerializeField]
+    private GameObject p2DeadScreen;
+
+
     //CheckpointControl activateFCP;
 
 
@@ -156,16 +162,33 @@ public class RespawnControl : MonoBehaviour
 
     public void Respawn(Vector3 respawnPos)
     {
-        player.transform.position = respawnPos;
-        player.transform.eulerAngles = new Vector3(0, 90, 0);
-        Debug.Log("RespawnPoint =" + respawnPos);
+        StartCoroutine(RespawnTimer(respawnPos));
+        //Debug.Log("RespawnPoint =" + respawnPos);
+    }
+    IEnumerator RespawnTimer(Vector3 respawnPos)
+    {
+        yield return new WaitForSeconds(3);
+        if (Player1Die)
+        {
+            player.transform.position = respawnPos;
+            player.transform.eulerAngles = new Vector3(0, 90, 0);
+            Player1Die = false;
+        }
+        if (Player2Die)
+        {
+            player.transform.position = respawnPos;
+            player.transform.eulerAngles = new Vector3(0, 90, 0);
+            Player2Die = false;
+        }
 
     }
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == ("Hazard"))
         {
-            Debug.Log("Hazard name =" + other.gameObject);
+            //Debug.Log("Hazard name =" + other.gameObject);
             Respawn(respawnPoint);
 
             if (isPlayer1)
@@ -177,6 +200,7 @@ public class RespawnControl : MonoBehaviour
                     LevelDialogue.ShowDevilPlayer2();
                     dR.Stop();
                     PlayRandomDialogue();
+                    Player1Die = true;
                 }
 
             }
@@ -194,6 +218,7 @@ public class RespawnControl : MonoBehaviour
                     LevelDialogue.ShowDevilPlayer1();
                     dR.Stop();
                     PlayRandomDialogue();
+                    Player2Die = true;
                 }
 
 
@@ -209,7 +234,7 @@ public class RespawnControl : MonoBehaviour
                 objectGrabbable.P2TakePackage = true;
                 objectGrabbable.P1TakePackage = false;
                 Player1Die = true;
-                Debug.Log("Player1Die");
+                //Debug.Log("Player1Die");
             }
             else if (Player2isCarrying && isPlayer2)
             {
@@ -217,7 +242,7 @@ public class RespawnControl : MonoBehaviour
                 objectGrabbable.P2TakePackage = false;
                 objectGrabbable.P1TakePackage = true;
                 Player2Die = true;
-                Debug.Log("Player2Die");
+                //Debug.Log("Player2Die");
 
             }
 
@@ -268,6 +293,7 @@ public class RespawnControl : MonoBehaviour
         {
 
             respawnPoint = other.transform.position;
+            objectGrabbable.respawnPoint = respawnPoint;
 
             foreach (CheckpointControl checkpc in cpc)
             {
@@ -276,7 +302,7 @@ public class RespawnControl : MonoBehaviour
 
             }
 
-            Debug.Log("RespawnPoint =" + respawnPoint);
+            //Debug.Log("RespawnPoint =" + respawnPoint);
 
             foreach (GameObject obj in Partner)
             {
@@ -286,7 +312,7 @@ public class RespawnControl : MonoBehaviour
                 if (partnerScript != null)
                 {
                     partnerScript.respawnPoint = respawnPoint;
-                    Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+                    //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
                 }
                 //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
             }
