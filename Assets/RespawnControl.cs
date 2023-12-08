@@ -162,26 +162,27 @@ public class RespawnControl : MonoBehaviour
 
     public void Respawn(Vector3 respawnPos)
     {
-        StartCoroutine(RespawnTimer(respawnPos));
+        player.transform.position = respawnPos;
+        player.transform.eulerAngles = new Vector3(0, 90, 0);
         //Debug.Log("RespawnPoint =" + respawnPos);
     }
-    IEnumerator RespawnTimer(Vector3 respawnPos)
-    {
-        yield return new WaitForSeconds(3);
-        if (Player1Die)
-        {
-            player.transform.position = respawnPos;
-            player.transform.eulerAngles = new Vector3(0, 90, 0);
-            Player1Die = false;
-        }
-        if (Player2Die)
-        {
-            player.transform.position = respawnPos;
-            player.transform.eulerAngles = new Vector3(0, 90, 0);
-            Player2Die = false;
-        }
+    //IEnumerator RespawnTimer(Vector3 respawnPos)
+    //{
+    //    yield return new WaitForSeconds(3);
+    //    if (Player1Die)
+    //    {
+    //        player.transform.position = respawnPos;
+    //        player.transform.eulerAngles = new Vector3(0, 90, 0);
+    //        Player1Die = false;
+    //    }
+    //    if (Player2Die)
+    //    {
+    //        player.transform.position = respawnPos;
+    //        player.transform.eulerAngles = new Vector3(0, 90, 0);
+    //        Player2Die = false;
+    //    }
 
-    }
+    //}
 
 
     private void OnTriggerEnter(Collider other)
@@ -251,7 +252,8 @@ public class RespawnControl : MonoBehaviour
         {
             
             respawnPoint = other.transform.position;
-            Debug.Log("RespawnPoint =" + respawnPoint);
+            objectGrabbable.respawnPoint = respawnPoint;
+            //Debug.Log("RespawnPoint =" + respawnPoint);
         }
 
         if (other.gameObject.tag == ("TriggerStart"))
