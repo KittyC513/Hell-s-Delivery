@@ -11,6 +11,11 @@ public class CheckpointControl : MonoBehaviour
     public ParticleSystem ps;
     public Animator cubeAnim;
     bool animSwitch;
+    [SerializeField]
+    GameObject[] cps;
+    public GameObject cpParent;
+    public bool deActivate;
+    RespawnControl rsc;
 
     // Start is called before the first frame update
     void Start()
@@ -18,16 +23,23 @@ public class CheckpointControl : MonoBehaviour
         anim.SetBool("Activate", false);
         ps.Stop();
         animSwitch = true;
+        deActivate = false;
+        
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-
-
         
-        if (other.gameObject.tag == ("FindScript"))
+
+        if (deActivate == true)
         {
-            Debug.Log("Collide");
+            anim.SetBool("Activate", false);
+            ps.Stop();
+            deActivate = false;
+        }
+
+        if (activate == true)
+        {
             anim.SetBool("Activate", true);
             ps.Play();
             if (animSwitch == true)
@@ -35,6 +47,18 @@ public class CheckpointControl : MonoBehaviour
                 cubeAnim.SetTrigger("GemActivate");
                 animSwitch = false;
             }
+            activate = false;
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        
+        if (other.gameObject.tag == ("FindScript"))
+        {
+            activate = true;
             
         }
     }

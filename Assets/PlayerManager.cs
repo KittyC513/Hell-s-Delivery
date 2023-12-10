@@ -21,7 +21,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private List<LayerMask> playerRespawnLayer;
     [SerializeField]
-    private List<LayerMask> playerCameraLayer;
+    private List<LayerMask> playerUILayer;
 
     private PlayerInputManager playerInputManager;
 
@@ -60,6 +60,7 @@ public class PlayerManager : MonoBehaviour
         playerParent.position = startingPoints[players.Count - 1].position;
 
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
+        int layerToRemove = (int)Mathf.Log(playerUILayer[players.Count - 1].value, 2);
         int colliderLayerToAdd = (int)Mathf.Log(playerColliderLayers[players.Count - 1].value, 2);
         int itemContainerLayerToAdd = (int)Mathf.Log(itemContainer[players.Count - 1].value, 2);
         int playerRespawnLayerToAdd = (int)Mathf.Log(playerRespawnLayer[players.Count - 1].value, 2);
@@ -72,6 +73,7 @@ public class PlayerManager : MonoBehaviour
         playerParent.GetComponentInChildren<BoxCollider>().gameObject.layer = itemContainerLayerToAdd;
         playerParent.GetComponentInChildren<RespawnControl>().gameObject.layer = playerRespawnLayerToAdd;
         playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
+        playerParent.GetComponentInChildren<Camera>().cullingMask &= ~(1 << layerToRemove);
         playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << colliderLayerToAdd;
         playerParent.GetComponentInChildren<InputHandler>().horizontal = player.actions.FindAction("CameraLook");
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 
 public class ScoreCount : MonoBehaviour
@@ -60,10 +61,21 @@ public class ScoreCount : MonoBehaviour
     [SerializeField]
     private float p2Score;
     [SerializeField]
-    private float time;
+    private float InitialScore;
+    [SerializeField]
+    public float time;
     [SerializeField]
     GameManager gameManager;
-
+    [SerializeField]
+    public float knobValue;
+    [SerializeField]
+    public float newRotation;
+    [SerializeField]
+    public float lastKnobValue;
+    [SerializeField]
+    private bool p1AddScore;
+    [SerializeField]
+    private bool p2AddScore;
 
 
     //need score for each value
@@ -81,9 +93,14 @@ public class ScoreCount : MonoBehaviour
     }
     void Start()
     {
+        lastKnobValue = 0;
+        knobValue = 0;
         StartLevelTime();
         gameManager = Object.FindAnyObjectByType<GameManager>();
-    }
+
+        p1Score = InitialScore;
+        p2Score = p1Score;
+    }   
 
     // Update is called once per frame
     void Update()
@@ -114,12 +131,14 @@ public class ScoreCount : MonoBehaviour
         {
             completionTime += Time.deltaTime;
         }
+
+        AddScore();
     }
 
     private void FixedUpdate()
     {
         calculateScore(p1Deaths, p1PackageTime, p2Deaths, p2PackageTime, completionTime);
-        TotalScoreCal();
+        //TotalScoreCal();
     }
 
     //return a vector 2, x is player 1 score y is player 2 score
@@ -227,7 +246,13 @@ public class ScoreCount : MonoBehaviour
     public void AddDeathsToP1(int value)
     {
         //when the player dies (referenced in the respawn script) add to deaths, same with p2 later
-        p1Deaths += value;
+        //p1Score += value;
+        
+
+        knobValue -= value;
+        //StartCoroutine(RotateToPositionP2(-knobValue, 0.3f));
+        p2Score += value;
+        p2AddScore = true;
         //p1Deaths += value;
         //p1Score += p1Deaths;
 
@@ -237,25 +262,51 @@ public class ScoreCount : MonoBehaviour
     public void AddPointToP1Package(int value)
     {
         //if player1 has the package add to their package time
-        time += Time.deltaTime;
-        if(time >= 10)
-        {
-
-            p1PackageTime += value * Time.fixedDeltaTime;
-            p1Score += p1PackageTime;
-            time = 0;
-
-            StartCoroutine(ActivateP1UIForDuration(3f));
-        }
 
 
-        //deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
+        knobValue += value;
+        //StartCoroutine(RotateToPosition(knobValue, 0.3f));
+        p1Score += value;
+        p1AddScore = true;
+
     }
+
+
+    //IEnumerator P1PackageTimer(int value)
+    //{
+    //    time += Time.deltaTime;
+    //    if (time >= 10)
+    //    {
+    //        p1Score += value;
+    //        time = 0;
+    //        StartCoroutine(ActivateP1UIForDuration(3));
+    //    }
+
+    //    yield return null;
+    //}
+    //IEnumerator P2PackageTimer(int value)
+    //{
+    //    time += Time.deltaTime;
+    //    if (time >= 10)
+    //    {
+    //        p2Score += value;
+    //        time = 0;
+    //        StartCoroutine(ActivateP2UIForDuration(3));
+    //    }
+
+    //    yield return null;
+    //}
 
     public void AddDeathsToP2(int value)
     {
 
-        p2Deaths += value;
+        
+        knobValue += value;
+        //p2Score += value;
+        //StartCoroutine(RotateToPosition(knobValue, 0.3f));
+        p1Score += value;
+        p1AddScore = true;
+
         //p2Deaths -= value;
         //p2Score += p2Deaths;
         //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
@@ -263,98 +314,186 @@ public class ScoreCount : MonoBehaviour
 
     public void AddPointToP2Package(int value)
     {
-        time += Time.deltaTime;
-        if(time >= 10)
-        {
-            p2PackageTime += value * Time.fixedDeltaTime;
-            p2Score += p2PackageTime;
-            time = 0;
-            StartCoroutine(ActivateP2UIForDuration(3f));
-        }
-        //add to player 2 package Time
-
-        //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
+        
+        knobValue -= value;
+        //StartCoroutine(RotateToPositionP2(-knobValue, 0.3f));
+        p2Score += value;
+        p2AddScore = true;
     }
 
-    void TotalScoreCal()
+    void AddScore()
     {
-        if (p1CalculatedScore > p2CalculatedScore)
+        if (p1AddScore)
         {
-            float difference = (p1CalculatedScore - p2CalculatedScore)/10;
-
-            if (knob.localEulerAngles.z >= 90)
-            {
-                knob.localEulerAngles = new Vector3(0, 0, 90);
-            }
-
-            StartCoroutine(RotateToPosition(difference, 2));
-
-        } 
-        else if (p2CalculatedScore > p1CalculatedScore)
-        {
-            float difference = (p2CalculatedScore - p1CalculatedScore) / 10;
-
-            if (knob.localEulerAngles.z <= -90)
-            {
-                knob.localEulerAngles = new Vector3(0, 0, -90);
-            }
-
-            StartCoroutine(RotateToPosition(-difference, 2));
+            StartCoroutine(RotateToPosition(knobValue, 0.3f));
         }
-        else if(p1CalculatedScore == p2CalculatedScore)
+
+        if (p2AddScore)
         {
-            knob.localEulerAngles = new Vector3(0, 0, 0);
+            StartCoroutine(RotateToPositionP2(knobValue, 0.3f));
         }
     }
 
 
-    IEnumerator ActivateP1UIForDuration(float duration)
-    {
-        gameManager.p1UI.SetActive(true);
-
-        // Wait for the specified duration
-        yield return new WaitForSeconds(duration);
-
-        // Deactivate the UI after the specified duration
-        gameManager.p1UI.SetActive(false);
-    }
-
-    IEnumerator ActivateP2UIForDuration(float duration)
-    {
-        gameManager.p2UI.SetActive(true);
-
-        // Wait for the specified duration
-        yield return new WaitForSeconds(duration);
-
-        // Deactivate the UI after the specified duration
-        gameManager.p2UI.SetActive(false);
-    }
-
-
-    //float knobPosition = percentage * slider.GetComponent<RectTransform>().rect.width;
-
-    //Vector3 newPosition = knob.localPosition;
-    //newPosition.x = knobPosition;
-    //knob.localPosition = newPosition;
     IEnumerator RotateToPosition(float targetRotation, float rotationTime)
     {
 
         float elapsedTime = 0f;
         float startingRotation = knob.localEulerAngles.z;
+        if(startingRotation > 180)
+        {
+            startingRotation -= 360;
+        } 
+        else if(startingRotation < -180)
+        {
+            startingRotation += 360;
+        }
+
 
 
         while (elapsedTime < rotationTime)
         {
-            float newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
-            knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
+
+            if (knobValue >= 90)
+            {
+                knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, 90);
+
+
+            }
+            else if (knobValue <= -90)
+            {
+                knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, -90);
+
+            }
+            else if (knobValue < 90)
+            {
+                if (knobValue > -90)
+                {
+                    newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
+                    print("startingRotation" + startingRotation);
+                    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
+  
+                }
+
+            }
+
+
+
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+
+        }
+        if(knobValue >= 90)
+        {
+            knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, 90);
+           
+        }
+        else if(knobValue <= -90)
+        {
+            knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, -90);
+            
+        }
+        else if(knobValue < 90) 
+        {
+            if(knobValue > -90)
+            {
+                knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, targetRotation);
+        
+            }
+
+        }
+
+        p1AddScore = false;
+
+        print("Moving" + targetRotation);
+
+
+
+    }
+
+    IEnumerator RotateToPositionP2(float targetRotation, float rotationTime)
+    {
+        float elapsedTime = 0f;
+        float startingRotation = knob.localEulerAngles.z;
+        
+        float shortestRotation = targetRotation - startingRotation;
+       
+        //print("KnobValue" + knobValue);
+        // Adjust for the shortest rotation
+        if (shortestRotation > 180f)
+        {
+            shortestRotation -= 360f;
+        }
+        else if (shortestRotation < -180f)
+        {
+            shortestRotation += 360f;
+        }
+
+
+
+        while (elapsedTime < rotationTime)
+        {
+
+
+            if ( knobValue >= 90)
+            {
+                knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, 90);
+
+            }
+            else if (knobValue <= -90)
+            {
+                knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, -90);
+
+            }
+            else if (knobValue < 90)
+            {
+                if (knobValue > -90)
+                {
+                    float currentRotation = Mathf.Lerp(startingRotation, startingRotation + shortestRotation, elapsedTime / rotationTime);
+                    knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, currentRotation);
+
+                }
+
+            }
+
+
+   
+
+            // Ensure rotation does not go below -90
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Ensure the object reaches the exact target position at the end
-        knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, targetRotation);
 
+        if (knobValue <= -90)
+        {
+            knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, -90);
+      
+        }
+        else if(knobValue >= 90)
+        {
+            knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, 90);
+
+        }
+        else if(knobValue > -90) 
+        {
+            if(knobValue < 90)
+            {
+                knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, targetRotation);
+
+            }
+
+        }
+
+
+        p2AddScore = false;
+        
     }
+
+
+
+
 
 
 }

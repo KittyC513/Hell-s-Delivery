@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     [SerializeField]
     public string curSceneName;
     string scene1 = "HubStart";
@@ -107,8 +109,9 @@ public class GameManager : MonoBehaviour
     private float waitingTime;
     [SerializeField]
     private GameObject TVinstruction;
+
     [SerializeField]
-    Canvas canvas;
+    public bool showTVInstruction;
 
     [SerializeField]
     public GameObject noisy1;
@@ -119,16 +122,36 @@ public class GameManager : MonoBehaviour
     private bool isNoisy1;
     [SerializeField]
     private bool isNoisy2;
+    [SerializeField]
+    private Transform p1StartPoint;
+    [SerializeField]
+    private Transform p2StartPoint;
+   
+    [Header("Indicator")]
+    [SerializeField]
+    private GameObject p1Indicator;
+    [SerializeField]
+    private GameObject p2Indicator;
+    [SerializeField]
+    private float indicatorDistance = 5;
+    [SerializeField]
+    private float appearanceDistance = 50f;
+
+    private Dictionary<GameObject, GameObject> projectileToIndicator = new Dictionary<GameObject, GameObject>();
+
 
 
     private void Awake()
     {
         instructionText.SetActive(false);
+        instance = this;
     }
     private void Start()
     {
 
         sceneChanged = false;
+        currentScene = SceneManager.GetActiveScene();
+        curSceneName = currentScene.name;
 
     }
 
@@ -143,8 +166,6 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        currentScene = SceneManager.GetActiveScene();
-        curSceneName = currentScene.name;
 
         SkyboxControl();
 
@@ -152,18 +173,23 @@ public class GameManager : MonoBehaviour
 
     }
 
+
     void SkyboxControl()
     {
         // Change skybox based on the scene name
-        if (curSceneName == scene3)
+        if (GameManager.instance.sceneChanged)
         {
-            RenderSettings.skybox = skyboxScene1;
+            if(curSceneName == scene3)
+            {
+                RenderSettings.skybox = skyboxScene1;
+            }
+            else
+            {
+                RenderSettings.skybox = skyboxScene2;
+            }
+            
         }
-        else
-        {
-            RenderSettings.skybox = skyboxScene2;
-        }
-        print(RenderSettings.skybox);
+
     }
 
     void DetectScene()
@@ -171,41 +197,19 @@ public class GameManager : MonoBehaviour
         if (sceneChanged)
         {
 
-            curSceneName = currentScene.name;
-
-            if (curSceneName == scene1)
-            {
-                player1.transform.position = new Vector3(4.97f, 1f, 3f);
-                player2.transform.position = new Vector3(3f, 1f, 3f);
-                print("Reset");
-
-                sceneChanged = false;
-
-            }
-
-            if(curSceneName == scene4)
-            {
-                player1.transform.position = new Vector3(-22f, 7.0f, 56f);
-                player2.transform.position = new Vector3(-22f, 7.0f, 42f);
-                print("Reset MVP Level");
-
-                sceneChanged = false;
-            }
-
-
         }
-        if (curSceneName == scene1 || curSceneName == scene5)
-        {
-            if(canvas == null)
-            {
-                canvas = GameObject.Find("TVCanvas").GetComponent<Canvas>();
-                TVinstruction = canvas.gameObject;
-                TVinstruction.SetActive(false);
 
-            }
 
-        }
+   
     }
+    public void Reposition(Transform P1position, Transform P2position)
+    {
+        player1.transform.position = P1position.position;
+        player2.transform.position = P2position.position;
+    }
+
+
+
 
 
     void FindPlayer()
@@ -220,10 +224,7 @@ public class GameManager : MonoBehaviour
             {
                 player1 = obj;
                 p1 = obj.GetComponent<TestCube>();
-                if(curSceneName == scene3)
-                {
 
-                }
 
                 Transform parentTransform = player1.transform;
 
@@ -266,10 +267,7 @@ public class GameManager : MonoBehaviour
                 player2 = obj;
                 p2 = obj.GetComponent<TestCube>();
 
-                if (curSceneName == scene3)
-                {
-                    //character2.SetActive(true);
-                }
+
 
                 Transform parentTransform = player2.transform;
 
@@ -310,25 +308,20 @@ public class GameManager : MonoBehaviour
         //two players join the game, it loads to the Title Scene
         if(p1 != null && p2 != null)
         {
-            if(curSceneName == scene3)
+            currentScene = SceneManager.GetActiveScene();
+            curSceneName = currentScene.name;
+            if (curSceneName == scene3)
             {
                 animTitle.SetBool("isEnded", true);
                 text.SetActive(false);
                 StartCoroutine(ShowDirection());
-
             }
-            //else
-            //{
-            //    Destroy(animTitle.gameObject);
-            //    Destroy(text.gameObject); 
-            //    Destroy(instructionText.gameObject);
-
-            //}
-            //p1Ani.SetBool("GameStart", true);
-            //p2Ani.SetBool("GameStart", true);
-            //titleAni.SetBool("GameStart", true);
-            //StartCoroutine(DestroyAfterDelay());
-
+            else
+            {
+                animTitle = null;
+                text = null;
+                StopCoroutine(ShowDirection());
+            }
         }
 
     }
@@ -435,20 +428,17 @@ public class GameManager : MonoBehaviour
 
 
 
-    void ShowTVInstruction()
+    public void ShowTVInstruction()
     {
         if(curSceneName == scene1 || curSceneName == scene5)
         {
-            if(canvas != null)
+            if (p1.withinTVRange || p2.withinTVRange)
             {
-                if (p1.withinTVRange || p2.withinTVRange)
-                {
-                    TVinstruction.SetActive(true);
-                }
-                else if (!p1.withinTVRange && !p2.withinTVRange)
-                {
-                    TVinstruction.SetActive(false);
-                }
+                showTVInstruction = true;
+            }
+            else if (!p1.withinTVRange && !p2.withinTVRange)
+            {
+                showTVInstruction = false;
             }
         }
 
@@ -462,15 +452,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //IEnumerator ShowIntruction()
-    //{
-
-    //    // Wait for the specified time
-    //    yield return new WaitForSeconds(waitingTime);
-    //    TVinstruction = canvas.gameObject;
-    //    TVinstruction.SetActive(true);
-       
-    //}
 
 
 
@@ -548,6 +529,19 @@ public class GameManager : MonoBehaviour
             else if (popUpIndex == 2)
             {
                 //pick packahge
+            }
+        }
+    }
+
+    void P1Indicator()
+    {
+        float distance = Vector3.Distance(player1.transform.position, player2.transform.position);
+        if(distance < appearanceDistance)
+        {
+            if (!projectileToIndicator.ContainsKey(player2))
+            {
+                //GameObject newIndicator = Instantiate(p2UIIndicator, Vector3.zero, Quaternion.identity);
+               // projectileToIndicator.Add(player2, newIndicator);
             }
         }
     }

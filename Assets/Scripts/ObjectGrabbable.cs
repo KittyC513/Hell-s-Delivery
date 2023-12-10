@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEngine.Rendering.ReloadAttribute;
@@ -47,7 +48,7 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     public GameObject checkPoint;
     [SerializeField]
-    Vector3 respawnPoint;
+    public Vector3 respawnPoint;
     [SerializeField]
     public GameObject p1Package;
     [SerializeField]
@@ -60,13 +61,19 @@ public class ObjectGrabbable : MonoBehaviour
     private TestCube player1TC;
     [SerializeField]
     private TestCube player2TC;
+    [SerializeField]
+    private float time;
+
+    [Header("Indicator")]
+    [SerializeField]
+    private GameObject indicator;
 
 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        bC = GetComponent<BoxCollider>();
+
     }
     // Start is called before the first frame update
 
@@ -103,7 +110,7 @@ public class ObjectGrabbable : MonoBehaviour
     {
         AddScore();
         //PackageIcon();
-        
+        IndicatorControl();
 
     }
 
@@ -141,26 +148,70 @@ public class ObjectGrabbable : MonoBehaviour
             {
                 P1TakePackage = true;
                 P2TakePackage = false;
+              
             }
             else if (objectGrabpo.position == p2ItemC.transform.position)
             {
                 P1TakePackage = false;
                 P2TakePackage = true;
+
+ 
             }
         }
     }
 
     void AddScore()
     {
+        if(!P1TakePackage && !P2TakePackage)
+        {
+            time = 0;
+        }
         if (P1TakePackage)
         {
-            ScoreCount.instance.AddPointToP1Package(5);
+            StartCoroutine(P1Timer());
+
         }
         else if (P2TakePackage)
         {
-            ScoreCount.instance.AddPointToP2Package(5);
+            StartCoroutine(P2Timer());
         }
 
+    }
+
+    IEnumerator P1Timer()
+    {
+        time += Time.deltaTime;
+        if (time >= 10)
+        {
+            ScoreCount.instance.AddPointToP1Package(3);
+            StartCoroutine(ActivateP1UIForDuration(3));
+            time = 0;
+        }
+        yield return null;
+    }
+
+    IEnumerator P2Timer()
+    {
+        time += Time.deltaTime;
+        if (time >= 10)
+        {
+            ScoreCount.instance.AddPointToP2Package(3);
+            StartCoroutine(ActivateP2UIForDuration(3));
+            time = 0;
+        }
+        yield return null;
+    }
+
+    void IndicatorControl()
+    {
+        if (!P1TakePackage && !P2TakePackage)
+        {
+            indicator.SetActive(true);
+        }
+        else
+        {
+            indicator.SetActive(false);
+        }
     }
 
 
@@ -191,6 +242,8 @@ public class ObjectGrabbable : MonoBehaviour
 
             P1TakePackage = false;
             P2TakePackage = false;
+
+            time = 0;
         }
     }
 
@@ -215,6 +268,9 @@ public class ObjectGrabbable : MonoBehaviour
 
             P1TakePackage = false;
             P2TakePackage = false;
+            ScoreCount.instance.time = 0;
+
+            time = 0;
         }
     }
 
@@ -239,8 +295,10 @@ public class ObjectGrabbable : MonoBehaviour
 
         P1TakePackage = false;
         P2TakePackage = false;
-
+        ScoreCount.instance.time = 0;
         InventoryManager.Instance.Remove(item);
+        time = 0;
+
     }
 
     public void P2Drop()
@@ -266,6 +324,7 @@ public class ObjectGrabbable : MonoBehaviour
         P2TakePackage = false;
 
         InventoryManager.Instance.Remove(item);
+        time = 0;
     }
 
     void FindGameObject()
@@ -365,5 +424,30 @@ public class ObjectGrabbable : MonoBehaviour
         {
             respawnPoint = other.transform.position;
         }
+
     }
+
+    IEnumerator ActivateP1UIForDuration(float duration)
+    {
+        GameManager.instance.p1UI.SetActive(true);
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Deactivate the UI after the specified duration
+        GameManager.instance.p1UI.SetActive(false);
+    }
+
+    IEnumerator ActivateP2UIForDuration(float duration)
+    {
+        GameManager.instance.p2UI.SetActive(true);
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Deactivate the UI after the specified duration
+        GameManager.instance.p2UI.SetActive(false);
+    }
+
+
 }

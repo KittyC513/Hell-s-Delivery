@@ -228,6 +228,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float pushButtonGracePeriod;
 
+
     private float? lastColliderTime;
     private float? pushButtonPressedTime;
 
@@ -240,8 +241,6 @@ public class TestCube : MonoBehaviour
     public GameObject aimCursor;
     public bool isAiming;
 
-    private bool p1Appear;
-    private bool p2Appear;
 
     [SerializeField]
     public bool p1pushed;
@@ -265,6 +264,11 @@ public class TestCube : MonoBehaviour
 
     float horizontalVelocity;
 
+    [Header("Indicator")]
+    [SerializeField]
+    private GameObject p1Indicator;
+    [SerializeField]
+    private GameObject p2Indicator;
 
 
 
@@ -318,7 +322,7 @@ public class TestCube : MonoBehaviour
     private void OnEnable()
     {
 
-        player.FindAction("Pick").started += DoPick;
+        player.FindAction("Pick").started += DoDrop;
         move = player.FindAction("Move");
 
         run = player.FindAction("Run");
@@ -341,7 +345,7 @@ public class TestCube : MonoBehaviour
     private void OnDisable()
     {
 
-        player.FindAction("Pick").started -= DoPick;
+        player.FindAction("Pick").started -= DoDrop;
 
         player.Disable();
         player.FindAction("Join").started -= DoTalk;
@@ -368,7 +372,7 @@ public class TestCube : MonoBehaviour
         //objectGrabbable = Object.FindAnyObjectByType<ObjectGrabbable>();
 
         withinDialogueRange = false;
-        package = GameObject.FindGameObjectWithTag("Package");
+
         //trigger = GameObject.FindGameObjectWithTag("Trigger");
         //tG = trigger.GetComponent<Trigger>();
 
@@ -402,6 +406,10 @@ public class TestCube : MonoBehaviour
         if (curSceneName == scene1 || curSceneName == scene3)
         {
             DetectInteractRange();
+        } 
+        if(curSceneName == scene5 && package == null)
+        {
+            package = GameObject.FindGameObjectWithTag("Package");
         }
         JoinGameTitle();
         //PlayerPosition();
@@ -432,16 +440,14 @@ public class TestCube : MonoBehaviour
             otherRB.useGravity = true;
             otherRB.isKinematic = false;
         }
-        
-        if (curSceneName == null)
-        {
-            curSceneName = currentScene.name;
-            currentScene = SceneManager.GetActiveScene();
 
+
+        TakePackage();
+        if(curSceneName == scene1 || curSceneName == scene3)
+        {
+            Interacte();
         }
 
-
-        Interacte();
     }
 
 
@@ -450,12 +456,14 @@ public class TestCube : MonoBehaviour
         if (isPlayer1 && !titleDisplayed)
         {
             titleText.text = "1P";
+            p2Indicator.SetActive(false);
             StartCoroutine(StopShowTitle());
 
         }
         if (isPlayer2 && !titleDisplayed)
         {
             titleText.text = "2P";
+            p2Indicator.SetActive(true);
             StartCoroutine(StopShowTitle());
         }
 
@@ -571,40 +579,45 @@ public class TestCube : MonoBehaviour
     //}
     void CameraSwitch()
     {
+        currentScene = SceneManager.GetActiveScene();
+        curSceneName = currentScene.name;
 
         if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         {
             playerCamera.enabled = false;
             mainCam = Camera.main;
+            //print("1");
 
         }
-        else if(curSceneName == scene5)
+        else if(curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5)
         {
             playerCamera.enabled = true;
             mainCam = null;
+            //print("2");
         }
         
     }
     private void Move()
     {
+
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
-            if (curSceneName == null) curSceneName = currentScene.name;
-
+            //if (curSceneName == null) curSceneName = currentScene.name;
 
             if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
             {
                 forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
             }
-            else if(curSceneName == scene5) 
+            else 
             {
                 if (isGliding)
                 {
                     //currentSpeed = gliderSpeed;
                 }
 
+   
 
                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
@@ -699,58 +712,97 @@ public class TestCube : MonoBehaviour
 
     }
 
-    private void DoPick(InputAction.CallbackContext obj)
+    void TakePackage()
     {
-       //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
-        if (objectGrabbable == null)
+        if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
         {
-            if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+
+            if (isPlayer1)
             {
-
-                if (isPlayer1)
-                {
-                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                    objectGrabbable.Grab(itemContainer);
-                }
-
-                if (isPlayer2)
-                {
-                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                    objectGrabbable.Grab(itemContainer);
-                }
-
-                //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer1)
-                //{
-                //    objectGrabbable.Grab(itemContainer);
-
-                //}
-
-                //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer2)
-                //{
-
-                //    objectGrabbable.Grab(itemContainer);
-                //}
-
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
             }
 
+            if (isPlayer2)
+            {
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
+            }
         }
-        else
+    }
+    private void DoDrop(InputAction.CallbackContext obj)
+    {
+        if (objectGrabbable != null)
         {
             if (isPlayer1 && rC.Player1isCarrying)
             {
                 objectGrabbable.P1Drop();
-
+                
             }
 
             if (isPlayer2 && rC.Player2isCarrying)
             {
                 objectGrabbable.P2Drop();
+                print("Drop");
             }
+
             objectGrabbable = null;
-
         }
-
     }
+
+
+    //private void DoPick(InputAction.CallbackContext obj)
+    //{
+    //    //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
+    //    if (objectGrabbable == null)
+    //    {
+    //        if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+    //        {
+
+    //            if (isPlayer1)
+    //            {
+    //                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+    //                objectGrabbable.Grab(itemContainer);
+    //            }
+
+    //            if (isPlayer2)
+    //            {
+    //                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+    //                objectGrabbable.Grab(itemContainer);
+    //            }
+
+    //            //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer1)
+    //            //{
+    //            //    objectGrabbable.Grab(itemContainer);
+
+    //            //}
+
+    //            //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer2)
+    //            //{
+
+    //            //    objectGrabbable.Grab(itemContainer);
+    //            //}
+
+    //        }
+
+    //    }
+    //    else
+    //    {
+    //        if (isPlayer1 && rC.Player1isCarrying)
+    //        {
+    //            objectGrabbable.P1Drop();
+
+    //        }
+
+    //        if (isPlayer2 && rC.Player2isCarrying)
+    //        {
+    //            objectGrabbable.P2Drop();
+    //        }
+    //        objectGrabbable = null;
+
+    //    }
+
+    //}
 
 
     void DetectPushRange()
@@ -786,10 +838,13 @@ public class TestCube : MonoBehaviour
             if (ReadActionButton())
             {
                 gameManager.sceneChanged = true;
+                print("sceneChanged: " + gameManager.sceneChanged);
                 print("Do interact with TV");
-                SceneManager.LoadScene("MVPLevel");
-                //change scene and enter tutorial level, set gameManger.sceneChanged to true
 
+                Loader.Load(Loader.Scene.MVPLevel);
+                //SceneControl.instance.LoadScene("MVPLevel");
+                //change scene and enter tutorial level, set gameManger.sceneChanged to true
+               
             }
         }
 
@@ -803,13 +858,11 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, interactableMask))
         {
             withinTVRange = true;
-            print("In TV Range");
 
         }
         else
         {
             withinTVRange = false;
-            print("NO In TV Range");
 
         }
     }
@@ -1396,6 +1449,7 @@ public class TestCube : MonoBehaviour
             playerSounds.steps.Post(this.gameObject);
         }
     }
+
 
 
 

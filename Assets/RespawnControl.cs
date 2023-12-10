@@ -12,6 +12,13 @@ public class RespawnControl : MonoBehaviour
     public Vector3 respawnPoint;
 
     [SerializeField]
+    private List<GameObject> cps = new List<GameObject>();
+    [SerializeField]
+    private List<CheckpointControl> cpc = new List<CheckpointControl>();
+
+    public GameObject cpParent;
+
+    [SerializeField]
     private GameObject player;
     [SerializeField]
     private TestCube testCube;
@@ -52,6 +59,14 @@ public class RespawnControl : MonoBehaviour
 
     public DialogueRunner dR;
 
+    public GameObject currentActive;
+    [SerializeField]
+    private GameObject p1DeadScreen;
+    [SerializeField]
+    private GameObject p2DeadScreen;
+
+
+    //CheckpointControl activateFCP;
 
 
     List<string> nodeNames = new List<string>
@@ -63,19 +78,31 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
-        respawnPoint = this.transform.position;
+        cpParent = GameObject.FindWithTag("cpParent");
+
+        
+
         dR = Object.FindAnyObjectByType<DialogueRunner>();
 
         gameManager = Object.FindAnyObjectByType<GameManager>();
 
         testCube = player.GetComponent<TestCube>();
+
+        foreach (Transform child in cpParent.transform)
+        {
+            cps.Add(child.gameObject);
+
+            CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
+            cpc.Add(checkpc);
+        }
     }
 
     void SceneCheck()
     {
-        if (gameManager.sceneChanged)
+        if (GameManager.instance.sceneChanged)
         {
-            if (curSceneName == scene2 || curSceneName == scene3 || curSceneName == scene4)
+            curSceneName = GameManager.instance.curSceneName;
+            if (curSceneName == scene4)
             {
                 if (objectGrabbable == null)
                 {
@@ -83,24 +110,35 @@ public class RespawnControl : MonoBehaviour
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
             }
-            else
-            {
-                objectGrabbable = null;
-            }
         }
 
+    }
+
+    void ResetInitialRespawnPoint()
+    {
+        if(respawnPoint == null && curSceneName == scene4)
+        {
+            if (isPlayer1)
+            {
+                respawnPoint = SceneControl.instance.P1StartPoint.position;
+            }
+            if (isPlayer2)
+            {
+                respawnPoint = SceneControl.instance.P2StartPoint.position;
+            }
+        }
     }
 
     private void Update()
     {
         SceneCheck();
         PlayerDetector();
-        if(curSceneName == scene2 || curSceneName == scene3 || curSceneName == scene4)
+        if(objectGrabbable != null)
         {
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
         }
-
+        ResetInitialRespawnPoint();
         ////if (Partner == null)
         //{
          Partner = GameObject.FindGameObjectsWithTag("FindScript");
@@ -126,25 +164,44 @@ public class RespawnControl : MonoBehaviour
     {
         player.transform.position = respawnPos;
         player.transform.eulerAngles = new Vector3(0, 90, 0);
-        Debug.Log("RespawnPoint =" + respawnPos);
-
+        //Debug.Log("RespawnPoint =" + respawnPos);
     }
+    //IEnumerator RespawnTimer(Vector3 respawnPos)
+    //{
+    //    yield return new WaitForSeconds(3);
+    //    if (Player1Die)
+    //    {
+    //        player.transform.position = respawnPos;
+    //        player.transform.eulerAngles = new Vector3(0, 90, 0);
+    //        Player1Die = false;
+    //    }
+    //    if (Player2Die)
+    //    {
+    //        player.transform.position = respawnPos;
+    //        player.transform.eulerAngles = new Vector3(0, 90, 0);
+    //        Player2Die = false;
+    //    }
+
+    //}
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == ("Hazard"))
         {
-            Debug.Log("Hazard name =" + other.gameObject);
+            //Debug.Log("Hazard name =" + other.gameObject);
             Respawn(respawnPoint);
 
             if (isPlayer1)
             {
-                ScoreCount.instance.AddDeathsToP1(3);
+                ScoreCount.instance.AddDeathsToP1(5);
                 StartCoroutine(ActivateP1UIForDuration(3f));
                 if (curSceneName == scene2)
                 {
                     LevelDialogue.ShowDevilPlayer2();
                     dR.Stop();
                     PlayRandomDialogue();
+                    Player1Die = true;
                 }
 
             }
@@ -155,13 +212,14 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2)
             {
-                ScoreCount.instance.AddDeathsToP2(3);
+                ScoreCount.instance.AddDeathsToP2(5);
                 StartCoroutine(ActivateP2UIForDuration(3f));
                 if (curSceneName == scene2)
                 {
                     LevelDialogue.ShowDevilPlayer1();
                     dR.Stop();
                     PlayRandomDialogue();
+                    Player2Die = true;
                 }
 
 
@@ -177,7 +235,7 @@ public class RespawnControl : MonoBehaviour
                 objectGrabbable.P2TakePackage = true;
                 objectGrabbable.P1TakePackage = false;
                 Player1Die = true;
-                Debug.Log("Player1Die");
+                //Debug.Log("Player1Die");
             }
             else if (Player2isCarrying && isPlayer2)
             {
@@ -185,15 +243,17 @@ public class RespawnControl : MonoBehaviour
                 objectGrabbable.P2TakePackage = false;
                 objectGrabbable.P1TakePackage = true;
                 Player2Die = true;
-                Debug.Log("Player2Die");
+                //Debug.Log("Player2Die");
 
             }
 
         }
         else if (other.tag == "CheckPoint")
         {
+            
             respawnPoint = other.transform.position;
-            Debug.Log("RespawnPoint =" + respawnPoint);
+            objectGrabbable.respawnPoint = respawnPoint;
+            //Debug.Log("RespawnPoint =" + respawnPoint);
         }
 
         if (other.gameObject.tag == ("TriggerStart"))
@@ -235,9 +295,16 @@ public class RespawnControl : MonoBehaviour
         {
 
             respawnPoint = other.transform.position;
-            
+            objectGrabbable.respawnPoint = respawnPoint;
 
-            Debug.Log("RespawnPoint =" + respawnPoint);
+            foreach (CheckpointControl checkpc in cpc)
+            {
+
+                checkpc.deActivate = true;
+
+            }
+
+            //Debug.Log("RespawnPoint =" + respawnPoint);
 
             foreach (GameObject obj in Partner)
             {
@@ -247,7 +314,7 @@ public class RespawnControl : MonoBehaviour
                 if (partnerScript != null)
                 {
                     partnerScript.respawnPoint = respawnPoint;
-                    Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+                    //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
                 }
                 //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
             }
@@ -265,7 +332,11 @@ public class RespawnControl : MonoBehaviour
             if (testCube.ReadActionButton())
             {
                 gameManager.sceneChanged = true;
-                SceneManager.LoadScene(scene1);  
+                print("sceneChanged: " + gameManager.sceneChanged);
+
+                //GameManager.instance.LoadScene(scene1);
+                Loader.Load(Loader.Scene.HubStart);
+                
 
             }            
         }
