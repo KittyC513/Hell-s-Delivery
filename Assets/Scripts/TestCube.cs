@@ -29,7 +29,7 @@ public class TestCube : MonoBehaviour
     float moveSpeed = 10f;
 
     [SerializeField] private InputActionAsset inputAsset;
-    [SerializeField] private InputActionMap player, dialogue;
+    [SerializeField] private InputActionMap player, dialogue, pause;
     [SerializeField] private InputAction move, run, jump, parachute, cancelParachute, triggerButton;
     [SerializeField] public bool isPicking;
 
@@ -298,6 +298,7 @@ public class TestCube : MonoBehaviour
         inputAsset = this.GetComponent<PlayerInput>().actions;
         player = inputAsset.FindActionMap("Cube");
         dialogue = inputAsset.FindActionMap("Dialogue");
+       
         rb = this.GetComponent<Rigidbody>();
         testPickDrop = GetComponent<TestPickDrop>();
         //playerPos = this.transform;

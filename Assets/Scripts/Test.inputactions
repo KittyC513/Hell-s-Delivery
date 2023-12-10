@@ -437,6 +437,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PauseControls",
+            "id": "7f17af04-f74f-440c-b4b1-7e67d1df88c5",
+            "actions": [
+                {
+                    "name": "Pause/Unpause",
+                    "type": "Button",
+                    "id": "86179dbf-23c6-4418-8dd4-2507af6cba15",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Menu Joystick",
+                    "type": "Value",
+                    "id": "c3253ffc-75f4-4660-a25f-9090ed840471",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SelectOption",
+                    "type": "Button",
+                    "id": "542f070a-77f5-4094-bb6f-784f74e1fbbf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5cf1176c-1531-4fc2-a654-150e52853275",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause/Unpause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5ca59905-6196-498b-8bb7-f69f754e9291",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu Joystick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "43cce7e5-57b1-48cf-bbf1-c331debdddd1",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectOption",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
