@@ -17,6 +17,9 @@ public class CheckpointControl : MonoBehaviour
     public bool deActivate;
     RespawnControl rsc;
 
+    public AK.Wwise.Event checkPointGetSound;
+    private bool shouldPlaySound = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +39,7 @@ public class CheckpointControl : MonoBehaviour
             anim.SetBool("Activate", false);
             ps.Stop();
             deActivate = false;
+            shouldPlaySound = true;
         }
 
         if (activate == true)
@@ -47,6 +51,8 @@ public class CheckpointControl : MonoBehaviour
                 cubeAnim.SetTrigger("GemActivate");
                 animSwitch = false;
             }
+            if (shouldPlaySound) checkPointGetSound.Post(this.gameObject);
+            shouldPlaySound = false;
             activate = false;
         }
 

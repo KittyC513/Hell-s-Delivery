@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_APARTMENT_COMPLEX_V1 = 359343595U;
+        static const AkUniqueID PLAY_CHECKPOINT_GET = 1359342141U;
         static const AkUniqueID PLAY_HIGHUPAMBIENCE = 1431564541U;
         static const AkUniqueID PLAY_LANDINGS = 1019246482U;
         static const AkUniqueID PLAY_METALLANDING = 2180111060U;

@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{72929AF9-BAE9-CC9A-3326-253AF369230D}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{3F5A8B71-25B4-47F3-1145-615CA014DA2A}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -62,6 +62,10 @@
 				<File Id="496788715" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>MetalLand_2.wav</ShortName>
 					<CachePath>SFX/MetalLand_2_10C4C929.wem</CachePath>
+				</File>
+				<File Id="612044681" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Checkpoint Get.wav</ShortName>
+					<CachePath>SFX/Checkpoint Get_05BA101F.wem</CachePath>
 				</File>
 				<File Id="634520690" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>MetalLand_1.wav</ShortName>
@@ -108,6 +112,11 @@
 				<Event Id="359343595" Name="Play_Apartment_Complex_v1" DurationType="OneShot" DurationMin="207.76923" DurationMax="207.76923">
 					<MediaRefs>
 						<MediaRef Id="71935411"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1359342141" Name="Play_Checkpoint_Get" MaxAttenuation="20" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="612044681"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1431564541" Name="Play_HighUpAmbience" DurationType="OneShot" DurationMin="45.818188" DurationMax="45.818188">
@@ -183,5 +192,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{D2553834-0705-DCD0-D1BA-36B7F9E11467}</FileHash>
+	<FileHash>{B30AD547-AFA4-96C6-4590-323845070288}</FileHash>
 </SoundBanksInfo>
