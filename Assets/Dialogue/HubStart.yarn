@@ -3,80 +3,35 @@ tags:
 position: -186,56
 ---
 <<PlayerShow>>
-<<Act Player1 ShmonkDefault 0.75 center blue>>
-<<Act Player2 ShminkDefault 1.25 center red>>
-<<Act Devil DevilHot 5 center red>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
 
-<<Hide ShmonkDefault>>
-<<Act Player1 ShmonkAnnoyed 0.75 center blue>>
-Player1: Oi! Move, baldy! Your big head is blocking the way.
-Player1: I can't even tell we're open!
-<<Act Player1 ShmonkDefault>>
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+Devil: Hello, my little delivery demons.
+<<Act Devil DevilPopUp_Default>>
 
-<<Hide ShminkDefault>>
-<<Act Player2 ShminkAnnoyed 1.25 center red>>
-Player2: Can you stop screaming? Your breath stinks.
-Player2: Customers will think someone died in here!
-<<Act Player2 ShminkDefault>>
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
+Devil: I do hope you're not wasting precious company time...
+<<Act Devil DevilPopUp_Default>>
 
-<<Hide ShmonkDefault>>
-<<Act Player1 ShmonkAnnoyed 0.75 center blue>>
-Player1: Newsflash! We did die, actually.
-<<Act Player1 ShmonkDefault>>
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Disappointed 0.45 0.03 white>>
+Devil: Perhaps you've forgotten how to do your jobs.
+<<Act Devil DevilPopUp_Default>>
 
-<<Hide ShminkDefault>>
-<<Act Player2 ShminkAnnoyed 1.25 center red>>
-Player2: You know what I mean. Don't be so annoying!
-<<Act Player2 ShminkDefault>>
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
+Devil: I can't fire you yet! That's too nice.
+<<Act Devil DevilPopUp_Default>>
 
-<<Hide ShmonkDefault>>
-<<Act Player1 ShmonkHappy 0.75 center blue>>
-Player1: Bothering you is my full-time job. Comes with dental coverage, baby.
-<<Act Player1 ShmonkDefault>>
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Cheery 0.45 0.03 white>>
+Devil: Don't worry, my little demons. I have a little something for you to watch.
+<<Act Devil DevilPopUp_Default>>
 
-Devil: You know what else comes with dental coverage?
-<<Move DevilHot 1.25 center 0.1>>
-<<Move ShminkDefault 0.50 center 0.1>>
+<<Hide DevilPopUp_Default>>
 
-Devil: Huhuhu...
-
-<<Hide ShminkDefault>>
-<<Act Player2 ShminkSadShocked 0.50 center red>>
-Player2: GAH!
-<<Act Player2 ShminkDefault>>
-
-Devil: Your actual jobs, my little delivery demons. Huhuhu.
-
-<<Hide ShmonkDefault>>
-<<Act Player1 ShmonkAnnoyed 0.75 center blue>>
-Player1: ...Wait. No, it doesn't.
-<<Act Player1 ShmonkDefault>>
-
-Devil: Semantics.
-Devil: Tell you what. Whoever can successfully deliver the most packages will receive a promotion.
-
-<<Hide ShminkDefault>>
-<<Act Player2 ShminkMischevious 0.50 center red>>
-Player2: !!!
-<<Act Player2 ShminkDefault>>
-
-<<Move DevilHot 5 center 0.1>>
-<<Move ShminkDefault 1.25 center 0.1>>
-
-<<wait  0.5>>
-
-<<Hide ShminkDefault>>
-<<Act Player2 ShminkHappy 1.25 center red>>
-Player2: Off to work then!
-<<Act Player2 ShminkDefault>>
-
-<<Hide ShmonkDefault>>
-<<Act Player1 ShmonkAnnoyed 0.75 center blue>>
-Player1: Ugh.
-<<Act Player1 ShmonkDefault>>
-
-<<Move ShminkDefault 2 center 0.1>>
-<<Move ShmonkDefault -1 center 0.1>>
-<<Hide ShminkDefault>>
-<<Hide ShmonkDefault>>
+<<HideGradient>>
+<<TutorialLevel>>
 ===
