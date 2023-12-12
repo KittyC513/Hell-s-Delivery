@@ -108,7 +108,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 7ff36978145fe842bd14fccf80764e96
     GuidInternal: 
-    m_lastTime: -8584992565916635317
+    m_lastTime: -8584991939968695363
     List:
     - name: Play_Apartment_Complex_v1
       guid: 6802d184e355c240b71ec96a6ef7c135
@@ -125,8 +125,8 @@ MonoBehaviour:
         guid: 6802d184e355c240b71ec96a6ef7c135
       Path: Events\Default Work Unit\Play_Apartment_Complex_v1
       maxAttenuation: 0
-      maxDuration: 207.76923
-      minDuration: 207.76923
+      maxDuration: -1
+      minDuration: -1
     - name: Play_Checkpoint_Get
       guid: 4c5c3bcee342864ea21f90edf3925325
       id: 1359342141
@@ -161,6 +161,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 45.818188
       minDuration: 45.818188
+    - name: Play_Hub_Music
+      guid: 67a1315d182de24eacbe19e12ebebeb4
+      id: 4050862303
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_Hub_Music
+        ObjectType: 3
+        guid: 67a1315d182de24eacbe19e12ebebeb4
+      Path: Events\Default Work Unit\Play_Hub_Music
+      maxAttenuation: 30
+      maxDuration: -1
+      minDuration: -1
     - name: Play_Landings
       guid: 6d5b955e1558374a9cd101c19828b908
       id: 1019246482
@@ -422,7 +439,7 @@ MonoBehaviour:
     m_lastTime: -8585015309829515142
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 1b0000001c000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0
