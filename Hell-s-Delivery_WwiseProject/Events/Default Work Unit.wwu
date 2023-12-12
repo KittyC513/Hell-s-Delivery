@@ -255,6 +255,52 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Fan_All" ID="{31AA47FC-3B58-44AE-8BBE-3D0442B1CBAC}">
+					<ChildrenList>
+						<Action Name="" ID="{65C6D832-DB3D-4F4B-B067-7425D22A9E26}" ShortID="23500137">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Fan_All" ID="{3A71BBFB-FEBB-41BE-BD34-6988C1E2A027}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{248AE399-8588-4217-BC61-C643F5E994FA}" ShortID="390910547">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Fan_All" ID="{3A71BBFB-FEBB-41BE-BD34-6988C1E2A027}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Fan_All" ID="{5D6DC696-CCD7-46AB-82A8-F01CE6C57401}">
+					<ChildrenList>
+						<Action Name="" ID="{A29BE4FA-9DC9-452B-A52A-FDE434A10552}" ShortID="942127156">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="34"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Fan_All" ID="{3A71BBFB-FEBB-41BE-BD34-6988C1E2A027}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{E88BC786-798F-4657-B337-5E05AB042099}" ShortID="794782583">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="36"/>
+								<Property Name="SeekToMarker" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Fan_All" ID="{3A71BBFB-FEBB-41BE-BD34-6988C1E2A027}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

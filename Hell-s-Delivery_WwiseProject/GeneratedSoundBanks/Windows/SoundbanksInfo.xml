@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{475300DE-CCDD-6CC7-3B91-44BF36DBCBF0}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{0FE6A4D3-3A4C-5CD3-97D3-4DD78F60F9E1}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -58,6 +58,10 @@
 				<File Id="382886941" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ScoreSceneMusic.wav</ShortName>
 					<CachePath>SFX/ScoreSceneMusic_1633EC5B.wem</CachePath>
+				</File>
+				<File Id="431873265" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Fan_All.wav</ShortName>
+					<CachePath>SFX/Fan_All_85BFF465.wem</CachePath>
 				</File>
 				<File Id="473084078" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodLanding_1.wav</ShortName>
@@ -129,6 +133,11 @@
 				<Event Id="1359342141" Name="Play_Checkpoint_Get" MaxAttenuation="20" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="612044681"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="452465945" Name="Play_Fan_All" MaxAttenuation="40" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="431873265"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1431564541" Name="Play_HighUpAmbience" DurationType="OneShot" DurationMin="45.818188" DurationMax="45.818188">
@@ -214,10 +223,11 @@
 						<MediaRef Id="987426019"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="3708642647" Name="Stop_Fan_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="2017739505" Name="Stop_Parachute" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="222428266" Name="Stop_Summoning_Circle_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{29D760AF-F148-1A3C-A45D-8EF4B9E0E980}</FileHash>
+	<FileHash>{BBF8FDF7-93ED-AA2B-D632-FC91CA64B4AF}</FileHash>
 </SoundBanksInfo>

@@ -108,7 +108,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 7ff36978145fe842bd14fccf80764e96
     GuidInternal: 
-    m_lastTime: -8584991939968695363
+    m_lastTime: -8584991888631721926
     List:
     - name: Play_Apartment_Complex_v1
       guid: 6802d184e355c240b71ec96a6ef7c135
@@ -142,6 +142,23 @@ MonoBehaviour:
         guid: 4c5c3bcee342864ea21f90edf3925325
       Path: Events\Default Work Unit\Play_Checkpoint_Get
       maxAttenuation: 20
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Fan_All
+      guid: fc47aa31583bae448bbe3d0442b1cbac
+      id: 452465945
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_Fan_All
+        ObjectType: 3
+        guid: fc47aa31583bae448bbe3d0442b1cbac
+      Path: Events\Default Work Unit\Play_Fan_All
+      maxAttenuation: 40
       maxDuration: -1
       minDuration: -1
     - name: Play_HighUpAmbience
@@ -348,6 +365,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.1575175
       minDuration: 0.15054809
+    - name: Stop_Fan_All
+      guid: 96c66d5dd7ccab4682a8f01ce6c57401
+      id: 3708642647
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Stop_Fan_All
+        ObjectType: 3
+        guid: 96c66d5dd7ccab4682a8f01ce6c57401
+      Path: Events\Default Work Unit\Stop_Fan_All
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - name: Stop_Parachute
       guid: 2afb8a592f43c544bd9a3d029a1b45fe
       id: 2017739505
@@ -439,7 +473,7 @@ MonoBehaviour:
     m_lastTime: -8585015309829515142
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 1b0000001c000000
+  ExpandedWaapiItemIds: 07000000080000001c0000001f00000020000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0
