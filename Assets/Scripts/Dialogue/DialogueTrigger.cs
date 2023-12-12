@@ -28,7 +28,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == false)
         {
-            PlayRandomDiaglogue();
+            PlayRandomDialogue();
             //dialogueRunner.StartDialogue("WhatPromotion");
             hasTalkedBefore = true;
             splitScreen.SetActive(true);
@@ -45,7 +45,7 @@ public class DialogueTrigger : MonoBehaviour
         {
             dialogueRunner.Stop();
             //dialogueRunner.StartDialogue("Repeat");
-            PlayRandomDiaglogue();
+            PlayRandomDialogue();
             GoToLevelScene();
         }
     }
@@ -58,7 +58,7 @@ public class DialogueTrigger : MonoBehaviour
         }
     }
 
-    public void PlayRandomDiaglogue()
+    public void PlayRandomDialogue()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(nodeNames.Count);

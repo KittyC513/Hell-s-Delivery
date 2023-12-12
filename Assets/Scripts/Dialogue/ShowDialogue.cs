@@ -4,12 +4,14 @@ using UnityEngine;
 using Yarn.Unity;
 using UnityEngine.UI;
 using Yarn.Unity.Example;
+using UnityEngine.SceneManagement;
 
 //using UnityEngine.ProBuilder.Shapes;
 
 public class ShowDialogue :DialogueViewBase
 {
     private static GameObject LVPlayers;
+    public static GameObject Gradient;
 
     [SerializeField] DialogueRunner runner;
 
@@ -85,8 +87,7 @@ public class ShowDialogue :DialogueViewBase
     void Start()
     {
         LVPlayers = GameObject.Find("Line View Players");
-
-        LVPlayers.SetActive(false);
+        Gradient = GameObject.Find("DialogueBox");
     }
 
     // Update is called once per frame
@@ -98,7 +99,24 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("PlayerShow")]
     public static void PlayerShow()
     {
+        LVPlayers = GameObject.Find("Line View Players");
         LVPlayers.SetActive(true);
+       // runner.StartDialogue("HubStart");
+
+        Debug.Log("Here");
+    }
+
+    [YarnCommand("TutorialLevel")]
+    public static void TutorialLevel()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
+    [YarnCommand("HideGradient")]
+    public static void HideGradient()
+    {
+        Gradient = GameObject.Find("DialogueBox");
+        Gradient.SetActive(false);
     }
 
  
