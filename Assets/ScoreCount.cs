@@ -110,7 +110,7 @@ public class ScoreCount : MonoBehaviour
         int minutes = Mathf.FloorToInt(completionTime / 60);
         int seconds = Mathf.FloorToInt(completionTime % 60);
         timeIndicatorText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        timeIndicatorTextLayout.text = timeIndicatorText.text;
+        //timeIndicatorTextLayout.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
         //timeIndicatorText.text = completionTime.ToString("f2");
 
@@ -455,7 +455,7 @@ public class ScoreCount : MonoBehaviour
                 {
                     float currentRotation = Mathf.Lerp(startingRotation, startingRotation + shortestRotation, elapsedTime / rotationTime);
                     knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, currentRotation);
-
+                    print("startingRotation" + startingRotation);
                 }
 
             }
