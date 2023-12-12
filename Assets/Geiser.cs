@@ -9,6 +9,8 @@ public class Geiser : MonoBehaviour
     ParticleSystem ps;
     BoxCollider bc;
     bool activeSwitch = true;
+    [SerializeField] private AK.Wwise.Event playFan;
+    [SerializeField] private AK.Wwise.Event stopFan;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +43,7 @@ public class Geiser : MonoBehaviour
             ps.Play();
             bc.enabled = true;
             activeSwitch = false;
+            playFan.Post(this.gameObject);
         }
         
     }
@@ -54,6 +57,7 @@ public class Geiser : MonoBehaviour
             ps.Stop();
             bc.enabled = false;
             activeSwitch = true;
+            stopFan.Post(this.gameObject);
         }
         
 

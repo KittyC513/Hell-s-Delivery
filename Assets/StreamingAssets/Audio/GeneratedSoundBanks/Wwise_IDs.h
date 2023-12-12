@@ -15,6 +15,7 @@ namespace AK
     {
         static const AkUniqueID PLAY_APARTMENT_COMPLEX_V1 = 359343595U;
         static const AkUniqueID PLAY_CHECKPOINT_GET = 1359342141U;
+        static const AkUniqueID PLAY_FAN_ALL = 452465945U;
         static const AkUniqueID PLAY_HIGHUPAMBIENCE = 1431564541U;
         static const AkUniqueID PLAY_HUB_MUSIC = 4050862303U;
         static const AkUniqueID PLAY_LANDINGS = 1019246482U;
@@ -27,6 +28,7 @@ namespace AK
         static const AkUniqueID PLAY_SUMMONING_CIRCLE_ALL = 2914340836U;
         static const AkUniqueID PLAY_WOODSTEPS = 1787223838U;
         static const AkUniqueID PLAYER_STEPS = 4272057794U;
+        static const AkUniqueID STOP_FAN_ALL = 3708642647U;
         static const AkUniqueID STOP_PARACHUTE = 2017739505U;
         static const AkUniqueID STOP_SUMMONING_CIRCLE_ALL = 222428266U;
     } // namespace EVENTS
