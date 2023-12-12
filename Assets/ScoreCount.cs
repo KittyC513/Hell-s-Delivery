@@ -17,6 +17,8 @@ public class ScoreCount : MonoBehaviour
     public float scoreValueP2 = 0;
     [SerializeField]
     public TextMeshProUGUI timeIndicatorText;
+    [SerializeField]
+    public TextMeshProUGUI timeIndicatorTextLayout;
 
     [SerializeField] private int p1Deaths = 0;
     [SerializeField] private float p1PackageTime = 0;
@@ -108,6 +110,7 @@ public class ScoreCount : MonoBehaviour
         int minutes = Mathf.FloorToInt(completionTime / 60);
         int seconds = Mathf.FloorToInt(completionTime % 60);
         timeIndicatorText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        timeIndicatorTextLayout.text = timeIndicatorText.text;
 
         //timeIndicatorText.text = completionTime.ToString("f2");
 
