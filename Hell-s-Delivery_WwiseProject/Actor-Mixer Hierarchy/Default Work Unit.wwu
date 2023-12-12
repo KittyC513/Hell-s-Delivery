@@ -969,7 +969,7 @@
 														</Point>
 														<Point>
 															<XPos>3.47291</XPos>
-															<YPos>-0</YPos>
+															<YPos>0</YPos>
 															<Flags>0</Flags>
 														</Point>
 														<Point>
@@ -1061,6 +1061,70 @@
 					</ChildrenList>
 					<ActiveSourceList>
 						<ActiveSource Name="Checkpoint Get" ID="{F8B382C5-7AB8-4DA2-A6DF-7E253DBB4DB6}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="ScoreCard Sequence" ID="{DE6FC337-AA61-4DF4-B374-AF199F000B7D}" ShortID="857047676">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-11</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="ScoreCard Sequence" ID="{5863FA4E-6909-4088-9335-4E1E24CA86DE}">
+							<Language>SFX</Language>
+							<AudioFile>ScoreCard Sequence.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="657201783"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="ScoreCard Sequence" ID="{5863FA4E-6909-4088-9335-4E1E24CA86DE}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="ScoreSceneMusic" ID="{1EE7F101-4F98-443A-AC74-FF94D4D6A3D9}" ShortID="1027713851">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-15</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="ScoreSceneMusic" ID="{D9D42527-56A8-4D6A-A88D-E64A33A5FA5D}">
+							<PropertyList>
+								<Property Name="LoopBegin" Type="Real64" Value="2.4"/>
+								<Property Name="LoopEnd" Type="Real64" Value="7.2"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>ScoreSceneMusic.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="382886941"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="ScoreSceneMusic" ID="{D9D42527-56A8-4D6A-A88D-E64A33A5FA5D}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>

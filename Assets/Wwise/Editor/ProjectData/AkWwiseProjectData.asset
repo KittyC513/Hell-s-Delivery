@@ -108,7 +108,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 7ff36978145fe842bd14fccf80764e96
     GuidInternal: 
-    m_lastTime: -8584993321521676915
+    m_lastTime: -8584992565916635317
     List:
     - name: Play_Apartment_Complex_v1
       guid: 6802d184e355c240b71ec96a6ef7c135
@@ -142,8 +142,8 @@ MonoBehaviour:
         guid: 4c5c3bcee342864ea21f90edf3925325
       Path: Events\Default Work Unit\Play_Checkpoint_Get
       maxAttenuation: 20
-      maxDuration: 2.5
-      minDuration: 2.5
+      maxDuration: -1
+      minDuration: -1
     - name: Play_HighUpAmbience
       guid: 0a61e808e893b04f815e10e408499f58
       id: 1431564541
@@ -246,6 +246,40 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.29855272
       minDuration: 0.2558957
+    - name: Play_ScoreCard_Sequence
+      guid: b8a454417339c24b87852d2e59ed17dc
+      id: 342527874
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_ScoreCard_Sequence
+        ObjectType: 3
+        guid: b8a454417339c24b87852d2e59ed17dc
+      Path: Events\Default Work Unit\Play_ScoreCard_Sequence
+      maxAttenuation: 0
+      maxDuration: 6
+      minDuration: 6
+    - name: Play_ScoreSceneMusic
+      guid: af4c81e446322441b2cab87c3f5b9c2a
+      id: 613185981
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_ScoreSceneMusic
+        ObjectType: 3
+        guid: af4c81e446322441b2cab87c3f5b9c2a
+      Path: Events\Default Work Unit\Play_ScoreSceneMusic
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Play_Summoning_Circle_All
       guid: e16c166adfa2784189d3d3ecc8fe3d39
       id: 2914340836
@@ -388,7 +422,7 @@ MonoBehaviour:
     m_lastTime: -8585015309829515142
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0600000007000000
+  ExpandedWaapiItemIds: 060000000700000008000000190000001a0000002400000025000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

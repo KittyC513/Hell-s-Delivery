@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{3F5A8B71-25B4-47F3-1145-615CA014DA2A}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{24C54371-BDF6-265F-62F2-97D36969A5FB}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -55,6 +55,10 @@
 					<ShortName>Step 3 - Light.wav</ShortName>
 					<CachePath>SFX/Step 3 - Light_10C4C929.wem</CachePath>
 				</File>
+				<File Id="382886941" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>ScoreSceneMusic.wav</ShortName>
+					<CachePath>SFX/ScoreSceneMusic_1633EC5B.wem</CachePath>
+				</File>
 				<File Id="473084078" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodLanding_1.wav</ShortName>
 					<CachePath>SFX/WoodLanding_1_10C4C929.wem</CachePath>
@@ -74,6 +78,10 @@
 				<File Id="648574403" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Parachute Sequence.wav</ShortName>
 					<CachePath>SFX/Parachute Sequence_44906136.wem</CachePath>
+				</File>
+				<File Id="657201783" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>ScoreCard Sequence.wav</ShortName>
+					<CachePath>SFX/ScoreCard Sequence_10C4C929.wem</CachePath>
 				</File>
 				<File Id="675843431" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodStep_2.wav</ShortName>
@@ -164,6 +172,16 @@
 						<MediaRef Id="1049211099"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="342527874" Name="Play_ScoreCard_Sequence" DurationType="OneShot" DurationMin="6" DurationMax="6">
+					<MediaRefs>
+						<MediaRef Id="657201783"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="613185981" Name="Play_ScoreSceneMusic" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="382886941"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="2914340836" Name="Play_Summoning_Circle_All" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="271139115"/>
@@ -192,5 +210,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{B30AD547-AFA4-96C6-4590-323845070288}</FileHash>
+	<FileHash>{C0238E30-AFBD-5130-1545-08C844D60FC4}</FileHash>
 </SoundBanksInfo>
