@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{24C54371-BDF6-265F-62F2-97D36969A5FB}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{475300DE-CCDD-6CC7-3B91-44BF36DBCBF0}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -33,7 +33,7 @@
 				</File>
 				<File Id="71935411" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Apartment Complex v1.wav</ShortName>
-					<CachePath>SFX/Apartment Complex v1_10C4C929.wem</CachePath>
+					<CachePath>SFX/Apartment Complex v1_9D5A64B3.wem</CachePath>
 				</File>
 				<File Id="151202581" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodStep_1.wav</ShortName>
@@ -107,6 +107,10 @@
 					<ShortName>MetalStep_1.wav</ShortName>
 					<CachePath>SFX/MetalStep_1_0244B083.wem</CachePath>
 				</File>
+				<File Id="972916110" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Hub Music.wav</ShortName>
+					<CachePath>SFX/Hub Music_B41E0A40.wem</CachePath>
+				</File>
 				<File Id="987426019" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 2 - Light.wav</ShortName>
 					<CachePath>SFX/Step 2 - Light_10C4C929.wem</CachePath>
@@ -117,7 +121,7 @@
 				</File>
 			</Media>
 			<Events>
-				<Event Id="359343595" Name="Play_Apartment_Complex_v1" DurationType="OneShot" DurationMin="207.76923" DurationMax="207.76923">
+				<Event Id="359343595" Name="Play_Apartment_Complex_v1" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="71935411"/>
 					</MediaRefs>
@@ -130,6 +134,11 @@
 				<Event Id="1431564541" Name="Play_HighUpAmbience" DurationType="OneShot" DurationMin="45.818188" DurationMax="45.818188">
 					<MediaRefs>
 						<MediaRef Id="948208631"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="4050862303" Name="Play_Hub_Music" MaxAttenuation="30" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="972916110"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1019246482" Name="Play_Landings" DurationType="OneShot" DurationMin="0.2558957" DurationMax="0.2786168">
@@ -210,5 +219,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{767B8F6D-5CE8-B26C-AF9D-49261528E875}</FileHash>
+	<FileHash>{D09F089F-B43F-0639-D4BF-F13CAF6D33D7}</FileHash>
 </SoundBanksInfo>
