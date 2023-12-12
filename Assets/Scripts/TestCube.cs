@@ -269,6 +269,10 @@ public class TestCube : MonoBehaviour
     private GameObject p1Indicator;
     [SerializeField]
     private GameObject p2Indicator;
+    [SerializeField]
+    private GameObject Cam1;
+    [SerializeField]
+    private GameObject Cam2;
 
 
 
@@ -1431,6 +1435,16 @@ public class TestCube : MonoBehaviour
         {
             rb.AddForce(Vector3.up * geiserForce);
         }
+        if(other.gameObject.tag == ("BridgeButton"))
+        {
+            Cam1.SetActive(true);
+            Cam1.SetActive(false);
+        }
+        else
+        {
+            Cam1.SetActive(false);
+            Cam1.SetActive(true);
+        }
     }
 
     private void PlayGroundSound(string material)
@@ -1447,7 +1461,10 @@ public class TestCube : MonoBehaviour
         {
             playerSounds.steps.Post(this.gameObject);
         }
+
     }
+
+
 
 
 
