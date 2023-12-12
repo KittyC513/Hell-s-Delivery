@@ -125,6 +125,7 @@ public class TestCube : MonoBehaviour
     string scene4 = "ParticleTesting";
     string scene5 = "MVPLevel";
     string scene6 = "TitleScene";
+    string scene7 = "Tutorial";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -592,7 +593,7 @@ public class TestCube : MonoBehaviour
             //print("1");
 
         }
-        else if(curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5)
+        else if(curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7)
         {
             playerCamera.enabled = true;
             mainCam = null;
@@ -1435,16 +1436,7 @@ public class TestCube : MonoBehaviour
         {
             rb.AddForce(Vector3.up * geiserForce);
         }
-        if(other.gameObject.tag == ("BridgeButton"))
-        {
-            Cam1.SetActive(true);
-            Cam1.SetActive(false);
-        }
-        else
-        {
-            Cam1.SetActive(false);
-            Cam1.SetActive(true);
-        }
+
     }
 
     private void PlayGroundSound(string material)
