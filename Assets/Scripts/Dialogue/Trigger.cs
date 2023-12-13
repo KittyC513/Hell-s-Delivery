@@ -5,6 +5,7 @@ using Yarn.Unity;
 
 public class Trigger : MonoBehaviour
 {
+
     public DialogueRunner dR;
     [SerializeField]
     private LayerMask layer1;
@@ -13,6 +14,8 @@ public class Trigger : MonoBehaviour
     [SerializeField]
     public bool conversationStart;
 
+
+
     [SerializeField]
     private List<Collider> colliderInTriggerZone = new List<Collider>();
 
@@ -20,6 +23,7 @@ public class Trigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        conversationStart = GameManager.instance.GMconversationStart;
         layer1 = LayerMask.NameToLayer("P1Collider");
         layer2 = LayerMask.NameToLayer("P2Collider");
     }
@@ -29,7 +33,7 @@ public class Trigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!colliderInTriggerZone.Contains(other))
+        if (!colliderInTriggerZone.Contains(other) && !GameManager.instance.GMconversationStart)
         {
             if((other.gameObject.layer == layer1))
             {
@@ -37,9 +41,11 @@ public class Trigger : MonoBehaviour
             }
             if ((other.gameObject.layer == layer2))
             {
+                //conversationStart = true;
+                GameManager.instance.GMconversationStart = true;
                 dR.StartDialogue("HubStart");
-                conversationStart = true;
                 Destroy(this.gameObject);
+
             }
         }
 
