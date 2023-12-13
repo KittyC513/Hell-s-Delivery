@@ -6,14 +6,17 @@ using Yarn.Unity;
 
 public class LevelDialogue : MonoBehaviour
 {
+    [SerializeField]
     private static LevelDialogue instance;
 
-    public DialogueRunner dR;
+    [SerializeField]
+    public DialogueRunner dRP1, dRP2;
+    
+    [SerializeField]
+    private static GameObject LV, DRP1, DRP2;
 
-    private static GameObject LVP1, LVP2;
 
 
- 
     private void Awake()
     {
         instance = this;
@@ -21,29 +24,60 @@ public class LevelDialogue : MonoBehaviour
     
     void Start()
     {
-        LVP1 = GameObject.Find("Devil Player 1");
-        LVP2 = GameObject.Find("Devil Player 2");
+        //LV = GameObject.Find("Devil Players");
 
-        LVP1.SetActive(false);
-        LVP2.SetActive(false);
+
+        DRP1 = GameObject.Find("DRP1");
+        //print("DRP1 found" + DRP1);
+
+        DRP2 = GameObject.Find("DRP2");
+        //print("DRP2 found" + DRP1);
+        
+        DRP1.SetActive(false);
+        DRP2.SetActive(false);
+        //LV.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        //curSceneName = GameManager.instance.curSceneName;
+
+        //if (curSceneName == ("Tutorial") && DRP1 == null || DRP2 == null )
+        //{
+        //    LV = GameObject.Find("Devil Players");
+        //    LV.SetActive(false);
+
+        //    if (DRP1 == null)
+        //    {
+        //        DRP1 = GameObject.Find("DRP1");
+        //    }
+
+        //    if(DRP2 == null)
+        //    {
+        //        DRP2 = GameObject.Find("DRP2");
+        //    }
+ 
+        //}
     }
 
-    //public static void ShowDevilPlayer1()
-    //{
-    //    LVP1.SetActive(true);
-    //    LVP2.SetActive(false);
-    //}
+    public static void ShowDevilPlayer1()
+    {
+        DRP1.SetActive(true);
+        //DRP2.SetActive(false);
+    }
 
-    //public static void ShowDevilPlayer2()
+    public static void ShowDevilPlayer2()
+    {
+        DRP2.SetActive(true);
+        //DRP1.SetActive(false);
+    }
+
+    //public static void ShowBoth()
     //{
-    //    LVP2.SetActive(true);
-    //    LVP1.SetActive(false);
+    //    P1.SetActive(true);
+    //    P2.SetActive(true);
     //}
 
 }

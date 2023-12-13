@@ -110,7 +110,7 @@ public class ObjectGrabbable : MonoBehaviour
     {
         AddScore();
         //PackageIcon();
-        IndicatorControl();
+        //IndicatorControl();
 
     }
 
@@ -202,17 +202,17 @@ public class ObjectGrabbable : MonoBehaviour
         yield return null;
     }
 
-    void IndicatorControl()
-    {
-        if (!P1TakePackage && !P2TakePackage)
-        {
-            indicator.SetActive(true);
-        }
-        else
-        {
-            indicator.SetActive(false);
-        }
-    }
+    //void IndicatorControl()
+    //{
+    //    if (!P1TakePackage && !P2TakePackage)
+    //    {
+    //        indicator.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        indicator.SetActive(false);
+    //    }
+    //}
 
 
 

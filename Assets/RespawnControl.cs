@@ -41,11 +41,13 @@ public class RespawnControl : MonoBehaviour
     public bool Player2Die;
     [SerializeField]
     string curSceneName;
+
     string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
     string scene3 = "TitleScene";
     string scene4 = "MVPLevel";
-    string scene5 = "TutorialLevel";
+    string scene5 = "Tutorial";
+
     [SerializeField]
     public bool Player1isCarrying;
     [SerializeField]
@@ -56,8 +58,10 @@ public class RespawnControl : MonoBehaviour
     GameManager gameManager;
     [SerializeField]
     private bool isAtDoor;
-
-    public DialogueRunner dR;
+    [SerializeField]
+    public DialogueRunner dRP1, dRP2;
+    [SerializeField]
+    private GameObject dRGameobject, dRGameobject2;
 
     public GameObject currentActive;
     [SerializeField]
@@ -65,6 +69,8 @@ public class RespawnControl : MonoBehaviour
     [SerializeField]
     private GameObject p2DeadScreen;
 
+    bool p1Pass;
+    bool p2Pass;
 
     //CheckpointControl activateFCP;
 
@@ -80,9 +86,9 @@ public class RespawnControl : MonoBehaviour
     {
         cpParent = GameObject.FindWithTag("cpParent");
 
-        
 
-        dR = Object.FindAnyObjectByType<DialogueRunner>();
+
+        //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
 
         gameManager = Object.FindAnyObjectByType<GameManager>();
 
@@ -102,17 +108,44 @@ public class RespawnControl : MonoBehaviour
         if (GameManager.instance.sceneChanged)
         {
             curSceneName = GameManager.instance.curSceneName;
-            if (curSceneName == scene4)
+            if (curSceneName == scene4 || curSceneName ==scene5)
             {
+                if (dRP1 == null)
+                {
+                    dRGameobject = GameObject.FindWithTag("DRP1");
+                    dRP1 = dRGameobject.GetComponent<DialogueRunner>();
+                }
+
+                if(dRP2 == null)
+                {
+                    dRGameobject2 = GameObject.FindWithTag("DRP2");
+                    dRP2 = dRGameobject2.GetComponent<DialogueRunner>();
+                }
+
                 if (objectGrabbable == null)
                 {
                     package = GameObject.FindGameObjectWithTag("Package");
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
             }
-        }
 
+        }
     }
+
+    //void FindDR()
+    //{
+    //    curSceneName = GameManager.instance.curSceneName;
+    //    if(curSceneName == scene5 && dR == null)
+    //    {
+
+    //        dR = Object.FindAnyObjectByType<DialogueRunner>();
+    //        print("DR FOUND");
+
+    //    }
+
+    //}
+
+
 
     void ResetInitialRespawnPoint()
     {
@@ -131,6 +164,7 @@ public class RespawnControl : MonoBehaviour
 
     private void Update()
     {
+        //FindDR();
         SceneCheck();
         PlayerDetector();
         if(objectGrabbable != null)
@@ -199,7 +233,7 @@ public class RespawnControl : MonoBehaviour
                 if (curSceneName == scene2)
                 {
                     //LevelDialogue.ShowDevilPlayer2();
-                    dR.Stop();
+                    dRP1.Stop();
                     PlayRandomDialogue();
                     Player1Die = true;
                 }
@@ -217,7 +251,7 @@ public class RespawnControl : MonoBehaviour
                 if (curSceneName == scene2)
                 {
                     //LevelDialogue.ShowDevilPlayer1();
-                    dR.Stop();
+                    dRP1.Stop();
                     PlayRandomDialogue();
                     Player2Die = true;
                 }
@@ -259,36 +293,64 @@ public class RespawnControl : MonoBehaviour
         if (other.gameObject.tag == ("TriggerStart"))
         {
             //LevelDialogue.ShowDevilAll();
-            dR.StartDialogue("StartLevel");
+            dRP1.StartDialogue("StartLevel");
             Destroy(other.gameObject);
         }
 
         if (other.gameObject.tag == ("TriggerFirstLevel"))
         {
             //LevelDialogue.ShowDevilAll();
-            dR.StartDialogue("FirstLevel");
+            dRP1.StartDialogue("FirstLevel");
             Destroy(other.gameObject);
         }
 
         if (other.gameObject.tag == ("TriggerSecondLevel"))
         {
             //LevelDialogue.ShowDevilAll();
-            dR.StartDialogue("SecondLevel");
+            dRP1.StartDialogue("SecondLevel");
             Destroy(other.gameObject);
         }
 
         if (other.gameObject.tag == ("TriggerThirdLevel"))
         {
             //LevelDialogue.ShowDevilAll();
-            dR.StartDialogue("ThirdLevel");
+            dRP1.StartDialogue("ThirdLevel");
             Destroy(other.gameObject);
         }
 
         if (other.gameObject.tag == ("TriggerEnd"))
         {
             //LevelDialogue.ShowDevilAll();
-            dR.StartDialogue("EndLevel");
+            dRP1.StartDialogue("EndLevel");
             Destroy(other.gameObject);
+        }
+        if (other.gameObject.tag == ("Start_Tutorial"))
+        {
+
+
+            if (isPlayer1 && !p1Pass)
+            {
+                p1Pass = true;
+                LevelDialogue.ShowDevilPlayer1();
+                //dR.Stop();
+                dRP1.StartDialogue("LookAround");
+
+            }
+
+            if (isPlayer2 && !p2Pass)
+            {
+                p2Pass = true;
+                LevelDialogue.ShowDevilPlayer2();
+                //dR.Stop();
+                dRP2.StartDialogue("LookAround2");
+
+            }
+
+            if (p2Pass && p1Pass)
+            {
+                Destroy(other.gameObject);
+            }
+
         }
 
         if (other.gameObject.tag == ("fCheckpoint"))
@@ -359,7 +421,7 @@ public class RespawnControl : MonoBehaviour
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(nodeNames.Count);
-        dR.StartDialogue(nodeNames[index]);
+        dRP1.StartDialogue(nodeNames[index]);
     }
 
 
@@ -383,6 +445,13 @@ public class RespawnControl : MonoBehaviour
 
         // Deactivate the UI after the specified duration
         gameManager.p2UIMinus.SetActive(false);
+    }
+
+    IEnumerator DestroyGameObject(GameObject gameObject)
+    {
+        Destroy(gameObject);
+        return null;
+
     }
 
 }

@@ -109,7 +109,10 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("TutorialLevel")]
     public static void TutorialLevel()
     {
-        SceneManager.LoadScene("Tutorial");
+        GameManager.instance.sceneChanged = true;
+        Loader.Load(Loader.Scene.Tutorial);
+        
+        //SceneManager.LoadScene("Tutorial");
     }
 
     [YarnCommand("HideGradient")]

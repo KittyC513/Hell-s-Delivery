@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         FindCamera();
         DetectScene();
         PushCheck();
-
+        P1Indicator();
 
     }
 
@@ -540,16 +540,11 @@ public class GameManager : MonoBehaviour
 
     void P1Indicator()
     {
-        float distance = Vector3.Distance(player1.transform.position, player2.transform.position);
-        if(distance < appearanceDistance)
-        {
-            if (!projectileToIndicator.ContainsKey(player2))
-            {
-                //GameObject newIndicator = Instantiate(p2UIIndicator, Vector3.zero, Quaternion.identity);
-               // projectileToIndicator.Add(player2, newIndicator);
-            }
-        }
+
+
     }
+
+
 
 }
 

@@ -264,9 +264,9 @@ public class TestCube : MonoBehaviour
 
     [Header("Indicator")]
     [SerializeField]
-    private GameObject p1Indicator;
+    public GameObject p1Indicator;
     [SerializeField]
-    private GameObject p2Indicator;
+    public GameObject p2Indicator;
 
     [Header("Camera Control")]
     [SerializeField]
@@ -639,10 +639,10 @@ public class TestCube : MonoBehaviour
             mainCam = null;
             //print("2");
 
-            if (exButton.instance.inBridge)
-            {
-                StartCoroutine(exButton.instance.SwitchCamera());
-            }
+            //if (exButton.instance.inBridge)
+            //{
+            //    StartCoroutine(exButton.instance.SwitchCamera());
+            //}
 
 
         }
