@@ -472,7 +472,7 @@ public class TestCube : MonoBehaviour
         if (isPlayer1 && !titleDisplayed)
         {
             titleText.text = "1P";
-            p2Indicator.SetActive(false);
+
             StartCoroutine(StopShowTitle());
             model1.SetActive(true);
             Destroy(model2);
@@ -481,11 +481,10 @@ public class TestCube : MonoBehaviour
         if (isPlayer2 && !titleDisplayed)
         {
             titleText.text = "2P";
-            p2Indicator.SetActive(true);
+
             StartCoroutine(StopShowTitle());
             model2.SetActive(true);
             Destroy(model1);
-
         }
 
 
@@ -513,10 +512,12 @@ public class TestCube : MonoBehaviour
         if (isPlayer1)
         {
             playerAnimator.SetBool("isGliding", isGliding);
+            p1Indicator.SetActive(true);
         }
 
         if (isPlayer2)
         {
+            p2Indicator.SetActive(true);
             playerAnimator2.SetBool("isGliding", isGliding);
         }
 
@@ -634,6 +635,7 @@ public class TestCube : MonoBehaviour
             playerCamera.enabled = false;
             mainCam = Camera.main;
             //print("1");
+
 
         }
         else if(curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7)
