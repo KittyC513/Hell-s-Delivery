@@ -13,6 +13,7 @@ using TMPro;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 
+
 public class TestCube : MonoBehaviour
 {
 
@@ -92,11 +93,11 @@ public class TestCube : MonoBehaviour
 
 
     [SerializeField]
-    private Camera playerCamera;
+    public Camera playerCamera;
     [SerializeField]
     Camera mainCam;
     [SerializeField]
-    TestPickDrop testPickDrop;
+    public CinemachineFreeLook thirdPersonCam;
 
 
 
@@ -236,13 +237,7 @@ public class TestCube : MonoBehaviour
     private float? pushButtonPressedTime;
 
 
-    [Header("Camera Control")]
-    //public CameraStyle currentStyle;
-    public GameObject thirdPersonCam;
-    public GameObject combatCam;
-    public GameObject topDownCam;
-    public GameObject aimCursor;
-    public bool isAiming;
+
 
 
     [SerializeField]
@@ -320,7 +315,7 @@ public class TestCube : MonoBehaviour
         dialogue = inputAsset.FindActionMap("Dialogue");
        
         rb = this.GetComponent<Rigidbody>();
-        testPickDrop = GetComponent<TestPickDrop>();
+       
         //playerPos = this.transform;
         maxSpeed = walkSpeed;
         mainCam = Camera.main;
@@ -643,6 +638,13 @@ public class TestCube : MonoBehaviour
             playerCamera.enabled = true;
             mainCam = null;
             //print("2");
+
+            if (exButton.instance.inBridge)
+            {
+                StartCoroutine(exButton.instance.SwitchCamera());
+            }
+
+
         }
         
     }

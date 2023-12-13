@@ -373,7 +373,7 @@ public class ScoreCount : MonoBehaviour
                 if (knobValue > -90)
                 {
                     newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
-                    print("startingRotation" + startingRotation);
+                    //print("startingRotation" + startingRotation);
                     knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
   
                 }
@@ -409,7 +409,7 @@ public class ScoreCount : MonoBehaviour
 
         p1AddScore = false;
 
-        print("Moving" + targetRotation);
+        //print("Moving" + targetRotation);
 
 
 
@@ -455,7 +455,7 @@ public class ScoreCount : MonoBehaviour
                 {
                     float currentRotation = Mathf.Lerp(startingRotation, startingRotation + shortestRotation, elapsedTime / rotationTime);
                     knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, currentRotation);
-                    print("startingRotation" + startingRotation);
+                    //print("startingRotation" + startingRotation);
                 }
 
             }
