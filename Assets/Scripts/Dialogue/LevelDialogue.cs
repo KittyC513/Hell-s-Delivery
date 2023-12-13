@@ -10,7 +10,7 @@ public class LevelDialogue : MonoBehaviour
 
     public DialogueRunner dR;
 
-    private static GameObject LVDevil, LVP1, LVP2;
+    private static GameObject LVP1, LVP2;
 
 
  
@@ -21,11 +21,9 @@ public class LevelDialogue : MonoBehaviour
     
     void Start()
     {
-        LVDevil = GameObject.Find("Devil All");
         LVP1 = GameObject.Find("Devil Player 1");
         LVP2 = GameObject.Find("Devil Player 2");
 
-        LVDevil.SetActive(false);
         LVP1.SetActive(false);
         LVP2.SetActive(false);
     }
@@ -36,25 +34,16 @@ public class LevelDialogue : MonoBehaviour
         
     }
 
-    public static void ShowDevilAll()
-    {
-        LVDevil.SetActive(true);
-        LVP1.SetActive(false);
-        LVP2.SetActive(false);
-    }
+    //public static void ShowDevilPlayer1()
+    //{
+    //    LVP1.SetActive(true);
+    //    LVP2.SetActive(false);
+    //}
 
-    public static void ShowDevilPlayer1()
-    {
-        LVP1.SetActive(true);
-        LVDevil.SetActive(false);
-        LVP2.SetActive(false);
-    }
-
-    public static void ShowDevilPlayer2()
-    {
-        LVP2.SetActive(true);
-        LVP1.SetActive(false);
-        LVDevil.SetActive(false);
-    }
+    //public static void ShowDevilPlayer2()
+    //{
+    //    LVP2.SetActive(true);
+    //    LVP1.SetActive(false);
+    //}
 
 }
