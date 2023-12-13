@@ -71,6 +71,36 @@ public class RespawnControl : MonoBehaviour
 
     bool p1Pass;
     bool p2Pass;
+    
+    bool p1Pass1;
+    bool p2Pass1;
+    
+    bool p1Pass2;
+    bool p2Pass2;
+    
+    bool p1Pass3;
+    bool p2Pass3;
+
+    bool p1Pass4;
+    bool p2Pass4;
+
+    bool p1Pass5;
+    bool p2Pass5;
+
+    bool p1Pass6;
+    bool p2Pass6;
+
+    bool p1Pass7;
+    bool p2Pass7;
+
+    bool p1Pass8;
+    bool p2Pass8;
+
+    [SerializeField]
+    private GameObject t1, t2, t3, t4, t5, t6, t7,t8;
+
+    [SerializeField]
+    private GameObject t1c, t2c, t3c, t4c, t5c, t6c, t7c,t8c;
 
     //CheckpointControl activateFCP;
 
@@ -292,67 +322,292 @@ public class RespawnControl : MonoBehaviour
             //Debug.Log("RespawnPoint =" + respawnPoint);
         }
 
-        if (other.gameObject.tag == ("TriggerStart"))
-        {
-            //LevelDialogue.ShowDevilAll();
-            dRP1.StartDialogue("StartLevel");
-            Destroy(other.gameObject);
-        }
+        //if (other.gameObject.tag == ("TriggerStart"))
+        //{
+        //    //LevelDialogue.ShowDevilAll();
+        //    dRP1.StartDialogue("StartLevel");
+        //    Destroy(other.gameObject);
+        //}
 
-        if (other.gameObject.tag == ("TriggerFirstLevel"))
-        {
-            //LevelDialogue.ShowDevilAll();
-            dRP1.StartDialogue("FirstLevel");
-            Destroy(other.gameObject);
-        }
+        //if (other.gameObject.tag == ("TriggerFirstLevel"))
+        //{
+        //    //LevelDialogue.ShowDevilAll();
+        //    dRP1.StartDialogue("FirstLevel");
+        //    Destroy(other.gameObject);
+        //}
 
-        if (other.gameObject.tag == ("TriggerSecondLevel"))
-        {
-            //LevelDialogue.ShowDevilAll();
-            dRP1.StartDialogue("SecondLevel");
-            Destroy(other.gameObject);
-        }
+        //if (other.gameObject.tag == ("TriggerSecondLevel"))
+        //{
+        //    //LevelDialogue.ShowDevilAll();
+        //    dRP1.StartDialogue("SecondLevel");
+        //    Destroy(other.gameObject);
+        //}
 
-        if (other.gameObject.tag == ("TriggerThirdLevel"))
-        {
-            //LevelDialogue.ShowDevilAll();
-            dRP1.StartDialogue("ThirdLevel");
-            Destroy(other.gameObject);
-        }
+        //if (other.gameObject.tag == ("TriggerThirdLevel"))
+        //{
+        //    //LevelDialogue.ShowDevilAll();
+        //    dRP1.StartDialogue("ThirdLevel");
+        //    Destroy(other.gameObject);
+        //}
 
-        if (other.gameObject.tag == ("TriggerEnd"))
-        {
-            //LevelDialogue.ShowDevilAll();
-            dRP1.StartDialogue("EndLevel");
-            Destroy(other.gameObject);
-        }
         if (other.gameObject.tag == ("Start_Tutorial"))
         {
-
+        
 
             if (isPlayer1 && !p1Pass)
             {
                 p1Pass = true;
                 LevelDialogue.ShowDevilPlayer1();
-                //dR.Stop();
+                dRP1.Stop();
                 dRP1.StartDialogue("LookAround");
-
+    
+            
             }
+
 
             if (isPlayer2 && !p2Pass)
             {
                 p2Pass = true;
                 LevelDialogue.ShowDevilPlayer2();
-                //dR.Stop();
+                dRP2.Stop();
                 dRP2.StartDialogue("LookAround2");
+          
+
+            }
+ 
+            if (p1Pass && p2Pass)
+            {
+                Destroy(other.gameObject);
+                t5.SetActive(false);
+            }
+
+        }
+
+        if (other.gameObject.tag == ("Package_Tutorial"))
+        {
+            if (isPlayer1 && !p1Pass1)
+            {
+                p1Pass1 = true;
+                LevelDialogue.ShowDevilPlayer1();
+                dRP1.Stop();
+                dRP1.StartDialogue("Package");
+         
+                Debug.Log("Print");
+   
+
+            }
+  
+
+            if (isPlayer2 && !p2Pass1)
+            {
+                p2Pass1 = true;
+                LevelDialogue.ShowDevilPlayer2();
+                dRP2.Stop();
+                dRP2.StartDialogue("Packages2");
+    
 
             }
 
-            if (p2Pass && p1Pass)
+
+            if (p1Pass1 && p2Pass1)
+            {
+                Destroy(other.gameObject);
+                t3.SetActive(false);
+            }
+        }
+
+        if (other.gameObject.tag == ("Jump_Tutorial"))
+        {
+            if (isPlayer1 && !p1Pass2)
+            {
+                p1Pass2 = true;
+                LevelDialogue.ShowDevilPlayer1();
+                dRP1.Stop();
+                dRP1.StartDialogue("P1Jump");
+      
+            
+
+            }
+
+
+            if (isPlayer2 && !p2Pass2)
+            {
+                p2Pass2 = true;
+                LevelDialogue.ShowDevilPlayer2();
+                dRP2.Stop();
+                dRP2.StartDialogue("P2Jump");
+       
+
+            }
+
+
+            if  (p1Pass2 && p2Pass2)
+            {
+                Destroy(other.gameObject);
+                t1.SetActive(false);
+            }
+        }
+
+        if (other.gameObject.tag == ("Pressure_Tutorial"))
+        {
+            if (isPlayer1 && !p1Pass3)
+            {
+                p1Pass3 = true;
+                LevelDialogue.ShowDevilPlayer1();
+                dRP1.Stop();
+                dRP1.StartDialogue("PressurePlate");
+           
+
+            }
+    
+            if (isPlayer2 && !p2Pass3)
+            {
+                p2Pass3 = true;
+                LevelDialogue.ShowDevilPlayer2();
+                dRP2.Stop();
+                dRP2.StartDialogue("PressurePlate2");
+
+            }
+
+            if (p1Pass3 && p2Pass3)
             {
                 Destroy(other.gameObject);
             }
+        }
 
+        if (other.gameObject.tag == ("Checkpoint_Tutorial"))
+        {
+            if (isPlayer1 && !p1Pass4)
+            {
+                p1Pass4 = true;
+                LevelDialogue.ShowDevilPlayer1();
+                dRP1.Stop();
+                dRP1.StartDialogue("Checkpoints");
+
+            }
+
+            if (isPlayer2 && !p2Pass4)
+            {
+                p2Pass4 = true;
+                LevelDialogue.ShowDevilPlayer2();
+                dRP2.Stop();
+                dRP2.StartDialogue("Checkpoints2");
+
+            }
+
+
+            if (p1Pass4 && p2Pass4)
+            {
+                Destroy(other.gameObject);
+            }
+        }
+
+        if (other.gameObject.tag == ("SummoningCircle_Tutorial"))
+        {
+            if (isPlayer1 && !p1Pass5)
+            {
+                p1Pass5 = true;
+                LevelDialogue.ShowDevilPlayer1();
+                dRP1.Stop();
+                dRP1.StartDialogue("P1SummoningCircle");
+            
+
+            }
+
+
+            if (isPlayer2 && !p2Pass5)
+            {
+                p2Pass5 = true;
+                LevelDialogue.ShowDevilPlayer2();
+                dRP2.Stop();
+                dRP2.StartDialogue("P2SummoningCircle");
+            
+            }
+
+            if (p1Pass5 && p2Pass5)
+            {
+                Destroy(other.gameObject);
+                t2.SetActive(false);
+            }
+       
+            
+        }
+
+        if (other.gameObject.tag == ("Cooperation_Tutorial"))
+        {
+            if (isPlayer1 && !p1Pass6)
+            {
+                p1Pass6 = true;
+                LevelDialogue.ShowDevilPlayer1();
+                dRP1.Stop();
+                dRP1.StartDialogue("Cooperation");
+
+            }
+
+            if (isPlayer2 && !p2Pass6)
+            {
+                p2Pass6 = true;
+                LevelDialogue.ShowDevilPlayer2();
+                dRP2.Stop();
+                dRP2.StartDialogue("Cooperation2");
+            }
+
+            if (p1Pass6 && p2Pass6)
+            {
+                Destroy(other.gameObject);
+            }
+        }
+
+        if (other.gameObject.tag == ("Sabotage_Tutorial"))
+        {
+            if (isPlayer1 && !p1Pass7)
+            {
+                p1Pass7 = true;
+                LevelDialogue.ShowDevilPlayer1();
+                dRP1.Stop();
+                dRP1.StartDialogue("Sabotage");
+
+            }
+
+            if (isPlayer2 && !p2Pass7)
+            {
+                p2Pass7 = true;
+                LevelDialogue.ShowDevilPlayer2();
+                dRP2.Stop();
+                dRP2.StartDialogue("Sabotage2");
+            }
+
+            if (p1Pass7 && p2Pass7)
+            {
+                Destroy(other.gameObject);
+            }
+        }
+
+        if (other.gameObject.tag == ("End_Tutorial"))
+        {
+
+            if (isPlayer1 && !p1Pass8)
+            {
+                p1Pass8 = true;
+                LevelDialogue.ShowDevilPlayer1();
+                dRP1.Stop();
+                dRP1.StartDialogue("End");
+            }
+
+            if (isPlayer2 && !p2Pass8)
+            {
+                p2Pass8 = true;
+                LevelDialogue.ShowDevilPlayer2();
+                dRP2.Stop();
+                dRP2.StartDialogue("End2");
+               
+            }
+
+
+            if (p1Pass8 && p2Pass8)
+            {
+                Destroy(other.gameObject);
+            }
         }
         //Debug.Log("newcheckpoint");
         if (other.gameObject.tag == ("fCheckpoint"))
@@ -409,16 +664,312 @@ public class RespawnControl : MonoBehaviour
 
             }            
         }
-        //if(other.gameObject.tag == ("TV"))
-        //{
-        //    if (testCube.ReadActionButton())
-        //    {
-        //        print("Enter Tutorial Level");
-        //        //gameManager.sceneChanged = true;
-        //        //SceneManager.LoadScene("TutorialLevel);
-        //    }
+        if (other.gameObject.tag == ("Start_Tutorial"))
+        {
 
-        //}
+
+            if (isPlayer1)
+            {
+
+                t1.SetActive(true);
+
+            }
+
+
+            if (isPlayer2)
+            {
+
+                t1c.SetActive(true);
+
+            }
+
+
+
+        }
+
+        if (other.gameObject.tag == ("Package_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t3.SetActive(true);
+
+            }
+
+
+            if (isPlayer2)
+            {
+
+                t3c.SetActive(true);
+
+            }
+
+
+        }
+
+        if (other.gameObject.tag == ("Jump_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t4.SetActive(true);
+
+            }
+
+
+            if (isPlayer2)
+            {
+
+                t4c.SetActive(true);
+
+            }
+
+
+
+        }
+
+        if (other.gameObject.tag == ("Pressure_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t5.SetActive(true);
+
+            }
+
+            if (isPlayer2)
+            {
+
+                t5c.SetActive(true);
+            }
+
+
+        }
+
+        if (other.gameObject.tag == ("Checkpoint_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+                t7.SetActive(true);
+
+            }
+
+            if (isPlayer2)
+            {
+                t6c.SetActive(true);
+
+            }
+
+        }
+
+        if (other.gameObject.tag == ("SummoningCircle_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t8.SetActive(true);
+            }
+
+
+            if (isPlayer2)
+            {
+                t7c.SetActive(true);
+
+            }
+
+
+
+
+        }
+
+        if (other.gameObject.tag == ("Cooperation_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t7.SetActive(true);
+
+            }
+
+            if (isPlayer2)
+            {
+                t6c.SetActive(true);
+            }
+
+
+        }
+
+
+        if (other.gameObject.tag == ("End_Tutorial"))
+        {
+
+            if (isPlayer1)
+            {
+
+            }
+
+            if (isPlayer2)
+            {
+
+
+            }
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == ("Start_Tutorial"))
+        {
+
+
+            if (isPlayer1)
+            {
+
+                t1.SetActive(false);
+
+            }
+
+
+            if (isPlayer2)
+            {
+
+                t1c.SetActive(false);
+
+            }
+
+
+
+        }
+
+        if (other.gameObject.tag == ("Package_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t3.SetActive(false);
+
+            }
+
+
+            if (isPlayer2)
+            {
+
+                t3c.SetActive(false);
+
+            }
+
+
+        }
+
+        if (other.gameObject.tag == ("Jump_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t4.SetActive(false);
+
+            }
+
+
+            if (isPlayer2)
+            {
+
+                t4c.SetActive(false);
+
+            }
+
+
+
+        }
+
+        if (other.gameObject.tag == ("Pressure_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t5.SetActive(false);
+
+            }
+
+            if (isPlayer2)
+            {
+
+                t5c.SetActive(false);
+            }
+
+
+        }
+
+        if (other.gameObject.tag == ("Checkpoint_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+                t7.SetActive(false);
+
+            }
+
+            if (isPlayer2)
+            {
+                t6c.SetActive(false);
+
+            }
+
+        }
+
+        if (other.gameObject.tag == ("SummoningCircle_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t8.SetActive(false);
+            }
+
+
+            if (isPlayer2)
+            {
+                t7c.SetActive(false);
+
+            }
+
+
+
+
+        }
+
+        if (other.gameObject.tag == ("Cooperation_Tutorial"))
+        {
+            if (isPlayer1)
+            {
+
+                t7.SetActive(false);
+
+            }
+
+            if (isPlayer2)
+            {
+                t6c.SetActive(false);
+            }
+
+
+        }
+
+
+        if (other.gameObject.tag == ("End_Tutorial"))
+        {
+
+            if (isPlayer1)
+            {
+
+            }
+
+            if (isPlayer2)
+            {
+
+
+            }
+
+        }
     }
 
 
