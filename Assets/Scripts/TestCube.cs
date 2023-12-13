@@ -283,6 +283,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private GameObject model1;
     [SerializeField]
+    private float runThreshold;
+
+    [SerializeField]
     private GameObject model2;
 
     //public enum CameraStyle
@@ -403,7 +406,7 @@ public class TestCube : MonoBehaviour
     {
         CastBlobShadow();
         CheckGrounded();
-        SpeedControl();
+        //SpeedControl();
 
         ContinueBottonControl();
         //MovementCalcs();
@@ -544,9 +547,26 @@ public class TestCube : MonoBehaviour
 
         if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
         {
-            //we are moving
-            faceDir = new Vector3(move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
-            isWalking = true;
+            Vector2 moveInput = move.ReadValue<Vector2>();
+            if(moveInput.magnitude > 0)
+            {            
+                //we are moving
+                faceDir = new Vector3(move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
+                isWalking = true;
+                
+                if(moveInput.magnitude > runThreshold)
+                {
+                    isRunning = true;
+                    print("Is Runing");
+                }
+                else
+                {
+                    isRunning = false;
+                }
+
+                print("isWalking" + isWalking);
+            } 
+
 
             
             if (isRunning && !isGliding)
@@ -591,34 +611,19 @@ public class TestCube : MonoBehaviour
         //Debug.Log(rb.velocity);
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
-
-    //void PlayerPosition()
+    //void SpeedControl()
     //{
-    //    currentScene = SceneManager.GetActiveScene();
-    //    curSceneName = currentScene.name;
-    //    Debug.Log("Current scene" + curSceneName);
-
-    //    if (curSceneName == scene2)
+    //    if (run.ReadValue<float>() == 1)
     //    {
-    //        if (isPlayer1 && !p1Appear)
-    //        {
-    //            transform.position = new Vector3(-65f, 13f, 56f);
-    //            p1Appear = true;
-    //            print("p1 in the position");
-
-    //        }
-
-    //        if (isPlayer2 && !p2Appear)
-    //        {
-    //            transform.position = new Vector3(65f, -13f, 65f);
-    //            p2Appear = true;
-
-    //            print("p2 in the position");
-
-    //        }
+    //        isRunning = true;
     //    }
- 
+    //    else if (run.ReadValue<float>() == 0)
+    //    {
+    //        isRunning = false;
+    //    }
+
     //}
+
     void CameraSwitch()
     {
         currentScene = SceneManager.GetActiveScene();
@@ -1297,18 +1302,7 @@ public class TestCube : MonoBehaviour
 
 
 
-    void SpeedControl()
-    {
-        if (run.ReadValue<float>() == 1)
-        {
-            isRunning = true;
-        }
-        else if (run.ReadValue<float>() == 0)
-        {
-            isRunning = false;
-        }
 
-    }
 
     private void CheckGrounded()
     {
