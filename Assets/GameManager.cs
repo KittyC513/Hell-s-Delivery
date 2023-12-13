@@ -53,9 +53,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool readyToStart;
     [SerializeField]
-    private Animator p1Ani;
+    public Animator p1Ani;
     [SerializeField]
-    private Animator p2Ani;
+    public Animator p2Ani;
     [SerializeField]
     private Animator titleAni;
     [SerializeField]
@@ -112,6 +112,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     public bool showTVInstruction;
+    [SerializeField]
+    public bool isBegin;
 
     [SerializeField]
     public GameObject noisy1;
@@ -162,6 +164,7 @@ public class GameManager : MonoBehaviour
         DetectScene();
         PushCheck();
 
+
     }
 
     private void FixedUpdate()
@@ -171,7 +174,10 @@ public class GameManager : MonoBehaviour
 
         ShowTVInstruction();
 
+
+
     }
+
 
 
     void SkyboxControl()
@@ -224,18 +230,16 @@ public class GameManager : MonoBehaviour
             {
                 player1 = obj;
                 p1 = obj.GetComponent<TestCube>();
+                p1Ani = p1.playerAnimator;
 
 
                 Transform parentTransform = player1.transform;
 
                 foreach (Transform child in parentTransform)
                 {
-                    if (child.CompareTag("Character"))
+                    if (p1Ani != null)
                     {
-                        p1Anim = child;
-                        p1Character = p1Anim.gameObject;
                         p1AnimFound = true;
-                        p1Ani = p1Character.GetComponent<Animator>();
                     }
 
                     if (child.CompareTag("InGameUI"))
@@ -266,21 +270,16 @@ public class GameManager : MonoBehaviour
             {
                 player2 = obj;
                 p2 = obj.GetComponent<TestCube>();
-
+                p2Ani = p2.playerAnimator2;
 
 
                 Transform parentTransform = player2.transform;
 
                 foreach (Transform child in parentTransform)
                 {
-                    if (child.CompareTag("Character"))
+                    if (p2Ani != null)
                     {
-
-                        p2Anim = child;
-                        p2Character = p2Anim.gameObject;
-                        p2AnimFound = true;
-                        p2Ani = p2Character.GetComponent<Animator>();
-
+                        p2AnimFound = true; 
                     }
 
                     if (child.CompareTag("InGameUI"))
@@ -354,6 +353,7 @@ public class GameManager : MonoBehaviour
         {
             p1.isFreeze = false;
             p2.isFreeze = false;
+
         }
 
         if (p1 != null && p2 == null)
@@ -423,7 +423,7 @@ public class GameManager : MonoBehaviour
     {
         float lerpSpeed = 5f;
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, cameraPosition.position, Time.deltaTime * lerpSpeed);
-        print("Camera");
+        //print("Camera");
     }
 
 
@@ -451,7 +451,12 @@ public class GameManager : MonoBehaviour
         // Destroy the GameObject this script is attached to
     }
 
-
+    IEnumerable FindCharacter()
+    {
+        yield return new WaitForSeconds(1);
+        FindPlayer();
+        isBegin = false;
+    }
 
 
 

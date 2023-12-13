@@ -198,7 +198,7 @@ public class RespawnControl : MonoBehaviour
                 StartCoroutine(ActivateP1UIForDuration(3f));
                 if (curSceneName == scene2)
                 {
-                    LevelDialogue.ShowDevilPlayer2();
+                    //LevelDialogue.ShowDevilPlayer2();
                     dR.Stop();
                     PlayRandomDialogue();
                     Player1Die = true;
@@ -216,7 +216,7 @@ public class RespawnControl : MonoBehaviour
                 StartCoroutine(ActivateP2UIForDuration(3f));
                 if (curSceneName == scene2)
                 {
-                    LevelDialogue.ShowDevilPlayer1();
+                    //LevelDialogue.ShowDevilPlayer1();
                     dR.Stop();
                     PlayRandomDialogue();
                     Player2Die = true;
@@ -258,35 +258,35 @@ public class RespawnControl : MonoBehaviour
 
         if (other.gameObject.tag == ("TriggerStart"))
         {
-            LevelDialogue.ShowDevilAll();
+            //LevelDialogue.ShowDevilAll();
             dR.StartDialogue("StartLevel");
             Destroy(other.gameObject);
         }
 
         if (other.gameObject.tag == ("TriggerFirstLevel"))
         {
-            LevelDialogue.ShowDevilAll();
+            //LevelDialogue.ShowDevilAll();
             dR.StartDialogue("FirstLevel");
             Destroy(other.gameObject);
         }
 
         if (other.gameObject.tag == ("TriggerSecondLevel"))
         {
-            LevelDialogue.ShowDevilAll();
+            //LevelDialogue.ShowDevilAll();
             dR.StartDialogue("SecondLevel");
             Destroy(other.gameObject);
         }
 
         if (other.gameObject.tag == ("TriggerThirdLevel"))
         {
-            LevelDialogue.ShowDevilAll();
+            //LevelDialogue.ShowDevilAll();
             dR.StartDialogue("ThirdLevel");
             Destroy(other.gameObject);
         }
 
         if (other.gameObject.tag == ("TriggerEnd"))
         {
-            LevelDialogue.ShowDevilAll();
+            //LevelDialogue.ShowDevilAll();
             dR.StartDialogue("EndLevel");
             Destroy(other.gameObject);
         }

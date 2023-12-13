@@ -42,7 +42,9 @@ public class TestCube : MonoBehaviour
     private Vector3 forceDirection = Vector3.zero;
 
     [SerializeField]
-    private Animator playerAnimator;
+    public Animator playerAnimator;
+    [SerializeField]
+    public Animator playerAnimator2;
 
     private Rigidbody rb;
     [SerializeField]
@@ -270,12 +272,18 @@ public class TestCube : MonoBehaviour
     private GameObject p1Indicator;
     [SerializeField]
     private GameObject p2Indicator;
+
+    [Header("Camera Control")]
     [SerializeField]
     private GameObject Cam1;
     [SerializeField]
     private GameObject Cam2;
 
-
+    [Header("Player Model")]
+    [SerializeField]
+    private GameObject model1;
+    [SerializeField]
+    private GameObject model2;
 
     //public enum CameraStyle
     //{
@@ -463,6 +471,8 @@ public class TestCube : MonoBehaviour
             titleText.text = "1P";
             p2Indicator.SetActive(false);
             StartCoroutine(StopShowTitle());
+            model1.SetActive(true);
+            Destroy(model2);
 
         }
         if (isPlayer2 && !titleDisplayed)
@@ -470,6 +480,9 @@ public class TestCube : MonoBehaviour
             titleText.text = "2P";
             p2Indicator.SetActive(true);
             StartCoroutine(StopShowTitle());
+            model2.SetActive(true);
+            Destroy(model1);
+
         }
 
 
@@ -494,15 +507,39 @@ public class TestCube : MonoBehaviour
 
     private void MovementCalcs()
     {
-        playerAnimator.SetBool("isGliding", isGliding);
+        if (isPlayer1)
+        {
+            playerAnimator.SetBool("isGliding", isGliding);
+        }
+
+        if (isPlayer2)
+        {
+            playerAnimator2.SetBool("isGliding", isGliding);
+        }
+
 
         if (isFreeze)
         {
-            playerAnimator.SetFloat("speed", 0);
+            if (isPlayer1)
+            {
+                playerAnimator.SetFloat("speed", 0);
+            }
+            if (isPlayer2)
+            {
+                playerAnimator2.SetFloat("speed", 0);
+            }
         }
         else
         {
-            playerAnimator.SetFloat("speed", currentSpeed);
+            if (isPlayer1)
+            {
+                playerAnimator.SetFloat("speed", currentSpeed);
+            }
+            if (isPlayer2)
+            {
+                playerAnimator2.SetFloat("speed", currentSpeed);
+            }
+            
         }
 
         if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
@@ -822,14 +859,14 @@ public class TestCube : MonoBehaviour
             withinPushingRange = false;
             if (isPlayer1 && p1Anim != null)
             {
-                p2Anim.SetBool("beingPush", false);
+                p2Anim.SetBool("beingPushed", false);
                 //p1pushed = false;
 
             }
 
             if (isPlayer2 && p2Anim != null)
             {
-                p1Anim.SetBool("beingPush", false);
+                p1Anim.SetBool("beingPushed", false);
                 //p2pushed = false;
             }
         }
@@ -903,7 +940,8 @@ public class TestCube : MonoBehaviour
     {
 
         otherRB = gameManager.player2.GetComponent<Rigidbody>();
-        p2Anim = gameManager.p2Character.GetComponent<Animator>();
+        //p2Anim = gameManager.p2Character.GetComponent<Animator>();
+        p2Anim = GameManager.instance.p2Ani;
 
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
@@ -933,7 +971,7 @@ public class TestCube : MonoBehaviour
     {
 
         otherRB = gameManager.player1.GetComponent<Rigidbody>();
-        p1Anim = gameManager.p1Character.GetComponent<Animator>();
+        p1Anim = GameManager.instance.p1Ani;
 
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
