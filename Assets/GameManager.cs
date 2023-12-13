@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Yarn.Unity;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -138,6 +140,12 @@ public class GameManager : MonoBehaviour
     private float indicatorDistance = 5;
     [SerializeField]
     private float appearanceDistance = 50f;
+    [SerializeField]
+    public bool GMconversationStart;
+    [SerializeField]
+    public Trigger trigger;
+    [SerializeField]
+    public bool foundTrigger;
 
     private Dictionary<GameObject, GameObject> projectileToIndicator = new Dictionary<GameObject, GameObject>();
 
@@ -183,7 +191,7 @@ public class GameManager : MonoBehaviour
     void SkyboxControl()
     {
         // Change skybox based on the scene name
-        if (GameManager.instance.sceneChanged)
+        if (sceneChanged)
         {
             if(curSceneName == scene3)
             {
@@ -200,14 +208,10 @@ public class GameManager : MonoBehaviour
 
     void DetectScene()
     {
-        if (sceneChanged)
-        {
-
-        }
-
-
    
     }
+
+
     public void Reposition(Transform P1position, Transform P2position)
     {
         player1.transform.position = P1position.position;

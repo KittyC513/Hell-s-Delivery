@@ -115,6 +115,15 @@ public class ShowDialogue :DialogueViewBase
         //SceneManager.LoadScene("Tutorial");
     }
 
+    [YarnCommand("HubStart")]
+    public static void HubStart()
+    {
+        GameManager.instance.sceneChanged = true;
+        Loader.Load(Loader.Scene.HubStart);
+
+        //SceneManager.LoadScene("Tutorial");
+    }
+
     [YarnCommand("HideGradient")]
     public static void HideGradient()
     {
