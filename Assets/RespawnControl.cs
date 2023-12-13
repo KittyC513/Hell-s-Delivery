@@ -86,6 +86,13 @@ public class RespawnControl : MonoBehaviour
     {
         cpParent = GameObject.FindWithTag("cpParent");
 
+        foreach (Transform child in cpParent.transform)
+        {
+            cps.Add(child.gameObject);
+
+            CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
+            cpc.Add(checkpc);
+        }
 
 
         //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
@@ -94,13 +101,7 @@ public class RespawnControl : MonoBehaviour
 
         testCube = player.GetComponent<TestCube>();
 
-        foreach (Transform child in cpParent.transform)
-        {
-            cps.Add(child.gameObject);
-
-            CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
-            cpc.Add(checkpc);
-        }
+        
     }
 
     void SceneCheck()
@@ -352,17 +353,22 @@ public class RespawnControl : MonoBehaviour
             }
 
         }
-
+        //Debug.Log("newcheckpoint");
         if (other.gameObject.tag == ("fCheckpoint"))
         {
-
+            
             respawnPoint = other.transform.position;
-            objectGrabbable.respawnPoint = respawnPoint;
+            if (objectGrabbable != null)
+            {
+                objectGrabbable.respawnPoint = respawnPoint;
+            }
+            
 
             foreach (CheckpointControl checkpc in cpc)
             {
-
+                Debug.Log("deactivatetrue");
                 checkpc.deActivate = true;
+                
 
             }
 
@@ -376,7 +382,7 @@ public class RespawnControl : MonoBehaviour
                 if (partnerScript != null)
                 {
                     partnerScript.respawnPoint = respawnPoint;
-                    //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+                    Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
                 }
                 //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
             }
