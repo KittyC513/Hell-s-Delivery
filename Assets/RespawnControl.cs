@@ -165,6 +165,7 @@ public class RespawnControl : MonoBehaviour
 
     private void Update()
     {
+        Partner = GameObject.FindGameObjectsWithTag("FindScript");
         //FindDR();
         SceneCheck();
         PlayerDetector();
@@ -176,7 +177,7 @@ public class RespawnControl : MonoBehaviour
         ResetInitialRespawnPoint();
         ////if (Partner == null)
         //{
-         Partner = GameObject.FindGameObjectsWithTag("FindScript");
+         
         //}
 
 
@@ -376,7 +377,7 @@ public class RespawnControl : MonoBehaviour
 
             foreach (GameObject obj in Partner)
             {
-                //Debug.Log(obj);
+                Debug.Log("loopworking");
                 RespawnControl partnerScript = obj.GetComponent<RespawnControl>();
 
                 if (partnerScript != null)
