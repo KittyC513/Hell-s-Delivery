@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{F2527CF3-8D66-F638-A622-1DBC87E34A2E}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{E597D766-30F1-0965-0EAB-034E0A51C489}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -86,6 +86,10 @@
 				<File Id="496788715" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>MetalLand_2.wav</ShortName>
 					<CachePath>SFX/MetalLand_2_10C4C929.wem</CachePath>
+				</File>
+				<File Id="556158382" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PackageImpact.wav</ShortName>
+					<CachePath>SFX/PackageImpact_10C4C929.wem</CachePath>
 				</File>
 				<File Id="612044681" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Checkpoint Get.wav</ShortName>
@@ -204,6 +208,11 @@
 						<MediaRef Id="987426019"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="246128500" Name="Play_PackageImpact" DurationType="OneShot" DurationMin="3" DurationMax="3">
+					<MediaRefs>
+						<MediaRef Id="556158382"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="3361946317" Name="Play_PackagePick" DurationType="OneShot" DurationMin="0.15621315" DurationMax="0.15621315">
 					<MediaRefs>
 						<MediaRef Id="619171860"/>
@@ -294,5 +303,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{DAC68A05-A231-0373-7135-4E307B4F10C3}</FileHash>
+	<FileHash>{3116A869-C739-64B3-F9BD-E182B0171EE9}</FileHash>
 </SoundBanksInfo>

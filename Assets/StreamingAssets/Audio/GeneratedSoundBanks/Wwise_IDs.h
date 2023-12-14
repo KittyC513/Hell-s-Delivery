@@ -21,6 +21,7 @@ namespace AK
         static const AkUniqueID PLAY_LANDINGS = 1019246482U;
         static const AkUniqueID PLAY_METALLANDING = 2180111060U;
         static const AkUniqueID PLAY_METALSTEPS = 296643996U;
+        static const AkUniqueID PLAY_PACKAGEIMPACT = 246128500U;
         static const AkUniqueID PLAY_PACKAGEPICK = 3361946317U;
         static const AkUniqueID PLAY_PACKAGETHROW = 1549093586U;
         static const AkUniqueID PLAY_PARACHUTE = 419517223U;
