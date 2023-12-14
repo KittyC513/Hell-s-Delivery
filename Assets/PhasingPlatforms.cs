@@ -21,6 +21,11 @@ public class PhasingPlatforms : MonoBehaviour
 
     private float time;
 
+    [SerializeField] private AK.Wwise.Event phaseIn;
+    [SerializeField] private AK.Wwise.Event phaseOut;
+
+    private bool shouldPlaySound = false;
+
     private void Awake()
     {
 
@@ -74,6 +79,11 @@ public class PhasingPlatforms : MonoBehaviour
                 renderer.material = Solid;
             }
 
+            if (shouldPlaySound)
+            {
+                shouldPlaySound = false;
+                phaseIn.Post(this.gameObject);
+            }
 
         }
         else
@@ -94,6 +104,12 @@ public class PhasingPlatforms : MonoBehaviour
             foreach (Renderer renderer in renderers)
             {
                 renderer.material = Phased;
+            }
+
+            if (!shouldPlaySound)
+            {
+                shouldPlaySound = true;
+                phaseOut.Post(this.gameObject);
             }
 
         }

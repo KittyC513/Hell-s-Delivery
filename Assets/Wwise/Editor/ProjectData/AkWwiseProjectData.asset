@@ -108,7 +108,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 7ff36978145fe842bd14fccf80764e96
     GuidInternal: 
-    m_lastTime: -8584990280449854940
+    m_lastTime: -8584990241231943514
     List:
     - name: Play_Apartment_Complex_v1
       guid: 6802d184e355c240b71ec96a6ef7c135
@@ -297,6 +297,57 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: Play_PlatformsMove
+      guid: 5de47c92562ab24a8919f80855ebfe2b
+      id: 2752324885
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_PlatformsMove
+        ObjectType: 3
+        guid: 5de47c92562ab24a8919f80855ebfe2b
+      Path: Events\Default Work Unit\Play_PlatformsMove
+      maxAttenuation: 90
+      maxDuration: 3.5
+      minDuration: 3.5
+    - name: Play_PlatformsPhaseIn
+      guid: 4ff68673a1f99c48bd621d30ca3b517f
+      id: 2281964030
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_PlatformsPhaseIn
+        ObjectType: 3
+        guid: 4ff68673a1f99c48bd621d30ca3b517f
+      Path: Events\Default Work Unit\Play_PlatformsPhaseIn
+      maxAttenuation: 90
+      maxDuration: 1.5
+      minDuration: 1.5
+    - name: Play_PlatformsPhaseOut
+      guid: 480e09f2f8feb24db5ec5d4b95cc93be
+      id: 123604001
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_PlatformsPhaseOut
+        ObjectType: 3
+        guid: 480e09f2f8feb24db5ec5d4b95cc93be
+      Path: Events\Default Work Unit\Play_PlatformsPhaseOut
+      maxAttenuation: 90
+      maxDuration: 1.5
+      minDuration: 1.5
     - name: Play_RandWoodLand
       guid: f2fad38a9420ea4e9d9b1bfa0f099bc7
       id: 415850775
@@ -575,7 +626,7 @@ MonoBehaviour:
     m_lastTime: -8585015309829515142
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0600000007000000
+  ExpandedWaapiItemIds: 060000000700000008000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

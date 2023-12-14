@@ -23,13 +23,21 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{068D51ED-B0F9-693B-39AC-4A8A2E50147F}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{F2527CF3-8D66-F638-A622-1DBC87E34A2E}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
+				<File Id="25988797" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PlatformsMove.wav</ShortName>
+					<CachePath>SFX/PlatformsMove_10C4C929.wem</CachePath>
+				</File>
 				<File Id="26740870" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 1 - Light.wav</ShortName>
 					<CachePath>SFX/Step 1 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="40513669" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PlatformsPhaseOut.wav</ShortName>
+					<CachePath>SFX/PlatformsPhaseOut_10C4C929.wem</CachePath>
 				</File>
 				<File Id="71935411" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Apartment Complex v1.wav</ShortName>
@@ -42,6 +50,10 @@
 				<File Id="151202581" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodStep_1.wav</ShortName>
 					<CachePath>SFX/WoodStep_1_10C4C929.wem</CachePath>
+				</File>
+				<File Id="222451205" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PlatformsPhaseIn.wav</ShortName>
+					<CachePath>SFX/PlatformsPhaseIn_10C4C929.wem</CachePath>
 				</File>
 				<File Id="250775375" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 4 - Light.wav</ShortName>
@@ -207,6 +219,21 @@
 						<MediaRef Id="648574403"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="2752324885" Name="Play_PlatformsMove" MaxAttenuation="90" DurationType="OneShot" DurationMin="3.5" DurationMax="3.5">
+					<MediaRefs>
+						<MediaRef Id="25988797"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2281964030" Name="Play_PlatformsPhaseIn" MaxAttenuation="90" DurationType="OneShot" DurationMin="1.5" DurationMax="1.5">
+					<MediaRefs>
+						<MediaRef Id="222451205"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="123604001" Name="Play_PlatformsPhaseOut" MaxAttenuation="90" DurationType="OneShot" DurationMin="1.5" DurationMax="1.5">
+					<MediaRefs>
+						<MediaRef Id="40513669"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="415850775" Name="Play_RandWoodLand" DurationType="OneShot" DurationMin="0.2558957" DurationMax="0.29855272">
 					<MediaRefs>
 						<MediaRef Id="473084078"/>
@@ -267,5 +294,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{F66A27D2-7615-BE79-F3A4-0376D6F25298}</FileHash>
+	<FileHash>{BF59239A-0B2B-F666-54D1-D745CDB216EA}</FileHash>
 </SoundBanksInfo>

@@ -24,6 +24,9 @@ namespace AK
         static const AkUniqueID PLAY_PACKAGEPICK = 3361946317U;
         static const AkUniqueID PLAY_PACKAGETHROW = 1549093586U;
         static const AkUniqueID PLAY_PARACHUTE = 419517223U;
+        static const AkUniqueID PLAY_PLATFORMSMOVE = 2752324885U;
+        static const AkUniqueID PLAY_PLATFORMSPHASEIN = 2281964030U;
+        static const AkUniqueID PLAY_PLATFORMSPHASEOUT = 123604001U;
         static const AkUniqueID PLAY_RANDWOODLAND = 415850775U;
         static const AkUniqueID PLAY_SCORECARD_SEQUENCE = 342527874U;
         static const AkUniqueID PLAY_SCORESCENEMUSIC = 613185981U;
