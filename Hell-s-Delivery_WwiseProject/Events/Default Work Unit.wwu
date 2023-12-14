@@ -389,6 +389,91 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_TutorialMusic" ID="{7975B632-0D3E-4897-B551-CCEA3DA973C6}">
+					<ChildrenList>
+						<Action Name="" ID="{76AF86F7-C49A-44E1-B37A-85FF38CBFD09}" ShortID="573335734">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="TutorialMusic" ID="{0CDC0331-4B62-46C9-A810-8E81B00590B0}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_PlatformsPhaseOut" ID="{F2090E48-FEF8-4DB2-B5EC-5D4B95CC93BE}">
+					<ChildrenList>
+						<Action Name="" ID="{8B940F14-5D73-4577-B5DB-2251B7952FDC}" ShortID="13547773">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlatformsPhaseOut" ID="{1305A2FD-601B-4661-8F3E-FC950CF944DB}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{CC047E0A-B6B8-4951-AA4C-FDA6DDDC0CAA}" ShortID="978754761">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlatformsPhaseOut" ID="{1305A2FD-601B-4661-8F3E-FC950CF944DB}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_PlatformsPhaseIn" ID="{7386F64F-F9A1-489C-BD62-1D30CA3B517F}">
+					<ChildrenList>
+						<Action Name="" ID="{7EDFB421-A7FF-447C-A839-6C1BBD9B8F87}" ShortID="1052277535">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlatformsPhaseIn" ID="{EF09EB83-71D8-4690-9BD0-FFBCC1E4BA14}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{EAF1E410-C236-453E-AFA2-7938EDE67704}" ShortID="247590741">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlatformsPhaseIn" ID="{EF09EB83-71D8-4690-9BD0-FFBCC1E4BA14}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_PlatformsMove" ID="{927CE45D-2A56-4AB2-8919-F80855EBFE2B}">
+					<ChildrenList>
+						<Action Name="" ID="{162EE033-9679-4878-AE70-710055F0FE4F}" ShortID="160281325">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlatformsMove" ID="{09994FF2-1C8C-465F-AF38-9823206D0455}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{35926432-0340-4DAB-894C-A4AC215E6D1D}" ShortID="380407722">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlatformsMove" ID="{09994FF2-1C8C-465F-AF38-9823206D0455}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_PackageImpact" ID="{36BC6077-B7B2-4B31-835E-18A4A8CB17C4}">
+					<ChildrenList>
+						<Action Name="" ID="{CCA170A0-A412-462A-8820-D4F346DE2098}" ShortID="80929498">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PackageImpact" ID="{DE7D4E03-D865-492A-A224-9EDD06E35120}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

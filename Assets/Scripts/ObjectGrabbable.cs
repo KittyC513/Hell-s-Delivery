@@ -68,7 +68,7 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     private GameObject indicator;
 
-
+    [SerializeField] private AK.Wwise.Event packageImpact;
 
     private void Awake()
     {
@@ -453,5 +453,11 @@ public class ObjectGrabbable : MonoBehaviour
         GameManager.instance.p2UI.SetActive(false);
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            packageImpact.Post(this.gameObject);
+        }
+    }
 }

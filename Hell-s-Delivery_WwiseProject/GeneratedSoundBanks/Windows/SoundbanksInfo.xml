@@ -23,21 +23,37 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{CA67FBB5-19A2-4157-0169-294EC61EE190}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{E597D766-30F1-0965-0EAB-034E0A51C489}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
+				<File Id="25988797" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PlatformsMove.wav</ShortName>
+					<CachePath>SFX/PlatformsMove_10C4C929.wem</CachePath>
+				</File>
 				<File Id="26740870" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 1 - Light.wav</ShortName>
 					<CachePath>SFX/Step 1 - Light_10C4C929.wem</CachePath>
+				</File>
+				<File Id="40513669" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PlatformsPhaseOut.wav</ShortName>
+					<CachePath>SFX/PlatformsPhaseOut_10C4C929.wem</CachePath>
 				</File>
 				<File Id="71935411" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Apartment Complex v1.wav</ShortName>
 					<CachePath>SFX/Apartment Complex v1_9D5A64B3.wem</CachePath>
 				</File>
+				<File Id="95162724" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>TutorialMusic.wav</ShortName>
+					<CachePath>SFX/TutorialMusic_F33C1FD4.wem</CachePath>
+				</File>
 				<File Id="151202581" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodStep_1.wav</ShortName>
 					<CachePath>SFX/WoodStep_1_10C4C929.wem</CachePath>
+				</File>
+				<File Id="222451205" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PlatformsPhaseIn.wav</ShortName>
+					<CachePath>SFX/PlatformsPhaseIn_10C4C929.wem</CachePath>
 				</File>
 				<File Id="250775375" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 4 - Light.wav</ShortName>
@@ -70,6 +86,10 @@
 				<File Id="496788715" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>MetalLand_2.wav</ShortName>
 					<CachePath>SFX/MetalLand_2_10C4C929.wem</CachePath>
+				</File>
+				<File Id="556158382" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PackageImpact.wav</ShortName>
+					<CachePath>SFX/PackageImpact_10C4C929.wem</CachePath>
 				</File>
 				<File Id="612044681" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Checkpoint Get.wav</ShortName>
@@ -188,6 +208,11 @@
 						<MediaRef Id="987426019"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="246128500" Name="Play_PackageImpact" DurationType="OneShot" DurationMin="3" DurationMax="3">
+					<MediaRefs>
+						<MediaRef Id="556158382"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="3361946317" Name="Play_PackagePick" DurationType="OneShot" DurationMin="0.15621315" DurationMax="0.15621315">
 					<MediaRefs>
 						<MediaRef Id="619171860"/>
@@ -201,6 +226,21 @@
 				<Event Id="419517223" Name="Play_Parachute" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="648574403"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2752324885" Name="Play_PlatformsMove" MaxAttenuation="90" DurationType="OneShot" DurationMin="3.5" DurationMax="3.5">
+					<MediaRefs>
+						<MediaRef Id="25988797"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2281964030" Name="Play_PlatformsPhaseIn" MaxAttenuation="90" DurationType="OneShot" DurationMin="1.5" DurationMax="1.5">
+					<MediaRefs>
+						<MediaRef Id="222451205"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="123604001" Name="Play_PlatformsPhaseOut" MaxAttenuation="90" DurationType="OneShot" DurationMin="1.5" DurationMax="1.5">
+					<MediaRefs>
+						<MediaRef Id="40513669"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="415850775" Name="Play_RandWoodLand" DurationType="OneShot" DurationMin="0.2558957" DurationMax="0.29855272">
@@ -225,6 +265,11 @@
 				<Event Id="2914340836" Name="Play_Summoning_Circle_All" MaxAttenuation="25" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="271139115"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2086825057" Name="Play_TutorialMusic" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="95162724"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="3366204753" Name="Play_WindCatch" DurationType="Infinite">
@@ -258,5 +303,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{216AB30A-0993-5551-3AC9-5C5497543930}</FileHash>
+	<FileHash>{3116A869-C739-64B3-F9BD-E182B0171EE9}</FileHash>
 </SoundBanksInfo>

@@ -9,6 +9,14 @@ public class PlaySound : MonoBehaviour
 
     [SerializeField] private AK.Wwise.Event secondaryEvent;
     private bool isPlaying = false;
+    uint playingId;
+    uint playingIdSecondary;
+
+    private void OnDestroy()
+    {
+        AkSoundEngine.StopPlayingID(playingId);
+        AkSoundEngine.StopPlayingID(playingIdSecondary);
+    }
 
     public void TriggerSound()
     {
@@ -16,13 +24,15 @@ public class PlaySound : MonoBehaviour
 
         if (!isPlaying && loop)
         {
-            startEvent.Post(this.gameObject);
+            playingId = startEvent.Post(this.gameObject);
             isPlaying = true;
         }
         else if (!loop)
         {
-            startEvent.Post(this.gameObject);
+            playingId = startEvent.Post(this.gameObject);
         }
+
+       
        
     }
 
@@ -33,6 +43,6 @@ public class PlaySound : MonoBehaviour
             isPlaying = false;
         }
 
-        secondaryEvent.Post(this.gameObject);
+        playingIdSecondary = secondaryEvent.Post(this.gameObject);
     }
 }

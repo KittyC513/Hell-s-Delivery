@@ -30,6 +30,9 @@ public class RisingPlatforms : MonoBehaviour
 
     public bool isRunning;
 
+    [SerializeField] private AK.Wwise.Event platformsMove;
+    private bool shouldSound = false;
+
     private void Awake()
     {
 
@@ -84,7 +87,11 @@ public class RisingPlatforms : MonoBehaviour
                 child.transform.position = Vector3.Lerp(transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
             }*/
 
-           
+           if (shouldSound)
+            {
+                shouldSound = false;
+                platformsMove.Post(this.gameObject);
+            }
             
 
         }
@@ -94,7 +101,11 @@ public class RisingPlatforms : MonoBehaviour
 
             platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, startPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
 
-            
+            if (!shouldSound)
+            {
+                shouldSound = true;
+                platformsMove.Post(this.gameObject);
+            }
 
 
         }

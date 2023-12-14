@@ -27,7 +27,7 @@ public class CheckpointControl : MonoBehaviour
         anim.SetBool("Activate", false);
         ps.Stop();
         animSwitch = true;
-        deActivate = false;
+        deActivate = true;
         
     }
 
