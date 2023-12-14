@@ -127,16 +127,20 @@ public class RespawnControl : MonoBehaviour
 
         //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
 
-        gameManager = Object.FindAnyObjectByType<GameManager>();
 
-        testCube = player.GetComponent<TestCube>();
+
+        //testCube = player.GetComponent<TestCube>();
 
         
     }
 
     void SceneCheck()
     {
-        if (GameManager.instance.sceneChanged)
+        if(gameManager == null)
+        {
+            gameManager = Object.FindAnyObjectByType<GameManager>();
+        }
+        if (gameManager.sceneChanged)
         {
             curSceneName = GameManager.instance.curSceneName;
             if (curSceneName ==scene5 ) 
