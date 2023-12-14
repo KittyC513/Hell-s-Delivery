@@ -333,17 +333,18 @@ public class ScoreCount : MonoBehaviour
     {
         if (p1AddScore)
         {
+            p1scoreEffect.SetActive(true);
             StartCoroutine(RotateToPosition(knobValue, 0.3f));
             StartCoroutine(ScoreEffectP1());
         }
 
         if (p2AddScore)
         {
+            p2scoreEffect.SetActive(true);
             StartCoroutine(RotateToPositionP2(knobValue, 0.3f));
             StartCoroutine(ScoreEffectP2());
         }
     }
-
 
     IEnumerator RotateToPosition(float targetRotation, float rotationTime)
     {
@@ -504,7 +505,7 @@ public class ScoreCount : MonoBehaviour
 
     IEnumerator ScoreEffectP1()
     {
-        p1scoreEffect.SetActive(true);
+
         yield return new WaitForSeconds(3f);
         
         p1scoreEffect.SetActive(false);
@@ -512,7 +513,7 @@ public class ScoreCount : MonoBehaviour
 
     IEnumerator ScoreEffectP2()
     {
-        p2scoreEffect.SetActive(true);
+
         yield return new WaitForSeconds(3f);
 
         p2scoreEffect.SetActive(false);

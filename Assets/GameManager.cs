@@ -26,9 +26,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public Transform closeShoot;
     [SerializeField]
-    private Animator animTitle;
+    public Animator animTitle;
     [SerializeField]
-    private GameObject text;
+    public GameObject text;
     [SerializeField]
     private GameObject instructionText;
 
@@ -150,7 +150,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool foundTrigger;
     [SerializeField]
-    public bool camChanged;
+    public bool camChanged1;
+    [SerializeField]
+    public bool camChanged2;
     [SerializeField]
     public bool enterOffice;
 
@@ -176,7 +178,8 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         FindPlayer();
-        FindCamera();
+        
+        //FindCamera();
         DetectScene();
         PushCheck();
         P1Indicator();
@@ -317,22 +320,27 @@ public class GameManager : MonoBehaviour
         }
 
         //two players join the game, it loads to the Title Scene
-        if(p1 != null && p2 != null)
+        if (p1 != null && p2 != null)
         {
+
             currentScene = SceneManager.GetActiveScene();
             curSceneName = currentScene.name;
-            if (curSceneName == scene3)
-            {
-                animTitle.SetBool("isEnded", true);
-                text.SetActive(false);
-                StartCoroutine(ShowDirection());
-            }
-            else
+            if (curSceneName != scene3)
             {
                 animTitle = null;
                 text = null;
-                StopCoroutine(ShowDirection());
             }
+            else
+            {
+                if(!camChanged1 && !camChanged2)
+                {
+                    MoveCamera(cameraPosition);
+                    animTitle.SetBool("isEnded", true);
+                    text.SetActive(false);
+                }
+ 
+            }
+
         }
 
     }
@@ -423,42 +431,58 @@ public class GameManager : MonoBehaviour
 
 
 
-    void FindCamera()
-    {
-        if(curSceneName == scene3)
-        {
-            mainCam = Camera.main;
-            if (p1)
-            {
-                if (!enterOffice)
-                {
-                    MoveCamera(cameraPosition);
-                }
-                else
-                {
-                    StartCoroutine(MovingCamera());
-                }
+    //public void FindCamera()
+    //{
+    //    if(curSceneName == scene3)
+    //    {
+    //        mainCam = Camera.main;
+    //        if (p1)
+    //        {
+    //            if (!enterOffice)
+    //            {
+    //                MoveCamera(cameraPosition);
+    //            }
+    //            else
+    //            {
+
+    //                StartCoroutine(MovingCamera());
+
+    //                if(camChanged == true)
+    //                {
+    //                    Loader.Load(Loader.Scene.HubStart);
+    //                }
+    //            }
 
 
-            }
+    //        }
 
     
-        }
-        else
-        {
-            mainCam = null;
-            cameraPosition = null;
-        }
-    }
+    //    }
+    //    else
+    //    {
+    //        mainCam = null;
+    //        cameraPosition = null;
+    //    }
+    //}
 
-    IEnumerator MovingCamera()
+    public IEnumerator MovingCamera1()
     {
         MoveCamera(closeShoot);
         yield return new WaitForSecondsRealtime(2f);
-        
-        Loader.Load(Loader.Scene.HubStart);
+        camChanged1 = true;
 
     }
+
+    public IEnumerator MovingCamera2()
+    {
+        MoveCamera(closeShoot);
+        yield return new WaitForSecondsRealtime(2f);
+        camChanged2 = true;
+
+    }
+
+
+
 
 
 
@@ -486,11 +510,17 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    IEnumerator ShowDirection()
+    public void ShowDirection()
     {
         // Wait for the specified time
-        yield return new WaitForSeconds(waitingTime);
         instructionText.SetActive(true);
+        // Destroy the GameObject this script is attached to
+    }
+
+    public void StopShowDirection()
+    {
+        // Wait for the specified time
+        instructionText.SetActive(false);
         // Destroy the GameObject this script is attached to
     }
 

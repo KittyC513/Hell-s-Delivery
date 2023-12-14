@@ -662,18 +662,18 @@ public class RespawnControl : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == ("PostOfficeDoor") && gameManager.player1!= null && gameManager.player2 != null)
-        {
-            // when scene changed, both players reset start point
-            if (testCube.ReadActionButton())
-            {
-                gameManager.enterOffice = true;
-                gameManager.sceneChanged = true;
+        //if (other.gameObject.tag == ("PostOfficeDoor") && gameManager.player1!= null && gameManager.player2 != null)
+        //{
+        //    // when scene changed, both players reset start point
+        //    if (testCube.ReadActionButton())
+        //    {
+        //        gameManager.enterOffice = true;
+        //        gameManager.sceneChanged = true;
                 
-                //GameManager.instance.LoadScene(scene1);               
+        //        //GameManager.instance.LoadScene(scene1);               
 
-            }            
-        }
+        //    }            
+        //}
         if (other.gameObject.tag == ("Start_Tutorial"))
         {
 
