@@ -129,7 +129,7 @@ public class TestCube : MonoBehaviour
     string scene5 = "MVPLevel";
     string scene6 = "TitleScene";
     string scene7 = "Tutorial";
-    string scene8 = "ScordCards";
+    string scene8 = "ScoreCards";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]

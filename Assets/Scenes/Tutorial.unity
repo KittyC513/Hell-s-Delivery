@@ -3314,6 +3314,16 @@ MonoBehaviour:
   closeShootTV: {fileID: 0}
   closeShootWerther: {fileID: 0}
   mainCam: {fileID: 0}
+  mainCamera: {fileID: 0}
+  WertherCam: {fileID: 0}
+  dR: {fileID: 0}
+  Lv1: {fileID: 0}
+  lv2: {fileID: 0}
+  phoneUI: {fileID: 0}
+  dialogueBox: {fileID: 0}
+  nameTag: {fileID: 0}
+  nameTag1: {fileID: 0}
+  WertherDialogue: {fileID: 0}
 --- !u!4 &161784146
 Transform:
   m_ObjectHideFlags: 0
@@ -8495,6 +8505,7 @@ MonoBehaviour:
   TVinstruction: {fileID: 0}
   showTVInstruction: 0
   isBegin: 0
+  showWertherInstruction: 0
   noisy1: {fileID: 0}
   noisy2: {fileID: 0}
   isNoisy1: 0
@@ -22655,8 +22666,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5820201961154625037, guid: 1d68dabbaa1ab9043a0ca0f0372944fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381813552}
   m_SourcePrefab: {fileID: 100100000, guid: 1d68dabbaa1ab9043a0ca0f0372944fc, type: 3}
+--- !u!1 &1381813551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5820201961154625037, guid: 1d68dabbaa1ab9043a0ca0f0372944fc, type: 3}
+  m_PrefabInstance: {fileID: 1381813550}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1381813552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381813551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d57911cb49a17a4baac7f4133db5428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1384490734
 Mesh:
   m_ObjectHideFlags: 0
