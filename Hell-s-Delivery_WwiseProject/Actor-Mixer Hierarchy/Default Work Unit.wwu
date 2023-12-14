@@ -1599,6 +1599,35 @@
 						<ActiveSource Name="WindCatch" ID="{20298CEE-89D7-4BFF-B683-4432000B2322}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="TutorialMusic" ID="{0CDC0331-4B62-46C9-A810-8E81B00590B0}" ShortID="380114036">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-6</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="TutorialMusic" ID="{26F3F347-10C2-4CF3-A160-82BCB29D9B83}">
+							<Language>SFX</Language>
+							<AudioFile>TutorialMusic.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="95162724"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="TutorialMusic" ID="{26F3F347-10C2-4CF3-A160-82BCB29D9B83}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

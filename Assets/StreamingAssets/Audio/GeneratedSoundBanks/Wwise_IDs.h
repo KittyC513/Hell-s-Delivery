@@ -28,6 +28,7 @@ namespace AK
         static const AkUniqueID PLAY_SCORECARD_SEQUENCE = 342527874U;
         static const AkUniqueID PLAY_SCORESCENEMUSIC = 613185981U;
         static const AkUniqueID PLAY_SUMMONING_CIRCLE_ALL = 2914340836U;
+        static const AkUniqueID PLAY_TUTORIALMUSIC = 2086825057U;
         static const AkUniqueID PLAY_WINDCATCH = 3366204753U;
         static const AkUniqueID PLAY_WOODSTEPS = 1787223838U;
         static const AkUniqueID PLAYER_STEPS = 4272057794U;

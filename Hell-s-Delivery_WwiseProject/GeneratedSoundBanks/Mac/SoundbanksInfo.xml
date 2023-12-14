@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{CA67FBB5-19A2-4157-0169-294EC61EE190}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{E6D32C07-2D69-2F8A-30D5-0C89B62D1345}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -34,6 +34,10 @@
 				<File Id="71935411" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Apartment Complex v1.wav</ShortName>
 					<CachePath>SFX/Apartment Complex v1_9D5A64B3.wem</CachePath>
+				</File>
+				<File Id="95162724" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>TutorialMusic.wav</ShortName>
+					<CachePath>SFX/TutorialMusic_10C4C929.wem</CachePath>
 				</File>
 				<File Id="151202581" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodStep_1.wav</ShortName>
@@ -227,6 +231,11 @@
 						<MediaRef Id="271139115"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="2086825057" Name="Play_TutorialMusic" DurationType="OneShot" DurationMin="71.64179" DurationMax="71.64179">
+					<MediaRefs>
+						<MediaRef Id="95162724"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="3366204753" Name="Play_WindCatch" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="731966279"/>
@@ -258,5 +267,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{C85CC528-505B-AA7E-6795-D2ABD3C246D6}</FileHash>
+	<FileHash>{A0513562-D822-9105-D5E0-59D4747AEE9B}</FileHash>
 </SoundBanksInfo>

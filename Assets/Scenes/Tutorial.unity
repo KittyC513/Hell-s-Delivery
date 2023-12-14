@@ -3311,6 +3311,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   P1StartPoint: {fileID: 22126910}
   P2StartPoint: {fileID: 2071910012}
+  closeShootTV: {fileID: 0}
+  closeShootWerther: {fileID: 0}
+  mainCam: {fileID: 0}
 --- !u!4 &161784146
 Transform:
   m_ObjectHideFlags: 0
@@ -6822,6 +6825,67 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1001 &507254522
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 383378251556233831, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: data.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 504c6754335ad334aa85a0f6c1122cdf, type: 2}
+    - target: {fileID: 4702760987078811540, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_Name
+      value: Music Player (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 735.75244
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 229.7575
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.974959
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044227154337954241, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e141d44fbd4fbdd4e8114a6766618520, type: 3}
 --- !u!1 &518420548
 GameObject:
   m_ObjectHideFlags: 0
@@ -8522,6 +8586,7 @@ MonoBehaviour:
   curSceneName: 
   mainCam: {fileID: 0}
   cameraPosition: {fileID: 0}
+  closeShoot: {fileID: 0}
   animTitle: {fileID: 0}
   text: {fileID: 0}
   instructionText: {fileID: 0}
@@ -8577,6 +8642,9 @@ MonoBehaviour:
   GMconversationStart: 0
   trigger: {fileID: 0}
   foundTrigger: 0
+  camChanged1: 0
+  camChanged2: 0
+  enterOffice: 0
 --- !u!4 &671034072
 Transform:
   m_ObjectHideFlags: 0
@@ -16491,6 +16559,8 @@ MonoBehaviour:
   lastKnobValue: 0
   p1AddScore: 0
   p2AddScore: 0
+  p1scoreEffect: {fileID: 0}
+  p2scoreEffect: {fileID: 0}
 --- !u!114 &1058182665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37529,3 +37599,4 @@ SceneRoots:
   - {fileID: 1852399139}
   - {fileID: 2104560833}
   - {fileID: 5346169915602031040}
+  - {fileID: 507254522}
