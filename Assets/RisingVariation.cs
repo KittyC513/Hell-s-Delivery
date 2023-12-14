@@ -22,8 +22,12 @@ public class RisingVariation : MonoBehaviour
     private Transform startPosition;
     public Material onActive;
     Material Default;
+    private List<Renderer> renderers = new List<Renderer>();
+    public Material outline;
 
     private float time;
+
+    bool toggle;
 
     private void Awake()
     {
@@ -37,7 +41,8 @@ public class RisingVariation : MonoBehaviour
         {
             platforms.Add(child.gameObject);
 
-
+            Renderer renderer = child.gameObject.GetComponent<Renderer>();
+            renderers.Add(renderer);
 
         }
 
@@ -109,5 +114,59 @@ public class RisingVariation : MonoBehaviour
         //Debug.Log("Deactivate");
     }
 
+    public void OutlineDeActivate()
+    {
+        // Get all Renderer components in the GameObject
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer renderer in renderers)
+        {
+            // Get the existing materials
+            Material[] materials = renderer.materials;
+
+            // Remove the last material if there are more than one materials
+            if (materials.Length > 1)
+            {
+                Material[] newMaterials = new Material[materials.Length - 1];
+                for (int i = 0; i < newMaterials.Length; i++)
+                {
+                    newMaterials[i] = materials[i];
+                }
+
+                // Update the materials on the Renderer
+                renderer.materials = newMaterials;
+            }
+        }
+    }
+
+    public void OutlineActivate()
+    {
+        // Get all Renderer components in the GameObject
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        if (toggle == false)
+        {
+            foreach (Renderer renderer in renderers)
+            {
+                // Get the existing materials
+                Material[] materials = renderer.materials;
+
+                // Add the additional material to the array
+                if (materials.Length <= 1)
+                {
+                    Material[] newMaterials = new Material[materials.Length + 1];
+                    for (int i = 0; i < materials.Length; i++)
+                    {
+                        newMaterials[i] = materials[i];
+                    }
+                    newMaterials[materials.Length] = outline;
+
+                    // Update the materials on the Renderer
+                    renderer.materials = newMaterials;
+                }
+
+            }
+            toggle = true;
+        }
+    }
 
 }

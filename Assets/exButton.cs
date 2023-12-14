@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Cinemachine;
 
 public class exButton : MonoBehaviour
 {
+
+    public static exButton instance;
+
     [SerializeField]
     //private TestCube[] players;
 
@@ -44,10 +48,18 @@ public class exButton : MonoBehaviour
     public Animator Anim;
     public Animator x;
     bool switch1;
+    [SerializeField]
+    private Camera cam;
+    [SerializeField]
+    public bool inBridge;
 
-
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
+        
 
         matChange1 = b1Cyl.GetComponent<Renderer>();
         switch1 = true;
@@ -102,6 +114,15 @@ public class exButton : MonoBehaviour
                 blueActive = true;
                 Anim.SetBool("Activate", true);
                 switch1 = false;
+                if(this.gameObject.layer == LayerMask.NameToLayer("BridgeButton"))
+                {
+                    inBridge = true;
+
+                }
+                else
+                {
+                    inBridge = false;
+                }
             }
             
 
@@ -114,6 +135,8 @@ public class exButton : MonoBehaviour
                 matChange1.material = Default;
                 Anim.SetBool("Activate", false);
                 switch1 = true;
+
+                inBridge = false;
             }
             
         }
@@ -129,6 +152,33 @@ public class exButton : MonoBehaviour
 
 
 
+    }
+
+    public IEnumerator SwitchCamera()
+    {
+        
+        activePlayer.playerCamera.enabled = false;
+        AdjustCameraViewport(cam, 0.5f, 1f);
+
+        yield return new WaitForSeconds(3);
+        activePlayer.playerCamera.enabled = true;
+        
+    }
+
+    void AdjustCameraViewport(Camera camera, float width, float height)
+    {
+        // Make sure the camera component exists
+        if (camera != null)
+        {
+            Rect cameraRect = camera.rect;
+            cameraRect.width = width;
+            cameraRect.height = height;
+            camera.rect = cameraRect;
+        }
+        else
+        {
+            Debug.LogError("Camera reference is null!");
+        }
     }
 }
 

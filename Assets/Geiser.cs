@@ -11,6 +11,10 @@ public class Geiser : MonoBehaviour
     bool activeSwitch = true;
     [SerializeField] private AK.Wwise.Event playFan;
     [SerializeField] private AK.Wwise.Event stopFan;
+    Renderer r;
+    bool toggle;
+    public Material outline;
+    public GameObject cylinder;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +24,8 @@ public class Geiser : MonoBehaviour
 
         ps.Stop();
         bc.enabled = false;
+
+        r = cylinder.gameObject.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -61,5 +67,53 @@ public class Geiser : MonoBehaviour
         }
         
 
+    }
+
+    public void OutlineDeActivate()
+    {
+        if (toggle == true)
+        {
+            // Get the existing materials
+            Material[] materials = r.materials;
+
+            // Remove the last material if there are more than one materials
+            if (materials.Length > 1)
+            {
+                Material[] newMaterials = new Material[materials.Length - 1];
+                for (int i = 0; i < newMaterials.Length; i++)
+                {
+                    newMaterials[i] = materials[i];
+                }
+
+                // Update the materials on the Renderer
+                r.materials = newMaterials;
+            }
+            toggle = false;
+        }
+    }
+
+    public void OutlineActivate()
+    {
+
+        if (toggle == false)
+        {
+                // Get the existing materials
+                Material[] materials = r.materials;
+
+                // Add the additional material to the array
+                if (materials.Length <= 1)
+                {
+                    Material[] newMaterials = new Material[materials.Length + 1];
+                    for (int i = 0; i < materials.Length; i++)
+                    {
+                        newMaterials[i] = materials[i];
+                    }
+                    newMaterials[materials.Length] = outline;
+
+                    // Update the materials on the Renderer
+                    r.materials = newMaterials;
+                }
+            toggle = true;
+        }
     }
 }

@@ -13,6 +13,7 @@ using TMPro;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 
+
 public class TestCube : MonoBehaviour
 {
 
@@ -42,7 +43,9 @@ public class TestCube : MonoBehaviour
     private Vector3 forceDirection = Vector3.zero;
 
     [SerializeField]
-    private Animator playerAnimator;
+    public Animator playerAnimator;
+    [SerializeField]
+    public Animator playerAnimator2;
 
     private Rigidbody rb;
     [SerializeField]
@@ -90,11 +93,11 @@ public class TestCube : MonoBehaviour
 
 
     [SerializeField]
-    private Camera playerCamera;
+    public Camera playerCamera;
     [SerializeField]
     Camera mainCam;
     [SerializeField]
-    TestPickDrop testPickDrop;
+    public CinemachineFreeLook thirdPersonCam;
 
 
 
@@ -234,13 +237,7 @@ public class TestCube : MonoBehaviour
     private float? pushButtonPressedTime;
 
 
-    [Header("Camera Control")]
-    //public CameraStyle currentStyle;
-    public GameObject thirdPersonCam;
-    public GameObject combatCam;
-    public GameObject topDownCam;
-    public GameObject aimCursor;
-    public bool isAiming;
+
 
 
     [SerializeField]
@@ -267,15 +264,24 @@ public class TestCube : MonoBehaviour
 
     [Header("Indicator")]
     [SerializeField]
-    private GameObject p1Indicator;
+    public GameObject p1Indicator;
     [SerializeField]
-    private GameObject p2Indicator;
+    public GameObject p2Indicator;
+
+    [Header("Camera Control")]
     [SerializeField]
     private GameObject Cam1;
     [SerializeField]
     private GameObject Cam2;
 
+    [Header("Player Model")]
+    [SerializeField]
+    private GameObject model1;
+    [SerializeField]
+    private float runThreshold;
 
+    [SerializeField]
+    private GameObject model2;
 
     //public enum CameraStyle
     //{
@@ -309,7 +315,7 @@ public class TestCube : MonoBehaviour
         dialogue = inputAsset.FindActionMap("Dialogue");
        
         rb = this.GetComponent<Rigidbody>();
-        testPickDrop = GetComponent<TestPickDrop>();
+       
         //playerPos = this.transform;
         maxSpeed = walkSpeed;
         mainCam = Camera.main;
@@ -395,7 +401,7 @@ public class TestCube : MonoBehaviour
     {
         CastBlobShadow();
         CheckGrounded();
-        SpeedControl();
+        //SpeedControl();
 
         ContinueBottonControl();
         //MovementCalcs();
@@ -461,15 +467,19 @@ public class TestCube : MonoBehaviour
         if (isPlayer1 && !titleDisplayed)
         {
             titleText.text = "1P";
-            p2Indicator.SetActive(false);
+
             StartCoroutine(StopShowTitle());
+            model1.SetActive(true);
+            Destroy(model2);
 
         }
         if (isPlayer2 && !titleDisplayed)
         {
             titleText.text = "2P";
-            p2Indicator.SetActive(true);
+
             StartCoroutine(StopShowTitle());
+            model2.SetActive(true);
+            Destroy(model1);
         }
 
 
@@ -494,22 +504,65 @@ public class TestCube : MonoBehaviour
 
     private void MovementCalcs()
     {
-        playerAnimator.SetBool("isGliding", isGliding);
+        if (isPlayer1)
+        {
+            playerAnimator.SetBool("isGliding", isGliding);
+            p1Indicator.SetActive(true);
+        }
+
+        if (isPlayer2)
+        {
+            p2Indicator.SetActive(true);
+            playerAnimator2.SetBool("isGliding", isGliding);
+        }
+
 
         if (isFreeze)
         {
-            playerAnimator.SetFloat("speed", 0);
+            if (isPlayer1)
+            {
+                playerAnimator.SetFloat("speed", 0);
+            }
+            if (isPlayer2)
+            {
+                playerAnimator2.SetFloat("speed", 0);
+            }
         }
         else
         {
-            playerAnimator.SetFloat("speed", currentSpeed);
+            if (isPlayer1)
+            {
+                playerAnimator.SetFloat("speed", currentSpeed);
+            }
+            if (isPlayer2)
+            {
+                playerAnimator2.SetFloat("speed", currentSpeed);
+            }
+            
         }
 
         if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
         {
-            //we are moving
-            faceDir = new Vector3(move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
-            isWalking = true;
+            Vector2 moveInput = move.ReadValue<Vector2>();
+            if(moveInput.magnitude > 0)
+            {            
+                //we are moving
+                faceDir = new Vector3(move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
+                isWalking = true;
+                
+                if(moveInput.magnitude > runThreshold)
+                {
+                    isRunning = true;
+                    print("Is Runing");
+                }
+                else
+                {
+                    isRunning = false;
+                }
+
+                print("isWalking" + isWalking);
+            } 
+
 
             
             if (isRunning && !isGliding)
@@ -554,34 +607,19 @@ public class TestCube : MonoBehaviour
         //Debug.Log(rb.velocity);
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
-
-    //void PlayerPosition()
+    //void SpeedControl()
     //{
-    //    currentScene = SceneManager.GetActiveScene();
-    //    curSceneName = currentScene.name;
-    //    Debug.Log("Current scene" + curSceneName);
-
-    //    if (curSceneName == scene2)
+    //    if (run.ReadValue<float>() == 1)
     //    {
-    //        if (isPlayer1 && !p1Appear)
-    //        {
-    //            transform.position = new Vector3(-65f, 13f, 56f);
-    //            p1Appear = true;
-    //            print("p1 in the position");
-
-    //        }
-
-    //        if (isPlayer2 && !p2Appear)
-    //        {
-    //            transform.position = new Vector3(65f, -13f, 65f);
-    //            p2Appear = true;
-
-    //            print("p2 in the position");
-
-    //        }
+    //        isRunning = true;
     //    }
- 
+    //    else if (run.ReadValue<float>() == 0)
+    //    {
+    //        isRunning = false;
+    //    }
+
     //}
+
     void CameraSwitch()
     {
         currentScene = SceneManager.GetActiveScene();
@@ -593,12 +631,20 @@ public class TestCube : MonoBehaviour
             mainCam = Camera.main;
             //print("1");
 
+
         }
         else if(curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7)
         {
             playerCamera.enabled = true;
             mainCam = null;
             //print("2");
+
+            //if (exButton.instance.inBridge)
+            //{
+            //    StartCoroutine(exButton.instance.SwitchCamera());
+            //}
+
+
         }
         
     }
@@ -822,14 +868,14 @@ public class TestCube : MonoBehaviour
             withinPushingRange = false;
             if (isPlayer1 && p1Anim != null)
             {
-                p2Anim.SetBool("beingPush", false);
+                p2Anim.SetBool("beingPushed", false);
                 //p1pushed = false;
 
             }
 
             if (isPlayer2 && p2Anim != null)
             {
-                p1Anim.SetBool("beingPush", false);
+                p1Anim.SetBool("beingPushed", false);
                 //p2pushed = false;
             }
         }
@@ -903,7 +949,8 @@ public class TestCube : MonoBehaviour
     {
 
         otherRB = gameManager.player2.GetComponent<Rigidbody>();
-        p2Anim = gameManager.p2Character.GetComponent<Animator>();
+        //p2Anim = gameManager.p2Character.GetComponent<Animator>();
+        p2Anim = GameManager.instance.p2Ani;
 
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
@@ -933,7 +980,7 @@ public class TestCube : MonoBehaviour
     {
 
         otherRB = gameManager.player1.GetComponent<Rigidbody>();
-        p1Anim = gameManager.p1Character.GetComponent<Animator>();
+        p1Anim = GameManager.instance.p1Ani;
 
         otherRB.useGravity = false;
         otherRB.isKinematic = true;
@@ -1259,18 +1306,7 @@ public class TestCube : MonoBehaviour
 
 
 
-    void SpeedControl()
-    {
-        if (run.ReadValue<float>() == 1)
-        {
-            isRunning = true;
-        }
-        else if (run.ReadValue<float>() == 0)
-        {
-            isRunning = false;
-        }
 
-    }
 
     private void CheckGrounded()
     {
