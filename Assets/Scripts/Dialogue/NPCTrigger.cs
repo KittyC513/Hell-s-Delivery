@@ -18,15 +18,15 @@ public class NPCTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == false)
-        {
-            dialogueRunner.StartDialogue("HubEnd");
-            hasTalkedBefore = true;
-        }
-        else
-        {
-            Repeat();
-        }
+        //if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == false)
+        //{
+        //    dialogueRunner.StartDialogue("HubEnd");
+        //    hasTalkedBefore = true;
+        //}
+        //else
+        //{
+        //    Repeat();
+        //}
     }
     public void Repeat()
     {
@@ -40,7 +40,7 @@ public class NPCTrigger : MonoBehaviour
 
     public void GoToLevelScene()
     {
-        SceneManager.LoadScene("PrototypeLevel");
+        //SceneManager.LoadScene("PrototypeLevel");
     }
 
 

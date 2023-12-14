@@ -254,7 +254,7 @@ MonoBehaviour:
   cpc: []
   cpParent: {fileID: 0}
   player: {fileID: 7636394438553627759}
-  testCube: {fileID: 0}
+  testCube: {fileID: 8749953798318015332}
   isDead: 0
   objectGrabbable: {fileID: 0}
   package: {fileID: 0}
@@ -5559,6 +5559,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 262144
   withinTVRange: 0
+  onTv: 0
+  turnOnTV: 0
+  NPCLayer:
+    serializedVersion: 2
+    m_Bits: 33554432
+  withinNPCsRange: 0
+  isTalking: 0
+  interactWithNpc: 0
+  postEnter:
+    serializedVersion: 2
+    m_Bits: 67108864
+  withinEntranceRange: 0
   pushButtonGracePeriod: 0
   p1pushed: 0
   p2pushed: 0
@@ -7751,6 +7763,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2618575627546304545}
     m_Modifications:
+    - target: {fileID: 874257037474637148, guid: bdd79635b057d5a408a253dddb7d5a1e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 62e754aaa9368c94fa3fc0311284cee2, type: 3}
     - target: {fileID: 5591639481586017807, guid: bdd79635b057d5a408a253dddb7d5a1e, type: 3}
       propertyPath: m_Name
       value: Tutorial UI HUD
@@ -7833,6 +7849,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5963423001941919446, guid: bdd79635b057d5a408a253dddb7d5a1e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350477342735408602, guid: bdd79635b057d5a408a253dddb7d5a1e, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

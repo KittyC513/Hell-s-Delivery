@@ -102,6 +102,8 @@ public class RespawnControl : MonoBehaviour
     [SerializeField]
     private GameObject t1c, t2c, t3c, t4c, t5c, t6c, t7c,t8c;
 
+    bool entry;
+
     //CheckpointControl activateFCP;
 
 
@@ -114,32 +116,28 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
-        cpParent = GameObject.FindWithTag("cpParent");
-
-        foreach (Transform child in cpParent.transform)
-        {
-            cps.Add(child.gameObject);
-
-            CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
-            cpc.Add(checkpc);
-        }
+        
 
 
         //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
 
-        gameManager = Object.FindAnyObjectByType<GameManager>();
 
-        testCube = player.GetComponent<TestCube>();
+
+        //testCube = player.GetComponent<TestCube>();
 
         
     }
 
     void SceneCheck()
     {
-        if (GameManager.instance.sceneChanged)
+        if(gameManager == null)
+        {
+            gameManager = Object.FindAnyObjectByType<GameManager>();
+        }
+        if (gameManager.sceneChanged)
         {
             curSceneName = GameManager.instance.curSceneName;
-            if (curSceneName == scene4 || curSceneName ==scene5)
+            if (curSceneName ==scene5 ) 
             {
                 if (dRP1 == null)
                 {
@@ -153,8 +151,22 @@ public class RespawnControl : MonoBehaviour
                     dRP2 = dRGameobject2.GetComponent<DialogueRunner>();
                 }
 
+
+            }
+
+            if(curSceneName == scene4)
+            {
                 if (objectGrabbable == null)
                 {
+                    cpParent = GameObject.FindWithTag("cpParent");
+
+                    foreach (Transform child in cpParent.transform)
+                    {
+                        cps.Add(child.gameObject);
+
+                        CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
+                        cpc.Add(checkpc);
+                    }
                     package = GameObject.FindGameObjectWithTag("Package");
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
@@ -650,20 +662,18 @@ public class RespawnControl : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == ("PostOfficeDoor") && gameManager.player1!= null && gameManager.player2 != null)
-        {
-            // when scene changed, both players reset start point
-            if (testCube.ReadActionButton())
-            {
-                gameManager.sceneChanged = true;
-                print("sceneChanged: " + gameManager.sceneChanged);
-
-                //GameManager.instance.LoadScene(scene1);
-                Loader.Load(Loader.Scene.HubStart);
+        //if (other.gameObject.tag == ("PostOfficeDoor") && gameManager.player1!= null && gameManager.player2 != null)
+        //{
+        //    // when scene changed, both players reset start point
+        //    if (testCube.ReadActionButton())
+        //    {
+        //        gameManager.enterOffice = true;
+        //        gameManager.sceneChanged = true;
                 
+        //        //GameManager.instance.LoadScene(scene1);               
 
-            }            
-        }
+        //    }            
+        //}
         if (other.gameObject.tag == ("Start_Tutorial"))
         {
 
@@ -1004,6 +1014,8 @@ public class RespawnControl : MonoBehaviour
         // Deactivate the UI after the specified duration
         gameManager.p2UIMinus.SetActive(false);
     }
+
+
 
     IEnumerator DestroyGameObject(GameObject gameObject)
     {

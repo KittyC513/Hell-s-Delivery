@@ -129,6 +129,7 @@ public class TestCube : MonoBehaviour
     string scene5 = "MVPLevel";
     string scene6 = "TitleScene";
     string scene7 = "Tutorial";
+    string scene8 = "ScordCards";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -228,6 +229,26 @@ public class TestCube : MonoBehaviour
     private LayerMask interactableMask;
     [SerializeField]
     public bool withinTVRange;
+    [SerializeField]
+    public bool onTv;
+    [SerializeField]
+    public bool turnOnTV;
+
+    [SerializeField]
+    private LayerMask NPCLayer;
+    [SerializeField]
+    public bool withinNPCsRange;
+    [SerializeField]
+    public bool isTalking;
+    [SerializeField]
+    public bool interactWithNpc;
+
+    [SerializeField]
+    private LayerMask postEnter;
+    [SerializeField]
+    public bool withinEntranceRange;
+    [SerializeField]
+    public bool isEntered;
 
     [SerializeField]
     private float pushButtonGracePeriod;
@@ -235,7 +256,6 @@ public class TestCube : MonoBehaviour
 
     private float? lastColliderTime;
     private float? pushButtonPressedTime;
-
 
 
 
@@ -417,7 +437,7 @@ public class TestCube : MonoBehaviour
         MovementCalcs();
         DetectPushRange();
 
-        if (curSceneName == scene1 || curSceneName == scene3)
+        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         {
             DetectInteractRange();
         } 
@@ -460,7 +480,14 @@ public class TestCube : MonoBehaviour
         if(curSceneName == scene1 || curSceneName == scene3)
         {
             Interacte();
+            OnTV();
         }
+        if(curSceneName == scene6)
+        {
+            EnterOffice();
+            Interacte();
+        }
+   
 
     }
 
@@ -556,14 +583,14 @@ public class TestCube : MonoBehaviour
                 if(moveInput.magnitude > runThreshold)
                 {
                     isRunning = true;
-                    print("Is Runing");
+                    //print("Is Runing");
                 }
                 else
                 {
                     isRunning = false;
                 }
 
-                print("isWalking" + isWalking);
+                //print("isWalking" + isWalking);
             } 
 
 
@@ -628,7 +655,7 @@ public class TestCube : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
 
-        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6 || curSceneName == scene8)
         {
             playerCamera.enabled = false;
             mainCam = Camera.main;
@@ -812,59 +839,6 @@ public class TestCube : MonoBehaviour
     }
 
 
-    //private void DoPick(InputAction.CallbackContext obj)
-    //{
-    //    //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
-    //    if (objectGrabbable == null)
-    //    {
-    //        if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
-    //        {
-
-    //            if (isPlayer1)
-    //            {
-    //                objectGrabbable = package.GetComponent<ObjectGrabbable>();
-    //                objectGrabbable.Grab(itemContainer);
-    //            }
-
-    //            if (isPlayer2)
-    //            {
-    //                objectGrabbable = package.GetComponent<ObjectGrabbable>();
-    //                objectGrabbable.Grab(itemContainer);
-    //            }
-
-    //            //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer1)
-    //            //{
-    //            //    objectGrabbable.Grab(itemContainer);
-
-    //            //}
-
-    //            //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer2)
-    //            //{
-
-    //            //    objectGrabbable.Grab(itemContainer);
-    //            //}
-
-    //        }
-
-    //    }
-    //    else
-    //    {
-    //        if (isPlayer1 && rC.Player1isCarrying)
-    //        {
-    //            objectGrabbable.P1Drop();
-
-    //        }
-
-    //        if (isPlayer2 && rC.Player2isCarrying)
-    //        {
-    //            objectGrabbable.P2Drop();
-    //        }
-    //        objectGrabbable = null;
-
-    //    }
-
-    //}
-
 
     void DetectPushRange()
     {
@@ -898,18 +872,108 @@ public class TestCube : MonoBehaviour
         {
             if (ReadActionButton())
             {
-                gameManager.sceneChanged = true;
-                print("sceneChanged: " + gameManager.sceneChanged);
-                print("Do interact with TV");
-
-                Loader.Load(Loader.Scene.MVPLevel);
+                turnOnTV = true;
                 //SceneControl.instance.LoadScene("MVPLevel");
-                //change scene and enter tutorial level, set gameManger.sceneChanged to true
-               
+                //change scene and enter tutorial level, set gameManger.sceneChanged to true               
             }
         }
 
+        if (withinNPCsRange)
+        {
+            gameManager.sceneChanged = true;
+
+            //StartCoroutine(MovingCameraWerther());
+            if (ReadActionButton())
+            {
+                //Start Dialogue
+            }
+
+        }
+
+        if (withinEntranceRange)
+        {
+            print("Hello plz");
+            if (ReadActionButton())
+            {
+                print("Enter");
+                isEntered = true;
+
+                //SceneControl.instance.LoadScene("MVPLevel");
+                //change scene and enter tutorial level, set gameManger.sceneChanged to true               
+            }
+
+
+        }
+
     }
+
+    void OnTV()
+    {
+        if (turnOnTV)
+        {
+            gameManager.sceneChanged = true;
+            StartCoroutine(MovingCameraTV());
+            if (onTv)
+            {
+                Loader.Load(Loader.Scene.MVPLevel);
+                onTv = false;
+                turnOnTV = false;
+            }
+
+        }
+    }
+
+    void EnterOffice()
+    {
+        if (isEntered)
+        {
+           
+            print("Enter Office");
+            if (isPlayer1 && !gameManager.camChanged2)
+            {
+                StartCoroutine(gameManager.MovingCamera1());
+                if (gameManager.camChanged1)
+                {
+                    Loader.Load(Loader.Scene.HubStart);
+                    isEntered = false;
+
+                }
+                gameManager.camChanged1 = false;
+                gameManager.sceneChanged = true;
+
+            }
+
+            if (isPlayer2)
+            {
+                StartCoroutine(gameManager.MovingCamera2());
+                if (gameManager.camChanged2 && !gameManager.camChanged1)
+                {
+                    Loader.Load(Loader.Scene.HubStart);
+                    isEntered = false;
+                }
+                gameManager.camChanged2 = false;
+                gameManager.sceneChanged = true;
+            }
+
+        }
+    }
+
+    IEnumerator MovingCameraTV()
+    {
+        SceneControl.instance.MoveCamera(SceneControl.instance.closeShootTV);
+        yield return new WaitForSecondsRealtime(2f);
+        onTv = true;
+
+    }
+
+    IEnumerator MovingCameraWerther()
+    {
+        SceneControl.instance.MoveCamera(SceneControl.instance.closeShootWerther);
+        yield return new WaitForSecondsRealtime(2f);
+        isTalking = true;
+
+    }
+
 
 
 
@@ -926,6 +990,32 @@ public class TestCube : MonoBehaviour
             withinTVRange = false;
 
         }
+
+        if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
+        {
+            withinEntranceRange = true;
+            print("inEntranceRange");
+            gameManager.ShowDirection();
+
+        }
+        else
+        {
+            withinEntranceRange = false;
+            //gameManager.StopShowDirection();
+            print("NotinEntranceRange");
+        }
+
+        if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
+        {
+            withinNPCsRange = true;
+
+        }
+        else
+        {
+            withinNPCsRange = false;
+
+        }
+
     }
     private void DoPush(InputAction.CallbackContext obj)
     {
@@ -1441,6 +1531,9 @@ public class TestCube : MonoBehaviour
     {
         if (triggerButton.ReadValue<float>() == 1) return true;
         else return false;
+
+
+
     }
 
     public void OnSummoningEnter(GameObject circle)

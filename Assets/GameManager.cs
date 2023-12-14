@@ -17,15 +17,18 @@ public class GameManager : MonoBehaviour
     string scene3 = "TitleScene";
     string scene4 = "MVPLevel";
     string scene5 = "HubEnd";
+    string scene6 = "ScoreCards";
 
     [SerializeField]
     Camera mainCam;
     [SerializeField]
     private Transform cameraPosition;
     [SerializeField]
-    private Animator animTitle;
+    public Transform closeShoot;
     [SerializeField]
-    private GameObject text;
+    public Animator animTitle;
+    [SerializeField]
+    public GameObject text;
     [SerializeField]
     private GameObject instructionText;
 
@@ -146,6 +149,13 @@ public class GameManager : MonoBehaviour
     public Trigger trigger;
     [SerializeField]
     public bool foundTrigger;
+    [SerializeField]
+    public bool camChanged1;
+    [SerializeField]
+    public bool camChanged2;
+    [SerializeField]
+    public bool enterOffice;
+
 
     private Dictionary<GameObject, GameObject> projectileToIndicator = new Dictionary<GameObject, GameObject>();
 
@@ -168,7 +178,8 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         FindPlayer();
-        FindCamera();
+        
+        //FindCamera();
         DetectScene();
         PushCheck();
         P1Indicator();
@@ -309,22 +320,27 @@ public class GameManager : MonoBehaviour
         }
 
         //two players join the game, it loads to the Title Scene
-        if(p1 != null && p2 != null)
+        if (p1 != null && p2 != null)
         {
+
             currentScene = SceneManager.GetActiveScene();
             curSceneName = currentScene.name;
-            if (curSceneName == scene3)
-            {
-                animTitle.SetBool("isEnded", true);
-                text.SetActive(false);
-                StartCoroutine(ShowDirection());
-            }
-            else
+            if (curSceneName != scene3)
             {
                 animTitle = null;
                 text = null;
-                StopCoroutine(ShowDirection());
             }
+            else
+            {
+                if(!camChanged1 && !camChanged2)
+                {
+                    MoveCamera(cameraPosition);
+                    animTitle.SetBool("isEnded", true);
+                    text.SetActive(false);
+                }
+ 
+            }
+
         }
 
     }
@@ -346,6 +362,17 @@ public class GameManager : MonoBehaviour
         if (p1 == null && p2 != null)
         {
             p2.isFreeze = true;
+        }
+
+        if (enterOffice)
+        {
+            p1.isFreeze = true;
+            p2.isFreeze = true;
+        }
+        if (sceneChanged)
+        {
+            p1.isFreeze = false;
+            p2.isFreeze = false;
         }
 
 
@@ -404,29 +431,65 @@ public class GameManager : MonoBehaviour
 
 
 
-    void FindCamera()
+    //public void FindCamera()
+    //{
+    //    if(curSceneName == scene3)
+    //    {
+    //        mainCam = Camera.main;
+    //        if (p1)
+    //        {
+    //            if (!enterOffice)
+    //            {
+    //                MoveCamera(cameraPosition);
+    //            }
+    //            else
+    //            {
+
+    //                StartCoroutine(MovingCamera());
+
+    //                if(camChanged == true)
+    //                {
+    //                    Loader.Load(Loader.Scene.HubStart);
+    //                }
+    //            }
+
+
+    //        }
+
+    
+    //    }
+    //    else
+    //    {
+    //        mainCam = null;
+    //        cameraPosition = null;
+    //    }
+    //}
+
+    public IEnumerator MovingCamera1()
     {
-        if(curSceneName == scene3)
-        {
-            mainCam = Camera.main;
-            if (p1)
-            {
-                MoveCamera();
-            }
-        }
-        else
-        {
-            mainCam = null;
-            cameraPosition = null;
-        }
+        MoveCamera(closeShoot);
+        yield return new WaitForSecondsRealtime(2f);
+        camChanged1 = true;
+
+    }
+
+    public IEnumerator MovingCamera2()
+    {
+        MoveCamera(closeShoot);
+        yield return new WaitForSecondsRealtime(2f);
+        camChanged2 = true;
+
     }
 
 
 
-    void MoveCamera()
+
+
+
+    public void MoveCamera(Transform newPos)
     {
         float lerpSpeed = 5f;
-        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, cameraPosition.position, Time.deltaTime * lerpSpeed);
+        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
         //print("Camera");
     }
 
@@ -447,11 +510,17 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    IEnumerator ShowDirection()
+    public void ShowDirection()
     {
         // Wait for the specified time
-        yield return new WaitForSeconds(waitingTime);
         instructionText.SetActive(true);
+        // Destroy the GameObject this script is attached to
+    }
+
+    public void StopShowDirection()
+    {
+        // Wait for the specified time
+        instructionText.SetActive(false);
         // Destroy the GameObject this script is attached to
     }
 
