@@ -5394,7 +5394,6 @@ GameObject:
   - component: {fileID: 7189003711293798659}
   - component: {fileID: 9188257059409889075}
   - component: {fileID: 8311449913966261600}
-  - component: {fileID: 8808803013025500067}
   m_Layer: 0
   m_Name: ShmonkButton
   m_TagString: Untagged
@@ -5497,34 +5496,10 @@ MonoBehaviour:
     m_Bits: 67584
   onSummon:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onExit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   hasPlayer: 0
   summoningActive: 0
   playerCollider: []
@@ -5539,24 +5514,13 @@ MonoBehaviour:
   b1Cyl: {fileID: 8182987838328665901}
   Anim: {fileID: 5264353533909604241}
   x: {fileID: 5921492009980566083}
---- !u!114 &8808803013025500067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8182987838328665901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ad59ff1f806994b87d4a2a8374cef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loop: 1
-  startEvent:
+  cam: {fileID: 0}
+  inBridge: 0
+  summonStart:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 4c821c54cb9d01840a843268e9270567, type: 2}
-  secondaryEvent:
+  summonEnd:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: b245875a01d657d47987860aa9b7e9b1, type: 2}

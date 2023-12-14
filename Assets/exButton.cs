@@ -53,7 +53,11 @@ public class exButton : MonoBehaviour
     [SerializeField]
     public bool inBridge;
 
-    private bool shouldExit = false;
+    private bool shouldPlay = false;
+
+    [SerializeField] private AK.Wwise.Event summonStart;
+    [SerializeField] private AK.Wwise.Event summonEnd;
+    
 
     private void Awake()
     {
@@ -82,12 +86,24 @@ public class exButton : MonoBehaviour
         if (summoningActive)
         {
             onSummon.Invoke();
-            shouldExit = true;
+
+            if (shouldPlay)
+            {
+                summonStart.Post(this.gameObject);
+                shouldPlay = false; 
+            }
+          
         }
-        else if (shouldExit)
+        else
         {
             onExit.Invoke();
-            shouldExit = false;
+
+            if (!shouldPlay)
+            {
+                shouldPlay = true;
+                summonEnd.Post(this.gameObject);
+            }
+            
         }
 
     }

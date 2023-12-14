@@ -5394,7 +5394,6 @@ GameObject:
   - component: {fileID: 8896409397718198009}
   - component: {fileID: 3041909272175916444}
   - component: {fileID: 1086677712746160106}
-  - component: {fileID: 7064179360112579428}
   m_Layer: 0
   m_Name: ShminkButton
   m_TagString: Untagged
@@ -5539,24 +5538,13 @@ MonoBehaviour:
   b1Cyl: {fileID: 7574270784089906887}
   Anim: {fileID: 7073947790280480582}
   x: {fileID: 2097314199173459952}
---- !u!114 &7064179360112579428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7574270784089906887}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ad59ff1f806994b87d4a2a8374cef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loop: 1
-  startEvent:
+  cam: {fileID: 0}
+  inBridge: 0
+  summonStart:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 4c821c54cb9d01840a843268e9270567, type: 2}
-  secondaryEvent:
+  summonEnd:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: b245875a01d657d47987860aa9b7e9b1, type: 2}
