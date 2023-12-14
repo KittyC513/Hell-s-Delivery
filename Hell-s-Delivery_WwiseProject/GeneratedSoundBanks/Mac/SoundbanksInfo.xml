@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{E597D766-30F1-0965-0EAB-034E0A51C489}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{F4E6A89B-CF37-A2E4-397E-663E6423FD0D}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -78,6 +78,10 @@
 				<File Id="431873265" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Fan_All.wav</ShortName>
 					<CachePath>SFX/Fan_All_85BFF465.wem</CachePath>
+				</File>
+				<File Id="446591649" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Devil Theme.wav</ShortName>
+					<CachePath>SFX/Devil Theme_84AFE0B4.wem</CachePath>
 				</File>
 				<File Id="473084078" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodLanding_1.wav</ShortName>
@@ -165,6 +169,11 @@
 				<Event Id="1359342141" Name="Play_Checkpoint_Get" MaxAttenuation="20" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="612044681"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2640074606" Name="Play_Devil_Theme" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="446591649"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="452465945" Name="Play_Fan_All" MaxAttenuation="40" DurationType="Infinite">
@@ -303,5 +312,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{98701695-1E5A-860A-70E3-C631B09A9986}</FileHash>
+	<FileHash>{6699FA9F-D782-6970-FF9D-7041D13A535D}</FileHash>
 </SoundBanksInfo>
