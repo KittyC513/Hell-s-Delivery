@@ -131,6 +131,21 @@ public class ShowDialogue :DialogueViewBase
         //SceneManager.LoadScene("Tutorial");
     }
 
+    [YarnCommand("SwitchCamNPC")]
+    public static void SwitchCamera1()
+    {
+        SceneControl.instance.SwitchCameraToNpc();
+
+
+    }
+    [YarnCommand("SwitchCamMain")]
+    public static void SwitchCamera2()
+    {
+        SceneControl.instance.SwitchCameraToMain();
+
+
+    }
+
     [YarnCommand("HideGradient")]
     public static void HideGradient()
     {

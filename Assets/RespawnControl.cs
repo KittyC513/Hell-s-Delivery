@@ -154,7 +154,7 @@ public class RespawnControl : MonoBehaviour
 
             }
 
-            if(curSceneName == scene4)
+            if(curSceneName == scene4 || curSceneName == scene5)
             {
                 if (objectGrabbable == null)
                 {

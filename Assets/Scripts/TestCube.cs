@@ -307,6 +307,8 @@ public class TestCube : MonoBehaviour
     private bool NPCInteracting;
     [SerializeField]
     private bool Dialogue1;
+    [SerializeField]
+    private bool Dialogue2;
 
 
     //public enum CameraStyle
@@ -449,10 +451,14 @@ public class TestCube : MonoBehaviour
         {
             DetectInteractRange();
         } 
-        if(curSceneName == scene5 && package == null)
+        if(curSceneName == scene5 || curSceneName == scene7)
         {
-            package = GameObject.FindGameObjectWithTag("Package");
+            if (package == null)
+            {
+                package = GameObject.FindGameObjectWithTag("Package");
+            }
         }
+            
         JoinGameTitle();
         //PlayerPosition();
 
@@ -488,7 +494,7 @@ public class TestCube : MonoBehaviour
         if(curSceneName == scene1 || curSceneName == scene3)
         {
             Interacte();
-            OnTV();
+            //OnTV();
             Talk();
         }
         if(curSceneName == scene6)
@@ -686,6 +692,12 @@ public class TestCube : MonoBehaviour
             //}
 
 
+        }
+
+        if(curSceneName == scene1 && !Dialogue2)
+        {
+            SceneControl.instance.dR.StartDialogue("HubStart");
+            Dialogue2 = true;
         }
 
     }
@@ -933,15 +945,21 @@ public class TestCube : MonoBehaviour
     {
         if (NPCInteracting)
         {
+            //StartCoroutine(MovingCameraWerther());
             if (!Dialogue1)
             {
                 //SceneControl.LV.SetActive(false);
                 SceneControl.instance.dR.StopAllCoroutines();
                 SceneControl.instance.phoneUI.SetActive(false);
                 SceneControl.instance.dialogueBox.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("BoomerQuest");
+
                 NPCInteracting = false;
                 Dialogue1 = true;
+
+               
             }
 
         }
@@ -1036,6 +1054,7 @@ public class TestCube : MonoBehaviour
         {
             withinNPCsRange = true;
             print("inNpcRange");
+
         }
         else
         {

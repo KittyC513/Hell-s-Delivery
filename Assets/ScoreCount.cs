@@ -107,6 +107,8 @@ public class ScoreCount : MonoBehaviour
 
         p1Score = InitialScore;
         p2Score = p1Score;
+        p1scoreEffect.SetActive(false);
+        p2scoreEffect.SetActive(false);
     }   
 
     // Update is called once per frame
@@ -336,6 +338,7 @@ public class ScoreCount : MonoBehaviour
             p1scoreEffect.SetActive(true);
             StartCoroutine(RotateToPosition(knobValue, 0.3f));
             StartCoroutine(ScoreEffectP1());
+            p1AddScore = false;
         }
 
         if (p2AddScore)
@@ -343,6 +346,7 @@ public class ScoreCount : MonoBehaviour
             p2scoreEffect.SetActive(true);
             StartCoroutine(RotateToPositionP2(knobValue, 0.3f));
             StartCoroutine(ScoreEffectP2());
+            p1AddScore = false;
         }
     }
 

@@ -5571,6 +5571,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 67108864
   withinEntranceRange: 0
+  isEntered: 0
   pushButtonGracePeriod: 0
   p1pushed: 0
   p2pushed: 0
@@ -5588,9 +5589,13 @@ MonoBehaviour:
   model1: {fileID: 4480523803979142669}
   runThreshold: 0.7
   model2: {fileID: 5173540319895431461}
+  NPCInteracting: 0
+  Dialogue1: 0
+  Dialogue2: 0
   footstepRate: 115
   groundMaterial: nothing
   geiserForce: 100
+  wasFoundLV: 0
 --- !u!114 &965772886468833305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6504,7 +6509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.20532116, y: 0.61583996, z: -0.17057782, w: 0.74127436}
+  m_LocalRotation: {x: 0.20532112, y: 0.61584, z: -0.17057785, w: 0.74127424}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6568,13 +6573,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2618575627546304545}
   - component: {fileID: 1723533860159853961}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Test
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2618575627546304545
 Transform:
   m_ObjectHideFlags: 0
@@ -7764,6 +7769,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2618575627546304545}
     m_Modifications:
     - target: {fileID: 874257037474637148, guid: bdd79635b057d5a408a253dddb7d5a1e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 62e754aaa9368c94fa3fc0311284cee2, type: 3}
+    - target: {fileID: 4180699396520633408, guid: bdd79635b057d5a408a253dddb7d5a1e, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 62e754aaa9368c94fa3fc0311284cee2, type: 3}

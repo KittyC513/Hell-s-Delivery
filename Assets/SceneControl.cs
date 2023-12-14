@@ -19,6 +19,10 @@ public class SceneControl : MonoBehaviour
     public Transform closeShootWerther;
     [SerializeField]
     public Transform mainCam;
+    [SerializeField]
+    public GameObject mainCamera;
+    [SerializeField]
+    public GameObject WertherCam;
 
     [SerializeField]
     public static GameObject LVNPC, LV;
@@ -27,7 +31,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject Lv1, lv2;
     [SerializeField]
-    public GameObject phoneUI, dialogueBox;
+    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherDialogue;
 
     private void Awake()
     {
@@ -45,7 +49,14 @@ public class SceneControl : MonoBehaviour
 
     private void Update()
     {
-
+        if (GameManager.instance.showWertherInstruction)
+        {
+            WertherDialogue.SetActive(true);
+        }
+        else
+        {
+            WertherDialogue.SetActive(false);
+        }
     }
 
 
@@ -56,12 +67,15 @@ public class SceneControl : MonoBehaviour
 
     public void SwitchCameraToNpc()
     {
-        MoveCamera(closeShootWerther);
+        mainCamera.SetActive(false);
+        WertherCam.SetActive(true);
+   
     }
 
     public void SwitchCameraToMain()
     {
-        MoveCamera(mainCam);
+        mainCamera.SetActive(true);
+        WertherCam.SetActive(false);
     }
 
 
@@ -72,5 +86,8 @@ public class SceneControl : MonoBehaviour
         mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
         //print("Camera");
     }
+
+
+
 
 }

@@ -38,9 +38,9 @@ public class GameManager : MonoBehaviour
     public string layerNameToFind2 = "P2Collider";
     GameObject player;
     [SerializeField]
-    private TestCube p1;
+    public TestCube p1;
     [SerializeField]
-    private TestCube p2;
+    public TestCube p2;
     [SerializeField]
     public GameObject player1;
     [SerializeField]
@@ -119,6 +119,8 @@ public class GameManager : MonoBehaviour
     public bool showTVInstruction;
     [SerializeField]
     public bool isBegin;
+    [SerializeField]
+    public bool showWertherInstruction;
 
     [SerializeField]
     public GameObject noisy1;
@@ -239,6 +241,7 @@ public class GameManager : MonoBehaviour
                 }
 
             }
+
 
         }
 
@@ -507,6 +510,15 @@ public class GameManager : MonoBehaviour
             else if (!p1.withinTVRange && !p2.withinTVRange)
             {
                 showTVInstruction = false;
+            }
+
+            if(p1.withinNPCsRange || p2.withinNPCsRange)
+            {
+                showWertherInstruction = true;
+            }
+            else if (!p1.withinTVRange && !p2.withinTVRange)
+            {
+                showWertherInstruction = false;
             }
         }
 
