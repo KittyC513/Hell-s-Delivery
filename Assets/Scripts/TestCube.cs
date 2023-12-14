@@ -129,6 +129,7 @@ public class TestCube : MonoBehaviour
     string scene5 = "MVPLevel";
     string scene6 = "TitleScene";
     string scene7 = "Tutorial";
+    string scene8 = "ScordCards";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -625,7 +626,7 @@ public class TestCube : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
 
-        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6 || curSceneName == scene8)
         {
             playerCamera.enabled = false;
             mainCam = Camera.main;

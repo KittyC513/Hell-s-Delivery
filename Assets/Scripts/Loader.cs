@@ -20,7 +20,8 @@ public static class Loader
         HubEnd,
         MVPLevel,
         Tutorial,
-        LoadingScene
+        LoadingScene,
+        ScoreCards
 
     }
 
