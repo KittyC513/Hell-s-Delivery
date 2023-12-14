@@ -108,7 +108,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 7ff36978145fe842bd14fccf80764e96
     GuidInternal: 
-    m_lastTime: -8584991671805832900
+    m_lastTime: -8584990904273992325
     List:
     - name: Play_Apartment_Complex_v1
       guid: 6802d184e355c240b71ec96a6ef7c135
@@ -246,6 +246,40 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.6869768
       minDuration: 0.47193712
+    - name: Play_PackagePick
+      guid: 13b70cd63826bf44aa60ba235ed16940
+      id: 3361946317
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_PackagePick
+        ObjectType: 3
+        guid: 13b70cd63826bf44aa60ba235ed16940
+      Path: Events\Default Work Unit\Play_PackagePick
+      maxAttenuation: 0
+      maxDuration: 0.15621315
+      minDuration: 0.15621315
+    - name: Play_PackageThrow
+      guid: ec4d20ef6f501c4b928ec65934ece0f5
+      id: 1549093586
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_PackageThrow
+        ObjectType: 3
+        guid: ec4d20ef6f501c4b928ec65934ece0f5
+      Path: Events\Default Work Unit\Play_PackageThrow
+      maxAttenuation: 0
+      maxDuration: 0.62263036
+      minDuration: 0.62263036
     - name: Play_Parachute
       guid: 2dc52946580e084cb226face500f7cc1
       id: 419517223
@@ -328,6 +362,23 @@ MonoBehaviour:
         ObjectType: 3
         guid: e16c166adfa2784189d3d3ecc8fe3d39
       Path: Events\Default Work Unit\Play_Summoning_Circle_All
+      maxAttenuation: 25
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_WindCatch
+      guid: abf0d4e5d97bda43b5c9ecfe9a1b72b2
+      id: 3366204753
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Play_WindCatch
+        ObjectType: 3
+        guid: abf0d4e5d97bda43b5c9ecfe9a1b72b2
+      Path: Events\Default Work Unit\Play_WindCatch
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -430,6 +481,23 @@ MonoBehaviour:
         ObjectType: 3
         guid: 1d258ef5b0772c4f83f1bca64185dbb9
       Path: Events\Default Work Unit\Stop_Summoning_Circle_All
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_WindCatch
+      guid: 10bf336cd6a0264caffd59d7d656ac6a
+      id: 1676944771
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 7ff36978145fe842bd14fccf80764e96
+      - ElementName: Stop_WindCatch
+        ObjectType: 3
+        guid: 10bf336cd6a0264caffd59d7d656ac6a
+      Path: Events\Default Work Unit\Stop_WindCatch
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0

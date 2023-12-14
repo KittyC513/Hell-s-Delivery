@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{D5A7C49E-3834-C7C0-2A40-325E91B16F0E}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{CA67FBB5-19A2-4157-0169-294EC61EE190}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -75,6 +75,14 @@
 					<ShortName>Checkpoint Get.wav</ShortName>
 					<CachePath>SFX/Checkpoint Get_05BA101F.wem</CachePath>
 				</File>
+				<File Id="619171860" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PackagePick.wav</ShortName>
+					<CachePath>SFX/PackagePick_10C4C929.wem</CachePath>
+				</File>
+				<File Id="621680383" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PackageThrow.wav</ShortName>
+					<CachePath>SFX/PackageThrow_10C4C929.wem</CachePath>
+				</File>
 				<File Id="634520690" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>MetalLand_1.wav</ShortName>
 					<CachePath>SFX/MetalLand_1_0244B083.wem</CachePath>
@@ -90,6 +98,10 @@
 				<File Id="675843431" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodStep_2.wav</ShortName>
 					<CachePath>SFX/WoodStep_2_10C4C929.wem</CachePath>
+				</File>
+				<File Id="731966279" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>WindCatch.wav</ShortName>
+					<CachePath>SFX/WindCatch_3DAA6752.wem</CachePath>
 				</File>
 				<File Id="755542444" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Landing.wav</ShortName>
@@ -176,6 +188,16 @@
 						<MediaRef Id="987426019"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="3361946317" Name="Play_PackagePick" DurationType="OneShot" DurationMin="0.15621315" DurationMax="0.15621315">
+					<MediaRefs>
+						<MediaRef Id="619171860"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1549093586" Name="Play_PackageThrow" DurationType="OneShot" DurationMin="0.62263036" DurationMax="0.62263036">
+					<MediaRefs>
+						<MediaRef Id="621680383"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="419517223" Name="Play_Parachute" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="648574403"/>
@@ -200,9 +222,14 @@
 						<MediaRef Id="382886941"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="2914340836" Name="Play_Summoning_Circle_All" DurationType="Infinite">
+				<Event Id="2914340836" Name="Play_Summoning_Circle_All" MaxAttenuation="25" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="271139115"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3366204753" Name="Play_WindCatch" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="731966279"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1787223838" Name="Play_WoodSteps" DurationType="OneShot" DurationMin="0.15054809" DurationMax="0.23341395">
@@ -227,8 +254,9 @@
 				<Event Id="3708642647" Name="Stop_Fan_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="2017739505" Name="Stop_Parachute" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="222428266" Name="Stop_Summoning_Circle_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+				<Event Id="1676944771" Name="Stop_WindCatch" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{280EB7F9-E981-F295-29D4-4C922B623AF7}</FileHash>
+	<FileHash>{216AB30A-0993-5551-3AC9-5C5497543930}</FileHash>
 </SoundBanksInfo>

@@ -213,6 +213,16 @@
 				</Event>
 				<Event Name="Play_Checkpoint_Get" ID="{CE3B5C4C-42E3-4E86-A21F-90EDF3925325}">
 					<ChildrenList>
+						<Action Name="" ID="{D1257DE4-3663-4FFF-AFCA-2DC64E114E47}" ShortID="644158568">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Checkpoint Get" ID="{C17E95BC-A6C9-4503-B7EC-F39E09CDA091}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 						<Action Name="" ID="{DDD5697C-FB51-4554-A78D-7CE9CF7D1FF5}" ShortID="454853462">
 							<ReferenceList>
 								<Reference Name="Target">
@@ -308,6 +318,74 @@
 								<Property Name="ActionType" Type="int16" Value="3"/>
 							</PropertyList>
 							<ReferenceList/>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_PackagePick" ID="{D60CB713-2638-44BF-AA60-BA235ED16940}">
+					<ChildrenList>
+						<Action Name="" ID="{8A39EC1C-9620-4566-B8C2-F5F66F6C4318}" ShortID="650746011">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PackagePick" ID="{055BA397-45E8-4AD6-A065-18AE155E88CA}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_PackageThrow" ID="{EF204DEC-506F-4B1C-928E-C65934ECE0F5}">
+					<ChildrenList>
+						<Action Name="" ID="{D8D00553-D68D-42AF-A9C2-2356FA1808D1}" ShortID="241694938">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PackageThrow" ID="{C3CD091C-922E-413E-A1F1-E7BECC413505}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_WindCatch" ID="{E5D4F0AB-7BD9-43DA-B5C9-ECFE9A1B72B2}">
+					<ChildrenList>
+						<Action Name="" ID="{4D81576E-0507-43F6-9989-501E69EAA9B3}" ShortID="253994446">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WindCatch" ID="{4D8433DF-FF9D-45F7-A2EE-D9A50884F5AF}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{B03B45A1-8C53-4AED-9ED5-F5BF669B3659}" ShortID="330541936">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WindCatch" ID="{4D8433DF-FF9D-45F7-A2EE-D9A50884F5AF}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_WindCatch" ID="{6C33BF10-A0D6-4C26-AFFD-59D7D656AC6A}">
+					<ChildrenList>
+						<Action Name="" ID="{5F2EB926-73F0-458B-B981-B724DBD71545}" ShortID="612117808">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="34"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WindCatch" ID="{4D8433DF-FF9D-45F7-A2EE-D9A50884F5AF}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{96DD4E39-671F-4693-BCFA-625C7CECCEAB}" ShortID="544872986">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="36"/>
+								<Property Name="SeekToMarker" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WindCatch" ID="{4D8433DF-FF9D-45F7-A2EE-D9A50884F5AF}" WorkUnitID="{69FF77DA-741C-4470-9121-A7DBE7CA718D}"/>
+								</Reference>
+							</ReferenceList>
 						</Action>
 					</ChildrenList>
 				</Event>

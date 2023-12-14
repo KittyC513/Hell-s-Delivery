@@ -21,17 +21,21 @@ namespace AK
         static const AkUniqueID PLAY_LANDINGS = 1019246482U;
         static const AkUniqueID PLAY_METALLANDING = 2180111060U;
         static const AkUniqueID PLAY_METALSTEPS = 296643996U;
+        static const AkUniqueID PLAY_PACKAGEPICK = 3361946317U;
+        static const AkUniqueID PLAY_PACKAGETHROW = 1549093586U;
         static const AkUniqueID PLAY_PARACHUTE = 419517223U;
         static const AkUniqueID PLAY_RANDWOODLAND = 415850775U;
         static const AkUniqueID PLAY_SCORECARD_SEQUENCE = 342527874U;
         static const AkUniqueID PLAY_SCORESCENEMUSIC = 613185981U;
         static const AkUniqueID PLAY_SUMMONING_CIRCLE_ALL = 2914340836U;
+        static const AkUniqueID PLAY_WINDCATCH = 3366204753U;
         static const AkUniqueID PLAY_WOODSTEPS = 1787223838U;
         static const AkUniqueID PLAYER_STEPS = 4272057794U;
         static const AkUniqueID STOP_ALL = 452547817U;
         static const AkUniqueID STOP_FAN_ALL = 3708642647U;
         static const AkUniqueID STOP_PARACHUTE = 2017739505U;
         static const AkUniqueID STOP_SUMMONING_CIRCLE_ALL = 222428266U;
+        static const AkUniqueID STOP_WINDCATCH = 1676944771U;
     } // namespace EVENTS
 
     namespace BANKS

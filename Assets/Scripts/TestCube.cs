@@ -305,6 +305,9 @@ public class TestCube : MonoBehaviour
     private AK.Wwise.Event parachuteOpenEvent;
     private AK.Wwise.Event glideEvent;
 
+    private bool shouldPlayGeiser = false;
+    private bool isOnGeiser = false;
+
 
     public float geiserForce;
 
@@ -767,6 +770,10 @@ public class TestCube : MonoBehaviour
     {
         if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
         {
+            if (objectGrabbable == null)
+            {
+                playerSounds.packagePick.Post(this.gameObject);
+            }
 
             if (isPlayer1)
             {
@@ -779,12 +786,15 @@ public class TestCube : MonoBehaviour
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 objectGrabbable.Grab(itemContainer);
             }
+
+            
         }
     }
     private void DoDrop(InputAction.CallbackContext obj)
     {
         if (objectGrabbable != null)
         {
+            playerSounds.packageToss.Post(this.gameObject);
             if (isPlayer1 && rC.Player1isCarrying)
             {
                 objectGrabbable.P1Drop();
@@ -1471,9 +1481,21 @@ public class TestCube : MonoBehaviour
     {
         if (other.gameObject.tag == ("Geiser") && isGliding)
         {
+            //we are now on a geiser
+            if (shouldPlayGeiser) playerSounds.windCatch.Post(this.gameObject);
+            shouldPlayGeiser = false;
             rb.AddForce(Vector3.up * geiserForce);
         }
 
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == ("Geiser"))
+        {
+            if (!shouldPlayGeiser) playerSounds.windExit.Post(this.gameObject);
+            shouldPlayGeiser = true;
+        }
     }
 
     private void PlayGroundSound(string material)
