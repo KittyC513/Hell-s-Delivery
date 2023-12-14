@@ -4830,7 +4830,7 @@ GameObject:
   - component: {fileID: 2976522732543663343}
   m_Layer: 0
   m_Name: ThirdPersonCam
-  m_TagString: Untagged
+  m_TagString: camHolder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5571,6 +5571,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 67108864
   withinEntranceRange: 0
+  isEntered: 0
   pushButtonGracePeriod: 0
   p1pushed: 0
   p2pushed: 0
@@ -5588,9 +5589,12 @@ MonoBehaviour:
   model1: {fileID: 4480523803979142669}
   runThreshold: 0.7
   model2: {fileID: 5173540319895431461}
+  NPCInteracting: 0
+  Dialogue1: 0
   footstepRate: 115
   groundMaterial: nothing
   geiserForce: 100
+  wasFoundLV: 0
 --- !u!114 &965772886468833305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6504,7 +6508,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.20532116, y: 0.61583996, z: -0.17057782, w: 0.74127436}
+  m_LocalRotation: {x: 0.20532112, y: 0.61584, z: -0.17057785, w: 0.74127424}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
