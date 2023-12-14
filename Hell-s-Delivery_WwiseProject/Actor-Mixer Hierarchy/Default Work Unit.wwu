@@ -2027,6 +2027,7 @@
 				</Sound>
 				<Sound Name="Devil Theme" ID="{761BAB4D-53E3-4061-B666-CC6375794DC3}" ShortID="505518212">
 					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
 								<Value>-11</Value>
@@ -2043,6 +2044,10 @@
 					</ReferenceList>
 					<ChildrenList>
 						<AudioFileSource Name="Devil Theme" ID="{A0F9ECE8-AC73-451E-A4A9-E0435EE14808}">
+							<PropertyList>
+								<Property Name="LoopBegin" Type="Real64" Value="7.384"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+							</PropertyList>
 							<Language>SFX</Language>
 							<AudioFile>Devil Theme.wav</AudioFile>
 							<MediaIDList>

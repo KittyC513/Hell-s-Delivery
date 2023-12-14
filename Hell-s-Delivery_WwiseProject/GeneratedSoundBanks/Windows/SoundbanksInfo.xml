@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{E44552E2-2884-0FE0-8A88-524498C66301}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{F4E6A89B-CF37-A2E4-397E-663E6423FD0D}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -81,7 +81,7 @@
 				</File>
 				<File Id="446591649" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Devil Theme.wav</ShortName>
-					<CachePath>SFX/Devil Theme_10C4C929.wem</CachePath>
+					<CachePath>SFX/Devil Theme_84AFE0B4.wem</CachePath>
 				</File>
 				<File Id="473084078" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodLanding_1.wav</ShortName>
@@ -171,7 +171,7 @@
 						<MediaRef Id="612044681"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="2640074606" Name="Play_Devil_Theme" DurationType="OneShot" DurationMin="118.153854" DurationMax="118.153854">
+				<Event Id="2640074606" Name="Play_Devil_Theme" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="446591649"/>
 					</MediaRefs>
@@ -312,5 +312,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{73F8C69C-C39B-70E7-8F00-E0B0452766B0}</FileHash>
+	<FileHash>{BB7750FD-AA61-0249-595A-E498047CC611}</FileHash>
 </SoundBanksInfo>
