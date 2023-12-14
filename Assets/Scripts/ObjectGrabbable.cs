@@ -181,6 +181,8 @@ public class ObjectGrabbable : MonoBehaviour
     IEnumerator P1Timer()
     {
         time += Time.deltaTime;
+
+        ScoreCount.instance.AddTimeToP1Package(time);
         if (time >= 10)
         {
             ScoreCount.instance.AddPointToP1Package(3);
@@ -192,7 +194,9 @@ public class ObjectGrabbable : MonoBehaviour
 
     IEnumerator P2Timer()
     {
+      
         time += Time.deltaTime;
+        ScoreCount.instance.AddTimeToP2Package(time);
         if (time >= 10)
         {
             ScoreCount.instance.AddPointToP2Package(3);

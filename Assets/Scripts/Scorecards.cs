@@ -64,8 +64,8 @@ public class Scorecards : MonoBehaviour
         yield return new WaitForSeconds(0.44f);
         scoreCardSequence.Post(this.gameObject);
         yield return new WaitForSeconds(0.31f);
-        p1Stickers[1] = CheckScore(lvlData.p1Deliver, p1PackageSpot.position, categories.package);
-        p2Stickers[1] = CheckScore(lvlData.p2Deliver, p2PackageSpot.position, categories.package);
+        p1Stickers[1] = CheckScore(lvlData.p1Deliver / (lvlData.p1Deliver + lvlData.p2Deliver), p1PackageSpot.position, categories.package);
+        p2Stickers[1] = CheckScore(lvlData.p2Deliver / (lvlData.p1Deliver + lvlData.p2Deliver), p2PackageSpot.position, categories.package);
         yield return new WaitForSeconds(0.75f);
         p1Stickers[2] = CheckScore(lvlData.completionTime, p1CompletionSpot.position, categories.completion);
         p2Stickers[2] = CheckScore(lvlData.completionTime, p2CompletionSpot.position, categories.completion);
