@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{E6D32C07-2D69-2F8A-30D5-0C89B62D1345}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{068D51ED-B0F9-693B-39AC-4A8A2E50147F}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -37,7 +37,7 @@
 				</File>
 				<File Id="95162724" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>TutorialMusic.wav</ShortName>
-					<CachePath>SFX/TutorialMusic_10C4C929.wem</CachePath>
+					<CachePath>SFX/TutorialMusic_F33C1FD4.wem</CachePath>
 				</File>
 				<File Id="151202581" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodStep_1.wav</ShortName>
@@ -231,7 +231,7 @@
 						<MediaRef Id="271139115"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="2086825057" Name="Play_TutorialMusic" DurationType="OneShot" DurationMin="71.64179" DurationMax="71.64179">
+				<Event Id="2086825057" Name="Play_TutorialMusic" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="95162724"/>
 					</MediaRefs>
@@ -267,5 +267,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{A0513562-D822-9105-D5E0-59D4747AEE9B}</FileHash>
+	<FileHash>{F66A27D2-7615-BE79-F3A4-0376D6F25298}</FileHash>
 </SoundBanksInfo>

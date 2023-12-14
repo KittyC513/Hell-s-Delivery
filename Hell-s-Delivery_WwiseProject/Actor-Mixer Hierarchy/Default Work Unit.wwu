@@ -1601,6 +1601,7 @@
 				</Sound>
 				<Sound Name="TutorialMusic" ID="{0CDC0331-4B62-46C9-A810-8E81B00590B0}" ShortID="380114036">
 					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
 								<Value>-6</Value>
@@ -1617,6 +1618,10 @@
 					</ReferenceList>
 					<ChildrenList>
 						<AudioFileSource Name="TutorialMusic" ID="{26F3F347-10C2-4CF3-A160-82BCB29D9B83}">
+							<PropertyList>
+								<Property Name="LoopBegin" Type="Real64" Value="42.985"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+							</PropertyList>
 							<Language>SFX</Language>
 							<AudioFile>TutorialMusic.wav</AudioFile>
 							<MediaIDList>
