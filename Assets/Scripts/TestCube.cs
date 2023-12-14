@@ -129,7 +129,7 @@ public class TestCube : MonoBehaviour
     string scene5 = "MVPLevel";
     string scene6 = "TitleScene";
     string scene7 = "Tutorial";
-    string scene8 = "ScordCards";
+    string scene8 = "ScoreCards";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -464,7 +464,10 @@ public class TestCube : MonoBehaviour
 
 
         //CameraControl();
-
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Loader.Load(Loader.Scene.MVPLevel);
+        }
 
     }
 
@@ -539,13 +542,13 @@ public class TestCube : MonoBehaviour
 
     public void ContinueBottonControl()
     {
-        if (continueControl.action.triggered)
-        {
-            //lineView = FindObjectOfType<LineView>();
-            SceneControl.LVNPC.GetComponent<LineView>().OnContinueClicked();
-            SceneControl.LV.GetComponent<LineView>().OnContinueClicked();
-            //lineView.OnContinueClicked();
-        }
+        //if (continueControl.action.triggered)
+        //{
+        //    //lineView = FindObjectOfType<LineView>();
+        //    SceneControl.LVNPC.GetComponent<LineView>().OnContinueClicked();
+        //    SceneControl.LV.GetComponent<LineView>().OnContinueClicked();
+        //    //lineView.OnContinueClicked();
+        //}
     }
 
 

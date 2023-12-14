@@ -49,13 +49,17 @@ public class SceneControl : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.showWertherInstruction)
+        if (GameManager.instance.curSceneName == "HubStart")
         {
-            WertherDialogue.SetActive(true);
-        }
-        else
-        {
-            WertherDialogue.SetActive(false);
+            if (GameManager.instance.showWertherInstruction)
+            {
+                WertherDialogue.SetActive(true);
+            }
+            else
+            {
+                WertherDialogue.SetActive(false);
+            }
+           
         }
     }
 

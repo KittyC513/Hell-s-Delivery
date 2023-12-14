@@ -80,9 +80,9 @@ public class ScoreCount : MonoBehaviour
     private bool p2AddScore;
 
     [SerializeField]
-    private GameObject p1scoreEffect;
+    public GameObject p1scoreEffect;
     [SerializeField]
-    private GameObject p2scoreEffect;
+    public GameObject p2scoreEffect;
 
 
     //need score for each value
@@ -335,19 +335,26 @@ public class ScoreCount : MonoBehaviour
     {
         if (p1AddScore)
         {
-            p1scoreEffect.SetActive(true);
+            
             StartCoroutine(RotateToPosition(knobValue, 0.3f));
+            p1scoreEffect.SetActive(true);
+
             StartCoroutine(ScoreEffectP1());
-            p1AddScore = false;
+            print("31");
+
         }
+
 
         if (p2AddScore)
         {
             p2scoreEffect.SetActive(true);
             StartCoroutine(RotateToPositionP2(knobValue, 0.3f));
+
             StartCoroutine(ScoreEffectP2());
-            p1AddScore = false;
+            print("33");
+
         }
+
     }
 
     IEnumerator RotateToPosition(float targetRotation, float rotationTime)
@@ -419,6 +426,8 @@ public class ScoreCount : MonoBehaviour
 
         }
 
+
+       
         p1AddScore = false;
 
         //print("Moving" + targetRotation);
