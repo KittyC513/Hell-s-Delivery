@@ -116,6 +116,13 @@ public class RespawnControl : MonoBehaviour
     {
         cpParent = GameObject.FindWithTag("cpParent");
 
+        foreach (Transform child in cpParent.transform)
+        {
+            cps.Add(child.gameObject);
+
+            CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
+            cpc.Add(checkpc);
+        }
 
 
         //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
@@ -124,13 +131,7 @@ public class RespawnControl : MonoBehaviour
 
         testCube = player.GetComponent<TestCube>();
 
-        foreach (Transform child in cpParent.transform)
-        {
-            cps.Add(child.gameObject);
-
-            CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
-            cpc.Add(checkpc);
-        }
+        
     }
 
     void SceneCheck()
@@ -199,6 +200,7 @@ public class RespawnControl : MonoBehaviour
 
     private void Update()
     {
+        Partner = GameObject.FindGameObjectsWithTag("FindScript");
         //FindDR();
         SceneCheck();
         PlayerDetector();
@@ -210,7 +212,7 @@ public class RespawnControl : MonoBehaviour
         ResetInitialRespawnPoint();
         ////if (Partner == null)
         //{
-         Partner = GameObject.FindGameObjectsWithTag("FindScript");
+         
         //}
 
 
@@ -612,17 +614,22 @@ public class RespawnControl : MonoBehaviour
                 Destroy(other.gameObject);
             }
         }
-
+        //Debug.Log("newcheckpoint");
         if (other.gameObject.tag == ("fCheckpoint"))
         {
-
+            
             respawnPoint = other.transform.position;
-            objectGrabbable.respawnPoint = respawnPoint;
+            if (objectGrabbable != null)
+            {
+                objectGrabbable.respawnPoint = respawnPoint;
+            }
+            
 
             foreach (CheckpointControl checkpc in cpc)
             {
-
+                Debug.Log("deactivatetrue");
                 checkpc.deActivate = true;
+                
 
             }
 
@@ -630,13 +637,13 @@ public class RespawnControl : MonoBehaviour
 
             foreach (GameObject obj in Partner)
             {
-                //Debug.Log(obj);
+                Debug.Log("loopworking");
                 RespawnControl partnerScript = obj.GetComponent<RespawnControl>();
 
                 if (partnerScript != null)
                 {
                     partnerScript.respawnPoint = respawnPoint;
-                    //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+                    Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
                 }
                 //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
             }
