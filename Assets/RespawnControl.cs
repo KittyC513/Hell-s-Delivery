@@ -102,6 +102,8 @@ public class RespawnControl : MonoBehaviour
     [SerializeField]
     private GameObject t1c, t2c, t3c, t4c, t5c, t6c, t7c,t8c;
 
+    bool entry;
+
     //CheckpointControl activateFCP;
 
 
@@ -114,15 +116,7 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
-        cpParent = GameObject.FindWithTag("cpParent");
-
-        foreach (Transform child in cpParent.transform)
-        {
-            cps.Add(child.gameObject);
-
-            CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
-            cpc.Add(checkpc);
-        }
+        
 
 
         //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
@@ -164,6 +158,15 @@ public class RespawnControl : MonoBehaviour
             {
                 if (objectGrabbable == null)
                 {
+                    cpParent = GameObject.FindWithTag("cpParent");
+
+                    foreach (Transform child in cpParent.transform)
+                    {
+                        cps.Add(child.gameObject);
+
+                        CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
+                        cpc.Add(checkpc);
+                    }
                     package = GameObject.FindGameObjectWithTag("Package");
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
