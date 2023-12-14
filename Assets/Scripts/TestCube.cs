@@ -803,59 +803,6 @@ public class TestCube : MonoBehaviour
     }
 
 
-    //private void DoPick(InputAction.CallbackContext obj)
-    //{
-    //    //Set up Pick up condition: 1. player is facing the item within the pickup range 2. "Pick" button is pressed
-    //    if (objectGrabbable == null)
-    //    {
-    //        if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
-    //        {
-
-    //            if (isPlayer1)
-    //            {
-    //                objectGrabbable = package.GetComponent<ObjectGrabbable>();
-    //                objectGrabbable.Grab(itemContainer);
-    //            }
-
-    //            if (isPlayer2)
-    //            {
-    //                objectGrabbable = package.GetComponent<ObjectGrabbable>();
-    //                objectGrabbable.Grab(itemContainer);
-    //            }
-
-    //            //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer1)
-    //            //{
-    //            //    objectGrabbable.Grab(itemContainer);
-
-    //            //}
-
-    //            //if (raycastHit.transform.TryGetComponent(out objectGrabbable) && isPlayer2)
-    //            //{
-
-    //            //    objectGrabbable.Grab(itemContainer);
-    //            //}
-
-    //        }
-
-    //    }
-    //    else
-    //    {
-    //        if (isPlayer1 && rC.Player1isCarrying)
-    //        {
-    //            objectGrabbable.P1Drop();
-
-    //        }
-
-    //        if (isPlayer2 && rC.Player2isCarrying)
-    //        {
-    //            objectGrabbable.P2Drop();
-    //        }
-    //        objectGrabbable = null;
-
-    //    }
-
-    //}
-
 
     void DetectPushRange()
     {

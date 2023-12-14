@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform cameraPosition;
     [SerializeField]
+    public Transform closeShoot;
+    [SerializeField]
     private Animator animTitle;
     [SerializeField]
     private GameObject text;
@@ -147,6 +149,11 @@ public class GameManager : MonoBehaviour
     public Trigger trigger;
     [SerializeField]
     public bool foundTrigger;
+    [SerializeField]
+    public bool camChanged;
+    [SerializeField]
+    public bool enterOffice;
+
 
     private Dictionary<GameObject, GameObject> projectileToIndicator = new Dictionary<GameObject, GameObject>();
 
@@ -349,6 +356,17 @@ public class GameManager : MonoBehaviour
             p2.isFreeze = true;
         }
 
+        if (enterOffice)
+        {
+            p1.isFreeze = true;
+            p2.isFreeze = true;
+        }
+        if (sceneChanged)
+        {
+            p1.isFreeze = false;
+            p2.isFreeze = false;
+        }
+
 
     }
 
@@ -412,8 +430,19 @@ public class GameManager : MonoBehaviour
             mainCam = Camera.main;
             if (p1)
             {
-                MoveCamera();
+                if (!enterOffice)
+                {
+                    MoveCamera(cameraPosition);
+                }
+                else
+                {
+                    StartCoroutine(MovingCamera());
+                }
+
+
             }
+
+    
         }
         else
         {
@@ -422,12 +451,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator MovingCamera()
+    {
+        MoveCamera(closeShoot);
+        yield return new WaitForSeconds(3);
+        Loader.Load(Loader.Scene.HubStart);
+
+    }
 
 
-    void MoveCamera()
+
+    public void MoveCamera(Transform newPos)
     {
         float lerpSpeed = 5f;
-        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, cameraPosition.position, Time.deltaTime * lerpSpeed);
+        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
         //print("Camera");
     }
 

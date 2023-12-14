@@ -667,12 +667,10 @@ public class RespawnControl : MonoBehaviour
             // when scene changed, both players reset start point
             if (testCube.ReadActionButton())
             {
+                gameManager.enterOffice = true;
                 gameManager.sceneChanged = true;
-                print("sceneChanged: " + gameManager.sceneChanged);
-
-                //GameManager.instance.LoadScene(scene1);
-                Loader.Load(Loader.Scene.HubStart);
                 
+                //GameManager.instance.LoadScene(scene1);               
 
             }            
         }
@@ -1016,6 +1014,8 @@ public class RespawnControl : MonoBehaviour
         // Deactivate the UI after the specified duration
         gameManager.p2UIMinus.SetActive(false);
     }
+
+
 
     IEnumerator DestroyGameObject(GameObject gameObject)
     {
