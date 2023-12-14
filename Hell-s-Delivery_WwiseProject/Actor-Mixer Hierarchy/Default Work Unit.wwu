@@ -1664,7 +1664,7 @@
 														</Point>
 														<Point>
 															<XPos>76.13556</XPos>
-															<YPos>-0</YPos>
+															<YPos>0</YPos>
 															<Flags>0</Flags>
 														</Point>
 														<Point>
@@ -1785,7 +1785,7 @@
 														</Point>
 														<Point>
 															<XPos>75.89789</XPos>
-															<YPos>-0</YPos>
+															<YPos>0</YPos>
 															<Flags>0</Flags>
 														</Point>
 														<Point>
@@ -2023,6 +2023,40 @@
 					</ChildrenList>
 					<ActiveSourceList>
 						<ActiveSource Name="PackageImpact" ID="{B1AC39B6-047D-4025-B8D4-D219CE17D35C}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Devil Theme" ID="{761BAB4D-53E3-4061-B666-CC6375794DC3}" ShortID="505518212">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-11</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Devil Theme" ID="{A0F9ECE8-AC73-451E-A4A9-E0435EE14808}">
+							<PropertyList>
+								<Property Name="LoopBegin" Type="Real64" Value="7.384"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>Devil Theme.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="446591649"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Devil Theme" ID="{A0F9ECE8-AC73-451E-A4A9-E0435EE14808}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>
