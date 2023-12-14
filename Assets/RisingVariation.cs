@@ -116,26 +116,31 @@ public class RisingVariation : MonoBehaviour
 
     public void OutlineDeActivate()
     {
+
         // Get all Renderer components in the GameObject
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
-        foreach (Renderer renderer in renderers)
+        if (toggle == true)
         {
-            // Get the existing materials
-            Material[] materials = renderer.materials;
-
-            // Remove the last material if there are more than one materials
-            if (materials.Length > 1)
+            foreach (Renderer renderer in renderers)
             {
-                Material[] newMaterials = new Material[materials.Length - 1];
-                for (int i = 0; i < newMaterials.Length; i++)
-                {
-                    newMaterials[i] = materials[i];
-                }
+                // Get the existing materials
+                Material[] materials = renderer.materials;
 
-                // Update the materials on the Renderer
-                renderer.materials = newMaterials;
+                // Remove the last material if there are more than one materials
+                if (materials.Length > 1)
+                {
+                    Material[] newMaterials = new Material[materials.Length - 1];
+                    for (int i = 0; i < newMaterials.Length; i++)
+                    {
+                        newMaterials[i] = materials[i];
+                    }
+
+                    // Update the materials on the Renderer
+                    renderer.materials = newMaterials;
+                }
             }
+            toggle = false;
         }
     }
 
