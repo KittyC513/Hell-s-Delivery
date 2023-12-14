@@ -79,6 +79,11 @@ public class ScoreCount : MonoBehaviour
     [SerializeField]
     private bool p2AddScore;
 
+    [SerializeField]
+    private GameObject p1scoreEffect;
+    [SerializeField]
+    private GameObject p2scoreEffect;
+
 
     //need score for each value
     //need an expected outcome for each player
@@ -329,11 +334,13 @@ public class ScoreCount : MonoBehaviour
         if (p1AddScore)
         {
             StartCoroutine(RotateToPosition(knobValue, 0.3f));
+            StartCoroutine(ScoreEffectP1());
         }
 
         if (p2AddScore)
         {
             StartCoroutine(RotateToPositionP2(knobValue, 0.3f));
+            StartCoroutine(ScoreEffectP2());
         }
     }
 
@@ -494,6 +501,22 @@ public class ScoreCount : MonoBehaviour
         
     }
 
+
+    IEnumerator ScoreEffectP1()
+    {
+        p1scoreEffect.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        
+        p1scoreEffect.SetActive(false);
+    }
+
+    IEnumerator ScoreEffectP2()
+    {
+        p2scoreEffect.SetActive(true);
+        yield return new WaitForSeconds(3f);
+
+        p2scoreEffect.SetActive(false);
+    }
 
 
 

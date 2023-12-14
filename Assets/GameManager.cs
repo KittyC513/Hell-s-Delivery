@@ -454,7 +454,8 @@ public class GameManager : MonoBehaviour
     IEnumerator MovingCamera()
     {
         MoveCamera(closeShoot);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSecondsRealtime(2f);
+        
         Loader.Load(Loader.Scene.HubStart);
 
     }
