@@ -219,7 +219,29 @@ public class GameManager : MonoBehaviour
 
     void DetectScene()
     {
-   
+        if (p1 != null && p2 != null)
+        {
+
+            currentScene = SceneManager.GetActiveScene();
+            curSceneName = currentScene.name;
+            if (curSceneName != scene3)
+            {
+                animTitle = null;
+                text = null;
+            }
+            else
+            {
+                if (!enterOffice)
+                {
+                    MoveCamera(cameraPosition, 5f);
+                    animTitle.SetBool("isEnded", true);
+                    text.SetActive(false);
+                }
+
+            }
+
+        }
+
     }
 
 
@@ -320,28 +342,6 @@ public class GameManager : MonoBehaviour
         }
 
         //two players join the game, it loads to the Title Scene
-        if (p1 != null && p2 != null)
-        {
-
-            currentScene = SceneManager.GetActiveScene();
-            curSceneName = currentScene.name;
-            if (curSceneName != scene3)
-            {
-                animTitle = null;
-                text = null;
-            }
-            else
-            {
-                if(!camChanged1 && !camChanged2)
-                {
-                    MoveCamera(cameraPosition);
-                    animTitle.SetBool("isEnded", true);
-                    text.SetActive(false);
-                }
- 
-            }
-
-        }
 
     }
 
@@ -467,30 +467,31 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MovingCamera1()
     {
-        MoveCamera(closeShoot);
+        MoveCamera(closeShoot,5);
         yield return new WaitForSecondsRealtime(2f);
         camChanged1 = true;
 
     }
 
-    public IEnumerator MovingCamera2()
+    //public IEnumerator MovingCamera2()
+    //{
+    //    MoveCamera(closeShoot);
+    //    yield return new WaitForSecondsRealtime(2f);
+    //    camChanged2 = true;
+
+    //}
+
+
+
+
+
+
+    public void MoveCamera(Transform newPos, float lerpSpeed)
     {
-        MoveCamera(closeShoot);
-        yield return new WaitForSecondsRealtime(2f);
-        camChanged2 = true;
-
-    }
-
-
-
-
-
-
-    public void MoveCamera(Transform newPos)
-    {
-        float lerpSpeed = 5f;
+        
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
-        //print("Camera");
+        //mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
+
     }
 
 

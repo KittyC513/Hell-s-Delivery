@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 
 
 public class SceneControl : MonoBehaviour
@@ -18,6 +19,16 @@ public class SceneControl : MonoBehaviour
     public Transform closeShootWerther;
     [SerializeField]
     public Transform mainCam;
+
+    [SerializeField]
+    public static GameObject LVNPC, LV;
+    [SerializeField]
+    public DialogueRunner dR;
+    [SerializeField]
+    public GameObject Lv1, lv2;
+    [SerializeField]
+    public GameObject phoneUI, dialogueBox;
+
     private void Awake()
     {
         instance = this;
@@ -25,6 +36,16 @@ public class SceneControl : MonoBehaviour
     private void Start()
     {
         GameManager.instance.Reposition(P1StartPoint, P2StartPoint);
+        //LVNPC = Lv1;
+        LV = lv2;
+
+        //LVNPC.SetActive(false);
+     
+    }
+
+    private void Update()
+    {
+
     }
 
 

@@ -27,5 +27,6 @@ public class LineViewShow : MonoBehaviour
 
         LVPlayers.SetActive(true);
         dR.StartDialogue("HubStart");
+        print("12344");
     }
 }

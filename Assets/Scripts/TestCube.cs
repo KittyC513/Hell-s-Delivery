@@ -12,7 +12,7 @@ using Unity.VisualScripting;
 using TMPro;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
-
+using Yarn;
 
 public class TestCube : MonoBehaviour
 {
@@ -303,6 +303,12 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private GameObject model2;
 
+    [SerializeField]
+    private bool NPCInteracting;
+    [SerializeField]
+    private bool Dialogue1;
+
+
     //public enum CameraStyle
     //{
     //    Basic,
@@ -330,6 +336,8 @@ public class TestCube : MonoBehaviour
 
 
     public float geiserForce;
+    [SerializeField]
+    private bool wasFoundLV;
 
     private void Awake()
     {
@@ -360,7 +368,7 @@ public class TestCube : MonoBehaviour
         move = player.FindAction("Move");
 
         run = player.FindAction("Run");
-        player.FindAction("Join").started += DoTalk;
+        //player.FindAction("Join").started += DoTalk;
 
         jump = player.FindAction("Jump");
         triggerButton = player.FindAction("Trigger");
@@ -382,7 +390,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("Pick").started -= DoDrop;
 
         player.Disable();
-        player.FindAction("Join").started -= DoTalk;
+        //player.FindAction("Join").started -= DoTalk;
         player.FindAction("Parachute").started -= DoParachute;
         player.FindAction("Parachute").canceled -= DoFall;
         player.FindAction("Push").started -= DoPush;
@@ -399,7 +407,7 @@ public class TestCube : MonoBehaviour
     void Start()
     {
 
-        dR = Object.FindAnyObjectByType<DialogueRunner>();
+       
         gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
 
@@ -481,6 +489,7 @@ public class TestCube : MonoBehaviour
         {
             Interacte();
             OnTV();
+            Talk();
         }
         if(curSceneName == scene6)
         {
@@ -522,12 +531,14 @@ public class TestCube : MonoBehaviour
     }
 
 
-    void ContinueBottonControl()
+    public void ContinueBottonControl()
     {
         if (continueControl.action.triggered)
         {
-            lineView = FindObjectOfType<LineView>();
-            lineView.OnContinueClicked();
+            //lineView = FindObjectOfType<LineView>();
+            SceneControl.LVNPC.GetComponent<LineView>().OnContinueClicked();
+            SceneControl.LV.GetComponent<LineView>().OnContinueClicked();
+            //lineView.OnContinueClicked();
         }
     }
 
@@ -676,8 +687,10 @@ public class TestCube : MonoBehaviour
 
 
         }
-        
+
     }
+
+
     private void Move()
     {
 
@@ -881,18 +894,27 @@ public class TestCube : MonoBehaviour
         if (withinNPCsRange)
         {
             gameManager.sceneChanged = true;
+            bool firstTime = false;
+            if (!firstTime)
+            {
+                //SceneControl.instance.dR.Stop();
+                firstTime = true;
+            } 
 
             //StartCoroutine(MovingCameraWerther());
             if (ReadActionButton())
             {
+                NPCInteracting = true;
+                //SceneControl.LV.SetActive(false);
                 //Start Dialogue
+
             }
 
         }
 
         if (withinEntranceRange)
         {
-            print("Hello plz");
+
             if (ReadActionButton())
             {
                 print("Enter");
@@ -905,6 +927,24 @@ public class TestCube : MonoBehaviour
 
         }
 
+    }
+
+    void Talk()
+    {
+        if (NPCInteracting)
+        {
+            if (!Dialogue1)
+            {
+                //SceneControl.LV.SetActive(false);
+                SceneControl.instance.dR.StopAllCoroutines();
+                SceneControl.instance.phoneUI.SetActive(false);
+                SceneControl.instance.dialogueBox.SetActive(true);
+                SceneControl.instance.dR.StartDialogue("BoomerQuest");
+                NPCInteracting = false;
+                Dialogue1 = true;
+            }
+
+        }
     }
 
     void OnTV()
@@ -927,33 +967,20 @@ public class TestCube : MonoBehaviour
     {
         if (isEntered)
         {
-           
+            gameManager.enterOffice = true;
             print("Enter Office");
-            if (isPlayer1 && !gameManager.camChanged2)
-            {
-                StartCoroutine(gameManager.MovingCamera1());
-                if (gameManager.camChanged1)
-                {
-                    Loader.Load(Loader.Scene.HubStart);
-                    isEntered = false;
+            gameManager.sceneChanged = true;
 
-                }
+            StartCoroutine(gameManager.MovingCamera1());
+            if (gameManager.camChanged1)
+            {
+                Loader.Load(Loader.Scene.HubStart);
+
+                isEntered = false;
                 gameManager.camChanged1 = false;
-                gameManager.sceneChanged = true;
-
+               
             }
 
-            if (isPlayer2)
-            {
-                StartCoroutine(gameManager.MovingCamera2());
-                if (gameManager.camChanged2 && !gameManager.camChanged1)
-                {
-                    Loader.Load(Loader.Scene.HubStart);
-                    isEntered = false;
-                }
-                gameManager.camChanged2 = false;
-                gameManager.sceneChanged = true;
-            }
 
         }
     }
@@ -994,7 +1021,7 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
         {
             withinEntranceRange = true;
-            print("inEntranceRange");
+
             gameManager.ShowDirection();
 
         }
@@ -1002,17 +1029,18 @@ public class TestCube : MonoBehaviour
         {
             withinEntranceRange = false;
             //gameManager.StopShowDirection();
-            print("NotinEntranceRange");
+
         }
 
         if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
         {
             withinNPCsRange = true;
-
+            print("inNpcRange");
         }
         else
         {
             withinNPCsRange = false;
+            print("NotinEntranceRange");
 
         }
 
@@ -1448,20 +1476,20 @@ public class TestCube : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "NPC1")
-        {
-            withinDialogueRange = true;
-            hubStart = true;
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.tag == "NPC1")
+    //    {
+    //        withinDialogueRange = true;
+    //        hubStart = true;
 
-        }
-        else if (other.gameObject.tag == "NPC2")
-        {
-            withinDialogueRange = true;
-            hubEnd = true;
-        }
-    }
+    //    }
+    //    else if (other.gameObject.tag == "NPC2")
+    //    {
+    //        withinDialogueRange = true;
+    //        hubEnd = true;
+    //    }
+    //}
 
 
     //void DoContinue(InputAction.CallbackContext obj)
@@ -1471,30 +1499,29 @@ public class TestCube : MonoBehaviour
 
     //}
 
-    void DoTalk(InputAction.CallbackContext obj)
-    {
-        if (withinDialogueRange)
-        {
-            if (!conversationStart && hubStart == true)
-            {
-                dR.StartDialogue("BoomerQuest");
-                conversationStart = true;
+    //void DoTalk(InputAction.CallbackContext obj)
+    //{
+    //    if (withinDialogueRange)
+    //    {
+    //        if (!conversationStart && hubStart == true)
+    //        {
+    //            SceneControl.instance.dR.StartDialogue("BoomerQuest");
+    //            conversationStart = true;
 
-                lineView = FindObjectOfType<LineView>();
-                withinDialogueRange = false;
-            }
+    //            //lineView = FindObjectOfType<LineView>();
+    //            withinDialogueRange = false;
+    //        }
 
-            if (!conversationStart && hubEnd == true)
-            {
-                dR.StartDialogue("HubEnd");
-                conversationStart = true;
+    //        if (!conversationStart && hubEnd == true)
+    //        {
+    //            SceneControl.instance.dR.StartDialogue("HubEnd");
+    //            conversationStart = true;
 
-                lineView = FindObjectOfType<LineView>();
-                withinDialogueRange = false;
-            }
+    //            withinDialogueRange = false;
+    //        }
 
-        }
-    }
+    //    }
+    //}
 
 
     //void DoContinue(InputAction.CallbackContext obj)
@@ -1515,7 +1542,8 @@ public class TestCube : MonoBehaviour
     [YarnCommand("ChangeScene")]
     public static void GoToLevelScene()
     {
-        SceneManager.LoadScene("PrototypeLevel");
+
+        Loader.Load(Loader.Scene.MVPLevel);
 
     }
 

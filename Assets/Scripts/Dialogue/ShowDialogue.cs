@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class ShowDialogue :DialogueViewBase
 {
-    private static GameObject LVPlayers;
+    private static GameObject LVPlayers, LVNPC;
     public static GameObject Gradient;
 
     [SerializeField] DialogueRunner runner;
@@ -104,6 +104,13 @@ public class ShowDialogue :DialogueViewBase
        // runner.StartDialogue("HubStart");
 
         Debug.Log("Here");
+    }
+
+    [YarnCommand("NPCShow")]
+    public static void NPCShow()
+    {
+        LVPlayers = GameObject.Find("Line View Players");
+        LVPlayers.SetActive(true);
     }
 
     [YarnCommand("TutorialLevel")]
