@@ -53,6 +53,8 @@ public class exButton : MonoBehaviour
     [SerializeField]
     public bool inBridge;
 
+    private bool shouldExit = false;
+
     private void Awake()
     {
         instance = this;
@@ -80,12 +82,12 @@ public class exButton : MonoBehaviour
         if (summoningActive)
         {
             onSummon.Invoke();
-
+            shouldExit = true;
         }
-        else
+        else if (shouldExit)
         {
             onExit.Invoke();
-
+            shouldExit = false;
         }
 
     }
