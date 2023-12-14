@@ -138,7 +138,7 @@ public class RespawnControl : MonoBehaviour
         if (GameManager.instance.sceneChanged)
         {
             curSceneName = GameManager.instance.curSceneName;
-            if (curSceneName == scene4 || curSceneName ==scene5)
+            if (curSceneName ==scene5 ) 
             {
                 if (dRP1 == null)
                 {
@@ -152,6 +152,11 @@ public class RespawnControl : MonoBehaviour
                     dRP2 = dRGameobject2.GetComponent<DialogueRunner>();
                 }
 
+
+            }
+
+            if(curSceneName == scene4)
+            {
                 if (objectGrabbable == null)
                 {
                     package = GameObject.FindGameObjectWithTag("Package");
