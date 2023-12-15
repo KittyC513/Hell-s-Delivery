@@ -361,7 +361,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""New control scheme"",
                     ""action"": ""Close"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

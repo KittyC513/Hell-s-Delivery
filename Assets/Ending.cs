@@ -20,11 +20,11 @@ public class Ending : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "Player")
-        {
-            Loader.Load(Loader.Scene.ScoreCards);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.gameObject.tag == "Player")
+    //    {
+    //        Loader.Load(Loader.Scene.ScoreCards);
+    //    }
+    //}
 }

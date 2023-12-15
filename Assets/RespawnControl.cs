@@ -172,6 +172,26 @@ public class RespawnControl : MonoBehaviour
                 }
             }
 
+            if(curSceneName != scene5)
+            {
+                t1.SetActive(false);
+                t2.SetActive(false);
+                t3.SetActive(false);
+                t4.SetActive(false);
+                t5.SetActive(false);
+        
+                t7.SetActive(false);
+                t8.SetActive(false);
+                t1c.SetActive(false);
+                t2c.SetActive(false);
+                t3c.SetActive(false);
+                t4c.SetActive(false);
+                t5c.SetActive(false);
+                t6c.SetActive(false);
+                t7c.SetActive(false);
+               
+            }
+
         }
     }
 
@@ -332,6 +352,19 @@ public class RespawnControl : MonoBehaviour
             respawnPoint = other.transform.position;
             objectGrabbable.respawnPoint = respawnPoint;
             //Debug.Log("RespawnPoint =" + respawnPoint);
+        }
+
+        if(other.tag == "EndingPoint")
+        {
+            if(isPlayer1 && Player1isCarrying)
+            {
+                Loader.Load(Loader.Scene.ScoreCards);
+            }
+            if (isPlayer2 && Player2isCarrying)
+            {
+                Loader.Load(Loader.Scene.ScoreCards);
+            }
+
         }
 
         //if (other.gameObject.tag == ("TriggerStart"))
