@@ -268,7 +268,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     GameObject noisy1;
     [SerializeField]
-    GameObject noisy2;
+         GameObject noisy2;
     [SerializeField]
     GameObject circle1;
     [SerializeField]
