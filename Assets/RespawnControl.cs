@@ -104,6 +104,9 @@ public class RespawnControl : MonoBehaviour
 
     bool entry;
 
+    [SerializeField]
+    private GameObject p1Model, p2Model;
+
     //CheckpointControl activateFCP;
 
 
@@ -281,6 +284,25 @@ public class RespawnControl : MonoBehaviour
     //    }
 
     //}
+    IEnumerator P1RespawnTimer()
+    {
+        p1Model.SetActive(false);
+        p1DeadScreen.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Respawn(respawnPoint);
+        p1Model.SetActive(true);
+        p1DeadScreen.SetActive(false);
+    }
+
+    IEnumerator P2RespawnTimer()
+    {
+        p2Model.SetActive(false);
+        p2DeadScreen.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Respawn(respawnPoint);
+        p2Model.SetActive(true);
+        p2DeadScreen.SetActive(false);
+    }
 
 
     private void OnTriggerEnter(Collider other)
@@ -288,11 +310,15 @@ public class RespawnControl : MonoBehaviour
         if (other.gameObject.tag == ("Hazard"))
         {
             //Debug.Log("Hazard name =" + other.gameObject);
-            Respawn(respawnPoint);
+
+            //Respawn(respawnPoint);
+
 
             if (isPlayer1)
             {
-                if(curSceneName != scene5)
+
+                StartCoroutine(P1RespawnTimer());
+                if (curSceneName != scene5)
                 {
                     ScoreCount.instance.AddDeathsToP1(5);
                     StartCoroutine(ActivateP1UIForDuration(3f));
@@ -314,7 +340,8 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2)
             {
-                if(curSceneName != scene5)
+                StartCoroutine(P2RespawnTimer());
+                if (curSceneName != scene5)
                 {
                     ScoreCount.instance.AddDeathsToP2(5);
                     StartCoroutine(ActivateP2UIForDuration(3f));
@@ -685,13 +712,13 @@ public class RespawnControl : MonoBehaviour
 
             foreach (GameObject obj in Partner)
             {
-                Debug.Log("loopworking");
+                //Debug.Log("loopworking");
                 RespawnControl partnerScript = obj.GetComponent<RespawnControl>();
 
                 if (partnerScript != null)
                 {
                     partnerScript.respawnPoint = respawnPoint;
-                    Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+                    //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
                 }
                 //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
             }
