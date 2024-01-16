@@ -529,6 +529,12 @@ public class GameManager : MonoBehaviour
         instructionText.SetActive(true);
         // Destroy the GameObject this script is attached to
     }
+    public void CloseDirection()
+    {
+        // Wait for the specified time
+        instructionText.SetActive(false);
+        // Destroy the GameObject this script is attached to
+    }
 
     public void StopShowDirection()
     {

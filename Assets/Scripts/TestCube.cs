@@ -242,6 +242,8 @@ public class TestCube : MonoBehaviour
     public bool isTalking;
     [SerializeField]
     public bool interactWithNpc;
+    [SerializeField]
+    public float doorDistance;
 
     [SerializeField]
     private LayerMask postEnter;
@@ -436,7 +438,7 @@ public class TestCube : MonoBehaviour
         CheckGrounded();
         //SpeedControl();
 
-        ContinueBottonControl();
+        //ContinueBottonControl();
         //MovementCalcs();
         //CheckCamera();
         ItemDetector();
@@ -539,17 +541,6 @@ public class TestCube : MonoBehaviour
         titleCanvas.SetActive(false);
     }
 
-
-    public void ContinueBottonControl()
-    {
-        //if (continueControl.action.triggered)
-        //{
-        //    //lineView = FindObjectOfType<LineView>();
-        //    SceneControl.LVNPC.GetComponent<LineView>().OnContinueClicked();
-        //    SceneControl.LV.GetComponent<LineView>().OnContinueClicked();
-        //    //lineView.OnContinueClicked();
-        //}
-    }
 
 
     private void MovementCalcs()
@@ -986,6 +977,14 @@ public class TestCube : MonoBehaviour
 
     void EnterOffice()
     {
+        if (withinEntranceRange)
+        {
+            gameManager.ShowDirection();
+        } else
+        {
+            gameManager.CloseDirection();
+        }
+
         if (isEntered)
         {
             gameManager.enterOffice = true;
@@ -999,7 +998,7 @@ public class TestCube : MonoBehaviour
 
                 isEntered = false;
                 gameManager.camChanged1 = false;
-               
+
             }
 
 
@@ -1039,11 +1038,9 @@ public class TestCube : MonoBehaviour
 
         }
 
-        if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
+        if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
         {
             withinEntranceRange = true;
-
-            gameManager.ShowDirection();
 
         }
         else
