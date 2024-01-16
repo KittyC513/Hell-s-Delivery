@@ -292,8 +292,12 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-                ScoreCount.instance.AddDeathsToP1(5);
-                StartCoroutine(ActivateP1UIForDuration(3f));
+                if(curSceneName != scene5)
+                {
+                    ScoreCount.instance.AddDeathsToP1(5);
+                    StartCoroutine(ActivateP1UIForDuration(3f));
+                }
+
                 if (curSceneName == scene2)
                 {
                     //LevelDialogue.ShowDevilPlayer2();
@@ -310,8 +314,12 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2)
             {
-                ScoreCount.instance.AddDeathsToP2(5);
-                StartCoroutine(ActivateP2UIForDuration(3f));
+                if(curSceneName != scene5)
+                {
+                    ScoreCount.instance.AddDeathsToP2(5);
+                    StartCoroutine(ActivateP2UIForDuration(3f));
+                }
+
                 if (curSceneName == scene2)
                 {
                     //LevelDialogue.ShowDevilPlayer1();
