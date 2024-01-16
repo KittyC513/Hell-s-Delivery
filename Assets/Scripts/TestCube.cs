@@ -491,7 +491,7 @@ public class TestCube : MonoBehaviour
         {
 
             otherRB.useGravity = true;
-            otherRB.isKinematic = false;
+            //otherRB.isKinematic = false;
         }
 
 
@@ -864,7 +864,7 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
         {
             withinPushingRange = true;
-            lastColliderTime = Time.time;
+            //lastColliderTime = Time.time;
         } 
         else
         {
@@ -1100,7 +1100,7 @@ public class TestCube : MonoBehaviour
         p2Anim = GameManager.instance.p2Ani;
 
         otherRB.useGravity = false;
-        otherRB.isKinematic = true;
+        //otherRB.isKinematic = true;
         Vector3 forceDir = otherRB.transform.position - transform.position;
 
         Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
@@ -1130,7 +1130,7 @@ public class TestCube : MonoBehaviour
         p1Anim = GameManager.instance.p1Ani;
 
         otherRB.useGravity = false;
-        otherRB.isKinematic = true;
+        //otherRB.isKinematic = true;
         Vector3 forceDir = otherRB.transform.position - transform.position;
 
         Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
