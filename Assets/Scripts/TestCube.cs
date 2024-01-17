@@ -312,6 +312,10 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool Dialogue2;
 
+    [Header("Push/Pull")]
+    [SerializeField]
+    private float movingObjForce;
+
 
     //public enum CameraStyle
     //{
@@ -376,6 +380,7 @@ public class TestCube : MonoBehaviour
 
         jump = player.FindAction("Jump");
         triggerButton = player.FindAction("Trigger");
+
 
         player.FindAction("Parachute").started += DoParachute;
         player.FindAction("Parachute").canceled += DoFall;
@@ -1579,9 +1584,9 @@ public class TestCube : MonoBehaviour
         if (triggerButton.ReadValue<float>() == 1) return true;
         else return false;
 
-
-
     }
+
+
 
     public void OnSummoningEnter(GameObject circle)
     {
@@ -1617,6 +1622,7 @@ public class TestCube : MonoBehaviour
 
     }
 
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == ("Geiser") && isGliding)
@@ -1636,6 +1642,7 @@ public class TestCube : MonoBehaviour
             if (!shouldPlayGeiser) playerSounds.windExit.Post(this.gameObject);
             shouldPlayGeiser = true;
         }
+
     }
 
     private void PlayGroundSound(string material)
