@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class camManager : MonoBehaviour
 {
+
+    public static camManager instance;
+
     public GameObject[] players;
     public Camera cam1;
     public Camera cam2;
     public Camera cutCam;
+    [SerializeField]
+    public Camera puzzle1Cam;
     public float time;
     [SerializeField]
     float timer;
@@ -20,23 +26,20 @@ public class camManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-            players = GameObject.FindGameObjectsWithTag("Camera");
+        players = GameObject.FindGameObjectsWithTag("Camera");
 
         if (!leftActive && !rightActive)
         {
             cam1 = players[0].gameObject.GetComponent<Camera>();
             cam2 = players[1].gameObject.GetComponent<Camera>();
         }
-            
-        
-
-
+           
 
         if (leftActive == true)
         {
@@ -137,4 +140,20 @@ public class camManager : MonoBehaviour
         
 
     }
+
+    public void switchPuzzle1Cam()
+    {
+        GameManager.instance.cam1.SetActive(false);
+        puzzle1Cam.gameObject.SetActive(true);
+    }
+
+    public void switchPuzzle1CamBack()
+    {
+        GameManager.instance.cam1.SetActive(true);
+        puzzle1Cam.gameObject.SetActive(false);
+    }
+
+
+
+
 }

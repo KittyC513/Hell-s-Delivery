@@ -316,6 +316,10 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float movingObjForce;
 
+    [Header("Camera Control")]
+    [SerializeField]
+    private bool switchPuzzleCam;
+
 
     //public enum CameraStyle
     //{
@@ -671,6 +675,7 @@ public class TestCube : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
 
+
         if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6 || curSceneName == scene8)
         {
             playerCamera.enabled = false;
@@ -709,25 +714,33 @@ public class TestCube : MonoBehaviour
         if (!isOnCircle)
         {
             //if (curSceneName == null) curSceneName = currentScene.name;
-
-            if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+            if (!switchPuzzleCam)
             {
-                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
-                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
-            }
-            else 
-            {
-                if (isGliding)
+                if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
                 {
-                    //currentSpeed = gliderSpeed;
+                    forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                    forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
                 }
+                else
+                {
+                    if (isGliding)
+                    {
+                        //currentSpeed = gliderSpeed;
+                    }
 
-   
 
-                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
-          
+
+                    forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                    forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+
+                }
             }
+            else
+            {
+                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
+                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
+            }
+
  
         }
         else
@@ -1046,6 +1059,7 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
         {
             withinEntranceRange = true;
+            print("WithinDoorRange");
 
         }
         else
@@ -1058,13 +1072,13 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
         {
             withinNPCsRange = true;
-            print("inNpcRange");
+      
 
         }
         else
         {
             withinNPCsRange = false;
-            print("NotinEntranceRange");
+
 
         }
 
@@ -1632,6 +1646,11 @@ public class TestCube : MonoBehaviour
             shouldPlayGeiser = false;
             rb.AddForce(Vector3.up * geiserForce);
         }
+        if (other.CompareTag("Puzzle1"))
+        {
+            camManager.instance.switchPuzzle1Cam();
+            switchPuzzleCam = true;
+        }
 
     }
 
@@ -1641,6 +1660,12 @@ public class TestCube : MonoBehaviour
         {
             if (!shouldPlayGeiser) playerSounds.windExit.Post(this.gameObject);
             shouldPlayGeiser = true;
+        }
+
+        if (other.CompareTag("Puzzle1"))
+        {
+            camManager.instance.switchPuzzle1CamBack();
+            switchPuzzleCam = false;
         }
 
     }

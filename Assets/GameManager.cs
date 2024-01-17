@@ -157,6 +157,11 @@ public class GameManager : MonoBehaviour
     public bool camChanged2;
     [SerializeField]
     public bool enterOffice;
+    [SerializeField]
+    public GameObject cam1, cam2;
+    [SerializeField]
+    public bool camFound1, camFound2;
+
 
 
     private Dictionary<GameObject, GameObject> projectileToIndicator = new Dictionary<GameObject, GameObject>();
@@ -266,7 +271,7 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject obj in objectsInScene)
         {
-            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1 &&!isNoisy1)
+            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1 &&!isNoisy1 && !camFound1)
             {
                 player1 = obj;
                 p1 = obj.GetComponent<TestCube>();
@@ -301,12 +306,18 @@ public class GameManager : MonoBehaviour
                         noisy1.SetActive(false);
                     }
 
+                    if (child.CompareTag("Camera"))
+                    {
+                        cam1 = child.gameObject;
+                        camFound1 = true;
+                    }
+
                 }
 
 
             }
 
-            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2 && !isNoisy2)
+            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2 && !isNoisy2 && !camFound2)
             {
                 player2 = obj;
                 p2 = obj.GetComponent<TestCube>();
@@ -338,7 +349,12 @@ public class GameManager : MonoBehaviour
                         noisy2 = child.gameObject;
                         isNoisy2 = true;
                         noisy2.SetActive(false);
+                    }
 
+                    if (child.CompareTag("Camera"))
+                    {
+                        cam2 = child.gameObject;
+                        camFound2 = true;
                     }
                 }
             }
@@ -527,6 +543,7 @@ public class GameManager : MonoBehaviour
     {
         // Wait for the specified time
         instructionText.SetActive(true);
+        print("Show Instruction");
         // Destroy the GameObject this script is attached to
     }
     public void CloseDirection()

@@ -106,6 +106,8 @@ public class RespawnControl : MonoBehaviour
 
     [SerializeField]
     private GameObject p1Model, p2Model;
+    [SerializeField]
+    private bool switchPuzzleCam;
 
     //CheckpointControl activateFCP;
 
