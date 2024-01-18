@@ -31,7 +31,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute, triggerButton;
+    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute, triggerButton, drop;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -352,6 +352,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool wasFoundLV;
 
+    [Header("Bounce")]
+    [SerializeField]
+    private float bounceForce;
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -378,8 +381,9 @@ public class TestCube : MonoBehaviour
     {
 
         player.FindAction("Pick").started += DoDrop;
-        move = player.FindAction("Move");
 
+        move = player.FindAction("Move");
+        drop = player.FindAction("Pick");
         run = player.FindAction("Run");
         //player.FindAction("Join").started += DoTalk;
 
@@ -863,13 +867,13 @@ public class TestCube : MonoBehaviour
             if (isPlayer1 && rC.Player1isCarrying)
             {
                 objectGrabbable.P1Drop();
-                
+
             }
 
             if (isPlayer2 && rC.Player2isCarrying)
             {
                 objectGrabbable.P2Drop();
-                print("Drop");
+                //print("Drop");
             }
 
             objectGrabbable = null;
@@ -996,13 +1000,6 @@ public class TestCube : MonoBehaviour
 
     void EnterOffice()
     {
-        if (withinEntranceRange)
-        {
-            gameManager.ShowDirection();
-        } else
-        {
-            gameManager.CloseDirection();
-        }
 
         if (isEntered)
         {
@@ -1691,6 +1688,16 @@ public class TestCube : MonoBehaviour
             playerSounds.steps.Post(this.gameObject);
         }
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Wall")
+        {
+            rb.AddExplosionForce(bounceForce, collision.contacts[0].point, 5);
+            //rb.AddForce(collision.contacts[0].normal * bounceForce);
+            print("Bounce");
+        }
     }
 
 

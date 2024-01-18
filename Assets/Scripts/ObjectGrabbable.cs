@@ -295,6 +295,7 @@ public class ObjectGrabbable : MonoBehaviour
 
 
         rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
+
         rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
 
 
@@ -318,8 +319,11 @@ public class ObjectGrabbable : MonoBehaviour
 
         rb.velocity = player2.GetComponent<Rigidbody>().velocity;
 
+       
 
         rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
+
+
         rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
 
 

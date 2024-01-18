@@ -143,6 +143,15 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Value"",
+                    ""id"": ""fc6ee264-7812-4928-8b5d-fb4bb4b13249"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -409,6 +418,17 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""action"": ""Push"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2bff1bb-2ae6-4620-926d-9338931240c2"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -558,6 +578,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         m_Cube_Aim = m_Cube.FindAction("Aim", throwIfNotFound: true);
         m_Cube_Trigger = m_Cube.FindAction("Trigger", throwIfNotFound: true);
         m_Cube_Push = m_Cube.FindAction("Push", throwIfNotFound: true);
+        m_Cube_Drop = m_Cube.FindAction("Drop", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_StartDialogue = m_Dialogue.FindAction("StartDialogue", throwIfNotFound: true);
@@ -641,6 +662,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
     private readonly InputAction m_Cube_Aim;
     private readonly InputAction m_Cube_Trigger;
     private readonly InputAction m_Cube_Push;
+    private readonly InputAction m_Cube_Drop;
     public struct CubeActions
     {
         private @Test m_Wrapper;
@@ -658,6 +680,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Cube_Aim;
         public InputAction @Trigger => m_Wrapper.m_Cube_Trigger;
         public InputAction @Push => m_Wrapper.m_Cube_Push;
+        public InputAction @Drop => m_Wrapper.m_Cube_Drop;
         public InputActionMap Get() { return m_Wrapper.m_Cube; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -706,6 +729,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Push.started += instance.OnPush;
             @Push.performed += instance.OnPush;
             @Push.canceled += instance.OnPush;
+            @Drop.started += instance.OnDrop;
+            @Drop.performed += instance.OnDrop;
+            @Drop.canceled += instance.OnDrop;
         }
 
         private void UnregisterCallbacks(ICubeActions instance)
@@ -749,6 +775,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Push.started -= instance.OnPush;
             @Push.performed -= instance.OnPush;
             @Push.canceled -= instance.OnPush;
+            @Drop.started -= instance.OnDrop;
+            @Drop.performed -= instance.OnDrop;
+            @Drop.canceled -= instance.OnDrop;
         }
 
         public void RemoveCallbacks(ICubeActions instance)
@@ -906,6 +935,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnTrigger(InputAction.CallbackContext context);
         void OnPush(InputAction.CallbackContext context);
+        void OnDrop(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {

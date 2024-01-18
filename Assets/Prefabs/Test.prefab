@@ -5000,7 +5000,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6715688338489921252}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.018300733, y: 0.97085243, z: -0.22563231, w: -0.07874454}
+  m_LocalRotation: {x: -0.018300738, y: 0.97085243, z: -0.22563231, w: -0.07874456}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6079,6 +6079,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  drop:
+    m_Name: Drop
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d24c3c83-d1f6-4ecd-859b-5843d00448a5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   isPicking: 0
   movementForce: 1
   playerAnimator: {fileID: 2734292067166858235}
@@ -6206,6 +6215,7 @@ MonoBehaviour:
   groundMaterial: nothing
   geiserForce: 100
   wasFoundLV: 0
+  bounceForce: 100
 --- !u!114 &965772886468833305
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -200,6 +200,8 @@ public class GameManager : MonoBehaviour
 
         ShowTVInstruction();
 
+        ShowDirection();
+
 
 
     }
@@ -541,17 +543,37 @@ public class GameManager : MonoBehaviour
     }
     public void ShowDirection()
     {
+        if (curSceneName == scene3)
+        {
+            if (p1.withinEntranceRange || p2.withinEntranceRange)
+            {
+                instructionText.SetActive(true);
+            }
+            else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+            {
+                instructionText.SetActive(false);
+            }
+
+            if (p1.withinEntranceRange || p2.withinEntranceRange)
+            {
+                instructionText.SetActive(true);
+            }
+            else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+            {
+                instructionText.SetActive(false);
+            }
+        }
         // Wait for the specified time
-        instructionText.SetActive(true);
-        print("Show Instruction");
+        
+        //print("Show Instruction");
         // Destroy the GameObject this script is attached to
     }
-    public void CloseDirection()
-    {
-        // Wait for the specified time
-        instructionText.SetActive(false);
-        // Destroy the GameObject this script is attached to
-    }
+    //public void CloseDirection()
+    //{
+    //    // Wait for the specified time
+    //    instructionText.SetActive(false);
+    //    // Destroy the GameObject this script is attached to
+    //}
 
     public void StopShowDirection()
     {
