@@ -130,6 +130,7 @@ public class TestCube : MonoBehaviour
     string scene6 = "TitleScene";
     string scene7 = "Tutorial";
     string scene8 = "ScoreCards";
+    string scene9 = "Level1";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -462,7 +463,7 @@ public class TestCube : MonoBehaviour
         {
             DetectInteractRange();
         } 
-        if(curSceneName == scene5 || curSceneName == scene7)
+        if(curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
         {
             if (package == null)
             {
@@ -1413,7 +1414,9 @@ public class TestCube : MonoBehaviour
             {
                 forceDirection += Vector3.up * jumpSpeed;
                 
-            } else if (horizontalVelocity < 9)
+            } else 
+            
+            if (horizontalVelocity < 9)
             {
                 forceDirection += Vector3.up * parachuteSpeed;
             } else
@@ -1437,23 +1440,26 @@ public class TestCube : MonoBehaviour
 
     void DoParachute(InputAction.CallbackContext obj)
     {
-
-        if (isInAir || isJumping)
+        if (curSceneName == scene5)
         {
-
-            if (!isGliding)
+            if (isInAir || isJumping)
             {
-                playerSounds.parachuteOpen.Post(this.gameObject);
+
+                if (!isGliding)
+                {
+                    playerSounds.parachuteOpen.Post(this.gameObject);
+                }
+
+                forceDirection += Vector3.up * parachuteSpeed;
+
+                //forceDirection += Vector3.up * parachuteSpeed;
+
+                print("Gliding");
+                isGliding = true;
+                canJump = false;
             }
-
-            forceDirection += Vector3.up * parachuteSpeed;
-
-            //forceDirection += Vector3.up * parachuteSpeed;
-
-            print("Gliding");
-            isGliding = true;
-            canJump = false;
         }
+        
     }
 
     void DoFall(InputAction.CallbackContext obj)
