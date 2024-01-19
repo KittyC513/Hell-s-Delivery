@@ -355,6 +355,22 @@ public class TestCube : MonoBehaviour
     [Header("Bounce")]
     [SerializeField]
     private float bounceForce;
+
+
+    [Header("Pull/Push")]
+    [SerializeField]
+    private float pullItemForce, pushItemForce;
+    [SerializeField]
+    private float PRange;
+    [SerializeField]
+    private GameObject targetObject;
+    [SerializeField]
+    private Transform PPosition;
+    [SerializeField]
+    private LayerMask moveableLayer;
+    [SerializeField]
+    private Rigidbody targetRigid;
+
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -485,6 +501,8 @@ public class TestCube : MonoBehaviour
             Loader.Load(Loader.Scene.MVPLevel);
         }
 
+        GetPullObjects();
+
     }
 
     private void LateUpdate()
@@ -521,8 +539,8 @@ public class TestCube : MonoBehaviour
             EnterOffice();
             Interacte();
         }
-   
 
+        Pull();
     }
 
 
@@ -1057,7 +1075,7 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
         {
             withinEntranceRange = true;
-            print("WithinDoorRange");
+            //print("WithinDoorRange");
 
         }
         else
@@ -1699,6 +1717,59 @@ public class TestCube : MonoBehaviour
             print("Bounce");
         }
     }
+    #region Pull/Push 
+    private void GetPullObjects()
+    {
+        targetObject = null;
+
+
+        if (Physics.SphereCast(playerPos.position, PRange, playerPos.forward, out raycastHit, interactDistance, moveableLayer))
+        {
+            targetObject = raycastHit.collider.gameObject;
+
+        }
+
+
+    }
+
+
+
+
+    private void Pull()
+    {
+
+
+
+        if (targetObject != null)
+        {
+            targetRigid = targetObject.GetComponent<Rigidbody>();
+
+            if (ReadActionButton())
+            {
+   
+    
+                targetRigid.velocity = (PPosition.position - targetRigid.position) * pullItemForce * Time.deltaTime;
+            }
+            else
+            {
+           
+              
+
+            }
+
+        }
+        else
+        {
+            targetRigid = null;
+
+        }
+
+
+    }
+
+    #endregion
+
+
 
 
 
