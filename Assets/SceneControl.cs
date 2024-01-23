@@ -12,6 +12,10 @@ public class SceneControl : MonoBehaviour
     public Transform P1StartPoint;
     [SerializeField]
     public Transform P2StartPoint;
+    [SerializeField]
+    public Transform P1Rotation;
+    [SerializeField]
+    public Transform P2Rotation;
 
     [SerializeField]
     public Transform closeShootTV;
@@ -39,7 +43,7 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.instance.Reposition(P1StartPoint, P2StartPoint);
+        GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
         //LVNPC = Lv1;
         LV = lv2;
 

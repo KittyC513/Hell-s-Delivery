@@ -276,7 +276,7 @@ public class RespawnControl : MonoBehaviour
     public void Respawn(Vector3 respawnPos)
     {
         player.transform.position = respawnPos;
-        player.transform.eulerAngles = new Vector3(0, -90, 0);
+        //player.transform.rotation = respawnRotation.rotation;
         //Debug.Log("RespawnPoint =" + respawnPos);
     }
     //IEnumerator RespawnTimer(Vector3 respawnPos)

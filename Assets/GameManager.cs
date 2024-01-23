@@ -255,10 +255,12 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void Reposition(Transform P1position, Transform P2position)
+    public void Reposition(Transform P1position, Transform P2position, Transform P1rotation, Transform P2rotation)
     {
         player1.transform.position = P1position.position;
+        player1.transform.rotation = P1rotation.rotation;
         player2.transform.position = P2position.position;
+        player2.transform.rotation = P2rotation.rotation;
     }
 
 
