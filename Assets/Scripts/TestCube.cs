@@ -319,7 +319,7 @@ public class TestCube : MonoBehaviour
 
     [Header("Camera Control")]
     [SerializeField]
-    private bool switchPuzzleCam;
+    private bool switchPuzzleCam, switchPuzzleCamP2;
 
 
     //public enum CameraStyle
@@ -736,36 +736,68 @@ public class TestCube : MonoBehaviour
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
-            //if (curSceneName == null) curSceneName = currentScene.name;
-            if (!switchPuzzleCam)
+            if (isPlayer1)
             {
-                if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+                if (!switchPuzzleCam)
                 {
-                    forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
-                    forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+                    if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+                    {
+                        forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                        forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+                    }
+                    else
+                    {
+                        if (isGliding)
+                        {
+                            //currentSpeed = gliderSpeed;
+                        }
+
+
+
+                        forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                        forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+
+                    }
                 }
                 else
                 {
-                    if (isGliding)
-                    {
-                        //currentSpeed = gliderSpeed;
-                    }
-
-
-
-                    forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-                    forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
-
+                    forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
+                    forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
                 }
             }
-            else
-            {
-                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
-                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
-            }
 
- 
+            if (isPlayer2)
+            {
+                if (!switchPuzzleCamP2)
+                {
+                    if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+                    {
+                        forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                        forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+                    }
+                    else
+                    {
+                        if (isGliding)
+                        {
+                            //currentSpeed = gliderSpeed;
+                        }
+
+
+
+                        forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                        forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+
+                    }
+                }
+                else
+                {
+                    forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * currentSpeed;
+                    forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * currentSpeed;
+                }
+            }
         }
+           
+           
         else
         {
             //rb.velocity = new Vector3(-(transform.position.x - activeCircle.transform.position.x) * 3 * Time.deltaTime, 0, -(transform.position.z - activeCircle.transform.position.z) * 3 *Time.deltaTime);
@@ -1669,8 +1701,18 @@ public class TestCube : MonoBehaviour
         }
         if (other.CompareTag("Puzzle1"))
         {
-            camManager.instance.switchPuzzle1Cam();
-            switchPuzzleCam = true;
+            if (isPlayer1)
+            {
+                camManager.instance.switchPuzzle1Cam();
+                switchPuzzleCam = true;
+            }
+
+            if (isPlayer2)
+            {
+                camManager.instance.switchPuzzle1CamP2();
+                switchPuzzleCamP2 = true;
+            }
+
         }
 
     }
@@ -1685,8 +1727,18 @@ public class TestCube : MonoBehaviour
 
         if (other.CompareTag("Puzzle1"))
         {
-            camManager.instance.switchPuzzle1CamBack();
-            switchPuzzleCam = false;
+            if (isPlayer1)
+            {
+                camManager.instance.switchPuzzle1CamBack();
+                switchPuzzleCam = false;
+            }
+
+            if (isPlayer2)
+            {
+                camManager.instance.switchPuzzle1CamBackP2();
+                switchPuzzleCamP2 = false;
+            }
+
         }
 
     }

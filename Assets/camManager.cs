@@ -13,7 +13,7 @@ public class camManager : MonoBehaviour
     public Camera cam2;
     public Camera cutCam;
     [SerializeField]
-    public Camera puzzle1Cam;
+    public Camera puzzle1Cam, puzzle1CamP2;
     public float time;
     [SerializeField]
     float timer;
@@ -147,12 +147,23 @@ public class camManager : MonoBehaviour
         puzzle1Cam.gameObject.SetActive(true);
     }
 
+    public void switchPuzzle1CamP2()
+    {
+        GameManager.instance.cam2.SetActive(false);
+        puzzle1CamP2.gameObject.SetActive(true);
+    }
+
     public void switchPuzzle1CamBack()
     {
         GameManager.instance.cam1.SetActive(true);
         puzzle1Cam.gameObject.SetActive(false);
     }
 
+    public void switchPuzzle1CamBackP2()
+    {
+        GameManager.instance.cam2.SetActive(true);
+        puzzle1CamP2.gameObject.SetActive(false);
+    }
 
 
 
