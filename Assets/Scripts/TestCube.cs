@@ -1699,21 +1699,21 @@ public class TestCube : MonoBehaviour
             shouldPlayGeiser = false;
             rb.AddForce(Vector3.up * geiserForce);
         }
-        if (other.CompareTag("Puzzle1"))
+
+        if (other.CompareTag("Puzzle1") && isPlayer1)
         {
-            if (isPlayer1)
-            {
-                camManager.instance.switchPuzzle1Cam();
-                switchPuzzleCam = true;
-            }
-
-            if (isPlayer2)
-            {
-                camManager.instance.switchPuzzle1CamP2();
-                switchPuzzleCamP2 = true;
-            }
-
+            camManager.instance.switchPuzzle1Cam();
+            switchPuzzleCam = true;
+            print("Cam1On");
         }
+
+        if (other.CompareTag("Puzzle1") && isPlayer2)
+        {
+            camManager.instance.switchPuzzle1CamP2();
+            switchPuzzleCamP2 = true;
+            print("Cam2On");
+        }
+
 
     }
 
@@ -1725,21 +1725,30 @@ public class TestCube : MonoBehaviour
             shouldPlayGeiser = true;
         }
 
-        if (other.CompareTag("Puzzle1"))
+        if (other.CompareTag("Puzzle1") && isPlayer1)
         {
-            if (isPlayer1)
-            {
-                camManager.instance.switchPuzzle1CamBack();
-                switchPuzzleCam = false;
-            }
 
-            if (isPlayer2)
-            {
-                camManager.instance.switchPuzzle1CamBackP2();
-                switchPuzzleCamP2 = false;
-            }
+            camManager.instance.switchPuzzle1CamBack();
+            switchPuzzleCam = false;
+            print("Cam1Off");
+
 
         }
+
+        if (other.CompareTag("Puzzle1") && isPlayer2)
+        {
+            camManager.instance.switchPuzzle1CamBackP2();
+            switchPuzzleCamP2 = false;
+            print("Cam2Off");
+        }
+
+
+
+
+
+
+
+
 
     }
 

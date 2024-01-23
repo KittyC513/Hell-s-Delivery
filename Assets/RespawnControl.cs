@@ -10,6 +10,8 @@ public class RespawnControl : MonoBehaviour
 
     [SerializeField]
     public Vector3 respawnPoint;
+    [SerializeField]
+    private bool resetRespawnP;
 
     [SerializeField]
     private List<GameObject> cps = new List<GameObject>();
@@ -217,17 +219,19 @@ public class RespawnControl : MonoBehaviour
 
     void ResetInitialRespawnPoint()
     {
-        if(respawnPoint == null && curSceneName == scene4)
+
+        if (isPlayer1)
         {
-            if (isPlayer1)
-            {
-                respawnPoint = SceneControl.instance.P1StartPoint.position;
-            }
-            if (isPlayer2)
-            {
-                respawnPoint = SceneControl.instance.P2StartPoint.position;
-            }
+            respawnPoint = SceneControl.instance.P1StartPoint.position;
         }
+        if (isPlayer2)
+        {
+            respawnPoint = SceneControl.instance.P2StartPoint.position;
+        }
+
+
+
+
     }
 
     private void Update()
@@ -241,7 +245,13 @@ public class RespawnControl : MonoBehaviour
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
         }
-        ResetInitialRespawnPoint();
+
+        if (!resetRespawnP && curSceneName == scene4)
+        {
+            ResetInitialRespawnPoint();
+            resetRespawnP = true;
+        }
+            
         ////if (Partner == null)
         //{
          
