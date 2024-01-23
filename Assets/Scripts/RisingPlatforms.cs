@@ -64,7 +64,7 @@ public class RisingPlatforms : MonoBehaviour
         platformParent.transform.position = startPosition.transform.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         MovePlatforms();
 
