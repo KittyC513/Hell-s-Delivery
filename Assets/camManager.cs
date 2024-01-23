@@ -147,24 +147,28 @@ public class camManager : MonoBehaviour
     {
         cam1.SetActive(false);
         puzzle1Cam.gameObject.SetActive(true);
+        print("cam1 switch");
     }
 
     public void switchPuzzle1CamP2()
     {
         cam2.SetActive(false);
         puzzle1CamP2.gameObject.SetActive(true);
+        print("cam2 switch");
     }
 
     public void switchPuzzle1CamBack()
     {
         cam1.SetActive(true);
         puzzle1Cam.gameObject.SetActive(false);
+        print("cam1 switchBack");
     }
 
     public void switchPuzzle1CamBackP2()
     {
         cam2.SetActive(true);
         puzzle1CamP2.gameObject.SetActive(false);
+        print("cam2 switchBack");
     }
 
 

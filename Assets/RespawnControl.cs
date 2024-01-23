@@ -111,6 +111,8 @@ public class RespawnControl : MonoBehaviour
     [SerializeField]
     private bool switchPuzzleCam;
 
+    [SerializeField]
+    Vector3 respawnPos;
     //CheckpointControl activateFCP;
 
 
@@ -123,8 +125,6 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
-        
-
 
         //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
 
@@ -132,7 +132,7 @@ public class RespawnControl : MonoBehaviour
 
         //testCube = player.GetComponent<TestCube>();
 
-        
+
     }
 
     void SceneCheck()
@@ -275,8 +275,8 @@ public class RespawnControl : MonoBehaviour
 
     public void Respawn(Vector3 respawnPos)
     {
-        player.transform.position = respawnPos;
-        player.transform.eulerAngles = new Vector3(0, 90, 0);
+        player.transform.position = respawnPos + respawnPos;
+        player.transform.eulerAngles = new Vector3(0, 0, 0);
         //Debug.Log("RespawnPoint =" + respawnPos);
     }
     //IEnumerator RespawnTimer(Vector3 respawnPos)

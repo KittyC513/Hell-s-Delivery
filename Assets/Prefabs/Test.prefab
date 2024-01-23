@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnPoint: {x: 0, y: 0, z: 0}
+  resetRespawnP: 0
   cps: []
   cpc: []
   cpParent: {fileID: 0}
@@ -294,6 +295,7 @@ MonoBehaviour:
   p1Model: {fileID: 4480523803979142669}
   p2Model: {fileID: 5173540319895431461}
   switchPuzzleCam: 0
+  respawnPos: {x: 0, y: 30, z: 0}
 --- !u!1 &307637956170343215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,7 +1443,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790931724609759169}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.01503562, y: 0.97933656, z: -0.1853763, w: -0.07943267}
+  m_LocalRotation: {x: -0.015035627, y: 0.9793365, z: -0.1853763, w: -0.07943269}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2835,7 +2837,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -3412,7 +3414,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516074710670123496}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.01503562, y: 0.97933656, z: -0.1853763, w: -0.07943266}
+  m_LocalRotation: {x: -0.015035631, y: 0.97933656, z: -0.18537632, w: -0.07943272}
   m_LocalPosition: {x: 0.80578613, y: 3, z: 4.9346466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5107,7 +5109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6715688338489921252}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.018300736, y: 0.97085243, z: -0.22563231, w: -0.07874455}
+  m_LocalRotation: {x: -0.018300733, y: 0.97085243, z: -0.22563231, w: -0.07874454}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6319,6 +6321,7 @@ MonoBehaviour:
   Dialogue2: 0
   movingObjForce: 0
   switchPuzzleCam: 0
+  switchPuzzleCamP2: 0
   footstepRate: 115
   groundMaterial: nothing
   geiserForce: 100

@@ -1732,7 +1732,6 @@ public class TestCube : MonoBehaviour
             switchPuzzleCam = false;
             print("Cam1Off");
 
-
         }
 
         if (other.CompareTag("Puzzle1") && isPlayer2)

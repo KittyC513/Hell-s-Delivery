@@ -16,19 +16,19 @@ public class Puzzle1Cam : MonoBehaviour
         
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            camManager.instance.switchPuzzle1Cam();
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        camManager.instance.switchPuzzle1Cam();
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            camManager.instance.switchPuzzle1CamBack();
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        camManager.instance.switchPuzzle1CamBack();
+    //    }
+    //}
 }
