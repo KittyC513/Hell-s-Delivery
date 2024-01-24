@@ -1391,11 +1391,32 @@ public class TestCube : MonoBehaviour
         {
             if(Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod)
             {
-                jumpSpeed = jumpForce;
-                isJumping = true;
-                canJump = false;
-                jumpButtonPressedTime = null;
-                lastGroundedTime = null;
+                if (curSceneName != scene9)
+                {
+                    jumpSpeed = jumpForce;
+                    isJumping = true;
+                    canJump = false;
+                    jumpButtonPressedTime = null;
+                    lastGroundedTime = null;
+                }
+                else if (isPlayer1 && !rC.Player1isCarrying)
+                {
+                    jumpSpeed = jumpForce;
+                    isJumping = true;
+                    canJump = false;
+                    jumpButtonPressedTime = null;
+                    lastGroundedTime = null;
+                    Debug.Log("1");
+                } else if (isPlayer2 && !rC.Player2isCarrying)
+                {
+                    jumpSpeed = jumpForce;
+                    isJumping = true;
+                    canJump = false;
+                    jumpButtonPressedTime = null;
+                    lastGroundedTime = null;
+                    Debug.Log("2");
+                }
+
             }
         }
 

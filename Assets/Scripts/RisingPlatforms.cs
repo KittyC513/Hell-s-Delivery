@@ -175,21 +175,26 @@ public class RisingPlatforms : MonoBehaviour
         {
             foreach (Renderer renderer in renderers)
             {
-                // Get the existing materials
-                Material[] materials = renderer.materials;
-
-                // Add the additional material to the array
-                if (materials.Length <= 1)
+                if (renderer.gameObject.tag != "noOutline" && renderer.gameObject.tag != "Character")
                 {
-                    Material[] newMaterials = new Material[materials.Length + 1];
-                    for (int i = 0; i < materials.Length; i++)
-                    {
-                        newMaterials[i] = materials[i];
-                    }
-                    newMaterials[materials.Length] = outline;
+                    // Get the existing materials
+                    Material[] materials = renderer.materials;
 
-                    // Update the materials on the Renderer
-                    renderer.materials = newMaterials;
+                    // Add the additional material to the array
+                    if (materials.Length <= 1)
+                    {
+                        Material[] newMaterials = new Material[materials.Length + 1];
+                        for (int i = 0; i < materials.Length; i++)
+                        {
+                            newMaterials[i] = materials[i];
+                        }
+                        newMaterials[materials.Length] = outline;
+
+                        // Update the materials on the Renderer
+                        renderer.materials = newMaterials;
+                    }
+
+                
                 }
 
             }
