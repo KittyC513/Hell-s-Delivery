@@ -244,6 +244,10 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool withinNPCsRange;
     [SerializeField]
+    public bool withinNPC2Range;
+    [SerializeField]
+    public bool withinNPC3Range;
+    [SerializeField]
     public bool isTalking;
     [SerializeField]
     public bool interactWithNpc;
@@ -312,6 +316,10 @@ public class TestCube : MonoBehaviour
 
     [SerializeField]
     private bool NPCInteracting;
+    [SerializeField]
+    private bool NPC2Interacting;
+    [SerializeField]
+    private bool NPC3Interacting;
     [SerializeField]
     private bool Dialogue1;
     [SerializeField]
@@ -387,19 +395,21 @@ public class TestCube : MonoBehaviour
     Vector3 newPosition;
     [SerializeField]
     private bool isCameraLocked;
+    [SerializeField]
+    private float pullingSpeed;
 
     [Header("Detect Direction from player to object")]
     [SerializeField]
     bool isFront, isRight, isLeft, isBehind;
+    [SerializeField]
+    bool isFront2, isRight2, isLeft2, isBehind2;
+
 
     [Header("Heavy Package")]
     [SerializeField]
     private bool tooHeavy;
 
 
-    private LineRenderer forwardLineRenderer;
-    private LineRenderer directionLineRenderer;
-    private LineRenderer arcLineRenderer;
 
 
     //[SerializeField]
@@ -686,6 +696,7 @@ public class TestCube : MonoBehaviour
             {
                 //float accel = (maxSpeed / timeToPull);
                 currentSpeed = pullItemForce;
+                print("isPulling" + currentSpeed);
                
             }
             else if (isGliding)
@@ -797,7 +808,15 @@ public class TestCube : MonoBehaviour
                         }
                         else
                         {
-                            MoveTowardFacingDirection();
+                            float horizontalInput = move.ReadValue<Vector2>().x;
+                            float verticalInput = move.ReadValue<Vector2>().y;
+
+                            Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+                            //transform.Translate(Vector3.forward * Time.deltaTime * currentSpeed * verticalInput);
+                            //transform.Translate(Vector3.right * Time.deltaTime * currentSpeed * horizontalInput);
+                            transform.Translate(movement * currentSpeed * Time.deltaTime, Space.World);
+
+                            //MoveTowardFacingDirection();
                         }
 
                     }
@@ -816,7 +835,11 @@ public class TestCube : MonoBehaviour
                         }
                         else
                         {
-                            MoveTowardFacingDirection();
+
+                            forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
+                            forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
+                            //MoveTowardFacingDirection();
+                            //print("pullingSpeed" + pullingSpeed);
                         }
 
 
@@ -833,7 +856,16 @@ public class TestCube : MonoBehaviour
                     }
                     else
                     {
-                        MoveTowardFacingDirection();
+                        float horizontalInput = move.ReadValue<Vector2>().x;
+                        float verticalInput = move.ReadValue<Vector2>().y;
+
+                        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+                        //transform.Translate(Vector3.forward * Time.deltaTime * currentSpeed * verticalInput);
+                        //transform.Translate(Vector3.right * Time.deltaTime * currentSpeed * horizontalInput);
+                        
+                        transform.Translate(movement * currentSpeed * Time.deltaTime, Space.World);
+                        
+                        //MoveTowardFacingDirection();
                     }
 
 
@@ -852,6 +884,11 @@ public class TestCube : MonoBehaviour
                             forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
 
                         }
+                        else
+                        {
+
+                            MoveTowardFacingDirection2();
+                        }
 
                     }
                     else
@@ -865,11 +902,12 @@ public class TestCube : MonoBehaviour
                         {
                             forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                             forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+                            
 
                         }
                         else
                         {
-                            MoveTowardFacingDirection();
+                            MoveTowardFacingDirection2();
                         }
 
 
@@ -886,7 +924,7 @@ public class TestCube : MonoBehaviour
                     }
                     else
                     {
-                        MoveTowardFacingDirection();
+                        MoveTowardFacingDirection2();
                     }
 
                 }
@@ -942,7 +980,12 @@ public class TestCube : MonoBehaviour
 
         }
 
-        LookAt();
+        if (!isCameraLocked)
+        {
+            LookAt();
+        }
+
+
     }
     #region Interact with moveable obstacles
 
@@ -955,43 +998,89 @@ public class TestCube : MonoBehaviour
             // Calculate the dot product between the forward vector of the object and the toPlayer vector
             float dotProduct = Vector3.Dot(targetObject.transform.forward, toPlayer.normalized);
 
-            if (dotProduct > 0.5f)
+            if (isPlayer1)
             {
-                isRight = true;
-                isLeft = false;
-                isFront = false;
-                isBehind = false;
-
-                Debug.Log("Player is on the right side of the object");
-            }
-            else if (dotProduct < -0.5f)
-            {
-                isRight = false;
-                isLeft = true;
-                isFront = false;
-                isBehind = false;
-                Debug.Log("Player is on the left side of the object");
-            }
-            else
-            {
-                // You may need to adjust these thresholds based on your specific scenario
-                if (toPlayer.x > 0)
-                {
-                    isRight = false;
-                    isLeft = false;
-                    isFront = true;
-                    isBehind = false;
-                    Debug.Log("Player is in front of the object");
-                }
-                else
+                if (dotProduct > 0.5f)
                 {
                     isRight = false;
                     isLeft = false;
                     isFront = false;
                     isBehind = true;
-                    Debug.Log("Player is behind the object");
+
+                    Debug.Log("Player is on the right side of the object");
+                }
+                else if (dotProduct < -0.5f)
+                {
+                    isRight = false;
+                    isLeft = false;
+                    isFront = true;
+                    isBehind = false;
+                    Debug.Log("Player is on the left side of the object");
+                }
+                else
+                {
+                    // You may need to adjust these thresholds based on your specific scenario
+                    if (toPlayer.x > 0)
+                    {
+                        isRight = true;
+                        isLeft = false;
+                        isFront = false;
+                        isBehind = false;
+                        Debug.Log("Player is in front of the object");
+                    }
+                    else
+                    {
+                        isRight = false;
+                        isLeft = true;
+                        isFront = false;
+                        isBehind = false;
+                        Debug.Log("Player is behind the object");
+                    }
                 }
             }
+
+            if (isPlayer2)
+            {
+                if (dotProduct > 0.5f)
+                {
+                    isRight2 = false;
+                    isLeft2 = false;
+                    isFront2 = false;
+                    isBehind2 = true;
+
+                    Debug.Log("Player is on the right side of the object");
+                }
+                else if (dotProduct < -0.5f)
+                {
+                    isRight2 = false;
+                    isLeft2 = false;
+                    isFront2 = true;
+                    isBehind2 = false;
+                    Debug.Log("Player is on the left side of the object");
+                }
+                else
+                {
+                    // You may need to adjust these thresholds based on your specific scenario
+                    if (toPlayer.x > 0)
+                    {
+                        isRight2 = true;
+                        isLeft2 = false;
+                        isFront2 = false;
+                        isBehind2 = false;
+                        Debug.Log("Player is in front of the object");
+                    }
+                    else
+                    {
+                        isRight2 = false;
+                        isLeft2 = true;
+                        isFront2 = false;
+                        isBehind2 = false;
+                        Debug.Log("Player is behind the object");
+                    }
+                }
+
+            }
+
 
 
 
@@ -1028,6 +1117,37 @@ public class TestCube : MonoBehaviour
             transform.Translate(playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
         }
 
+
+
+    }
+
+    private void MoveTowardFacingDirection2()
+    {
+        float horizontalInput = move.ReadValue<Vector2>().x;
+        float verticalInput = move.ReadValue<Vector2>().y;
+        if (isBehind2)
+        {
+            transform.Translate(playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+        if (isLeft2)
+        {
+            transform.Translate(-playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(-playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+        if (isRight2)
+        {
+            transform.Translate(-playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(-playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+        if (isFront2)
+        {
+            transform.Translate(playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
     }
 
     #endregion
@@ -1274,6 +1394,54 @@ public class TestCube : MonoBehaviour
 
         }
 
+        if (withinNPC2Range)
+        {
+            gameManager.sceneChanged = true;
+            bool firstTime = false;
+            if (!firstTime)
+            {
+                //SceneControl.instance.dR.Stop();
+                firstTime = true;
+            }
+
+
+            if (ReadActionButton())
+            {
+                NPC2Interacting = true;
+                //SceneControl.LV.SetActive(false);
+                //Start Dialogue
+            }
+            else
+            {
+                NPC2Interacting = false;
+            }
+
+        }
+
+        if (withinNPC3Range)
+        {
+            gameManager.sceneChanged = true;
+            bool firstTime = false;
+            if (!firstTime)
+            {
+                //SceneControl.instance.dR.Stop();
+                firstTime = true;
+            }
+
+
+            if (ReadActionButton())
+            {
+                NPC3Interacting = true;
+                //SceneControl.LV.SetActive(false);
+                //Start Dialogue
+            }
+            else
+            {
+                NPC3Interacting = false;
+            }
+
+        }
+
         if (withinEntranceRange)
         {
 
@@ -1295,73 +1463,64 @@ public class TestCube : MonoBehaviour
     {
         if (NPCInteracting)
         {
-
-            if (selectNPC != null)
+            if (!Dialogue1)
             {
-                if (selectNPC.CompareTag("NPC1"))
-                {
-                    if (!Dialogue1)
-                    {
-                        print("interactiNPC1");
-                        //SceneControl.LV.SetActive(false);
-                        SceneControl.instance.dR.StopAllCoroutines();
-                        SceneControl.instance.phoneUI.SetActive(false);
-                        SceneControl.instance.dialogueBox.SetActive(true);
-                        SceneControl.instance.nameTag1.SetActive(true);
-                        SceneControl.instance.nameTag.SetActive(false);
-                        SceneControl.instance.dR.StartDialogue("BoomerQuest");
+                print("interactiNPC1");
+                //SceneControl.LV.SetActive(false);
+                SceneControl.instance.dR.StopAllCoroutines();
+                SceneControl.instance.phoneUI.SetActive(false);
+                SceneControl.instance.dialogueBox.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.dR.StartDialogue("BoomerQuest");
 
-                        NPCInteracting = false;
-                        Dialogue1 = true;
-                        //StartCoroutine(MovingCameraWerther());
+                NPCInteracting = false;
+                Dialogue1 = true;
+                //StartCoroutine(MovingCameraWerther());
 
-                    }
-                }
+            }    
+        }
 
-                if (selectNPC.CompareTag("NPC3"))
-                {
-                    if (!Dialogue3)
-                    {
-                        print("interactiNPC2");
-                        //SceneControl.LV.SetActive(false);
-                        SceneControl.instance.dR.StopAllCoroutines();
-                        SceneControl.instance.phoneUI.SetActive(false);
-                        SceneControl.instance.dialogueBox.SetActive(true);
-                        SceneControl.instance.nameTag1.SetActive(true);
-                        SceneControl.instance.nameTag.SetActive(false);
-                        SceneControl.instance.dR.StartDialogue("LalahQuest");
+        if (NPC2Interacting)
+        {
+            if (!Dialogue3)
+            {
+                print("interactiNPC2");
+                //SceneControl.LV.SetActive(false);
+                SceneControl.instance.dR.StopAllCoroutines();
+                SceneControl.instance.phoneUI.SetActive(false);
+                SceneControl.instance.dialogueBox.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.dR.StartDialogue("LalahQuest");
 
-                        NPCInteracting = false;
-                        Dialogue3 = true;
-                        //StartCoroutine(MovingCameraNPC2());
-
-                    }
-                }
-                if (selectNPC.CompareTag("NPC4"))
-                {
-                    if (!Dialogue4)
-                    {
-                        print("interactiNPC3");
-                        //SceneControl.LV.SetActive(false);
-                        SceneControl.instance.dR.StopAllCoroutines();
-                        SceneControl.instance.phoneUI.SetActive(false);
-                        SceneControl.instance.dialogueBox.SetActive(true);
-                        SceneControl.instance.nameTag1.SetActive(true);
-                        SceneControl.instance.nameTag.SetActive(false);
-                        SceneControl.instance.dR.StartDialogue("MichaelQuest");
-                        
-                        //StartCoroutine(MovingCameraNPC3());
-                        NPCInteracting = false;
-                        Dialogue4 = true;
-
-
-                    }
-                }
+                NPCInteracting = false;
+                Dialogue3 = true;
+                //StartCoroutine(MovingCameraNPC2());
 
             }
-
-
         }
+
+        if (NPC3Interacting)
+        {
+            if (!Dialogue4)
+            {
+                print("interactiNPC3");
+                //SceneControl.LV.SetActive(false);
+                SceneControl.instance.dR.StopAllCoroutines();
+                SceneControl.instance.phoneUI.SetActive(false);
+                SceneControl.instance.dialogueBox.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.dR.StartDialogue("MichaelQuest");
+
+                //StartCoroutine(MovingCameraNPC3());
+                NPCInteracting = false;
+                Dialogue4 = true;
+
+
+            }
+        }                                              
     }
 
     void OnTV()
@@ -1399,7 +1558,6 @@ public class TestCube : MonoBehaviour
 
             }
 
-
         }
     }
 
@@ -1410,34 +1568,6 @@ public class TestCube : MonoBehaviour
         onTv = true;
 
     }
-
-    //IEnumerator MovingCameraWerther()
-    //{
-    //    SceneControl.instance.MoveCamera(SceneControl.instance.closeShootWerther);
-    //    yield return new WaitForSecondsRealtime(2f);
-    //    isTalking = true;
-
-    //}
-
-    //IEnumerator MovingCameraNPC2()
-    //{
-    //    SceneControl.instance.MoveCamera(SceneControl.instance.closeShootNPC2);
-    //    yield return new WaitForSecondsRealtime(2f);
-    //    isTalking = true;
-
-    //}
-
-
-    //IEnumerator MovingCameraNPC3()
-    //{
-    //    SceneControl.instance.MoveCamera(SceneControl.instance.closeShootNPC3);
-    //    yield return new WaitForSecondsRealtime(2f);
-    //    isTalking = true;
-
-    //}
-
-
-
 
 
     public void DetectInteractRange()
@@ -1470,16 +1600,39 @@ public class TestCube : MonoBehaviour
         {
             selectNPC = raycastHit.collider.gameObject;
 
-            print("selectNPC" + selectNPC);
-            withinNPCsRange = true;
-      
+            if (selectNPC.CompareTag("NPC1"))
+            {
+                withinNPCsRange = true;
+            }
+            else
+            {
+                withinNPCsRange = false;
+            }
+
+            if (selectNPC.CompareTag("NPC3"))
+            {
+                withinNPC2Range = true;
+            }
+            else
+            {
+                withinNPC2Range = false;
+            }
+
+            if (selectNPC.CompareTag("NPC4"))
+            {
+                withinNPC3Range = true;
+            }
+            else
+            {
+                withinNPC3Range = false;
+            }    
 
         }
         else
         {
             withinNPCsRange = false;
-
-
+            withinNPC2Range = false;
+            withinNPC3Range = false;
         }
 
     }
@@ -1719,16 +1872,6 @@ public class TestCube : MonoBehaviour
 
     }
 
-    //When player is on the ground and button is pressed, the Jump is triggered
-    //void DoJump(InputAction.CallbackContext obj)
-    //{
-    //    if (isGrounded && !isFreeze)
-    //    {
-    //        forceDirection += Vector3.up * jumpForce;
-    //    }
-    //}
-
-
     void Jump()
     {
         //if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
@@ -1897,10 +2040,6 @@ public class TestCube : MonoBehaviour
     }
 
 
-
-
-
-
     private void CheckGrounded()
     {
         //send a spherecast downwards and check for ground, if theres ground we are grounded
@@ -1939,70 +2078,6 @@ public class TestCube : MonoBehaviour
             //Debug.Log("isGrounded" + isGrounded);
         }
     }
-
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.tag == "NPC1")
-    //    {
-    //        withinDialogueRange = true;
-    //        hubStart = true;
-
-    //    }
-    //    else if (other.gameObject.tag == "NPC2")
-    //    {
-    //        withinDialogueRange = true;
-    //        hubEnd = true;
-    //    }
-    //}
-
-
-    //void DoContinue(InputAction.CallbackContext obj)
-    //{
-
-    //    ContinueBotton.instance.PressContinue();
-
-    //}
-
-    //void DoTalk(InputAction.CallbackContext obj)
-    //{
-    //    if (withinDialogueRange)
-    //    {
-    //        if (!conversationStart && hubStart == true)
-    //        {
-    //            SceneControl.instance.dR.StartDialogue("BoomerQuest");
-    //            conversationStart = true;
-
-    //            //lineView = FindObjectOfType<LineView>();
-    //            withinDialogueRange = false;
-    //        }
-
-    //        if (!conversationStart && hubEnd == true)
-    //        {
-    //            SceneControl.instance.dR.StartDialogue("HubEnd");
-    //            conversationStart = true;
-
-    //            withinDialogueRange = false;
-    //        }
-
-    //    }
-    //}
-
-
-    //void DoContinue(InputAction.CallbackContext obj)
-    //{
-    //    lineView.OnContinueClicked();
-    //}
-
-    //void ContinueBottonControl()
-    //{
-    //    if (continueControl.action.triggered)
-    //    {
-    //        Debug.Log("Hello");
-    //        lineView = FindObjectOfType<LineView>();
-    //        lineView.OnContinueClicked();
-    //    }
-    //}
 
     [YarnCommand("ChangeScene")]
     public static void GoToLevelScene()
@@ -2159,6 +2234,7 @@ public class TestCube : MonoBehaviour
 
         if (Physics.SphereCast(playerPos.position, PRange, playerPos.forward, out raycastHit, interactDistance, moveableLayer))
         {
+            //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, PRange);
             targetObject = raycastHit.collider.gameObject;
         }
 
@@ -2192,7 +2268,7 @@ public class TestCube : MonoBehaviour
 
                 //targetObject.transform.rotation = PPosition.rotation;
                 //targetObject.transform.position = newPosition;
-                targetObject.transform.position = Vector3.Lerp(targetObject.transform.position, newPosition, currentSpeed * Time.deltaTime);
+                targetObject.transform.position = Vector3.Lerp(targetObject.transform.position, newPosition, currentSpeed * Time.deltaTime * 1.2f);
                 isCameraLocked = true;
             }
             else

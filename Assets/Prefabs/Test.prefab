@@ -1458,7 +1458,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790931724609759169}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.01503562, y: 0.97933656, z: -0.1853763, w: -0.07943267}
+  m_LocalRotation: {x: -0.015035627, y: 0.9793365, z: -0.1853763, w: -0.07943269}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3429,7 +3429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516074710670123496}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.01503562, y: 0.97933656, z: -0.1853763, w: -0.07943266}
+  m_LocalRotation: {x: -0.015035631, y: 0.97933656, z: -0.18537632, w: -0.07943272}
   m_LocalPosition: {x: 0.80578613, y: 3, z: 4.9346466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3475,7 +3475,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3153407
+    m_Bits: 842014207
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6308,6 +6308,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 33554432
   withinNPCsRange: 1
+  withinNPC2Range: 0
+  withinNPC3Range: 0
   isTalking: 0
   interactWithNpc: 1
   doorDistance: 1.5
@@ -6334,10 +6336,13 @@ MonoBehaviour:
   runThreshold: 0.7
   model2: {fileID: 5173540319895431461}
   NPCInteracting: 0
+  NPC2Interacting: 0
+  NPC3Interacting: 0
   Dialogue1: 0
   Dialogue2: 0
   Dialogue3: 0
   Dialogue4: 0
+  selectNPC: {fileID: 0}
   switchPuzzleCam: 0
   switchPuzzleCamP2: 0
   footstepRate: 115
@@ -6357,10 +6362,15 @@ MonoBehaviour:
   isPulling: 0
   newPosition: {x: 0, y: 0, z: 0}
   isCameraLocked: 0
+  pullingSpeed: 0.1
   isFront: 0
   isRight: 0
   isLeft: 0
   isBehind: 0
+  isFront2: 0
+  isRight2: 0
+  isLeft2: 0
+  isBehind2: 0
   tooHeavy: 0
 --- !u!114 &965772886468833305
 MonoBehaviour:
