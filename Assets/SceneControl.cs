@@ -22,11 +22,19 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public Transform closeShootWerther;
     [SerializeField]
+    public Transform closeShootNPC2;
+    [SerializeField]
+    public Transform closeShootNPC3;
+    [SerializeField]
     public Transform mainCam;
     [SerializeField]
     public GameObject mainCamera;
     [SerializeField]
     public GameObject WertherCam;
+    [SerializeField]
+    public GameObject Npc2Cam;
+    [SerializeField]
+    public GameObject Npc3Cam;
 
     [SerializeField]
     public static GameObject LVNPC, LV;
@@ -78,6 +86,20 @@ public class SceneControl : MonoBehaviour
         mainCamera.SetActive(false);
         WertherCam.SetActive(true);
    
+    }
+
+    public void SwitchCameraToNpc2()
+    {
+        mainCamera.SetActive(false);
+        Npc2Cam.SetActive(true);
+
+    }
+
+    public void SwitchCameraToNpc3()
+    {
+        mainCamera.SetActive(false);
+        Npc3Cam.SetActive(true);
+
     }
 
     public void SwitchCameraToMain()

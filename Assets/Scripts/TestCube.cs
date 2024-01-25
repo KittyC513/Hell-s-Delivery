@@ -1260,12 +1260,16 @@ public class TestCube : MonoBehaviour
                 firstTime = true;
             } 
 
-            //StartCoroutine(MovingCameraWerther());
+
             if (ReadActionButton())
             {
                 NPCInteracting = true;
                 //SceneControl.LV.SetActive(false);
                 //Start Dialogue
+            }
+            else
+            {
+                NPCInteracting = false;
             }
 
         }
@@ -1298,6 +1302,7 @@ public class TestCube : MonoBehaviour
                 {
                     if (!Dialogue1)
                     {
+                        print("interactiNPC1");
                         //SceneControl.LV.SetActive(false);
                         SceneControl.instance.dR.StopAllCoroutines();
                         SceneControl.instance.phoneUI.SetActive(false);
@@ -1308,7 +1313,7 @@ public class TestCube : MonoBehaviour
 
                         NPCInteracting = false;
                         Dialogue1 = true;
-
+                        //StartCoroutine(MovingCameraWerther());
 
                     }
                 }
@@ -1317,6 +1322,7 @@ public class TestCube : MonoBehaviour
                 {
                     if (!Dialogue3)
                     {
+                        print("interactiNPC2");
                         //SceneControl.LV.SetActive(false);
                         SceneControl.instance.dR.StopAllCoroutines();
                         SceneControl.instance.phoneUI.SetActive(false);
@@ -1327,7 +1333,7 @@ public class TestCube : MonoBehaviour
 
                         NPCInteracting = false;
                         Dialogue3 = true;
-
+                        //StartCoroutine(MovingCameraNPC2());
 
                     }
                 }
@@ -1335,6 +1341,7 @@ public class TestCube : MonoBehaviour
                 {
                     if (!Dialogue4)
                     {
+                        print("interactiNPC3");
                         //SceneControl.LV.SetActive(false);
                         SceneControl.instance.dR.StopAllCoroutines();
                         SceneControl.instance.phoneUI.SetActive(false);
@@ -1342,7 +1349,8 @@ public class TestCube : MonoBehaviour
                         SceneControl.instance.nameTag1.SetActive(true);
                         SceneControl.instance.nameTag.SetActive(false);
                         SceneControl.instance.dR.StartDialogue("MichaelQuest");
-
+                        
+                        //StartCoroutine(MovingCameraNPC3());
                         NPCInteracting = false;
                         Dialogue4 = true;
 
@@ -1403,13 +1411,30 @@ public class TestCube : MonoBehaviour
 
     }
 
-    IEnumerator MovingCameraWerther()
-    {
-        SceneControl.instance.MoveCamera(SceneControl.instance.closeShootWerther);
-        yield return new WaitForSecondsRealtime(2f);
-        isTalking = true;
+    //IEnumerator MovingCameraWerther()
+    //{
+    //    SceneControl.instance.MoveCamera(SceneControl.instance.closeShootWerther);
+    //    yield return new WaitForSecondsRealtime(2f);
+    //    isTalking = true;
 
-    }
+    //}
+
+    //IEnumerator MovingCameraNPC2()
+    //{
+    //    SceneControl.instance.MoveCamera(SceneControl.instance.closeShootNPC2);
+    //    yield return new WaitForSecondsRealtime(2f);
+    //    isTalking = true;
+
+    //}
+
+
+    //IEnumerator MovingCameraNPC3()
+    //{
+    //    SceneControl.instance.MoveCamera(SceneControl.instance.closeShootNPC3);
+    //    yield return new WaitForSecondsRealtime(2f);
+    //    isTalking = true;
+
+    //}
 
 
 
@@ -1445,6 +1470,7 @@ public class TestCube : MonoBehaviour
         {
             selectNPC = raycastHit.collider.gameObject;
 
+            print("selectNPC" + selectNPC);
             withinNPCsRange = true;
       
 

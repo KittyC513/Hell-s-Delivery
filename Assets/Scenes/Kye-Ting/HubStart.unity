@@ -491,6 +491,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 63982208}
   m_CullTransparentMesh: 1
+--- !u!1 &71078308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 71078309}
+  m_Layer: 0
+  m_Name: CloseShoot_NPC2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &71078309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71078308}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
+  m_LocalPosition: {x: 5.24, y: 0.834, z: -4.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &85736987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2666,6 +2697,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &395498479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 395498480}
+  m_Layer: 0
+  m_Name: CloseShoot_NPC3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &395498480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395498479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
+  m_LocalPosition: {x: -3.51, y: 0.834, z: -5.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &431173676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4057,9 +4119,13 @@ MonoBehaviour:
   P2Rotation: {fileID: 1822304127}
   closeShootTV: {fileID: 693498090}
   closeShootWerther: {fileID: 775785603}
+  closeShootNPC2: {fileID: 71078309}
+  closeShootNPC3: {fileID: 1196149218}
   mainCam: {fileID: 1034765985}
   mainCamera: {fileID: 1034765982}
   WertherCam: {fileID: 1107994697}
+  Npc2Cam: {fileID: 2119856976}
+  Npc3Cam: {fileID: 1196149217}
   dR: {fileID: 8234583170500384629}
   Lv1: {fileID: 133796822}
   lv2: {fileID: 2796402176970801406}
@@ -10792,6 +10858,8 @@ SceneRoots:
   - {fileID: 1552503441}
   - {fileID: 693498090}
   - {fileID: 775785603}
+  - {fileID: 71078309}
+  - {fileID: 395498480}
   - {fileID: 122339972}
   - {fileID: 1462073267}
   - {fileID: 1457516729}
