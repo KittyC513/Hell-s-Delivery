@@ -1266,7 +1266,6 @@ public class TestCube : MonoBehaviour
                 NPCInteracting = true;
                 //SceneControl.LV.SetActive(false);
                 //Start Dialogue
-
             }
 
         }
@@ -1292,56 +1291,67 @@ public class TestCube : MonoBehaviour
     {
         if (NPCInteracting)
         {
-            //StartCoroutine(MovingCameraWerther());
-            if (!Dialogue1)
+
+            if (selectNPC != null)
             {
-                //SceneControl.LV.SetActive(false);
-                SceneControl.instance.dR.StopAllCoroutines();
-                SceneControl.instance.phoneUI.SetActive(false);
-                SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
-                SceneControl.instance.nameTag.SetActive(false);
-                SceneControl.instance.dR.StartDialogue("BoomerQuest");
+                if (selectNPC.CompareTag("NPC1"))
+                {
+                    if (!Dialogue1)
+                    {
+                        //SceneControl.LV.SetActive(false);
+                        SceneControl.instance.dR.StopAllCoroutines();
+                        SceneControl.instance.phoneUI.SetActive(false);
+                        SceneControl.instance.dialogueBox.SetActive(true);
+                        SceneControl.instance.nameTag1.SetActive(true);
+                        SceneControl.instance.nameTag.SetActive(false);
+                        SceneControl.instance.dR.StartDialogue("BoomerQuest");
 
-                NPCInteracting = false;
-                Dialogue1 = true;
+                        NPCInteracting = false;
+                        Dialogue1 = true;
 
-               
+
+                    }
+                }
+
+                if (selectNPC.CompareTag("NPC3"))
+                {
+                    if (!Dialogue3)
+                    {
+                        //SceneControl.LV.SetActive(false);
+                        SceneControl.instance.dR.StopAllCoroutines();
+                        SceneControl.instance.phoneUI.SetActive(false);
+                        SceneControl.instance.dialogueBox.SetActive(true);
+                        SceneControl.instance.nameTag1.SetActive(true);
+                        SceneControl.instance.nameTag.SetActive(false);
+                        SceneControl.instance.dR.StartDialogue("LalahQuest");
+
+                        NPCInteracting = false;
+                        Dialogue3 = true;
+
+
+                    }
+                }
+                if (selectNPC.CompareTag("NPC4"))
+                {
+                    if (!Dialogue4)
+                    {
+                        //SceneControl.LV.SetActive(false);
+                        SceneControl.instance.dR.StopAllCoroutines();
+                        SceneControl.instance.phoneUI.SetActive(false);
+                        SceneControl.instance.dialogueBox.SetActive(true);
+                        SceneControl.instance.nameTag1.SetActive(true);
+                        SceneControl.instance.nameTag.SetActive(false);
+                        SceneControl.instance.dR.StartDialogue("MichaelQuest");
+
+                        NPCInteracting = false;
+                        Dialogue4 = true;
+
+
+                    }
+                }
+
             }
 
-            //StartCoroutine(MovingCameraWerther());
-            if (!Dialogue3)
-            {
-                //SceneControl.LV.SetActive(false);
-                SceneControl.instance.dR.StopAllCoroutines();
-                SceneControl.instance.phoneUI.SetActive(false);
-                SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
-                SceneControl.instance.nameTag.SetActive(false);
-                SceneControl.instance.dR.StartDialogue("LalahQuest");
-
-                NPCInteracting = false;
-                Dialogue3 = true;
-
-
-            }
-
-            //StartCoroutine(MovingCameraWerther());
-            if (!Dialogue4)
-            {
-                //SceneControl.LV.SetActive(false);
-                SceneControl.instance.dR.StopAllCoroutines();
-                SceneControl.instance.phoneUI.SetActive(false);
-                SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
-                SceneControl.instance.nameTag.SetActive(false);
-                SceneControl.instance.dR.StartDialogue("MichaelQuest");
-
-                NPCInteracting = false;
-                Dialogue4 = true;
-
-
-            }
 
         }
     }
@@ -1433,6 +1443,8 @@ public class TestCube : MonoBehaviour
 
         if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
         {
+            selectNPC = raycastHit.collider.gameObject;
+
             withinNPCsRange = true;
       
 
