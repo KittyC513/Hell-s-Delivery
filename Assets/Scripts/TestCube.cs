@@ -381,10 +381,18 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool isCameraLocked;
 
+    [Header("Detect Direction from player to object")]
+    [SerializeField]
+    bool isFront, isRight, isLeft, isBehind;
+
     [Header("Heavy Package")]
     [SerializeField]
     private bool tooHeavy;
 
+
+    private LineRenderer forwardLineRenderer;
+    private LineRenderer directionLineRenderer;
+    private LineRenderer arcLineRenderer;
 
 
     //[SerializeField]
@@ -484,6 +492,7 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DetectDirectionBetweenPlayerAndObject();
         DetectPackageWight();
         CastBlobShadow();
         CheckGrounded();
@@ -663,26 +672,26 @@ public class TestCube : MonoBehaviour
             {
                 float accel = (maxSpeed / timeToRun);
                 currentSpeed += accel * Time.deltaTime;
-                print("currentSpeed" + currentSpeed);
+                
 
             }
             else if (isPulling)
             {
                 //float accel = (maxSpeed / timeToPull);
                 currentSpeed = pullItemForce;
-                print("currentSpeed" + currentSpeed);
+               
             }
             else if (isGliding)
             {
                 float accel = (maxSpeed / timeToGlide);
                 currentSpeed += accel * Time.deltaTime;
-                print("currentSpeed" + currentSpeed);
+                
             }
             else if(!isRunning && !isGliding && !isPulling)
             {
                 float accel = (maxSpeed / timeToWalk);
                 currentSpeed += accel * Time.deltaTime;
-                print("currentSpeed" + currentSpeed);
+               
             }
 
 
@@ -928,15 +937,93 @@ public class TestCube : MonoBehaviour
 
         LookAt();
     }
+    #region Interact with moveable obstacles
 
+    private void DetectDirectionBetweenPlayerAndObject()
+    {
+        if (targetObject != null)
+        {
+            // Calculate the direction vector from the object to the player
+            Vector3 toPlayer = this.transform.position - targetObject.transform.position;
+            // Calculate the dot product between the forward vector of the object and the toPlayer vector
+            float dotProduct = Vector3.Dot(targetObject.transform.forward, toPlayer.normalized);
+
+            if (dotProduct > 0.5f)
+            {
+                isRight = true;
+                isLeft = false;
+                isFront = false;
+                isBehind = false;
+
+                Debug.Log("Player is on the right side of the object");
+            }
+            else if (dotProduct < -0.5f)
+            {
+                isRight = false;
+                isLeft = true;
+                isFront = false;
+                isBehind = false;
+                Debug.Log("Player is on the left side of the object");
+            }
+            else
+            {
+                // You may need to adjust these thresholds based on your specific scenario
+                if (toPlayer.x > 0)
+                {
+                    isRight = false;
+                    isLeft = false;
+                    isFront = true;
+                    isBehind = false;
+                    Debug.Log("Player is in front of the object");
+                }
+                else
+                {
+                    isRight = false;
+                    isLeft = false;
+                    isFront = false;
+                    isBehind = true;
+                    Debug.Log("Player is behind the object");
+                }
+            }
+
+
+
+        }
+
+
+    }
     private void MoveTowardFacingDirection()
     {
         float horizontalInput = move.ReadValue<Vector2>().x;
         float verticalInput = move.ReadValue<Vector2>().y;
 
-        transform.Translate(-playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
-        transform.Translate(-playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        if (isBehind)
+        {
+            transform.Translate(playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+        if (isLeft)
+        {
+            transform.Translate(-playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(-playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+        if (isRight)
+        {
+            transform.Translate(-playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(-playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+        if (isFront)
+        {
+            transform.Translate(playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
     }
+
+    #endregion
 
     private void LookAt()
     {
