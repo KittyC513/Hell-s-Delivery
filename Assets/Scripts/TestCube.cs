@@ -316,6 +316,13 @@ public class TestCube : MonoBehaviour
     private bool Dialogue1;
     [SerializeField]
     private bool Dialogue2;
+    [SerializeField]
+    private bool Dialogue3;
+    [SerializeField]
+    private bool Dialogue4;
+
+    [SerializeField]
+    private GameObject selectNPC;
 
     //[Header("Push/Pull")]
     //[SerializeField]
@@ -1300,6 +1307,40 @@ public class TestCube : MonoBehaviour
                 Dialogue1 = true;
 
                
+            }
+
+            //StartCoroutine(MovingCameraWerther());
+            if (!Dialogue3)
+            {
+                //SceneControl.LV.SetActive(false);
+                SceneControl.instance.dR.StopAllCoroutines();
+                SceneControl.instance.phoneUI.SetActive(false);
+                SceneControl.instance.dialogueBox.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.dR.StartDialogue("LalahQuest");
+
+                NPCInteracting = false;
+                Dialogue3 = true;
+
+
+            }
+
+            //StartCoroutine(MovingCameraWerther());
+            if (!Dialogue4)
+            {
+                //SceneControl.LV.SetActive(false);
+                SceneControl.instance.dR.StopAllCoroutines();
+                SceneControl.instance.phoneUI.SetActive(false);
+                SceneControl.instance.dialogueBox.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.dR.StartDialogue("MichaelQuest");
+
+                NPCInteracting = false;
+                Dialogue4 = true;
+
+
             }
 
         }
