@@ -79,6 +79,11 @@ public class ScoreCount : MonoBehaviour
     [SerializeField]
     private bool p2AddScore;
 
+    [SerializeField]
+    public GameObject p1scoreEffect;
+    [SerializeField]
+    public GameObject p2scoreEffect;
+
 
     //need score for each value
     //need an expected outcome for each player
@@ -102,6 +107,8 @@ public class ScoreCount : MonoBehaviour
 
         p1Score = InitialScore;
         p2Score = p1Score;
+        p1scoreEffect.SetActive(false);
+        p2scoreEffect.SetActive(false);
     }   
 
     // Update is called once per frame
@@ -256,7 +263,7 @@ public class ScoreCount : MonoBehaviour
         //StartCoroutine(RotateToPositionP2(-knobValue, 0.3f));
         p2Score += value;
         p2AddScore = true;
-        //p1Deaths += value;
+        p1Deaths += 1;
         //p1Score += p1Deaths;
 
         //deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
@@ -271,9 +278,18 @@ public class ScoreCount : MonoBehaviour
         //StartCoroutine(RotateToPosition(knobValue, 0.3f));
         p1Score += value;
         p1AddScore = true;
-
+      
     }
 
+    public void AddTimeToP1Package(float time)
+    {
+        p1PackageTime = time;
+    }
+
+    public void AddTimeToP2Package(float time)
+    {
+        p2PackageTime = time;
+    }
 
     //IEnumerator P1PackageTimer(int value)
     //{
@@ -310,7 +326,7 @@ public class ScoreCount : MonoBehaviour
         p1Score += value;
         p1AddScore = true;
 
-        //p2Deaths -= value;
+        p2Deaths += 1;
         //p2Score += p2Deaths;
         //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
     }
@@ -322,21 +338,34 @@ public class ScoreCount : MonoBehaviour
         //StartCoroutine(RotateToPositionP2(-knobValue, 0.3f));
         p2Score += value;
         p2AddScore = true;
+      
     }
 
     void AddScore()
     {
         if (p1AddScore)
         {
+            
             StartCoroutine(RotateToPosition(knobValue, 0.3f));
+            p1scoreEffect.SetActive(true);
+
+            StartCoroutine(ScoreEffectP1());
+       
+
         }
+
 
         if (p2AddScore)
         {
+            p2scoreEffect.SetActive(true);
             StartCoroutine(RotateToPositionP2(knobValue, 0.3f));
-        }
-    }
 
+            StartCoroutine(ScoreEffectP2());
+    
+
+        }
+
+    }
 
     IEnumerator RotateToPosition(float targetRotation, float rotationTime)
     {
@@ -373,7 +402,7 @@ public class ScoreCount : MonoBehaviour
                 if (knobValue > -90)
                 {
                     newRotation = Mathf.Lerp(startingRotation, targetRotation, elapsedTime / rotationTime);
-                    print("startingRotation" + startingRotation);
+                    //print("startingRotation" + startingRotation);
                     knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, newRotation);
   
                 }
@@ -407,9 +436,11 @@ public class ScoreCount : MonoBehaviour
 
         }
 
+
+       
         p1AddScore = false;
 
-        print("Moving" + targetRotation);
+        //print("Moving" + targetRotation);
 
 
 
@@ -455,7 +486,7 @@ public class ScoreCount : MonoBehaviour
                 {
                     float currentRotation = Mathf.Lerp(startingRotation, startingRotation + shortestRotation, elapsedTime / rotationTime);
                     knob.localEulerAngles = new Vector3(knob.localEulerAngles.x, knob.localEulerAngles.y, currentRotation);
-                    print("startingRotation" + startingRotation);
+                    //print("startingRotation" + startingRotation);
                 }
 
             }
@@ -494,6 +525,22 @@ public class ScoreCount : MonoBehaviour
         
     }
 
+
+    IEnumerator ScoreEffectP1()
+    {
+
+        yield return new WaitForSeconds(3f);
+        
+        p1scoreEffect.SetActive(false);
+    }
+
+    IEnumerator ScoreEffectP2()
+    {
+
+        yield return new WaitForSeconds(3f);
+
+        p2scoreEffect.SetActive(false);
+    }
 
 
 

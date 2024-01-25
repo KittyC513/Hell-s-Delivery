@@ -32,8 +32,10 @@ public class ContinueBotton : MonoBehaviour
 
     public void PressContinue()
     {
+        SceneControl.LVNPC.GetComponent<LineView>().OnContinueClicked();
         lineView = FindObjectOfType<LineView>();
         lineView.OnContinueClicked();
+     
     }
 
 }

@@ -82,12 +82,12 @@ public class TestPickDrop : MonoBehaviour
             {
                 if (this.gameObject.layer == LayerMask.NameToLayer("P1Collider"))
                 {
-                    objectGrabbable.P1Drop();
+                    //objectGrabbable.P1Drop();
                 }
 
                 if (this.gameObject.layer == LayerMask.NameToLayer("P2Collider"))
                 {
-                    objectGrabbable.P2Drop();
+                    //objectGrabbable.P2Drop();
                 }
                 objectGrabbable = null;
 

@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class ShowDialogue :DialogueViewBase
 {
-    private static GameObject LVPlayers;
+    private static GameObject LVPlayers, LVNPC;
     public static GameObject Gradient;
 
     [SerializeField] DialogueRunner runner;
@@ -106,10 +106,44 @@ public class ShowDialogue :DialogueViewBase
         Debug.Log("Here");
     }
 
+    [YarnCommand("NPCShow")]
+    public static void NPCShow()
+    {
+        LVPlayers = GameObject.Find("Line View Players");
+        LVPlayers.SetActive(true);
+    }
+
     [YarnCommand("TutorialLevel")]
     public static void TutorialLevel()
     {
-        SceneManager.LoadScene("Tutorial");
+        GameManager.instance.sceneChanged = true;
+        Loader.Load(Loader.Scene.Tutorial);
+        
+        //SceneManager.LoadScene("Tutorial");
+    }
+
+    [YarnCommand("HubStart")]
+    public static void HubStart()
+    {
+        GameManager.instance.sceneChanged = true;
+        Loader.Load(Loader.Scene.HubStart);
+
+        //SceneManager.LoadScene("Tutorial");
+    }
+
+    [YarnCommand("SwitchCamNPC")]
+    public static void SwitchCamera1()
+    {
+        SceneControl.instance.SwitchCameraToNpc();
+
+
+    }
+    [YarnCommand("SwitchCamMain")]
+    public static void SwitchCamera2()
+    {
+        SceneControl.instance.SwitchCameraToMain();
+
+
     }
 
     [YarnCommand("HideGradient")]

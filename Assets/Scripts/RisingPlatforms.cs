@@ -20,8 +20,18 @@ public class RisingPlatforms : MonoBehaviour
     private Transform startPosition;
     public Material onActive;
     Material Default;
+    [SerializeField]
+    private List<Renderer> renderers = new List<Renderer>();
+    public Material outline;
+
+    public bool toggle;
 
     private float time;
+
+    public bool isRunning;
+
+    [SerializeField] private AK.Wwise.Event platformsMove;
+    private bool shouldSound = false;
 
     private void Awake()
     {
@@ -35,10 +45,12 @@ public class RisingPlatforms : MonoBehaviour
         {
             platforms.Add(child.gameObject);
 
-            
-            
+            Renderer renderer = child.gameObject.GetComponent<Renderer>();
+            renderers.Add(renderer);
+
         }
 
+        toggle = false;
       //  foreach (Transform child in platformParent.transform)
        // {
          //   Renderer renderer = child.GetComponent<Renderer>();
@@ -52,9 +64,11 @@ public class RisingPlatforms : MonoBehaviour
         platformParent.transform.position = startPosition.transform.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         MovePlatforms();
+
+        
     }
 
     private void MovePlatforms()
@@ -64,15 +78,21 @@ public class RisingPlatforms : MonoBehaviour
         {
             //move platforms to target
 
-           //move the entire parent object giving the level designer more freedom at loss of the visual upgrade of moving each piece individually
-           //could implement later
-           platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+            //move the entire parent object giving the level designer more freedom at loss of the visual upgrade of moving each piece individually
+            //could implement later
+            platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
 
             /*foreach (GameObject child in platforms)
             {
                 child.transform.position = Vector3.Lerp(transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
             }*/
 
+           if (shouldSound)
+            {
+                shouldSound = false;
+                platformsMove.Post(this.gameObject);
+            }
+            
 
         }
         else
@@ -80,6 +100,12 @@ public class RisingPlatforms : MonoBehaviour
             //move platforms back to starting
 
             platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, startPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+
+            if (!shouldSound)
+            {
+                shouldSound = true;
+                platformsMove.Post(this.gameObject);
+            }
 
 
         }
@@ -92,20 +118,88 @@ public class RisingPlatforms : MonoBehaviour
     public void ActivatePlatforms()
     {
         //when on the button activate platforms
-        
-        if (!active) time = Time.deltaTime;
+
+        if (!active)
+        {
+            time = Time.deltaTime;
+            
+        }
         active = true;
+        
     }
 
     public void DeactivatePlatforms()
     {
         //platforms are no longer active
-        if (active) time = Time.deltaTime;
+        if (active)
+        {
+            time = Time.deltaTime;
+            toggle = false;
+        }
         active = false;
 
-
+        
         //Debug.Log("Deactivate");
     }
 
+    public void OutlineDeActivate()
+    {
+        // Get all Renderer components in the GameObject
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer renderer in renderers)
+        {
+            // Get the existing materials
+            Material[] materials = renderer.materials;
+
+            // Remove the last material if there are more than one materials
+            if (materials.Length > 1)
+            {
+                Material[] newMaterials = new Material[materials.Length - 1];
+                for (int i = 0; i < newMaterials.Length; i++)
+                {
+                    newMaterials[i] = materials[i];
+                }
+
+                // Update the materials on the Renderer
+                renderer.materials = newMaterials;
+            }
+        }
+    }
+
+    public void OutlineActivate()
+    {
+        // Get all Renderer components in the GameObject
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        if (toggle == false)
+        {
+            foreach (Renderer renderer in renderers)
+            {
+                if (renderer.gameObject.tag != "noOutline" && renderer.gameObject.tag != "Character")
+                {
+                    // Get the existing materials
+                    Material[] materials = renderer.materials;
+
+                    // Add the additional material to the array
+                    if (materials.Length <= 1)
+                    {
+                        Material[] newMaterials = new Material[materials.Length + 1];
+                        for (int i = 0; i < materials.Length; i++)
+                        {
+                            newMaterials[i] = materials[i];
+                        }
+                        newMaterials[materials.Length] = outline;
+
+                        // Update the materials on the Renderer
+                        renderer.materials = newMaterials;
+                    }
+
+                
+                }
+
+            }
+            toggle = true;
+        }
+    }
 
 }

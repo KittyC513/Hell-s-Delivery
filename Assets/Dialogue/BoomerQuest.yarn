@@ -1,41 +1,28 @@
 ﻿title: BoomerQuest
 tags:
 ---
-<<PlayerShow>>
-<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped 1.25 center white>>
-<<Act Player1 ShmonkDefault 0.75 center blue>>
-<<Act Player2 ShminkDefault 0.50 center red>>
+<<NPCShow>>
+<<SwitchCamNPC>>
+Werther: Finally, some help! I've been standing here for ages!
 
-<<Hide Boomer Boomer_Demon_Rough_Sketch_Flipped>>
-<<Act Boomer BoomerDemonHappy 1.25 center #d7e878>>
-Boomer: Oh, thank goodness! A demon my age.
-<<Act Boomer Boomer_Demon_Rough_Sketch_Flipped>>
+//YouDemonz: ...
 
-<<Hide ShminkDefault>>
-<<Act Player2 ShminkAngry 0.50 center red>>
-Player2: Pardon?!
-<<Act Player2 ShminkDefault>>
-
-Boomer: Now that you're here, I need you two dearies to deliver this for me.
+Werther: Hush now! I need this <color=\#e06666>delivered!</color>
 
 //Show the onesie, then make it disappear
 <<Draw Background 1 center>>
 <<Draw DemonBabyOnesie 1 0.60>>
 
-DEMON BABY ONESIE
+<color=\#e06666>DEMON BABY ONESIE</color>
 
 <<Hide DemonBabyOnesie>>
 <<Hide Background>>
 
-Boomer: I made this for my 23rd generation newborn grandchild...
-Boomer: from the hairs found back at my hell manor.
-Boomer: Well, chop-chop! I'll be waiting here.
+Werther: I made this for my 23rd-generation newborn grandchild...
+Werther: From the <color=\#e06666>hairs</color> on my back.
+Werther: Well, chop-chop! I'll be waiting here.
 
-<<Move ShminkDefault -1 center 0.1>>
-<<Move ShmonkDefault -1 center 0.1>>
-<<Move Boomer 2 center 0.1>>
-
-<<Fade black 0.0 1.0 1.0>>
-<<wait  1>>
+//change this command to go to the MVP level
+<<SwitchCamMain>>
 <<ChangeScene>>
 ===

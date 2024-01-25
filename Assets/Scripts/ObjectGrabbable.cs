@@ -12,7 +12,9 @@ public class ObjectGrabbable : MonoBehaviour
     public BoxCollider bC;
     private Transform objectGrabpo;
     [SerializeField]
-    private float dropForce, dropUpForce;
+    public float dropForce;
+    [SerializeField]
+    public float dropUpForce;
     [SerializeField]
     private float stealForce, stealUpForce;
     public GameObject player;
@@ -68,11 +70,19 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     private GameObject indicator;
 
+    [Header("Package Types")]
+    [SerializeField]
+    public bool isHeavy;
 
+    [SerializeField] private AK.Wwise.Event packageImpact;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        if(this.transform.localScale.x > 1)
+        {
+            isHeavy = true;
+        }
 
     }
     // Start is called before the first frame update
@@ -108,9 +118,13 @@ public class ObjectGrabbable : MonoBehaviour
 
     private void FixedUpdate()
     {
-        AddScore();
+        if(GameManager.instance.curSceneName == GameManager.instance.scene4)
+        {
+            AddScore();
+        }
+
         //PackageIcon();
-        IndicatorControl();
+        //IndicatorControl();
 
     }
 
@@ -181,6 +195,8 @@ public class ObjectGrabbable : MonoBehaviour
     IEnumerator P1Timer()
     {
         time += Time.deltaTime;
+
+        ScoreCount.instance.AddTimeToP1Package(time);
         if (time >= 10)
         {
             ScoreCount.instance.AddPointToP1Package(3);
@@ -192,7 +208,9 @@ public class ObjectGrabbable : MonoBehaviour
 
     IEnumerator P2Timer()
     {
+      
         time += Time.deltaTime;
+        ScoreCount.instance.AddTimeToP2Package(time);
         if (time >= 10)
         {
             ScoreCount.instance.AddPointToP2Package(3);
@@ -208,7 +226,11 @@ public class ObjectGrabbable : MonoBehaviour
         {
             indicator.SetActive(true);
         }
-        else
+        else if(P1TakePackage)
+        {
+            indicator.SetActive(false);
+        } 
+        else if (P2TakePackage)
         {
             indicator.SetActive(false);
         }
@@ -287,6 +309,7 @@ public class ObjectGrabbable : MonoBehaviour
 
 
         rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
+
         rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
 
 
@@ -310,8 +333,11 @@ public class ObjectGrabbable : MonoBehaviour
 
         rb.velocity = player2.GetComponent<Rigidbody>().velocity;
 
+       
 
         rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
+
+
         rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
 
 
@@ -449,5 +475,11 @@ public class ObjectGrabbable : MonoBehaviour
         GameManager.instance.p2UI.SetActive(false);
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            packageImpact.Post(this.gameObject);
+        }
+    }
 }

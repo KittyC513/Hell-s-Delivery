@@ -19,7 +19,9 @@ public static class Loader
         PrototypeLevel,
         HubEnd,
         MVPLevel,
-        LoadingScene
+        Tutorial,
+        LoadingScene,
+        ScoreCards
 
     }
 

@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Yarn.Unity;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -13,17 +15,20 @@ public class GameManager : MonoBehaviour
     string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
     string scene3 = "TitleScene";
-    string scene4 = "MVPLevel";
+    public string scene4 = "MVPLevel";
     string scene5 = "HubEnd";
+    string scene6 = "ScoreCards";
 
     [SerializeField]
     Camera mainCam;
     [SerializeField]
     private Transform cameraPosition;
     [SerializeField]
-    private Animator animTitle;
+    public Transform closeShoot;
     [SerializeField]
-    private GameObject text;
+    public Animator animTitle;
+    [SerializeField]
+    public GameObject text;
     [SerializeField]
     private GameObject instructionText;
 
@@ -33,9 +38,9 @@ public class GameManager : MonoBehaviour
     public string layerNameToFind2 = "P2Collider";
     GameObject player;
     [SerializeField]
-    private TestCube p1;
+    public TestCube p1;
     [SerializeField]
-    private TestCube p2;
+    public TestCube p2;
     [SerializeField]
     public GameObject player1;
     [SerializeField]
@@ -53,9 +58,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool readyToStart;
     [SerializeField]
-    private Animator p1Ani;
+    public Animator p1Ani;
     [SerializeField]
-    private Animator p2Ani;
+    public Animator p2Ani;
     [SerializeField]
     private Animator titleAni;
     [SerializeField]
@@ -112,6 +117,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     public bool showTVInstruction;
+    [SerializeField]
+    public bool isBegin;
+    [SerializeField]
+    public bool showWertherInstruction;
 
     [SerializeField]
     public GameObject noisy1;
@@ -136,6 +145,24 @@ public class GameManager : MonoBehaviour
     private float indicatorDistance = 5;
     [SerializeField]
     private float appearanceDistance = 50f;
+    [SerializeField]
+    public bool GMconversationStart;
+    [SerializeField]
+    public Trigger trigger;
+    [SerializeField]
+    public bool foundTrigger;
+    [SerializeField]
+    public bool camChanged1;
+    [SerializeField]
+    public bool camChanged2;
+    [SerializeField]
+    public bool enterOffice;
+    [SerializeField]
+    public GameObject cam1, cam2;
+    [SerializeField]
+    public bool camFound1, camFound2;
+
+
 
     private Dictionary<GameObject, GameObject> projectileToIndicator = new Dictionary<GameObject, GameObject>();
 
@@ -158,9 +185,11 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         FindPlayer();
-        FindCamera();
+        
+        //FindCamera();
         DetectScene();
         PushCheck();
+        P1Indicator();
 
     }
 
@@ -171,13 +200,18 @@ public class GameManager : MonoBehaviour
 
         ShowTVInstruction();
 
+        ShowDirection();
+
+
+
     }
+
 
 
     void SkyboxControl()
     {
         // Change skybox based on the scene name
-        if (GameManager.instance.sceneChanged)
+        if (sceneChanged)
         {
             if(curSceneName == scene3)
             {
@@ -194,18 +228,39 @@ public class GameManager : MonoBehaviour
 
     void DetectScene()
     {
-        if (sceneChanged)
+        if (p1 != null && p2 != null)
         {
+
+            currentScene = SceneManager.GetActiveScene();
+            curSceneName = currentScene.name;
+            if (curSceneName != scene3)
+            {
+                animTitle = null;
+                text = null;
+            }
+            else
+            {
+                if (!enterOffice)
+                {
+                    MoveCamera(cameraPosition, 5f);
+                    animTitle.SetBool("isEnded", true);
+                    text.SetActive(false);
+                }
+
+            }
+
 
         }
 
-
-   
     }
-    public void Reposition(Transform P1position, Transform P2position)
+
+
+    public void Reposition(Transform P1position, Transform P2position, Transform P1rotation, Transform P2rotation)
     {
         player1.transform.position = P1position.position;
+        player1.transform.rotation = P1rotation.rotation;
         player2.transform.position = P2position.position;
+        player2.transform.rotation = P2rotation.rotation;
     }
 
 
@@ -220,22 +275,20 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject obj in objectsInScene)
         {
-            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1 &&!isNoisy1)
+            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1 &&!isNoisy1 && !camFound1)
             {
                 player1 = obj;
                 p1 = obj.GetComponent<TestCube>();
+                p1Ani = p1.playerAnimator;
 
 
                 Transform parentTransform = player1.transform;
 
                 foreach (Transform child in parentTransform)
                 {
-                    if (child.CompareTag("Character"))
+                    if (p1Ani != null)
                     {
-                        p1Anim = child;
-                        p1Character = p1Anim.gameObject;
                         p1AnimFound = true;
-                        p1Ani = p1Character.GetComponent<Animator>();
                     }
 
                     if (child.CompareTag("InGameUI"))
@@ -257,30 +310,31 @@ public class GameManager : MonoBehaviour
                         noisy1.SetActive(false);
                     }
 
+                    if (child.CompareTag("Camera"))
+                    {
+                        cam1 = child.gameObject;
+                        camFound1 = true;
+                    }
+
                 }
 
 
             }
 
-            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2 && !isNoisy2)
+            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2 && !isNoisy2 && !camFound2)
             {
                 player2 = obj;
                 p2 = obj.GetComponent<TestCube>();
-
+                p2Ani = p2.playerAnimator2;
 
 
                 Transform parentTransform = player2.transform;
 
                 foreach (Transform child in parentTransform)
                 {
-                    if (child.CompareTag("Character"))
+                    if (p2Ani != null)
                     {
-
-                        p2Anim = child;
-                        p2Character = p2Anim.gameObject;
-                        p2AnimFound = true;
-                        p2Ani = p2Character.GetComponent<Animator>();
-
+                        p2AnimFound = true; 
                     }
 
                     if (child.CompareTag("InGameUI"))
@@ -299,30 +353,18 @@ public class GameManager : MonoBehaviour
                         noisy2 = child.gameObject;
                         isNoisy2 = true;
                         noisy2.SetActive(false);
+                    }
 
+                    if (child.CompareTag("Camera"))
+                    {
+                        cam2 = child.gameObject;
+                        camFound2 = true;
                     }
                 }
             }
         }
 
         //two players join the game, it loads to the Title Scene
-        if(p1 != null && p2 != null)
-        {
-            currentScene = SceneManager.GetActiveScene();
-            curSceneName = currentScene.name;
-            if (curSceneName == scene3)
-            {
-                animTitle.SetBool("isEnded", true);
-                text.SetActive(false);
-                StartCoroutine(ShowDirection());
-            }
-            else
-            {
-                animTitle = null;
-                text = null;
-                StopCoroutine(ShowDirection());
-            }
-        }
 
     }
 
@@ -345,6 +387,17 @@ public class GameManager : MonoBehaviour
             p2.isFreeze = true;
         }
 
+        if (enterOffice)
+        {
+            p1.isFreeze = true;
+            p2.isFreeze = true;
+        }
+        if (sceneChanged)
+        {
+            p1.isFreeze = false;
+            p2.isFreeze = false;
+        }
+
 
     }
 
@@ -354,6 +407,7 @@ public class GameManager : MonoBehaviour
         {
             p1.isFreeze = false;
             p2.isFreeze = false;
+
         }
 
         if (p1 != null && p2 == null)
@@ -400,30 +454,67 @@ public class GameManager : MonoBehaviour
 
 
 
-    void FindCamera()
+    //public void FindCamera()
+    //{
+    //    if(curSceneName == scene3)
+    //    {
+    //        mainCam = Camera.main;
+    //        if (p1)
+    //        {
+    //            if (!enterOffice)
+    //            {
+    //                MoveCamera(cameraPosition);
+    //            }
+    //            else
+    //            {
+
+    //                StartCoroutine(MovingCamera());
+
+    //                if(camChanged == true)
+    //                {
+    //                    Loader.Load(Loader.Scene.HubStart);
+    //                }
+    //            }
+
+
+    //        }
+
+    
+    //    }
+    //    else
+    //    {
+    //        mainCam = null;
+    //        cameraPosition = null;
+    //    }
+    //}
+
+    public IEnumerator MovingCamera1()
     {
-        if(curSceneName == scene3)
-        {
-            mainCam = Camera.main;
-            if (p1)
-            {
-                MoveCamera();
-            }
-        }
-        else
-        {
-            mainCam = null;
-            cameraPosition = null;
-        }
+        MoveCamera(closeShoot,5);
+        yield return new WaitForSecondsRealtime(2f);
+        camChanged1 = true;
+
     }
 
+    //public IEnumerator MovingCamera2()
+    //{
+    //    MoveCamera(closeShoot);
+    //    yield return new WaitForSecondsRealtime(2f);
+    //    camChanged2 = true;
+
+    //}
 
 
-    void MoveCamera()
+
+
+
+
+    public void MoveCamera(Transform newPos, float lerpSpeed)
     {
-        float lerpSpeed = 5f;
-        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, cameraPosition.position, Time.deltaTime * lerpSpeed);
-        print("Camera");
+        
+        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
+        //mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
+
     }
 
 
@@ -440,18 +531,65 @@ public class GameManager : MonoBehaviour
             {
                 showTVInstruction = false;
             }
+
+            if(p1.withinNPCsRange || p2.withinNPCsRange)
+            {
+                showWertherInstruction = true;
+            }
+            else if (!p1.withinTVRange && !p2.withinTVRange)
+            {
+                showWertherInstruction = false;
+            }
         }
 
     }
-    IEnumerator ShowDirection()
+    public void ShowDirection()
+    {
+        if (curSceneName == scene3)
+        {
+            if (p1.withinEntranceRange || p2.withinEntranceRange)
+            {
+                instructionText.SetActive(true);
+            }
+            else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+            {
+                instructionText.SetActive(false);
+            }
+
+            if (p1.withinEntranceRange || p2.withinEntranceRange)
+            {
+                instructionText.SetActive(true);
+            }
+            else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+            {
+                instructionText.SetActive(false);
+            }
+        }
+        // Wait for the specified time
+        
+        //print("Show Instruction");
+        // Destroy the GameObject this script is attached to
+    }
+    //public void CloseDirection()
+    //{
+    //    // Wait for the specified time
+    //    instructionText.SetActive(false);
+    //    // Destroy the GameObject this script is attached to
+    //}
+
+    public void StopShowDirection()
     {
         // Wait for the specified time
-        yield return new WaitForSeconds(waitingTime);
-        instructionText.SetActive(true);
+        instructionText.SetActive(false);
         // Destroy the GameObject this script is attached to
     }
 
-
+    IEnumerable FindCharacter()
+    {
+        yield return new WaitForSeconds(1);
+        FindPlayer();
+        isBegin = false;
+    }
 
 
 
@@ -535,16 +673,11 @@ public class GameManager : MonoBehaviour
 
     void P1Indicator()
     {
-        float distance = Vector3.Distance(player1.transform.position, player2.transform.position);
-        if(distance < appearanceDistance)
-        {
-            if (!projectileToIndicator.ContainsKey(player2))
-            {
-                //GameObject newIndicator = Instantiate(p2UIIndicator, Vector3.zero, Quaternion.identity);
-               // projectileToIndicator.Add(player2, newIndicator);
-            }
-        }
+
+
     }
+
+
 
 }
 
