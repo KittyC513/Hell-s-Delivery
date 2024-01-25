@@ -12,7 +12,9 @@ public class ObjectGrabbable : MonoBehaviour
     public BoxCollider bC;
     private Transform objectGrabpo;
     [SerializeField]
-    private float dropForce, dropUpForce;
+    public float dropForce;
+    [SerializeField]
+    public float dropUpForce;
     [SerializeField]
     private float stealForce, stealUpForce;
     public GameObject player;
@@ -68,11 +70,19 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     private GameObject indicator;
 
+    [Header("Package Types")]
+    [SerializeField]
+    public bool isHeavy;
+
     [SerializeField] private AK.Wwise.Event packageImpact;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        if(this.transform.localScale.x > 1)
+        {
+            isHeavy = true;
+        }
 
     }
     // Start is called before the first frame update
@@ -108,9 +118,13 @@ public class ObjectGrabbable : MonoBehaviour
 
     private void FixedUpdate()
     {
-        AddScore();
+        if(GameManager.instance.curSceneName == GameManager.instance.scene4)
+        {
+            AddScore();
+        }
+
         //PackageIcon();
-        IndicatorControl();
+        //IndicatorControl();
 
     }
 

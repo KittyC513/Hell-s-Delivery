@@ -175,7 +175,10 @@ public class RespawnControl : MonoBehaviour
                         CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
                         cpc.Add(checkpc);
                     }
+
                     package = GameObject.FindGameObjectWithTag("Package");
+                    //package = GameObject.FindGameObjectWithTag("HeavyPackage");
+
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
             }

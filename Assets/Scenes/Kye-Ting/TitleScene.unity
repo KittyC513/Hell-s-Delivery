@@ -3441,13 +3441,14 @@ GameObject:
   - component: {fileID: 684451615}
   - component: {fileID: 684451614}
   - component: {fileID: 684451618}
+  - component: {fileID: 684451619}
   m_Layer: 29
   m_Name: Box
   m_TagString: Moveable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &684451614
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3530,7 +3531,7 @@ Transform:
   m_GameObject: {fileID: 684451613}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.05, y: 0.47, z: 8.06}
+  m_LocalPosition: {x: 3.438, y: 0.47, z: 9.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3544,7 +3545,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684451613}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -3563,6 +3564,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &684451619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684451613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34d7932eae7fd6418d4fc819d442164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705230518
 GameObject:
   m_ObjectHideFlags: 0
@@ -4681,6 +4694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curSceneName: 
+  scene4: MVPLevel
   mainCam: {fileID: 1034765984}
   cameraPosition: {fileID: 1505317392}
   closeShoot: {fileID: 340756829}
@@ -6710,7 +6724,7 @@ MonoBehaviour:
   m_NotificationBehavior: 3
   m_MaxPlayerCount: -1
   m_AllowJoining: 1
-  m_JoinBehavior: 1
+  m_JoinBehavior: 0
   m_PlayerJoinedEvent:
     m_PersistentCalls:
       m_Calls: []
