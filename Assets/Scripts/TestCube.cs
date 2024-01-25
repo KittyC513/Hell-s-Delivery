@@ -381,6 +381,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool isCameraLocked;
 
+    [Header("Heavy Package")]
+    [SerializeField]
+    private bool tooHeavy;
 
 
 
@@ -481,6 +484,7 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DetectPackageWight();
         CastBlobShadow();
         CheckGrounded();
         //SpeedControl();
@@ -502,10 +506,10 @@ public class TestCube : MonoBehaviour
         } 
         if(curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
         {
-            if (package == null)
-            {
-                package = GameObject.FindGameObjectWithTag("Package");
-            }
+
+            package = GameObject.FindGameObjectWithTag("Package");
+            //package = GameObject.FindGameObjectWithTag("HeavyPackage");
+
         }
             
         JoinGameTitle();
@@ -777,14 +781,7 @@ public class TestCube : MonoBehaviour
                         }
                         else
                         {
-
                             MoveTowardFacingDirection();
-                            //if (moveDirection != Vector3.zero)
-                            //{
-                            //    Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-                            //    transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, Time.deltaTime * 500f);
-                            //}
-
                         }
 
                     }
@@ -801,6 +798,10 @@ public class TestCube : MonoBehaviour
                             forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
 
                         }
+                        else
+                        {
+                            MoveTowardFacingDirection();
+                        }
 
 
 
@@ -813,6 +814,10 @@ public class TestCube : MonoBehaviour
                         forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
                         forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
 
+                    }
+                    else
+                    {
+                        MoveTowardFacingDirection();
                     }
 
 
@@ -846,6 +851,10 @@ public class TestCube : MonoBehaviour
                             forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
 
                         }
+                        else
+                        {
+                            MoveTowardFacingDirection();
+                        }
 
 
 
@@ -858,6 +867,10 @@ public class TestCube : MonoBehaviour
                         forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * currentSpeed;
                         forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * currentSpeed;
 
+                    }
+                    else
+                    {
+                        MoveTowardFacingDirection();
                     }
 
                 }
@@ -1028,6 +1041,51 @@ public class TestCube : MonoBehaviour
     //    }
     //}
 
+    private void DetectPackageWight()
+    {
+        if (isPlayer1)
+        {
+            if (rC.Player1isCarrying)
+            {
+                if (objectGrabbable.isHeavy)
+                {
+                    tooHeavy = true;
+                }
+                else
+                {
+                    tooHeavy = false;
+                }
+            }
+            else
+            {
+                tooHeavy = false;
+
+            }
+
+        } 
+
+        if (isPlayer2 )
+        {
+            if(rC.Player2isCarrying)
+            {
+                if (objectGrabbable.isHeavy)
+                {
+                    tooHeavy = true;
+                }
+                else
+                {
+                    tooHeavy = false;
+                }
+            }
+            else
+            {
+                tooHeavy = false;
+            }
+
+        }
+
+
+    }
 
     private void DoDrop(InputAction.CallbackContext obj)
     {
@@ -1039,14 +1097,20 @@ public class TestCube : MonoBehaviour
             {
                 objectGrabbable.P1Drop();
                 print("DoDrop1");
+
+
             }
+
 
             if (isPlayer2 && rC.Player2isCarrying)
             {
                 objectGrabbable.P2Drop();
                 //print("Drop");
                 print("DoDrop2");
+
+
             }
+
 
             objectGrabbable = null;
         }
@@ -1502,7 +1566,7 @@ public class TestCube : MonoBehaviour
     void Jump()
     {
         //if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
-        if (jump.ReadValue<float>() == 1 && canJump)
+        if (jump.ReadValue<float>() == 1 && canJump && !tooHeavy)
         {
             //jumpSpeed = jumpForce;
             //isJumping = true;
@@ -1978,10 +2042,13 @@ public class TestCube : MonoBehaviour
         else
         {
             isPulling = false;
-            targetRigid.useGravity = true;
-            targetRigid.gameObject.transform.SetParent(null);
+            if(targetRigid != null)
+            {
+                targetRigid.useGravity = true;
+                targetRigid.gameObject.transform.SetParent(null);
+            }
             //newPosition = targetObject.transform.position;
-            targetRigid = null;
+            //targetRigid = null;
             isCameraLocked = false;
         }
 

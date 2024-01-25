@@ -70,11 +70,19 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     private GameObject indicator;
 
+    [Header("Package Types")]
+    [SerializeField]
+    public bool isHeavy;
+
     [SerializeField] private AK.Wwise.Event packageImpact;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        if(this.transform.localScale.x > 1)
+        {
+            isHeavy = true;
+        }
 
     }
     // Start is called before the first frame update
@@ -116,7 +124,7 @@ public class ObjectGrabbable : MonoBehaviour
         }
 
         //PackageIcon();
-        IndicatorControl();
+        //IndicatorControl();
 
     }
 
