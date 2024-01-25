@@ -346,6 +346,17 @@ public partial class @Test: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""ba0384f6-3f1c-4a1d-8da1-b67f90ef8982"",
+                    ""path"": ""<SwitchProControllerHID>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Nintendo Controller"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""1096b6df-2246-492e-abdb-321235d90a8d"",
                     ""path"": ""<XInputController>/leftTrigger"",
                     ""interactions"": """",
@@ -373,6 +384,17 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""Parachute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46e7894f-7c94-4725-aa09-b511f3dd8b02"",
+                    ""path"": ""<SwitchProControllerHID>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Nintendo Controller"",
                     ""action"": ""Parachute"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -536,6 +558,17 @@ public partial class @Test: IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<XInputController>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Nintendo Controller"",
+            ""bindingGroup"": ""Nintendo Controller"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<SwitchProControllerHID>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }
@@ -889,6 +922,15 @@ public partial class @Test: IInputActionCollection2, IDisposable
         {
             if (m_NewcontrolschemeSchemeIndex == -1) m_NewcontrolschemeSchemeIndex = asset.FindControlSchemeIndex("New control scheme");
             return asset.controlSchemes[m_NewcontrolschemeSchemeIndex];
+        }
+    }
+    private int m_NintendoControllerSchemeIndex = -1;
+    public InputControlScheme NintendoControllerScheme
+    {
+        get
+        {
+            if (m_NintendoControllerSchemeIndex == -1) m_NintendoControllerSchemeIndex = asset.FindControlSchemeIndex("Nintendo Controller");
+            return asset.controlSchemes[m_NintendoControllerSchemeIndex];
         }
     }
     public interface ICubeActions

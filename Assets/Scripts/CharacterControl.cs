@@ -33,7 +33,7 @@ public class CharacterControl : MonoBehaviour
     private float decelerationTime = 0;
     private Vector3 faceDir;
 
-    private bool isGrounded = false;
+    public bool isGrounded = false;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.33f;
     [SerializeField] private float groundCheckDist = 0.75f;
@@ -47,15 +47,22 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float minQuickTurn = 0.8f;
 
     [Space, Header("Jumping Variables")]
-    [SerializeField] private float jumpHeight = 8;
+    [SerializeField] private float peakJumpSpeed = 800;
     [SerializeField] private float maxFallSpeed = 15;
     [SerializeField] private AnimationCurve jumpCurve;
     [SerializeField] private AnimationCurve fallAccelCurve;
     //air velocity curve will build more slowly than a normal grounded acceleration to give the player a more controlled turn around
     [SerializeField] private AnimationCurve airVelocityCurve;
+    [SerializeField] private float ySpeed = 0;
+    private float fTime = 0;
+    private float jTime = 0;
+    private float airSpeed = 0;
+    private Vector3 lastStandingVector;
 
     private bool isParachuting = false;
-    private bool isJumping = false;
+    [SerializeField] private bool isJumping = false;
+    [SerializeField] private float minJump = 100f;
+    private bool reachedMinJump = false;
 
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
@@ -90,7 +97,7 @@ public class CharacterControl : MonoBehaviour
         //disable our action maps
         inputAsset.Disable();
 
-        jump.started -= ctx => OnJump();
+        jump.performed -= ctx => OnJump();
         jump.canceled -= ctx => OnJumpExit();
     }
     #endregion
@@ -98,14 +105,11 @@ public class CharacterControl : MonoBehaviour
     #region Essential Functions
     private void Start()
     {
-        //temporary for testing
         cam = thirdPersonCam;
         rb = GetComponent<Rigidbody>();
         currentSpeed = 0;
         faceDir = Vector3.zero;
 
-        //temp
-        isGrounded = true;
     }
 
     private void Update()
@@ -113,16 +117,28 @@ public class CharacterControl : MonoBehaviour
         MovementCalculations();
         StateMachineUpdate();
         GetStickInputs();
+        
+        ApplyGravity();
+        CheckGrounded();
+
         RotateTowards(faceDir.normalized);
 
-        Debug.Log(currentSpeed);
+        JumpCalculations();
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, 0, directionSpeed.z * Time.fixedDeltaTime);
-
-       
+        //not used currently but if we need to use different physics based on grounded state we can change that here
+        if (isGrounded)
+        {
+            rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
+        }
+            
+        else if (!isGrounded)
+        {
+            rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
+        }
+            
 
     }
 
@@ -139,28 +155,52 @@ public class CharacterControl : MonoBehaviour
 
                 //if we are grounded and start moving we should transition to a run state
                 if (isGrounded && currentSpeed > 0) pState = playerStates.run;
-
+                if (!isGrounded && !isJumping) pState = playerStates.fall;
+                if (isJumping) pState = playerStates.jump;
                 break;
             case playerStates.run:
                 //can transition to idle, jump, thrown or dead
 
                 //if we are grounded and have no speed we are now idle
                 if (isGrounded && currentSpeed <= 0) pState = playerStates.idle;
-   
+                if (!isGrounded && !isJumping)
+                {
+                    //transition state AND apply our grounded speed to our air movement speed
+                    //this keeps our grounded speed while jumping because the air velocity will be different 
+                    airSpeed = currentSpeed;
+                    pState = playerStates.fall;
+                }
+
+                if (isJumping)
+                {
+                    airSpeed = currentSpeed;
+                    pState = playerStates.jump;
+                }
                 break;
             case playerStates.jump:
                 //can transition to fall, land, parachute, dead, thrown
+                if (isJumping == false && !isGrounded && !isParachuting)
+                {
+                    pState = playerStates.fall;
+                }
+                if (isGrounded) pState = playerStates.land;
+               
                 break;
             case playerStates.fall:
                 //can transition to land, parachute, thrown, dead
+                if (isParachuting) pState = playerStates.parachute;
+                if (isGrounded) pState = playerStates.land;
                 break;
             case playerStates.land:
                 //can transition to idle, run, jump, thrown, dead
 
                 if (isGrounded && currentSpeed > 0) pState = playerStates.run;
+                if (!isGrounded && !isJumping) pState = playerStates.fall;
+                if (isJumping) pState = playerStates.jump;
                 break;
             case playerStates.parachute:
                 //can transition to fall, thrown, dead, land
+                if (!isGrounded && !isJumping && !isParachuting) pState = playerStates.fall;
                 break;
             case playerStates.thrown:
                 //can transition to idle, run, fall, land, thrown, dead, parachute
@@ -175,9 +215,12 @@ public class CharacterControl : MonoBehaviour
 
     #endregion
 
+    #region Physics Calculations
     private void OnJump()
     {
         //start a jump and hold the input for higher jumps
+        //jump is pressed
+        //Debug.Log("Jump is pressed");
     }
 
     private void OnJumpExit()
@@ -191,7 +234,9 @@ public class CharacterControl : MonoBehaviour
         Vector3 camForward = camera.transform.forward;
         Vector3 camRight = camera.transform.right;
 
+        //get our stick input
         Vector3 stickInput = inputValue;
+        //multiply our stick value by our cam right and forward to get a camera relative input
         Vector3 horizontal = stickInput.x * camRight;
         Vector3 vertical = stickInput.y * camForward;
 
@@ -239,8 +284,15 @@ public class CharacterControl : MonoBehaviour
         //we get our camera relative inputs from this function to be used later
         Vector3 inputDir = GetRelativeInputDirection(cam, inputValue);
 
-
-        directionSpeed = new Vector3(faceDir.x * currentSpeed, rb.velocity.y, faceDir.z * currentSpeed);
+        //if we are grounded use our grounded speed curve otherwise use the airspeed curve
+        if (isGrounded)
+        {
+            directionSpeed = new Vector3(faceDir.x * currentSpeed, rb.velocity.y, faceDir.z * currentSpeed);
+        }
+        else
+        {
+            directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
+        }
 
 
         //if we are inputting on the control stick we want to apply our velocity curve and start speeding the character up
@@ -263,7 +315,7 @@ public class CharacterControl : MonoBehaviour
             else
             {
                 //if we aren't grounded we evaluate the air movement curve
-                currentSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+                airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
             }
 
         }
@@ -288,6 +340,80 @@ public class CharacterControl : MonoBehaviour
     
     }
 
+    private void JumpCalculations()
+    {
+
+        //if the jump button is pressed
+        if (jump.ReadValue<float>() == 1 && isGrounded && !isJumping)
+        {
+            if (!isJumping && isGrounded)
+            {
+                //lets get our starting y vector
+                lastStandingVector = transform.position;
+            }
+            //reset the reached minimum jump variable
+            reachedMinJump = false;
+
+            //we are not jumping
+            isJumping = true;
+           
+            
+        }
+
+        if (jump.ReadValue<float>() == 0 && !isGrounded && isJumping && reachedMinJump)
+        {
+            //if we let go of jump while not in the air, while jumping and if we have reached the minimum jump requirements
+            isJumping = false;
+
+            //cut our jump speed
+            ySpeed /= 2;
+
+            //reset our jump time
+            jTime = 0.8f;
+
+            Debug.Log("stop jump");
+
+        }
+
+        if (isJumping)
+        {
+            jTime += Time.deltaTime;
+            ySpeed = peakJumpSpeed * jumpCurve.Evaluate(jTime);
+        }
+        else
+        {
+            jTime = 0;
+            reachedMinJump = false;
+        }
+
+        if (ySpeed >= minJump && isJumping) reachedMinJump = true;
+
+        if (isGrounded && reachedMinJump) isJumping = false;
+
+            //if we have stopped gaining height, and have reached a minimum jump speed, start falling
+            if (ySpeed <= 1 && isJumping && reachedMinJump) isJumping = false;
+    }
+
+    private void ApplyGravity()
+    {
+        //build downwards velocity until you reach peak speed
+        if (!isGrounded && pState == playerStates.fall)
+        {
+            //add time to the fall timer
+            fTime += Time.deltaTime;
+            //add to our fall speed by using the animation curve
+            ySpeed = (-maxFallSpeed) * fallAccelCurve.Evaluate(fTime);
+        }
+        else if (pState == playerStates.idle || pState == playerStates.run || pState == playerStates.land)
+        {
+            if (!isJumping) ySpeed = 0;
+            //reset the fall timer
+
+            fTime = 0;
+            
+        }
+    }
+
     private void RotateTowards(Vector3 direction)
     {
         //make sure we have no y value so that we don't rotate on the wrong axis
@@ -303,10 +429,14 @@ public class CharacterControl : MonoBehaviour
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
         {
             isGrounded = true;
+            transform.position = new Vector3(transform.position.x, (hit.point.y + 1.05f), transform.position.z);
         }
         else
         {
             isGrounded = false;
         }
+
     }
+
+    #endregion
 }
