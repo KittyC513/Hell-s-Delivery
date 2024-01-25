@@ -3441,6 +3441,7 @@ GameObject:
   - component: {fileID: 684451615}
   - component: {fileID: 684451614}
   - component: {fileID: 684451618}
+  - component: {fileID: 684451619}
   m_Layer: 29
   m_Name: Box
   m_TagString: Moveable
@@ -3563,6 +3564,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &684451619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684451613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34d7932eae7fd6418d4fc819d442164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentObject: {fileID: 0}
 --- !u!1 &705230518
 GameObject:
   m_ObjectHideFlags: 0

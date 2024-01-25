@@ -2779,8 +2779,8 @@ Transform:
   m_GameObject: {fileID: 3222000546401263008}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.786, z: 1.402}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0.078, y: -0.231, z: 1.334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5651904090368527511}
@@ -5124,7 +5124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6715688338489921252}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.018300738, y: 0.97085243, z: -0.22563231, w: -0.07874456}
+  m_LocalRotation: {x: -0.018300736, y: 0.97085243, z: -0.22563231, w: -0.07874455}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6218,6 +6218,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 2734292067166858235}
   playerAnimator2: {fileID: 5150309675789237006}
   maxSpeed: 5
+  pullSpeed: 2
   walkSpeed: 5
   runSpeed: 8
   gliderSpeed: 12
@@ -6335,7 +6336,6 @@ MonoBehaviour:
   NPCInteracting: 0
   Dialogue1: 0
   Dialogue2: 0
-  movingObjForce: 0
   switchPuzzleCam: 0
   switchPuzzleCamP2: 0
   footstepRate: 115
@@ -6343,8 +6343,8 @@ MonoBehaviour:
   geiserForce: 100
   wasFoundLV: 0
   bounceForce: 100
-  pullItemForce: 5
-  pushItemForce: 10000
+  pullItemForce: 0.8
+  pushItemForce: 0.2
   PRange: 0.1
   targetObject: {fileID: 0}
   PPosition: {fileID: 7327793236341214904}
@@ -6353,6 +6353,8 @@ MonoBehaviour:
     m_Bits: 536870912
   targetRigid: {fileID: 0}
   isPulling: 0
+  newPosition: {x: 0, y: 0, z: 0}
+  isCameraLocked: 0
 --- !u!114 &965772886468833305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7266,7 +7268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.021579744, y: 0.9605606, z: -0.26605976, w: -0.077909775}
+  m_LocalRotation: {x: -0.021579754, y: 0.96056056, z: -0.26605973, w: -0.0779098}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
