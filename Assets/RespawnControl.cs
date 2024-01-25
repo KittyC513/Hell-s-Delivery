@@ -49,6 +49,7 @@ public class RespawnControl : MonoBehaviour
     string scene3 = "TitleScene";
     string scene4 = "MVPLevel";
     string scene5 = "Tutorial";
+    string scene9 = "Level1";
 
     [SerializeField]
     public bool Player1isCarrying;
@@ -161,7 +162,7 @@ public class RespawnControl : MonoBehaviour
 
             }
 
-            if(curSceneName == scene4 || curSceneName == scene5)
+            if(curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene9)
             {
                 if (objectGrabbable == null)
                 {
@@ -179,7 +180,8 @@ public class RespawnControl : MonoBehaviour
                 }
             }
 
-            if(curSceneName != scene5)
+
+            if (curSceneName != scene5)
             {
                 t1.SetActive(false);
                 t2.SetActive(false);
@@ -242,6 +244,9 @@ public class RespawnControl : MonoBehaviour
         PlayerDetector();
         if(objectGrabbable != null)
         {
+
+            Debug.Log("check");
+
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
         }
@@ -251,14 +256,21 @@ public class RespawnControl : MonoBehaviour
             ResetInitialRespawnPoint();
             resetRespawnP = true;
         }
-            
-        ////if (Partner == null)
-        //{
-         
-        //}
+        else if (!resetRespawnP && curSceneName == scene9)
+        {
+            ResetInitialRespawnPoint();
+            resetRespawnP = true;
+        }
+
+        Debug.Log(curSceneName);
+
+            ////if (Partner == null)
+            //{
+
+            //}
 
 
-    }
+        }
     void PlayerDetector()
     {
 
