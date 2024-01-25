@@ -1458,7 +1458,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790931724609759169}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.01503562, y: 0.97933656, z: -0.1853763, w: -0.07943267}
+  m_LocalRotation: {x: -0.015035627, y: 0.9793365, z: -0.1853763, w: -0.07943269}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3429,7 +3429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516074710670123496}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.01503562, y: 0.97933656, z: -0.1853763, w: -0.07943266}
+  m_LocalRotation: {x: -0.015035631, y: 0.97933656, z: -0.18537632, w: -0.07943272}
   m_LocalPosition: {x: 0.80578613, y: 3, z: 4.9346466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6204,11 +6204,11 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  drop:
-    m_Name: Drop
+  pull:
+    m_Name: Pull
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: d24c3c83-d1f6-4ecd-859b-5843d00448a5
+    m_Id: 11500133-1d0d-4040-aa64-1fc0632980d1
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -6226,6 +6226,7 @@ MonoBehaviour:
   timeToRun: 0.2
   timeToWalk: 0.1
   timeToGlide: 1
+  timeToPull: 1.5
   timeToZero: 0.083
   shadowRenderer: {fileID: 8281716036767929258}
   jumpForce: 6.5
@@ -6351,6 +6352,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 536870912
   targetRigid: {fileID: 0}
+  isPulling: 0
 --- !u!114 &965772886468833305
 MonoBehaviour:
   m_ObjectHideFlags: 0

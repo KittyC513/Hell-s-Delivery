@@ -31,7 +31,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute, triggerButton, drop;
+    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute, triggerButton, pull;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -70,6 +70,8 @@ public class TestCube : MonoBehaviour
     private float timeToWalk = 0.1f;
     [SerializeField]
     private float timeToGlide = 1f;
+    [SerializeField]
+    private float timeToPull = 1.5f;
     [SerializeField]
     private float timeToZero = 0.083f;
 
@@ -313,9 +315,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool Dialogue2;
 
-    [Header("Push/Pull")]
-    [SerializeField]
-    private float movingObjForce;
+    //[Header("Push/Pull")]
+    //[SerializeField]
+    //private float movingObjForce;
 
     [Header("Camera Control")]
     [SerializeField]
@@ -371,9 +373,14 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private Rigidbody targetRigid;
     [SerializeField]
-    float dropValue;
-    [SerializeField]
-    float dropForce;
+    private bool isPulling;
+
+
+
+    //[SerializeField]
+    //float dropValue;
+    //[SerializeField]
+    //float dropForce;
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -402,7 +409,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("Pick").started += DoDrop;
 
         move = player.FindAction("Move");
-        //drop = player.FindAction("Pick");
+        pull = player.FindAction("Pull");
         run = player.FindAction("Run");
         //player.FindAction("Join").started += DoTalk;
 
@@ -641,13 +648,18 @@ public class TestCube : MonoBehaviour
 
 
             
-            if (isRunning && !isGliding)
+            if (isRunning && !isGliding && !isPulling)
             {
                 float accel = (maxSpeed / timeToRun);
                 currentSpeed += accel * Time.deltaTime;
 
             }
-            else if (isGliding)
+            else if (isPulling && !isGliding)
+            {
+                float accel = (maxSpeed / timeToPull);
+                currentSpeed += accel * Time.deltaTime;
+            }
+            else if (isGliding && !isPulling)
             {
                 float accel = (maxSpeed / timeToGlide);
                 currentSpeed += accel * Time.deltaTime;
@@ -1853,40 +1865,44 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(playerPos.position, PRange, playerPos.forward, out raycastHit, interactDistance, moveableLayer))
         {
             targetObject = raycastHit.collider.gameObject;
-
         }
 
 
     }
 
 
+    public bool ReadPullButton()
+    {
+        if (pull.ReadValue<float>() == 1) return true;
+        else return false;
 
+    }
 
     private void Pull()
     {
-
-
 
         if (targetObject != null)
         {
             targetRigid = targetObject.GetComponent<Rigidbody>();
 
-            if (ReadActionButton())
+            if (ReadPullButton())
             {
-   
-    
+                isPulling = true;
+                targetRigid.useGravity = false;
                 targetRigid.velocity = (PPosition.position - targetRigid.position) * pullItemForce * Time.deltaTime;
+
+
             }
             else
             {
-           
-              
-
+                targetRigid.useGravity = true;
+                isPulling = false;
             }
 
         }
         else
         {
+            targetRigid.useGravity = true;
             targetRigid = null;
 
         }

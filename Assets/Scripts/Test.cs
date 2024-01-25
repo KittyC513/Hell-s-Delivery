@@ -145,7 +145,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Drop"",
+                    ""name"": ""Pull"",
                     ""type"": ""Value"",
                     ""id"": ""fc6ee264-7812-4928-8b5d-fb4bb4b13249"",
                     ""expectedControlType"": """",
@@ -624,7 +624,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drop"",
+                    ""action"": ""Pull"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -635,7 +635,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drop"",
+                    ""action"": ""Pull"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -646,7 +646,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drop"",
+                    ""action"": ""Pull"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -809,7 +809,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         m_Cube_Aim = m_Cube.FindAction("Aim", throwIfNotFound: true);
         m_Cube_Trigger = m_Cube.FindAction("Trigger", throwIfNotFound: true);
         m_Cube_Push = m_Cube.FindAction("Push", throwIfNotFound: true);
-        m_Cube_Drop = m_Cube.FindAction("Drop", throwIfNotFound: true);
+        m_Cube_Pull = m_Cube.FindAction("Pull", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_StartDialogue = m_Dialogue.FindAction("StartDialogue", throwIfNotFound: true);
@@ -893,7 +893,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
     private readonly InputAction m_Cube_Aim;
     private readonly InputAction m_Cube_Trigger;
     private readonly InputAction m_Cube_Push;
-    private readonly InputAction m_Cube_Drop;
+    private readonly InputAction m_Cube_Pull;
     public struct CubeActions
     {
         private @Test m_Wrapper;
@@ -911,7 +911,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Cube_Aim;
         public InputAction @Trigger => m_Wrapper.m_Cube_Trigger;
         public InputAction @Push => m_Wrapper.m_Cube_Push;
-        public InputAction @Drop => m_Wrapper.m_Cube_Drop;
+        public InputAction @Pull => m_Wrapper.m_Cube_Pull;
         public InputActionMap Get() { return m_Wrapper.m_Cube; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -960,9 +960,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Push.started += instance.OnPush;
             @Push.performed += instance.OnPush;
             @Push.canceled += instance.OnPush;
-            @Drop.started += instance.OnDrop;
-            @Drop.performed += instance.OnDrop;
-            @Drop.canceled += instance.OnDrop;
+            @Pull.started += instance.OnPull;
+            @Pull.performed += instance.OnPull;
+            @Pull.canceled += instance.OnPull;
         }
 
         private void UnregisterCallbacks(ICubeActions instance)
@@ -1006,9 +1006,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Push.started -= instance.OnPush;
             @Push.performed -= instance.OnPush;
             @Push.canceled -= instance.OnPush;
-            @Drop.started -= instance.OnDrop;
-            @Drop.performed -= instance.OnDrop;
-            @Drop.canceled -= instance.OnDrop;
+            @Pull.started -= instance.OnPull;
+            @Pull.performed -= instance.OnPull;
+            @Pull.canceled -= instance.OnPull;
         }
 
         public void RemoveCallbacks(ICubeActions instance)
@@ -1175,7 +1175,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnTrigger(InputAction.CallbackContext context);
         void OnPush(InputAction.CallbackContext context);
-        void OnDrop(InputAction.CallbackContext context);
+        void OnPull(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {
