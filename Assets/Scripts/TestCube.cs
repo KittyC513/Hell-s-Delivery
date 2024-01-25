@@ -370,7 +370,10 @@ public class TestCube : MonoBehaviour
     private LayerMask moveableLayer;
     [SerializeField]
     private Rigidbody targetRigid;
-
+    [SerializeField]
+    float dropValue;
+    [SerializeField]
+    float dropForce;
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -399,7 +402,7 @@ public class TestCube : MonoBehaviour
         player.FindAction("Pick").started += DoDrop;
 
         move = player.FindAction("Move");
-        drop = player.FindAction("Pick");
+        //drop = player.FindAction("Pick");
         run = player.FindAction("Run");
         //player.FindAction("Join").started += DoTalk;
 
@@ -909,21 +912,63 @@ public class TestCube : MonoBehaviour
             
         }
     }
+
+    //void Drop(float _dropForce)
+    //{
+    //    if (objectGrabbable != null)
+    //    {
+    //        print("1");
+    //        playerSounds.packageToss.Post(this.gameObject);
+    //        if (isPlayer1 && rC.Player1isCarrying)
+    //        {
+    //            print("2");
+
+    //            if(dropValue >= 0.01)
+    //            {
+    //                _dropForce = dropValue * objectGrabbable.dropForce;
+    //                dropForce = _dropForce;
+    //                objectGrabbable.P1Drop(dropForce);
+    //                print("3");
+    //            }
+
+
+    //        }
+
+    //        if (isPlayer2 && rC.Player2isCarrying)
+    //        {
+    //            print("22");
+
+    //            if (dropValue >= 0.01)
+    //            {
+    //                print("33");
+    //                _dropForce = dropValue * objectGrabbable.dropForce;
+    //                dropForce = _dropForce;
+    //                objectGrabbable.P2Drop(dropForce);
+    //            }
+    //        }
+
+    //        objectGrabbable = null;
+    //    }
+    //}
+
+
     private void DoDrop(InputAction.CallbackContext obj)
     {
+        print("DoDrop");
         if (objectGrabbable != null)
         {
             playerSounds.packageToss.Post(this.gameObject);
             if (isPlayer1 && rC.Player1isCarrying)
             {
                 objectGrabbable.P1Drop();
-
+                print("DoDrop1");
             }
 
             if (isPlayer2 && rC.Player2isCarrying)
             {
                 objectGrabbable.P2Drop();
                 //print("Drop");
+                print("DoDrop2");
             }
 
             objectGrabbable = null;
@@ -1375,6 +1420,7 @@ public class TestCube : MonoBehaviour
     //        forceDirection += Vector3.up * jumpForce;
     //    }
     //}
+
 
     void Jump()
     {

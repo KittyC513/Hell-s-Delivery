@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
     string scene3 = "TitleScene";
-    string scene4 = "MVPLevel";
+    public string scene4 = "MVPLevel";
     string scene5 = "HubEnd";
     string scene6 = "ScoreCards";
 

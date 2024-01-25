@@ -12,7 +12,9 @@ public class ObjectGrabbable : MonoBehaviour
     public BoxCollider bC;
     private Transform objectGrabpo;
     [SerializeField]
-    private float dropForce, dropUpForce;
+    public float dropForce;
+    [SerializeField]
+    public float dropUpForce;
     [SerializeField]
     private float stealForce, stealUpForce;
     public GameObject player;
@@ -108,7 +110,11 @@ public class ObjectGrabbable : MonoBehaviour
 
     private void FixedUpdate()
     {
-        AddScore();
+        if(GameManager.instance.curSceneName == GameManager.instance.scene4)
+        {
+            AddScore();
+        }
+
         //PackageIcon();
         IndicatorControl();
 
