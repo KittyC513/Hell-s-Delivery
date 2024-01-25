@@ -143,6 +143,15 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pull"",
+                    ""type"": ""Value"",
+                    ""id"": ""fc6ee264-7812-4928-8b5d-fb4bb4b13249"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -214,8 +223,41 @@ public partial class @Test: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""d028ee43-7075-43eb-97d8-62f6facf2e32"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Join"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""fa92c473-4441-4bd7-b53c-a645186eedef"",
                     ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""590588b1-13be-4567-9936-4a47927587a8"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5629a47-0e5f-4c91-9693-39f0489601d3"",
+                    ""path"": ""<DualShockGamepad>/buttonWest"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -334,6 +376,61 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""decd8cf6-b0ab-4ebc-a3bf-cbe01957bb19"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""4dd4a2a1-f2fe-453c-ac06-38788e4b54db"",
+                    ""path"": ""<DualShockGamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""bb2c4d43-131e-4a23-acab-875f944fd118"",
+                    ""path"": ""<DualShockGamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""e1f4dd2f-da09-43b1-a93c-8e42e22e894d"",
+                    ""path"": ""<DualShockGamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""1ac26556-a5e0-4b17-8e6e-a0b0aa1f0f50"",
+                    ""path"": ""<DualShockGamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""2e67206c-4f09-4228-b3c4-a2bcd4c59177"",
                     ""path"": ""<XInputController>/buttonSouth"",
@@ -346,11 +443,22 @@ public partial class @Test: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ba0384f6-3f1c-4a1d-8da1-b67f90ef8982"",
-                    ""path"": ""<SwitchProControllerHID>/buttonSouth"",
+                    ""id"": ""dbeedb47-e572-4d0b-b15a-8abdce583c18"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Nintendo Controller"",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24986921-27f2-4305-ab35-339f22fd863f"",
+                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -379,6 +487,28 @@ public partial class @Test: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""8a550bde-b0dd-4948-aea1-02215de109ef"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6ac2420-8d73-423b-9dd0-a088922cde5d"",
+                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""53486f20-0fd5-4306-8baf-9d351e6eb3bf"",
                     ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": """",
@@ -390,11 +520,22 @@ public partial class @Test: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""46e7894f-7c94-4725-aa09-b511f3dd8b02"",
-                    ""path"": ""<SwitchProControllerHID>/buttonSouth"",
+                    ""id"": ""883e09a2-4657-409d-b4a8-33558b4332fd"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Nintendo Controller"",
+                    ""groups"": """",
+                    ""action"": ""Parachute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff39981c-133b-4a83-843e-919016937032"",
+                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Parachute"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -423,12 +564,89 @@ public partial class @Test: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b1c88e53-b948-466f-8261-6b7880097783"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Trigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""419e1da2-0a3b-4536-bf2c-55e1ec8ed8ed"",
+                    ""path"": ""<DualShockGamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Trigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""2dfd4d58-4e0b-492f-b30c-989042508f46"",
                     ""path"": ""<XInputController>/buttonNorth"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Push"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c601917c-cb65-41ba-ac6c-de68db902358"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Push"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9e5923fb-22a3-458d-bf4a-254de9cb6fe1"",
+                    ""path"": ""<DualShockGamepad>/buttonNorth"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Push"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2bff1bb-2ae6-4620-926d-9338931240c2"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pull"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5ee9d5b-e5f1-445f-bb8f-d6f437fcc9af"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pull"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01433661-e492-453c-a1e3-6b2bd45023da"",
+                    ""path"": ""<DualShockGamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pull"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -564,12 +782,12 @@ public partial class @Test: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Nintendo Controller"",
-            ""bindingGroup"": ""Nintendo Controller"",
+            ""name"": ""New control scheme1"",
+            ""bindingGroup"": ""New control scheme1"",
             ""devices"": [
                 {
-                    ""devicePath"": ""<SwitchProControllerHID>"",
-                    ""isOptional"": false,
+                    ""devicePath"": ""<DualShockGamepad>"",
+                    ""isOptional"": true,
                     ""isOR"": false
                 }
             ]
@@ -591,6 +809,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         m_Cube_Aim = m_Cube.FindAction("Aim", throwIfNotFound: true);
         m_Cube_Trigger = m_Cube.FindAction("Trigger", throwIfNotFound: true);
         m_Cube_Push = m_Cube.FindAction("Push", throwIfNotFound: true);
+        m_Cube_Pull = m_Cube.FindAction("Pull", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_StartDialogue = m_Dialogue.FindAction("StartDialogue", throwIfNotFound: true);
@@ -674,6 +893,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
     private readonly InputAction m_Cube_Aim;
     private readonly InputAction m_Cube_Trigger;
     private readonly InputAction m_Cube_Push;
+    private readonly InputAction m_Cube_Pull;
     public struct CubeActions
     {
         private @Test m_Wrapper;
@@ -691,6 +911,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Cube_Aim;
         public InputAction @Trigger => m_Wrapper.m_Cube_Trigger;
         public InputAction @Push => m_Wrapper.m_Cube_Push;
+        public InputAction @Pull => m_Wrapper.m_Cube_Pull;
         public InputActionMap Get() { return m_Wrapper.m_Cube; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -739,6 +960,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Push.started += instance.OnPush;
             @Push.performed += instance.OnPush;
             @Push.canceled += instance.OnPush;
+            @Pull.started += instance.OnPull;
+            @Pull.performed += instance.OnPull;
+            @Pull.canceled += instance.OnPull;
         }
 
         private void UnregisterCallbacks(ICubeActions instance)
@@ -782,6 +1006,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Push.started -= instance.OnPush;
             @Push.performed -= instance.OnPush;
             @Push.canceled -= instance.OnPush;
+            @Pull.started -= instance.OnPull;
+            @Pull.performed -= instance.OnPull;
+            @Pull.canceled -= instance.OnPull;
         }
 
         public void RemoveCallbacks(ICubeActions instance)
@@ -924,13 +1151,13 @@ public partial class @Test: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_NewcontrolschemeSchemeIndex];
         }
     }
-    private int m_NintendoControllerSchemeIndex = -1;
-    public InputControlScheme NintendoControllerScheme
+    private int m_Newcontrolscheme1SchemeIndex = -1;
+    public InputControlScheme Newcontrolscheme1Scheme
     {
         get
         {
-            if (m_NintendoControllerSchemeIndex == -1) m_NintendoControllerSchemeIndex = asset.FindControlSchemeIndex("Nintendo Controller");
-            return asset.controlSchemes[m_NintendoControllerSchemeIndex];
+            if (m_Newcontrolscheme1SchemeIndex == -1) m_Newcontrolscheme1SchemeIndex = asset.FindControlSchemeIndex("New control scheme1");
+            return asset.controlSchemes[m_Newcontrolscheme1SchemeIndex];
         }
     }
     public interface ICubeActions
@@ -948,6 +1175,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnTrigger(InputAction.CallbackContext context);
         void OnPush(InputAction.CallbackContext context);
+        void OnPull(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {

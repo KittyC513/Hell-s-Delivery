@@ -138,6 +138,23 @@ public class ShowDialogue :DialogueViewBase
 
 
     }
+
+    [YarnCommand("SwitchCamNPC2")]
+    public static void SwitchCamera3()
+    {
+        SceneControl.instance.SwitchCameraToNpc2();
+
+
+    }
+
+    [YarnCommand("SwitchCamNPC3")]
+    public static void SwitchCamera4()
+    {
+        SceneControl.instance.SwitchCameraToNpc3();
+
+
+    }
+
     [YarnCommand("SwitchCamMain")]
     public static void SwitchCamera2()
     {

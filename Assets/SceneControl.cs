@@ -12,17 +12,29 @@ public class SceneControl : MonoBehaviour
     public Transform P1StartPoint;
     [SerializeField]
     public Transform P2StartPoint;
+    [SerializeField]
+    public Transform P1Rotation;
+    [SerializeField]
+    public Transform P2Rotation;
 
     [SerializeField]
     public Transform closeShootTV;
     [SerializeField]
     public Transform closeShootWerther;
     [SerializeField]
+    public Transform closeShootNPC2;
+    [SerializeField]
+    public Transform closeShootNPC3;
+    [SerializeField]
     public Transform mainCam;
     [SerializeField]
     public GameObject mainCamera;
     [SerializeField]
     public GameObject WertherCam;
+    [SerializeField]
+    public GameObject Npc2Cam;
+    [SerializeField]
+    public GameObject Npc3Cam;
 
     [SerializeField]
     public static GameObject LVNPC, LV;
@@ -39,7 +51,7 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.instance.Reposition(P1StartPoint, P2StartPoint);
+        GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
         //LVNPC = Lv1;
         LV = lv2;
 
@@ -76,10 +88,26 @@ public class SceneControl : MonoBehaviour
    
     }
 
+    public void SwitchCameraToNpc2()
+    {
+        mainCamera.SetActive(false);
+        Npc2Cam.SetActive(true);
+
+    }
+
+    public void SwitchCameraToNpc3()
+    {
+        mainCamera.SetActive(false);
+        Npc3Cam.SetActive(true);
+
+    }
+
     public void SwitchCameraToMain()
     {
         mainCamera.SetActive(true);
         WertherCam.SetActive(false);
+        Npc2Cam.SetActive(false);
+        Npc3Cam.SetActive(false);
     }
 
 

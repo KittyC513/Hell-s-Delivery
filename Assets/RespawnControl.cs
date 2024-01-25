@@ -10,6 +10,8 @@ public class RespawnControl : MonoBehaviour
 
     [SerializeField]
     public Vector3 respawnPoint;
+    [SerializeField]
+    private bool resetRespawnP;
 
     [SerializeField]
     private List<GameObject> cps = new List<GameObject>();
@@ -47,6 +49,7 @@ public class RespawnControl : MonoBehaviour
     string scene3 = "TitleScene";
     string scene4 = "MVPLevel";
     string scene5 = "Tutorial";
+    string scene9 = "Level1";
 
     [SerializeField]
     public bool Player1isCarrying;
@@ -104,6 +107,13 @@ public class RespawnControl : MonoBehaviour
 
     bool entry;
 
+    [SerializeField]
+    private GameObject p1Model, p2Model;
+    [SerializeField]
+    private bool switchPuzzleCam;
+
+    [SerializeField]
+    Vector3 respawnPos;
     //CheckpointControl activateFCP;
 
 
@@ -116,8 +126,6 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
-        
-
 
         //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
 
@@ -125,7 +133,7 @@ public class RespawnControl : MonoBehaviour
 
         //testCube = player.GetComponent<TestCube>();
 
-        
+
     }
 
     void SceneCheck()
@@ -154,7 +162,7 @@ public class RespawnControl : MonoBehaviour
 
             }
 
-            if(curSceneName == scene4 || curSceneName == scene5)
+            if(curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene9)
             {
                 if (objectGrabbable == null)
                 {
@@ -167,12 +175,16 @@ public class RespawnControl : MonoBehaviour
                         CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
                         cpc.Add(checkpc);
                     }
+
                     package = GameObject.FindGameObjectWithTag("Package");
+                    //package = GameObject.FindGameObjectWithTag("HeavyPackage");
+
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
             }
 
-            if(curSceneName != scene5)
+
+            if (curSceneName != scene5)
             {
                 t1.SetActive(false);
                 t2.SetActive(false);
@@ -212,17 +224,19 @@ public class RespawnControl : MonoBehaviour
 
     void ResetInitialRespawnPoint()
     {
-        if(respawnPoint == null && curSceneName == scene4)
+
+        if (isPlayer1)
         {
-            if (isPlayer1)
-            {
-                respawnPoint = SceneControl.instance.P1StartPoint.position;
-            }
-            if (isPlayer2)
-            {
-                respawnPoint = SceneControl.instance.P2StartPoint.position;
-            }
+            respawnPoint = SceneControl.instance.P1StartPoint.position;
         }
+        if (isPlayer2)
+        {
+            respawnPoint = SceneControl.instance.P2StartPoint.position;
+        }
+
+
+
+
     }
 
     private void Update()
@@ -233,17 +247,33 @@ public class RespawnControl : MonoBehaviour
         PlayerDetector();
         if(objectGrabbable != null)
         {
+
+            Debug.Log("check");
+
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
         }
-        ResetInitialRespawnPoint();
-        ////if (Partner == null)
-        //{
-         
-        //}
+
+        if (!resetRespawnP && curSceneName == scene4)
+        {
+            ResetInitialRespawnPoint();
+            resetRespawnP = true;
+        }
+        else if (!resetRespawnP && curSceneName == scene9)
+        {
+            ResetInitialRespawnPoint();
+            resetRespawnP = true;
+        }
+
+        Debug.Log(curSceneName);
+
+            ////if (Partner == null)
+            //{
+
+            //}
 
 
-    }
+        }
     void PlayerDetector()
     {
 
@@ -261,7 +291,7 @@ public class RespawnControl : MonoBehaviour
     public void Respawn(Vector3 respawnPos)
     {
         player.transform.position = respawnPos;
-        player.transform.eulerAngles = new Vector3(0, 90, 0);
+        //player.transform.rotation = respawnRotation.rotation;
         //Debug.Log("RespawnPoint =" + respawnPos);
     }
     //IEnumerator RespawnTimer(Vector3 respawnPos)
@@ -281,6 +311,25 @@ public class RespawnControl : MonoBehaviour
     //    }
 
     //}
+    IEnumerator P1RespawnTimer()
+    {
+        p1Model.SetActive(false);
+        p1DeadScreen.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Respawn(respawnPoint);
+        p1Model.SetActive(true);
+        p1DeadScreen.SetActive(false);
+    }
+
+    IEnumerator P2RespawnTimer()
+    {
+        p2Model.SetActive(false);
+        p2DeadScreen.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Respawn(respawnPoint);
+        p2Model.SetActive(true);
+        p2DeadScreen.SetActive(false);
+    }
 
 
     private void OnTriggerEnter(Collider other)
@@ -288,12 +337,20 @@ public class RespawnControl : MonoBehaviour
         if (other.gameObject.tag == ("Hazard"))
         {
             //Debug.Log("Hazard name =" + other.gameObject);
-            Respawn(respawnPoint);
+
+            //Respawn(respawnPoint);
+
 
             if (isPlayer1)
             {
-                ScoreCount.instance.AddDeathsToP1(5);
-                StartCoroutine(ActivateP1UIForDuration(3f));
+
+                StartCoroutine(P1RespawnTimer());
+                if (curSceneName != scene5)
+                {
+                    ScoreCount.instance.AddDeathsToP1(5);
+                    StartCoroutine(ActivateP1UIForDuration(3f));
+                }
+
                 if (curSceneName == scene2)
                 {
                     //LevelDialogue.ShowDevilPlayer2();
@@ -310,8 +367,13 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2)
             {
-                ScoreCount.instance.AddDeathsToP2(5);
-                StartCoroutine(ActivateP2UIForDuration(3f));
+                StartCoroutine(P2RespawnTimer());
+                if (curSceneName != scene5)
+                {
+                    ScoreCount.instance.AddDeathsToP2(5);
+                    StartCoroutine(ActivateP2UIForDuration(3f));
+                }
+
                 if (curSceneName == scene2)
                 {
                     //LevelDialogue.ShowDevilPlayer1();
@@ -677,13 +739,13 @@ public class RespawnControl : MonoBehaviour
 
             foreach (GameObject obj in Partner)
             {
-                Debug.Log("loopworking");
+                //Debug.Log("loopworking");
                 RespawnControl partnerScript = obj.GetComponent<RespawnControl>();
 
                 if (partnerScript != null)
                 {
                     partnerScript.respawnPoint = respawnPoint;
-                    Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+                    //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
                 }
                 //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
             }

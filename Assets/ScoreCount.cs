@@ -350,7 +350,7 @@ public class ScoreCount : MonoBehaviour
             p1scoreEffect.SetActive(true);
 
             StartCoroutine(ScoreEffectP1());
-            print("31");
+       
 
         }
 
@@ -361,7 +361,7 @@ public class ScoreCount : MonoBehaviour
             StartCoroutine(RotateToPositionP2(knobValue, 0.3f));
 
             StartCoroutine(ScoreEffectP2());
-            print("33");
+    
 
         }
 

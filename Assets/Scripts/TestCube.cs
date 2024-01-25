@@ -31,7 +31,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute, triggerButton;
+    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute, triggerButton, pull;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -50,6 +50,8 @@ public class TestCube : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private float maxSpeed = 5f;
+    [SerializeField]
+    private float pullSpeed = 2f;
     [SerializeField]
     private float walkSpeed = 4f;
     [SerializeField]
@@ -70,6 +72,8 @@ public class TestCube : MonoBehaviour
     private float timeToWalk = 0.1f;
     [SerializeField]
     private float timeToGlide = 1f;
+    [SerializeField]
+    private float timeToPull = 1.5f;
     [SerializeField]
     private float timeToZero = 0.083f;
 
@@ -130,6 +134,7 @@ public class TestCube : MonoBehaviour
     string scene6 = "TitleScene";
     string scene7 = "Tutorial";
     string scene8 = "ScoreCards";
+    string scene9 = "Level1";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -242,6 +247,8 @@ public class TestCube : MonoBehaviour
     public bool isTalking;
     [SerializeField]
     public bool interactWithNpc;
+    [SerializeField]
+    public float doorDistance;
 
     [SerializeField]
     private LayerMask postEnter;
@@ -309,6 +316,21 @@ public class TestCube : MonoBehaviour
     private bool Dialogue1;
     [SerializeField]
     private bool Dialogue2;
+    [SerializeField]
+    private bool Dialogue3;
+    [SerializeField]
+    private bool Dialogue4;
+
+    [SerializeField]
+    private GameObject selectNPC;
+
+    //[Header("Push/Pull")]
+    //[SerializeField]
+    //private float movingObjForce;
+
+    [Header("Camera Control")]
+    [SerializeField]
+    private bool switchPuzzleCam, switchPuzzleCamP2;
 
 
     //public enum CameraStyle
@@ -341,6 +363,49 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool wasFoundLV;
 
+    [Header("Bounce")]
+    [SerializeField]
+    private float bounceForce;
+
+
+    [Header("Pull/Push")]
+    [SerializeField]
+    private float pullItemForce, pushItemForce;
+    [SerializeField]
+    private float PRange;
+    [SerializeField]
+    private GameObject targetObject;
+    [SerializeField]
+    private Transform PPosition;
+    [SerializeField]
+    private LayerMask moveableLayer;
+    [SerializeField]
+    private Rigidbody targetRigid;
+    [SerializeField]
+    private bool isPulling;
+    [SerializeField]
+    Vector3 newPosition;
+    [SerializeField]
+    private bool isCameraLocked;
+
+    [Header("Detect Direction from player to object")]
+    [SerializeField]
+    bool isFront, isRight, isLeft, isBehind;
+
+    [Header("Heavy Package")]
+    [SerializeField]
+    private bool tooHeavy;
+
+
+    private LineRenderer forwardLineRenderer;
+    private LineRenderer directionLineRenderer;
+    private LineRenderer arcLineRenderer;
+
+
+    //[SerializeField]
+    //float dropValue;
+    //[SerializeField]
+    //float dropForce;
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -367,13 +432,15 @@ public class TestCube : MonoBehaviour
     {
 
         player.FindAction("Pick").started += DoDrop;
-        move = player.FindAction("Move");
 
+        move = player.FindAction("Move");
+        pull = player.FindAction("Pull");
         run = player.FindAction("Run");
         //player.FindAction("Join").started += DoTalk;
 
         jump = player.FindAction("Jump");
         triggerButton = player.FindAction("Trigger");
+
 
         player.FindAction("Parachute").started += DoParachute;
         player.FindAction("Parachute").canceled += DoFall;
@@ -409,7 +476,7 @@ public class TestCube : MonoBehaviour
     void Start()
     {
 
-       
+        isCameraLocked = false;
         gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
 
@@ -432,11 +499,13 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DetectDirectionBetweenPlayerAndObject();
+        DetectPackageWight();
         CastBlobShadow();
         CheckGrounded();
         //SpeedControl();
 
-        ContinueBottonControl();
+        //ContinueBottonControl();
         //MovementCalcs();
         //CheckCamera();
         ItemDetector();
@@ -451,12 +520,12 @@ public class TestCube : MonoBehaviour
         {
             DetectInteractRange();
         } 
-        if(curSceneName == scene5 || curSceneName == scene7)
+        if(curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
         {
-            if (package == null)
-            {
-                package = GameObject.FindGameObjectWithTag("Package");
-            }
+
+            package = GameObject.FindGameObjectWithTag("Package");
+            //package = GameObject.FindGameObjectWithTag("HeavyPackage");
+
         }
             
         JoinGameTitle();
@@ -468,6 +537,8 @@ public class TestCube : MonoBehaviour
         {
             Loader.Load(Loader.Scene.MVPLevel);
         }
+
+        GetPullObjects();
 
     }
 
@@ -489,7 +560,7 @@ public class TestCube : MonoBehaviour
         {
 
             otherRB.useGravity = true;
-            otherRB.isKinematic = false;
+            //otherRB.isKinematic = false;
         }
 
 
@@ -505,8 +576,8 @@ public class TestCube : MonoBehaviour
             EnterOffice();
             Interacte();
         }
-   
 
+        Pull();
     }
 
 
@@ -539,17 +610,6 @@ public class TestCube : MonoBehaviour
         titleCanvas.SetActive(false);
     }
 
-
-    public void ContinueBottonControl()
-    {
-        //if (continueControl.action.triggered)
-        //{
-        //    //lineView = FindObjectOfType<LineView>();
-        //    SceneControl.LVNPC.GetComponent<LineView>().OnContinueClicked();
-        //    SceneControl.LV.GetComponent<LineView>().OnContinueClicked();
-        //    //lineView.OnContinueClicked();
-        //}
-    }
 
 
     private void MovementCalcs()
@@ -615,21 +675,30 @@ public class TestCube : MonoBehaviour
 
 
             
-            if (isRunning && !isGliding)
+            if (isRunning && !isGliding && !isPulling)
             {
                 float accel = (maxSpeed / timeToRun);
                 currentSpeed += accel * Time.deltaTime;
+                
 
+            }
+            else if (isPulling)
+            {
+                //float accel = (maxSpeed / timeToPull);
+                currentSpeed = pullItemForce;
+               
             }
             else if (isGliding)
             {
                 float accel = (maxSpeed / timeToGlide);
                 currentSpeed += accel * Time.deltaTime;
+                
             }
-            else
+            else if(!isRunning && !isGliding && !isPulling)
             {
                 float accel = (maxSpeed / timeToWalk);
                 currentSpeed += accel * Time.deltaTime;
+               
             }
 
 
@@ -675,6 +744,7 @@ public class TestCube : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
 
+
         if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6 || curSceneName == scene8)
         {
             playerCamera.enabled = false;
@@ -712,28 +782,118 @@ public class TestCube : MonoBehaviour
         float forceAdd = timeToWalk;
         if (!isOnCircle)
         {
-            //if (curSceneName == null) curSceneName = currentScene.name;
-
-            if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+            if (isPlayer1)
             {
-                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
-                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
-            }
-            else 
-            {
-                if (isGliding)
+                if (!switchPuzzleCam)
                 {
-                    //currentSpeed = gliderSpeed;
+                    if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+                    {
+                        if (!isCameraLocked) 
+                        {
+                            forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+
+                            forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+
+                        }
+                        else
+                        {
+                            MoveTowardFacingDirection();
+                        }
+
+                    }
+                    else
+                    {
+                        if (isGliding)
+                        {
+                            //currentSpeed = gliderSpeed;
+                        }
+
+                        if (!isCameraLocked)
+                        {
+                            forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                            forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+
+                        }
+                        else
+                        {
+                            MoveTowardFacingDirection();
+                        }
+
+
+
+                    }
                 }
+                else
+                {
+                    if (!isCameraLocked)
+                    {
+                        forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
+                        forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
 
-   
+                    }
+                    else
+                    {
+                        MoveTowardFacingDirection();
+                    }
 
-                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
-          
+
+                }
             }
- 
+
+            if (isPlayer2)
+            {
+                if (!switchPuzzleCamP2)
+                {
+                    if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+                    {
+                        if (!isCameraLocked)
+                        {
+                            forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                            forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+
+                        }
+
+                    }
+                    else
+                    {
+                        if (isGliding)
+                        {
+                            //currentSpeed = gliderSpeed;
+                        }
+
+                        if (!isCameraLocked)
+                        {
+                            forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                            forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+
+                        }
+                        else
+                        {
+                            MoveTowardFacingDirection();
+                        }
+
+
+
+                    }
+                }
+                else
+                {
+                    if (!isCameraLocked)
+                    {
+                        forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * currentSpeed;
+                        forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * currentSpeed;
+
+                    }
+                    else
+                    {
+                        MoveTowardFacingDirection();
+                    }
+
+                }
+            }
         }
+           
+           
         else
         {
             //rb.velocity = new Vector3(-(transform.position.x - activeCircle.transform.position.x) * 3 * Time.deltaTime, 0, -(transform.position.z - activeCircle.transform.position.z) * 3 *Time.deltaTime);
@@ -769,6 +929,10 @@ public class TestCube : MonoBehaviour
                 {
                     maxSpeed = walkSpeed;
                 }
+            } 
+            else if (isPulling)
+            {
+                maxSpeed = pullSpeed;
             }
 
             rb.velocity = horizontalVelocity.normalized * currentSpeed + Vector3.up * rb.velocity.y;
@@ -780,6 +944,93 @@ public class TestCube : MonoBehaviour
 
         LookAt();
     }
+    #region Interact with moveable obstacles
+
+    private void DetectDirectionBetweenPlayerAndObject()
+    {
+        if (targetObject != null)
+        {
+            // Calculate the direction vector from the object to the player
+            Vector3 toPlayer = this.transform.position - targetObject.transform.position;
+            // Calculate the dot product between the forward vector of the object and the toPlayer vector
+            float dotProduct = Vector3.Dot(targetObject.transform.forward, toPlayer.normalized);
+
+            if (dotProduct > 0.5f)
+            {
+                isRight = true;
+                isLeft = false;
+                isFront = false;
+                isBehind = false;
+
+                Debug.Log("Player is on the right side of the object");
+            }
+            else if (dotProduct < -0.5f)
+            {
+                isRight = false;
+                isLeft = true;
+                isFront = false;
+                isBehind = false;
+                Debug.Log("Player is on the left side of the object");
+            }
+            else
+            {
+                // You may need to adjust these thresholds based on your specific scenario
+                if (toPlayer.x > 0)
+                {
+                    isRight = false;
+                    isLeft = false;
+                    isFront = true;
+                    isBehind = false;
+                    Debug.Log("Player is in front of the object");
+                }
+                else
+                {
+                    isRight = false;
+                    isLeft = false;
+                    isFront = false;
+                    isBehind = true;
+                    Debug.Log("Player is behind the object");
+                }
+            }
+
+
+
+        }
+
+
+    }
+    private void MoveTowardFacingDirection()
+    {
+        float horizontalInput = move.ReadValue<Vector2>().x;
+        float verticalInput = move.ReadValue<Vector2>().y;
+
+        if (isBehind)
+        {
+            transform.Translate(playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+        if (isLeft)
+        {
+            transform.Translate(-playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(-playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+        if (isRight)
+        {
+            transform.Translate(-playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(-playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+        if (isFront)
+        {
+            transform.Translate(playerDir.right * Time.deltaTime * currentSpeed * horizontalInput);
+            transform.Translate(playerDir.forward * Time.deltaTime * currentSpeed * verticalInput);
+        }
+
+    }
+
+    #endregion
 
     private void LookAt()
     {
@@ -845,22 +1096,115 @@ public class TestCube : MonoBehaviour
             
         }
     }
+
+    //void Drop(float _dropForce)
+    //{
+    //    if (objectGrabbable != null)
+    //    {
+    //        print("1");
+    //        playerSounds.packageToss.Post(this.gameObject);
+    //        if (isPlayer1 && rC.Player1isCarrying)
+    //        {
+    //            print("2");
+
+    //            if(dropValue >= 0.01)
+    //            {
+    //                _dropForce = dropValue * objectGrabbable.dropForce;
+    //                dropForce = _dropForce;
+    //                objectGrabbable.P1Drop(dropForce);
+    //                print("3");
+    //            }
+
+
+    //        }
+
+    //        if (isPlayer2 && rC.Player2isCarrying)
+    //        {
+    //            print("22");
+
+    //            if (dropValue >= 0.01)
+    //            {
+    //                print("33");
+    //                _dropForce = dropValue * objectGrabbable.dropForce;
+    //                dropForce = _dropForce;
+    //                objectGrabbable.P2Drop(dropForce);
+    //            }
+    //        }
+
+    //        objectGrabbable = null;
+    //    }
+    //}
+
+    private void DetectPackageWight()
+    {
+        if (isPlayer1)
+        {
+            if (rC.Player1isCarrying)
+            {
+                if (objectGrabbable.isHeavy)
+                {
+                    tooHeavy = true;
+                }
+                else
+                {
+                    tooHeavy = false;
+                }
+            }
+            else
+            {
+                tooHeavy = false;
+
+            }
+
+        } 
+
+        if (isPlayer2 )
+        {
+            if(rC.Player2isCarrying)
+            {
+                if (objectGrabbable.isHeavy)
+                {
+                    tooHeavy = true;
+                }
+                else
+                {
+                    tooHeavy = false;
+                }
+            }
+            else
+            {
+                tooHeavy = false;
+            }
+
+        }
+
+
+    }
+
     private void DoDrop(InputAction.CallbackContext obj)
     {
+        print("DoDrop");
         if (objectGrabbable != null)
         {
             playerSounds.packageToss.Post(this.gameObject);
             if (isPlayer1 && rC.Player1isCarrying)
             {
                 objectGrabbable.P1Drop();
-                
+                print("DoDrop1");
+
+
             }
+
 
             if (isPlayer2 && rC.Player2isCarrying)
             {
                 objectGrabbable.P2Drop();
-                print("Drop");
+                //print("Drop");
+                print("DoDrop2");
+
+
             }
+
 
             objectGrabbable = null;
         }
@@ -873,7 +1217,7 @@ public class TestCube : MonoBehaviour
         if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
         {
             withinPushingRange = true;
-            lastColliderTime = Time.time;
+            //lastColliderTime = Time.time;
         } 
         else
         {
@@ -916,13 +1260,16 @@ public class TestCube : MonoBehaviour
                 firstTime = true;
             } 
 
-            //StartCoroutine(MovingCameraWerther());
+
             if (ReadActionButton())
             {
                 NPCInteracting = true;
                 //SceneControl.LV.SetActive(false);
                 //Start Dialogue
-
+            }
+            else
+            {
+                NPCInteracting = false;
             }
 
         }
@@ -948,22 +1295,71 @@ public class TestCube : MonoBehaviour
     {
         if (NPCInteracting)
         {
-            //StartCoroutine(MovingCameraWerther());
-            if (!Dialogue1)
+
+            if (selectNPC != null)
             {
-                //SceneControl.LV.SetActive(false);
-                SceneControl.instance.dR.StopAllCoroutines();
-                SceneControl.instance.phoneUI.SetActive(false);
-                SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
-                SceneControl.instance.nameTag.SetActive(false);
-                SceneControl.instance.dR.StartDialogue("BoomerQuest");
+                if (selectNPC.CompareTag("NPC1"))
+                {
+                    if (!Dialogue1)
+                    {
+                        print("interactiNPC1");
+                        //SceneControl.LV.SetActive(false);
+                        SceneControl.instance.dR.StopAllCoroutines();
+                        SceneControl.instance.phoneUI.SetActive(false);
+                        SceneControl.instance.dialogueBox.SetActive(true);
+                        SceneControl.instance.nameTag1.SetActive(true);
+                        SceneControl.instance.nameTag.SetActive(false);
+                        SceneControl.instance.dR.StartDialogue("BoomerQuest");
 
-                NPCInteracting = false;
-                Dialogue1 = true;
+                        NPCInteracting = false;
+                        Dialogue1 = true;
+                        //StartCoroutine(MovingCameraWerther());
 
-               
+                    }
+                }
+
+                if (selectNPC.CompareTag("NPC3"))
+                {
+                    if (!Dialogue3)
+                    {
+                        print("interactiNPC2");
+                        //SceneControl.LV.SetActive(false);
+                        SceneControl.instance.dR.StopAllCoroutines();
+                        SceneControl.instance.phoneUI.SetActive(false);
+                        SceneControl.instance.dialogueBox.SetActive(true);
+                        SceneControl.instance.nameTag1.SetActive(true);
+                        SceneControl.instance.nameTag.SetActive(false);
+                        SceneControl.instance.dR.StartDialogue("LalahQuest");
+
+                        NPCInteracting = false;
+                        Dialogue3 = true;
+                        //StartCoroutine(MovingCameraNPC2());
+
+                    }
+                }
+                if (selectNPC.CompareTag("NPC4"))
+                {
+                    if (!Dialogue4)
+                    {
+                        print("interactiNPC3");
+                        //SceneControl.LV.SetActive(false);
+                        SceneControl.instance.dR.StopAllCoroutines();
+                        SceneControl.instance.phoneUI.SetActive(false);
+                        SceneControl.instance.dialogueBox.SetActive(true);
+                        SceneControl.instance.nameTag1.SetActive(true);
+                        SceneControl.instance.nameTag.SetActive(false);
+                        SceneControl.instance.dR.StartDialogue("MichaelQuest");
+                        
+                        //StartCoroutine(MovingCameraNPC3());
+                        NPCInteracting = false;
+                        Dialogue4 = true;
+
+
+                    }
+                }
+
             }
+
 
         }
     }
@@ -986,6 +1382,7 @@ public class TestCube : MonoBehaviour
 
     void EnterOffice()
     {
+
         if (isEntered)
         {
             gameManager.enterOffice = true;
@@ -999,7 +1396,7 @@ public class TestCube : MonoBehaviour
 
                 isEntered = false;
                 gameManager.camChanged1 = false;
-               
+
             }
 
 
@@ -1014,13 +1411,30 @@ public class TestCube : MonoBehaviour
 
     }
 
-    IEnumerator MovingCameraWerther()
-    {
-        SceneControl.instance.MoveCamera(SceneControl.instance.closeShootWerther);
-        yield return new WaitForSecondsRealtime(2f);
-        isTalking = true;
+    //IEnumerator MovingCameraWerther()
+    //{
+    //    SceneControl.instance.MoveCamera(SceneControl.instance.closeShootWerther);
+    //    yield return new WaitForSecondsRealtime(2f);
+    //    isTalking = true;
 
-    }
+    //}
+
+    //IEnumerator MovingCameraNPC2()
+    //{
+    //    SceneControl.instance.MoveCamera(SceneControl.instance.closeShootNPC2);
+    //    yield return new WaitForSecondsRealtime(2f);
+    //    isTalking = true;
+
+    //}
+
+
+    //IEnumerator MovingCameraNPC3()
+    //{
+    //    SceneControl.instance.MoveCamera(SceneControl.instance.closeShootNPC3);
+    //    yield return new WaitForSecondsRealtime(2f);
+    //    isTalking = true;
+
+    //}
 
 
 
@@ -1039,11 +1453,10 @@ public class TestCube : MonoBehaviour
 
         }
 
-        if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
+        if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
         {
             withinEntranceRange = true;
-
-            gameManager.ShowDirection();
+            //print("WithinDoorRange");
 
         }
         else
@@ -1055,14 +1468,17 @@ public class TestCube : MonoBehaviour
 
         if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
         {
+            selectNPC = raycastHit.collider.gameObject;
+
+            print("selectNPC" + selectNPC);
             withinNPCsRange = true;
-            print("inNpcRange");
+      
 
         }
         else
         {
             withinNPCsRange = false;
-            print("NotinEntranceRange");
+
 
         }
 
@@ -1103,7 +1519,7 @@ public class TestCube : MonoBehaviour
         p2Anim = GameManager.instance.p2Ani;
 
         otherRB.useGravity = false;
-        otherRB.isKinematic = true;
+        //otherRB.isKinematic = true;
         Vector3 forceDir = otherRB.transform.position - transform.position;
 
         Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
@@ -1133,7 +1549,7 @@ public class TestCube : MonoBehaviour
         p1Anim = GameManager.instance.p1Ani;
 
         otherRB.useGravity = false;
-        otherRB.isKinematic = true;
+        //otherRB.isKinematic = true;
         Vector3 forceDir = otherRB.transform.position - transform.position;
 
         Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
@@ -1312,10 +1728,11 @@ public class TestCube : MonoBehaviour
     //    }
     //}
 
+
     void Jump()
     {
         //if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
-        if (jump.ReadValue<float>() == 1 && canJump)
+        if (jump.ReadValue<float>() == 1 && canJump && !tooHeavy)
         {
             //jumpSpeed = jumpForce;
             //isJumping = true;
@@ -1327,11 +1744,32 @@ public class TestCube : MonoBehaviour
         {
             if(Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod)
             {
-                jumpSpeed = jumpForce;
-                isJumping = true;
-                canJump = false;
-                jumpButtonPressedTime = null;
-                lastGroundedTime = null;
+                if (curSceneName != scene9)
+                {
+                    jumpSpeed = jumpForce;
+                    isJumping = true;
+                    canJump = false;
+                    jumpButtonPressedTime = null;
+                    lastGroundedTime = null;
+                }
+                else if (isPlayer1 && !rC.Player1isCarrying)
+                {
+                    jumpSpeed = jumpForce;
+                    isJumping = true;
+                    canJump = false;
+                    jumpButtonPressedTime = null;
+                    lastGroundedTime = null;
+                    Debug.Log("1");
+                } else if (isPlayer2 && !rC.Player2isCarrying)
+                {
+                    jumpSpeed = jumpForce;
+                    isJumping = true;
+                    canJump = false;
+                    jumpButtonPressedTime = null;
+                    lastGroundedTime = null;
+                    Debug.Log("2");
+                }
+
             }
         }
 
@@ -1397,7 +1835,9 @@ public class TestCube : MonoBehaviour
             {
                 forceDirection += Vector3.up * jumpSpeed;
                 
-            } else if (horizontalVelocity < 9)
+            } else 
+            
+            if (horizontalVelocity < 9)
             {
                 forceDirection += Vector3.up * parachuteSpeed;
             } else
@@ -1421,23 +1861,26 @@ public class TestCube : MonoBehaviour
 
     void DoParachute(InputAction.CallbackContext obj)
     {
-
-        if (isInAir || isJumping)
+        if (curSceneName == scene5)
         {
-
-            if (!isGliding)
+            if (isInAir || isJumping)
             {
-                playerSounds.parachuteOpen.Post(this.gameObject);
+
+                if (!isGliding)
+                {
+                    playerSounds.parachuteOpen.Post(this.gameObject);
+                }
+
+                forceDirection += Vector3.up * parachuteSpeed;
+
+                //forceDirection += Vector3.up * parachuteSpeed;
+
+                print("Gliding");
+                isGliding = true;
+                canJump = false;
             }
-
-            forceDirection += Vector3.up * parachuteSpeed;
-
-            //forceDirection += Vector3.up * parachuteSpeed;
-
-            print("Gliding");
-            isGliding = true;
-            canJump = false;
         }
+        
     }
 
     void DoFall(InputAction.CallbackContext obj)
@@ -1582,9 +2025,9 @@ public class TestCube : MonoBehaviour
         if (triggerButton.ReadValue<float>() == 1) return true;
         else return false;
 
-
-
     }
+
+
 
     public void OnSummoningEnter(GameObject circle)
     {
@@ -1620,6 +2063,7 @@ public class TestCube : MonoBehaviour
 
     }
 
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == ("Geiser") && isGliding)
@@ -1630,6 +2074,21 @@ public class TestCube : MonoBehaviour
             rb.AddForce(Vector3.up * geiserForce);
         }
 
+        if (other.CompareTag("Puzzle1") && isPlayer1)
+        {
+            camManager.instance.switchPuzzle1Cam();
+            switchPuzzleCam = true;
+            print("Cam1On");
+        }
+
+        if (other.CompareTag("Puzzle1") && isPlayer2)
+        {
+            camManager.instance.switchPuzzle1CamP2();
+            switchPuzzleCamP2 = true;
+            print("Cam2On");
+        }
+
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -1639,6 +2098,31 @@ public class TestCube : MonoBehaviour
             if (!shouldPlayGeiser) playerSounds.windExit.Post(this.gameObject);
             shouldPlayGeiser = true;
         }
+
+        if (other.CompareTag("Puzzle1") && isPlayer1)
+        {
+
+            camManager.instance.switchPuzzle1CamBack();
+            switchPuzzleCam = false;
+            print("Cam1Off");
+
+        }
+
+        if (other.CompareTag("Puzzle1") && isPlayer2)
+        {
+            camManager.instance.switchPuzzle1CamBackP2();
+            switchPuzzleCamP2 = false;
+            print("Cam2Off");
+        }
+
+
+
+
+
+
+
+
+
     }
 
     private void PlayGroundSound(string material)
@@ -1657,6 +2141,89 @@ public class TestCube : MonoBehaviour
         }
 
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Wall")
+        {
+            rb.AddExplosionForce(bounceForce, collision.contacts[0].point, 5);
+            //rb.AddForce(collision.contacts[0].normal * bounceForce);
+            print("Bounce");
+        }
+    }
+    #region Pull/Push 
+    private void GetPullObjects()
+    {
+        targetObject = null;
+
+
+        if (Physics.SphereCast(playerPos.position, PRange, playerPos.forward, out raycastHit, interactDistance, moveableLayer))
+        {
+            targetObject = raycastHit.collider.gameObject;
+        }
+
+
+    }
+
+
+    public bool ReadPullButton()
+    {
+        if (pull.ReadValue<float>() == 1) return true;
+        else return false;
+
+    }
+
+    private void Pull()
+    {
+
+        if (targetObject != null)
+        {
+            targetRigid = targetObject.GetComponent<Rigidbody>();
+
+            if (ReadPullButton())
+            {
+              
+                isPulling = true;
+                targetRigid.useGravity = false;
+
+                targetObject.transform.SetParent(this.transform);
+
+                newPosition = new Vector3(PPosition.transform.position.x, targetObject.transform.position.y, PPosition.position.z);
+
+                //targetObject.transform.rotation = PPosition.rotation;
+                //targetObject.transform.position = newPosition;
+                targetObject.transform.position = Vector3.Lerp(targetObject.transform.position, newPosition, currentSpeed * Time.deltaTime);
+                isCameraLocked = true;
+            }
+            else
+            {
+                targetRigid.useGravity = true;
+                isPulling = false;
+                targetObject.transform.SetParent(null);
+                newPosition = targetObject.transform.position;
+                isCameraLocked = false;
+            }
+
+        }
+        else
+        {
+            isPulling = false;
+            if(targetRigid != null)
+            {
+                targetRigid.useGravity = true;
+                targetRigid.gameObject.transform.SetParent(null);
+            }
+            //newPosition = targetObject.transform.position;
+            //targetRigid = null;
+            isCameraLocked = false;
+        }
+
+
+    }
+
+    #endregion
+
+
 
 
 
