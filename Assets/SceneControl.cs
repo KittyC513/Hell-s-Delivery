@@ -106,6 +106,8 @@ public class SceneControl : MonoBehaviour
     {
         mainCamera.SetActive(true);
         WertherCam.SetActive(false);
+        Npc2Cam.SetActive(false);
+        Npc3Cam.SetActive(false);
     }
 
 
