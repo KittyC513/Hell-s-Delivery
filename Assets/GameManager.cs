@@ -495,6 +495,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MovingCamera1()
     {
+        p1.isFreeze = true;
+        p2.isFreeze = true;
         MoveCamera(closeShoot,5);
         yield return new WaitForSecondsRealtime(2f);
         camChanged1 = true;

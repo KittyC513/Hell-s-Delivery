@@ -406,8 +406,8 @@ public class TestCube : MonoBehaviour
     [Header("Heavy Package")]
     [SerializeField]
     private bool tooHeavy;
-
-
+    [SerializeField]
+    private float carryWeight;
 
 
     //[SerializeField]
@@ -679,15 +679,14 @@ public class TestCube : MonoBehaviour
                 }
 
                 //print("isWalking" + isWalking);
-            } 
+            }
 
-
-            
+      
             if (isRunning && !isGliding && !isPulling)
             {
                 float accel = (maxSpeed / timeToRun);
                 currentSpeed += accel * Time.deltaTime;
-                
+
 
             }
             else if (isPulling)
@@ -695,20 +694,24 @@ public class TestCube : MonoBehaviour
                 //float accel = (maxSpeed / timeToPull);
                 currentSpeed = pullItemForce;
                 print("isPulling" + currentSpeed);
-               
+
             }
             else if (isGliding)
             {
                 float accel = (maxSpeed / timeToGlide);
                 currentSpeed += accel * Time.deltaTime;
-                
+
             }
-            else if(!isRunning && !isGliding && !isPulling)
+            else if (!isRunning && !isGliding && !isPulling)
             {
                 float accel = (maxSpeed / timeToWalk);
                 currentSpeed += accel * Time.deltaTime;
-               
+
             }
+           
+
+            
+           
 
 
             if (shouldStep && isGrounded)
@@ -967,23 +970,43 @@ public class TestCube : MonoBehaviour
         {
             if (!isFreeze)
             {
-                if (isRunning && !isGliding)
+                if (!tooHeavy)
                 {
-                    maxSpeed = runSpeed;
-                } 
-                else if (isGliding)
-                {
-                    maxSpeed = gliderSpeed;
+                    if (isRunning && !isGliding)
+                    {
+                        maxSpeed = runSpeed;
+                    }
+                    else if (isGliding)
+                    {
+                        maxSpeed = gliderSpeed;
+                    }
+                    else
+                    {
+                        maxSpeed = walkSpeed;
+                    }
                 }
                 else
                 {
-                    maxSpeed = walkSpeed;
+                    if (isRunning && !isGliding)
+                    {
+                        maxSpeed = runSpeed / carryWeight;
+                    }
+                    else if (isGliding)
+                    {
+                        maxSpeed = gliderSpeed / carryWeight;
+                    }
+                    else
+                    {
+                        maxSpeed = walkSpeed / carryWeight;
+                    }
                 }
+
             } 
-            else if (isPulling)
-            {
-                maxSpeed = pullSpeed;
-            }
+            //else if (isPulling)
+            //{
+            //    maxSpeed = pullSpeed;
+            //}
+
 
             rb.velocity = horizontalVelocity.normalized * currentSpeed + Vector3.up * rb.velocity.y;
 

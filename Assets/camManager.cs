@@ -8,20 +8,29 @@ public class camManager : MonoBehaviour
 
     public static camManager instance;
 
+    [Header("Identify GameObject")]
     public GameObject[] players;
     public GameObject cam1;
     public GameObject cam2;
-    public Camera cutCam;
+    
+    [Header("Puzzle 1")]
     [SerializeField]
     public Camera puzzle1Cam, puzzle1CamP2;
     public float time;
     [SerializeField]
+    private bool puzzle1ButtonHasTriggered;
+   
+    [Header("Bridge")]
+    [SerializeField]
+    public Camera cutCam;
     float timer;
     public Animator anim;
     bool leftActive;
     bool rightActive;
     bool lSwitch = false;
     bool rSwitch = false;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -169,6 +178,25 @@ public class camManager : MonoBehaviour
         cam2.SetActive(true);
         puzzle1CamP2.gameObject.SetActive(false);
         print("cam2 switchBack");
+    }
+
+    public void FirstTimeTriggerButtonPuzzle1()
+    {
+        if (!puzzle1ButtonHasTriggered)
+        {
+            StartCoroutine(changeCameraViewPuzzle1());
+        }
+
+    }
+
+    IEnumerator changeCameraViewPuzzle1()
+    {
+        GameManager.instance.p2.isFreeze = true;
+        switchPuzzle1CamP2();
+        yield return new WaitForSeconds(3);
+        switchPuzzle1CamBackP2();
+        puzzle1ButtonHasTriggered = true;
+        GameManager.instance.p2.isFreeze = false;
     }
 
 
