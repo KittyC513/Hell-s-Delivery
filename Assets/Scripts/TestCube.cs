@@ -331,10 +331,8 @@ public class TestCube : MonoBehaviour
 
     [SerializeField]
     private GameObject selectNPC;
-
-    //[Header("Push/Pull")]
-    //[SerializeField]
-    //private float movingObjForce;
+    [SerializeField]
+    private bool isDropped;
 
     [Header("Camera Control")]
     [SerializeField]
@@ -382,7 +380,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float PRange;
     [SerializeField]
-    private GameObject targetObject;
+    public GameObject targetObject;
     [SerializeField]
     private Transform PPosition;
     [SerializeField]
@@ -1323,8 +1321,12 @@ public class TestCube : MonoBehaviour
             playerSounds.packageToss.Post(this.gameObject);
             if (isPlayer1 && rC.Player1isCarrying)
             {
-                objectGrabbable.P1Drop();
-                print("DoDrop1");
+                if(targetObject == null)
+                {
+                    objectGrabbable.P1Drop();
+                    print("DoDrop1");
+                    isDropped = true;
+                }
 
 
             }
@@ -1332,15 +1334,19 @@ public class TestCube : MonoBehaviour
 
             if (isPlayer2 && rC.Player2isCarrying)
             {
-                objectGrabbable.P2Drop();
-                //print("Drop");
-                print("DoDrop2");
-
-
+                if(targetObject == null)
+                {
+                    objectGrabbable.P2Drop();
+                    //print("Drop");
+                    print("DoDrop2");
+                    isDropped = true;
+                }
             }
 
-
-            objectGrabbable = null;
+            if (isDropped)
+            {
+                objectGrabbable = null;
+            }
         }
     }
 
