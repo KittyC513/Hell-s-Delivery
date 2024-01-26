@@ -19961,7 +19961,7 @@ PrefabInstance:
       objectReference: {fileID: 1696723332}
     - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
       propertyPath: dropForce
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
       propertyPath: p1Package
@@ -19976,8 +19976,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
+      propertyPath: divideForce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
       propertyPath: dropUpForce
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
+      propertyPath: divideFactor
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
+      propertyPath: HeavyDropForce
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
+      propertyPath: HeavyDropUpForce
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416238609017372899, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416238609017372899, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
+      propertyPath: m_Mass
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4416238609017372899, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
       propertyPath: m_Constraints
@@ -44506,6 +44530,18 @@ PrefabInstance:
     - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
       propertyPath: playerDir
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
+      propertyPath: divideFactor
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
+      propertyPath: HeavyDropForce
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142203272400099461, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
+      propertyPath: HeavyDropUpForce
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4416238609017372899, guid: 4167e7ef0ce49384ba9c8b00f0b77390, type: 3}
       propertyPath: m_Constraints

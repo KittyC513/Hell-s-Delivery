@@ -1269,46 +1269,54 @@ public class TestCube : MonoBehaviour
 
     private void DetectPackageWight()
     {
-        if (isPlayer1)
+        if(objectGrabbable != null)
         {
-            if (rC.Player1isCarrying)
+            if (isPlayer1)
             {
-                if (objectGrabbable.isHeavy)
+                if (rC.Player1isCarrying)
                 {
-                    tooHeavy = true;
+                    if (objectGrabbable.isHeavy)
+                    {
+                        tooHeavy = true;
+                    }
+                    else
+                    {
+                        tooHeavy = false;
+                    }
+                }
+                else
+                {
+                    tooHeavy = false;
+
+                }
+
+            }
+
+            if (isPlayer2)
+            {
+                if (rC.Player2isCarrying)
+                {
+                    if (objectGrabbable.isHeavy)
+                    {
+                        tooHeavy = true;
+                    }
+                    else
+                    {
+                        tooHeavy = false;
+                    }
                 }
                 else
                 {
                     tooHeavy = false;
                 }
-            }
-            else
-            {
-                tooHeavy = false;
 
             }
-
-        } 
-
-        if (isPlayer2 )
-        {
-            if(rC.Player2isCarrying)
-            {
-                if (objectGrabbable.isHeavy)
-                {
-                    tooHeavy = true;
-                }
-                else
-                {
-                    tooHeavy = false;
-                }
-            }
-            else
-            {
-                tooHeavy = false;
-            }
-
         }
+        else
+        {
+            tooHeavy = false;
+        }
+
 
 
     }

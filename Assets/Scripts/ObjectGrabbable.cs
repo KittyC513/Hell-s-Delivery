@@ -73,6 +73,12 @@ public class ObjectGrabbable : MonoBehaviour
     [Header("Package Types")]
     [SerializeField]
     public bool isHeavy;
+    [SerializeField]
+    private float HeavyDropForce;
+    [SerializeField]
+    private float HeavyDropUpForce;
+    [SerializeField]
+    private float divideFactor;
 
     [SerializeField] private AK.Wwise.Event packageImpact;
 
@@ -305,12 +311,23 @@ public class ObjectGrabbable : MonoBehaviour
         rb.isKinematic = false;
         bC.enabled = true;
 
-        rb.velocity = player.GetComponent<Rigidbody>().velocity;
+        rb.velocity = player.GetComponent<Rigidbody>().velocity / divideFactor;
 
+        if (isHeavy)
+        {
 
-        rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
+            print("HeavyDrop");
+            rb.AddForce(playerDir.forward * HeavyDropForce, ForceMode.Impulse);
+            rb.AddForce(playerDir.up * HeavyDropUpForce, ForceMode.Impulse);
+        }
+        else
+        {
 
-        rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
+            print("NormalDrop");
+            rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
+
+            rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
+        }
 
 
         float random = Random.Range(-1, 1);
@@ -318,7 +335,7 @@ public class ObjectGrabbable : MonoBehaviour
 
         P1TakePackage = false;
         P2TakePackage = false;
-        ScoreCount.instance.time = 0;
+        //ScoreCount.instance.time = 0;
         InventoryManager.Instance.Remove(item);
         time = 0;
 
@@ -331,14 +348,24 @@ public class ObjectGrabbable : MonoBehaviour
         rb.isKinematic = false;
         bC.enabled = true;
 
-        rb.velocity = player2.GetComponent<Rigidbody>().velocity;
+        rb.velocity = player2.GetComponent<Rigidbody>().velocity / divideFactor;
 
-       
+        if (isHeavy)
+        {
 
-        rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
+            rb.AddForce(player2Dir.forward * HeavyDropForce, ForceMode.Impulse);
+
+            rb.AddForce(player2Dir.up * HeavyDropUpForce, ForceMode.Impulse);
+        }
+        else
+        {
+
+            rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
+
+            rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
+        }
 
 
-        rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
 
 
 
