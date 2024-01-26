@@ -791,6 +791,17 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Nintendo Switch Controller"",
+            ""bindingGroup"": ""Nintendo Switch Controller"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<SwitchProControllerHID>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -1158,6 +1169,15 @@ public partial class @Test: IInputActionCollection2, IDisposable
         {
             if (m_Newcontrolscheme1SchemeIndex == -1) m_Newcontrolscheme1SchemeIndex = asset.FindControlSchemeIndex("New control scheme1");
             return asset.controlSchemes[m_Newcontrolscheme1SchemeIndex];
+        }
+    }
+    private int m_NintendoSwitchControllerSchemeIndex = -1;
+    public InputControlScheme NintendoSwitchControllerScheme
+    {
+        get
+        {
+            if (m_NintendoSwitchControllerSchemeIndex == -1) m_NintendoSwitchControllerSchemeIndex = asset.FindControlSchemeIndex("Nintendo Switch Controller");
+            return asset.controlSchemes[m_NintendoSwitchControllerSchemeIndex];
         }
     }
     public interface ICubeActions

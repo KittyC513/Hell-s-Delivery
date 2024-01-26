@@ -20,6 +20,8 @@ public class CharacterControl : MonoBehaviour
     private bool isThrown = false;
     private bool isDead = false;
 
+    [SerializeField] private GameObject shadowRenderer;
+
     [Header("Ground Movement")]
     [SerializeField] private float peakSpeed = 500;
     [SerializeField] private AnimationCurve velocityCurve;
@@ -55,13 +57,13 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private AnimationCurve airVelocityCurve;
     [SerializeField] private float ySpeed = 0;
     private float fTime = 0;
-    private float jTime = 0;
+    public float jTime = 0;
     private float airSpeed = 0;
     private Vector3 lastStandingVector;
 
     private bool isParachuting = false;
     [SerializeField] private bool isJumping = false;
-    [SerializeField] private float minJump = 100f;
+    [SerializeField] private float minJumpTime = 0.5f;
     private bool reachedMinJump = false;
 
     [Space, Header("Input Asset Variables")]
@@ -124,6 +126,9 @@ public class CharacterControl : MonoBehaviour
         RotateTowards(faceDir.normalized);
 
         JumpCalculations();
+        
+
+        Debug.Log(Mathf.Abs(rb.velocity.z) + Mathf.Abs(rb.velocity.x));
     }
 
     private void FixedUpdate()
@@ -140,6 +145,11 @@ public class CharacterControl : MonoBehaviour
         }
             
 
+    }
+
+    private void LateUpdate()
+    {
+        CastBlobShadow();
     }
 
     private void StateMachineUpdate()
@@ -300,7 +310,7 @@ public class CharacterControl : MonoBehaviour
         {
             //this facing direction means even if we are not inputting anything we are still facing somewhere
             //this is used to keep applying speed for a short time after we input to get a deceleration
-            faceDir = GetRelativeInputDirection(cam, inputValue);
+            faceDir = GetRelativeInputDirection(cam, inputValue).normalized;
 
 
             decelerationTime = 0;
@@ -335,6 +345,8 @@ public class CharacterControl : MonoBehaviour
             {
                 currentSpeed = 0;
             }
+
+            airSpeed = 0;
         }
 
     
@@ -356,22 +368,21 @@ public class CharacterControl : MonoBehaviour
 
             //we are not jumping
             isJumping = true;
-           
+            jTime = 0;
             
         }
-
-        if (jump.ReadValue<float>() == 0 && !isGrounded && isJumping && reachedMinJump)
+        else if (jump.ReadValue<float>() == 0 && !isGrounded && isJumping && reachedMinJump)
         {
             //if we let go of jump while not in the air, while jumping and if we have reached the minimum jump requirements
             isJumping = false;
 
             //cut our jump speed
-            ySpeed /= 2;
+            ySpeed /= 3;
 
             //reset our jump time
-            jTime = 0.8f;
+            jTime += 0.2f;
 
-            Debug.Log("stop jump");
+            
 
         }
 
@@ -382,16 +393,19 @@ public class CharacterControl : MonoBehaviour
         }
         else
         {
-            jTime = 0;
+            //jTime = 0;
             reachedMinJump = false;
         }
 
-        if (ySpeed >= minJump && isJumping) reachedMinJump = true;
+        if (jTime >= minJumpTime && isJumping) reachedMinJump = true;
 
-        if (isGrounded && reachedMinJump) isJumping = false;
+        //if we have stopped gaining height, and have reached a minimum jump speed, start falling
+        if (ySpeed <= 0 && isJumping && reachedMinJump) isJumping = false;
 
-            //if we have stopped gaining height, and have reached a minimum jump speed, start falling
-            if (ySpeed <= 1 && isJumping && reachedMinJump) isJumping = false;
+        if (isJumping && isGrounded && reachedMinJump)
+        {
+            isJumping = false;
+        }
     }
 
     private void ApplyGravity()
@@ -429,11 +443,27 @@ public class CharacterControl : MonoBehaviour
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
         {
             isGrounded = true;
-            transform.position = new Vector3(transform.position.x, (hit.point.y + 1.05f), transform.position.z);
+            if (!isJumping) transform.position = new Vector3(transform.position.x, (hit.point.y + 1.05f), transform.position.z);
         }
         else
         {
             isGrounded = false;
+        }
+
+    }
+
+    private void CastBlobShadow()
+    {
+        RaycastHit hit;
+
+        if (Physics.SphereCast(transform.position, groundCheckRadius, -Vector3.up, out hit, Mathf.Infinity, groundLayer))
+        {
+            shadowRenderer.SetActive(true);
+            shadowRenderer.transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);
+        }
+        else
+        {
+            shadowRenderer.SetActive(false);
         }
 
     }
