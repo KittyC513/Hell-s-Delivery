@@ -887,7 +887,13 @@ public class TestCube : MonoBehaviour
                         else
                         {
 
-                            MoveTowardFacingDirection2();
+                            float horizontalInput = move.ReadValue<Vector2>().x;
+                            float verticalInput = move.ReadValue<Vector2>().y;
+
+                            Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+                            //transform.Translate(Vector3.forward * Time.deltaTime * currentSpeed * verticalInput);
+                            //transform.Translate(Vector3.right * Time.deltaTime * currentSpeed * horizontalInput);
+                            transform.Translate(movement * currentSpeed * Time.deltaTime, Space.World);
                         }
 
                     }
@@ -907,7 +913,8 @@ public class TestCube : MonoBehaviour
                         }
                         else
                         {
-                            MoveTowardFacingDirection2();
+                            forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
+                            forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
                         }
 
 
@@ -924,7 +931,14 @@ public class TestCube : MonoBehaviour
                     }
                     else
                     {
-                        MoveTowardFacingDirection2();
+                        float horizontalInput = move.ReadValue<Vector2>().x;
+                        float verticalInput = move.ReadValue<Vector2>().y;
+
+                        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+                        //transform.Translate(Vector3.forward * Time.deltaTime * currentSpeed * verticalInput);
+                        //transform.Translate(Vector3.right * Time.deltaTime * currentSpeed * horizontalInput);
+
+                        transform.Translate(movement * currentSpeed * Time.deltaTime, Space.World);
                     }
 
                 }
