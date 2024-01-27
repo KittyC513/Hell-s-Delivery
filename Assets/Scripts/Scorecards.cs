@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Scorecards : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class Scorecards : MonoBehaviour
     [SerializeField] private int badgeBonus = 50;
 
     [SerializeField] private AK.Wwise.Event scoreCardSequence;
+    private enum scoreSection { scoreCards, eoftm }
+    private scoreSection section = scoreSection.scoreCards;
+
+    [Header("Objects")]
+    [SerializeField] private GameObject cardLeft;
+    [SerializeField] private GameObject cardRight;
 
     [Header ("Stickers")]
     [SerializeField] private GameObject happySticker;
@@ -60,19 +67,38 @@ public class Scorecards : MonoBehaviour
          return transform.rotation = Quaternion.Euler(0f, 0f, Random.Range(-15, 15));
       
     }
+
+    public void NextSection()
+    {
+        //if the player presses A progress to the section
+        //this could be from scorecards to employee of the month or from employee to exit scene
+        switch (section)
+        {
+            case scoreSection.scoreCards:
+                //skip to next scene
+                section = scoreSection.eoftm;
+                cardRight.GetComponent<Animator>().SetBool("Skipped", true);
+                cardLeft.GetComponent<Animator>().SetBool("Skipped", true);
+                break;
+            case scoreSection.eoftm:
+                SceneManager.LoadScene("HubEnd");
+                break;
+        }
+    }
+
     private IEnumerator AnimationCycle()
     {
         yield return new WaitForSeconds(0.85f);
 
         //p1Stickers[0] = CheckScore(lvlData.p1Deaths, p1DeathSpot.position, categories.deaths);
         //p2Stickers[0] = CheckScore(lvlData.p2Deaths, p2DeathSpot.position, categories.deaths);
-        CompareScore(lvlData.p1Deaths, lvlData.p2Deaths, categories.deaths, p1DeathSpot.position, p2DeathSpot.position);
+        CompareScore(lvlData.p1Deaths, lvlData.p2Deaths, categories.deaths, p1DeathSpot.position, p2DeathSpot.position, false);
         yield return new WaitForSeconds(0.44f);
         //scoreCardSequence.Post(this.gameObject);
         yield return new WaitForSeconds(0.31f);
         //p1Stickers[1] = CheckScore(lvlData.p1Deliver / (lvlData.p1Deliver + lvlData.p2Deliver), p1PackageSpot.position, categories.package);
         //p2Stickers[1] = CheckScore(lvlData.p2Deliver / (lvlData.p1Deliver + lvlData.p2Deliver), p2PackageSpot.position, categories.package);
-        CompareScore(lvlData.p1Deliver, lvlData.p2Deliver, categories.deaths, p1PackageSpot.position, p2PackageSpot.position);
+        CompareScore(lvlData.p1Deliver, lvlData.p2Deliver, categories.deaths, p1PackageSpot.position, p2PackageSpot.position, true);
         yield return new WaitForSeconds(0.75f);
         //p1Stickers[2] = CheckScore(lvlData.completionTime, p1CompletionSpot.position, categories.completion);
         //p2Stickers[2] = CheckScore(lvlData.completionTime, p2CompletionSpot.position, categories.completion);
@@ -89,6 +115,12 @@ public class Scorecards : MonoBehaviour
     {
         GameObject sticker1 = null;
         GameObject sticker2 = null;
+
+        if (!higherBetter)
+        {
+            p1Score *= -1;
+            p2Score *= -1;
+        }
 
         if (p1Score > p2Score)
         {
@@ -117,6 +149,13 @@ public class Scorecards : MonoBehaviour
         else if (p1Score == p2Score)
         {
             //maybe give a neutral sticker ONLY if they have the exact same value of deaths or package time
+     
+            sticker1 = Instantiate(neutralSticker, p1StickerPoint, Quaternion.identity);
+            sticker1.transform.rotation = RandomRotation();
+      
+            sticker2 = Instantiate(neutralSticker, p2StickerPoint, Quaternion.identity);
+            sticker2.transform.rotation = RandomRotation();
+       
         }
     }
 

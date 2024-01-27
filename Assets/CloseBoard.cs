@@ -9,8 +9,14 @@ public class CloseBoard : MonoBehaviour
     [SerializeField]
     private InputActionReference closeControl;
 
+    [SerializeField] private Scorecards scoreScript;
+    private bool canPress = false;
 
-
+    private void Start()
+    {
+        scoreScript = this.GetComponent<Scorecards>();
+        canPress = true;
+    }
     private void OnEnable()
     {
 
@@ -19,16 +25,20 @@ public class CloseBoard : MonoBehaviour
     }
 
     private void OnDisable()
-    {
-
+    { 
         closeControl.action.Disable();
     }
     private void Update()
     {
-        if (closeControl.action.triggered)
+        if (closeControl.action.triggered && canPress)
         {
             Debug.Log("Close");
-            SceneManager.LoadScene("HubEnd");
+            scoreScript.NextSection();
+            canPress = false;
+        }
+        else if (!closeControl.action.triggered)
+        {
+            canPress = true;
         }
     }
 
