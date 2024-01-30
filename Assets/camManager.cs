@@ -15,7 +15,7 @@ public class camManager : MonoBehaviour
     
     [Header("Puzzle 1")]
     [SerializeField]
-    public Camera puzzle1Cam, puzzle1CamP2;
+    public Camera puzzle1Cam, puzzle1CamP2, puzzle1CutScene;
     public float time;
     [SerializeField]
     private bool puzzle1ButtonHasTriggered;
@@ -149,35 +149,48 @@ public class camManager : MonoBehaviour
             rSwitch = true;
         }
         
-
     }
 
+    #region Puzzle1 CameraControl
     public void switchPuzzle1Cam()
     {
         cam1.SetActive(false);
         puzzle1Cam.gameObject.SetActive(true);
-        print("cam1 switch");
+
     }
 
     public void switchPuzzle1CamP2()
     {
         cam2.SetActive(false);
         puzzle1CamP2.gameObject.SetActive(true);
-        print("cam2 switch");
+
     }
 
+    public void switchPuzzle1CutScene()
+    {
+        cam2.SetActive(false);
+        puzzle1CutScene.gameObject.SetActive(true);
+
+    }
     public void switchPuzzle1CamBack()
     {
         cam1.SetActive(true);
         puzzle1Cam.gameObject.SetActive(false);
-        print("cam1 switchBack");
+
     }
 
     public void switchPuzzle1CamBackP2()
     {
         cam2.SetActive(true);
         puzzle1CamP2.gameObject.SetActive(false);
-        print("cam2 switchBack");
+
+    }
+
+    public void switchPuzzle1CamBackCutScene()
+    {
+        cam2.SetActive(true);
+        puzzle1CutScene.gameObject.SetActive(false);
+
     }
 
     public void FirstTimeTriggerButtonPuzzle1()
@@ -186,18 +199,19 @@ public class camManager : MonoBehaviour
         {
             StartCoroutine(changeCameraViewPuzzle1());
         }
-
     }
 
     IEnumerator changeCameraViewPuzzle1()
     {
         GameManager.instance.p2.isFreeze = true;
-        switchPuzzle1CamP2();
+        switchPuzzle1CutScene();
         yield return new WaitForSeconds(3);
-        switchPuzzle1CamBackP2();
+        switchPuzzle1CamBackCutScene();
         puzzle1ButtonHasTriggered = true;
         GameManager.instance.p2.isFreeze = false;
     }
+
+    #endregion
 
 
 

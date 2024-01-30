@@ -248,7 +248,7 @@ public class RespawnControl : MonoBehaviour
         if(objectGrabbable != null)
         {
 
-            Debug.Log("check");
+            //Debug.Log("check");
 
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;

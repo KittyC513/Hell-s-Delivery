@@ -80,6 +80,12 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     private float divideFactor;
 
+    [Header("Interact Button")]
+    [SerializeField]
+    private Transform buttonPos;
+    [SerializeField]
+    private Transform buttonOriPos;
+
     [SerializeField] private AK.Wwise.Event packageImpact;
 
     private void Awake()
@@ -89,6 +95,8 @@ public class ObjectGrabbable : MonoBehaviour
         {
             isHeavy = true;
         }
+
+        buttonOriPos = buttonPos;
 
     }
     // Start is called before the first frame update
@@ -102,6 +110,12 @@ public class ObjectGrabbable : MonoBehaviour
         rb.useGravity = false;
         rb.isKinematic = true;
         bC.enabled = false;
+
+        if(buttonPos != null)
+        {
+            buttonPos.parent = null;
+        }
+
 
         InventoryManager.Instance.Add(item);
 
@@ -128,6 +142,9 @@ public class ObjectGrabbable : MonoBehaviour
         {
             AddScore();
         }
+
+        //buttonPos = buttonOriPos;
+            
 
         //PackageIcon();
         //IndicatorControl();
@@ -163,6 +180,8 @@ public class ObjectGrabbable : MonoBehaviour
             //smooth moving
             Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabpo.position, Time.deltaTime * lerpspeed);
             rb.MovePosition(newPosition);
+            
+            
 
             if (objectGrabpo.position == p1ItemC.transform.position)
             {
@@ -316,17 +335,22 @@ public class ObjectGrabbable : MonoBehaviour
         if (isHeavy)
         {
 
-            print("HeavyDrop");
             rb.AddForce(playerDir.forward * HeavyDropForce, ForceMode.Impulse);
             rb.AddForce(playerDir.up * HeavyDropUpForce, ForceMode.Impulse);
+
+            print("DropForce" + HeavyDropForce);
+            print("DropUpForce" + HeavyDropUpForce);
         }
         else
         {
 
-            print("NormalDrop");
+
             rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
 
             rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
+
+            print("DropForce" + dropForce);
+            print("DropUpForce" + dropUpForce);
         }
 
 
@@ -356,13 +380,18 @@ public class ObjectGrabbable : MonoBehaviour
             rb.AddForce(player2Dir.forward * HeavyDropForce, ForceMode.Impulse);
 
             rb.AddForce(player2Dir.up * HeavyDropUpForce, ForceMode.Impulse);
+
+            print("DropForce" + HeavyDropForce);
+            print("DropUpForce" + HeavyDropUpForce);
         }
         else
         {
-
             rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
 
             rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
+
+            print("DropForce" + dropForce);
+            print("DropUpForce" + dropUpForce);
         }
 
 
@@ -404,9 +433,9 @@ public class ObjectGrabbable : MonoBehaviour
                     }
                 }
 
-                rb.velocity = player.GetComponent<Rigidbody>().velocity;
-                rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
-                rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
+                //rb.velocity = player.GetComponent<Rigidbody>().velocity;
+                //rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
+                //rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
 
             }
 
@@ -429,9 +458,9 @@ public class ObjectGrabbable : MonoBehaviour
                     }
 
                 }
-                rb.velocity = player2.GetComponent<Rigidbody>().velocity;
-                rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
-                rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
+                //rb.velocity = player2.GetComponent<Rigidbody>().velocity;
+                //rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
+                //rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
 
             }
         }
