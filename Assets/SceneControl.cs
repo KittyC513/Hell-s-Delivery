@@ -16,6 +16,11 @@ public class SceneControl : MonoBehaviour
     public Transform P1Rotation;
     [SerializeField]
     public Transform P2Rotation;
+    [SerializeField]
+    public Transform RespawnRotation;
+    [SerializeField]
+    public Transform RespawnRotation2;
+
 
     [SerializeField]
     public Transform closeShootTV;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
@@ -298,7 +299,34 @@ public class RespawnControl : MonoBehaviour
 
     public void Respawn(Vector3 respawnPos)
     {
-        player.transform.position = respawnPos;
+        if(curSceneName == scene5)
+        {
+            player.transform.position = respawnPos;
+            P1RespawnRotation = SceneControl.instance.P1Rotation;
+            P2RespawnRotation = P1RespawnRotation;
+            player.transform.rotation = P1RespawnRotation.rotation;
+        } 
+        else if(curSceneName == scene4)
+        {
+            player.transform.position = respawnPos;
+            if (isPlayer1)
+            {
+                P1RespawnRotation = SceneControl.instance.RespawnRotation;
+                player.transform.rotation = P1RespawnRotation.rotation;
+            }
+
+            if (isPlayer2)
+            {
+                P2RespawnRotation = SceneControl.instance.RespawnRotation;
+                player.transform.rotation = P2RespawnRotation.rotation;
+            }
+
+        }
+        else if(curSceneName != scene4 && curSceneName != scene5)
+        {
+            player.transform.position = respawnPos;
+        }
+
         //player.transform.rotation = respawnRotation.rotation;
         //Debug.Log("RespawnPoint =" + respawnPos);
     }
