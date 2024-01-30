@@ -1252,44 +1252,6 @@ public class TestCube : MonoBehaviour
         }
     }
 
-    //void Drop(float _dropForce)
-    //{
-    //    if (objectGrabbable != null)
-    //    {
-    //        print("1");
-    //        playerSounds.packageToss.Post(this.gameObject);
-    //        if (isPlayer1 && rC.Player1isCarrying)
-    //        {
-    //            print("2");
-
-    //            if(dropValue >= 0.01)
-    //            {
-    //                _dropForce = dropValue * objectGrabbable.dropForce;
-    //                dropForce = _dropForce;
-    //                objectGrabbable.P1Drop(dropForce);
-    //                print("3");
-    //            }
-
-
-    //        }
-
-    //        if (isPlayer2 && rC.Player2isCarrying)
-    //        {
-    //            print("22");
-
-    //            if (dropValue >= 0.01)
-    //            {
-    //                print("33");
-    //                _dropForce = dropValue * objectGrabbable.dropForce;
-    //                dropForce = _dropForce;
-    //                objectGrabbable.P2Drop(dropForce);
-    //            }
-    //        }
-
-    //        objectGrabbable = null;
-    //    }
-    //}
-
     private void DetectPackageWight()
     {
         if(objectGrabbable != null)
@@ -1358,6 +1320,10 @@ public class TestCube : MonoBehaviour
                     print("DoDrop1");
                     isDropped = true;
                 }
+                else
+                {
+                    isDropped = false;
+                }
 
 
             }
@@ -1371,6 +1337,10 @@ public class TestCube : MonoBehaviour
                     //print("Drop");
                     print("DoDrop2");
                     isDropped = true;
+                }
+                else
+                {
+                    isDropped = false;
                 }
             }
 
@@ -2241,14 +2211,6 @@ public class TestCube : MonoBehaviour
             print("Cam2Off");
         }
 
-
-
-
-
-
-
-
-
     }
 
     private void PlayGroundSound(string material)
@@ -2351,13 +2313,6 @@ public class TestCube : MonoBehaviour
     #endregion
 
 
-
-
-
-
-
-
-
     //private void OnCollisionEnter(Collision collision)
     //{
 
@@ -2437,10 +2392,6 @@ public class TestCube : MonoBehaviour
     //}
 
 }
-
-
-
-
 /*
 private void Move()
 {

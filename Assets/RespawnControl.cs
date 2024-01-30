@@ -8,10 +8,15 @@ using Yarn.Unity;
 public class RespawnControl : MonoBehaviour
 {
 
+    [Header("Respawn Points")]
     [SerializeField]
     public Vector3 respawnPoint;
     [SerializeField]
     private bool resetRespawnP;
+    [SerializeField]
+    private Transform P1RespawnRotation;
+    [SerializeField]
+    private Transform P2RespawnRotation;
 
     [SerializeField]
     private List<GameObject> cps = new List<GameObject>();
@@ -228,10 +233,13 @@ public class RespawnControl : MonoBehaviour
         if (isPlayer1)
         {
             respawnPoint = SceneControl.instance.P1StartPoint.position;
+            //P1RespawnRotation = SceneControl.instance.P1Rotation.rotation;
+
         }
         if (isPlayer2)
         {
             respawnPoint = SceneControl.instance.P2StartPoint.position;
+            //P2RespawnRotation = SceneControl.instance.P2Rotation.rotation;
         }
 
 
