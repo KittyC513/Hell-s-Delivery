@@ -36,6 +36,8 @@ public class SummoningCircle : MonoBehaviour
     private int num;
     public bool playActive;
     public Animator circle;
+    [SerializeField]
+    private GameObject instruction;
 
     private void Start()
     {
@@ -145,7 +147,7 @@ public class SummoningCircle : MonoBehaviour
 
         if (numOfPlayer <= playerCollider.Length)
         {
-  
+
             for (int i = 0; i < playerCollider.Length; i++)
             {
                 GameObject playerObj = playerCollider[i].gameObject;
@@ -184,7 +186,17 @@ public class SummoningCircle : MonoBehaviour
             players[0] = null;
             players[1] = null;
             num = 0;
-  
+
+
+        }
+
+        if(num == 0)
+        {
+            instruction.SetActive(false);
+        }
+        else
+        {
+            instruction.SetActive(true);
         }
      
     }
