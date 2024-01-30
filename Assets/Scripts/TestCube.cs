@@ -13,6 +13,7 @@ using TMPro;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 using Yarn;
+using static UnityEngine.UI.Image;
 
 public class TestCube : MonoBehaviour
 {
@@ -230,6 +231,8 @@ public class TestCube : MonoBehaviour
     public bool p2Steal;
     [SerializeField]
     private float interactDistance;
+    [SerializeField]
+    private float interactRadius;
     [SerializeField]
     private LayerMask interactableMask;
     [SerializeField]
@@ -547,7 +550,7 @@ public class TestCube : MonoBehaviour
         }
 
         GetPullObjects();
-
+        OnDrawGizmos();
     }
 
     private void LateUpdate()
@@ -1218,38 +1221,40 @@ public class TestCube : MonoBehaviour
     //    Gizmos.DrawWireSphere(playerPos.position, pickDistance);
     //}
 
-    private void OnDrawGizmos()
-    {
-        // Draw a wire sphere to visualize the SphereCast
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactableMask);
-        //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistance, pickDistance);
+    //private void OnDrawGizmos()
+    //{
+    //    // Draw a wire sphere to visualize the SphereCast
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactableMask);
+    //    //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistance, pickDistance);
 
-    }
+    //}
 
     void TakePackage()
     {
-        if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+        if(curSceneName != scene9)
         {
-            if (objectGrabbable == null)
+            if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
-                playerSounds.packagePick.Post(this.gameObject);
-            }
+                if (objectGrabbable == null)
+                {
+                    playerSounds.packagePick.Post(this.gameObject);
+                }
 
-            if (isPlayer1)
-            {
-                objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                objectGrabbable.Grab(itemContainer);
-            }
+                if (isPlayer1)
+                {
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                    objectGrabbable.Grab(itemContainer);
+                }
 
-            if (isPlayer2)
-            {
-                objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                objectGrabbable.Grab(itemContainer);
+                if (isPlayer2)
+                {
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                    objectGrabbable.Grab(itemContainer);
+                }
             }
-
-            
         }
+
     }
 
     private void DetectPackageWight()
@@ -1308,47 +1313,123 @@ public class TestCube : MonoBehaviour
 
     private void DoDrop(InputAction.CallbackContext obj)
     {
-        print("DoDrop");
-        if (objectGrabbable != null)
+        if(curSceneName == scene9)
         {
-            playerSounds.packageToss.Post(this.gameObject);
-            if (isPlayer1 && rC.Player1isCarrying)
+            if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
             {
-                if(targetObject == null)
+                if (objectGrabbable == null)
                 {
-                    objectGrabbable.P1Drop();
-                    print("DoDrop1");
-                    isDropped = true;
-                }
-                else
-                {
-                    isDropped = false;
+                    playerSounds.packagePick.Post(this.gameObject);
                 }
 
-
-            }
-
-
-            if (isPlayer2 && rC.Player2isCarrying)
-            {
-                if(targetObject == null)
+                if (isPlayer1)
                 {
-                    objectGrabbable.P2Drop();
-                    //print("Drop");
-                    print("DoDrop2");
-                    isDropped = true;
+                    if (targetObject == null)
+                    {
+                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                        objectGrabbable.Grab(itemContainer);
+                    }
                 }
-                else
+
+                if (isPlayer2)
                 {
-                    isDropped = false;
+                    if (targetObject == null)
+                    {
+                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                        objectGrabbable.Grab(itemContainer);
+                    }
+
                 }
             }
 
-            if (isDropped)
+            if (objectGrabbable != null)
             {
-                objectGrabbable = null;
+                playerSounds.packageToss.Post(this.gameObject);
+
+
+
+                if (isPlayer1 && rC.Player1isCarrying)
+                {
+                    if (targetObject == null)
+                    {
+                        objectGrabbable.P1Drop();
+                        print("DoDrop1");
+                        isDropped = true;
+                    }
+                    else
+                    {
+                        isDropped = false;
+                    }
+
+
+                }
+
+
+                if (isPlayer2 && rC.Player2isCarrying)
+                {
+                    if (targetObject == null)
+                    {
+                        objectGrabbable.P2Drop();
+                        //print("Drop");
+                        print("DoDrop2");
+                        isDropped = true;
+                    }
+                    else
+                    {
+                        isDropped = false;
+                    }
+                }
+
+                if (isDropped)
+                {
+                    objectGrabbable = null;
+                }
             }
         }
+        else
+        {
+            if (objectGrabbable != null)
+            {
+                playerSounds.packageToss.Post(this.gameObject);
+                if (isPlayer1 && rC.Player1isCarrying)
+                {
+                    if (targetObject == null)
+                    {
+                        objectGrabbable.P1Drop();
+                        print("DoDrop1");
+                        isDropped = true;
+                    }
+                    else
+                    {
+                        isDropped = false;
+                    }
+
+
+                }
+
+
+                if (isPlayer2 && rC.Player2isCarrying)
+                {
+                    if (targetObject == null)
+                    {
+                        objectGrabbable.P2Drop();
+                        //print("Drop");
+                        print("DoDrop2");
+                        isDropped = true;
+                    }
+                    else
+                    {
+                        isDropped = false;
+                    }
+                }
+
+                if (isDropped)
+                {
+                    objectGrabbable = null;
+                }
+            }
+        }
+       
     }
 
 
@@ -1590,10 +1671,15 @@ public class TestCube : MonoBehaviour
 
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactRadius);
+    }
     public void DetectInteractRange()
     {
-        if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, interactableMask))
+       
+        if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, interactableMask))
         {
             withinTVRange = true;
 
@@ -1603,9 +1689,10 @@ public class TestCube : MonoBehaviour
             withinTVRange = false;
 
         }
-
+        
         if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
         {
+
             withinEntranceRange = true;
             //print("WithinDoorRange");
 
@@ -1617,7 +1704,7 @@ public class TestCube : MonoBehaviour
 
         }
 
-        if (Physics.SphereCast(playerPos.position, interactDistance, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
+        if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
         {
             selectNPC = raycastHit.collider.gameObject;
 
