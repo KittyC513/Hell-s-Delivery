@@ -21,7 +21,8 @@ public static class Loader
         MVPLevel,
         Tutorial,
         LoadingScene,
-        ScoreCards
+        ScoreCards,
+        Level1
 
     }
 

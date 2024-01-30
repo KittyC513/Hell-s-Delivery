@@ -711,11 +711,7 @@ public class TestCube : MonoBehaviour
                 currentSpeed += accel * Time.deltaTime;
 
             }
-           
-
-            
-           
-
+                               
 
             if (shouldStep && isGrounded)
             {
@@ -768,7 +764,7 @@ public class TestCube : MonoBehaviour
 
 
         }
-        else if(curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7)
+        else if(curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
         {
             playerCamera.enabled = true;
             mainCam = null;

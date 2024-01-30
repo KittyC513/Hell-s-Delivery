@@ -94,10 +94,6 @@ public class SceneControl : MonoBehaviour
             {
                 NPC3UI.SetActive(false);
             }
-
-
-
-
         }
     }
 

@@ -17,5 +17,9 @@ public class SkipButton : MonoBehaviour
         {
             Loader.Load(Loader.Scene.HubStart);
         }
+
+
+
+
     }
 }
