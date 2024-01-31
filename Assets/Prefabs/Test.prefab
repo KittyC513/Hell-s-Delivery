@@ -3431,7 +3431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516074710670123496}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268346, y: -0.000000022481224, z: 0.0000000093120285, w: 0.92387956}
+  m_LocalRotation: {x: 0.38268346, y: 0.000000022481213, z: -0.000000009312024, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 7, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6239,14 +6239,11 @@ MonoBehaviour:
   groundCheckDist: 0.83
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   isRunning: 0
   playerCamera: {fileID: 8039368589211168344}
   mainCam: {fileID: 0}
   thirdPersonCam: {fileID: 5935711546814801641}
-  pickableMask:
-    serializedVersion: 2
-    m_Bits: 128
   playerPos: {fileID: 5651904090368527511}
   itemContainer: {fileID: 7935187663911269875}
   objectGrabbable: {fileID: 0}
@@ -6273,6 +6270,11 @@ MonoBehaviour:
   package: {fileID: 0}
   pickDistance: 0.6
   isCast: 0
+  pickDistanceHeavy: 0.6
+  pickRadiusHeavy: 0.8
+  pickableMask:
+    serializedVersion: 2
+    m_Bits: 128
   rC: {fileID: 6586379375218265399}
   raycastDistance: 5
   isCarrying: 0
@@ -7290,7 +7292,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685068126282114766}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00000008940696, y: -0.000000044412, z: 0.00000004441201, w: 1}
+  m_LocalRotation: {x: -0.00000008940696, y: -0.000000009999245, z: 0.000000009999248, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

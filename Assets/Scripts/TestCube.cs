@@ -106,8 +106,7 @@ public class TestCube : MonoBehaviour
 
 
 
-    [SerializeField]
-    private LayerMask pickableMask;
+
     [SerializeField]
     private Transform playerPos;
     [SerializeField]
@@ -172,15 +171,24 @@ public class TestCube : MonoBehaviour
     bool isPlayer1;
     [SerializeField]
     bool isPlayer2;
+    
+ 
+    [Header("Pick / Drop")]
     [SerializeField]
     private GameObject package;
     [SerializeField]
     private float pickDistance;
-
     [SerializeField]
     private RaycastHit raycastHit;
     [SerializeField]
     private bool isCast;
+    [SerializeField]
+    private float pickDistanceHeavy;
+    [SerializeField]
+    private float pickRadiusHeavy;
+    [SerializeField]
+    private LayerMask pickableMask;
+
     [SerializeField]
     private RespawnControl rC;
     [SerializeField]
@@ -1217,20 +1225,19 @@ public class TestCube : MonoBehaviour
     //    Gizmos.DrawWireSphere(playerPos.position, pickDistance);
     //}
 
-    //private void OnDrawGizmos()
-    //{
-    //    // Draw a wire sphere to visualize the SphereCast
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactableMask);
-    //    //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistance, pickDistance);
-
-    //}
+    private void OnDrawGizmos()
+    {
+        // Draw a wire sphere to visualize the SphereCast
+        Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactableMask);
+        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistanceHeavy, pickRadiusHeavy);
+    }
 
     void TakePackage()
     {
         if(curSceneName != scene9)
         {
-            if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+            if (Physics.SphereCast(playerPos.position, pickDistanceHeavy, playerPos.forward, out raycastHit, pickDistanceHeavy, pickableMask))
             {
                 if (objectGrabbable == null)
                 {
@@ -1244,6 +1251,28 @@ public class TestCube : MonoBehaviour
                 }
 
                 if (isPlayer2)
+                {
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                    objectGrabbable.Grab(itemContainer);
+                }
+            }
+        }
+        else
+        {
+            if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+            {
+                if (objectGrabbable == null)
+                {
+                    playerSounds.packagePick.Post(this.gameObject);
+                }
+
+                if (isPlayer1 && rC.Player2isCarrying)
+                {
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                    objectGrabbable.Grab(itemContainer);
+                }
+
+                if (isPlayer2 && rC.Player1isCarrying)
                 {
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                     objectGrabbable.Grab(itemContainer);
@@ -1311,39 +1340,37 @@ public class TestCube : MonoBehaviour
     {
         if(curSceneName == scene9)
         {
-            if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+            if(objectGrabbable == null)
             {
-                if (objectGrabbable == null)
-                {
-                    playerSounds.packagePick.Post(this.gameObject);
-                }
+                isDropped = false;
 
-                if (isPlayer1)
+                if (Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistance, pickableMask))
                 {
-                    if (targetObject == null)
+                    if (isPlayer1)
                     {
-                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                        objectGrabbable.Grab(itemContainer);
-                    }
-                }
-
-                if (isPlayer2)
-                {
-                    if (targetObject == null)
-                    {
-                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                        objectGrabbable.Grab(itemContainer);
+                        if (targetObject == null)
+                        {
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable.Grab(itemContainer);
+                            playerSounds.packagePick.Post(this.gameObject);
+                        }
                     }
 
+                    if (isPlayer2)
+                    {
+                        if (targetObject == null)
+                        {
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable.Grab(itemContainer);
+                            playerSounds.packagePick.Post(this.gameObject);
+                        }
+
+                    }
                 }
             }
 
             if (objectGrabbable != null)
             {
-                playerSounds.packageToss.Post(this.gameObject);
-
-
-
                 if (isPlayer1 && rC.Player1isCarrying)
                 {
                     if (targetObject == null)
@@ -1351,6 +1378,7 @@ public class TestCube : MonoBehaviour
                         objectGrabbable.P1Drop();
                         print("DoDrop1");
                         isDropped = true;
+                        playerSounds.packageToss.Post(this.gameObject);
                     }
                     else
                     {
@@ -1369,6 +1397,7 @@ public class TestCube : MonoBehaviour
                         //print("Drop");
                         print("DoDrop2");
                         isDropped = true;
+                        playerSounds.packageToss.Post(this.gameObject);
                     }
                     else
                     {
@@ -1667,11 +1696,12 @@ public class TestCube : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactRadius);
-    }
+    //DrawGizons from Player to Entrance
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactRadius);
+    //}
     public void DetectInteractRange()
     {
        
