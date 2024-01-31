@@ -550,7 +550,7 @@ public class TestCube : MonoBehaviour
         }
 
         GetPullObjects();
-        OnDrawGizmos();
+        //OnDrawGizmos();
     }
 
     private void LateUpdate()

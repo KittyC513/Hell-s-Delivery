@@ -591,6 +591,10 @@ public class GameManager : MonoBehaviour
                 instructionText.SetActive(false);
             }
         }
+        else
+        {
+            instructionText = null;
+        }
         // Wait for the specified time
         
         //print("Show Instruction");
