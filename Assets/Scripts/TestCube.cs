@@ -1220,18 +1220,12 @@ public class TestCube : MonoBehaviour
         return right.normalized;
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(playerPos.position, pickDistance);
-    //}
-
     private void OnDrawGizmos()
     {
-        // Draw a wire sphere to visualize the SphereCast
-        Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactableMask);
-        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistanceHeavy, pickRadiusHeavy);
+        Gizmos.DrawWireSphere(playerPos.position, pickDistanceHeavy);
     }
+
+
 
     void TakePackage()
     {
@@ -1344,8 +1338,11 @@ public class TestCube : MonoBehaviour
             {
                 isDropped = false;
 
-                if (Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+
+                //if (Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+                if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistance, pickableMask))
                 {
+                  
                     if (isPlayer1)
                     {
                         if (targetObject == null)
@@ -1461,7 +1458,9 @@ public class TestCube : MonoBehaviour
 
     void DetectPushRange()
     {
-        if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
+
+        //if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pushDistance, pushMask))
         {
             withinPushingRange = true;
             //lastColliderTime = Time.time;
@@ -1704,8 +1703,8 @@ public class TestCube : MonoBehaviour
     //}
     public void DetectInteractRange()
     {
-       
-        if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, interactableMask))
+        //if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, interactableMask))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, interactableMask))
         {
             withinTVRange = true;
 
@@ -1715,8 +1714,8 @@ public class TestCube : MonoBehaviour
             withinTVRange = false;
 
         }
-        
-        if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, doorDistance, postEnter))
+        //if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
         {
 
             withinEntranceRange = true;
@@ -1730,7 +1729,8 @@ public class TestCube : MonoBehaviour
 
         }
 
-        if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
+        //if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, NPCLayer))
         {
             selectNPC = raycastHit.collider.gameObject;
 
@@ -2358,7 +2358,8 @@ public class TestCube : MonoBehaviour
         targetObject = null;
 
 
-        if (Physics.SphereCast(playerPos.position, PRange, playerPos.forward, out raycastHit, interactDistance, moveableLayer))
+        //if (Physics.SphereCast(playerPos.position, PRange, playerPos.forward, out raycastHit, interactDistance, moveableLayer))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, moveableLayer))
         {
             //Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, PRange);
             targetObject = raycastHit.collider.gameObject;
@@ -2387,6 +2388,9 @@ public class TestCube : MonoBehaviour
               
                 isPulling = true;
                 targetRigid.useGravity = false;
+                targetRigid.mass = 10;
+                targetRigid.drag = 0;
+
 
                 targetObject.transform.SetParent(this.transform);
 
@@ -2401,6 +2405,8 @@ public class TestCube : MonoBehaviour
             {
                 targetRigid.useGravity = true;
                 isPulling = false;
+                targetRigid.drag = 10;
+                targetRigid.mass = 15;
                 targetObject.transform.SetParent(null);
                 newPosition = targetObject.transform.position;
                 isCameraLocked = false;
