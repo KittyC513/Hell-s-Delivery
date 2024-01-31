@@ -56,7 +56,11 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
+        if(GameManager.instance.curSceneName != "TitleScene")
+        {
+            GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
+        }
+
         //LVNPC = Lv1;
         LV = lv2;
 

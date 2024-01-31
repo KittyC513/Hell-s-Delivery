@@ -15,7 +15,12 @@ public class EnterLevel1 : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.R))
         {
+            GameManager.instance.sceneChanged = true;
+            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
+
             Loader.Load(Loader.Scene.Level1);
+
         }
     }
 }

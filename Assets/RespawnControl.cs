@@ -274,7 +274,7 @@ public class RespawnControl : MonoBehaviour
             resetRespawnP = true;
         }
 
-        Debug.Log(curSceneName);
+        //Debug.Log(curSceneName);
 
             ////if (Partner == null)
             //{

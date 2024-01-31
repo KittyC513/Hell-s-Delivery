@@ -574,23 +574,27 @@ public class GameManager : MonoBehaviour
     {
         if (curSceneName == scene3)
         {
-            if (p1.withinEntranceRange || p2.withinEntranceRange)
+            if(p1 != null && p2 != null)
             {
-                instructionText.SetActive(true);
-            }
-            else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
-            {
-                instructionText.SetActive(false);
+                if (p1.withinEntranceRange || p2.withinEntranceRange)
+                {
+                    instructionText.SetActive(true);
+                }
+                else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+                {
+                    instructionText.SetActive(false);
+                }
+
+                if (p1.withinEntranceRange || p2.withinEntranceRange)
+                {
+                    instructionText.SetActive(true);
+                }
+                else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+                {
+                    instructionText.SetActive(false);
+                }
             }
 
-            if (p1.withinEntranceRange || p2.withinEntranceRange)
-            {
-                instructionText.SetActive(true);
-            }
-            else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
-            {
-                instructionText.SetActive(false);
-            }
         }
         else
         {
@@ -636,7 +640,6 @@ public class GameManager : MonoBehaviour
                 {
                     p2Ani.SetBool("beingPush", false);
                     p1.p1pushed = false;
-
                 }
                 
             }
