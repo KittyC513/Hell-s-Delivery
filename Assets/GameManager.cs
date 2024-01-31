@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool camFound1, camFound2;
 
-
+    [SerializeField] private PlayerScoreData playerScore;
 
     private Dictionary<GameObject, GameObject> projectileToIndicator = new Dictionary<GameObject, GameObject>();
 
@@ -179,7 +179,8 @@ public class GameManager : MonoBehaviour
         sceneChanged = false;
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
-
+        playerScore.p1Overall = 0;
+        playerScore.p2Overall = 0;
     }
 
     private void Update()

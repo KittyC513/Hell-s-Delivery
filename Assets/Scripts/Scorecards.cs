@@ -17,13 +17,17 @@ public class Scorecards : MonoBehaviour
     [SerializeField] private int thumbsUpBonus = 50;
     [SerializeField] private int badgeBonus = 50;
 
+    private bool canContinue = false;
+    [SerializeField] private GameObject continueText;
+
     [SerializeField] private AK.Wwise.Event scoreCardSequence;
-    private enum scoreSection { scoreCards, eoftm }
+    private enum scoreSection { scoreCards, leader }
     private scoreSection section = scoreSection.scoreCards;
 
     [Header("Objects")]
     [SerializeField] private GameObject cardLeft;
     [SerializeField] private GameObject cardRight;
+    [SerializeField] private GameObject pedastols;
 
     [Header ("Stickers")]
     [SerializeField] private GameObject happySticker;
@@ -49,7 +53,14 @@ public class Scorecards : MonoBehaviour
     private stickerType[] p1Stickers;
     private stickerType[] p2Stickers;
     private enum categories { deaths, package, completion }
-    
+
+    [Header("Cameras")]
+    [SerializeField] private Camera cardCam;
+    [SerializeField] private Camera leader1;
+    [SerializeField] private Camera player1Lead;
+    [SerializeField] private Camera player2Lead;
+
+    private bool hasStartedLeader = false;
 
     private void Start()
     {
@@ -68,20 +79,51 @@ public class Scorecards : MonoBehaviour
       
     }
 
+    private void Update()
+    {
+        //let the player know when they can press the button
+        if (canContinue) continueText.SetActive(true);
+        else continueText.SetActive(false);
+
+        SectionUpdate();
+    }
+
     public void NextSection()
     {
         //if the player presses A progress to the section
         //this could be from scorecards to employee of the month or from employee to exit scene
+        if (section == scoreSection.scoreCards && canContinue)
+        {
+            section = scoreSection.leader;
+        }
+        else if (section == scoreSection.leader && canContinue)
+        {
+            if (canContinue) SceneManager.LoadScene("HubEnd");
+        }
+    }
+
+    private void SectionUpdate()
+    {
         switch (section)
         {
             case scoreSection.scoreCards:
-                //skip to next scene
-                section = scoreSection.eoftm;
+                if (canContinue)
+                {
+                    //skip to next scene
+                  
+                    
+                }
+
+                break;
+            case scoreSection.leader:
+               
+                if (!hasStartedLeader)
+                {
+                    hasStartedLeader = true;
+                    StartCoroutine(CurrentLeaderCycle());
+                }
                 cardRight.GetComponent<Animator>().SetBool("Skipped", true);
                 cardLeft.GetComponent<Animator>().SetBool("Skipped", true);
-                break;
-            case scoreSection.eoftm:
-                SceneManager.LoadScene("HubEnd");
                 break;
         }
     }
@@ -106,8 +148,41 @@ public class Scorecards : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
         FinalGrade(p1TotalSpot.position, p1Stickers);
         FinalGrade(p2TotalSpot.position, p2Stickers);
+        canContinue = true;
     }
 
+    public IEnumerator CurrentLeaderCycle()
+    {
+        canContinue = false;
+        yield return new WaitForSeconds(0.75f);
+        pedastols.SetActive(true);
+        //transition to cam 1
+        leader1.gameObject.SetActive(true);
+        cardCam.gameObject.SetActive(false);
+        yield return new WaitForSeconds(3);
+
+        if (playerScoreData.p1Overall > playerScoreData.p2Overall)
+        {
+            //player 1 score is higher
+            player1Lead.gameObject.SetActive(true);
+            leader1.gameObject.SetActive(false);
+        }
+        else if (playerScoreData.p1Overall == playerScoreData.p2Overall)
+        {
+            //have some tie state
+            leader1.gameObject.SetActive(false);
+        }
+        else
+        {
+            //player 2 score is higher
+            player2Lead.gameObject.SetActive(true);
+            leader1.gameObject.SetActive(false);
+        }
+
+        yield return new WaitForSeconds(1);
+        canContinue = true;
+        //transition to winning player cam
+    }
     //put in both players score and determine which player had the higher score
     //put a thumbs up or down sticker on each player's category
     //give that player their earned points
@@ -125,23 +200,23 @@ public class Scorecards : MonoBehaviour
         if (p1Score > p2Score)
         {
             //give a thumbs up sticker to player 1 
-            sticker1 = Instantiate(happySticker, p1StickerPoint, Quaternion.identity);
+            sticker1 = Instantiate(happySticker, p1StickerPoint, Quaternion.identity, cardLeft.transform);
             sticker1.transform.rotation = RandomRotation();
             //give 50 points to player 1
             playerScoreData.p1Overall += 50;
 
-            sticker2 = Instantiate(sadSticker, p2StickerPoint, Quaternion.identity);
+            sticker2 = Instantiate(sadSticker, p2StickerPoint, Quaternion.identity, cardRight.transform);
             sticker2.transform.rotation = RandomRotation();
         }
         else if (p2Score > p1Score)
         {
             //give a thumbs down sticker to player 1
-            sticker1 = Instantiate(sadSticker, p1StickerPoint, Quaternion.identity);
+            sticker1 = Instantiate(sadSticker, p1StickerPoint, Quaternion.identity, cardLeft.transform);
             sticker1.transform.rotation = RandomRotation();
             //do not give player 1 any points
 
             //give a thumbs up sticker to player 2
-            sticker2 = Instantiate(happySticker, p2StickerPoint, Quaternion.identity);
+            sticker2 = Instantiate(happySticker, p2StickerPoint, Quaternion.identity, cardRight.transform);
             sticker2.transform.rotation = RandomRotation();
             //give player 2 50 points
             playerScoreData.p2Overall += 50;
@@ -150,10 +225,10 @@ public class Scorecards : MonoBehaviour
         {
             //maybe give a neutral sticker ONLY if they have the exact same value of deaths or package time
      
-            sticker1 = Instantiate(neutralSticker, p1StickerPoint, Quaternion.identity);
+            sticker1 = Instantiate(neutralSticker, p1StickerPoint, Quaternion.identity, cardLeft.transform);
             sticker1.transform.rotation = RandomRotation();
       
-            sticker2 = Instantiate(neutralSticker, p2StickerPoint, Quaternion.identity);
+            sticker2 = Instantiate(neutralSticker, p2StickerPoint, Quaternion.identity, cardRight.transform);
             sticker2.transform.rotation = RandomRotation();
        
         }
