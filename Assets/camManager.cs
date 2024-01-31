@@ -43,92 +43,95 @@ public class camManager : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Camera");
 
-        if (!leftActive && !rightActive)
+        if(GameManager.instance.curSceneName == "MVPLevel")
         {
-            //cam1 = players[0].gameObject.GetComponent<Camera>();
-            //cam2 = players[1].gameObject.GetComponent<Camera>();
-            cam1 = GameManager.instance.cam1;
-            cam2 = GameManager.instance.cam2;
+            if (!leftActive && !rightActive)
+            {
+                //cam1 = players[0].gameObject.GetComponent<Camera>();
+                //cam2 = players[1].gameObject.GetComponent<Camera>();
+                cam1 = GameManager.instance.cam1;
+                cam2 = GameManager.instance.cam2;
+            }
+
+
+            if (leftActive == true)
+            {
+                anim.SetBool("right", false);
+                if (time > timer)
+                {
+                    if (cam1 != null)
+                    {
+                        cam1.SetActive(false);
+                    }
+                    if (cam2 != null)
+                    {
+                        cam2.SetActive(false);
+                    }
+
+                    cutCam.gameObject.SetActive(true);
+                    anim.SetBool("left", true);
+
+                    timer += Time.deltaTime;
+
+                }
+                else
+                {
+                    if (cam1 != null)
+                    {
+                        cam1.SetActive(true);
+                    }
+                    if (cam2 != null)
+                    {
+                        cam2.SetActive(true);
+                    }
+                    cutCam.gameObject.SetActive(false);
+
+
+                    leftActive = false;
+
+                    timer = 0;
+
+                }
+            }
+
+            if (rightActive == true)
+            {
+                anim.SetBool("left", false);
+                if (time > timer)
+                {
+                    if (cam1 != null)
+                    {
+                        cam1.SetActive(false);
+                    }
+                    if (cam2 != null)
+                    {
+                        cam2.SetActive(false);
+                    }
+
+                    cutCam.gameObject.SetActive(true);
+                    anim.SetBool("right", true);
+
+                    timer += Time.deltaTime;
+
+                }
+                else
+                {
+                    if (cam1 != null)
+                    {
+                        cam1.SetActive(true);
+                    }
+                    if (cam2 != null)
+                    {
+                        cam2.SetActive(true);
+                    }
+                    cutCam.gameObject.SetActive(false);
+
+                    timer = 0;
+                    rightActive = false;
+                }
+            }
         }
-           
-
-        if (leftActive == true)
-        {
-            anim.SetBool("right", false);
-            if (time > timer)
-            {
-                if (cam1 != null)
-                {
-                    cam1.SetActive(false);
-                }
-                if (cam2 != null)
-                {
-                    cam2.SetActive(false);
-                }
-
-                cutCam.gameObject.SetActive(true);
-                anim.SetBool("left", true);
-
-                timer += Time.deltaTime;
-
-            }
-            else
-            {
-                if (cam1 != null)
-                {
-                    cam1.SetActive(true);
-                }
-                if (cam2 != null)
-                {
-                    cam2.SetActive(true);
-                }
-                cutCam.gameObject.SetActive(false);
-
-                
-                leftActive = false;
-
-                timer = 0;
-
-            }
-        }
-
-        if (rightActive == true)
-        {
-            anim.SetBool("left", false);
-            if (time > timer)
-            {
-                if (cam1 != null)
-                {
-                    cam1.SetActive(false);
-                }
-                if (cam2 != null)
-                {
-                    cam2.SetActive(false);
-                }
-
-                cutCam.gameObject.SetActive(true);
-                anim.SetBool("right", true);
-
-                timer += Time.deltaTime;
-
-            }
-            else
-            {
-                if (cam1 != null)
-                {
-                    cam1.SetActive(true);
-                }
-                if (cam2 != null)
-                {
-                    cam2.SetActive(true);
-                }
-                cutCam.gameObject.SetActive(false);
-
-                timer = 0;
-                rightActive = false;
-            }
-        }
-        
+       
     }
 
     public void ActivateCutsceneLeft()

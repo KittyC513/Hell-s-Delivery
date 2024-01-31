@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public string scene4 = "MVPLevel";
     string scene5 = "HubEnd";
     string scene6 = "ScoreCards";
+    string scene7 = "Level1";
 
     [SerializeField]
     Camera mainCam;
