@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
@@ -8,10 +9,15 @@ using Yarn.Unity;
 public class RespawnControl : MonoBehaviour
 {
 
+    [Header("Respawn Points")]
     [SerializeField]
     public Vector3 respawnPoint;
     [SerializeField]
     private bool resetRespawnP;
+    [SerializeField]
+    private Transform P1RespawnRotation;
+    [SerializeField]
+    private Transform P2RespawnRotation;
 
     [SerializeField]
     private List<GameObject> cps = new List<GameObject>();
@@ -228,10 +234,13 @@ public class RespawnControl : MonoBehaviour
         if (isPlayer1)
         {
             respawnPoint = SceneControl.instance.P1StartPoint.position;
+            //P1RespawnRotation = SceneControl.instance.P1Rotation.rotation;
+
         }
         if (isPlayer2)
         {
             respawnPoint = SceneControl.instance.P2StartPoint.position;
+            //P2RespawnRotation = SceneControl.instance.P2Rotation.rotation;
         }
 
 
@@ -248,7 +257,7 @@ public class RespawnControl : MonoBehaviour
         if(objectGrabbable != null)
         {
 
-            Debug.Log("check");
+            //Debug.Log("check");
 
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
@@ -265,7 +274,7 @@ public class RespawnControl : MonoBehaviour
             resetRespawnP = true;
         }
 
-        Debug.Log(curSceneName);
+        //Debug.Log(curSceneName);
 
             ////if (Partner == null)
             //{
@@ -290,7 +299,34 @@ public class RespawnControl : MonoBehaviour
 
     public void Respawn(Vector3 respawnPos)
     {
-        player.transform.position = respawnPos;
+        if(curSceneName == scene5)
+        {
+            player.transform.position = respawnPos;
+            P1RespawnRotation = SceneControl.instance.P1Rotation;
+            P2RespawnRotation = P1RespawnRotation;
+            player.transform.rotation = P1RespawnRotation.rotation;
+        } 
+        else if(curSceneName == scene4)
+        {
+            player.transform.position = respawnPos;
+            if (isPlayer1)
+            {
+                P1RespawnRotation = SceneControl.instance.RespawnRotation;
+                player.transform.rotation = P1RespawnRotation.rotation;
+            }
+
+            if (isPlayer2)
+            {
+                P2RespawnRotation = SceneControl.instance.RespawnRotation;
+                player.transform.rotation = P2RespawnRotation.rotation;
+            }
+
+        }
+        else if(curSceneName != scene4 && curSceneName != scene5)
+        {
+            player.transform.position = respawnPos;
+        }
+
         //player.transform.rotation = respawnRotation.rotation;
         //Debug.Log("RespawnPoint =" + respawnPos);
     }

@@ -73,6 +73,18 @@ public class ObjectGrabbable : MonoBehaviour
     [Header("Package Types")]
     [SerializeField]
     public bool isHeavy;
+    [SerializeField]
+    private float HeavyDropForce;
+    [SerializeField]
+    private float HeavyDropUpForce;
+    [SerializeField]
+    private float divideFactor;
+
+    [Header("Interact Button")]
+    [SerializeField]
+    private Transform buttonPos;
+    [SerializeField]
+    private Transform buttonOriPos;
 
     [SerializeField] private AK.Wwise.Event packageImpact;
 
@@ -83,6 +95,8 @@ public class ObjectGrabbable : MonoBehaviour
         {
             isHeavy = true;
         }
+
+        buttonOriPos = buttonPos;
 
     }
     // Start is called before the first frame update
@@ -96,6 +110,12 @@ public class ObjectGrabbable : MonoBehaviour
         rb.useGravity = false;
         rb.isKinematic = true;
         bC.enabled = false;
+
+        if(buttonPos != null)
+        {
+            buttonPos.parent = null;
+        }
+
 
         InventoryManager.Instance.Add(item);
 
@@ -122,6 +142,9 @@ public class ObjectGrabbable : MonoBehaviour
         {
             AddScore();
         }
+
+        //buttonPos = buttonOriPos;
+            
 
         //PackageIcon();
         //IndicatorControl();
@@ -157,6 +180,8 @@ public class ObjectGrabbable : MonoBehaviour
             //smooth moving
             Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabpo.position, Time.deltaTime * lerpspeed);
             rb.MovePosition(newPosition);
+            
+            
 
             if (objectGrabpo.position == p1ItemC.transform.position)
             {
@@ -305,12 +330,28 @@ public class ObjectGrabbable : MonoBehaviour
         rb.isKinematic = false;
         bC.enabled = true;
 
-        rb.velocity = player.GetComponent<Rigidbody>().velocity;
+        rb.velocity = player.GetComponent<Rigidbody>().velocity / divideFactor;
+
+        if (isHeavy)
+        {
+
+            rb.AddForce(playerDir.forward * HeavyDropForce, ForceMode.Impulse);
+            rb.AddForce(playerDir.up * HeavyDropUpForce, ForceMode.Impulse);
+
+            print("DropForce" + HeavyDropForce);
+            print("DropUpForce" + HeavyDropUpForce);
+        }
+        else
+        {
 
 
-        rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
+            rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
 
-        rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
+            rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
+
+            print("DropForce" + dropForce);
+            print("DropUpForce" + dropUpForce);
+        }
 
 
         float random = Random.Range(-1, 1);
@@ -318,7 +359,7 @@ public class ObjectGrabbable : MonoBehaviour
 
         P1TakePackage = false;
         P2TakePackage = false;
-        ScoreCount.instance.time = 0;
+        //ScoreCount.instance.time = 0;
         InventoryManager.Instance.Remove(item);
         time = 0;
 
@@ -331,14 +372,29 @@ public class ObjectGrabbable : MonoBehaviour
         rb.isKinematic = false;
         bC.enabled = true;
 
-        rb.velocity = player2.GetComponent<Rigidbody>().velocity;
+        rb.velocity = player2.GetComponent<Rigidbody>().velocity / divideFactor;
 
-       
+        if (isHeavy)
+        {
 
-        rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
+            rb.AddForce(player2Dir.forward * HeavyDropForce, ForceMode.Impulse);
+
+            rb.AddForce(player2Dir.up * HeavyDropUpForce, ForceMode.Impulse);
+
+            print("DropForce" + HeavyDropForce);
+            print("DropUpForce" + HeavyDropUpForce);
+        }
+        else
+        {
+            rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
+
+            rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
+
+            print("DropForce" + dropForce);
+            print("DropUpForce" + dropUpForce);
+        }
 
 
-        rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
 
 
 
@@ -377,9 +433,9 @@ public class ObjectGrabbable : MonoBehaviour
                     }
                 }
 
-                rb.velocity = player.GetComponent<Rigidbody>().velocity;
-                rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
-                rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
+                //rb.velocity = player.GetComponent<Rigidbody>().velocity;
+                //rb.AddForce(playerDir.forward * dropForce, ForceMode.Impulse);
+                //rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
 
             }
 
@@ -402,9 +458,9 @@ public class ObjectGrabbable : MonoBehaviour
                     }
 
                 }
-                rb.velocity = player2.GetComponent<Rigidbody>().velocity;
-                rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
-                rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
+                //rb.velocity = player2.GetComponent<Rigidbody>().velocity;
+                //rb.AddForce(player2Dir.forward * dropForce, ForceMode.Impulse);
+                //rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
 
             }
         }

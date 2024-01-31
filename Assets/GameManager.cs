@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public string scene4 = "MVPLevel";
     string scene5 = "HubEnd";
     string scene6 = "ScoreCards";
+    string scene7 = "Level1";
 
     [SerializeField]
     Camera mainCam;
@@ -121,6 +122,10 @@ public class GameManager : MonoBehaviour
     public bool isBegin;
     [SerializeField]
     public bool showWertherInstruction;
+    [SerializeField]
+    public bool showNPC2Instruction;
+    [SerializeField]
+    public bool showNPC3Instruction;
 
     [SerializeField]
     public GameObject noisy1;
@@ -199,7 +204,7 @@ public class GameManager : MonoBehaviour
 
         SkyboxControl();
 
-        ShowTVInstruction();
+        ShowInstruction();
 
         ShowDirection();
 
@@ -261,6 +266,7 @@ public class GameManager : MonoBehaviour
         player1.transform.position = P1position.position;
         player1.transform.rotation = P1rotation.rotation;
         player2.transform.position = P2position.position;
+        player2.transform.rotation = P2rotation.rotation;
         player2.transform.rotation = P2rotation.rotation;
     }
 
@@ -491,6 +497,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MovingCamera1()
     {
+        p1.isFreeze = true;
+        p2.isFreeze = true;
         MoveCamera(closeShoot,5);
         yield return new WaitForSecondsRealtime(2f);
         camChanged1 = true;
@@ -520,7 +528,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    public void ShowTVInstruction()
+    public void ShowInstruction()
     {
         if(curSceneName == scene1 || curSceneName == scene5)
         {
@@ -536,11 +544,30 @@ public class GameManager : MonoBehaviour
             if(p1.withinNPCsRange || p2.withinNPCsRange)
             {
                 showWertherInstruction = true;
-            }
-            else if (!p1.withinTVRange && !p2.withinTVRange)
+            } 
+            else if(!p1.withinNPCsRange || !p2.withinNPCsRange)
             {
                 showWertherInstruction = false;
             }
+
+            if (p1.withinNPC2Range || p2.withinNPC2Range)
+            {
+                showNPC2Instruction = true;
+            }
+            else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
+            {
+                showNPC2Instruction = false;
+            }
+
+            if (p1.withinNPC3Range || p2.withinNPC3Range)
+            {
+                showNPC3Instruction = true;
+            }
+            else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
+            {
+                showNPC3Instruction = false;
+            }
+
         }
 
     }
@@ -548,23 +575,31 @@ public class GameManager : MonoBehaviour
     {
         if (curSceneName == scene3)
         {
-            if (p1.withinEntranceRange || p2.withinEntranceRange)
+            if(p1 != null && p2 != null)
             {
-                instructionText.SetActive(true);
-            }
-            else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
-            {
-                instructionText.SetActive(false);
+                if (p1.withinEntranceRange || p2.withinEntranceRange)
+                {
+                    instructionText.SetActive(true);
+                }
+                else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+                {
+                    instructionText.SetActive(false);
+                }
+
+                if (p1.withinEntranceRange || p2.withinEntranceRange)
+                {
+                    instructionText.SetActive(true);
+                }
+                else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+                {
+                    instructionText.SetActive(false);
+                }
             }
 
-            if (p1.withinEntranceRange || p2.withinEntranceRange)
-            {
-                instructionText.SetActive(true);
-            }
-            else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
-            {
-                instructionText.SetActive(false);
-            }
+        }
+        else
+        {
+            instructionText = null;
         }
         // Wait for the specified time
         
@@ -606,7 +641,6 @@ public class GameManager : MonoBehaviour
                 {
                     p2Ani.SetBool("beingPush", false);
                     p1.p1pushed = false;
-
                 }
                 
             }

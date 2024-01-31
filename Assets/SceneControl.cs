@@ -16,6 +16,11 @@ public class SceneControl : MonoBehaviour
     public Transform P1Rotation;
     [SerializeField]
     public Transform P2Rotation;
+    [SerializeField]
+    public Transform RespawnRotation;
+    [SerializeField]
+    public Transform RespawnRotation2;
+
 
     [SerializeField]
     public Transform closeShootTV;
@@ -43,7 +48,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject Lv1, lv2;
     [SerializeField]
-    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherDialogue;
+    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, NPC2UI, NPC3UI, nameTagNPC2,nameTagNPC3;
 
     private void Awake()
     {
@@ -51,7 +56,11 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
+        if(GameManager.instance.curSceneName != "TitleScene")
+        {
+            GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
+        }
+
         //LVNPC = Lv1;
         LV = lv2;
 
@@ -65,13 +74,30 @@ public class SceneControl : MonoBehaviour
         {
             if (GameManager.instance.showWertherInstruction)
             {
-                WertherDialogue.SetActive(true);
+                WertherUI.SetActive(true);
             }
             else
             {
-                WertherDialogue.SetActive(false);
+                WertherUI.SetActive(false);
             }
-           
+
+            if (GameManager.instance.showNPC2Instruction)
+            {
+                NPC2UI.SetActive(true);
+            }
+            else
+            {
+                NPC2UI.SetActive(false);
+            }
+
+            if (GameManager.instance.showNPC3Instruction)
+            {
+                NPC3UI.SetActive(true);
+            }
+            else
+            {
+                NPC3UI.SetActive(false);
+            }
         }
     }
 
