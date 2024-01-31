@@ -1264,12 +1264,14 @@ public class TestCube : MonoBehaviour
                 {
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                     objectGrabbable.Grab(itemContainer);
+                    GameManager.instance.p1.objectGrabbable = null;
                 }
 
                 if (isPlayer2 && rC.Player1isCarrying)
                 {
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                     objectGrabbable.Grab(itemContainer);
+                    GameManager.instance.p2.objectGrabbable = null;
                 }
             }
         }
@@ -2398,7 +2400,7 @@ public class TestCube : MonoBehaviour
 
                 //targetObject.transform.rotation = PPosition.rotation;
                 //targetObject.transform.position = newPosition;
-                targetObject.transform.position = Vector3.Lerp(targetObject.transform.position, newPosition, currentSpeed * Time.deltaTime * 1.2f);
+                targetObject.transform.position = Vector3.Lerp(targetObject.transform.position, newPosition, currentSpeed * Time.deltaTime * 1.5f);
                 isCameraLocked = true;
             }
             else
@@ -2406,7 +2408,7 @@ public class TestCube : MonoBehaviour
                 targetRigid.useGravity = true;
                 isPulling = false;
                 targetRigid.drag = 10;
-                targetRigid.mass = 15;
+                targetRigid.mass = 150;
                 targetObject.transform.SetParent(null);
                 newPosition = targetObject.transform.position;
                 isCameraLocked = false;
