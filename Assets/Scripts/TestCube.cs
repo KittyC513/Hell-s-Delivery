@@ -17,7 +17,7 @@ using static UnityEngine.UI.Image;
 
 public class TestCube : MonoBehaviour
 {
-
+    
     [SerializeField]
     public DialogueRunner dR;
     [SerializeField]
@@ -37,6 +37,9 @@ public class TestCube : MonoBehaviour
 
     private bool isOnCircle;
     private GameObject activeCircle;
+
+    [SerializeField] private bool useNewMovement = false;
+    private CharacterControl charController;
 
     [SerializeField]
     private float movementForce = 1f;
@@ -168,9 +171,9 @@ public class TestCube : MonoBehaviour
 
 
     [SerializeField]
-    bool isPlayer1;
+    public bool isPlayer1;
     [SerializeField]
-    bool isPlayer2;
+    public bool isPlayer2;
     
  
     [Header("Pick / Drop")]
@@ -509,7 +512,7 @@ public class TestCube : MonoBehaviour
         parachuteObj.SetActive(false);
         canJump = true;
         lastStepTime = Time.time;
-
+        charController = GetComponent<CharacterControl>();
         
 
 
@@ -530,10 +533,18 @@ public class TestCube : MonoBehaviour
         //CheckCamera();
         ItemDetector();
         CameraSwitch();
+        AnimationAndSound();
 
         playerPos = this.transform;
-
-        MovementCalcs();
+        if (!useNewMovement)
+        {
+            MovementCalcs();
+        }
+        else
+        {
+            charController.RunMovement(playerCamera, isGliding);
+        }
+        
         DetectPushRange();
 
         if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
@@ -570,10 +581,15 @@ public class TestCube : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isFreeze)
+        if (!isFreeze && !useNewMovement)
         {
             Move();
             Jump();
+        }
+        else if (!isFreeze && useNewMovement)
+        {
+            //apply new movement functions
+            charController.FixedUpdateFunctions();
         }
 
         if (!withinPushingRange & otherRB != null)
@@ -631,10 +647,9 @@ public class TestCube : MonoBehaviour
     }
 
 
-
-    private void MovementCalcs()
+    private void AnimationAndSound()
     {
-        if (isPlayer1)
+           if (isPlayer1)
         {
             playerAnimator.SetBool("isGliding", isGliding);
             p1Indicator.SetActive(true);
@@ -646,6 +661,25 @@ public class TestCube : MonoBehaviour
             playerAnimator2.SetBool("isGliding", isGliding);
         }
 
+        //if is moving
+        //if (shouldStep && isGrounded)
+        //{
+        //    PlayGroundSound(groundMaterial);
+        //    lastStepTime = Time.time;
+        //    shouldStep = false;
+        //}
+        //else if (currentSpeed > 0)
+        //{
+        //    if (Time.time - lastStepTime > (footstepRate / currentSpeed) * Time.deltaTime)
+        //    {
+        //        shouldStep = true;
+        //    }
+        //}
+
+    }
+    private void MovementCalcs()
+    {
+     
 
         if (isFreeze)
         {
@@ -722,19 +756,7 @@ public class TestCube : MonoBehaviour
             }
                                
 
-            if (shouldStep && isGrounded)
-            {
-                PlayGroundSound(groundMaterial);
-                lastStepTime = Time.time;
-                shouldStep = false;
-            }
-            else if (currentSpeed > 0)
-            {
-                if (Time.time - lastStepTime > (footstepRate / currentSpeed) * Time.deltaTime)
-                {
-                    shouldStep = true;
-                }
-            }
+           
         }
         else
         {

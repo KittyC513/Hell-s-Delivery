@@ -236,6 +236,8 @@ public class Scorecards : MonoBehaviour
 
     
 
+    
+
     //each category needs to have it's score checked
     //score values of good and neutral
     //face point to put down the face

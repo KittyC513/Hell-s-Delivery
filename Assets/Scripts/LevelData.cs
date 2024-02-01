@@ -39,4 +39,8 @@ public class LevelData : ScriptableObject
     public float p1FinalScore;
     [SerializeField]
     public float p2FinalScore;
+    [SerializeField]
+    public bool p1Collectable;
+    [SerializeField]
+    public bool p2Collectable;
 }

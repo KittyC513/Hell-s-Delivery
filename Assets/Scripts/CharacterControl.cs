@@ -11,16 +11,10 @@ public class CharacterControl : MonoBehaviour
     [Header("General")]
     [SerializeField] private playerStates pState = playerStates.idle;
 
-    private Camera cam;
-    [SerializeField] private Camera thirdPersonCam;
-    [SerializeField] private Camera hubCam;
-    [SerializeField] private Camera topDownCam;
-    [SerializeField] private Camera virtualCam;
 
     private bool isThrown = false;
     private bool isDead = false;
 
-    [SerializeField] private GameObject shadowRenderer;
 
     [Header("Ground Movement")]
     [SerializeField] private float peakSpeed = 500;
@@ -30,8 +24,8 @@ public class CharacterControl : MonoBehaviour
     private Vector2 forwardDirection;
     private float currentSpeed;
     private Vector3 directionSpeed;
-    [SerializeField]private float rotationSpeed = 300;
-    private float velocityTime = 0;
+    [SerializeField] private float rotationSpeed = 300;
+    [SerializeField] private float velocityTime = 0;
     private float decelerationTime = 0;
     private Vector3 faceDir;
 
@@ -65,6 +59,13 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private bool isJumping = false;
     [SerializeField] private float minJumpTime = 0.5f;
     private bool reachedMinJump = false;
+
+    private bool hasLeftGround = true;
+
+    [SerializeField] private bool canJump = true;
+    [SerializeField] private bool readJumpValue = false;
+    [SerializeField] private float jumpButtonGracePeriod = 0.3f;
+    private float graceTimer = 0;
 
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
@@ -107,50 +108,40 @@ public class CharacterControl : MonoBehaviour
     #region Essential Functions
     private void Start()
     {
-        cam = thirdPersonCam;
+    
         rb = GetComponent<Rigidbody>();
         currentSpeed = 0;
         faceDir = Vector3.zero;
 
     }
 
-    private void Update()
+    public void RunMovement(Camera cam, bool isParachuting)
     {
-        MovementCalculations();
+        MovementCalculations(cam);
         StateMachineUpdate();
         GetStickInputs();
-        
+
         ApplyGravity();
         CheckGrounded();
 
         RotateTowards(faceDir.normalized);
 
         JumpCalculations();
-        
-
-        Debug.Log(Mathf.Abs(rb.velocity.z) + Mathf.Abs(rb.velocity.x));
     }
 
-    private void FixedUpdate()
+    public void FixedUpdateFunctions()
     {
-        //not used currently but if we need to use different physics based on grounded state we can change that here
         if (isGrounded)
         {
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
         }
-            
+
         else if (!isGrounded)
         {
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
         }
-            
-
     }
 
-    private void LateUpdate()
-    {
-        CastBlobShadow();
-    }
 
     private void StateMachineUpdate()
     {
@@ -243,14 +234,18 @@ public class CharacterControl : MonoBehaviour
         //get camera forward and right
         Vector3 camForward = camera.transform.forward;
         Vector3 camRight = camera.transform.right;
+        camForward = camForward.normalized;
+        camRight = camRight.normalized;
 
         //get our stick input
         Vector3 stickInput = inputValue;
+        stickInput = stickInput.normalized;
         //multiply our stick value by our cam right and forward to get a camera relative input
         Vector3 horizontal = stickInput.x * camRight;
         Vector3 vertical = stickInput.y * camForward;
 
         Vector3 input = horizontal + vertical;
+        input = input.normalized;
         return input.normalized;
     }
     private void GetStickInputs()
@@ -289,7 +284,7 @@ public class CharacterControl : MonoBehaviour
             inputValue = Vector2.zero;
         }
     }
-    private void MovementCalculations()
+    private void MovementCalculations(Camera cam)
     {
         //we get our camera relative inputs from this function to be used later
         Vector3 inputDir = GetRelativeInputDirection(cam, inputValue);
@@ -356,8 +351,9 @@ public class CharacterControl : MonoBehaviour
     {
 
         //if the jump button is pressed
-        if (jump.ReadValue<float>() == 1 && isGrounded && !isJumping)
+        if (readJumpValue && isGrounded && !isJumping && canJump)
         {
+            canJump = false;
             if (!isJumping && isGrounded)
             {
                 //lets get our starting y vector
@@ -377,13 +373,55 @@ public class CharacterControl : MonoBehaviour
             isJumping = false;
 
             //cut our jump speed
-            ySpeed /= 3;
+            ySpeed /= 2;
 
             //reset our jump time
             jTime += 0.2f;
 
             
 
+        }
+
+        //if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
+        //{
+        //    readJumpValue = true;
+        //    graceTimer = 0;
+        //}
+
+        if (jump.ReadValue<float>() == 0)
+        {
+            canJump = true;
+        }
+
+        //when the player presses the jump button, read that input for a few extra frames until it no longer works
+        //player presses jump, the jump value is set to true for x seconds, jump is now set to false
+        if (jump.ReadValue<float>() == 1 && !readJumpValue && canJump)
+        {
+            //set jump to true for a few seconds
+            //read jump for 0.3 frames
+            readJumpValue = true;
+            graceTimer = 0;
+
+        }
+   
+        //we want the player's jump input to stay there for a little longer than they pressed
+        //it makes jumping as soon as you reach the ground a lot easier
+        if (readJumpValue)
+        {
+            graceTimer += Time.deltaTime;
+
+            if (graceTimer <= jumpButtonGracePeriod)
+            {
+                //read jump input
+                readJumpValue = true;
+                
+            }
+            else
+            {
+                //stop reading jump input and reset
+                readJumpValue = false;
+                canJump = false;
+            }
         }
 
         if (isJumping)
@@ -397,14 +435,24 @@ public class CharacterControl : MonoBehaviour
             reachedMinJump = false;
         }
 
-        if (jTime >= minJumpTime && isJumping) reachedMinJump = true;
+        if (jTime >= minJumpTime && isJumping && hasLeftGround) reachedMinJump = true;
 
         //if we have stopped gaining height, and have reached a minimum jump speed, start falling
-        if (ySpeed <= 0 && isJumping && reachedMinJump) isJumping = false;
+        if (ySpeed <= 0 && isJumping && reachedMinJump && hasLeftGround) isJumping = false;
 
-        if (isJumping && isGrounded && reachedMinJump)
+        if (isJumping && isGrounded && reachedMinJump && hasLeftGround)
         {
             isJumping = false;
+        }
+
+        //if we aren't grounded we have left the ground
+        if (!isGrounded)
+        {
+            hasLeftGround = true;
+        }//if we're not mid jump and grounded we have reached the ground and are not rising upwards
+        else if (!isJumping && isGrounded)
+        {
+            hasLeftGround = false;
         }
     }
 
@@ -450,22 +498,13 @@ public class CharacterControl : MonoBehaviour
             isGrounded = false;
         }
 
+        
     }
 
-    private void CastBlobShadow()
+    private void OnDrawGizmosSelected()
     {
-        RaycastHit hit;
-
-        if (Physics.SphereCast(transform.position, groundCheckRadius, -Vector3.up, out hit, Mathf.Infinity, groundLayer))
-        {
-            shadowRenderer.SetActive(true);
-            shadowRenderer.transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);
-        }
-        else
-        {
-            shadowRenderer.SetActive(false);
-        }
-
+        //Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
+        //Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDist, groundCheck.position.z));
     }
 
     #endregion
