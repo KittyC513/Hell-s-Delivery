@@ -449,13 +449,13 @@ public class RespawnControl : MonoBehaviour
             respawnPoint = other.transform.position;
             if (isPlayer1)
             {
-                P1RespawnRotation = other.transform.FindChild("Rotation").transform;
+                P1RespawnRotation = other.transform.Find("Rotation").transform;
           
             }
 
             if (isPlayer2)
             {
-                P2RespawnRotation = other.transform.FindChild("Rotation").transform;
+                P2RespawnRotation = other.transform.Find("Rotation").transform;
        
             }
 
@@ -777,13 +777,13 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-                P1RespawnRotation = other.transform.FindChild("Rotation").transform;
+                P1RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = P1RespawnRotation;
             }
 
             if (isPlayer2)
             {
-                P2RespawnRotation = other.transform.FindChild("Rotation").transform;
+                P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P1RespawnRotation = P2RespawnRotation;
             }
 

@@ -424,6 +424,17 @@ public class TestCube : MonoBehaviour
     private float carryWeight;
 
 
+    [Header("Phone")]
+    [SerializeField]
+    private float interactPhoneDistance;
+    [SerializeField]
+    public bool withinPhoneRange;
+    [SerializeField]
+    private LayerMask PhoneLayer;
+    [SerializeField]
+    public bool isAnswered;
+
+
     //[SerializeField]
     //float dropValue;
     //[SerializeField]
@@ -809,11 +820,12 @@ public class TestCube : MonoBehaviour
 
         }
 
-        if(curSceneName == scene1 && !Dialogue2)
-        {
-            SceneControl.instance.dR.StartDialogue("HubStart");
-            Dialogue2 = true;
-        }
+        //Start the Devil phone Dialogue 
+        //if(curSceneName == scene1 && !Dialogue2)
+        //{
+        //    SceneControl.instance.dR.StartDialogue("HubStart");
+        //    Dialogue2 = true;
+        //}
 
     }
 
@@ -1667,6 +1679,15 @@ public class TestCube : MonoBehaviour
 
         }
 
+        if (withinPhoneRange)
+        {
+            if (ReadActionButton() && !isAnswered)
+            {
+                SceneControl.instance.dR.StartDialogue("HubStart");
+                isAnswered = true;
+            }
+        }
+
     }
 
     void Talk()
@@ -1757,6 +1778,7 @@ public class TestCube : MonoBehaviour
             gameManager.enterOffice = true;
             print("Enter Office");
             gameManager.sceneChanged = true;
+            gameManager.firstTimeEnterHub = true;
 
             StartCoroutine(gameManager.MovingCamera1());
             if (gameManager.camChanged1)
@@ -1796,6 +1818,18 @@ public class TestCube : MonoBehaviour
         else
         {
             withinTVRange = false;
+
+        }
+
+        // Detect Phone Range
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactPhoneDistance, PhoneLayer))
+        {
+            withinPhoneRange = true;
+
+        }
+        else
+        {
+            withinPhoneRange = false;
 
         }
         if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, doorDistance, postEnter))

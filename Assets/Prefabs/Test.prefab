@@ -5126,7 +5126,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6715688338489921252}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.04184481, y: -0.000000028320205, z: 0.000000026043383, w: 0.99912417}
+  m_LocalRotation: {x: -0.04184481, y: -0.000000028320201, z: 0.00000002604338, w: 0.9991241}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6271,7 +6271,7 @@ MonoBehaviour:
   package: {fileID: 0}
   pickDistance: 0.6
   isCast: 0
-  pickDistanceHeavy: 1.47
+  pickDistanceHeavy: 1.6
   pickRadiusHeavy: 1.2
   pickableMask:
     serializedVersion: 2
@@ -6380,6 +6380,12 @@ MonoBehaviour:
   isBehind2: 0
   tooHeavy: 0
   carryWeight: 1.7
+  interactPhoneDistance: 1
+  withinPhoneRange: 0
+  PhoneLayer:
+    serializedVersion: 2
+    m_Bits: 1073741824
+  isAnswered: 0
 --- !u!114 &965772886468833305
 MonoBehaviour:
   m_ObjectHideFlags: 0

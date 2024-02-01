@@ -166,6 +166,11 @@ public class GameManager : MonoBehaviour
     public GameObject cam1, cam2;
     [SerializeField]
     public bool camFound1, camFound2;
+    [SerializeField]
+    public bool firstTimeEnterHub;
+    [SerializeField]
+    public bool ShowPhoneInstruction;
+
 
     [SerializeField] private PlayerScoreData playerScore;
 
@@ -566,6 +571,15 @@ public class GameManager : MonoBehaviour
             else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
             {
                 showNPC3Instruction = false;
+            }
+
+            if(p1.withinPhoneRange || p2.withinPhoneRange)
+            {
+                ShowPhoneInstruction = true;
+            } 
+            else if(!p1.withinPhoneRange && !p2.withinPhoneRange)
+            {
+                ShowPhoneInstruction = false;
             }
 
         }

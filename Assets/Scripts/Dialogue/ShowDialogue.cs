@@ -163,6 +163,13 @@ public class ShowDialogue :DialogueViewBase
 
     }
 
+    [YarnCommand("DialogueEnd")]
+    public static void DialogueEnd()
+    {
+        SceneControl.instance.dialogueFin = true;
+    }
+
+
     [YarnCommand("HideGradient")]
     public static void HideGradient()
     {
