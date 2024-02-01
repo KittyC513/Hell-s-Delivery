@@ -61,6 +61,7 @@ public class SceneControl : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
     }
     private void Start()
     {
@@ -73,11 +74,15 @@ public class SceneControl : MonoBehaviour
         LV = lv2;
 
         //LVNPC.SetActive(false);
-     
+
+
+
+
     }
 
     private void Update()
     {
+
         if (GameManager.instance.curSceneName == "HubStart")
         {
             HubStart();
@@ -131,16 +136,12 @@ public class SceneControl : MonoBehaviour
 
     public void StartComic()
     {
-        if (GameManager.instance.firstTimeEnterHub)
-        {
-            StartCoroutine(StartComicIntro());
-        }
+        StartCoroutine(StartComicIntro());
     }
 
     IEnumerator StartComicIntro()
     {
         Comic1.SetActive(true);
-        GameManager.instance.firstTimeEnterHub = false;
         yield return new WaitForSeconds(30);
         Comic1.SetActive(false);
         GameManager.instance.UnfreezePlayer();
@@ -149,9 +150,10 @@ public class SceneControl : MonoBehaviour
 
     void HubStart()
     {
-        if (GameManager.instance.firstTimeEnterHub)
+        if (GameManager.instance.firstTimeEnterHub == true)
         {
             StartComic();
+            GameManager.instance.firstTimeEnterHub = false;
         }
 
         if (GameManager.instance.showWertherInstruction)
