@@ -503,7 +503,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8135933071317343088}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2f604e06e0bbe8b4eba14cf2cfa64358, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -568,10 +568,14 @@ MonoBehaviour:
   HeavyDropForce: 50
   HeavyDropUpForce: 20
   divideFactor: 3
+  buttonPos: {fileID: 0}
+  buttonOriPos: {fileID: 0}
   packageImpact:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 1f9d615acfaba0043b0eb2517c00c428, type: 2}
+  platformTransform: {fileID: 0}
+  boxTransform: {fileID: 0}
 --- !u!54 &4416238609017372899
 Rigidbody:
   m_ObjectHideFlags: 0
