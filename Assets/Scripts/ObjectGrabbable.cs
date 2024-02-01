@@ -507,6 +507,16 @@ public class ObjectGrabbable : MonoBehaviour
             respawnPoint = other.transform.position;
         }
 
+        if (other.transform.tag == "MovingPlat" && !P1TakePackage && !P2TakePackage)
+        {
+
+            
+
+            platformTransform = other.transform;
+
+            boxTransform.parent = platformTransform;
+        }
+
     }
 
     IEnumerator ActivateP1UIForDuration(float duration)
@@ -536,6 +546,19 @@ public class ObjectGrabbable : MonoBehaviour
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             packageImpact.Post(this.gameObject);
+        }
+    }
+
+    public Transform platformTransform;
+    public Transform boxTransform;
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "MovingPlat")
+        {
+
+            boxTransform.parent = null;
+
         }
     }
 }

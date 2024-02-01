@@ -518,6 +518,7 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         DetectDirectionBetweenPlayerAndObject();
         DetectPackageWight();
         CastBlobShadow();

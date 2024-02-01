@@ -370,7 +370,7 @@ public class RespawnControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == ("Hazard"))
+        if (other.gameObject.tag == ("Hazard") || other.gameObject.tag == ("hazard2"))
         {
             //Debug.Log("Hazard name =" + other.gameObject);
 
