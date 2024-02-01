@@ -1384,9 +1384,10 @@ public class TestCube : MonoBehaviour
                     {
                         if (targetObject == null)
                         {
-                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                            objectGrabbable.Grab(itemContainer);
-                            playerSounds.packagePick.Post(this.gameObject);
+                            //objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            //objectGrabbable.Grab(itemContainer);
+                            //playerSounds.packagePick.Post(this.gameObject);
+                            TakePackageFunction();
                         }
                     }
 
@@ -1394,9 +1395,10 @@ public class TestCube : MonoBehaviour
                     {
                         if (targetObject == null)
                         {
-                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                            objectGrabbable.Grab(itemContainer);
-                            playerSounds.packagePick.Post(this.gameObject);
+                            //objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            //objectGrabbable.Grab(itemContainer);
+                            //playerSounds.packagePick.Post(this.gameObject);
+                            TakePackageFunction();
                         }
 
                     }
@@ -1490,6 +1492,51 @@ public class TestCube : MonoBehaviour
         }
        
     }
+
+    public void TakePackageFunction()
+    {
+        if (isPlayer1)
+        {
+            if (rC.Player2isCarrying)
+            {
+
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
+                playerSounds.packagePick.Post(this.gameObject);
+                GameManager.instance.p2.objectGrabbable = null;   
+                
+            } else if(!rC.Player1isCarrying && !rC.Player2isCarrying)
+            {
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
+                playerSounds.packagePick.Post(this.gameObject);
+            }
+
+        }
+
+        if (isPlayer2)
+        {
+            if (rC.Player1isCarrying)
+            {
+
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
+                playerSounds.packagePick.Post(this.gameObject);
+                GameManager.instance.p1.objectGrabbable = null;
+                
+            }
+            else if (!rC.Player1isCarrying && !rC.Player2isCarrying)
+            {
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
+                playerSounds.packagePick.Post(this.gameObject);
+            }
+
+        }
+
+    }
+
+
 
 
 
