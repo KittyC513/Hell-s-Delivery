@@ -37,7 +37,7 @@ public class CharacterControl : MonoBehaviour
 
     private Rigidbody rb;
     private Vector2 lastInput = Vector2.zero;
-    private Vector2 stickValue = Vector2.zero;
+    [HideInInspector] public Vector2 stickValue = Vector2.zero;
     private Vector2 inputValue;
 
     [SerializeField] private float minQuickTurn = 0.8f;

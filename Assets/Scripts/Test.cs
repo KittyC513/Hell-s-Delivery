@@ -321,6 +321,61 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""Nintendo Switch"",
+                    ""id"": ""920324eb-5fef-4193-854f-3b985305b96e"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""6747e4e3-404b-4003-85a2-1fee75415a4f"",
+                    ""path"": ""<SwitchProControllerHID>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Nintendo Switch Controller"",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""65922e7e-4392-4e9c-8aa5-3cb0fe3bd5f8"",
+                    ""path"": ""<SwitchProControllerHID>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Nintendo Switch Controller"",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""657071c6-9c87-46cd-8a49-c2135625f4c1"",
+                    ""path"": ""<SwitchProControllerHID>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Nintendo Switch Controller"",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b7eac8f4-a237-4e6c-bc4b-fc4cc350b912"",
+                    ""path"": ""<SwitchProControllerHID>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Nintendo Switch Controller"",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": ""Arrow"",
                     ""id"": ""e24c6e81-ebd8-4d37-9fa8-7bd522bddfdf"",
                     ""path"": ""2DVector"",
