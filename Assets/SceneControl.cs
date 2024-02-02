@@ -50,9 +50,18 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, NPC2UI, NPC3UI, nameTagNPC2,nameTagNPC3;
 
+    [Header("Hub Start")]
+    [SerializeField]
+    private GameObject Comic1;
+    [SerializeField]
+    private GameObject phoneInstruction;
+    [SerializeField]
+    public bool dialogueFin;
+
     private void Awake()
     {
         instance = this;
+
     }
     private void Start()
     {
@@ -65,39 +74,18 @@ public class SceneControl : MonoBehaviour
         LV = lv2;
 
         //LVNPC.SetActive(false);
-     
+
+
+
+
     }
 
     private void Update()
     {
+
         if (GameManager.instance.curSceneName == "HubStart")
         {
-            if (GameManager.instance.showWertherInstruction)
-            {
-                WertherUI.SetActive(true);
-            }
-            else
-            {
-                WertherUI.SetActive(false);
-            }
-
-            if (GameManager.instance.showNPC2Instruction)
-            {
-                NPC2UI.SetActive(true);
-            }
-            else
-            {
-                NPC2UI.SetActive(false);
-            }
-
-            if (GameManager.instance.showNPC3Instruction)
-            {
-                NPC3UI.SetActive(true);
-            }
-            else
-            {
-                NPC3UI.SetActive(false);
-            }
+            HubStart();
         }
     }
 
@@ -106,6 +94,7 @@ public class SceneControl : MonoBehaviour
     {
         MoveCamera(closeShootTV);
     }
+
 
     public void SwitchCameraToNpc()
     {
@@ -143,6 +132,71 @@ public class SceneControl : MonoBehaviour
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
         mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
         //print("Camera");
+    }
+
+    public void StartComic()
+    {
+        StartCoroutine(StartComicIntro());
+    }
+
+    IEnumerator StartComicIntro()
+    {
+        Comic1.SetActive(true);
+        yield return new WaitForSeconds(30);
+        Comic1.SetActive(false);
+        GameManager.instance.UnfreezePlayer();
+
+    }
+
+    void HubStart()
+    {
+        if (GameManager.instance.firstTimeEnterHub == true)
+        {
+            StartComic();
+            GameManager.instance.firstTimeEnterHub = false;
+        }
+
+        if (GameManager.instance.showWertherInstruction)
+        {
+            WertherUI.SetActive(true);
+        }
+        else
+        {
+            WertherUI.SetActive(false);
+        }
+
+        if (GameManager.instance.showNPC2Instruction)
+        {
+            NPC2UI.SetActive(true);
+        }
+        else
+        {
+            NPC2UI.SetActive(false);
+        }
+
+        if (GameManager.instance.showNPC3Instruction)
+        {
+            NPC3UI.SetActive(true);
+        }
+        else
+        {
+            NPC3UI.SetActive(false);
+        }
+
+        if (GameManager.instance.ShowPhoneInstruction)
+        {
+            phoneInstruction.SetActive(true);
+        }
+        else
+        {
+            phoneInstruction.SetActive(false);
+        }
+
+        if (dialogueFin)
+        {
+            SwitchCameraToTV();
+            //dialogueFin = false;
+        }
     }
 
 
