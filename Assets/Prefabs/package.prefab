@@ -416,14 +416,13 @@ GameObject:
   - component: {fileID: 4416238609017372899}
   - component: {fileID: 2134547861879351998}
   - component: {fileID: 693240545659223230}
-  - component: {fileID: 6690728211740107293}
   m_Layer: 7
   m_Name: package
   m_TagString: Package
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7243245511295909222
 Transform:
   m_ObjectHideFlags: 0
@@ -511,11 +510,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1142203272400099461
 MonoBehaviour:
@@ -530,7 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4416238609017372899}
-  bC: {fileID: 6809288887673640832}
+  bC: {fileID: 693240545659223230}
   dropForce: 15
   dropUpForce: 7
   stealForce: 1
@@ -550,6 +549,7 @@ MonoBehaviour:
   findPlayer2: 0
   findP1Container: 0
   findP2Container: 0
+  isDropped: 0
   p1ItemC: {fileID: 0}
   p2ItemC: {fileID: 0}
   P1TakePackage: 0
@@ -568,10 +568,20 @@ MonoBehaviour:
   HeavyDropForce: 50
   HeavyDropUpForce: 20
   divideFactor: 3
+  buttonPos: {fileID: 0}
+  buttonOriPos: {fileID: 0}
+  groundCheck: {fileID: 0}
+  groundCheckRadius: 0.33
+  groundCheckDist: 0.75
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   packageImpact:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 1f9d615acfaba0043b0eb2517c00c428, type: 2}
+  platformTransform: {fileID: 0}
+  boxTransform: {fileID: 0}
 --- !u!54 &4416238609017372899
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -619,7 +629,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8135933071317343088}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2f604e06e0bbe8b4eba14cf2cfa64358, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -627,28 +637,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &6690728211740107293
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8135933071317343088}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

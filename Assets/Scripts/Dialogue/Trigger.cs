@@ -43,7 +43,7 @@ public class Trigger : MonoBehaviour
             {
                 //conversationStart = true;
                 GameManager.instance.GMconversationStart = true;
-                dR.StartDialogue("HubStart");
+                //dR.StartDialogue("HubStart");
                 Destroy(this.gameObject);
 
             }

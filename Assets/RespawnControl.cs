@@ -311,13 +311,12 @@ public class RespawnControl : MonoBehaviour
             player.transform.position = respawnPos;
             if (isPlayer1)
             {
-                P1RespawnRotation = SceneControl.instance.RespawnRotation;
                 player.transform.rotation = P1RespawnRotation.rotation;
             }
 
             if (isPlayer2)
             {
-                P2RespawnRotation = SceneControl.instance.RespawnRotation;
+                
                 player.transform.rotation = P2RespawnRotation.rotation;
             }
 
@@ -370,7 +369,7 @@ public class RespawnControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == ("Hazard"))
+        if (other.gameObject.tag == ("Hazard") || other.gameObject.tag == ("hazard2"))
         {
             //Debug.Log("Hazard name =" + other.gameObject);
 
@@ -448,6 +447,18 @@ public class RespawnControl : MonoBehaviour
         {
             
             respawnPoint = other.transform.position;
+            if (isPlayer1)
+            {
+                P1RespawnRotation = other.transform.Find("Rotation").transform;
+          
+            }
+
+            if (isPlayer2)
+            {
+                P2RespawnRotation = other.transform.Find("Rotation").transform;
+       
+            }
+
             objectGrabbable.respawnPoint = respawnPoint;
             //Debug.Log("RespawnPoint =" + respawnPoint);
         }
@@ -757,11 +768,25 @@ public class RespawnControl : MonoBehaviour
         {
             
             respawnPoint = other.transform.position;
+
+
             if (objectGrabbable != null)
             {
                 objectGrabbable.respawnPoint = respawnPoint;
             }
-            
+
+            if (isPlayer1)
+            {
+                P1RespawnRotation = other.transform.Find("Rotation").transform;
+                P2RespawnRotation = P1RespawnRotation;
+            }
+
+            if (isPlayer2)
+            {
+                P2RespawnRotation = other.transform.Find("Rotation").transform;
+                P1RespawnRotation = P2RespawnRotation;
+            }
+
 
             foreach (CheckpointControl checkpc in cpc)
             {

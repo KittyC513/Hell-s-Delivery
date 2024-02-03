@@ -10,6 +10,7 @@ public class ObjectGrabbable : MonoBehaviour
 {
     public Rigidbody rb;
     public BoxCollider bC;
+    public BoxCollider TriggerbC;
     private Transform objectGrabpo;
     [SerializeField]
     public float dropForce;
@@ -39,6 +40,8 @@ public class ObjectGrabbable : MonoBehaviour
     bool findP1Container;
     [SerializeField]
     bool findP2Container;
+    [SerializeField]
+    bool isDropped;
     [SerializeField]
     public GameObject p1ItemC;
     [SerializeField]
@@ -86,6 +89,16 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     private Transform buttonOriPos;
 
+    [Header("Ground Check")]
+    [SerializeField]
+    private Transform groundCheck;
+    [SerializeField]
+    private float groundCheckRadius = 0.33f;
+    [SerializeField]
+    private float groundCheckDist = 0.75f;
+    [SerializeField]
+    LayerMask groundLayer;
+
     [SerializeField] private AK.Wwise.Event packageImpact;
 
     private void Awake()
@@ -116,6 +129,11 @@ public class ObjectGrabbable : MonoBehaviour
             buttonPos.parent = null;
         }
 
+        if (isHeavy)
+        {
+            TriggerbC.enabled = false;
+        }
+
 
         InventoryManager.Instance.Add(item);
 
@@ -133,6 +151,8 @@ public class ObjectGrabbable : MonoBehaviour
         Move();
         P1Steal();
         P2Steal();
+ 
+
 
     }
 
@@ -290,6 +310,10 @@ public class ObjectGrabbable : MonoBehaviour
             P1TakePackage = false;
             P2TakePackage = false;
 
+            if (isHeavy)
+            {
+                TriggerbC.enabled = true;
+            }
             time = 0;
         }
     }
@@ -317,6 +341,11 @@ public class ObjectGrabbable : MonoBehaviour
             P2TakePackage = false;
             ScoreCount.instance.time = 0;
 
+
+            if (isHeavy)
+            {
+                TriggerbC.enabled = true;
+            }
             time = 0;
         }
     }
@@ -340,6 +369,7 @@ public class ObjectGrabbable : MonoBehaviour
 
             print("DropForce" + HeavyDropForce);
             print("DropUpForce" + HeavyDropUpForce);
+
         }
         else
         {
@@ -351,6 +381,11 @@ public class ObjectGrabbable : MonoBehaviour
 
             print("DropForce" + dropForce);
             print("DropUpForce" + dropUpForce);
+        }
+
+        if (isHeavy)
+        {
+            TriggerbC.enabled = true;
         }
 
 
@@ -383,6 +418,7 @@ public class ObjectGrabbable : MonoBehaviour
 
             print("DropForce" + HeavyDropForce);
             print("DropUpForce" + HeavyDropUpForce);
+
         }
         else
         {
@@ -394,8 +430,10 @@ public class ObjectGrabbable : MonoBehaviour
             print("DropUpForce" + dropUpForce);
         }
 
-
-
+        if (isHeavy)
+        {
+            TriggerbC.enabled = true;
+        }
 
 
         float random = Random.Range(-1, 1);
@@ -507,6 +545,16 @@ public class ObjectGrabbable : MonoBehaviour
             respawnPoint = other.transform.position;
         }
 
+        if (other.transform.tag == "MovingPlat" && !P1TakePackage && !P2TakePackage)
+        {
+
+            
+
+            platformTransform = other.transform;
+
+            boxTransform.parent = platformTransform;
+        }
+
     }
 
     IEnumerator ActivateP1UIForDuration(float duration)
@@ -538,4 +586,25 @@ public class ObjectGrabbable : MonoBehaviour
             packageImpact.Post(this.gameObject);
         }
     }
+
+    public Transform platformTransform;
+    public Transform boxTransform;
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "MovingPlat")
+        {
+
+            boxTransform.parent = null;
+
+        }
+    }
+    private bool CheckGrounded()
+    {
+
+        RaycastHit hit;
+        if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer)) return true;
+        else return false;
+    }
+
 }

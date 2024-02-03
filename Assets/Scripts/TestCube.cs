@@ -191,6 +191,8 @@ public class TestCube : MonoBehaviour
     private float pickRadiusHeavy;
     [SerializeField]
     private LayerMask pickableMask;
+    [SerializeField]
+    public bool withinPackageRange;
 
     [SerializeField]
     private RespawnControl rC;
@@ -424,6 +426,17 @@ public class TestCube : MonoBehaviour
     private float carryWeight;
 
 
+    [Header("Phone")]
+    [SerializeField]
+    private float interactPhoneDistance;
+    [SerializeField]
+    public bool withinPhoneRange;
+    [SerializeField]
+    private LayerMask PhoneLayer;
+    [SerializeField]
+    public bool isAnswered;
+
+
     //[SerializeField]
     //float dropValue;
     //[SerializeField]
@@ -521,6 +534,7 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         DetectDirectionBetweenPlayerAndObject();
         DetectPackageWight();
         CastBlobShadow();
@@ -548,7 +562,7 @@ public class TestCube : MonoBehaviour
 
         if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         {
-            DetectInteractRange();
+            //DetectInteractRange();
         } 
         if(curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
         {
@@ -808,11 +822,12 @@ public class TestCube : MonoBehaviour
 
         }
 
-        if(curSceneName == scene1 && !Dialogue2)
-        {
-            SceneControl.instance.dR.StartDialogue("HubStart");
-            Dialogue2 = true;
-        }
+        //Start the Devil phone Dialogue 
+        //if(curSceneName == scene1 && !Dialogue2)
+        //{
+        //    SceneControl.instance.dR.StartDialogue("HubStart");
+        //    Dialogue2 = true;
+        //}
 
     }
 
@@ -1242,64 +1257,76 @@ public class TestCube : MonoBehaviour
         return right.normalized;
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(playerPos.position, pickDistanceHeavy);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(playerPos.position, pickDistanceHeavy);
+    //}
 
 
 
     void TakePackage()
     {
-        if(curSceneName != scene9)
+        if (curSceneName != scene9)
         {
-            if (Physics.SphereCast(playerPos.position, pickDistanceHeavy, playerPos.forward, out raycastHit, pickDistanceHeavy, pickableMask))
+            if (objectGrabbable == null)
             {
-                if (objectGrabbable == null)
+                //if (Physics.SphereCast(playerPos.position, pickDistanceHeavy, playerPos.forward, out raycastHit, pickDistanceHeavy, pickableMask))
+                if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 {
-                    playerSounds.packagePick.Post(this.gameObject);
-                }
+                    if (targetObject == null)
+                    {
+                        if (isPlayer1)
+                        {
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable.Grab(itemContainer);
+                            playerSounds.packagePick.Post(this.gameObject);
+                        }
 
-                if (isPlayer1)
-                {
-                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                    objectGrabbable.Grab(itemContainer);
-                }
+                        if (isPlayer2)
+                        {
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable.Grab(itemContainer);
+                            playerSounds.packagePick.Post(this.gameObject);
+                        }
+                    }
 
-                if (isPlayer2)
-                {
-                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                    objectGrabbable.Grab(itemContainer);
                 }
             }
         }
         else
         {
-            if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+            if(objectGrabbable == null)
             {
-                if (objectGrabbable == null)
+                //if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+                if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 {
-                    playerSounds.packagePick.Post(this.gameObject);
-                }
 
-                if (isPlayer1 && rC.Player2isCarrying)
-                {
-                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                    objectGrabbable.Grab(itemContainer);
-                    GameManager.instance.p1.objectGrabbable = null;
-                }
+                    if (isPlayer1 && rC.Player2isCarrying)
+                    {
+                        if(targetObject == null)
+                        {
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable.Grab(itemContainer);
+                            playerSounds.packagePick.Post(this.gameObject);
+                            GameManager.instance.p2.objectGrabbable = null;
+                        }
 
-                if (isPlayer2 && rC.Player1isCarrying)
-                {
-                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                    objectGrabbable.Grab(itemContainer);
-                    GameManager.instance.p2.objectGrabbable = null;
+                    }
+
+                    if (isPlayer2 && rC.Player1isCarrying)
+                    {
+                        if(targetObject == null)
+                        {
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable.Grab(itemContainer);
+                            playerSounds.packagePick.Post(this.gameObject);
+                            GameManager.instance.p1.objectGrabbable = null;
+                        }                    
+                    }                
                 }
-            }
+            }                                                               
         }
-
     }
-
     private void DetectPackageWight()
     {
         if(objectGrabbable != null)
@@ -1364,16 +1391,17 @@ public class TestCube : MonoBehaviour
 
 
                 //if (Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistance, pickableMask))
-                if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistance, pickableMask))
-                {
-                  
+                //if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistance, pickableMask))
+                if(withinPackageRange)
+                {                 
                     if (isPlayer1)
                     {
                         if (targetObject == null)
                         {
-                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                            objectGrabbable.Grab(itemContainer);
-                            playerSounds.packagePick.Post(this.gameObject);
+                            //objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            //objectGrabbable.Grab(itemContainer);
+                            //playerSounds.packagePick.Post(this.gameObject);
+                            TakePackageFunction();
                         }
                     }
 
@@ -1381,9 +1409,10 @@ public class TestCube : MonoBehaviour
                     {
                         if (targetObject == null)
                         {
-                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                            objectGrabbable.Grab(itemContainer);
-                            playerSounds.packagePick.Post(this.gameObject);
+                            //objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            //objectGrabbable.Grab(itemContainer);
+                            //playerSounds.packagePick.Post(this.gameObject);
+                            TakePackageFunction();
                         }
 
                     }
@@ -1477,6 +1506,51 @@ public class TestCube : MonoBehaviour
         }
        
     }
+
+    public void TakePackageFunction()
+    {
+        if (isPlayer1)
+        {
+            if (rC.Player2isCarrying)
+            {
+
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
+                playerSounds.packagePick.Post(this.gameObject);
+                GameManager.instance.p2.objectGrabbable = null;   
+                
+            } else if(!rC.Player1isCarrying && !rC.Player2isCarrying)
+            {
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
+                playerSounds.packagePick.Post(this.gameObject);
+            }
+
+        }
+
+        if (isPlayer2)
+        {
+            if (rC.Player1isCarrying)
+            {
+
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
+                playerSounds.packagePick.Post(this.gameObject);
+                GameManager.instance.p1.objectGrabbable = null;
+                
+            }
+            else if (!rC.Player1isCarrying && !rC.Player2isCarrying)
+            {
+                objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                objectGrabbable.Grab(itemContainer);
+                playerSounds.packagePick.Post(this.gameObject);
+            }
+
+        }
+
+    }
+
+
 
 
 
@@ -1607,6 +1681,15 @@ public class TestCube : MonoBehaviour
 
         }
 
+        if (withinPhoneRange)
+        {
+            if (ReadActionButton() && !isAnswered)
+            {
+                SceneControl.instance.dR.StartDialogue("HubStart");
+                isAnswered = true;
+            }
+        }
+
     }
 
     void Talk()
@@ -1697,6 +1780,7 @@ public class TestCube : MonoBehaviour
             gameManager.enterOffice = true;
             print("Enter Office");
             gameManager.sceneChanged = true;
+            gameManager.firstTimeEnterHub = true;
 
             StartCoroutine(gameManager.MovingCamera1());
             if (gameManager.camChanged1)
@@ -1725,75 +1809,91 @@ public class TestCube : MonoBehaviour
     //    Gizmos.color = Color.yellow;
     //    Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactRadius);
     //}
-    public void DetectInteractRange()
-    {
-        //if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, interactableMask))
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, interactableMask))
-        {
-            withinTVRange = true;
+    #region Old DetectInteractRange
+    //public void DetectInteractRange()
+    //{
+    //    if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, interactableMask))
+    //        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, interactableMask))
+    //        {
+    //            withinTVRange = true;
 
-        }
-        else
-        {
-            withinTVRange = false;
+    //        }
+    //        else
+    //        {
+    //            withinTVRange = false;
 
-        }
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, doorDistance, postEnter))
-        //if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
-        {
+    //        }
 
-            withinEntranceRange = true;
-            //print("WithinDoorRange");
+    //    Detect Phone Range
+    //    if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactPhoneDistance, PhoneLayer))
+    //    {
+    //        withinPhoneRange = true;
 
-        }
-        else
-        {
-            withinEntranceRange = false;
-            //gameManager.StopShowDirection();
+    //    }
+    //    else
+    //    {
+    //        withinPhoneRange = false;
 
-        }
+    //    }
+    //    if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, doorDistance, postEnter))
+    //    //if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
+    //    {
 
-        //if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, NPCLayer))
-        {
-            selectNPC = raycastHit.collider.gameObject;
+    //        withinEntranceRange = true;
+    //        //print("WithinDoorRange");
 
-            if (selectNPC.CompareTag("NPC1"))
-            {
-                withinNPCsRange = true;
-            }
-            else
-            {
-                withinNPCsRange = false;
-            }
+    //    }
+    //    else
+    //    {
+    //        withinEntranceRange = false;
+    //        //gameManager.StopShowDirection();
 
-            if (selectNPC.CompareTag("NPC3"))
-            {
-                withinNPC2Range = true;
-            }
-            else
-            {
-                withinNPC2Range = false;
-            }
+    //    }
 
-            if (selectNPC.CompareTag("NPC4"))
-            {
-                withinNPC3Range = true;
-            }
-            else
-            {
-                withinNPC3Range = false;
-            }    
+    //    if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
+    //        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, NPCLayer))
+    //        {
+    //            selectNPC = raycastHit.collider.gameObject;
 
-        }
-        else
-        {
-            withinNPCsRange = false;
-            withinNPC2Range = false;
-            withinNPC3Range = false;
-        }
+    //            if (selectNPC.CompareTag("NPC1"))
+    //            {
+    //                withinNPCsRange = true;
+    //            }
+    //            else
+    //            {
+    //                withinNPCsRange = false;
+    //            }
 
-    }
+    //            if (selectNPC.CompareTag("NPC3"))
+    //            {
+    //                withinNPC2Range = true;
+    //            }
+    //            else
+    //            {
+    //                withinNPC2Range = false;
+    //            }
+
+    //            if (selectNPC.CompareTag("NPC4"))
+    //            {
+    //                withinNPC3Range = true;
+    //            }
+    //            else
+    //            {
+    //                withinNPC3Range = false;
+    //            }
+
+    //        }
+    //        else
+    //        {
+    //            withinNPCsRange = false;
+    //            withinNPC2Range = false;
+    //            withinNPC3Range = false;
+    //        }
+
+    //}
+    #endregion
+
+    #region Push
     private void DoPush(InputAction.CallbackContext obj)
     {
   
@@ -1900,7 +2000,7 @@ public class TestCube : MonoBehaviour
 
     }
 
-
+    #endregion
 
 
     void ItemDetector()
@@ -2060,7 +2160,7 @@ public class TestCube : MonoBehaviour
                     canJump = false;
                     jumpButtonPressedTime = null;
                     lastGroundedTime = null;
-                    Debug.Log("1");
+                    //Debug.Log("1");
                 } else if (isPlayer2 && !rC.Player2isCarrying)
                 {
                     jumpSpeed = jumpForce;
@@ -2068,7 +2168,7 @@ public class TestCube : MonoBehaviour
                     canJump = false;
                     jumpButtonPressedTime = null;
                     lastGroundedTime = null;
-                    Debug.Log("2");
+                    //Debug.Log("2");
                 }
 
             }
@@ -2321,6 +2421,38 @@ public class TestCube : MonoBehaviour
             print("Cam2On");
         }
 
+        if (other.CompareTag("PostOfficeDoor"))
+        {
+            withinEntranceRange = true;
+        }
+
+        if (other.CompareTag("NPC1"))
+        {
+            withinNPCsRange = true;
+            print("withinNPCsRange" + withinNPCsRange);
+        }
+
+        if (other.CompareTag("NPC3"))
+        {
+            withinNPC2Range = true;
+        }
+
+        if (other.CompareTag("NPC4"))
+        {
+            withinNPC3Range = true;
+        }
+        
+        if (other.CompareTag("Phone"))
+        {
+            withinPhoneRange = true;
+        }
+
+        if (other.CompareTag("Package"))
+        {
+            withinPackageRange = true;
+        }
+
+
 
     }
 
@@ -2348,6 +2480,36 @@ public class TestCube : MonoBehaviour
             print("Cam2Off");
         }
 
+        if (other.CompareTag("PostOfficeDoor"))
+        {
+            withinEntranceRange = false;
+        }
+
+        if (other.CompareTag("NPC1"))
+        {
+            withinNPCsRange = false;
+            print("withinNPCsRange" + withinNPCsRange);
+        }
+
+        if (other.CompareTag("NPC3"))
+        {
+            withinNPC2Range = false;
+        }
+
+        if (other.CompareTag("NPC4"))
+        {
+            withinNPC3Range = false;
+        }
+
+        if (other.CompareTag("Phone"))
+        {
+            withinPhoneRange = false;
+        }
+
+        if (other.CompareTag("Package"))
+        {
+            withinPackageRange = false;
+        }
     }
 
     private void PlayGroundSound(string material)

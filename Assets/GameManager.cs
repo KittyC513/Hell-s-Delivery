@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     string scene5 = "HubEnd";
     string scene6 = "ScoreCards";
     string scene7 = "Level1";
+    string scene8= "Tutorial";
 
     [SerializeField]
     Camera mainCam;
@@ -166,6 +167,17 @@ public class GameManager : MonoBehaviour
     public GameObject cam1, cam2;
     [SerializeField]
     public bool camFound1, camFound2;
+    [SerializeField]
+    public bool firstTimeEnterHub;
+    [SerializeField]
+    public bool ShowPhoneInstruction;
+
+    [Header("Package")]
+    [SerializeField]
+    private GameObject package;
+    [SerializeField]
+    private ObjectGrabbable oG;
+
 
     [SerializeField] private PlayerScoreData playerScore;
 
@@ -196,6 +208,7 @@ public class GameManager : MonoBehaviour
         DetectScene();
         PushCheck();
         P1Indicator();
+        //FindPackage();
 
     }
 
@@ -544,10 +557,12 @@ public class GameManager : MonoBehaviour
             if(p1.withinNPCsRange || p2.withinNPCsRange)
             {
                 showWertherInstruction = true;
+                //print("showWertherInstruction" + showWertherInstruction);
             } 
             else if(!p1.withinNPCsRange || !p2.withinNPCsRange)
             {
                 showWertherInstruction = false;
+                //print("showWertherInstruction" + showWertherInstruction);
             }
 
             if (p1.withinNPC2Range || p2.withinNPC2Range)
@@ -568,6 +583,15 @@ public class GameManager : MonoBehaviour
                 showNPC3Instruction = false;
             }
 
+            if(p1.withinPhoneRange || p2.withinPhoneRange)
+            {
+                ShowPhoneInstruction = true;
+            } 
+            else if(!p1.withinPhoneRange && !p2.withinPhoneRange)
+            {
+                ShowPhoneInstruction = false;
+            }
+
         }
 
     }
@@ -577,9 +601,13 @@ public class GameManager : MonoBehaviour
         {
             if(p1 != null && p2 != null)
             {
-                if (p1.withinEntranceRange || p2.withinEntranceRange)
+                if (p1.withinEntranceRange || p2.withinEntranceRange )
                 {
-                    instructionText.SetActive(true);
+                    if (!enterOffice)
+                    {
+                        instructionText.SetActive(true);
+                    }
+
                 }
                 else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
                 {
@@ -671,10 +699,19 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitingTime);
         noisy1.SetActive(false);
-
-
-
     }
+
+    #region Package
+
+    private void FindPackage()
+    {
+        if(curSceneName == scene4 || curSceneName == scene7 || curSceneName == scene8)
+        {
+            package = GameObject.FindGameObjectWithTag("Package");
+            oG = package.GetComponent<ObjectGrabbable>();
+        }
+    }
+    #endregion
     void TutorialControl()
     {
         for (int i = 0; i < popUps.Length; i++)
