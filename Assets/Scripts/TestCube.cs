@@ -191,6 +191,8 @@ public class TestCube : MonoBehaviour
     private float pickRadiusHeavy;
     [SerializeField]
     private LayerMask pickableMask;
+    [SerializeField]
+    public bool withinPackageRange;
 
     [SerializeField]
     private RespawnControl rC;
@@ -560,7 +562,7 @@ public class TestCube : MonoBehaviour
 
         if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         {
-            DetectInteractRange();
+            //DetectInteractRange();
         } 
         if(curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
         {
@@ -1389,9 +1391,9 @@ public class TestCube : MonoBehaviour
 
 
                 //if (Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistance, pickableMask))
-                if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistance, pickableMask))
-                {
-                  
+                //if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistance, pickableMask))
+                if(withinPackageRange)
+                {                 
                     if (isPlayer1)
                     {
                         if (targetObject == null)
@@ -1807,87 +1809,91 @@ public class TestCube : MonoBehaviour
     //    Gizmos.color = Color.yellow;
     //    Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactRadius);
     //}
-    public void DetectInteractRange()
-    {
-        //if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, interactableMask))
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, interactableMask))
-        {
-            withinTVRange = true;
+    #region Old DetectInteractRange
+    //public void DetectInteractRange()
+    //{
+    //    if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, interactableMask))
+    //        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, interactableMask))
+    //        {
+    //            withinTVRange = true;
 
-        }
-        else
-        {
-            withinTVRange = false;
+    //        }
+    //        else
+    //        {
+    //            withinTVRange = false;
 
-        }
+    //        }
 
-        // Detect Phone Range
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactPhoneDistance, PhoneLayer))
-        {
-            withinPhoneRange = true;
+    //    Detect Phone Range
+    //    if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactPhoneDistance, PhoneLayer))
+    //    {
+    //        withinPhoneRange = true;
 
-        }
-        else
-        {
-            withinPhoneRange = false;
+    //    }
+    //    else
+    //    {
+    //        withinPhoneRange = false;
 
-        }
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, doorDistance, postEnter))
-        //if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
-        {
+    //    }
+    //    if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, doorDistance, postEnter))
+    //    //if (Physics.SphereCast(playerPos.position, doorDistance, playerPos.forward, out raycastHit, interactDistance, postEnter))
+    //    {
 
-            withinEntranceRange = true;
-            //print("WithinDoorRange");
+    //        withinEntranceRange = true;
+    //        //print("WithinDoorRange");
 
-        }
-        else
-        {
-            withinEntranceRange = false;
-            //gameManager.StopShowDirection();
+    //    }
+    //    else
+    //    {
+    //        withinEntranceRange = false;
+    //        //gameManager.StopShowDirection();
 
-        }
+    //    }
 
-        //if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, NPCLayer))
-        {
-            selectNPC = raycastHit.collider.gameObject;
+    //    if (Physics.SphereCast(playerPos.position, interactRadius, playerPos.forward, out raycastHit, interactDistance, NPCLayer))
+    //        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, interactDistance, NPCLayer))
+    //        {
+    //            selectNPC = raycastHit.collider.gameObject;
 
-            if (selectNPC.CompareTag("NPC1"))
-            {
-                withinNPCsRange = true;
-            }
-            else
-            {
-                withinNPCsRange = false;
-            }
+    //            if (selectNPC.CompareTag("NPC1"))
+    //            {
+    //                withinNPCsRange = true;
+    //            }
+    //            else
+    //            {
+    //                withinNPCsRange = false;
+    //            }
 
-            if (selectNPC.CompareTag("NPC3"))
-            {
-                withinNPC2Range = true;
-            }
-            else
-            {
-                withinNPC2Range = false;
-            }
+    //            if (selectNPC.CompareTag("NPC3"))
+    //            {
+    //                withinNPC2Range = true;
+    //            }
+    //            else
+    //            {
+    //                withinNPC2Range = false;
+    //            }
 
-            if (selectNPC.CompareTag("NPC4"))
-            {
-                withinNPC3Range = true;
-            }
-            else
-            {
-                withinNPC3Range = false;
-            }    
+    //            if (selectNPC.CompareTag("NPC4"))
+    //            {
+    //                withinNPC3Range = true;
+    //            }
+    //            else
+    //            {
+    //                withinNPC3Range = false;
+    //            }
 
-        }
-        else
-        {
-            withinNPCsRange = false;
-            withinNPC2Range = false;
-            withinNPC3Range = false;
-        }
+    //        }
+    //        else
+    //        {
+    //            withinNPCsRange = false;
+    //            withinNPC2Range = false;
+    //            withinNPC3Range = false;
+    //        }
 
-    }
+    //}
+    #endregion
+
+    #region Push
     private void DoPush(InputAction.CallbackContext obj)
     {
   
@@ -1994,7 +2000,7 @@ public class TestCube : MonoBehaviour
 
     }
 
-
+    #endregion
 
 
     void ItemDetector()
@@ -2415,6 +2421,38 @@ public class TestCube : MonoBehaviour
             print("Cam2On");
         }
 
+        if (other.CompareTag("PostOfficeDoor"))
+        {
+            withinEntranceRange = true;
+        }
+
+        if (other.CompareTag("NPC1"))
+        {
+            withinNPCsRange = true;
+            print("withinNPCsRange" + withinNPCsRange);
+        }
+
+        if (other.CompareTag("NPC3"))
+        {
+            withinNPC2Range = true;
+        }
+
+        if (other.CompareTag("NPC4"))
+        {
+            withinNPC3Range = true;
+        }
+        
+        if (other.CompareTag("Phone"))
+        {
+            withinPhoneRange = true;
+        }
+
+        if (other.CompareTag("Package"))
+        {
+            withinPackageRange = true;
+        }
+
+
 
     }
 
@@ -2442,6 +2480,36 @@ public class TestCube : MonoBehaviour
             print("Cam2Off");
         }
 
+        if (other.CompareTag("PostOfficeDoor"))
+        {
+            withinEntranceRange = false;
+        }
+
+        if (other.CompareTag("NPC1"))
+        {
+            withinNPCsRange = false;
+            print("withinNPCsRange" + withinNPCsRange);
+        }
+
+        if (other.CompareTag("NPC3"))
+        {
+            withinNPC2Range = false;
+        }
+
+        if (other.CompareTag("NPC4"))
+        {
+            withinNPC3Range = false;
+        }
+
+        if (other.CompareTag("Phone"))
+        {
+            withinPhoneRange = false;
+        }
+
+        if (other.CompareTag("Package"))
+        {
+            withinPackageRange = false;
+        }
     }
 
     private void PlayGroundSound(string material)

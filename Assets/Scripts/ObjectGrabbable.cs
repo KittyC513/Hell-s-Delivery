@@ -10,6 +10,7 @@ public class ObjectGrabbable : MonoBehaviour
 {
     public Rigidbody rb;
     public BoxCollider bC;
+    public BoxCollider TriggerbC;
     private Transform objectGrabpo;
     [SerializeField]
     public float dropForce;
@@ -126,6 +127,11 @@ public class ObjectGrabbable : MonoBehaviour
         if(buttonPos != null)
         {
             buttonPos.parent = null;
+        }
+
+        if (isHeavy)
+        {
+            TriggerbC.enabled = false;
         }
 
 
@@ -304,6 +310,10 @@ public class ObjectGrabbable : MonoBehaviour
             P1TakePackage = false;
             P2TakePackage = false;
 
+            if (isHeavy)
+            {
+                TriggerbC.enabled = true;
+            }
             time = 0;
         }
     }
@@ -331,6 +341,11 @@ public class ObjectGrabbable : MonoBehaviour
             P2TakePackage = false;
             ScoreCount.instance.time = 0;
 
+
+            if (isHeavy)
+            {
+                TriggerbC.enabled = true;
+            }
             time = 0;
         }
     }
@@ -366,6 +381,11 @@ public class ObjectGrabbable : MonoBehaviour
 
             print("DropForce" + dropForce);
             print("DropUpForce" + dropUpForce);
+        }
+
+        if (isHeavy)
+        {
+            TriggerbC.enabled = true;
         }
 
 
@@ -408,6 +428,11 @@ public class ObjectGrabbable : MonoBehaviour
 
             print("DropForce" + dropForce);
             print("DropUpForce" + dropUpForce);
+        }
+
+        if (isHeavy)
+        {
+            TriggerbC.enabled = true;
         }
 
 

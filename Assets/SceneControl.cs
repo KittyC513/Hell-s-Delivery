@@ -87,6 +87,13 @@ public class SceneControl : MonoBehaviour
         {
             HubStart();
         }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            StopCoroutine(StartComicIntro());
+            Comic1.SetActive(false);
+            GameManager.instance.UnfreezePlayer();
+        }
     }
 
 
@@ -147,6 +154,7 @@ public class SceneControl : MonoBehaviour
         GameManager.instance.UnfreezePlayer();
 
     }
+
 
     void HubStart()
     {
