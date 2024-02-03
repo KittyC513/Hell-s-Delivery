@@ -22,7 +22,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private AnimationCurve decelerationCurve;
     //velocity curve goes from 0.0 - 1.0, multiply our peak speed by that to get our current speed
     private Vector2 forwardDirection;
-    private float currentSpeed;
+    [SerializeField] private float currentSpeed;
     private Vector3 directionSpeed;
     [SerializeField] private float rotationSpeed = 300;
     [SerializeField] private float velocityTime = 0;
@@ -66,6 +66,8 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private bool readJumpValue = false;
     [SerializeField] private float jumpButtonGracePeriod = 0.3f;
     private float graceTimer = 0;
+
+    [SerializeField] private bool snappedToGround = false;
 
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
@@ -115,15 +117,19 @@ public class CharacterControl : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        GetStickInputs();
+        CheckGrounded();
+        //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
+    }
+
     public void RunMovement(Camera cam, bool isParachuting)
     {
         MovementCalculations(cam);
         StateMachineUpdate();
-        GetStickInputs();
 
         ApplyGravity();
-        CheckGrounded();
-
         RotateTowards(faceDir.normalized);
 
         JumpCalculations();
@@ -234,6 +240,10 @@ public class CharacterControl : MonoBehaviour
         //get camera forward and right
         Vector3 camForward = camera.transform.forward;
         Vector3 camRight = camera.transform.right;
+
+        camForward.y = 0;
+        camRight.y = 0;
+
         camForward = camForward.normalized;
         camRight = camRight.normalized;
 
@@ -244,8 +254,11 @@ public class CharacterControl : MonoBehaviour
         Vector3 horizontal = stickInput.x * camRight;
         Vector3 vertical = stickInput.y * camForward;
 
+        //Debug.Log(horizontal.ToString() + " " + vertical.ToString());
+
         Vector3 input = horizontal + vertical;
         input = input.normalized;
+        
         return input.normalized;
     }
     private void GetStickInputs()
@@ -293,6 +306,7 @@ public class CharacterControl : MonoBehaviour
         if (isGrounded)
         {
             directionSpeed = new Vector3(faceDir.x * currentSpeed, rb.velocity.y, faceDir.z * currentSpeed);
+        
         }
         else
         {
@@ -305,7 +319,7 @@ public class CharacterControl : MonoBehaviour
         {
             //this facing direction means even if we are not inputting anything we are still facing somewhere
             //this is used to keep applying speed for a short time after we input to get a deceleration
-            faceDir = GetRelativeInputDirection(cam, inputValue).normalized;
+            faceDir = GetRelativeInputDirection(cam, inputValue);
 
 
             decelerationTime = 0;
@@ -459,14 +473,14 @@ public class CharacterControl : MonoBehaviour
     private void ApplyGravity()
     {
         //build downwards velocity until you reach peak speed
-        if (!isGrounded && pState == playerStates.fall)
+        if (pState != playerStates.jump && !isJumping && !snappedToGround)
         {
             //add time to the fall timer
             fTime += Time.deltaTime;
             //add to our fall speed by using the animation curve
             ySpeed = (-maxFallSpeed) * fallAccelCurve.Evaluate(fTime);
         }
-        else if (pState == playerStates.idle || pState == playerStates.run || pState == playerStates.land)
+        else 
         {
             if (!isJumping) ySpeed = 0;
             //reset the fall timer
@@ -491,16 +505,33 @@ public class CharacterControl : MonoBehaviour
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
         {
             isGrounded = true;
-            if (!isJumping) transform.position = new Vector3(transform.position.x, (hit.point.y + 1.05f), transform.position.z);
+            //if the player isn't jumping and the distance between them and the ground is smaller than some number, snap them to the floor
+            if (!isJumping && !YDistanceGreaterThan(0.5f, groundCheck.transform.position, hit.point))
+            {
+                transform.position = new Vector3(transform.position.x, (hit.point.y + 1.05f), transform.position.z);
+                snappedToGround = true;
+            }
         }
         else
         {
             isGrounded = false;
+            snappedToGround = false;
         }
 
         
     }
 
+    private bool YDistanceGreaterThan(float dist, Vector3 pos1, Vector3 pos2)
+    {
+        if (Mathf.Abs(pos1.y - pos2.y) > dist)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     private void OnDrawGizmosSelected()
     {
         //Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);

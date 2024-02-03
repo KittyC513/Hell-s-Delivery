@@ -11,25 +11,38 @@ public class CharacterDebug : MonoBehaviour
     [SerializeField] private int playerTrailLength = 8;
     [SerializeField] private float playerTrailSampling = 0.2f;
     [SerializeField] private GameObject trailObject;
+    [SerializeField] private GameObject altTrailObject;
     private float lastSample = 0;
     private int currentSample = 0;
    
     private bool gameIsRunning = false;
-   
+
+    [SerializeField] private GameObject p1TrailParent;
+    [SerializeField] private GameObject p2TrailParent;
+
 
     private void Start()
     {
+        
         
         gameIsRunning = true;
         foreach (var p in players)
         {
             p.collider = p.obj.GetComponent<CapsuleCollider>();
             p.trailObjs = new GameObject[playerTrailLength];
+            p.cc = p.obj.GetComponent<CharacterControl>();
 
             for (int i = 0; i < playerTrailLength; i++)
             {
-                p.trailObjs[i] = Instantiate(trailObject, p.obj.transform.position, Quaternion.identity, this.gameObject.transform);
-                p.cc = p.obj.GetComponent<CharacterControl>();
+               
+                if (p == players[0])
+                {
+                    p.trailObjs[i] = Instantiate(trailObject, p.obj.transform.position, Quaternion.identity, p1TrailParent.transform);
+                }
+                else
+                {
+                    p.trailObjs[i] = Instantiate(altTrailObject, p.obj.transform.position, Quaternion.identity, p2TrailParent.transform);
+                }
             }
 
         }
