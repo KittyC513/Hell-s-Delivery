@@ -74,6 +74,8 @@ public class CharacterControl : MonoBehaviour
     private InputActionMap player, dialogue, pause;
     private InputAction move, run, jump, parachute, cancelParachute, triggerButton;
 
+    private Camera camera;
+
     #region Initialization
     private void Awake()
     {
@@ -119,7 +121,7 @@ public class CharacterControl : MonoBehaviour
 
     private void Update()
     {
-        GetStickInputs();
+        GetStickInputs(camera);
         CheckGrounded();
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
@@ -128,9 +130,10 @@ public class CharacterControl : MonoBehaviour
     {
         MovementCalculations(cam);
         StateMachineUpdate();
-
+        camera = cam;
         ApplyGravity();
-        RotateTowards(faceDir.normalized);
+        //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
+        if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(faceDir.normalized);
 
         JumpCalculations();
     }
@@ -261,35 +264,45 @@ public class CharacterControl : MonoBehaviour
         
         return input.normalized;
     }
-    private void GetStickInputs()
+    private void GetStickInputs(Camera cam)
     {
         stickValue = inputAsset.Cube.Move.ReadValue<Vector2>();
         stickValue = stickValue.normalized;
 
+        Vector3 relativeStick = GetRelativeInputDirection(cam, stickValue);
+
         //when the player makes a quick turn we should stop/cut their momentum to give them more control over a quick turn around
-        if (stickValue.x != 0 || stickValue.y != 0)
+        if (relativeStick.x != 0 || relativeStick.y != 0)
         {
             //if we have a new input
-            if (stickValue.x != lastInput.x || stickValue.y != lastInput.y)
+            if (relativeStick.x != lastInput.x || relativeStick.y != lastInput.y)
             {
-                //if our new input is a big enough difference from our last input we do a quick turn
-                if (stickValue.x - lastInput.x > minQuickTurn || stickValue.x - lastInput.x < -minQuickTurn)
+                if (lastInput.x > 0.1 || lastInput.x < -0.1)
                 {
-                    //quick turn here
-                    velocityTime = 0;
-                    currentSpeed = 0;
+                    //if our new input is a big enough difference from our last input we do a quick turn
+                    if (relativeStick.x - lastInput.x > minQuickTurn || relativeStick.x - lastInput.x < -minQuickTurn)
+                    {
+                        //quick turn here
+                        velocityTime = 0;
+                        currentSpeed = 0;
+                    }
                 }
+           
+                if (lastInput.y > 0.1 || lastInput.y < -0.1)
+                {
+                    if (relativeStick.y - lastInput.y > minQuickTurn || relativeStick.y - lastInput.y < -minQuickTurn)
+                    {
 
-                if (stickValue.y - lastInput.y > minQuickTurn || stickValue.y - lastInput.y < -minQuickTurn)
-                {
-                    //quick turn here
-                    velocityTime = 0;
-                    currentSpeed = 0;
+                        //quick turn here
+                        velocityTime = 0;
+                        currentSpeed = 0;
+                    }
                 }
+            
 
                 //we want to update our input value to the new stick direction
                 inputValue = stickValue;
-                lastInput = stickValue;
+                lastInput = relativeStick;
             }
         }
         else
@@ -534,8 +547,8 @@ public class CharacterControl : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        //Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
-        //Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDist, groundCheck.position.z));
+        Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
+        Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDist, groundCheck.position.z));
     }
 
     #endregion
