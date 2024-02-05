@@ -17,7 +17,7 @@ using static UnityEngine.UI.Image;
 
 public class TestCube : MonoBehaviour
 {
-    
+
     [SerializeField]
     public DialogueRunner dR;
     [SerializeField]
@@ -32,7 +32,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, run, jump, parachute, cancelParachute, triggerButton, pull;
+    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -78,6 +78,8 @@ public class TestCube : MonoBehaviour
     private float timeToGlide = 1f;
     [SerializeField]
     private float timeToPull = 1.5f;
+    [SerializeField]
+    private float timeToDash = 0.1f;
     [SerializeField]
     private float timeToZero = 0.083f;
 
@@ -174,8 +176,8 @@ public class TestCube : MonoBehaviour
     public bool isPlayer1;
     [SerializeField]
     public bool isPlayer2;
-    
- 
+
+
     [Header("Pick / Drop")]
     [SerializeField]
     private GameObject package;
@@ -295,7 +297,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     GameObject noisy1;
     [SerializeField]
-         GameObject noisy2;
+    GameObject noisy2;
     [SerializeField]
     GameObject circle1;
     [SerializeField]
@@ -436,6 +438,24 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool isAnswered;
 
+    [Header("Dash")]
+    [SerializeField]
+    private float dashForce;
+    [SerializeField]
+    private float dashSpeed;
+    [SerializeField]
+    private float dashUpForce;
+    [SerializeField]
+    private float dashDuration;
+    [SerializeField]
+    private float dashCd;
+    [SerializeField]
+    private float dashCdTimer;
+    [SerializeField]
+    private bool isDashing;
+    [SerializeField]
+    private bool startTimer;
+
 
     //[SerializeField]
     //float dropValue;
@@ -446,9 +466,9 @@ public class TestCube : MonoBehaviour
         inputAsset = this.GetComponent<PlayerInput>().actions;
         player = inputAsset.FindActionMap("Cube");
         dialogue = inputAsset.FindActionMap("Dialogue");
-       
+
         rb = this.GetComponent<Rigidbody>();
-       
+
         //playerPos = this.transform;
         maxSpeed = walkSpeed;
         mainCam = Camera.main;
@@ -470,7 +490,7 @@ public class TestCube : MonoBehaviour
 
         move = player.FindAction("Move");
         pull = player.FindAction("Pull");
-        run = player.FindAction("Run");
+        dash = player.FindAction("Dash");
         //player.FindAction("Join").started += DoTalk;
 
         jump = player.FindAction("Jump");
@@ -526,7 +546,7 @@ public class TestCube : MonoBehaviour
         canJump = true;
         lastStepTime = Time.time;
         charController = GetComponent<CharacterControl>();
-        
+
 
 
     }
@@ -557,21 +577,21 @@ public class TestCube : MonoBehaviour
         {
             charController.RunMovement(playerCamera, isGliding);
         }
-        
+
         DetectPushRange();
 
         if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         {
             //DetectInteractRange();
-        } 
-        if(curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
+        }
+        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
         {
 
             package = GameObject.FindGameObjectWithTag("Package");
             //package = GameObject.FindGameObjectWithTag("HeavyPackage");
 
         }
-            
+
         JoinGameTitle();
         //PlayerPosition();
 
@@ -583,6 +603,11 @@ public class TestCube : MonoBehaviour
         }
 
         GetPullObjects();
+
+        if(startTimer)
+        {
+            dashCdTimer += Time.deltaTime;
+        }
         //OnDrawGizmos();
     }
 
@@ -598,6 +623,7 @@ public class TestCube : MonoBehaviour
         {
             Move();
             Jump();
+            Dash();
         }
         else if (!isFreeze && useNewMovement)
         {
@@ -614,13 +640,13 @@ public class TestCube : MonoBehaviour
 
 
         TakePackage();
-        if(curSceneName == scene1 || curSceneName == scene3)
+        if (curSceneName == scene1 || curSceneName == scene3)
         {
             Interacte();
             //OnTV();
             Talk();
         }
-        if(curSceneName == scene6)
+        if (curSceneName == scene6)
         {
             EnterOffice();
             Interacte();
@@ -662,7 +688,7 @@ public class TestCube : MonoBehaviour
 
     private void AnimationAndSound()
     {
-           if (isPlayer1)
+        if (isPlayer1)
         {
             playerAnimator.SetBool("isGliding", isGliding);
             p1Indicator.SetActive(true);
@@ -692,7 +718,7 @@ public class TestCube : MonoBehaviour
     }
     private void MovementCalcs()
     {
-     
+
 
         if (isFreeze)
         {
@@ -715,19 +741,19 @@ public class TestCube : MonoBehaviour
             {
                 playerAnimator2.SetFloat("speed", currentSpeed);
             }
-            
+
         }
 
         if (move.ReadValue<Vector2>().x != 0 || move.ReadValue<Vector2>().y != 0)
         {
             Vector2 moveInput = move.ReadValue<Vector2>();
-            if(moveInput.magnitude > 0)
-            {            
+            if (moveInput.magnitude > 0)
+            {
                 //we are moving
                 faceDir = new Vector3(move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
                 isWalking = true;
-                
-                if(moveInput.magnitude > runThreshold)
+
+                if (moveInput.magnitude > runThreshold)
                 {
                     isRunning = true;
                     //print("Is Runing");
@@ -740,8 +766,8 @@ public class TestCube : MonoBehaviour
                 //print("isWalking" + isWalking);
             }
 
-      
-            if (isRunning && !isGliding && !isPulling)
+
+            if (isRunning)
             {
                 float accel = (maxSpeed / timeToRun);
                 currentSpeed += accel * Time.deltaTime;
@@ -761,15 +787,39 @@ public class TestCube : MonoBehaviour
                 currentSpeed += accel * Time.deltaTime;
 
             }
-            else if (!isRunning && !isGliding && !isPulling)
+            else if (!isRunning && !isGliding && !isPulling && !isDashing) 
             {
                 float accel = (maxSpeed / timeToWalk);
                 currentSpeed += accel * Time.deltaTime;
 
             }
-                               
 
-           
+            //if (isDashing && isRunning)
+            //{
+            //    //float accel = (dashSpeed / timeToWalk);
+            //    currentSpeed = dashSpeed;
+            //    print("current speed" + currentSpeed);
+            //} 
+            //else if (isDashing)
+            //{
+            //    //float accel = (dashSpeed / timeToWalk);
+            //    currentSpeed = dashSpeed;
+            //    print("current speed" + currentSpeed);
+            //}
+            //else if (isDashing && isWalking)
+            //{
+            //    //float accel = (dashSpeed / timeToWalk);
+            //    currentSpeed = dashSpeed;
+            //    print("current speed" + currentSpeed);
+            //}
+            //else if (isDashing && isGliding)
+            //{
+            //    //float accel = (dashSpeed / timeToWalk);
+            //    currentSpeed = dashSpeed;
+            //    print("current speed" + currentSpeed);
+            //}
+
+
         }
         else
         {
@@ -781,18 +831,6 @@ public class TestCube : MonoBehaviour
         //Debug.Log(rb.velocity);
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
-    //void SpeedControl()
-    //{
-    //    if (run.ReadValue<float>() == 1)
-    //    {
-    //        isRunning = true;
-    //    }
-    //    else if (run.ReadValue<float>() == 0)
-    //    {
-    //        isRunning = false;
-    //    }
-
-    //}
 
     void CameraSwitch()
     {
@@ -808,7 +846,7 @@ public class TestCube : MonoBehaviour
 
 
         }
-        else if(curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
+        else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
         {
             playerCamera.enabled = true;
             mainCam = null;
@@ -844,15 +882,26 @@ public class TestCube : MonoBehaviour
                 {
                     if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
                     {
-                        if (!isCameraLocked) 
+                        if (!isCameraLocked)
                         {
-                            forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+                            if (!isDashing)
+                            {
+                                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
 
-                            forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                            }
+                            else
+                            {
+                                forceDirection += faceDir.z * GetCameraForward(mainCam) * dashSpeed;
+
+                                forceDirection += faceDir.x * GetCameraRight(mainCam) * dashSpeed;
+                            }
+
 
                         }
                         else
                         {
+
                             float horizontalInput = move.ReadValue<Vector2>().x;
                             float verticalInput = move.ReadValue<Vector2>().y;
 
@@ -874,8 +923,17 @@ public class TestCube : MonoBehaviour
 
                         if (!isCameraLocked)
                         {
-                            forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-                            forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+                            if (!isDashing)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+                            }
+                            else
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * dashSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * dashSpeed;
+                            }
+
 
                         }
                         else
@@ -895,8 +953,17 @@ public class TestCube : MonoBehaviour
                 {
                     if (!isCameraLocked)
                     {
-                        forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
-                        forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
+                        if (!isDashing)
+                        {
+                            forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
+                            forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
+                        }
+                        else
+                        {
+                            forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * dashSpeed;
+                            forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * dashSpeed;
+                        }
+
 
                     }
                     else
@@ -907,9 +974,9 @@ public class TestCube : MonoBehaviour
                         Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
                         //transform.Translate(Vector3.forward * Time.deltaTime * currentSpeed * verticalInput);
                         //transform.Translate(Vector3.right * Time.deltaTime * currentSpeed * horizontalInput);
-                        
+
                         transform.Translate(movement * currentSpeed * Time.deltaTime, Space.World);
-                        
+
                         //MoveTowardFacingDirection();
                     }
 
@@ -925,8 +992,17 @@ public class TestCube : MonoBehaviour
                     {
                         if (!isCameraLocked)
                         {
-                            forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
-                            forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+                            if (!isDashing)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+                            }
+                            else
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(mainCam) * dashSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(mainCam) * dashSpeed;
+                            }
+
 
                         }
                         else
@@ -951,9 +1027,19 @@ public class TestCube : MonoBehaviour
 
                         if (!isCameraLocked)
                         {
-                            forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-                            forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
-                            
+                            if (!isDashing)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+                            }
+                            else
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * dashSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * dashSpeed;
+
+                            }
+
+
 
                         }
                         else
@@ -970,8 +1056,17 @@ public class TestCube : MonoBehaviour
                 {
                     if (!isCameraLocked)
                     {
-                        forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * currentSpeed;
-                        forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * currentSpeed;
+                        if (!isDashing)
+                        {
+                            forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * currentSpeed;
+                            forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * currentSpeed;
+                        }
+                        else
+                        {
+                            forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * dashSpeed;
+                            forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * dashSpeed;
+                        }
+
 
                     }
                     else
@@ -989,8 +1084,8 @@ public class TestCube : MonoBehaviour
                 }
             }
         }
-           
-           
+
+
         else
         {
             //rb.velocity = new Vector3(-(transform.position.x - activeCircle.transform.position.x) * 3 * Time.deltaTime, 0, -(transform.position.z - activeCircle.transform.position.z) * 3 *Time.deltaTime);
@@ -1045,7 +1140,7 @@ public class TestCube : MonoBehaviour
                     }
                 }
 
-            } 
+            }
             //else if (isPulling)
             //{
             //    maxSpeed = pullSpeed;
@@ -1066,8 +1161,8 @@ public class TestCube : MonoBehaviour
 
 
     }
-    #region Interact with moveable obstacles
 
+    #region Interact with moveable obstacles
     private void DetectDirectionBetweenPlayerAndObject()
     {
         if (targetObject != null)
@@ -1231,6 +1326,7 @@ public class TestCube : MonoBehaviour
 
     #endregion
 
+    #region Cameara Controls
     private void LookAt()
     {
         Vector3 direction = rb.velocity;
@@ -1257,13 +1353,10 @@ public class TestCube : MonoBehaviour
         return right.normalized;
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(playerPos.position, pickDistanceHeavy);
-    //}
+    #endregion
 
 
-
+    #region Package
     void TakePackage()
     {
         if (curSceneName != scene9)
@@ -1295,7 +1388,7 @@ public class TestCube : MonoBehaviour
         }
         else
         {
-            if(objectGrabbable == null)
+            if (objectGrabbable == null)
             {
                 //if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
                 if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
@@ -1303,7 +1396,7 @@ public class TestCube : MonoBehaviour
 
                     if (isPlayer1 && rC.Player2isCarrying)
                     {
-                        if(targetObject == null)
+                        if (targetObject == null)
                         {
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
@@ -1315,21 +1408,21 @@ public class TestCube : MonoBehaviour
 
                     if (isPlayer2 && rC.Player1isCarrying)
                     {
-                        if(targetObject == null)
+                        if (targetObject == null)
                         {
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             playerSounds.packagePick.Post(this.gameObject);
                             GameManager.instance.p1.objectGrabbable = null;
-                        }                    
-                    }                
+                        }
+                    }
                 }
-            }                                                               
+            }
         }
     }
     private void DetectPackageWight()
     {
-        if(objectGrabbable != null)
+        if (objectGrabbable != null)
         {
             if (isPlayer1)
             {
@@ -1383,17 +1476,17 @@ public class TestCube : MonoBehaviour
 
     private void DoDrop(InputAction.CallbackContext obj)
     {
-        if(curSceneName == scene9)
+        if (curSceneName == scene9)
         {
-            if(objectGrabbable == null)
+            if (objectGrabbable == null)
             {
                 isDropped = false;
 
 
                 //if (Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistance, pickableMask))
                 //if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistance, pickableMask))
-                if(withinPackageRange)
-                {                 
+                if (withinPackageRange)
+                {
                     if (isPlayer1)
                     {
                         if (targetObject == null)
@@ -1504,7 +1597,7 @@ public class TestCube : MonoBehaviour
                 }
             }
         }
-       
+
     }
 
     public void TakePackageFunction()
@@ -1517,9 +1610,10 @@ public class TestCube : MonoBehaviour
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 objectGrabbable.Grab(itemContainer);
                 playerSounds.packagePick.Post(this.gameObject);
-                GameManager.instance.p2.objectGrabbable = null;   
-                
-            } else if(!rC.Player1isCarrying && !rC.Player2isCarrying)
+                GameManager.instance.p2.objectGrabbable = null;
+
+            }
+            else if (!rC.Player1isCarrying && !rC.Player2isCarrying)
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 objectGrabbable.Grab(itemContainer);
@@ -1537,7 +1631,7 @@ public class TestCube : MonoBehaviour
                 objectGrabbable.Grab(itemContainer);
                 playerSounds.packagePick.Post(this.gameObject);
                 GameManager.instance.p1.objectGrabbable = null;
-                
+
             }
             else if (!rC.Player1isCarrying && !rC.Player2isCarrying)
             {
@@ -1550,36 +1644,12 @@ public class TestCube : MonoBehaviour
 
     }
 
+    #endregion
 
 
 
 
-    void DetectPushRange()
-    {
 
-        //if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pushDistance, pushMask))
-        {
-            withinPushingRange = true;
-            //lastColliderTime = Time.time;
-        } 
-        else
-        {
-            withinPushingRange = false;
-            if (isPlayer1 && p1Anim != null)
-            {
-                p2Anim.SetBool("beingPushed", false);
-                //p1pushed = false;
-
-            }
-
-            if (isPlayer2 && p2Anim != null)
-            {
-                p1Anim.SetBool("beingPushed", false);
-                //p2pushed = false;
-            }
-        }
-    }
 
 
     void Interacte()
@@ -1602,7 +1672,7 @@ public class TestCube : MonoBehaviour
             {
                 //SceneControl.instance.dR.Stop();
                 firstTime = true;
-            } 
+            }
 
 
             if (ReadActionButton())
@@ -1711,7 +1781,7 @@ public class TestCube : MonoBehaviour
                 Dialogue1 = true;
                 //StartCoroutine(MovingCameraWerther());
 
-            }    
+            }
         }
 
         if (NPC2Interacting)
@@ -1753,7 +1823,7 @@ public class TestCube : MonoBehaviour
 
 
             }
-        }                                              
+        }
     }
 
     void OnTV()
@@ -1894,9 +1964,35 @@ public class TestCube : MonoBehaviour
     #endregion
 
     #region Push
+    void DetectPushRange()
+    {
+
+        //if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pushDistance, pushMask))
+        {
+            withinPushingRange = true;
+            //lastColliderTime = Time.time;
+        }
+        else
+        {
+            withinPushingRange = false;
+            if (isPlayer1 && p1Anim != null)
+            {
+                p2Anim.SetBool("beingPushed", false);
+                //p1pushed = false;
+
+            }
+
+            if (isPlayer2 && p2Anim != null)
+            {
+                p1Anim.SetBool("beingPushed", false);
+                //p2pushed = false;
+            }
+        }
+    }
     private void DoPush(InputAction.CallbackContext obj)
     {
-  
+
         if (withinPushingRange)
         {
             if (isPlayer1)
@@ -1904,7 +2000,7 @@ public class TestCube : MonoBehaviour
                 P1Push();
                 objectGrabbable = null;
                 p1pushed = true;
-                
+
 
             }
 
@@ -2141,9 +2237,9 @@ public class TestCube : MonoBehaviour
             jumpButtonPressedTime = Time.time;
 
         }
-        if(Time.time - lastGroundedTime <= jumpButtonGracePeriod)
+        if (Time.time - lastGroundedTime <= jumpButtonGracePeriod)
         {
-            if(Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod)
+            if (Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod)
             {
                 if (curSceneName != scene9)
                 {
@@ -2161,7 +2257,8 @@ public class TestCube : MonoBehaviour
                     jumpButtonPressedTime = null;
                     lastGroundedTime = null;
                     //Debug.Log("1");
-                } else if (isPlayer2 && !rC.Player2isCarrying)
+                }
+                else if (isPlayer2 && !rC.Player2isCarrying)
                 {
                     jumpSpeed = jumpForce;
                     isJumping = true;
@@ -2194,7 +2291,7 @@ public class TestCube : MonoBehaviour
 
         //print("jump" + jump.ReadValue<float>());
         //print("canJump" + canJump);
-             
+
         //apply gravity
         if (jumpSpeed > maxFall)
         {
@@ -2235,13 +2332,15 @@ public class TestCube : MonoBehaviour
             if (!isGliding)
             {
                 forceDirection += Vector3.up * jumpSpeed;
-                
-            } else 
-            
+
+            }
+            else
+
             if (horizontalVelocity < 9)
             {
                 forceDirection += Vector3.up * parachuteSpeed;
-            } else
+            }
+            else
             {
                 forceDirection += Vector3.up * parachuteSpeed / 1.5f;
             }
@@ -2257,7 +2356,7 @@ public class TestCube : MonoBehaviour
             parachuteObj.SetActive(false);
         }
 
-   
+
     }
 
     void DoParachute(InputAction.CallbackContext obj)
@@ -2281,12 +2380,12 @@ public class TestCube : MonoBehaviour
                 canJump = false;
             }
         }
-        
+
     }
 
     void DoFall(InputAction.CallbackContext obj)
     {
-        
+
         if (isGliding)
         {
             playerSounds.parachuteClose.Post(this.gameObject);
@@ -2322,7 +2421,7 @@ public class TestCube : MonoBehaviour
             isGliding = false;
             lastGroundedTime = Time.time;
 
-            
+
             //isGliding = false;
 
             //Debug.Log("isGrounded" + isGrounded);
@@ -2441,7 +2540,7 @@ public class TestCube : MonoBehaviour
         {
             withinNPC3Range = true;
         }
-        
+
         if (other.CompareTag("Phone"))
         {
             withinPhoneRange = true;
@@ -2571,7 +2670,7 @@ public class TestCube : MonoBehaviour
 
             if (ReadPullButton())
             {
-              
+
                 isPulling = true;
                 targetRigid.useGravity = false;
                 targetRigid.mass = 10;
@@ -2602,7 +2701,7 @@ public class TestCube : MonoBehaviour
         else
         {
             isPulling = false;
-            if(targetRigid != null)
+            if (targetRigid != null)
             {
                 targetRigid.useGravity = true;
                 targetRigid.gameObject.transform.SetParent(null);
@@ -2617,108 +2716,42 @@ public class TestCube : MonoBehaviour
 
     #endregion
 
+    #region Dash
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
+    public bool DetectDashButton()
+    {
+        if (dash.triggered) return true;
+        else return false;
 
-    //    if (collision.gameObject.CompareTag("Player"))
-    //    {
-    //        print("Name" + collision.gameObject);
-    //        otherRigidbody = collision.gameObject.GetComponent<Rigidbody>();
+    }
+    private void Dash()
+    {
+        if (DetectDashButton())
+        {
+            if(dashCdTimer >= dashCd)
+            {
+                isDashing = true;
+                startTimer = false;
 
-    //        if (otherRigidbody != null && ReadPushButton() == true)
-    //        {
-    //            Vector3 pushDirection = (playerDir.transform.position - collision.transform.position).normalized;
-    //            otherRigidbody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
-    //            print("Push");
-    //        }
-    //    }
-    //}
+                Invoke(nameof(ResetDash), dashDuration);
+            }  
 
-    //public bool ReadPushButton()
-    //{
-    //    if (triggerButton.ReadValue<float>() == 1) return true;
-    //    else return false;
-    //}
+        }
+    }
 
+    private void ResetDash()
+    {
+        isDashing = false;
+        dashCdTimer = 0;
+        startTimer = true;
+        
+    }
 
 
 
-    //void SwitchCameraStyle(CameraStyle newStyle)
-    //{
-    //    combatCam.SetActive(false);
-    //    thirdPersonCam.SetActive(false);
-    //    topDownCam.SetActive(false);
-    //    //aimCursor.SetActive(false);
-
-    //    if (newStyle == CameraStyle.Basic)
-    //    {
-    //        thirdPersonCam.SetActive(true);
-    //    }
-
-    //    if (newStyle == CameraStyle.Combat)
-    //    {
-    //        combatCam.SetActive(true);
-    //        aimCursor.SetActive(true);
-    //    }
-
-    //    if (newStyle == CameraStyle.Topdown)
-    //    {
-    //        topDownCam.SetActive(true);
-    //    }
-
-    //    currentStyle = newStyle;
-    //}
-
-    //void DoAiming(InputAction.CallbackContext obj)
-    //{
-    //    isAiming = true;
-    //    print("isAiming" + isAiming);
-    //}
-
-    //void CancelAiming(InputAction.CallbackContext obj)
-    //{
-    //    isAiming = false;
-    //    print("isAiming" + isAiming);
-    //}
-
-    //void CameraControl()
-    //{
-    //    if (isAiming)
-    //    {
-    //        currentStyle = CameraStyle.Combat;
-    //        SwitchCameraStyle(currentStyle);
-    //    }
-    //    else
-    //    {
-    //        currentStyle = CameraStyle.Basic;
-    //        SwitchCameraStyle(currentStyle);
-    //    }
-    //}
+    #endregion
 
 }
-/*
-private void Move()
-{
-    Vector3 movement = new Vector3(i_movement.x, 0, i_movement.y) * moveSpeed * Time.deltaTime;
-    transform.Translate(movement);
-}
 
-private void Move(InputValue value)
-{
-    i_movement = value.Get<Vector2> ();
-    Debug.Log("Moving");
-}
-private void MoveDown(InputAction.CallbackContext obj)
-{
-    transform.Translate(transform.up);
-    Debug.Log("Moving");
-}
-private void MoveUp(InputAction.CallbackContext obj)
-{
-    transform.Translate(-transform.up);
-    Debug.Log("Moving");
-}
-*/
 
 

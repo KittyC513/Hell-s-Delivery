@@ -91,13 +91,13 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Run"",
-                    ""type"": ""Value"",
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
                     ""id"": ""d88b1745-82bd-4e81-b0bb-5c2511900197"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Close"",
@@ -470,7 +470,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Run"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -814,7 +814,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         m_Cube_Join = m_Cube.FindAction("Join", throwIfNotFound: true);
         m_Cube_Pick = m_Cube.FindAction("Pick", throwIfNotFound: true);
         m_Cube_Jump = m_Cube.FindAction("Jump", throwIfNotFound: true);
-        m_Cube_Run = m_Cube.FindAction("Run", throwIfNotFound: true);
+        m_Cube_Dash = m_Cube.FindAction("Dash", throwIfNotFound: true);
         m_Cube_Close = m_Cube.FindAction("Close", throwIfNotFound: true);
         m_Cube_Parachute = m_Cube.FindAction("Parachute", throwIfNotFound: true);
         m_Cube_Aim = m_Cube.FindAction("Aim", throwIfNotFound: true);
@@ -898,7 +898,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
     private readonly InputAction m_Cube_Join;
     private readonly InputAction m_Cube_Pick;
     private readonly InputAction m_Cube_Jump;
-    private readonly InputAction m_Cube_Run;
+    private readonly InputAction m_Cube_Dash;
     private readonly InputAction m_Cube_Close;
     private readonly InputAction m_Cube_Parachute;
     private readonly InputAction m_Cube_Aim;
@@ -916,7 +916,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         public InputAction @Join => m_Wrapper.m_Cube_Join;
         public InputAction @Pick => m_Wrapper.m_Cube_Pick;
         public InputAction @Jump => m_Wrapper.m_Cube_Jump;
-        public InputAction @Run => m_Wrapper.m_Cube_Run;
+        public InputAction @Dash => m_Wrapper.m_Cube_Dash;
         public InputAction @Close => m_Wrapper.m_Cube_Close;
         public InputAction @Parachute => m_Wrapper.m_Cube_Parachute;
         public InputAction @Aim => m_Wrapper.m_Cube_Aim;
@@ -953,9 +953,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Run.started += instance.OnRun;
-            @Run.performed += instance.OnRun;
-            @Run.canceled += instance.OnRun;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
             @Close.started += instance.OnClose;
             @Close.performed += instance.OnClose;
             @Close.canceled += instance.OnClose;
@@ -999,9 +999,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Run.started -= instance.OnRun;
-            @Run.performed -= instance.OnRun;
-            @Run.canceled -= instance.OnRun;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
             @Close.started -= instance.OnClose;
             @Close.performed -= instance.OnClose;
             @Close.canceled -= instance.OnClose;
@@ -1189,7 +1189,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         void OnJoin(InputAction.CallbackContext context);
         void OnPick(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnRun(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         void OnClose(InputAction.CallbackContext context);
         void OnParachute(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);

@@ -1460,7 +1460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790931724609759169}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16476835, y: 0.41138336, z: -0.19027096, w: 0.8760206}
+  m_LocalRotation: {x: 0.16476832, y: 0.41138342, z: -0.19027098, w: 0.8760206}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6161,11 +6161,11 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  run:
-    m_Name: Run
+  dash:
+    m_Name: Dash
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: d427483d-d6c9-4179-b73e-2d0b80fd67e6
+    m_Id: 26e7ef38-0af3-4427-a1f0-f8985d4c127d
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -6231,6 +6231,7 @@ MonoBehaviour:
   timeToWalk: 0.1
   timeToGlide: 1
   timeToPull: 1.5
+  timeToDash: 0.1
   timeToZero: 0.083
   shadowRenderer: {fileID: 8281716036767929258}
   jumpForce: 6.5
@@ -6276,6 +6277,7 @@ MonoBehaviour:
   pickableMask:
     serializedVersion: 2
     m_Bits: 128
+  withinPackageRange: 0
   rC: {fileID: 6586379375218265399}
   raycastDistance: 5
   isCarrying: 0
@@ -6386,6 +6388,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1073741824
   isAnswered: 0
+  dashForce: 0
+  dashSpeed: 100
+  dashUpForce: 0
+  dashDuration: 0.25
+  dashCd: 5
+  dashCdTimer: 5
+  isDashing: 0
+  startTimer: 0
 --- !u!114 &965772886468833305
 MonoBehaviour:
   m_ObjectHideFlags: 0
