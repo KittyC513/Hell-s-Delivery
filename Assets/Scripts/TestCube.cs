@@ -614,7 +614,16 @@ public class TestCube : MonoBehaviour
     private void LateUpdate()
     {
         PlayerDetector();
-        CastBlobShadow();
+
+        if (!useNewMovement)
+        {
+            CastBlobShadow();
+        }
+        else
+        {
+            charController.LateUpdateFunctions();
+        }
+       
     }
 
     private void FixedUpdate()

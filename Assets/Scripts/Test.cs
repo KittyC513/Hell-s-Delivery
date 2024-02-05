@@ -531,6 +531,17 @@ public partial class @Test: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""881c1070-944d-477e-b348-c1927a7fc870"",
+                    ""path"": ""<SwitchProControllerHID>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Nintendo Switch Controller"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""2dde65e9-d3d7-4eb7-8bc2-f9a300fdd09d"",
                     ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": ""Press"",

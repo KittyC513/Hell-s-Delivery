@@ -14,6 +14,7 @@ public class CharacterControl : MonoBehaviour
 
     private bool isThrown = false;
     private bool isDead = false;
+    [SerializeField] private GameObject shadowRenderer;
 
 
     [Header("Ground Movement")]
@@ -68,7 +69,11 @@ public class CharacterControl : MonoBehaviour
     private float graceTimer = 0;
 
     [SerializeField] private bool snappedToGround = false;
+    [SerializeField] private float coyoteTime = 0.12f;
+    public bool coyote = false;
+    private float coyoteTimer = 0;
 
+    private bool shouldJump = false;
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
     private InputActionMap player, dialogue, pause;
@@ -149,6 +154,11 @@ public class CharacterControl : MonoBehaviour
         {
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
         }
+    }
+
+    public void LateUpdateFunctions()
+    {
+        CastBlobShadow();
     }
 
 
@@ -378,10 +388,10 @@ public class CharacterControl : MonoBehaviour
     {
 
         //if the jump button is pressed
-        if (readJumpValue && isGrounded && !isJumping && canJump)
+        if (readJumpValue && shouldJump && !isJumping && canJump)
         {
             canJump = false;
-            if (!isJumping && isGrounded)
+            if (!isJumping && shouldJump)
             {
                 //lets get our starting y vector
                 lastStandingVector = transform.position;
@@ -524,14 +534,46 @@ public class CharacterControl : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, (hit.point.y + 1.05f), transform.position.z);
                 snappedToGround = true;
             }
+
+            if (!isJumping)
+            {
+                shouldJump = true;
+            }
         }
         else
         {
+            //if we were just grounded, lets factor in coyote time
+            //if we are grounded but we shouldn't be anymore
+            if (isGrounded && !coyote)
+            {
+                //activate coyote time
+                coyote = true;
+                coyoteTimer = Time.time;
+            }
+
+            //if we are in coyote time
+            if (coyote && !isJumping)
+            {
+                shouldJump = true;
+
+                if (Time.time - coyoteTimer >= coyoteTime)
+                {
+                    //we are no longer grounded
+                    coyote = false;
+                }
+            }
+            else
+            {
+                shouldJump = false;
+                coyote = false;
+            }    
+
+            Debug.Log(Time.deltaTime - coyoteTimer);
             isGrounded = false;
             snappedToGround = false;
         }
 
-        
+ 
     }
 
     private bool YDistanceGreaterThan(float dist, Vector3 pos1, Vector3 pos2)
@@ -549,6 +591,22 @@ public class CharacterControl : MonoBehaviour
     {
         Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDist, groundCheck.position.z));
+    }
+
+    private void CastBlobShadow()
+    {
+        RaycastHit hit;
+
+        if (Physics.SphereCast(groundCheck.position, groundCheckRadius, -Vector3.up, out hit, Mathf.Infinity, groundLayer))
+        {
+            shadowRenderer.SetActive(true);
+            shadowRenderer.transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);
+        }
+        else
+        {
+            shadowRenderer.SetActive(false);
+        }
+
     }
 
     #endregion
