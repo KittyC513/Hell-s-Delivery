@@ -1,45 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class CloseBoard : MonoBehaviour
 {
-    [SerializeField]
-    private InputActionReference closeControl;
 
-    [SerializeField] private Scorecards scoreScript;
-    private bool canPress = false;
+    [SerializeField] 
+    private Scorecards scoreScript;
+    [SerializeField] 
+    private bool isPressed;
 
     private void Start()
     {
         scoreScript = this.GetComponent<Scorecards>();
-        canPress = true;
-    }
-    private void OnEnable()
-    {
-
-        closeControl.action.Enable();
-
+        isPressed = false;
     }
 
-    private void OnDisable()
-    { 
-        closeControl.action.Disable();
-    }
     private void Update()
     {
-        if (closeControl.action.triggered && canPress)
+        if (GameManager.instance.p1.ReadCloseTagButton() || GameManager.instance.p2.ReadCloseTagButton())
         {
-            Debug.Log("Close");
-            scoreScript.NextSection();
-            canPress = false;
+            if (!isPressed)
+            {
+                Debug.Log("Close");
+                scoreScript.NextSection();
+                isPressed = true;
+            }
         }
-        else if (!closeControl.action.triggered)
-        {
-            canPress = true;
-        }
+
     }
 
 

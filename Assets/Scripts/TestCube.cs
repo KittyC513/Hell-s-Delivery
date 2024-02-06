@@ -32,7 +32,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull;
+    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -491,6 +491,8 @@ public class TestCube : MonoBehaviour
         move = player.FindAction("Move");
         pull = player.FindAction("Pull");
         dash = player.FindAction("Dash");
+        close = player.FindAction("Close");
+
         //player.FindAction("Join").started += DoTalk;
 
         jump = player.FindAction("Jump");
@@ -802,32 +804,6 @@ public class TestCube : MonoBehaviour
                 currentSpeed += accel * Time.deltaTime;
 
             }
-
-            //if (isDashing && isRunning)
-            //{
-            //    //float accel = (dashSpeed / timeToWalk);
-            //    currentSpeed = dashSpeed;
-            //    print("current speed" + currentSpeed);
-            //} 
-            //else if (isDashing)
-            //{
-            //    //float accel = (dashSpeed / timeToWalk);
-            //    currentSpeed = dashSpeed;
-            //    print("current speed" + currentSpeed);
-            //}
-            //else if (isDashing && isWalking)
-            //{
-            //    //float accel = (dashSpeed / timeToWalk);
-            //    currentSpeed = dashSpeed;
-            //    print("current speed" + currentSpeed);
-            //}
-            //else if (isDashing && isGliding)
-            //{
-            //    //float accel = (dashSpeed / timeToWalk);
-            //    currentSpeed = dashSpeed;
-            //    print("current speed" + currentSpeed);
-            //}
-
 
         }
         else
@@ -1382,6 +1358,12 @@ public class TestCube : MonoBehaviour
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             playerSounds.packagePick.Post(this.gameObject);
+                            if(GameManager.instance.p2.objectGrabbable != null)
+                            {
+                                GameManager.instance.p2.objectGrabbable = null;
+                            }
+
+
                         }
 
                         if (isPlayer2)
@@ -1389,6 +1371,10 @@ public class TestCube : MonoBehaviour
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             playerSounds.packagePick.Post(this.gameObject);
+                            if (GameManager.instance.p1.objectGrabbable != null)
+                            {
+                                GameManager.instance.p1.objectGrabbable = null;
+                            }
                         }
                     }
 
@@ -1654,11 +1640,6 @@ public class TestCube : MonoBehaviour
     }
 
     #endregion
-
-
-
-
-
 
 
     void Interacte()
@@ -1976,8 +1957,8 @@ public class TestCube : MonoBehaviour
     void DetectPushRange()
     {
 
-        //if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pushDistance, pushMask))
+        if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
+        //if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pushDistance, pushMask))
         {
             withinPushingRange = true;
             //lastColliderTime = Time.time;
@@ -2116,6 +2097,7 @@ public class TestCube : MonoBehaviour
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 p2rc.Player2Die = false;
+                GameManager.instance.p2.objectGrabbable = null;
 
             }
             else if (rC.Player1Die && rC.Player2isCarrying)
@@ -2126,12 +2108,14 @@ public class TestCube : MonoBehaviour
 
             }
         }
-        else if (isPlayer2 && p1rc != null)
+       
+        if (isPlayer2 && p1rc != null)
         {
             if (p1rc.Player1Die && rC.Player1isCarrying)
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 p1rc.Player1Die = false;
+                GameManager.instance.p1.objectGrabbable = null;
             }
             else if (rC.Player2Die && rC.Player1isCarrying)
             {
@@ -2461,14 +2445,27 @@ public class TestCube : MonoBehaviour
 
     }
 
+    #region Read Button
     public bool ReadActionButton()
     {
         if (triggerButton.ReadValue<float>() == 1) return true;
         else return false;
+    }
+
+    public bool ReadCloseTagButton()
+    {
+        if (close.triggered) return true;
+        else return false;
+    }
+
+    public bool DetectDashButton()
+    {
+        if (dash.triggered) return true;
+        else return false;
 
     }
 
-
+    #endregion
 
     public void OnSummoningEnter(GameObject circle)
     {
@@ -2726,13 +2723,6 @@ public class TestCube : MonoBehaviour
     #endregion
 
     #region Dash
-
-    public bool DetectDashButton()
-    {
-        if (dash.triggered) return true;
-        else return false;
-
-    }
     private void Dash()
     {
         if (DetectDashButton())
@@ -2755,8 +2745,6 @@ public class TestCube : MonoBehaviour
         startTimer = true;
         
     }
-
-
 
     #endregion
 

@@ -152,6 +152,15 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Close1"",
+                    ""type"": ""Button"",
+                    ""id"": ""a75d12ad-533a-4d29-a758-2b48069955b7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -715,6 +724,28 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""action"": ""Pull"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1de16b0f-a733-474d-b12d-8e5d22afec02"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30f5dacd-49f2-4a4f-9eb8-4f3b8ae50e60"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -887,6 +918,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         m_Cube_Trigger = m_Cube.FindAction("Trigger", throwIfNotFound: true);
         m_Cube_Push = m_Cube.FindAction("Push", throwIfNotFound: true);
         m_Cube_Pull = m_Cube.FindAction("Pull", throwIfNotFound: true);
+        m_Cube_Close1 = m_Cube.FindAction("Close1", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_StartDialogue = m_Dialogue.FindAction("StartDialogue", throwIfNotFound: true);
@@ -971,6 +1003,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
     private readonly InputAction m_Cube_Trigger;
     private readonly InputAction m_Cube_Push;
     private readonly InputAction m_Cube_Pull;
+    private readonly InputAction m_Cube_Close1;
     public struct CubeActions
     {
         private @Test m_Wrapper;
@@ -989,6 +1022,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         public InputAction @Trigger => m_Wrapper.m_Cube_Trigger;
         public InputAction @Push => m_Wrapper.m_Cube_Push;
         public InputAction @Pull => m_Wrapper.m_Cube_Pull;
+        public InputAction @Close1 => m_Wrapper.m_Cube_Close1;
         public InputActionMap Get() { return m_Wrapper.m_Cube; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1040,6 +1074,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Pull.started += instance.OnPull;
             @Pull.performed += instance.OnPull;
             @Pull.canceled += instance.OnPull;
+            @Close1.started += instance.OnClose1;
+            @Close1.performed += instance.OnClose1;
+            @Close1.canceled += instance.OnClose1;
         }
 
         private void UnregisterCallbacks(ICubeActions instance)
@@ -1086,6 +1123,9 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Pull.started -= instance.OnPull;
             @Pull.performed -= instance.OnPull;
             @Pull.canceled -= instance.OnPull;
+            @Close1.started -= instance.OnClose1;
+            @Close1.performed -= instance.OnClose1;
+            @Close1.canceled -= instance.OnClose1;
         }
 
         public void RemoveCallbacks(ICubeActions instance)
@@ -1262,6 +1302,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
         void OnTrigger(InputAction.CallbackContext context);
         void OnPush(InputAction.CallbackContext context);
         void OnPull(InputAction.CallbackContext context);
+        void OnClose1(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {
