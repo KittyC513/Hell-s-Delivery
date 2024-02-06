@@ -168,7 +168,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float jumpButtonGracePeriod;
 
+    [SerializeField]
     private float? lastGroundedTime;
+    [SerializeField]
     private float? jumpButtonPressedTime;
 
 
@@ -217,6 +219,7 @@ public class TestCube : MonoBehaviour
     private int numOfButtonPressed;
     [SerializeField]
     private GameObject parachuteObj;
+
 
     [SerializeField]
     private float pushForce;
@@ -2010,14 +2013,30 @@ public class TestCube : MonoBehaviour
         //otherRB.isKinematic = true;
         Vector3 forceDir = otherRB.transform.position - transform.position;
 
-        Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
+        //Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
+
+        //gameManager.p2.forceDirection += gameManager.player2.transform.position * forceDir.z * pushForce;
+        //gameManager.p2.forceDirection += gameManager.player2.transform.position * forceDir.x * pushForce;
+
+        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+        {
+            gameManager.p2.forceDirection += forceDir.z * gameManager.p2.GetCameraRight(mainCam) * pushForce;
+            gameManager.p2.forceDirection += forceDir.x * gameManager.p2.GetCameraRight(mainCam) * pushForce;
+        }
+        else
+        {
+            gameManager.p2.forceDirection += forceDir.z * gameManager.p2.GetCameraRight(playerCamera) * pushForce;
+            gameManager.p2.forceDirection += forceDir.x * gameManager.p2.GetCameraRight(playerCamera) * pushForce;
+        }
+
+
         //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
 
         //float randomTorque = Random.Range(-5f, 5f);
         //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
         //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
         //otherRB.MovePosition(newPosition);
-        StartCoroutine(SlideToPosition(forcePosition));
+        //StartCoroutine(SlideToPosition(forcePosition));
 
         p2Anim.SetBool("beingPush", true);
 
@@ -2040,14 +2059,29 @@ public class TestCube : MonoBehaviour
         //otherRB.isKinematic = true;
         Vector3 forceDir = otherRB.transform.position - transform.position;
 
-        Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+        //Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+
+        //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.z * pushForce;
+        //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.x * pushForce;
+
+        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+        {
+            gameManager.p1.forceDirection += forceDir.z * gameManager.p1.GetCameraRight(mainCam) * pushForce + gameManager.player1.transform.position * 5;
+            gameManager.p1.forceDirection += forceDir.x * gameManager.p1.GetCameraRight(mainCam) * pushForce + gameManager.player1.transform.position * 5;
+        }
+        else
+        {
+            gameManager.p1.forceDirection += forceDir.z * gameManager.p1.GetCameraRight(playerCamera) * pushForce;
+            gameManager.p1.forceDirection += forceDir.x * gameManager.p1.GetCameraRight(playerCamera) * pushForce;
+        }
+
         //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
 
         //float randomTorque = Random.Range(-5f, 5f);
         //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
         //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
         //otherRB.MovePosition(newPosition);
-        StartCoroutine(SlideToPosition(forcePosition));
+        //StartCoroutine(SlideToPosition(forcePosition));
 
         p1Anim.SetBool("beingPush", true);
 
@@ -2060,22 +2094,22 @@ public class TestCube : MonoBehaviour
         }
     }
 
-    IEnumerator SlideToPosition(Vector3 targetPosition)
-    {
-        float elapsedTime = 0f;
-        Vector3 startingPosition = otherRB.transform.position;
+    //IEnumerator SlideToPosition(Vector3 targetPosition)
+    //{
+    //    float elapsedTime = 0f;
+    //    Vector3 startingPosition = otherRB.transform.position;
 
-        while (elapsedTime < slideTime)
-        {
-            otherRB.MovePosition(Vector3.Lerp(startingPosition, targetPosition, elapsedTime / slideTime));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+    //    while (elapsedTime < slideTime)
+    //    {
+    //        otherRB.MovePosition(Vector3.Lerp(startingPosition, targetPosition, elapsedTime / slideTime));
+    //        elapsedTime += Time.deltaTime;
+    //        yield return null;
+    //    }
 
-        // Ensure the object reaches the exact target position at the end
-        otherRB.MovePosition(targetPosition);
+    //    // Ensure the object reaches the exact target position at the end
+    //    otherRB.MovePosition(targetPosition);
 
-    }
+    //}
 
     #endregion
 
