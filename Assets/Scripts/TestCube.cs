@@ -32,7 +32,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull;
+    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -491,6 +491,8 @@ public class TestCube : MonoBehaviour
         move = player.FindAction("Move");
         pull = player.FindAction("Pull");
         dash = player.FindAction("Dash");
+        close = player.FindAction("Close");
+
         //player.FindAction("Join").started += DoTalk;
 
         jump = player.FindAction("Jump");
@@ -793,32 +795,6 @@ public class TestCube : MonoBehaviour
                 currentSpeed += accel * Time.deltaTime;
 
             }
-
-            //if (isDashing && isRunning)
-            //{
-            //    //float accel = (dashSpeed / timeToWalk);
-            //    currentSpeed = dashSpeed;
-            //    print("current speed" + currentSpeed);
-            //} 
-            //else if (isDashing)
-            //{
-            //    //float accel = (dashSpeed / timeToWalk);
-            //    currentSpeed = dashSpeed;
-            //    print("current speed" + currentSpeed);
-            //}
-            //else if (isDashing && isWalking)
-            //{
-            //    //float accel = (dashSpeed / timeToWalk);
-            //    currentSpeed = dashSpeed;
-            //    print("current speed" + currentSpeed);
-            //}
-            //else if (isDashing && isGliding)
-            //{
-            //    //float accel = (dashSpeed / timeToWalk);
-            //    currentSpeed = dashSpeed;
-            //    print("current speed" + currentSpeed);
-            //}
-
 
         }
         else
@@ -2460,14 +2436,27 @@ public class TestCube : MonoBehaviour
 
     }
 
+    #region Read Button
     public bool ReadActionButton()
     {
         if (triggerButton.ReadValue<float>() == 1) return true;
         else return false;
+    }
+
+    public bool ReadCloseTagButton()
+    {
+        if (close.triggered) return true;
+        else return false;
+    }
+
+    public bool DetectDashButton()
+    {
+        if (dash.triggered) return true;
+        else return false;
 
     }
 
-
+    #endregion
 
     public void OnSummoningEnter(GameObject circle)
     {
@@ -2725,13 +2714,6 @@ public class TestCube : MonoBehaviour
     #endregion
 
     #region Dash
-
-    public bool DetectDashButton()
-    {
-        if (dash.triggered) return true;
-        else return false;
-
-    }
     private void Dash()
     {
         if (DetectDashButton())
@@ -2754,8 +2736,6 @@ public class TestCube : MonoBehaviour
         startTimer = true;
         
     }
-
-
 
     #endregion
 
