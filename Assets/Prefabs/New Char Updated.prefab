@@ -3376,8 +3376,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.27978468
     - serializedVersion: 3
-      time: 0.090500005
-      value: 0.0023293449
+      time: 0.1401416
+      value: 0.000010008924
       inSlope: -0.15244514
       outSlope: -0.15244514
       tangentMode: 0
@@ -3387,9 +3387,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  airQuickTurnCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.00063705444
+      value: 1.005096
+      inSlope: -23.706139
+      outSlope: -23.706139
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.036257118
+    - serializedVersion: 3
+      time: 0.050234854
+      value: -0.008503432
+      inSlope: -0.78258353
+      outSlope: -0.78258353
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11634874
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   currentSpeed: 0
-  rotationSpeed: 800
+  rotationSpeed: 1300
   velocityTime: 0
+  decelerationTime: 0
   isGrounded: 0
   groundCheck: {fileID: 2104986263188469152}
   groundCheckRadius: 0.4
@@ -3398,7 +3423,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   stickValue: {x: 0, y: 0}
-  minQuickTurn: 0.9
+  minQuickTurn: 0.7
+  runMagnitude: 0.6
+  slowRotationSpeed: 800
+  requiredQTVelocity: 8
+  airQuickTurn: 0.6
   peakJumpSpeed: 1400
   maxFallSpeed: 1400
   jumpCurve:
@@ -3489,8 +3518,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.24778761
     - serializedVersion: 3
-      time: 0.29962316
-      value: 1.0018663
+      time: 0.14886633
+      value: 0.99950504
       inSlope: 0.29704547
       outSlope: 0.29704547
       tangentMode: 0
@@ -3500,10 +3529,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  airDecelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.0003695
+      inSlope: -0.48384583
+      outSlope: -0.48384583
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.27978468
+    - serializedVersion: 3
+      time: 0.20064086
+      value: 0.000010008924
+      inSlope: -2.853265
+      outSlope: -2.853265
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04680848
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   ySpeed: 0
   jTime: 0
   isJumping: 0
-  minJumpTime: 0.12
+  minJumpTime: 0.18
   canJump: 1
   readJumpValue: 0
   jumpButtonGracePeriod: 0.2

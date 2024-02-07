@@ -844,6 +844,11 @@ public class TestCube : MonoBehaviour
 
 
         }
+        else
+        {
+            playerCamera.enabled = true;
+            mainCam = null;
+        }
 
         //Start the Devil phone Dialogue 
         //if(curSceneName == scene1 && !Dialogue2)
