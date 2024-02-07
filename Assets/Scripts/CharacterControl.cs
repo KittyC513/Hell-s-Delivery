@@ -31,6 +31,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float velocityTime = 0;
     public float decelerationTime = 0;
     private Vector3 faceDir;
+    private Vector3 lookDir;
 
     public bool isGrounded = false;
     [SerializeField] private Transform groundCheck;
@@ -49,12 +50,12 @@ public class CharacterControl : MonoBehaviour
     private bool quickTurn = false;
 
     [SerializeField] private float runMagnitude = 0.6f;
-    [SerializeField] private float walkSpeed = 300f;
     [SerializeField] private float slowRotationSpeed = 300f;
-
+    [SerializeField] private float requiredQTVelocity = 8;
     private float lastSpeedValue;
 
     [Space, Header("Jumping Variables")]
+    [SerializeField] private float airQuickTurn = 0.2f;
     [SerializeField] private float peakJumpSpeed = 800;
     [SerializeField] private float maxFallSpeed = 15;
     [SerializeField] private AnimationCurve jumpCurve;
@@ -140,6 +141,7 @@ public class CharacterControl : MonoBehaviour
     {
         GetStickInputs(camera);
         CheckGrounded();
+       
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
@@ -150,15 +152,17 @@ public class CharacterControl : MonoBehaviour
         camera = cam;
         ApplyGravity();
         //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
-        if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(faceDir.normalized);
+        if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
 
         JumpCalculations();
         //Debug.Log(directionSpeed);
-        Debug.Log(rawInput.magnitude);
+       
     }
 
     public void FixedUpdateFunctions()
     {
+      
+
         if (isGrounded)
         {
             
@@ -168,6 +172,7 @@ public class CharacterControl : MonoBehaviour
         else if (!isGrounded)
         {
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
+          
         }
     }
 
@@ -289,6 +294,7 @@ public class CharacterControl : MonoBehaviour
         
         return input.normalized;
     }
+
     private void GetStickInputs(Camera cam)
     {
         rawInput = inputAsset.Cube.Move.ReadValue<Vector2>();
@@ -300,53 +306,55 @@ public class CharacterControl : MonoBehaviour
         //when the player makes a quick turn we should stop/cut their momentum to give them more control over a quick turn around
         if (relativeStick.x != 0 || relativeStick.y != 0)
         {
+            if (isGrounded)
+            {
+                //get the player's facing direction and check if our new input is far enough away from our facing direction
+                if (lookDir.x - relativeStick.x > minQuickTurn || lookDir.x - relativeStick.x < -minQuickTurn)
+                {
+                    
+                    if (!quickTurn) quickTurn = true;
+                    Debug.Log(quickTurn);
+                }
+
+                if (lookDir.z - relativeStick.z > minQuickTurn || lookDir.z - relativeStick.z < -minQuickTurn)
+                {
+                    if (!quickTurn) quickTurn = true;
+                    Debug.Log(quickTurn);
+                }
+
+            }
+            else
+            {
+                //get the player's facing direction and check if our new input is far enough away from our facing direction
+                if (lookDir.x - relativeStick.x > airQuickTurn || lookDir.x - relativeStick.x < -airQuickTurn)
+                {
+                    if (!quickTurn) quickTurn = true;
+                    Debug.Log(quickTurn);
+                }
+
+                if (lookDir.z - relativeStick.z > airQuickTurn || lookDir.z - relativeStick.z < -airQuickTurn)
+                {
+                    if (!quickTurn) quickTurn = true;
+                    Debug.Log(quickTurn);
+                }
+
+            }
+
             //if we have a new input
             if (relativeStick.x != lastInput.x || relativeStick.y != lastInput.y)
             {
-                if (lastInput.x > 0.1 || lastInput.x < -0.1)
-                {
-                    if (relativeStick.x != 0)
-                    {
-                        //if our new input is a big enough difference from our last input we do a quick turn
-                        if (relativeStick.x - lastInput.x > minQuickTurn || relativeStick.x - lastInput.x < -minQuickTurn)
-                        {
-                            //quick turn here
-                            //velocityTime = 0;
-                            //currentSpeed = 0;
-                            //Debug.Log("Quick Turn");
-                            quickTurn = true;
-                        }
-                    }
-                    
-                }
-           
-                if (lastInput.y > 0.1 || lastInput.y < -0.1)
-                {
-                    if (relativeStick.y != 0)
-                    {
-                        if (relativeStick.y - lastInput.y > minQuickTurn || relativeStick.y - lastInput.y < -minQuickTurn)
-                        {
-
-                            //quick turn here
-                            //velocityTime = 0;
-                            //currentSpeed = 0;
-                            //Debug.Log("Quick Turn");
-                            quickTurn = true;
-                        }
-                    }
-                    
-                }
-            
-
+                
                 //we want to update our input value to the new stick direction
                 inputValue = stickValue;
-                lastInput = relativeStick;
+              
             }
         }
         else
         {
             inputValue = Vector2.zero;
         }
+
+        lookDir = GetRelativeInputDirection(cam, inputValue);
     }
     private void MovementCalculations(Camera cam)
     {
@@ -356,31 +364,36 @@ public class CharacterControl : MonoBehaviour
         //if we are grounded use our grounded speed curve otherwise use the airspeed curve
         if (isGrounded)
         {
+            //if the player is inputting anything at all we should multiply the speed by their stick input to get a variable push rate
             if (rawInput.magnitude > 0)
             {
                 directionSpeed = new Vector3((faceDir.x * currentSpeed) * rawInput.magnitude, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude);
             }
             else
             {
+                //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
                 directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
             }
             
         }
         else
         {
-            
+            //the air speed is unaffected by the stick magnitude
             directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
-            
            
         }
 
+        //if there is some input
         if (inputValue.x != 0 || inputValue.y != 0)
         {
-            if (rawInput.magnitude > 0.1)
+            //and our magnitude isn't an accidental stick flick
+            //and the player is quick turning
+            if (rawInput.magnitude > 0.05 && !quickTurn)
             {
+                //set our facing direction
                 faceDir = GetRelativeInputDirection(cam, inputValue);
             }
-
+            
         }
 
         //if we are inputting on the control stick we want to apply our velocity curve and start speeding the character up
@@ -403,7 +416,7 @@ public class CharacterControl : MonoBehaviour
                 airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
 
                 //what was the player's speed the last time they were inputting
-                lastSpeedValue = currentSpeed;
+                lastSpeedValue = currentSpeed * rawInput.magnitude;
 
             }
             else
@@ -433,6 +446,7 @@ public class CharacterControl : MonoBehaviour
         }
         else
         {
+            
             quickTurnTime += Time.deltaTime;
 
             if (isGrounded)

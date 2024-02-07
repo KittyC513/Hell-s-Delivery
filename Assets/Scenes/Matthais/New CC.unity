@@ -5868,6 +5868,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerInputManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7274605172730961230, guid: ab741abebe3f2a84398d9f17abd3f9b6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8404608776340601744, guid: ab741abebe3f2a84398d9f17abd3f9b6, type: 3}
       propertyPath: m_PlayerPrefab
       value: 
@@ -12006,11 +12010,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1905823327603259122, guid: 742d4ba05029d704e92f21f5c7b61c1a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.6316303
+      value: -0.63163036
       objectReference: {fileID: 0}
     - target: {fileID: 1905823327603259122, guid: 742d4ba05029d704e92f21f5c7b61c1a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.007848068
+      value: 0.007848128
       objectReference: {fileID: 0}
     - target: {fileID: 1905823327603259122, guid: 742d4ba05029d704e92f21f5c7b61c1a, type: 3}
       propertyPath: m_LocalRotation.y
@@ -12094,11 +12098,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5374065390952669923, guid: 742d4ba05029d704e92f21f5c7b61c1a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.63076854
+      value: -0.63076836
       objectReference: {fileID: 0}
     - target: {fileID: 5374065390952669923, guid: 742d4ba05029d704e92f21f5c7b61c1a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0339067
+      value: 0.03390665
       objectReference: {fileID: 0}
     - target: {fileID: 5374065390952669923, guid: 742d4ba05029d704e92f21f5c7b61c1a, type: 3}
       propertyPath: m_LocalRotation.y
@@ -12106,7 +12110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5374065390952669923, guid: 742d4ba05029d704e92f21f5c7b61c1a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.48312482
+      value: -0.48312485
       objectReference: {fileID: 0}
     - target: {fileID: 5935711546814801641, guid: 742d4ba05029d704e92f21f5c7b61c1a, type: 3}
       propertyPath: m_XAxis.Value
@@ -14449,8 +14453,9 @@ MonoBehaviour:
   stickValue: {x: 0, y: 0}
   minQuickTurn: 0.9
   runMagnitude: 0.6
-  walkSpeed: 300
   slowRotationSpeed: 300
+  requiredQTVelocity: 8
+  airQuickTurn: 0.2
   peakJumpSpeed: 1400
   maxFallSpeed: 1400
   jumpCurve:
@@ -15601,8 +15606,9 @@ MonoBehaviour:
   stickValue: {x: 0, y: 0}
   minQuickTurn: 0.8
   runMagnitude: 0.6
-  walkSpeed: 300
   slowRotationSpeed: 300
+  requiredQTVelocity: 8
+  airQuickTurn: 0.2
   peakJumpSpeed: 800
   maxFallSpeed: 15
   jumpCurve:
@@ -19515,22 +19521,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2677690114730804654, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.04077953
+      value: -0.04077959
       objectReference: {fileID: 0}
     - target: {fileID: 2677690114730804654, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.16502135
+      value: -0.16502133
       objectReference: {fileID: 0}
     - target: {fileID: 2677690114730804654, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.15175432
+      value: 0.15175433
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: minJumpTime
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: airQuickTurn
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: minQuickTurn
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: rotationSpeed
+      value: 1300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: slowRotationSpeed
       value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
@@ -19542,8 +19560,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: airVelocityCurve.m_Curve.Array.data[1].time
+      value: 0.14886633
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: airQuickTurnCurve.m_Curve.Array.data[0].time
+      value: 0.00063705444
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airQuickTurnCurve.m_Curve.Array.data[1].time
-      value: 0.20009154
+      value: 0.050234854
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: airVelocityCurve.m_Curve.Array.data[1].value
+      value: 0.99950504
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: decelerationCurve.m_Curve.Array.data[1].time
@@ -19551,11 +19581,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airQuickTurnCurve.m_Curve.Array.data[0].value
-      value: 1.0003695
+      value: 1.005096
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airQuickTurnCurve.m_Curve.Array.data[1].value
-      value: -0.0014548348
+      value: -0.008503432
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: decelerationCurve.m_Curve.Array.data[1].value
@@ -19567,11 +19597,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airQuickTurnCurve.m_Curve.Array.data[0].inSlope
-      value: -0.48384583
+      value: -23.706139
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airQuickTurnCurve.m_Curve.Array.data[1].inSlope
-      value: -9.171295
+      value: -0.78258353
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airDecelerationCurve.m_Curve.Array.data[0].value
@@ -19583,19 +19613,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airQuickTurnCurve.m_Curve.Array.data[0].outSlope
-      value: -0.48384583
+      value: -23.706139
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airQuickTurnCurve.m_Curve.Array.data[1].inWeight
-      value: 0.043740377
+      value: 0.11634874
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airQuickTurnCurve.m_Curve.Array.data[1].outSlope
-      value: -9.171295
+      value: -0.78258353
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airQuickTurnCurve.m_Curve.Array.data[0].outWeight
-      value: 0.27978468
+      value: 0.036257118
       objectReference: {fileID: 0}
     - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: airDecelerationCurve.m_Curve.Array.data[0].inSlope
@@ -19643,11 +19673,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5378363313791952369, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.19560309
+      value: -0.19560304
       objectReference: {fileID: 0}
     - target: {fileID: 5378363313791952369, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.08102145
+      value: 0.081021436
       objectReference: {fileID: 0}
     - target: {fileID: 5721425956201530182, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_Name
@@ -19657,13 +19687,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6891849526826337978, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.066
+      objectReference: {fileID: 0}
     - target: {fileID: 7989845018757749681, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.15852672
+      value: -0.15852667
       objectReference: {fileID: 0}
     - target: {fileID: 7989845018757749681, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.1585267
+      value: 0.15852667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8101443428968427814, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.065999985
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
