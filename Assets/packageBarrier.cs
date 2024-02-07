@@ -28,7 +28,7 @@ public class packageBarrier : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Package")
+        if (other.gameObject.tag == "pTrigger")
         {
             Bc.enabled = false;
             blocking = false;
@@ -38,7 +38,7 @@ public class packageBarrier : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Package")
+        if (other.gameObject.tag == "pTrigger")
         {
             Bc.enabled = true;
             blocking = true;
