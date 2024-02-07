@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,13 +22,14 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float peakSpeed = 500;
     [SerializeField] private AnimationCurve velocityCurve;
     [SerializeField] private AnimationCurve decelerationCurve;
+    [SerializeField] private AnimationCurve airQuickTurnCurve;
     //velocity curve goes from 0.0 - 1.0, multiply our peak speed by that to get our current speed
     private Vector2 forwardDirection;
     [SerializeField] private float currentSpeed;
     private Vector3 directionSpeed;
     [SerializeField] private float rotationSpeed = 300;
     [SerializeField] private float velocityTime = 0;
-    private float decelerationTime = 0;
+    public float decelerationTime = 0;
     private Vector3 faceDir;
 
     public bool isGrounded = false;
@@ -40,8 +42,17 @@ public class CharacterControl : MonoBehaviour
     private Vector2 lastInput = Vector2.zero;
     [HideInInspector] public Vector2 stickValue = Vector2.zero;
     private Vector2 inputValue;
+    private Vector2 rawInput;
 
     [SerializeField] private float minQuickTurn = 0.8f;
+    private float quickTurnTime = 0;
+    private bool quickTurn = false;
+
+    [SerializeField] private float runMagnitude = 0.6f;
+    [SerializeField] private float walkSpeed = 300f;
+    [SerializeField] private float slowRotationSpeed = 300f;
+
+    private float lastSpeedValue;
 
     [Space, Header("Jumping Variables")]
     [SerializeField] private float peakJumpSpeed = 800;
@@ -50,6 +61,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private AnimationCurve fallAccelCurve;
     //air velocity curve will build more slowly than a normal grounded acceleration to give the player a more controlled turn around
     [SerializeField] private AnimationCurve airVelocityCurve;
+    [SerializeField] private AnimationCurve airDecelerationCurve;
     [SerializeField] private float ySpeed = 0;
     private float fTime = 0;
     public float jTime = 0;
@@ -141,12 +153,15 @@ public class CharacterControl : MonoBehaviour
         if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(faceDir.normalized);
 
         JumpCalculations();
+        //Debug.Log(directionSpeed);
+        Debug.Log(rawInput.magnitude);
     }
 
     public void FixedUpdateFunctions()
     {
         if (isGrounded)
         {
+            
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
         }
 
@@ -276,8 +291,9 @@ public class CharacterControl : MonoBehaviour
     }
     private void GetStickInputs(Camera cam)
     {
-        stickValue = inputAsset.Cube.Move.ReadValue<Vector2>();
-        stickValue = stickValue.normalized;
+        rawInput = inputAsset.Cube.Move.ReadValue<Vector2>();
+        stickValue = rawInput.normalized;
+       
 
         Vector3 relativeStick = GetRelativeInputDirection(cam, stickValue);
 
@@ -289,24 +305,36 @@ public class CharacterControl : MonoBehaviour
             {
                 if (lastInput.x > 0.1 || lastInput.x < -0.1)
                 {
-                    //if our new input is a big enough difference from our last input we do a quick turn
-                    if (relativeStick.x - lastInput.x > minQuickTurn || relativeStick.x - lastInput.x < -minQuickTurn)
+                    if (relativeStick.x != 0)
                     {
-                        //quick turn here
-                        velocityTime = 0;
-                        currentSpeed = 0;
+                        //if our new input is a big enough difference from our last input we do a quick turn
+                        if (relativeStick.x - lastInput.x > minQuickTurn || relativeStick.x - lastInput.x < -minQuickTurn)
+                        {
+                            //quick turn here
+                            //velocityTime = 0;
+                            //currentSpeed = 0;
+                            //Debug.Log("Quick Turn");
+                            quickTurn = true;
+                        }
                     }
+                    
                 }
            
                 if (lastInput.y > 0.1 || lastInput.y < -0.1)
                 {
-                    if (relativeStick.y - lastInput.y > minQuickTurn || relativeStick.y - lastInput.y < -minQuickTurn)
+                    if (relativeStick.y != 0)
                     {
+                        if (relativeStick.y - lastInput.y > minQuickTurn || relativeStick.y - lastInput.y < -minQuickTurn)
+                        {
 
-                        //quick turn here
-                        velocityTime = 0;
-                        currentSpeed = 0;
+                            //quick turn here
+                            //velocityTime = 0;
+                            //currentSpeed = 0;
+                            //Debug.Log("Quick Turn");
+                            quickTurn = true;
+                        }
                     }
+                    
                 }
             
 
@@ -328,60 +356,121 @@ public class CharacterControl : MonoBehaviour
         //if we are grounded use our grounded speed curve otherwise use the airspeed curve
         if (isGrounded)
         {
-            directionSpeed = new Vector3(faceDir.x * currentSpeed, rb.velocity.y, faceDir.z * currentSpeed);
-        
-        }
-        else
-        {
-            directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
-        }
-
-
-        //if we are inputting on the control stick we want to apply our velocity curve and start speeding the character up
-        if (inputDir.x != 0 || inputDir.y != 0)
-        {
-            //this facing direction means even if we are not inputting anything we are still facing somewhere
-            //this is used to keep applying speed for a short time after we input to get a deceleration
-            faceDir = GetRelativeInputDirection(cam, inputValue);
-
-
-            decelerationTime = 0;
-            velocityTime += Time.deltaTime;
-            //if we are on the ground we want to use our grounded velocity curve, otherwise we use the aerial one
-            if (isGrounded)
+            if (rawInput.magnitude > 0)
             {
-                //multiply our peak speed by our place on the velocity curve
-                //if we are at the peak our velocity will be our peak speed times 1, so our peak speed
-                currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
+                directionSpeed = new Vector3((faceDir.x * currentSpeed) * rawInput.magnitude, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude);
             }
             else
             {
-                //if we aren't grounded we evaluate the air movement curve
-                airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+                directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
             }
-
+            
         }
         else
         {
-            velocityTime = 0;
-            decelerationTime += Time.deltaTime;
-
-            if (currentSpeed > 0)
-            {
-                //apply a curve in the same way we applied the velocity but for when we want to slow down
-                currentSpeed = (currentSpeed * decelerationCurve.Evaluate(decelerationTime));
-            }
+            
+            directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
+            
            
-            //since we are multiplying we might get some weird values, just incase if we are at a decimal point below 1 just set to zero
-            if (currentSpeed < 1)
-            {
-                currentSpeed = 0;
-            }
-
-            airSpeed = 0;
         }
 
-    
+        if (inputValue.x != 0 || inputValue.y != 0)
+        {
+            if (rawInput.magnitude > 0.1)
+            {
+                faceDir = GetRelativeInputDirection(cam, inputValue);
+            }
+
+        }
+
+        //if we are inputting on the control stick we want to apply our velocity curve and start speeding the character up
+        if (!quickTurn)
+        {
+            if (inputDir.x != 0 || inputDir.y != 0)
+            {
+                //this facing direction means even if we are not inputting anything we are still facing somewhere
+                //this is used to keep applying speed for a short time after we input to get a deceleration
+               
+                decelerationTime = 0;
+                velocityTime += Time.deltaTime;
+
+                //if we are on the ground we want to use our grounded velocity curve, otherwise we use the aerial one
+                //multiply our peak speed by our place on the velocity curve
+                //if we are at the peak our velocity will be our peak speed times 1, so our peak speed
+                currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
+
+                //if we aren't grounded we evaluate the air movement curve
+                airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+
+                //what was the player's speed the last time they were inputting
+                lastSpeedValue = currentSpeed;
+
+            }
+            else
+            {
+                velocityTime = 0;
+                decelerationTime += Time.deltaTime;
+
+
+                if (currentSpeed > 0 || airSpeed > 0)
+                {
+                    //apply a curve in the same way we applied the velocity but for when we want to slow down
+                    currentSpeed = (lastSpeedValue * decelerationCurve.Evaluate(decelerationTime));
+                    //apply a curve in the same way we applied the velocity but for when we want to slow down
+                    airSpeed = (lastSpeedValue * airDecelerationCurve.Evaluate(decelerationTime));
+                }
+                else
+                {
+                    lastSpeedValue = 0;
+                }
+
+                //since we are multiplying we might get some weird values, just incase if we are at a decimal point below 1 just set to zero
+                if (currentSpeed < 1)
+                {
+                    currentSpeed = 0;
+                }
+            }
+        }
+        else
+        {
+            quickTurnTime += Time.deltaTime;
+
+            if (isGrounded)
+            {
+                if (currentSpeed > peakSpeed / 5)
+                {
+                    //apply a curve in the same way we applied the velocity but for when we want to slow down
+                    currentSpeed = (lastSpeedValue * decelerationCurve.Evaluate(quickTurnTime));
+
+                }
+                else
+                {
+                    quickTurn = false;
+                    velocityTime = 0;
+                    quickTurnTime = 0;
+                }
+
+            }
+            else if (!isGrounded)
+            {
+                if (airSpeed > peakSpeed / 5)
+                {
+                    //apply a curve in the same way we applied the velocity but for when we want to slow down
+                    airSpeed = (lastSpeedValue * airQuickTurnCurve.Evaluate(quickTurnTime));
+                }
+                else
+                {
+                    quickTurn = false;
+                    velocityTime = 0;
+                    quickTurnTime = 0;
+                }
+
+
+            }
+
+        }
+
+
     }
 
     private void JumpCalculations()
@@ -515,11 +604,20 @@ public class CharacterControl : MonoBehaviour
 
     private void RotateTowards(Vector3 direction)
     {
-        //make sure we have no y value so that we don't rotate on the wrong axis
         direction = new Vector3(direction.x, 0, direction.z);
         Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+    
+        if (rawInput.magnitude < runMagnitude)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, slowRotationSpeed * Time.fixedDeltaTime);
+        }
+       
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
+        
     }
 
     private void CheckGrounded()
@@ -568,7 +666,7 @@ public class CharacterControl : MonoBehaviour
                 coyote = false;
             }    
 
-            Debug.Log(Time.deltaTime - coyoteTimer);
+            //Debug.Log(Time.deltaTime - coyoteTimer);
             isGrounded = false;
             snappedToGround = false;
         }
