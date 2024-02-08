@@ -603,10 +603,10 @@ public class TestCube : MonoBehaviour
 
 
         //CameraControl();
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Loader.Load(Loader.Scene.MVPLevel);
-        }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    Loader.Load(Loader.Scene.MVPLevel);
+        //}
 
         GetPullObjects();
 
@@ -638,7 +638,7 @@ public class TestCube : MonoBehaviour
         {
             Move();
             Jump();
-            Dash();
+            //Dash();
         }
         else if (!isFreeze && useNewMovement)
         {
@@ -2525,12 +2525,12 @@ public class TestCube : MonoBehaviour
         else return false;
     }
 
-    public bool DetectDashButton()
-    {
-        if (dash.ReadValue<float>() ==1) return true;
-        else return false;
+    //public bool DetectDashButton()
+    //{
+    //    if (dash.ReadValue<float>() ==1) return true;
+    //    else return false;
 
-    }
+    //}
 
     #endregion
 
@@ -2789,29 +2789,30 @@ public class TestCube : MonoBehaviour
 
     #endregion
 
+
     #region Dash
-    private void Dash()
-    {
-        if (DetectDashButton())
-        {
-            if(dashCdTimer >= dashCd)
-            {
-                isDashing = true;
-                startTimer = false;
+    //private void Dash()
+    //{
+    //    if (DetectDashButton())
+    //    {
+    //        if(dashCdTimer >= dashCd)
+    //        {
+    //            isDashing = true;
+    //            startTimer = false;
 
-                Invoke(nameof(ResetDash), dashDuration);
-            }  
+    //            Invoke(nameof(ResetDash), dashDuration);
+    //        }  
 
-        }
-    }
+    //    }
+    //}
 
-    private void ResetDash()
-    {
-        isDashing = false;
-        dashCdTimer = 0;
-        startTimer = true;
+    //private void ResetDash()
+    //{
+    //    isDashing = false;
+    //    dashCdTimer = 0;
+    //    startTimer = true;
         
-    }
+    //}
 
     #endregion
 

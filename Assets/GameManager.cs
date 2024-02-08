@@ -170,6 +170,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool firstTimeEnterHub;
     [SerializeField]
+    public int timesEnterHub;
+    [SerializeField]
     public bool ShowPhoneInstruction;
 
     [Header("Package")]
@@ -583,14 +585,24 @@ public class GameManager : MonoBehaviour
                 showNPC3Instruction = false;
             }
 
-            if(p1.withinPhoneRange || p2.withinPhoneRange)
+            if(p1.isAnswered || p2.isAnswered)
             {
-                ShowPhoneInstruction = true;
-            } 
-            else if(!p1.withinPhoneRange && !p2.withinPhoneRange)
-            {
+                p1.withinPhoneRange = false;
+                p2.withinPhoneRange = false;
                 ShowPhoneInstruction = false;
             }
+            else
+            {
+                if (p1.withinPhoneRange || p2.withinPhoneRange)
+                {
+                    ShowPhoneInstruction = true;
+                }
+                else if (!p1.withinPhoneRange && !p2.withinPhoneRange)
+                {
+                    ShowPhoneInstruction = false;
+                }
+            }
+
 
         }
 
