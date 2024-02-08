@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,20 +15,23 @@ public class CharacterControl : MonoBehaviour
 
     private bool isThrown = false;
     private bool isDead = false;
+    [SerializeField] private GameObject shadowRenderer;
 
 
     [Header("Ground Movement")]
     [SerializeField] private float peakSpeed = 500;
     [SerializeField] private AnimationCurve velocityCurve;
     [SerializeField] private AnimationCurve decelerationCurve;
+    [SerializeField] private AnimationCurve airQuickTurnCurve;
     //velocity curve goes from 0.0 - 1.0, multiply our peak speed by that to get our current speed
     private Vector2 forwardDirection;
-    private float currentSpeed;
+    [SerializeField] private float currentSpeed;
     private Vector3 directionSpeed;
     [SerializeField] private float rotationSpeed = 300;
     [SerializeField] private float velocityTime = 0;
-    private float decelerationTime = 0;
+    public float decelerationTime = 0;
     private Vector3 faceDir;
+    private Vector3 lookDir;
 
     public bool isGrounded = false;
     [SerializeField] private Transform groundCheck;
@@ -37,18 +41,28 @@ public class CharacterControl : MonoBehaviour
 
     private Rigidbody rb;
     private Vector2 lastInput = Vector2.zero;
-    private Vector2 stickValue = Vector2.zero;
+    [HideInInspector] public Vector2 stickValue = Vector2.zero;
     private Vector2 inputValue;
+    private Vector2 rawInput;
 
     [SerializeField] private float minQuickTurn = 0.8f;
+    private float quickTurnTime = 0;
+    private bool quickTurn = false;
+
+    [SerializeField] private float runMagnitude = 0.6f;
+    [SerializeField] private float slowRotationSpeed = 300f;
+    [SerializeField] private float requiredQTVelocity = 8;
+    private float lastSpeedValue;
 
     [Space, Header("Jumping Variables")]
+    [SerializeField] private float airQuickTurn = 0.2f;
     [SerializeField] private float peakJumpSpeed = 800;
     [SerializeField] private float maxFallSpeed = 15;
     [SerializeField] private AnimationCurve jumpCurve;
     [SerializeField] private AnimationCurve fallAccelCurve;
     //air velocity curve will build more slowly than a normal grounded acceleration to give the player a more controlled turn around
     [SerializeField] private AnimationCurve airVelocityCurve;
+    [SerializeField] private AnimationCurve airDecelerationCurve;
     [SerializeField] private float ySpeed = 0;
     private float fTime = 0;
     public float jTime = 0;
@@ -67,10 +81,18 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float jumpButtonGracePeriod = 0.3f;
     private float graceTimer = 0;
 
+    [SerializeField] private bool snappedToGround = false;
+    [SerializeField] private float coyoteTime = 0.12f;
+    public bool coyote = false;
+    private float coyoteTimer = 0;
+
+    private bool shouldJump = false;
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
     private InputActionMap player, dialogue, pause;
     private InputAction move, run, jump, parachute, cancelParachute, triggerButton;
+
+    private Camera camera;
 
     #region Initialization
     private void Awake()
@@ -115,31 +137,48 @@ public class CharacterControl : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        GetStickInputs(camera);
+        CheckGrounded();
+       
+        //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
+    }
+
     public void RunMovement(Camera cam, bool isParachuting)
     {
         MovementCalculations(cam);
         StateMachineUpdate();
-        GetStickInputs();
-
+        camera = cam;
         ApplyGravity();
-        CheckGrounded();
-
-        RotateTowards(faceDir.normalized);
+        //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
+        if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
 
         JumpCalculations();
+        //Debug.Log(directionSpeed);
+       
     }
 
     public void FixedUpdateFunctions()
     {
+      
+
         if (isGrounded)
         {
+            
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
         }
 
         else if (!isGrounded)
         {
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
+          
         }
+    }
+
+    public void LateUpdateFunctions()
+    {
+        CastBlobShadow();
     }
 
 
@@ -234,6 +273,10 @@ public class CharacterControl : MonoBehaviour
         //get camera forward and right
         Vector3 camForward = camera.transform.forward;
         Vector3 camRight = camera.transform.right;
+
+        camForward.y = 0;
+        camRight.y = 0;
+
         camForward = camForward.normalized;
         camRight = camRight.normalized;
 
@@ -244,45 +287,74 @@ public class CharacterControl : MonoBehaviour
         Vector3 horizontal = stickInput.x * camRight;
         Vector3 vertical = stickInput.y * camForward;
 
+        //Debug.Log(horizontal.ToString() + " " + vertical.ToString());
+
         Vector3 input = horizontal + vertical;
         input = input.normalized;
+        
         return input.normalized;
     }
-    private void GetStickInputs()
+
+    private void GetStickInputs(Camera cam)
     {
-        stickValue = inputAsset.Cube.Move.ReadValue<Vector2>();
-        stickValue = stickValue.normalized;
+        rawInput = inputAsset.Cube.Move.ReadValue<Vector2>();
+        stickValue = rawInput.normalized;
+       
+
+        Vector3 relativeStick = GetRelativeInputDirection(cam, stickValue);
 
         //when the player makes a quick turn we should stop/cut their momentum to give them more control over a quick turn around
-        if (stickValue.x != 0 || stickValue.y != 0)
+        if (relativeStick.x != 0 || relativeStick.y != 0)
         {
-            //if we have a new input
-            if (stickValue.x != lastInput.x || stickValue.y != lastInput.y)
+            if (isGrounded)
             {
-                //if our new input is a big enough difference from our last input we do a quick turn
-                if (stickValue.x - lastInput.x > minQuickTurn || stickValue.x - lastInput.x < -minQuickTurn)
+                //get the player's facing direction and check if our new input is far enough away from our facing direction
+                if (lookDir.x - relativeStick.x > minQuickTurn || lookDir.x - relativeStick.x < -minQuickTurn)
                 {
-                    //quick turn here
-                    velocityTime = 0;
-                    currentSpeed = 0;
+                    
+                    if (!quickTurn) quickTurn = true;
+                    Debug.Log(quickTurn);
                 }
 
-                if (stickValue.y - lastInput.y > minQuickTurn || stickValue.y - lastInput.y < -minQuickTurn)
+                if (lookDir.z - relativeStick.z > minQuickTurn || lookDir.z - relativeStick.z < -minQuickTurn)
                 {
-                    //quick turn here
-                    velocityTime = 0;
-                    currentSpeed = 0;
+                    if (!quickTurn) quickTurn = true;
+                    Debug.Log(quickTurn);
                 }
 
+            }
+            else
+            {
+                //get the player's facing direction and check if our new input is far enough away from our facing direction
+                if (lookDir.x - relativeStick.x > airQuickTurn || lookDir.x - relativeStick.x < -airQuickTurn)
+                {
+                    if (!quickTurn) quickTurn = true;
+                    Debug.Log(quickTurn);
+                }
+
+                if (lookDir.z - relativeStick.z > airQuickTurn || lookDir.z - relativeStick.z < -airQuickTurn)
+                {
+                    if (!quickTurn) quickTurn = true;
+                    Debug.Log(quickTurn);
+                }
+
+            }
+
+            //if we have a new input
+            if (relativeStick.x != lastInput.x || relativeStick.y != lastInput.y)
+            {
+                
                 //we want to update our input value to the new stick direction
                 inputValue = stickValue;
-                lastInput = stickValue;
+              
             }
         }
         else
         {
             inputValue = Vector2.zero;
         }
+
+        lookDir = GetRelativeInputDirection(cam, inputValue);
     }
     private void MovementCalculations(Camera cam)
     {
@@ -292,69 +364,137 @@ public class CharacterControl : MonoBehaviour
         //if we are grounded use our grounded speed curve otherwise use the airspeed curve
         if (isGrounded)
         {
-            directionSpeed = new Vector3(faceDir.x * currentSpeed, rb.velocity.y, faceDir.z * currentSpeed);
-        }
-        else
-        {
-            directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
-        }
-
-
-        //if we are inputting on the control stick we want to apply our velocity curve and start speeding the character up
-        if (inputDir.x != 0 || inputDir.y != 0)
-        {
-            //this facing direction means even if we are not inputting anything we are still facing somewhere
-            //this is used to keep applying speed for a short time after we input to get a deceleration
-            faceDir = GetRelativeInputDirection(cam, inputValue).normalized;
-
-
-            decelerationTime = 0;
-            velocityTime += Time.deltaTime;
-            //if we are on the ground we want to use our grounded velocity curve, otherwise we use the aerial one
-            if (isGrounded)
+            //if the player is inputting anything at all we should multiply the speed by their stick input to get a variable push rate
+            if (rawInput.magnitude > 0)
             {
-                //multiply our peak speed by our place on the velocity curve
-                //if we are at the peak our velocity will be our peak speed times 1, so our peak speed
-                currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
+                directionSpeed = new Vector3((faceDir.x * currentSpeed) * rawInput.magnitude, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude);
             }
             else
             {
-                //if we aren't grounded we evaluate the air movement curve
-                airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+                //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
             }
-
+            
         }
         else
         {
-            velocityTime = 0;
-            decelerationTime += Time.deltaTime;
-
-            if (currentSpeed > 0)
-            {
-                //apply a curve in the same way we applied the velocity but for when we want to slow down
-                currentSpeed = (currentSpeed * decelerationCurve.Evaluate(decelerationTime));
-            }
+            //the air speed is unaffected by the stick magnitude
+            directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
            
-            //since we are multiplying we might get some weird values, just incase if we are at a decimal point below 1 just set to zero
-            if (currentSpeed < 1)
-            {
-                currentSpeed = 0;
-            }
-
-            airSpeed = 0;
         }
 
-    
+        //if there is some input
+        if (inputValue.x != 0 || inputValue.y != 0)
+        {
+            //and our magnitude isn't an accidental stick flick
+            //and the player is quick turning
+            if (rawInput.magnitude > 0.05 && !quickTurn)
+            {
+                //set our facing direction
+                faceDir = GetRelativeInputDirection(cam, inputValue);
+            }
+            
+        }
+
+        //if we are inputting on the control stick we want to apply our velocity curve and start speeding the character up
+        if (!quickTurn)
+        {
+            if (inputDir.x != 0 || inputDir.y != 0)
+            {
+                //this facing direction means even if we are not inputting anything we are still facing somewhere
+                //this is used to keep applying speed for a short time after we input to get a deceleration
+               
+                decelerationTime = 0;
+                velocityTime += Time.deltaTime;
+
+                //if we are on the ground we want to use our grounded velocity curve, otherwise we use the aerial one
+                //multiply our peak speed by our place on the velocity curve
+                //if we are at the peak our velocity will be our peak speed times 1, so our peak speed
+                currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
+
+                //if we aren't grounded we evaluate the air movement curve
+                airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+
+                //what was the player's speed the last time they were inputting
+                lastSpeedValue = currentSpeed * rawInput.magnitude;
+
+            }
+            else
+            {
+                velocityTime = 0;
+                decelerationTime += Time.deltaTime;
+
+
+                if (currentSpeed > 0 || airSpeed > 0)
+                {
+                    //apply a curve in the same way we applied the velocity but for when we want to slow down
+                    currentSpeed = (lastSpeedValue * decelerationCurve.Evaluate(decelerationTime));
+                    //apply a curve in the same way we applied the velocity but for when we want to slow down
+                    airSpeed = (lastSpeedValue * airDecelerationCurve.Evaluate(decelerationTime));
+                }
+                else
+                {
+                    lastSpeedValue = 0;
+                }
+
+                //since we are multiplying we might get some weird values, just incase if we are at a decimal point below 1 just set to zero
+                if (currentSpeed < 1)
+                {
+                    currentSpeed = 0;
+                }
+            }
+        }
+        else
+        {
+            
+            quickTurnTime += Time.deltaTime;
+
+            if (isGrounded)
+            {
+                if (currentSpeed > peakSpeed / 5)
+                {
+                    //apply a curve in the same way we applied the velocity but for when we want to slow down
+                    currentSpeed = (lastSpeedValue * decelerationCurve.Evaluate(quickTurnTime));
+
+                }
+                else
+                {
+                    quickTurn = false;
+                    velocityTime = 0;
+                    quickTurnTime = 0;
+                }
+
+            }
+            else if (!isGrounded)
+            {
+                if (airSpeed > peakSpeed / 5)
+                {
+                    //apply a curve in the same way we applied the velocity but for when we want to slow down
+                    airSpeed = (lastSpeedValue * airQuickTurnCurve.Evaluate(quickTurnTime));
+                }
+                else
+                {
+                    quickTurn = false;
+                    velocityTime = 0;
+                    quickTurnTime = 0;
+                }
+
+
+            }
+
+        }
+
+
     }
 
     private void JumpCalculations()
     {
 
         //if the jump button is pressed
-        if (readJumpValue && isGrounded && !isJumping && canJump)
+        if (readJumpValue && shouldJump && !isJumping && canJump)
         {
             canJump = false;
-            if (!isJumping && isGrounded)
+            if (!isJumping && shouldJump)
             {
                 //lets get our starting y vector
                 lastStandingVector = transform.position;
@@ -459,14 +599,14 @@ public class CharacterControl : MonoBehaviour
     private void ApplyGravity()
     {
         //build downwards velocity until you reach peak speed
-        if (!isGrounded && pState == playerStates.fall)
+        if (pState != playerStates.jump && !isJumping && !snappedToGround)
         {
             //add time to the fall timer
             fTime += Time.deltaTime;
             //add to our fall speed by using the animation curve
             ySpeed = (-maxFallSpeed) * fallAccelCurve.Evaluate(fTime);
         }
-        else if (pState == playerStates.idle || pState == playerStates.run || pState == playerStates.land)
+        else 
         {
             if (!isJumping) ySpeed = 0;
             //reset the fall timer
@@ -478,11 +618,20 @@ public class CharacterControl : MonoBehaviour
 
     private void RotateTowards(Vector3 direction)
     {
-        //make sure we have no y value so that we don't rotate on the wrong axis
         direction = new Vector3(direction.x, 0, direction.z);
         Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+    
+        if (rawInput.magnitude < runMagnitude)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, slowRotationSpeed * Time.fixedDeltaTime);
+        }
+       
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
+        
     }
 
     private void CheckGrounded()
@@ -491,20 +640,85 @@ public class CharacterControl : MonoBehaviour
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
         {
             isGrounded = true;
-            if (!isJumping) transform.position = new Vector3(transform.position.x, (hit.point.y + 1.05f), transform.position.z);
+            //if the player isn't jumping and the distance between them and the ground is smaller than some number, snap them to the floor
+            if (!isJumping && !YDistanceGreaterThan(0.5f, groundCheck.transform.position, hit.point))
+            {
+                transform.position = new Vector3(transform.position.x, (hit.point.y + 1.05f), transform.position.z);
+                snappedToGround = true;
+            }
+
+            if (!isJumping)
+            {
+                shouldJump = true;
+            }
         }
         else
         {
+            //if we were just grounded, lets factor in coyote time
+            //if we are grounded but we shouldn't be anymore
+            if (isGrounded && !coyote)
+            {
+                //activate coyote time
+                coyote = true;
+                coyoteTimer = Time.time;
+            }
+
+            //if we are in coyote time
+            if (coyote && !isJumping)
+            {
+                shouldJump = true;
+
+                if (Time.time - coyoteTimer >= coyoteTime)
+                {
+                    //we are no longer grounded
+                    coyote = false;
+                }
+            }
+            else
+            {
+                shouldJump = false;
+                coyote = false;
+            }    
+
+            //Debug.Log(Time.deltaTime - coyoteTimer);
             isGrounded = false;
+            snappedToGround = false;
         }
 
-        
+ 
     }
 
+    private bool YDistanceGreaterThan(float dist, Vector3 pos1, Vector3 pos2)
+    {
+        if (Mathf.Abs(pos1.y - pos2.y) > dist)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     private void OnDrawGizmosSelected()
     {
-        //Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
-        //Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDist, groundCheck.position.z));
+        Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);
+        Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDist, groundCheck.position.z));
+    }
+
+    private void CastBlobShadow()
+    {
+        RaycastHit hit;
+
+        if (Physics.SphereCast(groundCheck.position, groundCheckRadius, -Vector3.up, out hit, Mathf.Infinity, groundLayer))
+        {
+            shadowRenderer.SetActive(true);
+            shadowRenderer.transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);
+        }
+        else
+        {
+            shadowRenderer.SetActive(false);
+        }
+
     }
 
     #endregion

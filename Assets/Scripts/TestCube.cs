@@ -619,7 +619,16 @@ public class TestCube : MonoBehaviour
     private void LateUpdate()
     {
         PlayerDetector();
-        CastBlobShadow();
+
+        if (!useNewMovement)
+        {
+            CastBlobShadow();
+        }
+        else
+        {
+            charController.LateUpdateFunctions();
+        }
+       
     }
 
     private void FixedUpdate()
@@ -837,6 +846,11 @@ public class TestCube : MonoBehaviour
             //}
 
 
+        }
+        else
+        {
+            playerCamera.enabled = true;
+            mainCam = null;
         }
 
         //Start the Devil phone Dialogue 
