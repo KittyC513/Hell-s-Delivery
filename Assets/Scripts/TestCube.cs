@@ -288,6 +288,7 @@ public class TestCube : MonoBehaviour
 
     private float? lastColliderTime;
     private float? pushButtonPressedTime;
+    Vector3 forceDir;
 
 
 
@@ -1393,14 +1394,16 @@ public class TestCube : MonoBehaviour
         {
             if (objectGrabbable == null)
             {
-                //if (Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
-                if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
+                //if(Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
+                if(Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 {
-
+                    print("Package");
                     if (isPlayer1 && rC.Player2isCarrying)
                     {
+                        print("FoundPackage");
                         if (targetObject == null)
                         {
+                            print("TakePackage");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             playerSounds.packagePick.Post(this.gameObject);
@@ -1411,8 +1414,10 @@ public class TestCube : MonoBehaviour
 
                     if (isPlayer2 && rC.Player1isCarrying)
                     {
+                        print("FoundPackage");
                         if (targetObject == null)
                         {
+                            print("TakePackage");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             playerSounds.packagePick.Post(this.gameObject);
@@ -1485,7 +1490,6 @@ public class TestCube : MonoBehaviour
             {
                 isDropped = false;
 
-
                 //if (Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistance, pickableMask))
                 //if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistance, pickableMask))
                 if (withinPackageRange)
@@ -1494,10 +1498,10 @@ public class TestCube : MonoBehaviour
                     {
                         if (targetObject == null)
                         {
-                            //objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                            //objectGrabbable.Grab(itemContainer);
-                            //playerSounds.packagePick.Post(this.gameObject);
-                            TakePackageFunction();
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable.Grab(itemContainer);
+                            playerSounds.packagePick.Post(this.gameObject);
+                            //TakePackageFunction();
                         }
                     }
 
@@ -1505,10 +1509,10 @@ public class TestCube : MonoBehaviour
                     {
                         if (targetObject == null)
                         {
-                            //objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                            //objectGrabbable.Grab(itemContainer);
-                            //playerSounds.packagePick.Post(this.gameObject);
-                            TakePackageFunction();
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable.Grab(itemContainer);
+                            playerSounds.packagePick.Post(this.gameObject);
+                            //TakePackageFunction();
                         }
 
                     }
@@ -1644,8 +1648,9 @@ public class TestCube : MonoBehaviour
             }
 
         }
-
     }
+
+      
 
     #endregion
 
@@ -1965,8 +1970,8 @@ public class TestCube : MonoBehaviour
     void DetectPushRange()
     {
 
-        if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
-        //if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pushDistance, pushMask))
+        //if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pushDistance, pushMask))
         {
             withinPushingRange = true;
             //lastColliderTime = Time.time;
@@ -1974,18 +1979,18 @@ public class TestCube : MonoBehaviour
         else
         {
             withinPushingRange = false;
-            if (isPlayer1 && p1Anim != null)
-            {
-                p2Anim.SetBool("beingPushed", false);
-                //p1pushed = false;
+            //if (isPlayer1 && p1Anim != null)
+            //{
+            //    p2Anim.SetBool("beingPushed", false);
+            //    p1pushed = false;
 
-            }
+            //}
 
-            if (isPlayer2 && p2Anim != null)
-            {
-                p1Anim.SetBool("beingPushed", false);
-                //p2pushed = false;
-            }
+            //if (isPlayer2 && p2Anim != null)
+            //{
+            //    p1Anim.SetBool("beingPushed", false);
+            //    p2pushed = false;
+            //}
         }
     }
     private void DoPush(InputAction.CallbackContext obj)
@@ -1996,7 +2001,7 @@ public class TestCube : MonoBehaviour
             if (isPlayer1)
             {
                 P1Push();
-                objectGrabbable = null;
+                //objectGrabbable = null;
                 p1pushed = true;
 
 
@@ -2005,7 +2010,7 @@ public class TestCube : MonoBehaviour
             if (isPlayer2)
             {
                 P2Push();
-                objectGrabbable = null;
+                //objectGrabbable = null;
                 p2pushed = true;
             }
 
@@ -2023,25 +2028,31 @@ public class TestCube : MonoBehaviour
         //p2Anim = gameManager.p2Character.GetComponent<Animator>();
         p2Anim = GameManager.instance.p2Ani;
 
-        otherRB.useGravity = false;
-        //otherRB.isKinematic = true;
+        otherRB.useGravity = true;
+
         Vector3 forceDir = otherRB.transform.position - transform.position;
 
-        //Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
+        gameManager.p2.forceDirection += playerDir.forward * pushForce;
+        
+        //if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+        //{
+        //    gameManager.p2.forceDirection += playerDir.forward * pushForce;
 
-        //gameManager.p2.forceDirection += gameManager.player2.transform.position * forceDir.z * pushForce;
-        //gameManager.p2.forceDirection += gameManager.player2.transform.position * forceDir.x * pushForce;
+        //}
+        //else
+        //{        
+        //    gameManager.p2.forceDirection += playerDir.forward * pushForce;
 
-        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
-        {
-            gameManager.p2.forceDirection += forceDir.z * gameManager.p2.GetCameraRight(mainCam) * pushForce;
-            gameManager.p2.forceDirection += forceDir.x * gameManager.p2.GetCameraRight(mainCam) * pushForce;
-        }
-        else
-        {
-            gameManager.p2.forceDirection += forceDir.z * gameManager.p2.GetCameraRight(playerCamera) * pushForce;
-            gameManager.p2.forceDirection += forceDir.x * gameManager.p2.GetCameraRight(playerCamera) * pushForce;
-        }
+        //    //otherRB.AddForce(playerDir.up * pushForce, ForceMode.Impulse);
+
+
+        //    //transform.Translate(Vector3.forward * Time.deltaTime * currentSpeed * verticalInput);
+        //    //transform.Translate(Vector3.right * Time.deltaTime * currentSpeed * horizontalInput);
+
+        //    //otherRB.AddForce(playerDir.up * pushForce, ForceMode.Impulse);
+        //    //gameManager.p2.forceDirection += forceDir.z * gameManager.p2.GetCameraForward(playerCamera) * pushForce;
+        //    //gameManager.p2.forceDirection += forceDir.x * gameManager.p2.GetCameraRight(playerCamera) * pushForce;
+        //}
 
 
         //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
@@ -2053,7 +2064,7 @@ public class TestCube : MonoBehaviour
         //StartCoroutine(SlideToPosition(forcePosition));
 
         p2Anim.SetBool("beingPush", true);
-
+        StartCoroutine(StopBeingPushedP2());
         //noisy2 = gameManager.noisy2;
 
         if (rC.Player2isCarrying)
@@ -2072,23 +2083,26 @@ public class TestCube : MonoBehaviour
 
         otherRB.useGravity = false;
         //otherRB.isKinematic = true;
-        Vector3 forceDir = otherRB.transform.position - transform.position;
+        forceDir = otherRB.transform.position - transform.position;
 
-        //Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+        Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+
+        gameManager.p1.forceDirection += playerDir.forward * pushForce;
 
         //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.z * pushForce;
         //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.x * pushForce;
 
-        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
-        {
-            gameManager.p1.forceDirection += forceDir.z * gameManager.p1.GetCameraRight(mainCam) * pushForce + gameManager.player1.transform.position * 5;
-            gameManager.p1.forceDirection += forceDir.x * gameManager.p1.GetCameraRight(mainCam) * pushForce + gameManager.player1.transform.position * 5;
-        }
-        else
-        {
-            gameManager.p1.forceDirection += forceDir.z * gameManager.p1.GetCameraRight(playerCamera) * pushForce;
-            gameManager.p1.forceDirection += forceDir.x * gameManager.p1.GetCameraRight(playerCamera) * pushForce;
-        }
+        //if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+        //{
+
+        //    gameManager.p1.forceDirection += forceDir.z * GetCameraForward(mainCam) * pushForce;
+        //    gameManager.p1.forceDirection += forceDir.x * GetCameraRight(mainCam) * pushForce;
+        //}
+        //else
+        //{
+        //    gameManager.p1.forceDirection += forceDir.z * gameManager.p1.GetCameraForward(playerCamera) * pushForce;
+        //    gameManager.p1.forceDirection += forceDir.x * gameManager.p1.GetCameraRight(playerCamera) * pushForce;
+        //}
 
         //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
 
@@ -2099,7 +2113,7 @@ public class TestCube : MonoBehaviour
         //StartCoroutine(SlideToPosition(forcePosition));
 
         p1Anim.SetBool("beingPush", true);
-
+        StartCoroutine(StopBeingPushedP1());
         //noisy1 = gameManager.noisy1;
 
         if (rC.Player1isCarrying)
@@ -2110,10 +2124,21 @@ public class TestCube : MonoBehaviour
         }
     }
 
+    IEnumerator StopBeingPushedP1()
+    {
+        yield return new WaitForSeconds(1f);
+        p1Anim.SetBool("beingPush", false); ;
+    }
+
+    IEnumerator StopBeingPushedP2()
+    {
+        yield return new WaitForSeconds(1f);
+        p2Anim.SetBool("beingPush", false); ;
+    }
+
     //IEnumerator SlideToPosition(Vector3 targetPosition)
     //{
     //    float elapsedTime = 0f;
-    //    Vector3 startingPosition = otherRB.transform.position;
 
     //    while (elapsedTime < slideTime)
     //    {
@@ -2124,6 +2149,7 @@ public class TestCube : MonoBehaviour
 
     //    // Ensure the object reaches the exact target position at the end
     //    otherRB.MovePosition(targetPosition);
+    //    yield return null;
 
     //}
 
@@ -2501,7 +2527,7 @@ public class TestCube : MonoBehaviour
 
     public bool DetectDashButton()
     {
-        if (dash.triggered) return true;
+        if (dash.ReadValue<float>() ==1) return true;
         else return false;
 
     }

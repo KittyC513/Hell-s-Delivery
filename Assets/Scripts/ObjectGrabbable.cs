@@ -148,10 +148,12 @@ public class ObjectGrabbable : MonoBehaviour
     {
         FindGameObject();
         FindItemContainer();
+        IndicatorControl();
+
         Move();
         P1Steal();
         P2Steal();
- 
+
 
 
     }
@@ -164,10 +166,10 @@ public class ObjectGrabbable : MonoBehaviour
         }
 
         //buttonPos = buttonOriPos;
-            
+
 
         //PackageIcon();
-        //IndicatorControl();
+
 
     }
 
