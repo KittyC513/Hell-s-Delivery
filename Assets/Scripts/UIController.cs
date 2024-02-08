@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UIController : MonoBehaviour
+{
+
+    public Canvas canvas;
+    public Camera TestCamera;
+    public GameObject PackageIndicatorObject;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //UpdatePackageIndicator();
+    }
+
+
+    public void AddPackageIndicator(GameObject package)
+    {
+       // PackageIndicator indicator = GameObject.Instantiate(PackageIndicatorObject, Canvas.transform).GetComponent<PackageIndicator>();
+       // indicator.InitializePackageIndicator(package, TestCamera, canvas);
+        
+
+    }
+
+}
