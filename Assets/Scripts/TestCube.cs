@@ -2059,6 +2059,7 @@ public class TestCube : MonoBehaviour
         if (rC.Player2isCarrying)
         {
             p1Steal = true;
+            gameManager.p2.objectGrabbable = null;
         }
 
     }
@@ -2104,6 +2105,7 @@ public class TestCube : MonoBehaviour
         if (rC.Player1isCarrying)
         {
             p2Steal = true;
+            gameManager.p1.objectGrabbable = null;
 
         }
     }
