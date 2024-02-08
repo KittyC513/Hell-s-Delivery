@@ -24,6 +24,11 @@ public class LevelData : ScriptableObject
     [SerializeField]
     public float goodPackageTime = 0.8f;
 
+    [Space, Header("Badges")]
+
+    [Space, Header("Badge Values")]
+    
+
     [Space, Header("Player Level Data (do not change in editor)")]
     [SerializeField]
     public float p1Deaths;
@@ -43,4 +48,8 @@ public class LevelData : ScriptableObject
     public bool p1Collectable;
     [SerializeField]
     public bool p2Collectable;
+    [SerializeField]
+    public int p1MailCount;
+    [SerializeField]
+    public int p2MailCount;
 }

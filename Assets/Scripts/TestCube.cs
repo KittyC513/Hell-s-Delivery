@@ -456,7 +456,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool startTimer;
 
-
+    [Header("Collectables")]
+    public int mailCount;
+    
     //[SerializeField]
     //float dropValue;
     //[SerializeField]
@@ -579,6 +581,7 @@ public class TestCube : MonoBehaviour
         {
             charController.RunMovement(playerCamera, isGliding);
         }
+
 
         DetectPushRange();
 
@@ -1142,12 +1145,15 @@ public class TestCube : MonoBehaviour
             //rb.velocity = new Vector3((forceDirection.x * currentSpeed) * Time.deltaTime, rb.velocity.y, (forceDirection.z * currentSpeed) * Time.deltaTime);
             //Debug.Log("maxSpeed =" + maxSpeed);
 
+
+            if (!isCameraLocked)
+            {
+                LookAt();
+            }
+
         }
 
-        if (!isCameraLocked)
-        {
-            LookAt();
-        }
+       
 
 
     }

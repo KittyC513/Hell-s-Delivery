@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
-
+using UnityEditor;
 
 public class ScoreCount : MonoBehaviour
 {
@@ -29,8 +29,11 @@ public class ScoreCount : MonoBehaviour
     [SerializeField] private float completionTime = 0;
     private bool shouldCountTime = false;
 
+    private LevelData lvlData;
     [SerializeField]
-    public LevelData lvlData;
+    public LevelData lvl1Data;
+    [SerializeField] public LevelData lvl2Data;
+    [SerializeField] public LevelData lvl3Data;
 
     [Space, Header("Ratio Values")]
     [SerializeField]
@@ -84,7 +87,16 @@ public class ScoreCount : MonoBehaviour
     [SerializeField]
     public GameObject p2scoreEffect;
 
+    [Space, Header("UI Elements")]
+    [SerializeField] public RectTransform p1MailSlot;
+    [SerializeField] public RectTransform p2MailSlot;
+    [SerializeField] public TextMeshProUGUI p1MailCount;
+    [SerializeField] public TextMeshProUGUI p2MailCount;
 
+    [Space, Header("Scene Names")]
+    [SerializeField] private string level1 = "Level1";
+    [SerializeField] private string level2 = "Level2";
+    [SerializeField] private string level3 = "Level3";
     //need score for each value
     //need an expected outcome for each player
     //need a final value for each player
@@ -98,6 +110,19 @@ public class ScoreCount : MonoBehaviour
     {
         instance = this;
     }
+
+    private void ResetValues()
+    {
+        lvlData.p1Deaths = 0;
+        lvlData.p2Deaths = 0;
+        lvlData.p1Deliver = 0;
+        lvlData.p2Deliver = 0;
+        lvlData.p1Collectable = false;
+        lvlData.p2Collectable = false;
+        lvlData.p1MailCount = 0;
+        lvlData.p2MailCount = 0;
+    }
+
     void Start()
     {
         lastKnobValue = 0;
@@ -109,6 +134,22 @@ public class ScoreCount : MonoBehaviour
         p2Score = p1Score;
         p1scoreEffect.SetActive(false);
         p2scoreEffect.SetActive(false);
+        if (gameManager.curSceneName == level1)
+        {
+            lvlData = lvl1Data;
+        }
+        else if (gameManager.curSceneName == level2)
+        {
+            lvlData = lvl2Data;
+        }
+        else if (gameManager.curSceneName == level3)
+        {
+            lvlData = lvl3Data;
+        }
+        else
+        {
+            lvlData = lvl1Data;
+        }
     }   
 
     // Update is called once per frame
@@ -126,6 +167,13 @@ public class ScoreCount : MonoBehaviour
         lvlData.p1Deliver = p1PackageTime;
         lvlData.p2Deliver = p2PackageTime;
         lvlData.completionTime = completionTime;
+        lvlData.p1MailCount = gameManager.p1.mailCount;
+        //lvlData.p2MailCount = gameManager.p2.mailCount;
+
+        p1MailCount.text = lvlData.p1MailCount.ToString();
+
+        //p2MailCount.text = lvlData.p2MailCount.ToString();
+
         lvlData.p1FinalScore = p1CalculatedScore;
         lvlData.p2FinalScore = p2CalculatedScore;
 
