@@ -155,7 +155,7 @@ public class SceneControl : MonoBehaviour
     IEnumerator StartComicIntro()
     {
         Comic1.SetActive(true);
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(29);
         Comic1.SetActive(false);
         GameManager.instance.UnfreezePlayer();
 
