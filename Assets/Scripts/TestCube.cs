@@ -1400,8 +1400,8 @@ public class TestCube : MonoBehaviour
         {
             if (objectGrabbable == null)
             {
-                //if(Physics.SphereCast(playerPos.position, pickDistance, playerPos.forward, out raycastHit, pickDistance, pickableMask))
-                if(Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
+                if(Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistanceHeavy, pickableMask))
+                //if(Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 {
                     print("Package");
                     if (isPlayer1 && rC.Player2isCarrying)
@@ -1883,11 +1883,11 @@ public class TestCube : MonoBehaviour
     }
 
     //DrawGizons from Player to Entrance
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * interactDistance, interactRadius);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(playerPos.position + playerPos.forward * pickDistanceHeavy, pickRadiusHeavy);
+    }
     #region Old DetectInteractRange
     //public void DetectInteractRange()
     //{
