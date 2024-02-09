@@ -6086,7 +6086,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.49361324
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -6281,14 +6281,14 @@ MonoBehaviour:
   package: {fileID: 0}
   pickDistance: 0.6
   isCast: 0
-  pickDistanceHeavy: 1.6
+  pickDistanceHeavy: 2
   pickRadiusHeavy: 1.2
   pickableMask:
     serializedVersion: 2
     m_Bits: 128
   withinPackageRange: 0
   rC: {fileID: 6586379375218265399}
-  raycastDistance: 5
+  raycastDistance: 7
   isCarrying: 0
   tG: {fileID: 0}
   trigger: {fileID: 0}
@@ -6298,17 +6298,17 @@ MonoBehaviour:
   isGliding: 0
   numOfButtonPressed: 0
   parachuteObj: {fileID: 5520364453758422537}
-  pushForce: 2
+  pushForce: 100
   pushMask:
     serializedVersion: 2
     m_Bits: 3072
   gameManager: {fileID: 0}
   otherRB: {fileID: 0}
-  pushDistance: 0.5
+  pushDistance: 1.5
   pushMultiply: 100
-  lerpSpeed: 50
+  lerpSpeed: 10
   withinPushingRange: 0
-  slideTime: 0.1
+  slideTime: 0.5
   p1Anim: {fileID: 0}
   p2Anim: {fileID: 0}
   p1Steal: 0
@@ -6398,11 +6398,11 @@ MonoBehaviour:
     m_Bits: 1073741824
   isAnswered: 0
   dashForce: 0
-  dashSpeed: 100
-  dashUpForce: 0
+  dashSpeed: 50
+  dashUpForce: 1
   dashDuration: 0.25
-  dashCd: 5
-  dashCdTimer: 5
+  dashCd: 1
+  dashCdTimer: 1
   isDashing: 0
   startTimer: 0
 --- !u!114 &965772886468833305

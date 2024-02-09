@@ -57,6 +57,10 @@ public class SceneControl : MonoBehaviour
     private GameObject phoneInstruction;
     [SerializeField]
     public bool dialogueFin;
+    [SerializeField]
+    private GameObject Weather;
+    [SerializeField]
+    public bool firstCustomer;
 
     private void Awake()
     {
@@ -140,7 +144,9 @@ public class SceneControl : MonoBehaviour
         mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
         //print("Camera");
     }
-
+    
+    
+    #region HubStart
     public void StartComic()
     {
         StartCoroutine(StartComicIntro());
@@ -153,7 +159,10 @@ public class SceneControl : MonoBehaviour
         Comic1.SetActive(false);
         GameManager.instance.UnfreezePlayer();
 
+
+
     }
+
 
 
     void HubStart()
@@ -162,6 +171,17 @@ public class SceneControl : MonoBehaviour
         {
             StartComic();
             GameManager.instance.firstTimeEnterHub = false;
+        }
+
+        if (GameManager.instance.timesEnterHub >= 1)
+        {
+            Weather.SetActive(true);
+            firstCustomer = true;
+        }
+        else
+        {
+            Weather.SetActive(false);
+            firstCustomer = false;
         }
 
         if (GameManager.instance.showWertherInstruction)
@@ -206,6 +226,9 @@ public class SceneControl : MonoBehaviour
             //dialogueFin = false;
         }
     }
+
+
+    #endregion
 
 
 

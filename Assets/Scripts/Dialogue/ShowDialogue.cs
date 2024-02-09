@@ -117,6 +117,7 @@ public class ShowDialogue :DialogueViewBase
     public static void TutorialLevel()
     {
         GameManager.instance.sceneChanged = true;
+        GameManager.instance.timesEnterHub += 1;
         Loader.Load(Loader.Scene.Tutorial);
         
         //SceneManager.LoadScene("Tutorial");
