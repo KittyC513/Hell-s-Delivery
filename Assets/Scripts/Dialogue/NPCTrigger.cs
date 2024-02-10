@@ -10,11 +10,15 @@ public class NPCTrigger : MonoBehaviour
     public bool hasTalkedBefore = false;
     [SerializeField]
     private Animator anim;
+    [SerializeField]
+    private GameObject npc;
+    [SerializeField]
+    private GameObject npc1;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        npc1.SetActive(false);
     }
 
     // Update is called once per frame
@@ -51,7 +55,7 @@ public class NPCTrigger : MonoBehaviour
     {
         if (SceneControl.instance.firstCustomer)
         {
-            StartCoroutine(Walking());
+            //StartCoroutine(Walking());
         }
     }
 
@@ -61,6 +65,8 @@ public class NPCTrigger : MonoBehaviour
         anim.SetBool("Arrived", true);
         yield return new WaitForSeconds(3.5f);
         anim.SetBool("Arrived", false);
+
+
     }
 
 
