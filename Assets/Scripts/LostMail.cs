@@ -48,7 +48,7 @@ public class LostMail : MonoBehaviour
                 time = Time.time;
                 anim.SetBool("Collected", true);
                 collected = true;
-                Destroy(this.gameObject, 0.5f);
+                Destroy(this.gameObject, 0.3f);
             }
             
         }
@@ -61,8 +61,13 @@ public class LostMail : MonoBehaviour
         {
             if (p1) GetPositionToUI(p1MailSlot);
             else GetPositionToUI(p1MailSlot);
+            LookAtCamera(collector.cam);
         }
         
+    }
+    private void LookAtCamera(Camera cam)
+    {
+        this.transform.LookAt(cam.transform, cam.transform.up);
     }
 
     private void AddScoreToPlayer(PlayerCollector player)
