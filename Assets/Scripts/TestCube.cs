@@ -462,6 +462,8 @@ public class TestCube : MonoBehaviour
 
     [Header("Collectables")]
     public int mailCount;
+
+
     
     //[SerializeField]
     //float dropValue;
@@ -593,7 +595,7 @@ public class TestCube : MonoBehaviour
         {
             //DetectInteractRange();
         }
-        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
+        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == "HubStart")
         {
 
             package = GameObject.FindGameObjectWithTag("Package");
@@ -883,15 +885,23 @@ public class TestCube : MonoBehaviour
                         {
                             if (!isDashing)
                             {
-                                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+                                if(mainCam != null)
+                                {
+                                    forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
 
-                                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                                    forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                                }
+
                             }
                             else
                             {
-                                forceDirection += faceDir.z * GetCameraForward(mainCam) * dashSpeed;
+                                if(mainCam != null)
+                                {
+                                    forceDirection += faceDir.z * GetCameraForward(mainCam) * dashSpeed;
 
-                                forceDirection += faceDir.x * GetCameraRight(mainCam) * dashSpeed;
+                                    forceDirection += faceDir.x * GetCameraRight(mainCam) * dashSpeed;
+                                }
+
                             }
 
 
@@ -922,22 +932,33 @@ public class TestCube : MonoBehaviour
                         {
                             if (!isDashing)
                             {
-                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+                                if(playerCamera != null)
+                                {
+                                    forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                                    forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+                                }
+
                             }
                             else
                             {
-                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * dashSpeed;
-                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * dashSpeed;
+                                if(playerCamera != null)
+                                {
+                                    forceDirection += faceDir.x * GetCameraRight(playerCamera) * dashSpeed;
+                                    forceDirection += faceDir.z * GetCameraForward(playerCamera) * dashSpeed;
+                                }
+
                             }
 
 
                         }
                         else
                         {
+                            if(playerCamera != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
+                            }
 
-                            forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
-                            forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
                             //MoveTowardFacingDirection();
                             //print("pullingSpeed" + pullingSpeed);
                         }
@@ -952,13 +973,21 @@ public class TestCube : MonoBehaviour
                     {
                         if (!isDashing)
                         {
-                            forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
-                            forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
+                            if(camManager.instance.puzzle1Cam != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
+                            }
+
                         }
                         else
                         {
-                            forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * dashSpeed;
-                            forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * dashSpeed;
+                            if(camManager.instance.puzzle1Cam != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * dashSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * dashSpeed;
+                            }
+
                         }
 
 
@@ -991,13 +1020,21 @@ public class TestCube : MonoBehaviour
                         {
                             if (!isDashing)
                             {
-                                forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
-                                forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+                                if(mainCam != null)
+                                {
+                                    forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
+                                    forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
+                                }
+
                             }
                             else
                             {
-                                forceDirection += faceDir.x * GetCameraRight(mainCam) * dashSpeed;
-                                forceDirection += faceDir.z * GetCameraForward(mainCam) * dashSpeed;
+                                if(mainCam != null)
+                                {
+                                    forceDirection += faceDir.x * GetCameraRight(mainCam) * dashSpeed;
+                                    forceDirection += faceDir.z * GetCameraForward(mainCam) * dashSpeed;
+                                }
+
                             }
 
 
@@ -1026,13 +1063,20 @@ public class TestCube : MonoBehaviour
                         {
                             if (!isDashing)
                             {
-                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
-                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+                                if(playerCamera != null)
+                                {
+                                    forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
+                                    forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
+                                }
+
                             }
                             else
                             {
-                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * dashSpeed;
-                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * dashSpeed;
+                                if(playerCamera != null)
+                                {
+                                    forceDirection += faceDir.x * GetCameraRight(playerCamera) * dashSpeed;
+                                    forceDirection += faceDir.z * GetCameraForward(playerCamera) * dashSpeed;
+                                }
 
                             }
 
@@ -1041,8 +1085,12 @@ public class TestCube : MonoBehaviour
                         }
                         else
                         {
-                            forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
-                            forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
+                            if(playerAnimator2 != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
+                            }
+
                         }
 
 
@@ -1055,13 +1103,21 @@ public class TestCube : MonoBehaviour
                     {
                         if (!isDashing)
                         {
-                            forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * currentSpeed;
-                            forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * currentSpeed;
+                            if(camManager.instance.puzzle1CamP2 != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * currentSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * currentSpeed;
+                            }
+
                         }
                         else
                         {
-                            forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * dashSpeed;
-                            forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * dashSpeed;
+                            if (camManager.instance.puzzle1CamP2)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * dashSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * dashSpeed;
+                            }
+
                         }
 
 

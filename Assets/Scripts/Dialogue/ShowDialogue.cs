@@ -178,7 +178,15 @@ public class ShowDialogue :DialogueViewBase
         Gradient.SetActive(false);
     }
 
- 
+    [YarnCommand("WeatherDialogueEnd")]
+    public static void WeatherDialogueEnds()
+    {
+        SceneControl.instance.NPC1dialogueEnds = true;
+    }
+
+
+
+
 
     /*[YarnCommand("ShowDevilOnPlayerDeath")]
     public static void Show()

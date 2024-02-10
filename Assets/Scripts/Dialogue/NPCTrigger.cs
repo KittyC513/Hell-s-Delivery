@@ -13,12 +13,15 @@ public class NPCTrigger : MonoBehaviour
     [SerializeField]
     private GameObject npc;
     [SerializeField]
-    private GameObject npc1;
+    private GameObject smoke;
+    [SerializeField]
+    private bool npc1Arrived;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        npc1.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -53,9 +56,9 @@ public class NPCTrigger : MonoBehaviour
 
     private void Arrive()
     {
-        if (SceneControl.instance.firstCustomer)
+        if (SceneControl.instance.firstCustomer && !npc1Arrived)
         {
-            //StartCoroutine(Walking());
+            StartCoroutine(Walking());
         }
     }
 
@@ -63,9 +66,10 @@ public class NPCTrigger : MonoBehaviour
     IEnumerator Walking()
     {
         anim.SetBool("Arrived", true);
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(0.45f);
+        smoke.SetActive(false);
         anim.SetBool("Arrived", false);
-
+        npc1Arrived = true;
 
     }
 
