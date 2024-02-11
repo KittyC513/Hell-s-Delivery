@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField]
     public string curSceneName;
-    string scene1 = "HubStart";
+    public string scene1 = "HubStart";
     string scene2 = "PrototypeLevel";
     string scene3 = "TitleScene";
     public string scene4 = "MVPLevel";
@@ -51,7 +51,8 @@ public class GameManager : MonoBehaviour
     private Transform startPoint1;
     [SerializeField]
     private Transform startPoint2;
-
+    [SerializeField]
+    public bool answeredPhone;
 
     [SerializeField]
     private GameObject character1;
@@ -209,7 +210,7 @@ public class GameManager : MonoBehaviour
         //FindCamera();
         DetectScene();
         PushCheck();
-        P1Indicator();
+        DetectPhone();
         //FindPackage();
 
     }
@@ -755,8 +756,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void P1Indicator()
+    public void DetectPhone()
     {
+        if(curSceneName == "HubStart")
+        {
+            if (p1.isAnswered || p2.isAnswered)
+            {
+                answeredPhone = true;
+            }
+        }
 
 
     }

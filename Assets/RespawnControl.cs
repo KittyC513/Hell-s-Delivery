@@ -120,6 +120,8 @@ public class RespawnControl : MonoBehaviour
 
     [SerializeField]
     Vector3 respawnPos;
+    [SerializeField]
+    public bool inDeliveryArea;
     //CheckpointControl activateFCP;
 
 
@@ -184,6 +186,16 @@ public class RespawnControl : MonoBehaviour
 
                     package = GameObject.FindGameObjectWithTag("Package");
                     //package = GameObject.FindGameObjectWithTag("HeavyPackage");
+
+                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                }
+            }
+
+            if( curSceneName == scene1)
+            {
+                if (objectGrabbable == null)
+                {
+                    package = GameObject.FindGameObjectWithTag("Package");
 
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
@@ -475,6 +487,29 @@ public class RespawnControl : MonoBehaviour
             }
 
         }
+
+        if (other.tag == "DeliveryArea" && SceneControl.instance.showPackage)
+        {
+            if (isPlayer1 && Player1isCarrying)
+            {
+                Loader.Load(Loader.Scene.MVPLevel);
+            }
+            else if(isPlayer1 && !Player1isCarrying)
+            {
+                SceneControl.instance.ShowDeliveryText();
+            }
+            if (isPlayer2 && Player2isCarrying)
+            {
+                Loader.Load(Loader.Scene.MVPLevel);
+            } 
+            else if(isPlayer2 && !Player2isCarrying)
+            {
+                SceneControl.instance.ShowDeliveryText();
+            }
+
+        }
+
+
 
         //if (other.gameObject.tag == ("TriggerStart"))
         //{
@@ -985,6 +1020,7 @@ public class RespawnControl : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+
         if (other.gameObject.tag == ("Start_Tutorial"))
         {
 
@@ -1136,6 +1172,8 @@ public class RespawnControl : MonoBehaviour
             }
 
         }
+
+
     }
 
 

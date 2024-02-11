@@ -56,15 +56,37 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private GameObject phoneInstruction;
     [SerializeField]
+    private GameObject phoneRingText;
+    [SerializeField]
     public bool dialogueFin;
+
+    [Header("NPC1 Event")]
     [SerializeField]
     private GameObject Weather;
     [SerializeField]
     public bool firstCustomer;
+    [SerializeField]
+    public bool NPC1dialogueEnds;
+    [SerializeField]
+    public GameObject normalPackage;
+    [SerializeField]
+    public bool showPackage;
+    [SerializeField]
+    public GameObject phonePiece;
+    [SerializeField]
+    public GameObject deliveryText;
+
 
     private void Awake()
     {
         instance = this;
+
+        if (GameManager.instance.curSceneName == GameManager.instance.scene1)
+        {
+            phonePiece.SetActive(false);
+            phoneRingText.SetActive(false);
+            deliveryText.SetActive(false);
+        }
 
     }
     private void Start()
@@ -82,12 +104,14 @@ public class SceneControl : MonoBehaviour
 
 
 
+
+
     }
 
     private void Update()
     {
 
-        if (GameManager.instance.curSceneName == "HubStart")
+        if (GameManager.instance.curSceneName == GameManager.instance.scene1)
         {
             HubStart();
         }
@@ -97,6 +121,9 @@ public class SceneControl : MonoBehaviour
             StopCoroutine(StartComicIntro());
             Comic1.SetActive(false);
             GameManager.instance.UnfreezePlayer();
+
+            phonePiece.SetActive(true);
+            phoneRingText.SetActive(true);
         }
     }
 
@@ -155,11 +182,11 @@ public class SceneControl : MonoBehaviour
     IEnumerator StartComicIntro()
     {
         Comic1.SetActive(true);
-        yield return new WaitForSeconds(29);
+        yield return new WaitForSeconds(28);
         Comic1.SetActive(false);
         GameManager.instance.UnfreezePlayer();
-
-
+        phonePiece.SetActive(true);
+        phoneRingText.SetActive(true);
 
     }
 
@@ -167,6 +194,7 @@ public class SceneControl : MonoBehaviour
 
     void HubStart()
     {
+
         if (GameManager.instance.firstTimeEnterHub == true)
         {
             StartComic();
@@ -184,11 +212,11 @@ public class SceneControl : MonoBehaviour
             firstCustomer = false;
         }
 
-        if (GameManager.instance.showWertherInstruction)
+        if (GameManager.instance.showWertherInstruction && !NPC1dialogueEnds)
         {
             WertherUI.SetActive(true);
         }
-        else
+        else if(NPC1dialogueEnds)
         {
             WertherUI.SetActive(false);
         }
@@ -214,6 +242,10 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.ShowPhoneInstruction)
         {
             phoneInstruction.SetActive(true);
+            if (GameManager.instance.answeredPhone)
+            {
+                phoneRingText.SetActive(false);
+            }
         }
         else
         {
@@ -225,7 +257,26 @@ public class SceneControl : MonoBehaviour
             SwitchCameraToTV();
             //dialogueFin = false;
         }
+
+        if (NPC1dialogueEnds && !showPackage)
+        {
+            normalPackage.SetActive(true);
+            showPackage = true;
+        }
+        else if(!NPC1dialogueEnds)
+        {
+            normalPackage.SetActive(false);
+        }
     }
+
+    // delivery area text 
+    public void ShowDeliveryText()
+    {
+        deliveryText.SetActive(true);
+    }
+
+
+
 
 
     #endregion

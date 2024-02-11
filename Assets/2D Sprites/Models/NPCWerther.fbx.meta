@@ -42,7 +42,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -100,7 +100,117 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: NPCWerther(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Cube
+      parentName: NPCWerther(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Light
+      parentName: NPCWerther(Clone)
+      position: {x: -4.0762453, y: 5.903862, z: -1.005454}
+      rotation: {x: 0.52327543, y: -0.34203392, z: 0.72694236, w: 0.28416622}
+      scale: {x: 100.00001, y: 100, z: 100}
+    - name: Camera
+      parentName: NPCWerther(Clone)
+      position: {x: -7.3588915, y: 4.958309, z: 6.925791}
+      rotation: {x: 0.09062847, y: 0.89379627, z: -0.20997298, w: 0.3857799}
+      scale: {x: 100, y: 100.00001, z: 99.99999}
+    - name: Armature
+      parentName: NPCWerther(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Bone
+      parentName: Armature
+      position: {x: -0, y: 0.01, z: 0.00088773365}
+      rotation: {x: 0.7071068, y: -0.000000084293724, z: -0.000000084293724, w: 0.7071068}
+      scale: {x: 1, y: 0.9999998, z: 0.9999998}
+    - name: Bone.001
+      parentName: Bone
+      position: {x: -0, y: 0.01620695, z: 0}
+      rotation: {x: 0.2687156, y: 2.842171e-14, z: -0.00000006406682, w: 0.96321964}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.002
+      parentName: Bone.001
+      position: {x: 1.4210854e-16, y: 0.012336059, z: -2.9802322e-10}
+      rotation: {x: -0.033870023, y: 3.2462446e-14, z: 0.000000008075263, w: 0.99942625}
+      scale: {x: 1, y: 1.0000002, z: 1.0000002}
+    - name: Bone.002_end
+      parentName: Bone.002
+      position: {x: -0, y: 0.012259294, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.003
+      parentName: Bone.001
+      position: {x: 1.4210854e-16, y: 0.012336059, z: -2.9802322e-10}
+      rotation: {x: 0.62291235, y: -0.5875169, z: 0.3571368, w: 0.373172}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Bone.004
+      parentName: Bone.003
+      position: {x: -0.0000000036135315, y: 0.010175462, z: -0.0000000010430813}
+      rotation: {x: -0.012231928, y: 0.032945555, z: 0.013270763, w: 0.9992943}
+      scale: {x: 0.9999996, y: 1.0000002, z: 1.0000006}
+    - name: Bone.005
+      parentName: Bone.004
+      position: {x: 1.4901161e-10, y: 0.007410578, z: 8.9406965e-10}
+      rotation: {x: -0.17216574, y: -0.008435388, z: -0.03666954, w: 0.9843492}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000004}
+    - name: Bone.006
+      parentName: Bone.005
+      position: {x: -7.45058e-10, y: 0.0054944656, z: -0.0000000012665987}
+      rotation: {x: 0.06641851, y: -0.00009927524, z: 0.034752287, w: 0.99718654}
+      scale: {x: 0.99999964, y: 1.0000005, z: 1.0000006}
+    - name: Bone.006_end
+      parentName: Bone.006
+      position: {x: -0, y: 0.0040482534, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.007
+      parentName: Bone.001
+      position: {x: 1.4210854e-16, y: 0.012336059, z: -2.9802322e-10}
+      rotation: {x: -0.3066508, y: 0.0913739, z: 0.76020247, w: -0.5654276}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000001}
+    - name: Bone.008
+      parentName: Bone.007
+      position: {x: 0.0000000024586915, y: 0.010043209, z: 0.0000000011920929}
+      rotation: {x: -0.15013778, y: -0.1413664, z: 0.1583581, w: 0.965607}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1.0000002}
+    - name: Bone.009
+      parentName: Bone.008
+      position: {x: 1.8626451e-11, y: 0.007532914, z: 1.9674189e-10}
+      rotation: {x: 0.11176075, y: 0.011222047, z: -0.019886287, w: -0.9934728}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000005}
+    - name: Bone.010
+      parentName: Bone.009
+      position: {x: 1.6763806e-10, y: 0.005536543, z: 8.9406965e-10}
+      rotation: {x: 0.05704125, y: -0.008313453, z: 0.035070285, w: -0.9977211}
+      scale: {x: 1.0000002, y: 1.0000006, z: 1.0000001}
+    - name: Bone.010_end
+      parentName: Bone.010
+      position: {x: -0, y: 0.004068203, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Body
+      parentName: NPCWerther(Clone)
+      position: {x: -0, y: 0.7718959, z: -0.9986109}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 150, y: 170, z: 270}
+    - name: Head
+      parentName: NPCWerther(Clone)
+      position: {x: -0, y: 3.1079235, z: 0.2195584}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Walker
+      parentName: NPCWerther(Clone)
+      position: {x: -0, y: 0.75808066, z: 1.4191084}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 79.531715, y: 63.95913, z: 71.25978}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -111,13 +221,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

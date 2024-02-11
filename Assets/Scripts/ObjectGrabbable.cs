@@ -99,6 +99,12 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     LayerMask groundLayer;
 
+    [Header("Package in Hubstart")]
+    [SerializeField]
+    private BoxCollider normalPackageCollider;
+    [SerializeField]
+    private GameObject deliveryArea;
+
     [SerializeField] private AK.Wwise.Event packageImpact;
 
     private void Awake()
@@ -107,17 +113,41 @@ public class ObjectGrabbable : MonoBehaviour
         if(this.transform.localScale.x > 1)
         {
             isHeavy = true;
+        } 
+
+        if(GameManager.instance.curSceneName == "HubStart")
+        {
+            normalPackageCollider.enabled = true;
+
+        } else
+        {
+            normalPackageCollider = null;
         }
 
         buttonOriPos = buttonPos;
 
     }
+
+    private void Start()
+    {
+        respawnPoint = this.transform.position;
+        if (GameManager.instance.curSceneName == "HubStart")
+        {
+            deliveryArea.SetActive(false);
+            print("deliveryAreafalse");
+        }
+    }
+
+
     // Start is called before the first frame update
 
     //when a pickable item is picked, it transform to player's head
     public void Grab(Transform objectGrabpo)
     {
-
+        if(normalPackageCollider != null)
+        {
+            normalPackageCollider.enabled = false;
+        }
         this.objectGrabpo = objectGrabpo;
         //set the gravity to zero when it's picked
         rb.useGravity = false;
@@ -139,10 +169,7 @@ public class ObjectGrabbable : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        respawnPoint = this.transform.position;
-    }
+
 
     private void Update()
     {
@@ -153,7 +180,7 @@ public class ObjectGrabbable : MonoBehaviour
         Move();
         P1Steal();
         P2Steal();
-
+        ShowDeliveryArea();
 
 
     }
@@ -607,6 +634,19 @@ public class ObjectGrabbable : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer)) return true;
         else return false;
+    }
+
+
+    private void ShowDeliveryArea()
+    {
+        if(GameManager.instance.curSceneName == GameManager.instance.scene1)
+        {
+            if(P1TakePackage || P2TakePackage)
+            {
+                deliveryArea.SetActive(true);
+                print("deliveryAreaTrue");
+            }
+        }
     }
 
 }
