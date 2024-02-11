@@ -10,27 +10,41 @@ public class CloseBoard : MonoBehaviour
 
     [SerializeField] 
     private Scorecards scoreScript;
-    [SerializeField] 
-    private bool isPressed;
+    [SerializeField]
+    private bool isUnfreezed;
+    [SerializeField]
+    private bool start;
+
 
     private void Start()
     {
         scoreScript = this.GetComponent<Scorecards>();
-        isPressed = false;
+        isUnfreezed = false;
+
+        if (!start)
+        {
+            StartCoroutine(UnfreezeButton());
+            start = true;
+        }
     }
 
     private void Update()
     {
-        if (GameManager.instance.p1.ReadCloseTagButton() || GameManager.instance.p2.ReadCloseTagButton())
+        if (isUnfreezed)
         {
-            if (!isPressed)
+            if (GameManager.instance.p1.ReadCloseTagButton() || GameManager.instance.p2.ReadCloseTagButton())
             {
                 Debug.Log("Close");
                 scoreScript.NextSection();
-                isPressed = true;
             }
         }
+       
+    }
 
+    IEnumerator UnfreezeButton()
+    {
+        yield return new WaitForSeconds(1f);
+        isUnfreezed = true;
     }
 
 

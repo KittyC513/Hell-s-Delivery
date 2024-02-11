@@ -358,7 +358,7 @@ public class TestCube : MonoBehaviour
 
     [Header("Camera Control")]
     [SerializeField]
-    private bool switchPuzzleCam, switchPuzzleCamP2;
+    private bool switchPuzzleCam, switchPuzzleCamP2, switchPuzzle2CamL, switchPuzzle2CamR, switchPuzzle2CamLP2, switchPuzzle2CamRP2;
 
 
     //public enum CameraStyle
@@ -877,7 +877,7 @@ public class TestCube : MonoBehaviour
         {
             if (isPlayer1)
             {
-                if (!switchPuzzleCam)
+                if (!switchPuzzleCam || !switchPuzzle2CamL || !switchPuzzle2CamLP2 || !switchPuzzle2CamR || !switchPuzzle2CamRP2)
                 {
                     if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
                     {
@@ -978,14 +978,36 @@ public class TestCube : MonoBehaviour
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
                             }
+                            
+                            if(camManager.instance.puzzle2Cam != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2Cam) * currentSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2Cam) * currentSpeed;
+                            }
+                            
+                            if(camManager.instance.puzzle2CamP1 != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2CamP1) * currentSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2CamP1) * currentSpeed;
+                            }
 
                         }
                         else
                         {
-                            if(camManager.instance.puzzle1Cam != null)
+                            if (camManager.instance.puzzle1Cam != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * dashSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * dashSpeed;
+                            }
+                            else if (camManager.instance.puzzle2Cam != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2Cam) * dashSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2Cam) * dashSpeed;
+                            }
+                            else if (camManager.instance.puzzle2CamP1 != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2CamP1) * dashSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2CamP1) * dashSpeed;
                             }
 
                         }
@@ -1012,7 +1034,7 @@ public class TestCube : MonoBehaviour
 
             if (isPlayer2)
             {
-                if (!switchPuzzleCamP2)
+                if (!switchPuzzleCamP2 || !switchPuzzle2CamL || !switchPuzzle2CamLP2 || !switchPuzzle2CamR || !switchPuzzle2CamRP2)
                 {
                     if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
                     {
@@ -1108,6 +1130,18 @@ public class TestCube : MonoBehaviour
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * currentSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * currentSpeed;
                             }
+                            
+                            if (camManager.instance.puzzle2Cam2 != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2Cam2) * currentSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2Cam2) * currentSpeed;
+                            }
+                            
+                            if (camManager.instance.puzzle2CamP2 != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2CamP2) * currentSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2CamP2) * currentSpeed;
+                            }
 
                         }
                         else
@@ -1116,6 +1150,16 @@ public class TestCube : MonoBehaviour
                             {
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * dashSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * dashSpeed;
+                            }
+                            else if (camManager.instance.puzzle2Cam2 != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2Cam2) * dashSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2Cam2) * dashSpeed;
+                            }
+                            else if (camManager.instance.puzzle2CamP2 != null)
+                            {
+                                forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2CamP2) * dashSpeed;
+                                forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2CamP2) * dashSpeed;
                             }
 
                         }
@@ -2645,13 +2689,41 @@ public class TestCube : MonoBehaviour
         {
             camManager.instance.switchPuzzle1Cam();
             switchPuzzleCam = true;
-            print("Cam1On");
+            //print("Cam1On");
         }
 
         if (other.CompareTag("Puzzle1") && isPlayer2)
         {
             camManager.instance.switchPuzzle1CamP2();
             switchPuzzleCamP2 = true;
+            //print("Cam2On");
+        }
+
+        if (other.CompareTag("Puzzle2") && isPlayer1)
+        {
+            camManager.instance.switchPuzzle2CamL();
+            switchPuzzle2CamL = true;
+            print("Cam1On");
+        }
+
+        if (other.CompareTag("Puzzle2") && isPlayer2)
+        {
+            camManager.instance.switchPuzzle2CamR();
+            switchPuzzle2CamR = true;
+            print("Cam1On");
+        }
+
+        if (other.CompareTag("puzzle2_2") && isPlayer1)
+        {
+            camManager.instance.switchPuzzle2CamP2();
+            switchPuzzle2CamLP2 = true;
+            print("Cam1On");
+        }
+
+        if (other.CompareTag("puzzle2_2") && isPlayer2)
+        {
+            camManager.instance.switchPuzzle2CamP2();
+            switchPuzzle2CamRP2 = true;
             print("Cam2On");
         }
 
@@ -2703,7 +2775,7 @@ public class TestCube : MonoBehaviour
 
             camManager.instance.switchPuzzle1CamBack();
             switchPuzzleCam = false;
-            print("Cam1Off");
+            //print("Cam1Off");
 
         }
 
@@ -2711,6 +2783,39 @@ public class TestCube : MonoBehaviour
         {
             camManager.instance.switchPuzzle1CamBackP2();
             switchPuzzleCamP2 = false;
+            //print("Cam2Off");
+        }
+
+
+        if (other.CompareTag("Puzzle2") && isPlayer1)
+        {
+
+            camManager.instance.switchPuzzle2CamBack();
+            switchPuzzle2CamL = false;
+            print("Cam1Off");
+
+        }
+
+        if (other.CompareTag("Puzzle2") && isPlayer2)
+        {
+            camManager.instance.switchPuzzle2CamBackR();
+            switchPuzzle2CamR = false;
+            print("Cam2Off");
+        }
+
+        if (other.CompareTag("puzzle2_2") && isPlayer1)
+        {
+
+            camManager.instance.switchPuzzle2CamBackP2L();
+            switchPuzzle2CamLP2 = false;
+            print("Cam1Off");
+
+        }
+
+        if (other.CompareTag("puzzle2_2") && isPlayer2)
+        {
+            camManager.instance.switchPuzzle2CamBackP2();
+            switchPuzzle2CamRP2 = false;
             print("Cam2Off");
         }
 

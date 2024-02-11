@@ -78,6 +78,16 @@ public class RespawnControl : MonoBehaviour
     [SerializeField]
     private GameObject p2DeadScreen;
 
+    [SerializeField]
+    private GameObject P1Indicator;
+    [SerializeField]
+    private GameObject P2Indicator;
+
+    [SerializeField]
+    private GameObject P1Shade;
+    [SerializeField]
+    private GameObject P2Shade;
+
     bool p1Pass;
     bool p2Pass;
     
@@ -286,15 +296,23 @@ public class RespawnControl : MonoBehaviour
             resetRespawnP = true;
         }
 
-        //Debug.Log(curSceneName);
 
-            ////if (Partner == null)
-            //{
+    }
 
-            //}
-
-
+    private void FixedUpdate()
+    {
+        if (Player1Die)
+        {
+            P1Respawn();
+            Player1Die = false;
         }
+
+        if (Player2Die)
+        {
+            P2Respawn();
+            Player2Die = false;
+        }
+    }
     void PlayerDetector()
     {
 
@@ -318,7 +336,7 @@ public class RespawnControl : MonoBehaviour
             P2RespawnRotation = P1RespawnRotation;
             player.transform.rotation = P1RespawnRotation.rotation;
         } 
-        else if(curSceneName == scene4)
+        else if(curSceneName == scene4 || curSceneName == scene9)
         {
             player.transform.position = respawnPos;
             if (isPlayer1)
@@ -333,7 +351,7 @@ public class RespawnControl : MonoBehaviour
             }
 
         }
-        else if(curSceneName != scene4 && curSceneName != scene5)
+        else if(curSceneName != scene4 && curSceneName != scene5 && curSceneName != scene9)
         {
             player.transform.position = respawnPos;
         }
@@ -360,22 +378,91 @@ public class RespawnControl : MonoBehaviour
     //}
     IEnumerator P1RespawnTimer()
     {
+        GameManager.instance.p1.isFreeze = true;
         p1Model.SetActive(false);
         p1DeadScreen.SetActive(true);
+        P1Indicator.SetActive(false);
+        P1Shade.SetActive(false);
         yield return new WaitForSeconds(3);
         Respawn(respawnPoint);
         p1Model.SetActive(true);
         p1DeadScreen.SetActive(false);
+        P1Indicator.SetActive(true);
+        P1Shade.SetActive(true);
+        GameManager.instance.p1.isFreeze = false;
     }
 
     IEnumerator P2RespawnTimer()
     {
+        GameManager.instance.p2.isFreeze = true;
         p2Model.SetActive(false);
         p2DeadScreen.SetActive(true);
+        P2Indicator.SetActive(false);
+        P2Shade.SetActive(false);
         yield return new WaitForSeconds(3);
         Respawn(respawnPoint);
         p2Model.SetActive(true);
         p2DeadScreen.SetActive(false);
+        P2Indicator.SetActive(true);
+        P2Shade.SetActive(true);
+        GameManager.instance.p2.isFreeze = false;
+    }
+
+
+    void P1Respawn()
+    {
+        StartCoroutine(P1RespawnTimer());
+        if (curSceneName != scene5)
+        {
+            ScoreCount.instance.AddDeathsToP1(5);
+            StartCoroutine(ActivateP1UIForDuration(3f));
+        }
+
+        if (curSceneName == scene2)
+        {
+            //LevelDialogue.ShowDevilPlayer2();
+            dRP1.Stop();
+            PlayRandomDialogue();
+        }
+
+        if (Player1isCarrying && isPlayer1)
+        {
+            objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
+            objectGrabbable.P2TakePackage = true;
+            objectGrabbable.P1TakePackage = false;
+
+            //Debug.Log("Player1Die");
+        }
+
+
+    }
+
+    void P2Respawn()
+    {
+        StartCoroutine(P2RespawnTimer());
+        if (curSceneName != scene5)
+        {
+            ScoreCount.instance.AddDeathsToP2(5);
+            StartCoroutine(ActivateP2UIForDuration(3f));
+        }
+
+        if (curSceneName == scene2)
+        {
+            //LevelDialogue.ShowDevilPlayer1();
+            dRP1.Stop();
+            PlayRandomDialogue();
+        }
+        if (Player2isCarrying && isPlayer2)
+        {
+            objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
+            objectGrabbable.P2TakePackage = false;
+            objectGrabbable.P1TakePackage = true;
+            //Debug.Log("Player2Die");
+
+        }
+        
+
+        Player2Die = false;
     }
 
 
@@ -390,21 +477,7 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-
-                StartCoroutine(P1RespawnTimer());
-                if (curSceneName != scene5)
-                {
-                    ScoreCount.instance.AddDeathsToP1(5);
-                    StartCoroutine(ActivateP1UIForDuration(3f));
-                }
-
-                if (curSceneName == scene2)
-                {
-                    //LevelDialogue.ShowDevilPlayer2();
-                    dRP1.Stop();
-                    PlayRandomDialogue();
-                    Player1Die = true;
-                }
+                Player1Die = true;              
 
             }
             else
@@ -414,45 +487,13 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2)
             {
-                StartCoroutine(P2RespawnTimer());
-                if (curSceneName != scene5)
-                {
-                    ScoreCount.instance.AddDeathsToP2(5);
-                    StartCoroutine(ActivateP2UIForDuration(3f));
-                }
-
-                if (curSceneName == scene2)
-                {
-                    //LevelDialogue.ShowDevilPlayer1();
-                    dRP1.Stop();
-                    PlayRandomDialogue();
-                    Player2Die = true;
-                }
-
+                Player2Die = true;
 
             }
             else
             {
                 //dR.Stop();
-            }
-
-            if (Player1isCarrying && isPlayer1)
-            {
-                objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
-                objectGrabbable.P2TakePackage = true;
-                objectGrabbable.P1TakePackage = false;
-                Player1Die = true;
-                //Debug.Log("Player1Die");
-            }
-            else if (Player2isCarrying && isPlayer2)
-            {
-                objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
-                objectGrabbable.P2TakePackage = false;
-                objectGrabbable.P1TakePackage = true;
-                Player2Die = true;
-                //Debug.Log("Player2Die");
-
-            }
+            }        
 
         }
         else if (other.tag == "CheckPoint")
@@ -462,7 +503,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
                 P1RespawnRotation = other.transform.Find("Rotation").transform;
-          
+
             }
 
             if (isPlayer2)

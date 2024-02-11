@@ -98,7 +98,11 @@ public class Scorecards : MonoBehaviour
         }
         else if (section == scoreSection.leader && canContinue)
         {
-            if (canContinue) SceneManager.LoadScene("HubEnd");
+            //if (canContinue) SceneManager.LoadScene("HubEnd");
+            if (GameManager.instance.p1.ReadCloseTagButton() || GameManager.instance.p2.ReadCloseTagButton())
+            {
+                Loader.Load(Loader.Scene.HubEnd);
+            }
         }
     }
 
