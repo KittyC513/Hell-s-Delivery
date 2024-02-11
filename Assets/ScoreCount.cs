@@ -90,8 +90,24 @@ public class ScoreCount : MonoBehaviour
     [Space, Header("UI Elements")]
     [SerializeField] public RectTransform p1MailSlot;
     [SerializeField] public RectTransform p2MailSlot;
+    [SerializeField] public Image p1MailImage;
+    [SerializeField] public Image p2MailImage;
     [SerializeField] public TextMeshProUGUI p1MailCount;
     [SerializeField] public TextMeshProUGUI p2MailCount;
+
+    private int p1LocalMail;
+    private int p2LocalMail;
+
+    private float mailTime = 0;
+    private Vector3 originalImgSize;
+
+    private float p1TargetScaleMultiplier = 1;
+    private float p1ScaleMultiplier = 1;
+
+    private float p2TargetScaleMultiplier = 1;
+    private float p2ScaleMultiplier = 1;
+
+    [SerializeField] private float mailScaleSpeed = 1;
 
     [Space, Header("Scene Names")]
     [SerializeField] private string level1 = "Level1";
@@ -150,6 +166,8 @@ public class ScoreCount : MonoBehaviour
         {
             lvlData = lvl1Data;
         }
+
+        originalImgSize = p1MailImage.transform.localScale;
     }   
 
     // Update is called once per frame
@@ -191,6 +209,7 @@ public class ScoreCount : MonoBehaviour
         }
 
         AddScore();
+        AnimateMailImage();
     }
 
     private void FixedUpdate()
@@ -590,8 +609,68 @@ public class ScoreCount : MonoBehaviour
         p2scoreEffect.SetActive(false);
     }
 
+    private void AnimateMailImage()
+    {
+        if (p1LocalMail != lvlData.p1MailCount)
+        {
 
 
+            StartCoroutine(P1AddScale());
+        }
 
+        if (p2LocalMail != lvlData.p2MailCount)
+        {
+
+            StartCoroutine(P2AddScale());
+        }
+
+        if (p1ScaleMultiplier < p1TargetScaleMultiplier)
+        {
+            p1ScaleMultiplier += (mailScaleSpeed * 2.5f) * Time.deltaTime;
+        }
+        else if (p1ScaleMultiplier > 1)
+        {
+            p1ScaleMultiplier -= (mailScaleSpeed) * Time.deltaTime;
+            p1TargetScaleMultiplier = p1ScaleMultiplier;
+        }
+
+
+        if (p2ScaleMultiplier < p2TargetScaleMultiplier)
+        {
+            p2ScaleMultiplier += (mailScaleSpeed * 2.5f) * Time.deltaTime;
+        }
+        else if (p2ScaleMultiplier > 1)
+        {
+            p2ScaleMultiplier -= (mailScaleSpeed) * Time.deltaTime;
+            p2TargetScaleMultiplier = p2ScaleMultiplier;
+        }
+
+        p1MailImage.transform.localScale = new Vector3(originalImgSize.x * p1ScaleMultiplier, originalImgSize.y * p1ScaleMultiplier, originalImgSize.z);
+        p2MailImage.transform.localScale = new Vector3(originalImgSize.x * p2ScaleMultiplier, originalImgSize.y * p2ScaleMultiplier, originalImgSize.z);
+
+        p1TargetScaleMultiplier = Mathf.Clamp(p1TargetScaleMultiplier, 1, 2);
+        p2TargetScaleMultiplier = Mathf.Clamp(p2TargetScaleMultiplier, 1, 2);
+
+        p1ScaleMultiplier = Mathf.Clamp(p1ScaleMultiplier, 1, 2);
+        p2ScaleMultiplier = Mathf.Clamp(p2ScaleMultiplier, 1, 2);
+    }
+
+    private IEnumerator P1AddScale()
+    {
+        p1LocalMail = lvlData.p1MailCount;
+
+        yield return new WaitForSeconds(0.22f);
+
+        p1TargetScaleMultiplier += 0.2f;
+    }
+
+    private IEnumerator P2AddScale()
+    {
+        p2LocalMail = lvlData.p2MailCount;
+
+        yield return new WaitForSeconds(0.22f);
+
+        p2TargetScaleMultiplier += 0.2f;
+    }
 
 }

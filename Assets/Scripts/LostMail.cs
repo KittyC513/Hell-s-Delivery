@@ -19,6 +19,8 @@ public class LostMail : MonoBehaviour
     private Vector3 position;
 
     private Animator anim;
+    [SerializeField] private GameObject shadow;
+    [SerializeField] private LayerMask groundLayer;
 
     private void Start()
     {
@@ -48,7 +50,7 @@ public class LostMail : MonoBehaviour
                 time = Time.time;
                 anim.SetBool("Collected", true);
                 collected = true;
-                Destroy(this.gameObject, 0.5f);
+                Destroy(this.gameObject, 0.3f);
             }
             
         }
@@ -61,8 +63,14 @@ public class LostMail : MonoBehaviour
         {
             if (p1) GetPositionToUI(p1MailSlot);
             else GetPositionToUI(p1MailSlot);
+            LookAtCamera(collector.cam);
         }
-        
+
+        CastBlobShadow(shadow);
+    }
+    private void LookAtCamera(Camera cam)
+    {
+        this.transform.LookAt(cam.transform, cam.transform.up);
     }
 
     private void AddScoreToPlayer(PlayerCollector player)
@@ -97,5 +105,21 @@ public class LostMail : MonoBehaviour
         }
 
        
+    }
+
+    private void CastBlobShadow(GameObject shadowRenderer)
+    {
+        RaycastHit hit;
+
+        if (Physics.SphereCast(transform.position, 1, -Vector3.up, out hit, Mathf.Infinity, groundLayer))
+        {
+            shadowRenderer.SetActive(true);
+            shadowRenderer.transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);
+        }
+        else
+        {
+            shadowRenderer.SetActive(false);
+        }
+
     }
 }
