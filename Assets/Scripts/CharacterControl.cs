@@ -30,7 +30,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float rotationSpeed = 300;
     [SerializeField] private float velocityTime = 0;
     public float decelerationTime = 0;
-    private Vector3 faceDir;
+    [SerializeField] private Vector3 faceDir;
     private Vector3 lookDir;
 
     public bool isGrounded = false;
@@ -391,7 +391,7 @@ public class CharacterControl : MonoBehaviour
             if (rawInput.magnitude > 0.05 && !quickTurn)
             {
                 //set our facing direction
-                faceDir = GetRelativeInputDirection(cam, inputValue);
+                //faceDir = GetRelativeInputDirection(cam, inputValue);
             }
             
         }
