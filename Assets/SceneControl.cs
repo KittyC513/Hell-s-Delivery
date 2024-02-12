@@ -59,6 +59,16 @@ public class SceneControl : MonoBehaviour
     private GameObject phoneRingText;
     [SerializeField]
     public bool dialogueFin;
+    [SerializeField]
+    public GameObject ConfirmText;
+    [SerializeField]
+    public bool ConfirmTextisActivated;
+    [SerializeField]
+    public bool deliveryTextisActivated;
+    [SerializeField]
+    public bool p1AtDoor;
+    [SerializeField]
+    public bool p2AtDoor;
 
     [Header("NPC1 Event")]
     [SerializeField]
@@ -75,6 +85,7 @@ public class SceneControl : MonoBehaviour
     public GameObject phonePiece;
     [SerializeField]
     public GameObject deliveryText;
+
 
 
     private void Awake()
@@ -267,12 +278,42 @@ public class SceneControl : MonoBehaviour
         {
             normalPackage.SetActive(false);
         }
+
+        TextControl();
     }
 
     // delivery area text 
     public void ShowDeliveryText()
     {
         deliveryText.SetActive(true);
+        deliveryTextisActivated = true;
+    }
+
+    public void CloseDeliveryText()
+    {
+        deliveryText.SetActive(false);
+        deliveryTextisActivated = false;
+    }
+
+    public void ShowConfirmDeliveryText()
+    {
+        ConfirmText.SetActive(true);
+        ConfirmTextisActivated = true;
+    }
+
+    public void CloseConfirmDeliveryText()
+    {
+        ConfirmText.SetActive(false);
+        ConfirmTextisActivated = false;
+    }
+
+    void TextControl()
+    {
+        if(!p1AtDoor && !p2AtDoor)
+        {
+            CloseConfirmDeliveryText();
+            CloseDeliveryText();
+        }
     }
 
 
