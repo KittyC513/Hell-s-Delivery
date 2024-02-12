@@ -256,6 +256,7 @@ public class SceneControl : MonoBehaviour
             if (GameManager.instance.answeredPhone)
             {
                 phoneRingText.SetActive(false);
+                phonePiece.SetActive(false);
             }
         }
         else

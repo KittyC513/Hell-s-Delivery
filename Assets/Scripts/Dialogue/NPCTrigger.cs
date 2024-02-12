@@ -66,7 +66,7 @@ public class NPCTrigger : MonoBehaviour
     IEnumerator Walking()
     {
         anim.SetBool("Arrived", true);
-        yield return new WaitForSeconds(0.45f);
+        yield return new WaitForSeconds(0.7f);
         smoke.SetActive(false);
         anim.SetBool("Arrived", false);
         npc1Arrived = true;

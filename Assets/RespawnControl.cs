@@ -915,6 +915,7 @@ public class RespawnControl : MonoBehaviour
                 {
                     SceneControl.instance.ShowDeliveryText();
                     SceneControl.instance.CloseConfirmDeliveryText();
+                    SceneControl.instance.p1AtDoor = true;
                 }
 
                 if (isPlayer2 && Player2isCarrying)
@@ -934,6 +935,7 @@ public class RespawnControl : MonoBehaviour
                 {
                     SceneControl.instance.ShowDeliveryText();
                     SceneControl.instance.CloseConfirmDeliveryText();
+                    SceneControl.instance.p2AtDoor = true;
                 }
 
             }
