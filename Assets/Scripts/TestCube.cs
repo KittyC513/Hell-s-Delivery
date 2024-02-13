@@ -108,8 +108,7 @@ public class TestCube : MonoBehaviour
     Camera mainCam;
     [SerializeField]
     public CinemachineFreeLook thirdPersonCam;
-
-
+    private Camera movementCamera;
 
 
     [SerializeField]
@@ -848,7 +847,7 @@ public class TestCube : MonoBehaviour
             playerCamera.enabled = false;
             mainCam = Camera.main;
             //print("1");
-
+            movementCamera = mainCam;
 
         }
         else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == "New CC")
@@ -857,7 +856,7 @@ public class TestCube : MonoBehaviour
             mainCam = null;
             print("PlayerCamara");
             //print("2");
-
+            movementCamera = playerCamera;
             //if (exButton.instance.inBridge)
             //{
             //    StartCoroutine(exButton.instance.SwitchCamera());
