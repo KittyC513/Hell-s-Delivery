@@ -103,29 +103,9 @@ public class CharacterControl : MonoBehaviour
 
         //set our actions from our input asset
         move = inputAsset.Cube.Move;
-        jump = inputAsset.Cube.Jump;
-
-        //on jump start we jump and when the button is let go of we exit the jump
-        jump.started += ctx => OnJump();
-        jump.canceled += ctx => OnJumpExit();
-    }
-
-    private void OnEnable()
-    {
-        
-        //enable our action maps
-        inputAsset.Enable();
 
     }
 
-    private void OnDisable()
-    {
-        //disable our action maps
-        inputAsset.Disable();
-
-        jump.performed -= ctx => OnJump();
-        jump.canceled -= ctx => OnJumpExit();
-    }
     #endregion
 
     #region Essential Functions
