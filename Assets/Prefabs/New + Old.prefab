@@ -1436,7 +1436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 738019032030406117}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.041844696, y: 0.000000034601985, z: -0.000000031820136, w: 0.99912417}
+  m_LocalRotation: {x: -0.041844696, y: 0.000000009271574, z: -0.000000008526181, w: 0.99912417}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5510,11 +5510,11 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  run:
-    m_Name: Run
+  dash:
+    m_Name: Dash
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: d427483d-d6c9-4179-b73e-2d0b80fd67e6
+    m_Id: 63a82b16-04db-469e-b715-2c942a3dfcc8
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -5564,6 +5564,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  close:
+    m_Name: Close
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3a1d68db-f283-46b4-94a1-1c85f7218af5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   isPicking: 0
   useNewMovement: 1
   movementForce: 1
@@ -5580,6 +5589,7 @@ MonoBehaviour:
   timeToWalk: 0.1
   timeToGlide: 1
   timeToPull: 1.5
+  timeToDash: 0.1
   timeToZero: 0.083
   shadowRenderer: {fileID: 3509594332505721891}
   jumpForce: 6.5
@@ -5625,6 +5635,7 @@ MonoBehaviour:
   pickableMask:
     serializedVersion: 2
     m_Bits: 128
+  withinPackageRange: 0
   rC: {fileID: 7657535010872135617}
   raycastDistance: 5
   isCarrying: 0
@@ -5701,6 +5712,10 @@ MonoBehaviour:
   isDropped: 0
   switchPuzzleCam: 0
   switchPuzzleCamP2: 0
+  switchPuzzle2CamL: 0
+  switchPuzzle2CamR: 0
+  switchPuzzle2CamLP2: 0
+  switchPuzzle2CamRP2: 0
   footstepRate: 115
   groundMaterial: nothing
   geiserForce: 100
@@ -5729,6 +5744,21 @@ MonoBehaviour:
   isBehind2: 0
   tooHeavy: 0
   carryWeight: 1.7
+  interactPhoneDistance: 0
+  withinPhoneRange: 0
+  PhoneLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isAnswered: 0
+  dashForce: 0
+  dashSpeed: 0
+  dashUpForce: 0
+  dashDuration: 0
+  dashCd: 0
+  dashCdTimer: 0
+  isDashing: 0
+  startTimer: 0
+  mailCount: 0
 --- !u!114 &5313277391227187631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5863,6 +5893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pState: 0
+  shadowRenderer: {fileID: 0}
   peakSpeed: 1100
   velocityCurve:
     serializedVersion: 2
@@ -5921,7 +5952,17 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  airQuickTurnCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  currentSpeed: 0
   rotationSpeed: 1000
+  velocityTime: 0
+  decelerationTime: 0
+  faceDir: {x: 0, y: 0, z: 0}
   isGrounded: 0
   groundCheck: {fileID: 3261527226748298692}
   groundCheckRadius: 0.33
@@ -5929,7 +5970,12 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  stickValue: {x: 0, y: 0}
   minQuickTurn: 0.8
+  runMagnitude: 0.6
+  slowRotationSpeed: 300
+  requiredQTVelocity: 8
+  airQuickTurn: 0.2
   peakJumpSpeed: 1400
   maxFallSpeed: 1400
   jumpCurve:
@@ -6040,6 +6086,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  airDecelerationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   ySpeed: 0
   jTime: 0
   isJumping: 0
@@ -6047,6 +6099,9 @@ MonoBehaviour:
   canJump: 1
   readJumpValue: 0
   jumpButtonGracePeriod: 0.2
+  snappedToGround: 0
+  coyoteTime: 0.12
+  coyote: 0
 --- !u!1 &2850578336869241117
 GameObject:
   m_ObjectHideFlags: 0
@@ -16109,6 +16164,10 @@ MonoBehaviour:
   currentActive: {fileID: 0}
   p1DeadScreen: {fileID: 6639259950731120566}
   p2DeadScreen: {fileID: 9192416982322130820}
+  P1Indicator: {fileID: 0}
+  P2Indicator: {fileID: 0}
+  P1Shade: {fileID: 0}
+  P2Shade: {fileID: 0}
   t1: {fileID: 1408066687179279267}
   t2: {fileID: 7429381608871265330}
   t3: {fileID: 1150451558691449366}
@@ -16129,6 +16188,9 @@ MonoBehaviour:
   p2Model: {fileID: 1198241355952370719}
   switchPuzzleCam: 0
   respawnPos: {x: 0, y: 0, z: 0}
+  inDeliveryArea: 0
+  p1AtDoor: 0
+  p2AtDoor: 0
 --- !u!114 &8821524882699308424
 MonoBehaviour:
   m_ObjectHideFlags: 0

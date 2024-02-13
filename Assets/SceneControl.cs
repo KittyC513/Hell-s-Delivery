@@ -49,6 +49,10 @@ public class SceneControl : MonoBehaviour
     public GameObject Lv1, lv2;
     [SerializeField]
     public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, NPC2UI, NPC3UI, nameTagNPC2,nameTagNPC3;
+   
+    [Header("Title Page")]
+    [SerializeField]
+    private GameObject hightlightedDoor;
 
     [Header("Hub Start")]
     [SerializeField]
@@ -70,11 +74,11 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool p2AtDoor;
 
-    [Header("NPC1 Event")]
+    [Header("Weather Event")]
     [SerializeField]
     private GameObject Weather;
     [SerializeField]
-    public bool firstCustomer;
+    public bool secondCustomer;
     [SerializeField]
     public bool NPC1dialogueEnds;
     [SerializeField]
@@ -86,18 +90,24 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject deliveryText;
 
+    [Header("Lalah Event")]
+    [SerializeField]
+    private GameObject Lalah;
+    [SerializeField]
+    public bool firstCustomer;
+    [SerializeField]
+    public bool LalahdialogueEnds;
+    [SerializeField]
+    public GameObject HeavyPackage;
+    [SerializeField]
+    public bool showHeavyPackage;
 
 
     private void Awake()
     {
         instance = this;
 
-        if (GameManager.instance.curSceneName == GameManager.instance.scene1)
-        {
-            phonePiece.SetActive(false);
-            phoneRingText.SetActive(false);
-            deliveryText.SetActive(false);
-        }
+
 
     }
     private void Start()
@@ -112,7 +122,12 @@ public class SceneControl : MonoBehaviour
 
         //LVNPC.SetActive(false);
 
-
+        if (GameManager.instance.curSceneName == GameManager.instance.scene1)
+        {
+            phonePiece.SetActive(false);
+            phoneRingText.SetActive(false);
+            deliveryText.SetActive(false);
+        }
 
 
 
@@ -135,6 +150,11 @@ public class SceneControl : MonoBehaviour
 
             phonePiece.SetActive(true);
             phoneRingText.SetActive(true);
+        }
+
+        if(GameManager.instance.curSceneName == GameManager.instance.scene3)
+        {
+            ShowHightlightedDoor();
         }
     }
 
@@ -215,12 +235,12 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.timesEnterHub >= 1)
         {
             Weather.SetActive(true);
-            firstCustomer = true;
+            secondCustomer = true;
         }
         else
         {
             Weather.SetActive(false);
-            firstCustomer = false;
+            secondCustomer = false;
         }
 
         if (GameManager.instance.showWertherInstruction && !NPC1dialogueEnds)
@@ -319,6 +339,21 @@ public class SceneControl : MonoBehaviour
 
 
 
+
+
+    #endregion
+
+    #region TitlePage
+
+    private void ShowHightlightedDoor()
+    {
+        if(GameManager.instance.player1 != null && GameManager.instance.player2 != null)
+        {
+            hightlightedDoor.SetActive(true);
+            print("Door");
+        }
+
+    }
 
 
     #endregion

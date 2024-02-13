@@ -16805,6 +16805,10 @@ MonoBehaviour:
   currentActive: {fileID: 0}
   p1DeadScreen: {fileID: 263865552}
   p2DeadScreen: {fileID: 823701027}
+  P1Indicator: {fileID: 0}
+  P2Indicator: {fileID: 0}
+  P1Shade: {fileID: 0}
+  P2Shade: {fileID: 0}
   t1: {fileID: 2117340650}
   t2: {fileID: 1922770531}
   t3: {fileID: 1911184688}
@@ -16825,6 +16829,9 @@ MonoBehaviour:
   p2Model: {fileID: 522842461}
   switchPuzzleCam: 0
   respawnPos: {x: 0, y: 0, z: 0}
+  inDeliveryArea: 0
+  p1AtDoor: 0
+  p2AtDoor: 0
 --- !u!114 &1566921897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18391,6 +18398,7 @@ MonoBehaviour:
   rotationSpeed: 1800
   velocityTime: 0
   decelerationTime: 0
+  faceDir: {x: 0, y: 0, z: 0}
   isGrounded: 0
   groundCheck: {fileID: 2128760736}
   groundCheckRadius: 0.1
@@ -18539,6 +18547,7 @@ MonoBehaviour:
   snappedToGround: 0
   coyoteTime: 0.12
   coyote: 0
+  camera: {fileID: 0}
 --- !u!114 &1736135490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18906,6 +18915,10 @@ MonoBehaviour:
   isDropped: 0
   switchPuzzleCam: 0
   switchPuzzleCamP2: 0
+  switchPuzzle2CamL: 0
+  switchPuzzle2CamR: 0
+  switchPuzzle2CamLP2: 0
+  switchPuzzle2CamRP2: 0
   footstepRate: 115
   groundMaterial: nothing
   geiserForce: 100
@@ -19545,6 +19558,7 @@ MonoBehaviour:
   rotationSpeed: 300
   velocityTime: 0
   decelerationTime: 0
+  faceDir: {x: 0, y: 0, z: 0}
   isGrounded: 0
   groundCheck: {fileID: 0}
   groundCheckRadius: 0.33
@@ -19594,6 +19608,7 @@ MonoBehaviour:
   snappedToGround: 0
   coyoteTime: 0.12
   coyote: 0
+  camera: {fileID: 0}
 --- !u!1001 &1775902382
 PrefabInstance:
   m_ObjectHideFlags: 0
