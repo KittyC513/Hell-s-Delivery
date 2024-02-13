@@ -15,7 +15,8 @@ public class NPCTrigger : MonoBehaviour
     [SerializeField]
     private GameObject smoke;
     [SerializeField]
-    private bool npcArrived;
+    private bool npc1Arrived;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,6 @@ public class NPCTrigger : MonoBehaviour
     void Update()
     {
         Arrive();
-        //ArriveLalah();
         //if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == false)
         //{
         //    dialogueRunner.StartDialogue("HubEnd");
@@ -54,10 +54,9 @@ public class NPCTrigger : MonoBehaviour
     }
 
 
-    #region Weather
     private void Arrive()
     {
-        if (SceneControl.instance.secondCustomer && !npcArrived)
+        if (SceneControl.instance.firstCustomer && !npc1Arrived)
         {
             StartCoroutine(Walking());
         }
@@ -67,12 +66,12 @@ public class NPCTrigger : MonoBehaviour
     IEnumerator Walking()
     {
         anim.SetBool("Arrived", true);
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(0.45f);
         smoke.SetActive(false);
         anim.SetBool("Arrived", false);
-        npcArrived = true;
+        npc1Arrived = true;
 
     }
-    #endregion
+
 
 }

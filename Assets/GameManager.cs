@@ -13,13 +13,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public string curSceneName;
     public string scene1 = "HubStart";
-    public string scene2 = "PrototypeLevel";
-    public string scene3 = "TitleScene";
+    string scene2 = "PrototypeLevel";
+    string scene3 = "TitleScene";
     public string scene4 = "MVPLevel";
-    public string scene5 = "HubEnd";
-    public string scene6 = "ScoreCards";
-    public string scene7 = "Level1";
-    public string scene8= "Tutorial";
+    string scene5 = "HubEnd";
+    string scene6 = "ScoreCards";
+    string scene7 = "Level1";
+    string scene8= "Tutorial";
 
     [SerializeField]
     Camera mainCam;

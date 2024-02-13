@@ -30,7 +30,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float rotationSpeed = 300;
     [SerializeField] private float velocityTime = 0;
     public float decelerationTime = 0;
-    [SerializeField] private Vector3 faceDir;
+    private Vector3 faceDir;
     private Vector3 lookDir;
 
     public bool isGrounded = false;
@@ -90,9 +90,8 @@ public class CharacterControl : MonoBehaviour
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
     private InputActionMap player, dialogue, pause;
-    private InputAction move, run, parachute, cancelParachute, triggerButton;
+    private InputAction move, run, jump, parachute, cancelParachute, triggerButton;
 
-    [SerializeField]
     private Camera camera;
 
     #region Initialization
@@ -103,9 +102,29 @@ public class CharacterControl : MonoBehaviour
 
         //set our actions from our input asset
         move = inputAsset.Cube.Move;
+        jump = inputAsset.Cube.Jump;
+
+        //on jump start we jump and when the button is let go of we exit the jump
+        jump.started += ctx => OnJump();
+        jump.canceled += ctx => OnJumpExit();
+    }
+
+    private void OnEnable()
+    {
+        
+        //enable our action maps
+        inputAsset.Enable();
 
     }
 
+    private void OnDisable()
+    {
+        //disable our action maps
+        inputAsset.Disable();
+
+        jump.performed -= ctx => OnJump();
+        jump.canceled -= ctx => OnJumpExit();
+    }
     #endregion
 
     #region Essential Functions
@@ -120,23 +139,22 @@ public class CharacterControl : MonoBehaviour
 
     private void Update()
     {
-     
+        GetStickInputs(camera);
         CheckGrounded();
        
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
-    public void RunMovement(Camera cam, bool isParachuting, Vector2 input, InputAction jump)
+    public void RunMovement(Camera cam, bool isParachuting)
     {
-        camera = cam;
-        MovementCalculations(camera);
+        MovementCalculations(cam);
         StateMachineUpdate();
-        GetStickInputs(camera, input);
+        camera = cam;
         ApplyGravity();
         //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
         if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
 
-        JumpCalculations(jump);
+        JumpCalculations();
         //Debug.Log(directionSpeed);
        
     }
@@ -277,10 +295,9 @@ public class CharacterControl : MonoBehaviour
         return input.normalized;
     }
 
-    public void GetStickInputs(Camera cam, Vector2 input)
+    private void GetStickInputs(Camera cam)
     {
-
-        rawInput = input;
+        rawInput = inputAsset.Cube.Move.ReadValue<Vector2>();
         stickValue = rawInput.normalized;
        
 
@@ -470,7 +487,7 @@ public class CharacterControl : MonoBehaviour
 
     }
 
-    private void JumpCalculations(InputAction jump)
+    private void JumpCalculations()
     {
 
         //if the jump button is pressed

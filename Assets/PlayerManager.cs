@@ -23,7 +23,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private List<LayerMask> playerUILayer;
 
-    [SerializeField]
     private PlayerInputManager playerInputManager;
     [SerializeField]
     private List<LayerMask> playerCameraLayer;
@@ -39,7 +38,6 @@ public class PlayerManager : MonoBehaviour
     private void OnEnable()
     {
         playerInputManager.onPlayerJoined += AddPlayer;
-        print("playerJoined");
     }
     private void OnDisable()
     {
@@ -60,7 +58,6 @@ public class PlayerManager : MonoBehaviour
     void AddPlayer(PlayerInput player)
     {
         players.Add(player);
-        //print("players" + player.gameObject);
 
         Transform playerParent = player.transform.parent;
         playerParent.position = startingPoints[players.Count - 1].position;

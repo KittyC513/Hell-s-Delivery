@@ -128,16 +128,10 @@ public class RespawnControl : MonoBehaviour
     [SerializeField]
     private bool switchPuzzleCam;
 
-    [Header("Delivery Text")]
     [SerializeField]
     Vector3 respawnPos;
     [SerializeField]
     public bool inDeliveryArea;
-    [SerializeField]
-    public bool p1AtDoor;
-    [SerializeField]
-    public bool p2AtDoor;
-
     //CheckpointControl activateFCP;
 
 
@@ -535,7 +529,26 @@ public class RespawnControl : MonoBehaviour
 
         }
 
+        if (other.tag == "DeliveryArea" && SceneControl.instance.showPackage)
+        {
+            if (isPlayer1 && Player1isCarrying)
+            {
+                Loader.Load(Loader.Scene.MVPLevel);
+            }
+            else if(isPlayer1 && !Player1isCarrying)
+            {
+                SceneControl.instance.ShowDeliveryText();
+            }
+            if (isPlayer2 && Player2isCarrying)
+            {
+                Loader.Load(Loader.Scene.MVPLevel);
+            } 
+            else if(isPlayer2 && !Player2isCarrying)
+            {
+                SceneControl.instance.ShowDeliveryText();
+            }
 
+        }
 
 
 
@@ -888,60 +901,11 @@ public class RespawnControl : MonoBehaviour
         //    {
         //        gameManager.enterOffice = true;
         //        gameManager.sceneChanged = true;
-
+                
         //        //GameManager.instance.LoadScene(scene1);               
 
         //    }            
         //}
-        if (other.tag == "DeliveryArea")
-        {
-            if (SceneControl.instance.showPackage)
-            {
-                if (isPlayer1 && Player1isCarrying )
-                {
-                    if (!SceneControl.instance.ConfirmTextisActivated)
-                    {
-                        SceneControl.instance.ShowConfirmDeliveryText();
-                    }
-                    SceneControl.instance.CloseDeliveryText();
-                    SceneControl.instance.p1AtDoor = true;
-                    if (gameManager.p1.ReadActionButton())
-                    {
-                        Loader.Load(Loader.Scene.MVPLevel);
-                    }
-
-                }
-                else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
-                {
-                    SceneControl.instance.ShowDeliveryText();
-                    SceneControl.instance.CloseConfirmDeliveryText();
-                    SceneControl.instance.p1AtDoor = true;
-                }
-
-                if (isPlayer2 && Player2isCarrying)
-                {
-                    if (!SceneControl.instance.ConfirmTextisActivated)
-                    {
-                        SceneControl.instance.ShowConfirmDeliveryText();
-                    }
-                    SceneControl.instance.CloseDeliveryText();
-                    SceneControl.instance.p2AtDoor = true;
-                    if (gameManager.p2.ReadActionButton())
-                    {
-                        Loader.Load(Loader.Scene.MVPLevel);
-                    }
-                }
-                else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
-                {
-                    SceneControl.instance.ShowDeliveryText();
-                    SceneControl.instance.CloseConfirmDeliveryText();
-                    SceneControl.instance.p2AtDoor = true;
-                }
-
-            }
-
-        }
-
         if (other.gameObject.tag == ("Start_Tutorial"))
         {
 
@@ -960,8 +924,6 @@ public class RespawnControl : MonoBehaviour
                 t1c.SetActive(true);
 
             }
-
-
 
 
 
@@ -1099,27 +1061,8 @@ public class RespawnControl : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "DeliveryArea")
-        {
-            if (SceneControl.instance.showPackage)
-            {
-                if (isPlayer1)
-                {
-                    SceneControl.instance.p1AtDoor = false;
-                }
 
-                if (isPlayer2)
-                {
-                    SceneControl.instance.p2AtDoor = false;
-                }
-
-
-
-
-            }
-        }
-
-                if (other.gameObject.tag == ("Start_Tutorial"))
+        if (other.gameObject.tag == ("Start_Tutorial"))
         {
 
 

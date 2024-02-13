@@ -582,21 +582,10 @@ public class TestCube : MonoBehaviour
         if (!useNewMovement)
         {
             MovementCalcs();
-            print("use old movementCal");
         }
         else
         {
-            if (playerCamera != null)
-            {
-                
-                    charController.RunMovement(playerCamera, isGliding, move.ReadValue<Vector2>(), jump);
-            
-                
-
-
-                print("use new movementCal");
-            }
-
+            charController.RunMovement(playerCamera, isGliding);
         }
 
 
@@ -851,11 +840,10 @@ public class TestCube : MonoBehaviour
 
 
         }
-        else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == "New CC")
+        else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9)
         {
             playerCamera.enabled = true;
             mainCam = null;
-            print("PlayerCamara");
             //print("2");
 
             //if (exButton.instance.inBridge)
@@ -865,11 +853,11 @@ public class TestCube : MonoBehaviour
 
 
         }
-        //else
-        //{
-        //    playerCamera.enabled = true;
-        //    mainCam = null;
-        //}
+        else
+        {
+            playerCamera.enabled = true;
+            mainCam = null;
+        }
 
         //Start the Devil phone Dialogue 
         //if(curSceneName == scene1 && !Dialogue2)
@@ -1859,17 +1847,17 @@ public class TestCube : MonoBehaviour
 
         if (withinEntranceRange)
         {
-            if(gameManager.player1 != null && gameManager.player2 != null)
-            {
-                if (ReadActionButton())
-                {
-                    print("Enter");
-                    isEntered = true;
 
-                    //SceneControl.instance.LoadScene("MVPLevel");
-                    //change scene and enter tutorial level, set gameManger.sceneChanged to true               
-                }
+            if (ReadActionButton())
+            {
+                print("Enter");
+                isEntered = true;
+
+                //SceneControl.instance.LoadScene("MVPLevel");
+                //change scene and enter tutorial level, set gameManger.sceneChanged to true               
             }
+
+
         }
 
         if (withinPhoneRange)
@@ -2412,7 +2400,6 @@ public class TestCube : MonoBehaviour
             //jumpSpeed = jumpForce;
             //isJumping = true;
             //canJump = false;
-            
             jumpButtonPressedTime = Time.time;
 
         }
