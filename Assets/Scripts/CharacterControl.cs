@@ -309,13 +309,13 @@ public class CharacterControl : MonoBehaviour
                 {
                     
                     if (!quickTurn) quickTurn = true;
-                    Debug.Log(quickTurn);
+                    //Debug.Log(quickTurn);
                 }
 
                 if (lookDir.z - relativeStick.z > minQuickTurn || lookDir.z - relativeStick.z < -minQuickTurn)
                 {
                     if (!quickTurn) quickTurn = true;
-                    Debug.Log(quickTurn);
+                    //Debug.Log(quickTurn);
                 }
 
             }
@@ -325,13 +325,13 @@ public class CharacterControl : MonoBehaviour
                 if (lookDir.x - relativeStick.x > airQuickTurn || lookDir.x - relativeStick.x < -airQuickTurn)
                 {
                     if (!quickTurn) quickTurn = true;
-                    Debug.Log(quickTurn);
+                    //Debug.Log(quickTurn);
                 }
 
                 if (lookDir.z - relativeStick.z > airQuickTurn || lookDir.z - relativeStick.z < -airQuickTurn)
                 {
                     if (!quickTurn) quickTurn = true;
-                    Debug.Log(quickTurn);
+                    //Debug.Log(quickTurn);
                 }
 
             }

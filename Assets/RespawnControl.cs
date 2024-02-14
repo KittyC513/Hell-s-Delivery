@@ -840,12 +840,14 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
+
                 P1RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = P1RespawnRotation;
             }
 
             if (isPlayer2)
             {
+                P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P1RespawnRotation = P2RespawnRotation;
             }
@@ -895,7 +897,7 @@ public class RespawnControl : MonoBehaviour
         //}
         if (other.tag == "DeliveryArea")
         {
-            if (SceneControl.instance.showPackage)
+            if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
             {
                 if (isPlayer1 && Player1isCarrying )
                 {
@@ -907,7 +909,11 @@ public class RespawnControl : MonoBehaviour
                     SceneControl.instance.p1AtDoor = true;
                     if (gameManager.p1.ReadActionButton())
                     {
-                        Loader.Load(Loader.Scene.MVPLevel);
+                        if (SceneControl.instance.firstCustomer)
+                        {
+                            Loader.Load(Loader.Scene.Level1);
+                        }
+
                     }
 
                 }
@@ -928,7 +934,10 @@ public class RespawnControl : MonoBehaviour
                     SceneControl.instance.p2AtDoor = true;
                     if (gameManager.p2.ReadActionButton())
                     {
-                        Loader.Load(Loader.Scene.MVPLevel);
+                        if (SceneControl.instance.firstCustomer)
+                        {
+                            Loader.Load(Loader.Scene.Level1);
+                        }
                     }
                 }
                 else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
@@ -1101,16 +1110,18 @@ public class RespawnControl : MonoBehaviour
     {
         if (other.tag == "DeliveryArea")
         {
-            if (SceneControl.instance.showPackage)
+            if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
             {
                 if (isPlayer1)
                 {
                     SceneControl.instance.p1AtDoor = false;
+                    print("not in deliveryArea1");
                 }
 
                 if (isPlayer2)
                 {
                     SceneControl.instance.p2AtDoor = false;
+                    print("not in deliveryArea2");
                 }
 
 

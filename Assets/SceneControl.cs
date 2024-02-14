@@ -48,7 +48,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject Lv1, lv2;
     [SerializeField]
-    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, NPC2UI, NPC3UI, nameTagNPC2,nameTagNPC3;
+    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, LalahUI, MichaelUI, nameTagNPC2,nameTagNPC3;
    
     [Header("Title Page")]
     [SerializeField]
@@ -80,7 +80,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool secondCustomer;
     [SerializeField]
-    public bool NPC1dialogueEnds;
+    public bool WeatherdialogueEnds;
     [SerializeField]
     public GameObject normalPackage;
     [SerializeField]
@@ -98,10 +98,13 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool LalahdialogueEnds;
     [SerializeField]
-    public GameObject HeavyPackage;
+    public GameObject heavyPackage;
     [SerializeField]
     public bool showHeavyPackage;
 
+    [Header("Level 1")]
+    [SerializeField]
+    private GameObject packageInstruction;
 
     private void Awake()
     {
@@ -112,7 +115,7 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
-        if(GameManager.instance.curSceneName != "TitleScene")
+        if(GameManager.instance.curSceneName != "TitleScene" && GameManager.instance.player1 != null && GameManager.instance.player2 != null)
         {
             GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
         }
@@ -142,7 +145,7 @@ public class SceneControl : MonoBehaviour
             HubStart();
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && GameManager.instance.timesEnterHub < 1)
         {
             StopCoroutine(StartComicIntro());
             Comic1.SetActive(false);
@@ -151,6 +154,7 @@ public class SceneControl : MonoBehaviour
             phonePiece.SetActive(true);
             phoneRingText.SetActive(true);
         }
+
 
         if(GameManager.instance.curSceneName == GameManager.instance.scene3)
         {
@@ -232,42 +236,44 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.firstTimeEnterHub = false;
         }
 
-        if (GameManager.instance.timesEnterHub >= 1)
+        if (GameManager.instance.timesEnterHub == 1)
         {
-            Weather.SetActive(true);
-            secondCustomer = true;
+            Lalah.SetActive(true);
+            firstCustomer = true;
+            phonePiece.SetActive(false);
         }
         else
         {
-            Weather.SetActive(false);
-            secondCustomer = false;
+            Lalah.SetActive(false);
+            firstCustomer = false;
         }
 
-        if (GameManager.instance.showWertherInstruction && !NPC1dialogueEnds)
+        if (GameManager.instance.showWertherInstruction && !WeatherdialogueEnds)
         {
             WertherUI.SetActive(true);
         }
-        else if(NPC1dialogueEnds)
+        else if(WeatherdialogueEnds && !GameManager.instance.showWertherInstruction)
         {
             WertherUI.SetActive(false);
         }
 
-        if (GameManager.instance.showNPC2Instruction)
+        if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds)
         {
-            NPC2UI.SetActive(true);
+            LalahUI.SetActive(true);
+            print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
         }
-        else
+        else if(LalahdialogueEnds || !GameManager.instance.showLalahInstruction)
         {
-            NPC2UI.SetActive(false);
+            LalahUI.SetActive(false);
         }
 
-        if (GameManager.instance.showNPC3Instruction)
+        if (GameManager.instance.showMichaelInstruction)
         {
-            NPC3UI.SetActive(true);
+            MichaelUI.SetActive(true);
         }
         else
         {
-            NPC3UI.SetActive(false);
+            MichaelUI.SetActive(false);
         }
 
         if (GameManager.instance.ShowPhoneInstruction)
@@ -290,16 +296,25 @@ public class SceneControl : MonoBehaviour
             //dialogueFin = false;
         }
 
-        if (NPC1dialogueEnds && !showPackage)
+        if (WeatherdialogueEnds && !showPackage)
         {
             normalPackage.SetActive(true);
             showPackage = true;
         }
-        else if(!NPC1dialogueEnds)
+        else if(!WeatherdialogueEnds)
         {
             normalPackage.SetActive(false);
         }
 
+        if (LalahdialogueEnds && !showPackage)
+        {
+            heavyPackage.SetActive(true);
+            showHeavyPackage = true;
+        }
+        else if (!LalahdialogueEnds)
+        {
+           heavyPackage.SetActive(false);
+        }
         TextControl();
     }
 
@@ -358,6 +373,19 @@ public class SceneControl : MonoBehaviour
 
     #endregion
 
+
+    #region Level 1
+
+    public void ShowPackageInstruction()
+    {
+        packageInstruction.SetActive(true);
+    }
+
+    public void ClosePackageInstruction()
+    {
+        packageInstruction.SetActive(false);
+    }
+    #endregion
 
 
 

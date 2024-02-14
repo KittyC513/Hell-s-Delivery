@@ -116,6 +116,8 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private Transform itemContainer;
     [SerializeField]
+    private Transform itemContainer1;
+    [SerializeField]
     private ObjectGrabbable objectGrabbable;
     [SerializeField]
     public bool slotFull;
@@ -585,15 +587,31 @@ public class TestCube : MonoBehaviour
         }
         else
         {
-            if (playerCamera != null)
+            if (playerCamera != null || mainCam != null)
             {
-                
-                    charController.RunMovement(playerCamera, isGliding, move.ReadValue<Vector2>(), jump);
-            
+
+                if (curSceneName == "TitleScene" || curSceneName == "HubStart")
+                {
+                    charController.RunMovement(mainCam, isGliding, move.ReadValue<Vector2>(), jump);                  
+                    //print("use new movementCal");
+                }
+                else
+                {
+                    charController.RunMovement(playerCamera, isGliding, move.ReadValue<Vector2>(), jump);                    
+                    //print("use new movementCal");
+
+                }
+
+                if (isPlayer1)
+                {
+                    playerAnimator.SetFloat("speed", rb.velocity.magnitude);
+                }
+                if (isPlayer2)
+                {
+                    playerAnimator2.SetFloat("speed", rb.velocity.magnitude);
+                }
                 
 
-
-                print("use new movementCal");
             }
 
         }
@@ -601,16 +619,41 @@ public class TestCube : MonoBehaviour
 
         DetectPushRange();
 
-        if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+        if (curSceneName == scene3 || curSceneName == scene6)
         {
-            //DetectInteractRange();
+            package = null; 
         }
+
+        if(curSceneName == scene1)
+        {
+            package = GameObject.FindGameObjectWithTag("Package");
+
+            //if (GameManager.instance.timesEnterHub == 1)
+            //{
+            //    itemContainer.gameObject.SetActive(false);
+            //    itemContainer.gameObject.SetActive(true);
+            //}
+            //else
+            //{
+            //    itemContainer.gameObject.SetActive(true);
+            //    itemContainer.gameObject.SetActive(false);
+            //}
+        }
+
         if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == "HubStart")
         {
-
             package = GameObject.FindGameObjectWithTag("Package");
-            //package = GameObject.FindGameObjectWithTag("HeavyPackage");
-
+            
+            //if(GameManager.instance.timesEnterHub == 1)
+            //{
+            //    itemContainer.gameObject.SetActive(false);
+            //    itemContainer.gameObject.SetActive(true);
+            //}
+            //else
+            //{
+            //    itemContainer.gameObject.SetActive(true);
+            //    itemContainer.gameObject.SetActive(false);
+            //}
         }
 
         JoinGameTitle();
@@ -1493,7 +1536,19 @@ public class TestCube : MonoBehaviour
                         if (isPlayer1)
                         {
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
+
                             objectGrabbable.Grab(itemContainer);
+                            //if (tooHeavy)
+                            //{
+                            //    objectGrabbable.Grab(itemContainer1);
+                            //}
+                            //else
+                            //{
+                            //    objectGrabbable.Grab(itemContainer);
+                            //}
+
+
+
                             playerSounds.packagePick.Post(this.gameObject);
                             if(GameManager.instance.p2.objectGrabbable != null)
                             {
@@ -1507,6 +1562,14 @@ public class TestCube : MonoBehaviour
                         {
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
+                            //if (tooHeavy)
+                            //{
+                            //    objectGrabbable.Grab(itemContainer1);
+                            //}
+                            //else
+                            //{
+                            //    objectGrabbable.Grab(itemContainer);
+                            //}
                             playerSounds.packagePick.Post(this.gameObject);
                             if (GameManager.instance.p1.objectGrabbable != null)
                             {
@@ -1534,6 +1597,14 @@ public class TestCube : MonoBehaviour
                             print("TakePackage");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
+                            //if (tooHeavy)
+                            //{
+                            //    objectGrabbable.Grab(itemContainer1);
+                            //}
+                            //else
+                            //{
+                            //    objectGrabbable.Grab(itemContainer);
+                            //}
                             playerSounds.packagePick.Post(this.gameObject);
                             GameManager.instance.p2.objectGrabbable = null;
                         }
@@ -1548,6 +1619,14 @@ public class TestCube : MonoBehaviour
                             print("TakePackage");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
+                            //if (tooHeavy)
+                            //{
+                            //    objectGrabbable.Grab(itemContainer1);
+                            //}
+                            //else
+                            //{
+                            //    objectGrabbable.Grab(itemContainer);
+                            //}
                             playerSounds.packagePick.Post(this.gameObject);
                             GameManager.instance.p1.objectGrabbable = null;
                         }
@@ -1628,6 +1707,14 @@ public class TestCube : MonoBehaviour
                         {
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
+                            //if (tooHeavy)
+                            //{
+                            //    objectGrabbable.Grab(itemContainer1);
+                            //}
+                            //else
+                            //{
+                            //    objectGrabbable.Grab(itemContainer);
+                            //}
                             playerSounds.packagePick.Post(this.gameObject);
                             //TakePackageFunction();
                         }
@@ -1639,6 +1726,14 @@ public class TestCube : MonoBehaviour
                         {
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
+                            //if (tooHeavy)
+                            //{
+                            //    objectGrabbable.Grab(itemContainer1);
+                            //}
+                            //else
+                            //{
+                            //    objectGrabbable.Grab(itemContainer);
+                            //}
                             playerSounds.packagePick.Post(this.gameObject);
                             //TakePackageFunction();
                         }
@@ -1743,7 +1838,14 @@ public class TestCube : MonoBehaviour
             {
 
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                objectGrabbable.Grab(itemContainer);
+                if (tooHeavy)
+                {
+                    objectGrabbable.Grab(itemContainer1);
+                }
+                else
+                {
+                    objectGrabbable.Grab(itemContainer);
+                }
                 playerSounds.packagePick.Post(this.gameObject);
                 GameManager.instance.p2.objectGrabbable = null;
 
@@ -1751,7 +1853,14 @@ public class TestCube : MonoBehaviour
             else if (!rC.Player1isCarrying && !rC.Player2isCarrying)
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                objectGrabbable.Grab(itemContainer);
+                if (tooHeavy)
+                {
+                    objectGrabbable.Grab(itemContainer1);
+                }
+                else
+                {
+                    objectGrabbable.Grab(itemContainer);
+                }
                 playerSounds.packagePick.Post(this.gameObject);
             }
 
@@ -1763,7 +1872,14 @@ public class TestCube : MonoBehaviour
             {
 
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                objectGrabbable.Grab(itemContainer);
+                if (tooHeavy)
+                {
+                    objectGrabbable.Grab(itemContainer1);
+                }
+                else
+                {
+                    objectGrabbable.Grab(itemContainer);
+                }
                 playerSounds.packagePick.Post(this.gameObject);
                 GameManager.instance.p1.objectGrabbable = null;
 
@@ -1771,7 +1887,14 @@ public class TestCube : MonoBehaviour
             else if (!rC.Player1isCarrying && !rC.Player2isCarrying)
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                objectGrabbable.Grab(itemContainer);
+                if (tooHeavy)
+                {
+                    objectGrabbable.Grab(itemContainer1);
+                }
+                else
+                {
+                    objectGrabbable.Grab(itemContainer);
+                }
                 playerSounds.packagePick.Post(this.gameObject);
             }
 
@@ -1906,6 +2029,8 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.dialogueBox.SetActive(true);
                 SceneControl.instance.nameTag1.SetActive(true);
                 SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.nameTagNPC2.SetActive(false);
+                SceneControl.instance.nameTagNPC3.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("BoomerQuest");
 
                 NPCInteracting = false;
@@ -1924,8 +2049,10 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.dR.StopAllCoroutines();
                 SceneControl.instance.phoneUI.SetActive(false);
                 SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(false);
                 SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.nameTagNPC2.SetActive(true);
+                SceneControl.instance.nameTagNPC3.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("LalahQuest");
 
                 NPCInteracting = false;
@@ -1944,8 +2071,10 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.dR.StopAllCoroutines();
                 SceneControl.instance.phoneUI.SetActive(false);
                 SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(false);
                 SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.nameTagNPC2.SetActive(false);
+                SceneControl.instance.nameTagNPC3.SetActive(true);
                 SceneControl.instance.dR.StartDialogue("MichaelQuest");
 
                 //StartCoroutine(MovingCameraNPC3());
@@ -2692,6 +2821,44 @@ public class TestCube : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PostOfficeDoor"))
+        {
+            withinEntranceRange = true;
+        }
+
+        if (other.CompareTag("NPC1"))
+        {
+            withinNPCsRange = true;
+        }
+
+        if (other.CompareTag("NPC3"))
+        {
+            withinNPC2Range = true;
+            print("withinNPC2Range" + withinNPC2Range);
+        }
+
+        if (other.CompareTag("NPC4"))
+        {
+            withinNPC3Range = true;
+        }
+
+        if (other.CompareTag("Phone"))
+        {
+            withinPhoneRange = true;
+        }
+
+        if (other.CompareTag("Package"))
+        {
+            withinPackageRange = true;
+            if(curSceneName == "Level1")
+            {
+                SceneControl.instance.ShowPackageInstruction();
+            }
+
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -2745,36 +2912,7 @@ public class TestCube : MonoBehaviour
             print("Cam2On");
         }
 
-        if (other.CompareTag("PostOfficeDoor"))
-        {
-            withinEntranceRange = true;
-        }
-
-        if (other.CompareTag("NPC1"))
-        {
-            withinNPCsRange = true;
-            print("withinNPCsRange" + withinNPCsRange);
-        }
-
-        if (other.CompareTag("NPC3"))
-        {
-            withinNPC2Range = true;
-        }
-
-        if (other.CompareTag("NPC4"))
-        {
-            withinNPC3Range = true;
-        }
-
-        if (other.CompareTag("Phone"))
-        {
-            withinPhoneRange = true;
-        }
-
-        if (other.CompareTag("Package"))
-        {
-            withinPackageRange = true;
-        }
+  
 
 
 
@@ -2851,6 +2989,7 @@ public class TestCube : MonoBehaviour
         if (other.CompareTag("NPC3"))
         {
             withinNPC2Range = false;
+            print("withinNPC2Range" + withinNPC2Range);
         }
 
         if (other.CompareTag("NPC4"))
@@ -2866,6 +3005,11 @@ public class TestCube : MonoBehaviour
         if (other.CompareTag("Package"))
         {
             withinPackageRange = false;
+            if (curSceneName == "Level1")
+            {
+                if(gameManager.p1.rC.Player1isCarrying || gameManager.p2.rC.Player2isCarrying)
+                SceneControl.instance.ClosePackageInstruction();
+            }
         }
     }
 

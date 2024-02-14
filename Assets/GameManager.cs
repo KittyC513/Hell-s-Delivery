@@ -125,9 +125,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool showWertherInstruction;
     [SerializeField]
-    public bool showNPC2Instruction;
+    public bool showLalahInstruction;
     [SerializeField]
-    public bool showNPC3Instruction;
+    public bool showMichaelInstruction;
 
     [SerializeField]
     public GameObject noisy1;
@@ -199,8 +199,8 @@ public class GameManager : MonoBehaviour
         sceneChanged = false;
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
-        playerScore.p1Overall = 0;
-        playerScore.p2Overall = 0;
+        //playerScore.p1Overall = 0;
+        //playerScore.p2Overall = 0;
     }
 
     private void Update()
@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
 
         SkyboxControl();
 
-        ShowInstruction();
+        showMichaelInstructionFunction();
 
         ShowDirection();
 
@@ -544,7 +544,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    public void ShowInstruction()
+    public void showMichaelInstructionFunction()
     {
         if(curSceneName == scene1 || curSceneName == scene5)
         {
@@ -570,20 +570,22 @@ public class GameManager : MonoBehaviour
 
             if (p1.withinNPC2Range || p2.withinNPC2Range)
             {
-                showNPC2Instruction = true;
+                showLalahInstruction = true;
+                print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
             }
             else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
             {
-                showNPC2Instruction = false;
+                showLalahInstruction = false;
+                print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
             }
 
             if (p1.withinNPC3Range || p2.withinNPC3Range)
             {
-                showNPC3Instruction = true;
+                showMichaelInstruction = true;
             }
-            else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
+            else if (!p1.withinNPC3Range || !p2.withinNPC3Range)
             {
-                showNPC3Instruction = false;
+                showMichaelInstruction = false;
             }
 
             if(p1.isAnswered || p2.isAnswered)

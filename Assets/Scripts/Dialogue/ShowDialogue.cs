@@ -181,7 +181,13 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("WeatherDialogueEnd")]
     public static void WeatherDialogueEnds()
     {
-        SceneControl.instance.NPC1dialogueEnds = true;
+        SceneControl.instance.WeatherdialogueEnds = true;
+    }
+
+    [YarnCommand("LalahDialogueEnd")]
+    public static void LalahDialogueEnds()
+    {
+        SceneControl.instance.LalahdialogueEnds = true;
     }
 
 

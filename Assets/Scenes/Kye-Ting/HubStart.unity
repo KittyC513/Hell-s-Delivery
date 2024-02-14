@@ -1631,6 +1631,7 @@ MonoBehaviour:
   - serializedVersion: 2
     m_Bits: 65536
   playerUILayer: []
+  playerInputManager: {fileID: 0}
   playerCameraLayer: []
 --- !u!4 &158381865
 Transform:
@@ -10944,10 +10945,10 @@ MonoBehaviour:
   nameTag: {fileID: 1910265487}
   nameTag1: {fileID: 1451201860}
   WertherUI: {fileID: 980562536}
-  NPC2UI: {fileID: 1911410315}
-  NPC3UI: {fileID: 1741044223}
-  nameTagNPC2: {fileID: 0}
-  nameTagNPC3: {fileID: 0}
+  LalahUI: {fileID: 1911410315}
+  MichaelUI: {fileID: 1741044223}
+  nameTagNPC2: {fileID: 941614}
+  nameTagNPC3: {fileID: 1736504349}
   hightlightedDoor: {fileID: 0}
   Comic1: {fileID: 131280315}
   phoneInstruction: {fileID: 1540736740}
@@ -10960,7 +10961,7 @@ MonoBehaviour:
   p2AtDoor: 0
   Weather: {fileID: 581664678}
   secondCustomer: 0
-  NPC1dialogueEnds: 0
+  WeatherdialogueEnds: 0
   normalPackage: {fileID: 1593991863}
   showPackage: 0
   phonePiece: {fileID: 1610108721}
@@ -10968,7 +10969,7 @@ MonoBehaviour:
   Lalah: {fileID: 730074143}
   firstCustomer: 0
   LalahdialogueEnds: 0
-  HeavyPackage: {fileID: 0}
+  heavyPackage: {fileID: 1005355606}
   showHeavyPackage: 0
 --- !u!4 &835677023
 Transform:
@@ -11897,7 +11898,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1180552905044553815, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2021315596174547305, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
       propertyPath: m_UseGravity
@@ -11905,6 +11906,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021315596174547305, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
       propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042826728485002630, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: m_Size.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042826728485002630, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: m_Size.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042826728485002630, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: m_Size.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042826728485002630, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042826728485002630, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943776172007367988, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 2f604e06e0bbe8b4eba14cf2cfa64358, type: 2}
+    - target: {fileID: 3358961420541231375, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: indicator
+      value: 
+      objectReference: {fileID: 1005355605}
+    - target: {fileID: 3358961420541231375, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: deliveryArea
+      value: 
+      objectReference: {fileID: 1505098482}
+    - target: {fileID: 3358961420541231375, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: heavyPackageCollider
+      value: 
+      objectReference: {fileID: 1005355607}
+    - target: {fileID: 3358961420541231375, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: normalPackageCollider
+      value: 
+      objectReference: {fileID: 1693984290}
+    - target: {fileID: 3971044177061813588, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5026486830708843756, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
@@ -11956,6 +12001,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+--- !u!1 &1005355605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 736033999206377995, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+  m_PrefabInstance: {fileID: 1005355604}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1005355606 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5885116519340393210, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+  m_PrefabInstance: {fileID: 1005355604}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1005355607 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2042826728485002630, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+  m_PrefabInstance: {fileID: 1005355604}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1034765982
 GameObject:
   m_ObjectHideFlags: 0
@@ -22972,7 +23032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1911410316
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23863,7 +23923,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 89264d3ddcc4e3346aa22de9f391b259, type: 3}
       propertyPath: m_Name
-      value: NPCWerther
+      value: Lalah
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 89264d3ddcc4e3346aa22de9f391b259, type: 3}
       propertyPath: m_Layer

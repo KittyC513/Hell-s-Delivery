@@ -2019,8 +2019,8 @@ MonoBehaviour:
   nameTag: {fileID: 0}
   nameTag1: {fileID: 0}
   WertherUI: {fileID: 0}
-  NPC2UI: {fileID: 0}
-  NPC3UI: {fileID: 0}
+  LalahUI: {fileID: 0}
+  MichaelUI: {fileID: 0}
   nameTagNPC2: {fileID: 0}
   nameTagNPC3: {fileID: 0}
   hightlightedDoor: {fileID: 1491547972}
@@ -2035,7 +2035,7 @@ MonoBehaviour:
   p2AtDoor: 0
   Weather: {fileID: 0}
   secondCustomer: 0
-  NPC1dialogueEnds: 0
+  WeatherdialogueEnds: 0
   normalPackage: {fileID: 0}
   showPackage: 0
   phonePiece: {fileID: 0}
@@ -2043,8 +2043,9 @@ MonoBehaviour:
   Lalah: {fileID: 0}
   firstCustomer: 0
   LalahdialogueEnds: 0
-  HeavyPackage: {fileID: 0}
+  heavyPackage: {fileID: 0}
   showHeavyPackage: 0
+  packageInstruction: {fileID: 0}
 --- !u!4 &972791661
 Transform:
   m_ObjectHideFlags: 0
@@ -2146,8 +2147,8 @@ MonoBehaviour:
   showTVInstruction: 0
   isBegin: 0
   showWertherInstruction: 0
-  showNPC2Instruction: 0
-  showNPC3Instruction: 0
+  showLalahInstruction: 0
+  showMichaelInstruction: 0
   noisy1: {fileID: 0}
   noisy2: {fileID: 0}
   isNoisy1: 0
@@ -3409,63 +3410,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1516494122
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -16.40301
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 8.766048
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -6.8999996
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
-      propertyPath: m_Name
-      value: AptBuilding01_Balcony
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e941cb5fd821b214cbcfd93a89232fa0, type: 3}
 --- !u!1 &1562602820
 GameObject:
   m_ObjectHideFlags: 0
@@ -4690,4 +4634,3 @@ SceneRoots:
   - {fileID: 972791661}
   - {fileID: 1738282817}
   - {fileID: 1336459948}
-  - {fileID: 1516494122}

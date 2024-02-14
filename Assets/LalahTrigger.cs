@@ -39,12 +39,12 @@ public class LalahTrigger : MonoBehaviour
     }
     public void Repeat()
     {
-        if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == true)
-        {
-            GoToLevelScene();
-            dialogueRunner.Stop();
-            //dialogueRunner.StartDialogue("Repeat");
-        }
+        //if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == true)
+        //{
+        //    GoToLevelScene();
+        //    dialogueRunner.Stop();
+        //    //dialogueRunner.StartDialogue("Repeat");
+        //}
     }
 
     public void GoToLevelScene()
@@ -53,7 +53,7 @@ public class LalahTrigger : MonoBehaviour
     }
 
 
-    #region Weather
+    #region Lalah
     private void Arrive()
     {
         if (SceneControl.instance.firstCustomer && !npcArrived)
@@ -70,7 +70,6 @@ public class LalahTrigger : MonoBehaviour
         smoke.SetActive(false);
         anim.SetBool("Arrived", false);
         npcArrived = true;
-
     }
     #endregion
 }
