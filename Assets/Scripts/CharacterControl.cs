@@ -137,17 +137,27 @@ public class CharacterControl : MonoBehaviour
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
-    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage)
+    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle)
     {
         camera = cam;
-        MovementCalculations(camera);
+        
         StateMachineUpdate();
         GetStickInputs(camera, input);
         ApplyGravity();
         //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
         if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
 
-        JumpCalculations(jump);
+        //if we're on a summoning circle freeze movement
+        if (!isOnCircle)
+        {
+            MovementCalculations(camera);
+            JumpCalculations(jump);
+        }
+        else
+        {
+            directionSpeed = Vector3.zero;
+        }
+       
         //Debug.Log(directionSpeed);
         CheckParachute(jump, canParachute);
 
@@ -237,7 +247,11 @@ public class CharacterControl : MonoBehaviour
                 break;
             case playerStates.parachute:
                 //can transition to fall, thrown, dead, land
-                if (!isGrounded && !isJumping && !isParachuting) pState = playerStates.fall;
+                if (!isGrounded && !isJumping && !isParachuting)
+                {
+                    pState = playerStates.fall;
+                    fTime = 0.15f;
+                }
                 if (isGrounded) pState = playerStates.idle;
                 if (isJumping) pState = playerStates.jump;
 
