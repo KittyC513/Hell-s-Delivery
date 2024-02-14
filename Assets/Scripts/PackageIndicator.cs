@@ -10,12 +10,15 @@ public class PackageIndicator : MonoBehaviour
     public Image PackageIndicatorImage;
     public Image OffScreenPackageIndicator;
     
-    public float OutOfSightOffset = 20f;
+    public float OutOfSightOffset = 45f;
     public float outOfSightOffset { get { return OutOfSightOffset; } }
 
-    private GameObject package;
-    public Camera testCamera;
+    public GameObject package;
+
+    private Camera mainCamera;
+
     private RectTransform canvasRect;
+
     private RectTransform rectTransform;
 
     private void Awake()
@@ -23,12 +26,24 @@ public class PackageIndicator : MonoBehaviour
         instance = this;
         rectTransform = GetComponent<RectTransform>();
     }
-
-
-    public void InitializePackageIndicator(GameObject package, Camera testCamera, Canvas canvas)
+    private void Start()
     {
+        //if(GameManager.instance.cam2 != null)
+        //{
+        //    mainCamera = GameManager.instance.cam2.GetComponent<Camera>();
+        //} 
+
+        // = Camera.main;
+
+
+    }
+
+
+    public void InitializePackageIndicator(GameObject package, Camera mainCamera, Canvas canvas)
+    {
+        mainCamera = Camera.main;
         this.package = package;
-        this.testCamera = testCamera;
+        this.mainCamera = mainCamera;
         canvasRect = canvas.GetComponent<RectTransform>();
     }
 
@@ -45,7 +60,7 @@ public class PackageIndicator : MonoBehaviour
     protected void SetIndicatorPosition()
     {
         // get pos of target in relation to screenspace
-        Vector3 indicatorPos = testCamera.WorldToScreenPoint(package.transform.position);
+        Vector3 indicatorPos = mainCamera.WorldToScreenPoint(package.transform.position);
 
         if (indicatorPos.z >= 0f & indicatorPos.x <= canvasRect.rect.width * canvasRect.localScale.x & indicatorPos.y <= canvasRect.rect.height * canvasRect.localScale.x & indicatorPos.x >= 0f & indicatorPos.y >= 0f)
         {
@@ -53,14 +68,17 @@ public class PackageIndicator : MonoBehaviour
 
             targetOutOfSight(false, indicatorPos);
         }
+
         else if (indicatorPos.z >= 0f)
         {
             indicatorPos = OutOfRangeindicatorPositionB(indicatorPos);
             targetOutOfSight(true, indicatorPos);
         }
+
         else
         {
             indicatorPos *= -1f;
+
             indicatorPos = OutOfRangeindicatorPositionB(indicatorPos);
             targetOutOfSight(true, indicatorPos);
         }
@@ -69,33 +87,33 @@ public class PackageIndicator : MonoBehaviour
 
     }
 
-    private Vector3 OutOfRangeindicatorPositionB(Vector3 indicatorPosition)
+    private Vector3 OutOfRangeindicatorPositionB(Vector3 indicatorPos)
     {
-        indicatorPosition.z = 0f;
+        indicatorPos.z = 0f;
 
         Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 2f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
-        indicatorPosition -= canvasCenter;
+        indicatorPos -= canvasCenter;
 
-        float divX = (canvasRect.rect.width / 2f - outOfSightOffset / Mathf.Abs(indicatorPosition.x));
-        float divY = (canvasRect.rect.width / 2f - outOfSightOffset / Mathf.Abs(indicatorPosition.y));
+        float divX = (canvasRect.rect.width / 2f - outOfSightOffset / Mathf.Abs(indicatorPos.x));
+        float divY = (canvasRect.rect.width / 2f - outOfSightOffset / Mathf.Abs(indicatorPos.y));
 
         if (divX < divY)
         {
-            float angle = Vector3.SignedAngle(Vector3.right, indicatorPosition, Vector3.forward);
-            indicatorPosition.x = Mathf.Sign(indicatorPosition.x) * (canvasRect.rect.width * 0.5f - outOfSightOffset) * canvasRect.localScale.x;
-            indicatorPosition.y = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPosition.x;
+            float angle = Vector3.SignedAngle(Vector3.right, indicatorPos, Vector3.forward);
+            indicatorPos.x = Mathf.Sign(indicatorPos.x) * (canvasRect.rect.width * 0.5f - outOfSightOffset) * canvasRect.localScale.x;
+            indicatorPos.y = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPos.x;
         }
         else
         {
-            float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition, Vector3.forward);
+            float angle = Vector3.SignedAngle(Vector3.up, indicatorPos, Vector3.forward);
 
-            indicatorPosition.y = Mathf.Sign(indicatorPosition.y) * (canvasRect.rect.height / 2f - outOfSightOffset) * canvasRect.localScale.y;
-            indicatorPosition.x = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPosition.y;
+            indicatorPos.y = Mathf.Sign(indicatorPos.y) * (canvasRect.rect.height / 2f - outOfSightOffset) * canvasRect.localScale.y;
+            indicatorPos.x = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPos.y;
         }
 
 
-        indicatorPosition += canvasCenter;
-        return indicatorPosition;
+        indicatorPos += canvasCenter;
+        return indicatorPos;
 
 
     }
@@ -108,15 +126,30 @@ public class PackageIndicator : MonoBehaviour
             if (PackageIndicatorImage.isActiveAndEnabled == true) PackageIndicatorImage.enabled = false;
 
             //maybe add rotation
+            OffScreenPackageIndicator.rectTransform.rotation = Quaternion.Euler(rotationOutOfSightTargetindicator(indicatorPosition));
+
         }
         else
         {
             if (OffScreenPackageIndicator.gameObject.activeSelf == true) OffScreenPackageIndicator.gameObject.SetActive(false);
             if (PackageIndicatorImage.isActiveAndEnabled == false) PackageIndicatorImage.enabled = true;
 
+
         }
     }
 
+
+    private Vector3 rotationOutOfSightTargetindicator(Vector3 indicatorPosition)
+    {
+        //Calculate the canvasCenter
+        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 2f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
+
+        //Calculate the signedAngle between the position of the indicator and the Direction up.
+        float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition - canvasCenter, Vector3.forward);
+
+        //return the angle as a rotation Vector
+        return new Vector3(0f, 0f, angle);
+    }
 
 
 }
