@@ -745,6 +745,17 @@ public class TestCube : MonoBehaviour
         //    }
         //}
 
+
+        if (isGliding)
+        {
+            parachuteObj.SetActive(true);
+        }
+        else
+        {
+            parachuteObj.SetActive(false);
+        }
+
+
     }
     private void MovementCalcs()
     {
@@ -2525,21 +2536,12 @@ public class TestCube : MonoBehaviour
 
         }
 
-        if (isGliding)
-        {
-            parachuteObj.SetActive(true);
-        }
-        else
-        {
-            parachuteObj.SetActive(false);
-        }
-
 
     }
 
     void DoParachute(InputAction.CallbackContext obj)
     {
-        if (curSceneName == scene5)
+        if (curSceneName == scene5 || curSceneName == "New CC")
         {
             if (isInAir || isJumping)
             {
@@ -2549,7 +2551,11 @@ public class TestCube : MonoBehaviour
                     playerSounds.parachuteOpen.Post(this.gameObject);
                 }
 
-                forceDirection += Vector3.up * parachuteSpeed;
+                if (!useNewMovement)
+                {
+                    forceDirection += Vector3.up * parachuteSpeed;
+                }
+           
 
                 //forceDirection += Vector3.up * parachuteSpeed;
 

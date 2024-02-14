@@ -11116,7 +11116,7 @@ MonoBehaviour:
     trailNum: 0
   hitBoxesActive: 0
   slowMotion: 0
-  playerTrail: 1
+  playerTrail: 0
   showInputSpheres: 0
   playerTrailLength: 35
   playerTrailSampling: 0.04
@@ -18654,7 +18654,15 @@ MonoBehaviour:
   snappedToGround: 0
   coyoteTime: 0.12
   coyote: 0
-  camera: {fileID: 0}
+  maxGlideSpeed: 900
+  glideAccelerationSpeed: 200
+  glideAcceleration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  glideFallMax: 800
 --- !u!114 &1736135490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19715,7 +19723,15 @@ MonoBehaviour:
   snappedToGround: 0
   coyoteTime: 0.12
   coyote: 0
-  camera: {fileID: 0}
+  maxGlideSpeed: 900
+  glideAccelerationSpeed: 200
+  glideAcceleration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  glideFallMax: 800
 --- !u!1001 &1775902382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24759,6 +24775,38 @@ PrefabInstance:
     - target: {fileID: 4648375590135091751, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -42.154152
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: glideFallMax
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: glideAccelerationSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: glideAcceleration.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: glideAcceleration.m_Curve.Array.data[1].time
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: glideAcceleration.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: glideAcceleration.m_Curve.Array.data[1].inSlope
+      value: 4.395918
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: glideAcceleration.m_Curve.Array.data[1].inWeight
+      value: 0.045115776
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: glideAcceleration.m_Curve.Array.data[1].outSlope
+      value: 4.395918
       objectReference: {fileID: 0}
     - target: {fileID: 4692086341395662093, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
