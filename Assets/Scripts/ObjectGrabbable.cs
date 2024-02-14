@@ -32,6 +32,8 @@ public class ObjectGrabbable : MonoBehaviour
     public string layerNameToFind3 = "P1ItemContainer";
     public string layerNameToFind4 = "P2ItemContainer";
 
+
+
     [SerializeField]
     bool findPlayer1;
     [SerializeField]
@@ -104,6 +106,8 @@ public class ObjectGrabbable : MonoBehaviour
     private BoxCollider normalPackageCollider;
     [SerializeField]
     private GameObject deliveryArea;
+    [SerializeField]
+    private BoxCollider heavyPackageCollider;
 
     [SerializeField] private AK.Wwise.Event packageImpact;
 
@@ -117,11 +121,15 @@ public class ObjectGrabbable : MonoBehaviour
 
         if(GameManager.instance.curSceneName == "HubStart")
         {
-            normalPackageCollider.enabled = true;
+            if (isHeavy)
+            {
+                heavyPackageCollider.gameObject.SetActive(true);
+            }
+            else
+            {
+                normalPackageCollider.enabled = true;
+            }
 
-        } else
-        {
-            normalPackageCollider = null;
         }
 
         buttonOriPos = buttonPos;
@@ -148,6 +156,11 @@ public class ObjectGrabbable : MonoBehaviour
         {
             normalPackageCollider.enabled = false;
         }
+        if(heavyPackageCollider != null)
+        {
+            heavyPackageCollider.gameObject.SetActive(false);
+        }
+
         this.objectGrabpo = objectGrabpo;
         //set the gravity to zero when it's picked
         rb.useGravity = false;
@@ -182,7 +195,7 @@ public class ObjectGrabbable : MonoBehaviour
         P2Steal();
         ShowDeliveryArea();
 
-
+        //CheckGrounded();
     }
 
     private void FixedUpdate()
@@ -196,8 +209,6 @@ public class ObjectGrabbable : MonoBehaviour
 
 
         //PackageIcon();
-
-
     }
 
     void PackageIcon()
@@ -546,14 +557,14 @@ public class ObjectGrabbable : MonoBehaviour
             {
                 p1ItemC = obj;
                 findP1Container = true;
-                Debug.Log("Found GameObject on layer: " + obj.name);
+                //Debug.Log("Found GameObject on layer: " + obj.name);
             }
 
             if (obj.layer == layerToFind2 && !findP2Container)
             {
                 p2ItemC = obj;
                 findP2Container = true;
-                Debug.Log("Found GameObject on layer: " + obj.name);
+                //Debug.Log("Found GameObject on layer: " + obj.name);
             }
 
         }
@@ -628,13 +639,13 @@ public class ObjectGrabbable : MonoBehaviour
 
         }
     }
-    private bool CheckGrounded()
-    {
+    //private bool CheckGrounded()
+    //{
 
-        RaycastHit hit;
-        if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer)) return true;
-        else return false;
-    }
+    //    RaycastHit hit;
+    //    if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer)) return true;
+    //    else return false;
+    //}
 
 
     private void ShowDeliveryArea()
@@ -644,7 +655,7 @@ public class ObjectGrabbable : MonoBehaviour
             if(P1TakePackage || P2TakePackage)
             {
                 deliveryArea.SetActive(true);
-                print("deliveryAreaTrue");
+                //print("deliveryAreaTrue");
             }
         }
     }

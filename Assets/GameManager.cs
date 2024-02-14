@@ -199,8 +199,8 @@ public class GameManager : MonoBehaviour
         sceneChanged = false;
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
-        playerScore.p1Overall = 0;
-        playerScore.p2Overall = 0;
+        //playerScore.p1Overall = 0;
+        //playerScore.p2Overall = 0;
     }
 
     private void Update()
@@ -571,17 +571,19 @@ public class GameManager : MonoBehaviour
             if (p1.withinNPC2Range || p2.withinNPC2Range)
             {
                 showLalahInstruction = true;
+                print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
             }
             else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
             {
                 showLalahInstruction = false;
+                print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
             }
 
             if (p1.withinNPC3Range || p2.withinNPC3Range)
             {
                 showMichaelInstruction = true;
             }
-            else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
+            else if (!p1.withinNPC3Range || !p2.withinNPC3Range)
             {
                 showMichaelInstruction = false;
             }

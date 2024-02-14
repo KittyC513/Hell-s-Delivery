@@ -113,7 +113,7 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
-        if(GameManager.instance.curSceneName != "TitleScene")
+        if(GameManager.instance.curSceneName != "TitleScene" && GameManager.instance.player1 != null && GameManager.instance.player2 != null)
         {
             GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
         }
@@ -234,7 +234,7 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.firstTimeEnterHub = false;
         }
 
-        if (GameManager.instance.timesEnterHub >= 1)
+        if (GameManager.instance.timesEnterHub == 1)
         {
             Lalah.SetActive(true);
             firstCustomer = true;
@@ -250,7 +250,7 @@ public class SceneControl : MonoBehaviour
         {
             WertherUI.SetActive(true);
         }
-        else if(WeatherdialogueEnds)
+        else if(WeatherdialogueEnds && !GameManager.instance.showWertherInstruction)
         {
             WertherUI.SetActive(false);
         }
@@ -258,8 +258,9 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds)
         {
             LalahUI.SetActive(true);
+            print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
         }
-        else if(LalahdialogueEnds)
+        else if(LalahdialogueEnds || !GameManager.instance.showLalahInstruction)
         {
             LalahUI.SetActive(false);
         }
