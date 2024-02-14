@@ -594,17 +594,25 @@ public class TestCube : MonoBehaviour
 
                 if (curSceneName == "TitleScene" || curSceneName == "HubStart")
                 {
-                    charController.RunMovement(mainCam, isGliding, move.ReadValue<Vector2>(), jump);
-
+                    charController.RunMovement(mainCam, isGliding, move.ReadValue<Vector2>(), jump);                  
                     //print("use new movementCal");
                 }
                 else
                 {
-                    charController.RunMovement(playerCamera, isGliding, move.ReadValue<Vector2>(), jump);
-
+                    charController.RunMovement(playerCamera, isGliding, move.ReadValue<Vector2>(), jump);                    
                     //print("use new movementCal");
 
                 }
+
+                if (isPlayer1)
+                {
+                    playerAnimator.SetFloat("speed", rb.velocity.magnitude);
+                }
+                if (isPlayer2)
+                {
+                    playerAnimator2.SetFloat("speed", rb.velocity.magnitude);
+                }
+                
 
             }
 
