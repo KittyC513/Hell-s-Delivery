@@ -95,6 +95,8 @@ public class CharacterControl : MonoBehaviour
     private float parachutingSpeed = 0;
     private float parachuteTime = 0;
     [SerializeField] private float glideFallMax = 800;
+    [SerializeField] private float slowDownMultiplier = 0.6f;
+    private bool isSlow = false;
 
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
@@ -135,7 +137,7 @@ public class CharacterControl : MonoBehaviour
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
-    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump)
+    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage)
     {
         camera = cam;
         MovementCalculations(camera);
@@ -148,7 +150,10 @@ public class CharacterControl : MonoBehaviour
         JumpCalculations(jump);
         //Debug.Log(directionSpeed);
         CheckParachute(jump, canParachute);
-       
+
+        if (isParachuting) parachuteObj.SetActive(true);
+        else parachuteObj.SetActive(false);
+        isSlow = bigPackage;
     }
 
     public void FixedUpdateFunctions()
@@ -191,7 +196,7 @@ public class CharacterControl : MonoBehaviour
                 if (isJumping) pState = playerStates.jump;
                 break;
             case playerStates.run:
-                //can transition to idle, jump, thrown or dead
+                //can transition to idle, jump, thrown or deadr
 
                 //if we are grounded and have no speed we are now idle
                 if (isGrounded && currentSpeed <= 0) pState = playerStates.idle;
@@ -356,20 +361,36 @@ public class CharacterControl : MonoBehaviour
     {
         //we get our camera relative inputs from this function to be used later
         Vector3 inputDir = GetRelativeInputDirection(cam, inputValue);
-
+        
         //if we are grounded use our grounded speed curve otherwise use the airspeed curve
         if (isGrounded)
         {
             //if the player is inputting anything at all we should multiply the speed by their stick input to get a variable push rate
-            if (rawInput.magnitude > 0)
+            if (!isSlow)
             {
-                directionSpeed = new Vector3((faceDir.x * currentSpeed) * rawInput.magnitude, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude);
+                if (rawInput.magnitude > 0)
+                {
+                    directionSpeed = new Vector3((faceDir.x * currentSpeed) * rawInput.magnitude, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude);
+                }
+                else
+                {
+                    //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                    directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                }
             }
-            else 
+            else
             {
-                //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
-                directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                if (rawInput.magnitude > 0)
+                {
+                    directionSpeed = new Vector3((faceDir.x * currentSpeed) * rawInput.magnitude * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
+                }
+                else
+                {
+                    //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                    directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * slowDownMultiplier);
+                }
             }
+           
             
         }
         else if (pState == playerStates.fall || pState == playerStates.jump)
@@ -511,7 +532,7 @@ public class CharacterControl : MonoBehaviour
     {
 
         //if the jump button is pressed
-        if (readJumpValue && shouldJump && !isJumping && canJump)
+        if (readJumpValue && shouldJump && !isJumping && canJump && !isSlow)
         {
             canJump = false;
             if (!isJumping && shouldJump)
@@ -645,12 +666,16 @@ public class CharacterControl : MonoBehaviour
 
     private void CheckParachute(InputAction button, bool canParachute)
     {
-        if (!shouldJump && !isGrounded && canParachute && !isJumping)
+        if (!shouldJump && !isGrounded && canParachute && !isJumping && !isSlow)
         {
             if (button.ReadValue<float>() == 1)
             {
                 //parachute
                 isParachuting = true;
+            }
+            else
+            {
+                isParachuting = false;
             }
         }
         else
