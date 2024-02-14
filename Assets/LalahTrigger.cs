@@ -53,7 +53,7 @@ public class LalahTrigger : MonoBehaviour
     }
 
 
-    #region Weather
+    #region Lalah
     private void Arrive()
     {
         if (SceneControl.instance.firstCustomer && !npcArrived)
@@ -70,7 +70,6 @@ public class LalahTrigger : MonoBehaviour
         smoke.SetActive(false);
         anim.SetBool("Arrived", false);
         npcArrived = true;
-
     }
     #endregion
 }
