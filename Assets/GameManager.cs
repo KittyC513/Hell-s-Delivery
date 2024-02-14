@@ -125,9 +125,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool showWertherInstruction;
     [SerializeField]
-    public bool showNPC2Instruction;
+    public bool showLalahInstruction;
     [SerializeField]
-    public bool showNPC3Instruction;
+    public bool showMichaelInstruction;
 
     [SerializeField]
     public GameObject noisy1;
@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
 
         SkyboxControl();
 
-        ShowInstruction();
+        showMichaelInstructionFunction();
 
         ShowDirection();
 
@@ -544,7 +544,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    public void ShowInstruction()
+    public void showMichaelInstructionFunction()
     {
         if(curSceneName == scene1 || curSceneName == scene5)
         {
@@ -570,20 +570,20 @@ public class GameManager : MonoBehaviour
 
             if (p1.withinNPC2Range || p2.withinNPC2Range)
             {
-                showNPC2Instruction = true;
+                showLalahInstruction = true;
             }
             else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
             {
-                showNPC2Instruction = false;
+                showLalahInstruction = false;
             }
 
             if (p1.withinNPC3Range || p2.withinNPC3Range)
             {
-                showNPC3Instruction = true;
+                showMichaelInstruction = true;
             }
             else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
             {
-                showNPC3Instruction = false;
+                showMichaelInstruction = false;
             }
 
             if(p1.isAnswered || p2.isAnswered)

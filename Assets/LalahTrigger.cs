@@ -39,12 +39,12 @@ public class LalahTrigger : MonoBehaviour
     }
     public void Repeat()
     {
-        if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == true)
-        {
-            GoToLevelScene();
-            dialogueRunner.Stop();
-            //dialogueRunner.StartDialogue("Repeat");
-        }
+        //if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == true)
+        //{
+        //    GoToLevelScene();
+        //    dialogueRunner.Stop();
+        //    //dialogueRunner.StartDialogue("Repeat");
+        //}
     }
 
     public void GoToLevelScene()

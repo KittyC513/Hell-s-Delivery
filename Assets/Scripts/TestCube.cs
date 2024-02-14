@@ -1896,6 +1896,8 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.dialogueBox.SetActive(true);
                 SceneControl.instance.nameTag1.SetActive(true);
                 SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.nameTagNPC2.SetActive(false);
+                SceneControl.instance.nameTagNPC3.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("BoomerQuest");
 
                 NPCInteracting = false;
@@ -1914,8 +1916,10 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.dR.StopAllCoroutines();
                 SceneControl.instance.phoneUI.SetActive(false);
                 SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(false);
                 SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.nameTagNPC2.SetActive(true);
+                SceneControl.instance.nameTagNPC3.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("LalahQuest");
 
                 NPCInteracting = false;
@@ -1934,8 +1938,10 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.dR.StopAllCoroutines();
                 SceneControl.instance.phoneUI.SetActive(false);
                 SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(false);
                 SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.nameTagNPC2.SetActive(false);
+                SceneControl.instance.nameTagNPC3.SetActive(true);
                 SceneControl.instance.dR.StartDialogue("MichaelQuest");
 
                 //StartCoroutine(MovingCameraNPC3());
