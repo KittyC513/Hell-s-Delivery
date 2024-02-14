@@ -3442,32 +3442,32 @@ MonoBehaviour:
   slowRotationSpeed: 800
   requiredQTVelocity: 8
   airQuickTurn: 0.6
-  peakJumpSpeed: 1400
+  peakJumpSpeed: 1000
   maxFallSpeed: 1400
   jumpCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0.0005252459
-      value: -0.0032460243
-      inSlope: 0.19312161
-      outSlope: 0.19312161
+      value: -0.00040788949
+      inSlope: 9.781204
+      outSlope: 9.781204
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.11426026
+      outWeight: 0.50232506
     - serializedVersion: 3
-      time: 0.14495921
-      value: 1.001869
-      inSlope: -0.25184554
-      outSlope: -0.25184554
+      time: 0.13
+      value: 0.9971616
+      inSlope: 0.5195321
+      outSlope: 0.5195321
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.29949427
+      inWeight: 0.14238207
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.16036627
-      value: 0.9998664
+      time: 0.16499999
+      value: 1.0000017
       inSlope: -0.13717471
       outSlope: -0.13717471
       tangentMode: 0
@@ -3475,8 +3475,8 @@ MonoBehaviour:
       inWeight: 0.45830306
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.29949108
-      value: -0.0009844846
+      time: 0.32
+      value: -0.006666729
       inSlope: -8.040323
       outSlope: -8.040323
       tangentMode: 0
@@ -3556,7 +3556,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.27978468
     - serializedVersion: 3
-      time: 0.20064086
+      time: 0.25
       value: 0.000010008924
       inSlope: -2.853265
       outSlope: -2.853265
@@ -3577,7 +3577,7 @@ MonoBehaviour:
   snappedToGround: 0
   coyoteTime: 0.07
   coyote: 0
-  camera: {fileID: 2878398648056779871}
+  camera: {fileID: 0}
 --- !u!1 &1398057160942939610
 GameObject:
   m_ObjectHideFlags: 0
@@ -6910,7 +6910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3744829075321147806}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.04077953, y: -0.16502136, z: 0.15175435, w: 0.9736918}
+  m_LocalRotation: {x: -0.04077959, y: -0.16502133, z: 0.15175433, w: 0.9736918}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8734,7 +8734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4838951723700839669}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.08092585, y: -0.17114317, z: 0.14481518, w: 0.97117954}
+  m_LocalRotation: {x: -0.080925874, y: -0.17114317, z: 0.14481516, w: 0.9711795}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10930,7 +10930,7 @@ GameObject:
   - component: {fileID: 6987940440385354656}
   m_Layer: 0
   m_Name: ThirdPersonCam
-  m_TagString: Camera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
