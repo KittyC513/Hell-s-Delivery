@@ -110,11 +110,6 @@ public class ObjectGrabbable : MonoBehaviour
     private BoxCollider heavyPackageCollider;
 
 
-    [Header("Package in Level1")]
-    [SerializeField]
-    private GameObject instruction;
-
-
     [SerializeField] private AK.Wwise.Event packageImpact;
 
     private void Awake()
@@ -151,10 +146,6 @@ public class ObjectGrabbable : MonoBehaviour
             print("deliveryAreafalse");
         }
 
-        if(GameManager.instance.curSceneName == "Level1")
-        {
-            instruction.SetActive(true);
-        }
     }
 
 
@@ -188,10 +179,6 @@ public class ObjectGrabbable : MonoBehaviour
             TriggerbC.enabled = false;
         }
 
-        if (GameManager.instance.curSceneName == "Level1")
-        {
-            instruction.SetActive(false);
-        }
 
 
         InventoryManager.Instance.Add(item);
@@ -444,10 +431,7 @@ public class ObjectGrabbable : MonoBehaviour
             TriggerbC.enabled = true;
         }
 
-        if (GameManager.instance.curSceneName == "Level1")
-        {
-            instruction.SetActive(true);
-        }
+
 
 
         float random = Random.Range(-1, 1);
@@ -496,10 +480,6 @@ public class ObjectGrabbable : MonoBehaviour
             TriggerbC.enabled = true;
         }
 
-        if (GameManager.instance.curSceneName == "Level1")
-        {
-            instruction.SetActive(true);
-        }
 
 
         float random = Random.Range(-1, 1);

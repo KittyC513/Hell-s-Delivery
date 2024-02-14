@@ -2847,6 +2847,11 @@ public class TestCube : MonoBehaviour
         if (other.CompareTag("Package"))
         {
             withinPackageRange = true;
+            if(curSceneName == "Level1")
+            {
+                SceneControl.instance.ShowPackageInstruction();
+            }
+
         }
     }
 
@@ -2995,6 +3000,11 @@ public class TestCube : MonoBehaviour
         if (other.CompareTag("Package"))
         {
             withinPackageRange = false;
+            if (curSceneName == "Level1")
+            {
+                if(gameManager.p1.rC.Player1isCarrying || gameManager.p2.rC.Player2isCarrying)
+                SceneControl.instance.ClosePackageInstruction();
+            }
         }
     }
 

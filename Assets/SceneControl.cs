@@ -102,7 +102,9 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool showHeavyPackage;
 
-
+    [Header("Level 1")]
+    [SerializeField]
+    private GameObject packageInstruction;
 
     private void Awake()
     {
@@ -371,6 +373,19 @@ public class SceneControl : MonoBehaviour
 
     #endregion
 
+
+    #region Level 1
+
+    public void ShowPackageInstruction()
+    {
+        packageInstruction.SetActive(true);
+    }
+
+    public void ClosePackageInstruction()
+    {
+        packageInstruction.SetActive(false);
+    }
+    #endregion
 
 
 
