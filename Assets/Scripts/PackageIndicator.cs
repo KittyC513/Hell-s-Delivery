@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class PackageIndicator : MonoBehaviour
 {
-
+    public static PackageIndicator instance;
+    
     public Image PackageIndicatorImage;
+    public Image OffScreenPackageIndicator;
     
     public float OutOfSightOffset = 20f;
     public float outOfSightOffset { get { return OutOfSightOffset; } }
@@ -18,6 +20,7 @@ public class PackageIndicator : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         rectTransform = GetComponent<RectTransform>();
     }
 
@@ -48,18 +51,18 @@ public class PackageIndicator : MonoBehaviour
         {
             indicatorPos.z = 0f;
 
-            //targetOutOfSight(false, indicatorPos);
+            targetOutOfSight(false, indicatorPos);
         }
         else if (indicatorPos.z >= 0f)
         {
             indicatorPos = OutOfRangeindicatorPositionB(indicatorPos);
-            //targetOutOfSight(true, indicatorPos);
+            targetOutOfSight(true, indicatorPos);
         }
         else
         {
             indicatorPos *= -1f;
             indicatorPos = OutOfRangeindicatorPositionB(indicatorPos);
-            //targetOutOfSight(true, indicatorPos);
+            targetOutOfSight(true, indicatorPos);
         }
 
         rectTransform.position = indicatorPos;
@@ -95,6 +98,23 @@ public class PackageIndicator : MonoBehaviour
         return indicatorPosition;
 
 
+    }
+
+    private void targetOutOfSight(bool oos, Vector3 indicatorPosition)
+    {
+        if (oos)
+        {
+            if (OffScreenPackageIndicator.gameObject.activeSelf == false) OffScreenPackageIndicator.gameObject.SetActive(true);
+            if (PackageIndicatorImage.isActiveAndEnabled == true) PackageIndicatorImage.enabled = false;
+
+            //maybe add rotation
+        }
+        else
+        {
+            if (OffScreenPackageIndicator.gameObject.activeSelf == true) OffScreenPackageIndicator.gameObject.SetActive(false);
+            if (PackageIndicatorImage.isActiveAndEnabled == false) PackageIndicatorImage.enabled = true;
+
+        }
     }
 
 

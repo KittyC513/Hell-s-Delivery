@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
 {
 
     public Canvas canvas;
+    // List<TargetIndicator> targetIndicators = new List<TargetIndicator>();
     public Camera TestCamera;
     public GameObject PackageIndicatorObject;
 
@@ -19,15 +20,15 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //UpdatePackageIndicator();
+        PackageIndicator.instance.UpdatePackageIndicator();
     }
 
 
     public void AddPackageIndicator(GameObject package)
     {
-       // PackageIndicator indicator = GameObject.Instantiate(PackageIndicatorObject, Canvas.transform).GetComponent<PackageIndicator>();
-       // indicator.InitializePackageIndicator(package, TestCamera, canvas);
-        
+       PackageIndicator indicator = GameObject.Instantiate(PackageIndicatorObject, canvas.transform).GetComponent<PackageIndicator>();
+       indicator.InitializePackageIndicator(package, TestCamera, canvas);
+       //targetIndicators.Add(indicator);
 
     }
 
