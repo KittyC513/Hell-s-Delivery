@@ -87,12 +87,21 @@ public class CharacterControl : MonoBehaviour
     private float coyoteTimer = 0;
 
     private bool shouldJump = false;
+    [Space, Header("Misc Movement Variables")]
+    [SerializeField] private float maxGlideSpeed = 900;
+    [SerializeField] private float glideAccelerationSpeed = 200;
+    [SerializeField] private AnimationCurve glideAcceleration;
+    private float lastAirSpeed;
+    private float parachutingSpeed = 0;
+    private float parachuteTime = 0;
+    [SerializeField] private float glideFallMax = 800;
+
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
     private InputActionMap player, dialogue, pause;
     private InputAction move, run, parachute, cancelParachute, triggerButton;
 
-    [SerializeField]
+ 
     private Camera camera;
 
     #region Initialization
@@ -126,7 +135,7 @@ public class CharacterControl : MonoBehaviour
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
-    public void RunMovement(Camera cam, bool isParachuting, Vector2 input, InputAction jump)
+    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump)
     {
         camera = cam;
         MovementCalculations(camera);
@@ -138,6 +147,7 @@ public class CharacterControl : MonoBehaviour
 
         JumpCalculations(jump);
         //Debug.Log(directionSpeed);
+        CheckParachute(jump, canParachute);
        
     }
 
@@ -201,12 +211,12 @@ public class CharacterControl : MonoBehaviour
                 break;
             case playerStates.jump:
                 //can transition to fall, land, parachute, dead, thrown
-                if (isJumping == false && !isGrounded && !isParachuting)
+                if (isJumping == false && !isGrounded)
                 {
                     pState = playerStates.fall;
                 }
                 if (isGrounded) pState = playerStates.land;
-               
+                if (isParachuting) pState = playerStates.parachute;
                 break;
             case playerStates.fall:
                 //can transition to land, parachute, thrown, dead
@@ -223,6 +233,9 @@ public class CharacterControl : MonoBehaviour
             case playerStates.parachute:
                 //can transition to fall, thrown, dead, land
                 if (!isGrounded && !isJumping && !isParachuting) pState = playerStates.fall;
+                if (isGrounded) pState = playerStates.idle;
+                if (isJumping) pState = playerStates.jump;
+
                 break;
             case playerStates.thrown:
                 //can transition to idle, run, fall, land, thrown, dead, parachute
@@ -352,18 +365,22 @@ public class CharacterControl : MonoBehaviour
             {
                 directionSpeed = new Vector3((faceDir.x * currentSpeed) * rawInput.magnitude, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude);
             }
-            else
+            else 
             {
                 //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
                 directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
             }
             
         }
-        else
+        else if (pState == playerStates.fall || pState == playerStates.jump)
         {
             //the air speed is unaffected by the stick magnitude
             directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
            
+        }
+        else if (pState == playerStates.parachute)
+        {
+            directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
         }
 
         //if there is some input
@@ -398,6 +415,24 @@ public class CharacterControl : MonoBehaviour
                 //if we aren't grounded we evaluate the air movement curve
                 airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
 
+                if (pState == playerStates.parachute)
+                {
+                    parachuteTime += Time.deltaTime;
+                    //add to our last speed by evaluating the curve
+                    if (parachutingSpeed < maxGlideSpeed)
+                    {
+                        parachutingSpeed += (glideAccelerationSpeed * glideAcceleration.Evaluate(parachuteTime));
+                    }
+                }
+                else
+                {
+                    lastAirSpeed = airSpeed;
+                    parachutingSpeed = lastAirSpeed;
+                    parachuteTime = 0;
+
+                    
+                }
+
                 //what was the player's speed the last time they were inputting
                 lastSpeedValue = currentSpeed * rawInput.magnitude;
 
@@ -408,12 +443,14 @@ public class CharacterControl : MonoBehaviour
                 decelerationTime += Time.deltaTime;
 
 
-                if (currentSpeed > 0 || airSpeed > 0)
+                if (currentSpeed > 0 || airSpeed > 0 || parachutingSpeed > 0)
                 {
                     //apply a curve in the same way we applied the velocity but for when we want to slow down
                     currentSpeed = (lastSpeedValue * decelerationCurve.Evaluate(decelerationTime));
                     //apply a curve in the same way we applied the velocity but for when we want to slow down
                     airSpeed = (lastSpeedValue * airDecelerationCurve.Evaluate(decelerationTime));
+
+                    parachutingSpeed = (lastSpeedValue * airDecelerationCurve.Evaluate(decelerationTime));
                 }
                 else
                 {
@@ -582,12 +619,19 @@ public class CharacterControl : MonoBehaviour
     private void ApplyGravity()
     {
         //build downwards velocity until you reach peak speed
-        if (pState != playerStates.jump && !isJumping && !snappedToGround)
+        if (pState != playerStates.jump && pState != playerStates.parachute && !isJumping && !snappedToGround)
         {
             //add time to the fall timer
             fTime += Time.deltaTime;
             //add to our fall speed by using the animation curve
             ySpeed = (-maxFallSpeed) * fallAccelCurve.Evaluate(fTime);
+        }
+        else if (pState == playerStates.parachute)
+        {
+            //add time to the fall timer
+            fTime += Time.deltaTime;
+            //add to our fall speed by using the animation curve
+            ySpeed = (-glideFallMax) * fallAccelCurve.Evaluate(fTime);
         }
         else 
         {
@@ -596,6 +640,22 @@ public class CharacterControl : MonoBehaviour
 
             fTime = 0;
             
+        }
+    }
+
+    private void CheckParachute(InputAction button, bool canParachute)
+    {
+        if (!shouldJump && !isGrounded && canParachute && !isJumping)
+        {
+            if (button.ReadValue<float>() == 1)
+            {
+                //parachute
+                isParachuting = true;
+            }
+        }
+        else
+        {
+            isParachuting = false;
         }
     }
 

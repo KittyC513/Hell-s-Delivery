@@ -108,8 +108,7 @@ public class TestCube : MonoBehaviour
     Camera mainCam;
     [SerializeField]
     public CinemachineFreeLook thirdPersonCam;
-
-
+    private Camera movementCamera;
 
 
     [SerializeField]
@@ -789,6 +788,17 @@ public class TestCube : MonoBehaviour
         //    }
         //}
 
+
+        if (isGliding)
+        {
+            parachuteObj.SetActive(true);
+        }
+        else
+        {
+            parachuteObj.SetActive(false);
+        }
+
+
     }
     private void MovementCalcs()
     {
@@ -891,7 +901,7 @@ public class TestCube : MonoBehaviour
             playerCamera.enabled = false;
             mainCam = Camera.main;
             //print("1");
-
+            movementCamera = mainCam;
 
         }
         else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == "New CC")
@@ -900,7 +910,7 @@ public class TestCube : MonoBehaviour
             mainCam = null;
             print("PlayerCamara");
             //print("2");
-
+            movementCamera = playerCamera;
             //if (exButton.instance.inBridge)
             //{
             //    StartCoroutine(exButton.instance.SwitchCamera());
@@ -2655,21 +2665,12 @@ public class TestCube : MonoBehaviour
 
         }
 
-        if (isGliding)
-        {
-            parachuteObj.SetActive(true);
-        }
-        else
-        {
-            parachuteObj.SetActive(false);
-        }
-
 
     }
 
     void DoParachute(InputAction.CallbackContext obj)
     {
-        if (curSceneName == scene5)
+        if (curSceneName == scene5 || curSceneName == "New CC")
         {
             if (isInAir || isJumping)
             {
@@ -2679,7 +2680,11 @@ public class TestCube : MonoBehaviour
                     playerSounds.parachuteOpen.Post(this.gameObject);
                 }
 
-                forceDirection += Vector3.up * parachuteSpeed;
+                if (!useNewMovement)
+                {
+                    forceDirection += Vector3.up * parachuteSpeed;
+                }
+           
 
                 //forceDirection += Vector3.up * parachuteSpeed;
 

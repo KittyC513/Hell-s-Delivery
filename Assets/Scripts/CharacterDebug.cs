@@ -8,6 +8,7 @@ public class CharacterDebug : MonoBehaviour
     [SerializeField] private bool hitBoxesActive = false;
     [SerializeField] private bool slowMotion = false;
     [SerializeField] private bool playerTrail = false;
+    [SerializeField] private bool showInputSpheres = false;
     [SerializeField] private int playerTrailLength = 8;
     [SerializeField] private float playerTrailSampling = 0.2f;
     [SerializeField] private GameObject trailObject;
@@ -20,6 +21,14 @@ public class CharacterDebug : MonoBehaviour
     [SerializeField] private GameObject p1TrailParent;
     [SerializeField] private GameObject p2TrailParent;
 
+    [SerializeField] private GameObject onSphereObj;
+    [SerializeField] private GameObject offSphereObj;
+
+
+
+    private bool hasStarted = false;
+
+    private bool hasStopped = false;
 
     private void Start()
     {
@@ -60,7 +69,7 @@ public class CharacterDebug : MonoBehaviour
                     //draw a new gizmo
                     foreach (var p in players)
                     {
-                        if (p.cc.stickValue.x != 0 || p.cc.stickValue.y != 0 || !p.cc.isGrounded)
+                        if (p.obj.GetComponent<Rigidbody>().velocity.magnitude > 0)
                         {
                             p.trailObjs[p.trailNum].transform.position = p.obj.transform.position;
                             p.trailObjs[p.trailNum].transform.rotation = p.obj.transform.rotation;
@@ -77,9 +86,35 @@ public class CharacterDebug : MonoBehaviour
 
                     }
 
+                }
 
-                   
-
+                if (showInputSpheres)
+                {
+                    foreach (var p in players)
+                    {
+                        if (p.cc.stickValue.magnitude > 0)
+                        {
+                            //we inputted
+                            if (!hasStarted)
+                            {
+                                hasStopped = false;
+                                hasStarted = true;
+                                Vector3 pos = new Vector3(p.obj.transform.position.x, p.obj.transform.position.y + 4, p.obj.transform.position.z);
+                                Instantiate(onSphereObj, pos, Quaternion.identity);
+                            }
+                        }
+                        else
+                        {
+                            if (!hasStopped)
+                            {
+                                hasStopped = true;
+                                hasStarted = false;
+                                Vector3 pos = new Vector3(p.obj.transform.position.x, p.obj.transform.position.y + 4, p.obj.transform.position.z);
+                                Instantiate(offSphereObj, pos, Quaternion.identity);
+                            }
+                            //we let go
+                        }
+                    }
                 }
             }
         }
