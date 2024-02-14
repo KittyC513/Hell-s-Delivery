@@ -65,6 +65,8 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float currentSpeed;
 
+    private bool canParachute = false;
+
 
     private Vector3 faceDir;
     [SerializeField]
@@ -592,12 +594,12 @@ public class TestCube : MonoBehaviour
 
                 if (curSceneName == "TitleScene" || curSceneName == "HubStart")
                 {
-                    charController.RunMovement(mainCam, isGliding, move.ReadValue<Vector2>(), jump);                  
+                    charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle);                  
                     //print("use new movementCal");
                 }
                 else
                 {
-                    charController.RunMovement(playerCamera, isGliding, move.ReadValue<Vector2>(), jump);                    
+                    charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle);                    
                     //print("use new movementCal");
 
                 }
@@ -656,7 +658,16 @@ public class TestCube : MonoBehaviour
             //}
         }
 
-        JoinGameTitle();
+        if (curSceneName == scene5 || curSceneName == "New CC")
+        {
+            canParachute = true;
+        }
+        else
+        {
+            canParachute = false;
+        }
+
+            JoinGameTitle();
         //PlayerPosition();
 
 
@@ -788,15 +799,18 @@ public class TestCube : MonoBehaviour
         //    }
         //}
 
-
-        if (isGliding)
+        if (!useNewMovement)
         {
-            parachuteObj.SetActive(true);
+            if (isGliding)
+            {
+                parachuteObj.SetActive(true);
+            }
+            else
+            {
+                parachuteObj.SetActive(false);
+            }
         }
-        else
-        {
-            parachuteObj.SetActive(false);
-        }
+     
 
 
     }
@@ -2672,6 +2686,7 @@ public class TestCube : MonoBehaviour
     {
         if (curSceneName == scene5 || curSceneName == "New CC")
         {
+            canParachute = true;
             if (isInAir || isJumping)
             {
 
@@ -2693,6 +2708,7 @@ public class TestCube : MonoBehaviour
                 canJump = false;
             }
         }
+
 
     }
 

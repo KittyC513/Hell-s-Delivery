@@ -3063,6 +3063,7 @@ MonoBehaviour:
   thirdPersonCam: {fileID: 2787875765576810231}
   playerPos: {fileID: 2665975483670654211}
   itemContainer: {fileID: 5833295307811076831}
+  itemContainer1: {fileID: 0}
   objectGrabbable: {fileID: 0}
   slotFull: 0
   gM: {fileID: 0}
@@ -3435,7 +3436,7 @@ MonoBehaviour:
   groundCheckDist: 0.83
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 536871048
   stickValue: {x: 0, y: 0}
   minQuickTurn: 0.7
   runMagnitude: 0.6
@@ -3577,7 +3578,34 @@ MonoBehaviour:
   snappedToGround: 0
   coyoteTime: 0.07
   coyote: 0
-  camera: {fileID: 0}
+  maxGlideSpeed: 900
+  glideAccelerationSpeed: 200
+  glideAcceleration:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.45
+      value: 1
+      inSlope: 4.395918
+      outSlope: 4.395918
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.045115776
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  glideFallMax: 300
+  slowDownMultiplier: 0.6
 --- !u!1 &1398057160942939610
 GameObject:
   m_ObjectHideFlags: 0
