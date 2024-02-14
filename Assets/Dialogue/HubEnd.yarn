@@ -10,3 +10,46 @@ Werther: And don't you <color=\#e06666>dare</color> call me ancient! You don't k
 Werther: Urgh, never mind that. The worms in my stomach are doing the jiggy.
 Werther: ACK! I'VE GOTTA SCRAM! THEY'RE SLIPPING OUT!
 ===
+
+title: DevilWertherEnd
+tage:
+---
+<<PlayerShow>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Disappointed 0.45 0.03 white>>
+Devil: Ugh. Can one of you demons clean that up?
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Cheery 0.45 0.03 white>>
+Devil: It might not be in your job description, but <color=\#e06666>I'm your boss</color>, so...
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
+Devil: Make sure it's spotless, then you can go back to your regular jobs.
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+Devil: Which will give <color=\#e06666>one of you</color> a promotion, if you perform well.
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
+Devil: And, it seems like a real butt-clenching competition.
+<<Act Devil DevilPopUp_Default>>
+
+//Show employee of month png
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Annoyed 0.45 0.03 white>>
+Devil: Well, go on now, do your jobs.
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+
+<<HideGradient>>
+===
