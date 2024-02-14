@@ -591,7 +591,6 @@ public class TestCube : MonoBehaviour
             if (playerCamera != null || mainCam != null)
             {
 
-
                 if (curSceneName == "TitleScene" || curSceneName == "HubStart")
                 {
                     charController.RunMovement(mainCam, isGliding, move.ReadValue<Vector2>(), jump);                  
