@@ -160,6 +160,11 @@ public class SceneControl : MonoBehaviour
         {
             ShowHightlightedDoor();
         }
+
+        if(GameManager.instance.curSceneName == "Level1")
+        {
+            PackageInstructionControl();
+        }
     }
 
 
@@ -384,6 +389,18 @@ public class SceneControl : MonoBehaviour
     public void ClosePackageInstruction()
     {
         packageInstruction.SetActive(false);
+    }
+
+    public void PackageInstructionControl()
+    {
+        if(GameManager.instance.p1.withinPackageRange || GameManager.instance.p2.withinPackageRange)
+        {
+            ShowPackageInstruction();
+        } 
+        else if (!GameManager.instance.p1.withinPackageRange && !GameManager.instance.p2.withinPackageRange)
+        {
+            ClosePackageInstruction();
+        }
     }
     #endregion
 

@@ -8,6 +8,7 @@ public class TargerObject : MonoBehaviour
 
     private void Awake()
     {
+
         UIController ui = GetComponentInParent<UIController>();
         if (ui == null)
         {
@@ -17,6 +18,8 @@ public class TargerObject : MonoBehaviour
         if (ui == null) Debug.LogError("No UIController component found");
 
         ui.AddTargetIndicator(this.gameObject);
+       
+
     }
 
 }

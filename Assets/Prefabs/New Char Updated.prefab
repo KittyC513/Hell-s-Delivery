@@ -457,10 +457,10 @@ MonoBehaviour:
   currentActive: {fileID: 0}
   p1DeadScreen: {fileID: 8975706056278993396}
   p2DeadScreen: {fileID: 6939142165015097332}
-  P1Indicator: {fileID: 0}
-  P2Indicator: {fileID: 0}
-  P1Shade: {fileID: 0}
-  P2Shade: {fileID: 0}
+  P1Indicator: {fileID: 3052021886279913120}
+  P2Indicator: {fileID: 8758719343084979860}
+  P1Shade: {fileID: 5383759773769684957}
+  P2Shade: {fileID: 444063723474327818}
   t1: {fileID: 4476539866890053640}
   t2: {fileID: 362061208538095281}
   t3: {fileID: 4095539341280097298}
@@ -2819,6 +2819,7 @@ Transform:
   - {fileID: 8101443428968427814}
   - {fileID: 7016182843055085790}
   - {fileID: 8918972583812622249}
+  - {fileID: 7333415617263743200}
   m_Father: {fileID: 1000986402882707267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4487491502005922908
@@ -3030,6 +3031,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  push:
+    m_Name: Push
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: cbd45300-3c94-4815-a1dc-1ece7622f1af
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   isPicking: 0
   useNewMovement: 1
   movementForce: 1
@@ -3105,13 +3115,13 @@ MonoBehaviour:
   isGliding: 0
   numOfButtonPressed: 0
   parachuteObj: {fileID: 4786678468063173969}
-  pushForce: 2
+  pushForce: 100
   pushMask:
     serializedVersion: 2
     m_Bits: 3072
   gameManager: {fileID: 0}
   otherRB: {fileID: 0}
-  pushDistance: 0.5
+  pushDistance: 0.8
   pushMultiply: 100
   lerpSpeed: 50
   withinPushingRange: 0
@@ -3131,11 +3141,11 @@ MonoBehaviour:
   NPCLayer:
     serializedVersion: 2
     m_Bits: 33554432
-  withinNPCsRange: 1
+  withinNPCsRange: 0
   withinNPC2Range: 0
   withinNPC3Range: 0
   isTalking: 0
-  interactWithNpc: 1
+  interactWithNpc: 0
   doorDistance: 3
   postEnter:
     serializedVersion: 2
@@ -3426,6 +3436,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   currentSpeed: 0
+  directionSpeed: {x: 0, y: 0, z: 0}
   rotationSpeed: 1300
   velocityTime: 0
   decelerationTime: 0
@@ -3437,6 +3448,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 536871048
+  rb: {fileID: 0}
   stickValue: {x: 0, y: 0}
   minQuickTurn: 0.7
   runMagnitude: 0.6
@@ -3572,6 +3584,7 @@ MonoBehaviour:
   jTime: 0
   isJumping: 0
   minJumpTime: 0.18
+  reachedMinJump: 0
   canJump: 1
   readJumpValue: 0
   jumpButtonGracePeriod: 0.2
@@ -3606,6 +3619,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   glideFallMax: 300
   slowDownMultiplier: 0.6
+  isSlow: 0
+  freezeState: 0
 --- !u!1 &1398057160942939610
 GameObject:
   m_ObjectHideFlags: 0
@@ -10487,7 +10502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5982764182210883805}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.15852667, z: 0.15852667, w: 0.9745453}
+  m_LocalRotation: {x: -0, y: -0.15852672, z: 0.1585267, w: 0.9745453}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10800,7 +10815,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6258548748242453789}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.37400824, y: -0.19560304, z: 0.081021436, w: 0.9029357}
+  m_LocalRotation: {x: 0.37400824, y: -0.19560309, z: 0.08102145, w: 0.9029357}
   m_LocalPosition: {x: 2.896875, y: 6.9999995, z: -6.37245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14026,6 +14041,77 @@ Transform:
   - {fileID: 1700394433930342885}
   m_Father: {fileID: 6655886533335793816}
   m_LocalEulerAnglesHint: {x: -1.9984541, y: 45.84286, z: -52.986893}
+--- !u!1 &7995623039370358830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7333415617263743200}
+  - component: {fileID: 7369368647578047477}
+  - component: {fileID: 389621953588587212}
+  m_Layer: 31
+  m_Name: PushRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7333415617263743200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7995623039370358830}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2665975483670654211}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &7369368647578047477
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7995623039370358830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.1
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &389621953588587212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7995623039370358830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e331ccc00fabb284da84051381271acf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testCube: {fileID: 1194042218538432971}
+  isPlayer1: 0
+  isPlayer2: 0
 --- !u!1 &8001326422670238705
 GameObject:
   m_ObjectHideFlags: 0
@@ -14872,7 +14958,7 @@ Transform:
   m_GameObject: {fileID: 8199288654971462712}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.624, z: 0}
+  m_LocalPosition: {x: 0, y: 2.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

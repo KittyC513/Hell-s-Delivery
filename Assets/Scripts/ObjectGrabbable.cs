@@ -109,6 +109,9 @@ public class ObjectGrabbable : MonoBehaviour
     [SerializeField]
     private BoxCollider heavyPackageCollider;
 
+    [Header("Level 1")]
+    public Transform world;
+
 
     [SerializeField] private AK.Wwise.Event packageImpact;
 
@@ -355,7 +358,7 @@ public class ObjectGrabbable : MonoBehaviour
 
             if (isHeavy)
             {
-                TriggerbC.enabled = true;
+                TriggerbC.enabled = false;
             }
             time = 0;
         }
@@ -387,7 +390,7 @@ public class ObjectGrabbable : MonoBehaviour
 
             if (isHeavy)
             {
-                TriggerbC.enabled = true;
+                TriggerbC.enabled = false;
             }
             time = 0;
         }
@@ -640,8 +643,11 @@ public class ObjectGrabbable : MonoBehaviour
     {
         if (other.transform.tag == "MovingPlat")
         {
+            if(GameManager.instance.curSceneName == "Level1")
+            {
+                boxTransform.parent = world;
+            }
 
-            boxTransform.parent = null;
 
         }
     }

@@ -32,7 +32,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close;
+    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -503,6 +503,7 @@ public class TestCube : MonoBehaviour
         pull = player.FindAction("Pull");
         dash = player.FindAction("Dash");
         close = player.FindAction("Close");
+        push = player.FindAction("Push");
 
         //player.FindAction("Join").started += DoTalk;
 
@@ -582,6 +583,7 @@ public class TestCube : MonoBehaviour
         AnimationAndSound();
 
         playerPos = this.transform;
+
         if (!useNewMovement)
         {
             MovementCalcs();
@@ -594,32 +596,50 @@ public class TestCube : MonoBehaviour
 
                 if (curSceneName == "TitleScene" || curSceneName == "HubStart")
                 {
-                    charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);                  
+
+                    charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);
                     //print("use new movementCal");
                 }
                 else
                 {
-                    charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);                    
-                    //print("use new movementCal");
-
+                    charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);
                 }
+                //charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);                    
+                //print("use new movementCal");
+
 
                 if (isPlayer1)
                 {
-                    playerAnimator.SetFloat("speed", rb.velocity.magnitude);
+                    if (!isFreeze)
+                    {
+                        playerAnimator.SetFloat("speed", rb.velocity.magnitude);
+                    }
+                    else
+                    {
+                        charController.ApplyGravity();
+                        playerAnimator.SetFloat("speed", 0f);
+                    }
+
                 }
                 if (isPlayer2)
                 {
-                    playerAnimator2.SetFloat("speed", rb.velocity.magnitude);
+                    if (!isFreeze)
+                    {
+                        playerAnimator2.SetFloat("speed", rb.velocity.magnitude);
+                    }
+                    else
+                    {
+                        charController.ApplyGravity();
+                        playerAnimator2.SetFloat("speed", 0f);
+                    }
+
                 }
+            }
                 
 
-            }
+         }
 
-        }
-
-
-        DetectPushRange();
+        //DetectPushRange();
 
         if (curSceneName == scene3 || curSceneName == scene6)
         {
@@ -922,7 +942,7 @@ public class TestCube : MonoBehaviour
         {
             playerCamera.enabled = true;
             mainCam = null;
-            print("PlayerCamara");
+            //print("PlayerCamara");
             //print("2");
             movementCamera = playerCamera;
             //if (exButton.instance.inBridge)
@@ -2302,8 +2322,20 @@ public class TestCube : MonoBehaviour
         otherRB.useGravity = true;
 
         Vector3 forceDir = otherRB.transform.position - transform.position;
+        Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
 
-        gameManager.p2.forceDirection += playerDir.forward * pushForce;
+        gameManager.p2.charController.rb.AddForce(forcePosition.normalized * pushForce, ForceMode.Impulse);
+        //if (tooHeavy)
+        //{
+        //    //gameManager.p2.forceDirection += playerDir.forward * pushForce * 10;
+        //    charController.rb.velocity = new Vector3(charController.directionSpeed.x * Time.fixedDeltaTime * pushForce, charController.ySpeed * Time.fixedDeltaTime, charController.directionSpeed.z * Time.fixedDeltaTime * pushForce);
+        //}
+        //else
+        //{
+        //    gameManager.p2.forceDirection += playerDir.forward * pushForce;
+        //}
+
+        print("gameManager.p2.forcePosition" + forcePosition);
         
         //if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         //{
@@ -2354,12 +2386,17 @@ public class TestCube : MonoBehaviour
 
         otherRB.useGravity = false;
         //otherRB.isKinematic = true;
-        forceDir = otherRB.transform.position - transform.position;
-
+        Vector3 forceDir = otherRB.transform.position - transform.position;
         Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
 
-        gameManager.p1.forceDirection += playerDir.forward * pushForce;
+        gameManager.p1.charController.rb.AddForce(forcePosition.normalized * pushForce, ForceMode.Impulse);
+        //forceDir = otherRB.transform.position - transform.position;
 
+        ////Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+        //charController.rb.velocity = new Vector3(charController.directionSpeed.x * Time.fixedDeltaTime * pushForce, charController.ySpeed * Time.fixedDeltaTime, charController.directionSpeed.z * Time.fixedDeltaTime * pushForce);
+
+
+        print("forcePosition" + forcePosition);
         //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.z * pushForce;
         //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.x * pushForce;
 
@@ -2434,7 +2471,7 @@ public class TestCube : MonoBehaviour
             if (p2rc.Player2Die && rC.Player2isCarrying)
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                p2rc.Player2Die = false;
+                //p2rc.Player2Die = false;
                 GameManager.instance.p2.objectGrabbable = null;
 
             }
@@ -2442,7 +2479,7 @@ public class TestCube : MonoBehaviour
             {
                 Debug.Log("Player1die" + rC.Player1Die);
                 objectGrabbable = null;
-                rC.Player1Die = false;
+                //rC.Player1Die = false;
 
             }
         }
@@ -2452,14 +2489,14 @@ public class TestCube : MonoBehaviour
             if (p1rc.Player1Die && rC.Player1isCarrying)
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                p1rc.Player1Die = false;
+                //p1rc.Player1Die = false;
                 GameManager.instance.p1.objectGrabbable = null;
             }
             else if (rC.Player2Die && rC.Player1isCarrying)
             {
                 Debug.Log("Player2die" + rC.Player2Die);
                 objectGrabbable = null;
-                rC.Player2Die = false;
+                //rC.Player2Die = false;
             }
         }
 
@@ -2868,10 +2905,7 @@ public class TestCube : MonoBehaviour
         if (other.CompareTag("Package"))
         {
             withinPackageRange = true;
-            if(curSceneName == "Level1")
-            {
-                SceneControl.instance.ShowPackageInstruction();
-            }
+
 
         }
     }
@@ -3021,11 +3055,7 @@ public class TestCube : MonoBehaviour
         if (other.CompareTag("Package"))
         {
             withinPackageRange = false;
-            if (curSceneName == "Level1")
-            {
-                if(gameManager.p1.rC.Player1isCarrying || gameManager.p2.rC.Player2isCarrying)
-                SceneControl.instance.ClosePackageInstruction();
-            }
+
         }
     }
 

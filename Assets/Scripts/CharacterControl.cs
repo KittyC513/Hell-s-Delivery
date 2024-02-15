@@ -26,11 +26,11 @@ public class CharacterControl : MonoBehaviour
     //velocity curve goes from 0.0 - 1.0, multiply our peak speed by that to get our current speed
     private Vector2 forwardDirection;
     [SerializeField] private float currentSpeed;
-    private Vector3 directionSpeed;
+    public Vector3 directionSpeed;
     [SerializeField] private float rotationSpeed = 300;
     [SerializeField] private float velocityTime = 0;
     public float decelerationTime = 0;
-    [SerializeField] private Vector3 faceDir;
+    [SerializeField] public Vector3 faceDir;
     private Vector3 lookDir;
 
     public bool isGrounded = false;
@@ -39,7 +39,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float groundCheckDist = 0.75f;
     [SerializeField] private LayerMask groundLayer;
 
-    private Rigidbody rb;
+    public Rigidbody rb;
     private Vector2 lastInput = Vector2.zero;
     [HideInInspector] public Vector2 stickValue = Vector2.zero;
     private Vector2 inputValue;
@@ -63,7 +63,7 @@ public class CharacterControl : MonoBehaviour
     //air velocity curve will build more slowly than a normal grounded acceleration to give the player a more controlled turn around
     [SerializeField] private AnimationCurve airVelocityCurve;
     [SerializeField] private AnimationCurve airDecelerationCurve;
-    [SerializeField] private float ySpeed = 0;
+    [SerializeField] public float ySpeed = 0;
     private float fTime = 0;
     public float jTime = 0;
     private float airSpeed = 0;
@@ -72,7 +72,7 @@ public class CharacterControl : MonoBehaviour
     private bool isParachuting = false;
     [SerializeField] private bool isJumping = false;
     [SerializeField] private float minJumpTime = 0.5f;
-    private bool reachedMinJump = false;
+    [SerializeField] private bool reachedMinJump = false;
 
     private bool hasLeftGround = true;
 
@@ -96,7 +96,7 @@ public class CharacterControl : MonoBehaviour
     private float parachuteTime = 0;
     [SerializeField] private float glideFallMax = 800;
     [SerializeField] private float slowDownMultiplier = 0.6f;
-    private bool isSlow = false;
+    [SerializeField] private bool isSlow = false;
     [SerializeField] private bool freezeState = false;
 
     [Space, Header("Input Asset Variables")]
@@ -161,6 +161,10 @@ public class CharacterControl : MonoBehaviour
             {
                 JumpCalculations(jump);
             }
+            else
+            {
+                isJumping = false;
+            }
 
         }
         else
@@ -183,7 +187,10 @@ public class CharacterControl : MonoBehaviour
 
         if (isGrounded)
         {
-            
+            if (GameManager.instance.p1.p2pushed)
+            {
+
+            }
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
         }
 
@@ -192,6 +199,7 @@ public class CharacterControl : MonoBehaviour
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
           
         }
+
     }
 
     public void LateUpdateFunctions()
@@ -583,9 +591,10 @@ public class CharacterControl : MonoBehaviour
 
             //reset our jump time
             jTime += 0.2f;
-
-            
-
+           
+        }else if (isGrounded && jump.ReadValue<float>() == 0)
+        {
+            isJumping = false;
         }
 
         //if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
@@ -662,7 +671,7 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
-    private void ApplyGravity()
+    public void ApplyGravity()
     {
         //build downwards velocity until you reach peak speed
         if (pState != playerStates.jump && pState != playerStates.parachute && !isJumping && !snappedToGround)
@@ -685,7 +694,6 @@ public class CharacterControl : MonoBehaviour
             //reset the fall timer
 
             fTime = 0;
-            
         }
     }
 
@@ -733,6 +741,7 @@ public class CharacterControl : MonoBehaviour
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
         {
             isGrounded = true;
+            //isJumping = false;
             //if the player isn't jumping and the distance between them and the ground is smaller than some number, snap them to the floor
             if (!isJumping && !YDistanceGreaterThan(0.5f, groundCheck.transform.position, hit.point))
             {
@@ -792,6 +801,7 @@ public class CharacterControl : MonoBehaviour
             return false;
         }
     }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawSphere(groundCheck.position, groundCheckRadius);

@@ -280,14 +280,17 @@ public class RespawnControl : MonoBehaviour
             {
                 if (objectGrabbable == null)
                 {
-                    cpParent = GameObject.FindWithTag("cpParent");
-
-                    foreach (Transform child in cpParent.transform)
+                    if(curSceneName == scene4 || curSceneName == scene9)
                     {
-                        cps.Add(child.gameObject);
+                        cpParent = GameObject.FindWithTag("cpParent");
 
-                        CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
-                        cpc.Add(checkpc);
+                        foreach (Transform child in cpParent.transform)
+                        {
+                            cps.Add(child.gameObject);
+
+                            CheckpointControl checkpc = child.gameObject.GetComponent<CheckpointControl>();
+                            cpc.Add(checkpc);
+                        }
                     }
 
                     package = GameObject.FindGameObjectWithTag("Package");
@@ -573,7 +576,8 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-                Player1Die = true;              
+                Player1Die = true;
+                print("Player1Die" + Player1Die);
 
             }
             else
@@ -584,6 +588,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
                 Player2Die = true;
+                print("Player2Die" + Player1Die);
 
             }
             else
