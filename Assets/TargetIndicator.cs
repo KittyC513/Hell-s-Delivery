@@ -66,7 +66,7 @@ public class TargetIndicator : MonoBehaviour
     protected void SetIndicatorPos()
     {
         Vector3 indicatorPosition = p1Cam.WorldToScreenPoint(package.transform.position);
-        print("indicatorPosition" + indicatorPosition);
+        //print("indicatorPosition" + indicatorPosition);
 
         if (indicatorPosition.z >= 0f & indicatorPosition.x <= canvasRect.rect.width / 2 * canvasRect.localScale.x
         & indicatorPosition.y <= canvasRect.rect.height * canvasRect.localScale.x & indicatorPosition.x >= 0f & indicatorPosition.y >= 0f)

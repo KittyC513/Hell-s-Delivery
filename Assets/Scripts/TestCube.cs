@@ -120,7 +120,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private Transform itemContainer1;
     [SerializeField]
-    private ObjectGrabbable objectGrabbable;
+    public ObjectGrabbable objectGrabbable;
     [SerializeField]
     public bool slotFull;
 
@@ -1866,6 +1866,10 @@ public class TestCube : MonoBehaviour
 
     public void TakePackageFunction()
     {
+        if(objectGrabbable == null)
+        {
+            isDropped = false;
+        }
         if (isPlayer1)
         {
             if (rC.Player2isCarrying)
@@ -2472,10 +2476,11 @@ public class TestCube : MonoBehaviour
             {
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 //p2rc.Player2Die = false;
-                GameManager.instance.p2.objectGrabbable = null;
+                //GameManager.instance.p2.objectGrabbable = null;
 
             }
-            else if (rC.Player1Die && rC.Player2isCarrying)
+            
+            if (rC.Player1Die && rC.Player2isCarrying)
             {
                 Debug.Log("Player1die" + rC.Player1Die);
                 objectGrabbable = null;
@@ -2492,7 +2497,8 @@ public class TestCube : MonoBehaviour
                 //p1rc.Player1Die = false;
                 GameManager.instance.p1.objectGrabbable = null;
             }
-            else if (rC.Player2Die && rC.Player1isCarrying)
+            
+            if (rC.Player2Die && rC.Player1isCarrying)
             {
                 Debug.Log("Player2die" + rC.Player2Die);
                 objectGrabbable = null;
