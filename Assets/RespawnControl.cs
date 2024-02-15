@@ -141,11 +141,101 @@ public class RespawnControl : MonoBehaviour
     //CheckpointControl activateFCP;
 
 
-    List<string> nodeNames = new List<string>
+    List<string> PlayerDeath = new List<string>
     {
-        "MeantToDoThat",
-        "GottaHurt",
-        "Yikes"
+        "Huhu",
+        "Skill",
+        "Imagine",
+        "Oof",
+        "Hmph",
+        "Live",
+        "Payless",
+        "NoPromotion",
+        "Employee",
+        "WantPromotion",
+        "DyingPurpose",
+        "NotLiving",
+        "Unaliving",
+        "USuck",
+        "GetGud",
+        "Avoid",
+        "Womp",
+        "Recurring",
+        "Disappointing",
+        "DoYourJob",
+        "Goal",
+        "Good",
+        "Sigh",
+        "SlayedThat",
+        "Slay",
+        "Talent",
+        "GotSlayed",
+        "Icon",
+        "DoIt",
+        "Juice",
+        "Bruh",
+        "Nothing",
+        "Embarrassing",
+        "Zero",
+        "Hug"
+    };
+
+    List<string> SabotageChoice = new List<string>
+    {
+        "Eenie",
+        "WhoCares",
+        "HardDecision",
+        "MightExplode",
+        "WeRoll",
+        "LetMePick",
+        "Accidentally",
+        "RealDemon",
+        "AnyThoughts",
+        "OMMe",
+        "Indecisive",
+        "PickAlready",
+        "BigDemonPants",
+        "TooDifficult",
+        "GoingToPick",
+    };
+
+    List<string> CooperateChoice = new List<string>
+    {
+        "NoFun",
+        "InHell",
+        "Nice",
+        "Noo",
+        "Wow",
+        "WorkForMe",
+        "GuardianAngel",
+        "Sweet",
+        "Teamwork",
+        "InLove",
+        "Respectfully",
+        "Real",
+        "AChoice",
+        "Interesting",
+        "WorstThing",
+    };
+
+    List<string> PackageReminders = new List<string>
+    {
+        "NiceOfYou",
+        "Hog",
+        "Credit",
+        "Hold",
+        "Steal",
+        "Selfish",
+        "Tired",
+        "Promotion",
+        "Second",
+        "Share",
+        "ICanSee",
+        "NotDoing",
+        "Obvious",
+        "OnePerson",
+        "Hogging",
+        "GoingToPick",
     };
 
     private void Start()
@@ -428,7 +518,7 @@ public class RespawnControl : MonoBehaviour
         {
             //LevelDialogue.ShowDevilPlayer2();
             dRP1.Stop();
-            PlayRandomDialogue();
+            PlayRandomDeathDialogue();
         }
 
         if (Player1isCarrying && isPlayer1)
@@ -456,7 +546,7 @@ public class RespawnControl : MonoBehaviour
         {
             //LevelDialogue.ShowDevilPlayer1();
             dRP1.Stop();
-            PlayRandomDialogue();
+            PlayRandomDeathDialogue();
         }
         if (Player2isCarrying && isPlayer2)
         {
@@ -1288,11 +1378,35 @@ public class RespawnControl : MonoBehaviour
 
 
 
-    public void PlayRandomDialogue()
+    public void PlayRandomDeathDialogue()
     {
         System.Random rnd = new System.Random();
-        int index = rnd.Next(nodeNames.Count);
-        dRP1.StartDialogue(nodeNames[index]);
+        int index = rnd.Next(PlayerDeath.Count);
+        dRP1.StartDialogue(PlayerDeath[index]);
+        dRP2.StartDialogue(PlayerDeath[index]);
+    }
+
+    public void PlayRandomSabotageDialogue()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(SabotageChoice.Count);
+        dRP1.StartDialogue(SabotageChoice[index]);
+        dRP2.StartDialogue(SabotageChoice[index]);
+    }
+    public void PlayRandomCooperationDialogue()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(CooperateChoice.Count);
+        dRP1.StartDialogue(CooperateChoice[index]);
+        dRP2.StartDialogue(CooperateChoice[index]);
+    }
+
+    public void PlayRandomPackageDialogue()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(PackageReminders.Count);
+        dRP1.StartDialogue(PackageReminders[index]);
+        dRP2.StartDialogue(PackageReminders[index]);
     }
 
 
