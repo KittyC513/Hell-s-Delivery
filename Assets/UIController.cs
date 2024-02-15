@@ -43,13 +43,13 @@ public class UIController : MonoBehaviour
             }
         }
 
-        //if (playerIndicators.Count > 0)
-        //{
-        //    for (int i = 0; i < playerIndicators.Count; i++)
-        //    {
-        //        playerIndicators[i].UpdateIndicator();
-        //    }
-        //}
+        if (playerIndicators.Count > 0)
+        {
+            for (int i = 0; i < playerIndicators.Count; i++)
+            {
+                playerIndicators[i].UpdateIndicator();
+            }
+        }
 
 
     }

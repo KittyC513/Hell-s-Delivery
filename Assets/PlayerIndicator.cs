@@ -97,7 +97,7 @@ public class PlayerIndicator : MonoBehaviour
         Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 4f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
         indicatorPosition -= canvasCenter;
 
-        float divX = (canvasRect.rect.width / 0.25f - outOffSignOffset) / Mathf.Abs(indicatorPosition.x);
+        float divX = -(canvasRect.rect.width / 4f - outOffSignOffset) / Mathf.Abs(indicatorPosition.x);
         float divY = (canvasRect.rect.height / 2f - outOffSignOffset) / Mathf.Abs(indicatorPosition.y);
 
         if (divX < divY)

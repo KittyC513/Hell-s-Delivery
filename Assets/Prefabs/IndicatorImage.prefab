@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3191023709325610988
 RectTransform:
   m_ObjectHideFlags: 0
@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 2833482910189367593}
   - component: {fileID: 7547882312890982838}
   - component: {fileID: 1251472140591306547}
+  - component: {fileID: 1579876584961681279}
   m_Layer: 5
   m_Name: IndicatorImage
   m_TagString: Untagged
@@ -245,6 +246,27 @@ MonoBehaviour:
   IndicatorImage: {fileID: 5468351736112671965}
   IndicatorImageOffScreen: {fileID: 7547882312890982838}
   p1IndicatorImageOffScreen: {fileID: 1707854505683121827}
+  p2IndicatorImageOffScreen: {fileID: 469786126400352365}
+  outOfSigntOffSet: 25
+  package: {fileID: 0}
+  p1Cam: {fileID: 0}
+  p2Cam: {fileID: 0}
+  canvasRect: {fileID: 0}
+  canvasRect2: {fileID: 0}
+--- !u!114 &1579876584961681279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3270405172377279767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a713e71950523214796384f4fedf2aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IndicatorImage: {fileID: 5468351736112671965}
+  p1IndicatorImageOffScreen: {fileID: 0}
   p2IndicatorImageOffScreen: {fileID: 469786126400352365}
   outOfSigntOffSet: 25
   package: {fileID: 0}
