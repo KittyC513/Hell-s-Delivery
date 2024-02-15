@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
     private Canvas canvas2;
 
     public List<TargetIndicator> targetIndicators = new List<TargetIndicator>();
+    public List<PlayerIndicator> playerIndicators = new List<PlayerIndicator>();
 
     private GameObject player1;
     private GameObject player2;
@@ -41,7 +42,16 @@ public class UIController : MonoBehaviour
                 targetIndicators[i].UpdateIndicator();
             }
         }
-        
+
+        //if (playerIndicators.Count > 0)
+        //{
+        //    for (int i = 0; i < playerIndicators.Count; i++)
+        //    {
+        //        playerIndicators[i].UpdateIndicator();
+        //    }
+        //}
+
+
     }
 
     public void AddTargetIndicator(GameObject target)
@@ -49,5 +59,13 @@ public class UIController : MonoBehaviour
         TargetIndicator indicator = GameObject.Instantiate(TargetIndicatorPrefab, canvas.transform).GetComponent<TargetIndicator>();
         indicator.InitializeIndicator(target, player1, player2, p1Cam, p2Cam, canvas, canvas2);
         targetIndicators.Add(indicator);
+
+    }
+
+    public void AddPlayerIndicator(GameObject target)
+    {
+        PlayerIndicator indicator = GameObject.Instantiate(TargetIndicatorPrefab, canvas.transform).GetComponent<PlayerIndicator>();
+        indicator.InitializeIndicator(target, player1, player2, p1Cam, p2Cam, canvas, canvas2);
+        playerIndicators.Add(indicator);
     }
 }

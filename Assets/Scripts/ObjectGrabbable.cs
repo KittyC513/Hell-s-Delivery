@@ -253,14 +253,16 @@ public class ObjectGrabbable : MonoBehaviour
             {
                 P1TakePackage = true;
                 P2TakePackage = false;
+                GameManager.instance.p2.objectGrabbable = null;
               
             }
             else if (objectGrabpo.position == p2ItemC.transform.position)
             {
                 P1TakePackage = false;
                 P2TakePackage = true;
+                GameManager.instance.p1.objectGrabbable = null;
 
- 
+
             }
         }
     }
