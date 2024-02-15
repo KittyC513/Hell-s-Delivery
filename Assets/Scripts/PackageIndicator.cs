@@ -88,33 +88,40 @@ public class PackageIndicator : MonoBehaviour
 
     }
 
-    private Vector3 OutOfRangeindicatorPositionB(Vector3 indicatorPos)
+    private Vector3 OutOfRangeindicatorPositionB(Vector3 indicatorPosition)
     {
-        indicatorPos.z = 0f;
+        //Set indicatorPosition.z to 0f; We don't need that and it'll actually cause issues if it's outside the camera range (which easily happens in my case)
+        indicatorPosition.z = 0f;
 
+        //Calculate Center of Canvas and subtract from the indicator position to have indicatorCoordinates from the Canvas Center instead the bottom left!
         Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 2f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
-        indicatorPos -= canvasCenter;
+        indicatorPosition -= canvasCenter;
 
-        float divX = (canvasRect.rect.width / 2f - outOfSightOffset / Mathf.Abs(indicatorPos.x));
-        float divY = (canvasRect.rect.width / 2f + outOfSightOffset / Mathf.Abs(indicatorPos.y));
+        //Calculate if Vector to target intersects (first) with y border of canvas rect or if Vector intersects (first) with x border:
+        //This is required to see which border needs to be set to the max value and at which border the indicator needs to be moved (up & down or left & right)
+        float divX = (canvasRect.rect.width / 2f - OutOfSightOffset) / Mathf.Abs(indicatorPosition.x);
+        float divY = (canvasRect.rect.height / 2f - OutOfSightOffset) / Mathf.Abs(indicatorPosition.y);
 
+        //In case it intersects with x border first, put the x-one to the border and adjust the y-one accordingly (Trigonometry)
         if (divX < divY)
         {
-            float angle = Vector3.SignedAngle(Vector3.right, indicatorPos, Vector3.forward);
-            indicatorPos.x = Mathf.Sign(indicatorPos.x) * (canvasRect.rect.width * 0.5f - outOfSightOffset) * canvasRect.localScale.x;
-            indicatorPos.y = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPos.x;
+            float angle = Vector3.SignedAngle(Vector3.right, indicatorPosition, Vector3.forward);
+            indicatorPosition.x = Mathf.Sign(indicatorPosition.x) * (canvasRect.rect.width * 0.5f - OutOfSightOffset) * canvasRect.localScale.x;
+            indicatorPosition.y = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPosition.x;
         }
+
+        //In case it intersects with y border first, put the y-one to the border and adjust the x-one accordingly (Trigonometry)
         else
         {
-            float angle = Vector3.SignedAngle(Vector3.up, indicatorPos, Vector3.forward);
+            float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition, Vector3.forward);
 
-            indicatorPos.y = Mathf.Sign(indicatorPos.y) * (canvasRect.rect.height / 2f - outOfSightOffset) * canvasRect.localScale.y;
-            indicatorPos.x = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPos.y;
+            indicatorPosition.y = Mathf.Sign(indicatorPosition.y) * (canvasRect.rect.height / 2f - OutOfSightOffset) * canvasRect.localScale.y;
+            indicatorPosition.x = -Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPosition.y;
         }
 
-
-        indicatorPos += canvasCenter;
-        return indicatorPos;
+        //Change the indicator Position back to the actual rectTransform coordinate system and return indicatorPosition
+        indicatorPosition += canvasCenter;
+        return indicatorPosition;
 
 
     }
