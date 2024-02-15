@@ -97,6 +97,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float glideFallMax = 800;
     [SerializeField] private float slowDownMultiplier = 0.6f;
     private bool isSlow = false;
+    [SerializeField] private bool freezeState = false;
 
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
@@ -137,7 +138,7 @@ public class CharacterControl : MonoBehaviour
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
-    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle)
+    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle, bool isFreeze)
     {
         camera = cam;
         
@@ -145,13 +146,22 @@ public class CharacterControl : MonoBehaviour
         GetStickInputs(camera, input);
         ApplyGravity();
         //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
-        if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
+
+        if (!freezeState)
+        {
+            if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
+        }
+
 
         //if we're on a summoning circle freeze movement
         if (!isOnCircle)
         {
             MovementCalculations(camera);
-            JumpCalculations(jump);
+            if (!isSlow)
+            {
+                JumpCalculations(jump);
+            }
+
         }
         else
         {
@@ -164,6 +174,7 @@ public class CharacterControl : MonoBehaviour
         if (isParachuting) parachuteObj.SetActive(true);
         else parachuteObj.SetActive(false);
         isSlow = bigPackage;
+        freezeState = isFreeze;
     }
 
     public void FixedUpdateFunctions()
@@ -409,9 +420,10 @@ public class CharacterControl : MonoBehaviour
         }
         else if (pState == playerStates.fall || pState == playerStates.jump)
         {
+                
             //the air speed is unaffected by the stick magnitude
             directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
-           
+
         }
         else if (pState == playerStates.parachute)
         {
@@ -544,9 +556,8 @@ public class CharacterControl : MonoBehaviour
 
     private void JumpCalculations(InputAction jump)
     {
-
         //if the jump button is pressed
-        if (readJumpValue && shouldJump && !isJumping && canJump && !isSlow)
+        if (readJumpValue && shouldJump && !isJumping && canJump)
         {
             canJump = false;
             if (!isJumping && shouldJump)

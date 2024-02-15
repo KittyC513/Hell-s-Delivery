@@ -594,12 +594,12 @@ public class TestCube : MonoBehaviour
 
                 if (curSceneName == "TitleScene" || curSceneName == "HubStart")
                 {
-                    charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle);                  
+                    charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);                  
                     //print("use new movementCal");
                 }
                 else
                 {
-                    charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle);                    
+                    charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);                    
                     //print("use new movementCal");
 
                 }
