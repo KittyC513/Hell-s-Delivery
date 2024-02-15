@@ -10,12 +10,7 @@ public class UIController : MonoBehaviour
     public List<PackageIndicator> targetIndicators = new List<PackageIndicator>();
     public Camera TestCamera;
     public GameObject PackageIndicatorPrefab;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //TestCamera = GameManager.instance.cam2.GetComponent<Camera>();
-    }
+ 
 
     // Update is called once per frame
     void Update()
@@ -33,10 +28,11 @@ public class UIController : MonoBehaviour
 
     public void AddPackageIndicator(GameObject package)
     {
-       PackageIndicator indicator = GameObject.Instantiate(PackageIndicatorPrefab, canvas.transform).GetComponent<PackageIndicator>();
+        PackageIndicator indicator = GameObject.Instantiate(PackageIndicatorPrefab, canvas.transform).GetComponent<PackageIndicator>();
        indicator.InitializePackageIndicator(package, TestCamera, canvas);
        targetIndicators.Add(indicator);
 
     }
+   
+    }
 
-}

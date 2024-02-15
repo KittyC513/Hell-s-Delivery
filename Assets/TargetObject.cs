@@ -17,4 +17,6 @@ public class TargetObject : MonoBehaviour
 
         ui.AddPackageIndicator(this.gameObject);
     }
+
+
 }

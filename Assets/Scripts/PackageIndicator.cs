@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class PackageIndicator : MonoBehaviour
 {
-    public static PackageIndicator instance;
+    //public static PackageIndicator instance;
     
     public Image PackageIndicatorImage;
     public Image OffScreenPackageIndicator;
     
-    public float OutOfSightOffset = 45f;
+    public float OutOfSightOffset = 20f;
     public float outOfSightOffset { get { return OutOfSightOffset; } }
 
-    public GameObject package;
+    private GameObject package;
 
     private Camera mainCamera;
 
@@ -23,7 +23,7 @@ public class PackageIndicator : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        //instance = this;
         rectTransform = GetComponent<RectTransform>();
     }
     private void Start()
@@ -62,7 +62,8 @@ public class PackageIndicator : MonoBehaviour
         // get pos of target in relation to screenspace
         Vector3 indicatorPos = mainCamera.WorldToScreenPoint(package.transform.position);
 
-        if (indicatorPos.z >= 0f & indicatorPos.x <= canvasRect.rect.width * canvasRect.localScale.x & indicatorPos.y <= canvasRect.rect.height * canvasRect.localScale.x & indicatorPos.x >= 0f & indicatorPos.y >= 0f)
+        if (indicatorPos.z >= 0f & indicatorPos.x <= canvasRect.rect.width * canvasRect.localScale.x 
+            & indicatorPos.y <= canvasRect.rect.height * canvasRect.localScale.x & indicatorPos.x >= 0f & indicatorPos.y >= 0f)
         {
             indicatorPos.z = 0f;
 
@@ -95,7 +96,7 @@ public class PackageIndicator : MonoBehaviour
         indicatorPos -= canvasCenter;
 
         float divX = (canvasRect.rect.width / 2f - outOfSightOffset / Mathf.Abs(indicatorPos.x));
-        float divY = (canvasRect.rect.width / 2f - outOfSightOffset / Mathf.Abs(indicatorPos.y));
+        float divY = (canvasRect.rect.width / 2f + outOfSightOffset / Mathf.Abs(indicatorPos.y));
 
         if (divX < divY)
         {
