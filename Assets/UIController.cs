@@ -13,7 +13,10 @@ public class UIController : MonoBehaviour
 
     private GameObject player1;
     private GameObject player2;
+
+    [SerializeField]
     private Camera p1Cam;
+    [SerializeField]
     private Camera p2Cam;
 
 

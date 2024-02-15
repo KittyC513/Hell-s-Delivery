@@ -18,12 +18,19 @@ public class TargetIndicator : MonoBehaviour
 
     private float outOffSignOffset { get { return outOfSigntOffSet; } }
 
+    [SerializeField]
     private GameObject package;
     private GameObject player1;
     private GameObject player2;
+
+    [SerializeField]
     private Camera p1Cam;
+    [SerializeField]
     private Camera p2Cam;
+
+    [SerializeField]
     private RectTransform canvasRect;
+    [SerializeField]
     private RectTransform canvasRect2;
 
     private RectTransform rectTransform;
@@ -47,6 +54,8 @@ public class TargetIndicator : MonoBehaviour
         this.player2 = player2;
         this.p1Cam = cam;
         this.p2Cam = cam2;
+
+        canvasRect = canvas.GetComponent<RectTransform>();
     }
 
     public void UpdateIndicator()
@@ -57,8 +66,9 @@ public class TargetIndicator : MonoBehaviour
     protected void SetIndicatorPos()
     {
         Vector3 indicatorPosition = p1Cam.WorldToScreenPoint(package.transform.position);
+        print("indicatorPosition" + indicatorPosition);
 
-        if (indicatorPosition.z >= 0f & indicatorPosition.x <= canvasRect.rect.width * canvasRect.localScale.x
+        if (indicatorPosition.z >= 0f & indicatorPosition.x <= canvasRect.rect.width / 2 * canvasRect.localScale.x
         & indicatorPosition.y <= canvasRect.rect.height * canvasRect.localScale.x & indicatorPosition.x >= 0f & indicatorPosition.y >= 0f)
         {
             indicatorPosition.z = 0f;
@@ -84,16 +94,16 @@ public class TargetIndicator : MonoBehaviour
     {
         indicatorPosition.z = 0f;
 
-        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 2f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
+        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 4f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
         indicatorPosition -= canvasCenter;
 
-        float divX = (canvasRect.rect.width / 2f - outOffSignOffset) / Mathf.Abs(indicatorPosition.x);
+        float divX = (canvasRect.rect.width / 4f - outOffSignOffset) / Mathf.Abs(indicatorPosition.x);
         float divY = (canvasRect.rect.height / 2f - outOffSignOffset) / Mathf.Abs(indicatorPosition.y);
 
         if(divX < divY)
         {
             float angle = Vector3.SignedAngle(Vector3.right, indicatorPosition, Vector3.forward);
-            indicatorPosition.x = Mathf.Sign(indicatorPosition.x) * (canvasRect.rect.width * 0.5f - outOffSignOffset) * canvasRect.localScale.x;
+            indicatorPosition.x = Mathf.Sign(indicatorPosition.x) * (canvasRect.rect.width * 0.25f - outOffSignOffset) * canvasRect.localScale.x;
             indicatorPosition.y = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPosition.x;
         }
         else
@@ -116,6 +126,10 @@ public class TargetIndicator : MonoBehaviour
                 IndicatorImageOffScreen.gameObject.SetActive(true);
             }
 
+            if(IndicatorImage.isActiveAndEnabled == true)
+            {
+                IndicatorImage.enabled = false;
+            }
 
             IndicatorImageOffScreen.rectTransform.rotation = Quaternion.Euler(rotationOutOfSigntIndicator(indicatorPosition));
         }
@@ -131,7 +145,7 @@ public class TargetIndicator : MonoBehaviour
 
     private Vector3 rotationOutOfSigntIndicator(Vector3 indicatorPosition)
     {
-        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 2f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
+        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 4f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
 
         float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition - canvasCenter, Vector3.forward);
 
