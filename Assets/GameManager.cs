@@ -705,7 +705,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(waitingTime);
         noisy2.SetActive(false);
-        p1.p1pushed = false;
+        //p1.p1pushed = false;
 
 
 
@@ -715,7 +715,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(waitingTime);
         noisy1.SetActive(false);
-        p2.p2pushed = false;
+        //p2.p2pushed = false;
 
     }
 

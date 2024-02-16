@@ -6231,6 +6231,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  push:
+    m_Name: Push
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: dbf50bd1-8961-4c0d-8cb1-c875ce30ad4d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   isPicking: 0
   useNewMovement: 0
   movementForce: 1
@@ -6264,6 +6273,7 @@ MonoBehaviour:
   thirdPersonCam: {fileID: 5935711546814801641}
   playerPos: {fileID: 5651904090368527511}
   itemContainer: {fileID: 7935187663911269875}
+  itemContainer1: {fileID: 0}
   objectGrabbable: {fileID: 0}
   slotFull: 0
   gM: {fileID: 0}
@@ -6305,6 +6315,8 @@ MonoBehaviour:
   isGliding: 0
   numOfButtonPressed: 0
   parachuteObj: {fileID: 5520364453758422537}
+  pushCd: 0
+  pushTimer: 0
   pushForce: 100
   pushMask:
     serializedVersion: 2
@@ -6320,6 +6332,8 @@ MonoBehaviour:
   p2Anim: {fileID: 0}
   p1Steal: 0
   p2Steal: 0
+  pushStartTimer: 0
+  pushDuration: 0
   interactDistance: 2
   interactRadius: 0.5
   interactableMask:

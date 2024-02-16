@@ -223,7 +223,11 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private GameObject parachuteObj;
 
-
+    [Header("Push")]
+    [SerializeField]
+    private float pushCd;
+    [SerializeField]
+    private float pushTimer;
     [SerializeField]
     private float pushForce;
     [SerializeField]
@@ -250,6 +254,13 @@ public class TestCube : MonoBehaviour
     public bool p1Steal;
     [SerializeField]
     public bool p2Steal;
+    [SerializeField]
+    public bool pushStartTimer;
+    [SerializeField]
+    private float pushDuration;
+
+
+    [Header("Interact")]
     [SerializeField]
     private float interactDistance;
     [SerializeField]
@@ -513,7 +524,7 @@ public class TestCube : MonoBehaviour
 
         player.FindAction("Parachute").started += DoParachute;
         player.FindAction("Parachute").canceled += DoFall;
-        player.FindAction("Push").started += DoPush;
+        //player.FindAction("Push").started += DoPush;
 
         continueControl.action.Enable();
 
@@ -531,7 +542,7 @@ public class TestCube : MonoBehaviour
         //player.FindAction("Join").started -= DoTalk;
         player.FindAction("Parachute").started -= DoParachute;
         player.FindAction("Parachute").canceled -= DoFall;
-        player.FindAction("Push").started -= DoPush;
+        //player.FindAction("Push").started -= DoPush;
         continueControl.action.Disable();
 
 
@@ -596,7 +607,6 @@ public class TestCube : MonoBehaviour
 
                 if (curSceneName == "TitleScene" || curSceneName == "HubStart")
                 {
-
                     charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);
                     //print("use new movementCal");
                 }
@@ -635,6 +645,8 @@ public class TestCube : MonoBehaviour
 
                 }
             }
+            Push();
+            DoPush();
                 
 
          }
@@ -702,6 +714,11 @@ public class TestCube : MonoBehaviour
         if(startTimer)
         {
             dashCdTimer += Time.deltaTime;
+        }
+
+        if (pushStartTimer)
+        {
+            pushTimer += Time.deltaTime;
         }
         //OnDrawGizmos();
     }
@@ -2264,110 +2281,80 @@ public class TestCube : MonoBehaviour
     #region Push
     void DetectPushRange()
     {
-
-        //if (Physics.SphereCast(playerPos.position, pushDistance, playerPos.forward, out raycastHit, pushDistance, pushMask))
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pushDistance, pushMask))
-        {
-            withinPushingRange = true;
-            //lastColliderTime = Time.time;
-        }
-        else
-        {
-            withinPushingRange = false;
-            //if (isPlayer1 && p1Anim != null)
-            //{
-            //    p2Anim.SetBool("beingPushed", false);
-            //    p1pushed = false;
-
-            //}
-
-            //if (isPlayer2 && p2Anim != null)
-            //{
-            //    p1Anim.SetBool("beingPushed", false);
-            //    p2pushed = false;
-            //}
-        }
-    }
-    private void DoPush(InputAction.CallbackContext obj)
-    {
-
-        if (withinPushingRange)
+        if (!withinPushingRange)
         {
             if (isPlayer1)
             {
-                P1Push();
-                //objectGrabbable = null;
-                //p1pushed = true;
-
-
+                p1pushed = false;
             }
 
             if (isPlayer2)
             {
-                P2Push();
-                //objectGrabbable = null;
+                p2pushed = false;
             }
-
-
         }
 
+
+      
+        
     }
 
-
-
-    void P1Push()
+    private void DoPush()
     {
+        if(isPlayer1 && p1pushed)
+        {
+            P1Push();
+        }
 
-        otherRB = gameManager.player2.GetComponent<Rigidbody>();
-        //p2Anim = gameManager.p2Character.GetComponent<Animator>();
+        if (isPlayer2 && p2pushed)
+        {
+            P2Push();
+        }
+    }
+    //private void DoPush(InputAction.CallbackContext obj)
+    //{
+
+    //    if (withinPushingRange)
+    //    {
+    //        if (isPlayer1)
+    //        {
+    //            P1Push();
+    //            //objectGrabbable = null;
+    //            //p1pushed = true;
+
+
+    //        }
+
+    //        if (isPlayer2)
+    //        {
+    //            P2Push();
+    //            //objectGrabbable = null;
+    //        }
+
+
+    //    }
+
+    //}
+    IEnumerator P1PushCoroutine()
+    {
+        otherRB = gameManager.p2.charController.rb;
         p2Anim = GameManager.instance.p2Ani;
 
-        otherRB.useGravity = true;
+        otherRB.useGravity = false;
 
+        // Calculate force direction and distance
         Vector3 forceDir = otherRB.transform.position - transform.position;
-        Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
 
-        //gameManager.p2.charController.rb.AddForce(forcePosition.normalized * pushForce, ForceMode.Impulse);
-        //if (tooHeavy)
-        //{
-        //    //gameManager.p2.forceDirection += playerDir.forward * pushForce * 10;
-        //    charController.rb.velocity = new Vector3(charController.directionSpeed.x * Time.fixedDeltaTime * pushForce, charController.ySpeed * Time.fixedDeltaTime, charController.directionSpeed.z * Time.fixedDeltaTime * pushForce);
-        //}
-        //else
-        //{
-        //    gameManager.p2.forceDirection += playerDir.forward * pushForce;
-        //}
+        float distance = forceDir.magnitude;
 
-        print("gameManager.p2.forcePosition" + forcePosition);
+        // Normalize the force direction to get the unit vector
+        forceDir.Normalize();
 
-        //if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
-        //{
-        //    gameManager.p2.forceDirection += playerDir.forward * pushForce;
+        // Calculate the force to be applied
+        float forceMagnitude = pushForce;
 
-        //}
-        //else
-        //{        
-        //    gameManager.p2.forceDirection += playerDir.forward * pushForce;
-
-        //    //otherRB.AddForce(playerDir.up * pushForce, ForceMode.Impulse);
-
-
-        //    //transform.Translate(Vector3.forward * Time.deltaTime * currentSpeed * verticalInput);
-        //    //transform.Translate(Vector3.right * Time.deltaTime * currentSpeed * horizontalInput);
-
-        //    //otherRB.AddForce(playerDir.up * pushForce, ForceMode.Impulse);
-        //    //gameManager.p2.forceDirection += forceDir.z * gameManager.p2.GetCameraForward(playerCamera) * pushForce;
-        //    //gameManager.p2.forceDirection += forceDir.x * gameManager.p2.GetCameraRight(playerCamera) * pushForce;
-        //}
-
-
-        //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
-        gameManager.p2.charController.rb.AddForce(forcePosition.normalized * pushForce, ForceMode.Impulse);
-        //float randomTorque = Random.Range(-5f, 5f);
-        //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
-        //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
-        //otherRB.MovePosition(newPosition);
-        //StartCoroutine(SlideToPosition(forcePosition));
+        float elapsedTime = 0f;
+        float duration = 0.3f; // Adjust this based on how long you want the force to be applied
 
         p2Anim.SetBool("beingPush", true);
         StartCoroutine(StopBeingPushedP2());
@@ -2378,27 +2365,55 @@ public class TestCube : MonoBehaviour
             p1Steal = true;
             gameManager.p2.objectGrabbable = null;
         }
-    
+
+        while (elapsedTime < duration)
+        {
+            // Apply force based on linear interpolation
+            float normalizedTime = elapsedTime / duration;
+            float easedMagnitude = Mathf.Lerp(forceMagnitude, 0f, normalizedTime * normalizedTime);
+            otherRB.AddForce(forceDir * easedMagnitude, ForceMode.Force);
+
+            elapsedTime += Time.deltaTime;
+            distance = (otherRB.transform.position - transform.position).magnitude;
+
+            // Check if the desired distance is reached (you may need to adjust the threshold)
+            if (distance < 0.1f)
+            {
+                // Stop pushing when the desired distance is reached
+                otherRB.useGravity = true;
+                yield break; // Exit the coroutine
+            }
+
+            yield return null;
+        }
+
+    }
+
+
+
+    void P1Push()
+    {
+        StartCoroutine(P1PushCoroutine());
+        //p1pushed = true;
     }
 
     IEnumerator P2PushCoroutine()
     {
-        otherRB = gameManager.player1.GetComponent<Rigidbody>();
+        otherRB = gameManager.p1.charController.rb;
         p1Anim = GameManager.instance.p1Ani;
 
         otherRB.useGravity = false;
 
         // Calculate force direction and distance
         Vector3 forceDir = otherRB.transform.position - transform.position;
-        Vector3 forcePosition = gameManager.player2.transform.position + forceDir;
-
+        
         float distance = forceDir.magnitude;
 
         // Normalize the force direction to get the unit vector
-        forcePosition.Normalize();
+        forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = 1000;
+        float forceMagnitude = pushForce;
 
         float elapsedTime = 0f;
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
@@ -2418,7 +2433,7 @@ public class TestCube : MonoBehaviour
             // Apply force based on linear interpolation
             float normalizedTime = elapsedTime / duration;
             float easedMagnitude = Mathf.Lerp(forceMagnitude, 0f, normalizedTime * normalizedTime);
-            otherRB.AddForce(forcePosition * easedMagnitude, ForceMode.Force);
+            otherRB.AddForce(forceDir * easedMagnitude, ForceMode.Force);
 
             elapsedTime += Time.deltaTime;
             distance = (otherRB.transform.position - transform.position).magnitude;
@@ -2439,7 +2454,8 @@ public class TestCube : MonoBehaviour
     void P2Push()
     {
         StartCoroutine(P2PushCoroutine());
-        p2pushed = true;
+        
+        //p2pushed = true;
 
         
     }
@@ -2530,7 +2546,7 @@ public class TestCube : MonoBehaviour
     //    yield return null;
 
     //}
-
+    
     #endregion
 
 
@@ -2897,6 +2913,12 @@ public class TestCube : MonoBehaviour
         else return false;
     }
 
+    public bool ReadPushButton()
+    {
+        if (push.ReadValue<float>() == 1) return true;
+        else return false;
+    }
+
     public bool ReadCloseTagButton()
     {
         if (close.triggered) return true;
@@ -2977,7 +2999,6 @@ public class TestCube : MonoBehaviour
         if (other.CompareTag("Package"))
         {
             withinPackageRange = true;
-
 
         }
     }
@@ -3236,6 +3257,49 @@ public class TestCube : MonoBehaviour
 
     #endregion
 
+    private void Push()
+    {
+        if (ReadPushButton())
+        {
+            if(pushTimer >= pushCd)
+            {
+                if(isPlayer1 && withinPushingRange)
+                {
+                    p1pushed = true;
+                    pushStartTimer = false;
+
+                    Invoke(nameof(ResetPush), pushDuration);
+                }
+
+                if (isPlayer2 && withinPushingRange)
+                {
+                    p2pushed = true;
+                    pushStartTimer = false;
+
+                    Invoke(nameof(ResetPush), pushDuration);
+                }
+            }
+        }
+    }
+
+
+    private void ResetPush()
+    {
+        if (isPlayer1)
+        {
+            p1pushed = false;
+            pushTimer = 0;
+            pushStartTimer = true;
+        }
+
+        if (isPlayer2)
+        {
+            p2pushed = false;
+            pushTimer = 0;
+            pushStartTimer = true;
+        }
+
+    }
 
     #region Dash
     //private void Dash()
@@ -3258,7 +3322,7 @@ public class TestCube : MonoBehaviour
     //    isDashing = false;
     //    dashCdTimer = 0;
     //    startTimer = true;
-        
+
     //}
 
     #endregion
