@@ -2297,7 +2297,7 @@ public class TestCube : MonoBehaviour
             {
                 P1Push();
                 //objectGrabbable = null;
-                p1pushed = true;
+                //p1pushed = true;
 
 
             }
@@ -2306,7 +2306,6 @@ public class TestCube : MonoBehaviour
             {
                 P2Push();
                 //objectGrabbable = null;
-                p2pushed = true;
             }
 
 
@@ -2328,7 +2327,7 @@ public class TestCube : MonoBehaviour
         Vector3 forceDir = otherRB.transform.position - transform.position;
         Vector3 forcePosition = gameManager.player2.transform.position + forceDir * pushForce;
 
-        gameManager.p2.charController.rb.AddForce(forcePosition.normalized * pushForce, ForceMode.Impulse);
+        //gameManager.p2.charController.rb.AddForce(forcePosition.normalized * pushForce, ForceMode.Impulse);
         //if (tooHeavy)
         //{
         //    //gameManager.p2.forceDirection += playerDir.forward * pushForce * 10;
@@ -2340,7 +2339,7 @@ public class TestCube : MonoBehaviour
         //}
 
         print("gameManager.p2.forcePosition" + forcePosition);
-        
+
         //if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
         //{
         //    gameManager.p2.forceDirection += playerDir.forward * pushForce;
@@ -2363,7 +2362,7 @@ public class TestCube : MonoBehaviour
 
 
         //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
-
+        gameManager.p2.charController.rb.AddForce(forcePosition.normalized * pushForce, ForceMode.Impulse);
         //float randomTorque = Random.Range(-5f, 5f);
         //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
         //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
@@ -2379,67 +2378,132 @@ public class TestCube : MonoBehaviour
             p1Steal = true;
             gameManager.p2.objectGrabbable = null;
         }
-
+    
     }
 
-    void P2Push()
+    IEnumerator P2PushCoroutine()
     {
-
         otherRB = gameManager.player1.GetComponent<Rigidbody>();
         p1Anim = GameManager.instance.p1Ani;
 
         otherRB.useGravity = false;
-        //otherRB.isKinematic = true;
+
+        // Calculate force direction and distance
         Vector3 forceDir = otherRB.transform.position - transform.position;
-        Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+        float distance = forceDir.magnitude;
 
-        gameManager.p1.charController.rb.AddForce(forcePosition.normalized * pushForce, ForceMode.Impulse);
-        //forceDir = otherRB.transform.position - transform.position;
+        // Normalize the force direction to get the unit vector
+        forceDir.Normalize();
 
-        ////Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
-        //charController.rb.velocity = new Vector3(charController.directionSpeed.x * Time.fixedDeltaTime * pushForce, charController.ySpeed * Time.fixedDeltaTime, charController.directionSpeed.z * Time.fixedDeltaTime * pushForce);
+        // Calculate the force to be applied
+        float forceMagnitude = 1000;
 
-
-        print("forcePosition" + forcePosition);
-        //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.z * pushForce;
-        //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.x * pushForce;
-
-        //if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
-        //{
-
-        //    gameManager.p1.forceDirection += forceDir.z * GetCameraForward(mainCam) * pushForce;
-        //    gameManager.p1.forceDirection += forceDir.x * GetCameraRight(mainCam) * pushForce;
-        //}
-        //else
-        //{
-        //    gameManager.p1.forceDirection += forceDir.z * gameManager.p1.GetCameraForward(playerCamera) * pushForce;
-        //    gameManager.p1.forceDirection += forceDir.x * gameManager.p1.GetCameraRight(playerCamera) * pushForce;
-        //}
-
-        //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
-
-        //float randomTorque = Random.Range(-5f, 5f);
-        //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
-        //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
-        //otherRB.MovePosition(newPosition);
-        //StartCoroutine(SlideToPosition(forcePosition));
+        float elapsedTime = 0f;
+        float duration = 0.3f; // Adjust this based on how long you want the force to be applied
 
         p1Anim.SetBool("beingPush", true);
         StartCoroutine(StopBeingPushedP1());
-        //noisy1 = gameManager.noisy1;
+        //noisy2 = gameManager.noisy2;
 
-        if (rC.Player1isCarrying)
+        if (rC.Player2isCarrying)
         {
-            p2Steal = true;
-            gameManager.p1.objectGrabbable = null;
-
+            p1Steal = true;
+            gameManager.p2.objectGrabbable = null;
         }
+
+        while (elapsedTime < duration)
+        {
+            // Apply force based on linear interpolation
+            float normalizedTime = elapsedTime / duration;
+            float easedMagnitude = Mathf.Lerp(forceMagnitude, 0f, normalizedTime * normalizedTime);
+            otherRB.AddForce(forceDir * easedMagnitude, ForceMode.Force);
+
+            elapsedTime += Time.deltaTime;
+            distance = (otherRB.transform.position - transform.position).magnitude;
+
+            // Check if the desired distance is reached (you may need to adjust the threshold)
+            if (distance < 0.1f)
+            {
+                // Stop pushing when the desired distance is reached
+                otherRB.useGravity = true;
+                yield break; // Exit the coroutine
+            }
+
+            yield return null;
+        }
+        
     }
+
+    void P2Push()
+    {
+        StartCoroutine(P2PushCoroutine());
+        p2pushed = true;
+
+        
+    }
+
+
+
+
+    //void P2Push()
+    //{
+
+    //    otherRB = gameManager.player1.GetComponent<Rigidbody>();
+    //    p1Anim = GameManager.instance.p1Ani;
+
+    //    otherRB.useGravity = false;
+    //    //otherRB.isKinematic = true;
+    //    Vector3 forceDir = otherRB.transform.position - transform.position;
+    //    Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+
+    //    gameManager.p1.charController.rb.AddForce(forcePosition.normalized * pushForce * Time.deltaTime, ForceMode.Force);
+
+    //    //forceDir = otherRB.transform.position - transform.position;
+
+    //    ////Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
+    //    //charController.rb.velocity = new Vector3(charController.directionSpeed.x * Time.fixedDeltaTime * pushForce, charController.ySpeed * Time.fixedDeltaTime, charController.directionSpeed.z * Time.fixedDeltaTime * pushForce);
+
+
+    //    //print("forcePosition" + forcePosition);
+    //    //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.z * pushForce;
+    //    //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.x * pushForce;
+
+    //    //if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
+    //    //{
+
+    //    //    gameManager.p1.forceDirection += forceDir.z * GetCameraForward(mainCam) * pushForce;
+    //    //    gameManager.p1.forceDirection += forceDir.x * GetCameraRight(mainCam) * pushForce;
+    //    //}
+    //    //else
+    //    //{
+    //    //    gameManager.p1.forceDirection += forceDir.z * gameManager.p1.GetCameraForward(playerCamera) * pushForce;
+    //    //    gameManager.p1.forceDirection += forceDir.x * gameManager.p1.GetCameraRight(playerCamera) * pushForce;
+    //    //}
+
+    //    //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
+
+    //    //float randomTorque = Random.Range(-5f, 5f);
+    //    //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
+    //    //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
+    //    //otherRB.MovePosition(newPosition);
+    //    //StartCoroutine(SlideToPosition(forcePosition));
+
+    //    p1Anim.SetBool("beingPush", true);
+    //    StartCoroutine(StopBeingPushedP1());
+    //    //noisy1 = gameManager.noisy1;
+
+    //    if (rC.Player1isCarrying)
+    //    {
+    //        p2Steal = true;
+    //        gameManager.p1.objectGrabbable = null;
+
+    //    }
+    //}
 
     IEnumerator StopBeingPushedP1()
     {
         yield return new WaitForSeconds(1f);
-        p1Anim.SetBool("beingPush", false); ;
+        p1Anim.SetBool("beingPush", false); 
     }
 
     IEnumerator StopBeingPushedP2()

@@ -415,8 +415,8 @@ public class ObjectGrabbable : MonoBehaviour
             rb.AddForce(playerDir.forward * HeavyDropForce, ForceMode.Impulse);
             rb.AddForce(playerDir.up * HeavyDropUpForce, ForceMode.Impulse);
 
-            print("DropForce" + HeavyDropForce);
-            print("DropUpForce" + HeavyDropUpForce);
+            //print("DropForce" + HeavyDropForce);
+            //print("DropUpForce" + HeavyDropUpForce);
 
         }
         else
@@ -427,8 +427,8 @@ public class ObjectGrabbable : MonoBehaviour
 
             rb.AddForce(playerDir.up * dropUpForce, ForceMode.Impulse);
 
-            print("DropForce" + dropForce);
-            print("DropUpForce" + dropUpForce);
+            //print("DropForce" + dropForce);
+            //print("DropUpForce" + dropUpForce);
         }
 
         if (isHeavy)
@@ -466,8 +466,8 @@ public class ObjectGrabbable : MonoBehaviour
 
             rb.AddForce(player2Dir.up * HeavyDropUpForce, ForceMode.Impulse);
 
-            print("DropForce" + HeavyDropForce);
-            print("DropUpForce" + HeavyDropUpForce);
+           // print("DropForce" + HeavyDropForce);
+            //print("DropUpForce" + HeavyDropUpForce);
 
         }
         else
@@ -476,8 +476,8 @@ public class ObjectGrabbable : MonoBehaviour
 
             rb.AddForce(player2Dir.up * dropUpForce, ForceMode.Impulse);
 
-            print("DropForce" + dropForce);
-            print("DropUpForce" + dropUpForce);
+            //print("DropForce" + dropForce);
+            //print("DropUpForce" + dropUpForce);
         }
 
         if (isHeavy)
