@@ -2390,10 +2390,12 @@ public class TestCube : MonoBehaviour
 
         // Calculate force direction and distance
         Vector3 forceDir = otherRB.transform.position - transform.position;
+        Vector3 forcePosition = gameManager.player2.transform.position + forceDir;
+
         float distance = forceDir.magnitude;
 
         // Normalize the force direction to get the unit vector
-        forceDir.Normalize();
+        forcePosition.Normalize();
 
         // Calculate the force to be applied
         float forceMagnitude = 1000;
@@ -2416,7 +2418,7 @@ public class TestCube : MonoBehaviour
             // Apply force based on linear interpolation
             float normalizedTime = elapsedTime / duration;
             float easedMagnitude = Mathf.Lerp(forceMagnitude, 0f, normalizedTime * normalizedTime);
-            otherRB.AddForce(forceDir * easedMagnitude, ForceMode.Force);
+            otherRB.AddForce(forcePosition * easedMagnitude, ForceMode.Force);
 
             elapsedTime += Time.deltaTime;
             distance = (otherRB.transform.position - transform.position).magnitude;
