@@ -9,6 +9,14 @@ public class TargerObject : MonoBehaviour
     private void Awake()
     {
 
+
+
+
+    }
+
+    private void Start()
+    {
+
         UIController ui = GetComponentInParent<UIController>();
         if (ui == null)
         {
@@ -18,22 +26,7 @@ public class TargerObject : MonoBehaviour
         if (ui == null) Debug.LogError("No UIController component found");
 
         ui.AddTargetIndicator(this.gameObject);
-
-        UIController ui1 = GetComponentInParent<UIController>();
-        if (ui1 == null)
-        {
-            ui1 = GameObject.Find("New Char Updated").GetComponent<UIController>();
-        }
-
-        if (ui1 == null) Debug.LogError("No UIController component found");
-
-        ui1.AddPlayerIndicator(this.gameObject);
-
-
-    }
-
-    private void Start()
-    {
+        
 
     }
 

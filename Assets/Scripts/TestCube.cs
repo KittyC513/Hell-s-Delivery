@@ -474,6 +474,10 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool startTimer;
 
+    [Header("Off-screen Indicator")]
+    [SerializeField]
+    private PlayerObject playerObject;
+
     [Header("Collectables")]
     public int mailCount;
 
@@ -555,7 +559,7 @@ public class TestCube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
         isCameraLocked = false;
         gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
@@ -607,12 +611,20 @@ public class TestCube : MonoBehaviour
 
                 if (curSceneName == "TitleScene" || curSceneName == "HubStart")
                 {
-                    charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);
+                    if(charController.rb != null && !isFreeze)
+                    {
+                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);
+                    }
+
                     //print("use new movementCal");
                 }
                 else
                 {
-                    charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);
+                    if (charController.rb != null && !isFreeze)
+                    {
+                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);
+                    }
+
                 }
                 //charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);                    
                 //print("use new movementCal");
@@ -658,36 +670,19 @@ public class TestCube : MonoBehaviour
             package = null; 
         }
 
-        if(curSceneName == scene1)
-        {
-            package = GameObject.FindGameObjectWithTag("Package");
-
-            //if (GameManager.instance.timesEnterHub == 1)
-            //{
-            //    itemContainer.gameObject.SetActive(false);
-            //    itemContainer.gameObject.SetActive(true);
-            //}
-            //else
-            //{
-            //    itemContainer.gameObject.SetActive(true);
-            //    itemContainer.gameObject.SetActive(false);
-            //}
-        }
-
-        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == "HubStart")
+        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == scene1)
         {
             package = GameObject.FindGameObjectWithTag("Package");
             
-            //if(GameManager.instance.timesEnterHub == 1)
-            //{
-            //    itemContainer.gameObject.SetActive(false);
-            //    itemContainer.gameObject.SetActive(true);
-            //}
-            //else
-            //{
-            //    itemContainer.gameObject.SetActive(true);
-            //    itemContainer.gameObject.SetActive(false);
-            //}
+        }
+
+        if (curSceneName == "Level1" && isPlayer1)
+        {
+            playerObject.GetComponent<PlayerObject>().enabled = true;
+        }
+        else
+        {
+            playerObject.GetComponent<PlayerObject>().enabled = false;
         }
 
         if (curSceneName == scene5 || curSceneName == "New CC")

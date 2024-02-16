@@ -45,6 +45,7 @@ public class TargetIndicator : MonoBehaviour
     {
         p1Cam = GameManager.instance.cam1.GetComponent<Camera>();
         p2Cam = GameManager.instance.cam2.GetComponent<Camera>();
+        //p2IndicatorImageOffScreen.gameObject.SetActive(false);
     }
 
     public void InitializeIndicator(GameObject package, GameObject player1, GameObject player2, Camera cam, Camera cam2, Canvas canvas, Canvas canvas2)

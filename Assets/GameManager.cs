@@ -620,22 +620,38 @@ public class GameManager : MonoBehaviour
                 {
                     if (!enterOffice)
                     {
+                        if (instructionText != null)
+                        {
+                            instructionText.SetActive(true);
+                        }
+
+                    }
+
+                }
+                else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+                {
+                    if (instructionText != null)
+                    {
+                        instructionText.SetActive(false);
+                    }
+                }
+
+                
+                if (p1.withinEntranceRange || p2.withinEntranceRange)
+                {
+                    if(instructionText != null)
+                    {
                         instructionText.SetActive(true);
                     }
 
                 }
                 else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
                 {
-                    instructionText.SetActive(false);
-                }
+                    if (instructionText != null)
+                    {
+                        instructionText.SetActive(false);
+                    }
 
-                if (p1.withinEntranceRange || p2.withinEntranceRange)
-                {
-                    instructionText.SetActive(true);
-                }
-                else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
-                {
-                    instructionText.SetActive(false);
                 }
             }
 

@@ -65,24 +65,27 @@ public class PlayerIndicator : MonoBehaviour
     protected void SetIndicatorPos()
     {
         Vector3 indicatorPosition = p2Cam.WorldToScreenPoint(package.transform.position);
-        print("indicatorPosition" + indicatorPosition);
+        //print("indicatorPosition" + indicatorPosition);
 
         if (indicatorPosition.z >= 0f & indicatorPosition.x >= canvasRect.rect.width / 2 * canvasRect.localScale.x
         & indicatorPosition.y <= canvasRect.rect.height * canvasRect.localScale.x & indicatorPosition.x <= canvasRect.rect.width & indicatorPosition.y >= 0f)
         {
             indicatorPosition.z = 0f;
             targetOutOfSight(false, indicatorPosition);
+            print("InSight");
         }
         else if (indicatorPosition.z >= 0f)
         {
             indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
             targetOutOfSight(true, indicatorPosition);
+            print("OutOfSight");
         }
         else
         {
             indicatorPosition *= -1;
             indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
             targetOutOfSight(true, indicatorPosition);
+            print("OutOfSight");
         }
 
 
@@ -94,10 +97,10 @@ public class PlayerIndicator : MonoBehaviour
     {
         indicatorPosition.z = 0f;
 
-        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 4f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
+        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 1.33f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
         indicatorPosition -= canvasCenter;
 
-        float divX = -(canvasRect.rect.width / 4f - outOffSignOffset) / Mathf.Abs(indicatorPosition.x);
+        float divX = (canvasRect.rect.width / 4f - outOffSignOffset) / Mathf.Abs(indicatorPosition.x);
         float divY = (canvasRect.rect.height / 2f - outOffSignOffset) / Mathf.Abs(indicatorPosition.y);
 
         if (divX < divY)
@@ -114,6 +117,7 @@ public class PlayerIndicator : MonoBehaviour
         }
 
         indicatorPosition += canvasCenter;
+
         return indicatorPosition;
     }
 
@@ -145,7 +149,7 @@ public class PlayerIndicator : MonoBehaviour
 
     private Vector3 rotationOutOfSigntIndicator(Vector3 indicatorPosition)
     {
-        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 4f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
+        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 1.33f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
 
         float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition - canvasCenter, Vector3.forward);
 

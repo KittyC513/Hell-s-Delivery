@@ -21,7 +21,7 @@ public class InstructionTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Package"))
+        if (other.CompareTag("Package") && !SceneControl.instance.firstButtonIsTriggered)
         {
             canvasUI.SetActive(true);
         }
@@ -29,6 +29,11 @@ public class InstructionTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            canvasUI.SetActive(false);
+        }
+
         if (other.CompareTag("Package"))
         {
             canvasUI.SetActive(false);

@@ -105,6 +105,8 @@ public class SceneControl : MonoBehaviour
     [Header("Level 1")]
     [SerializeField]
     private GameObject packageInstruction;
+    [SerializeField]
+    public bool firstButtonIsTriggered;
 
     private void Awake()
     {
@@ -132,8 +134,8 @@ public class SceneControl : MonoBehaviour
             deliveryText.SetActive(false);
         }
 
-
-
+        GameManager.instance.p1.withinPackageRange = false;
+        GameManager.instance.p2.withinPackageRange = false;
 
     }
 
@@ -401,6 +403,16 @@ public class SceneControl : MonoBehaviour
         {
             ClosePackageInstruction();
         }
+    }
+
+    public void TriggerFirstButton()
+    {
+        firstButtonIsTriggered = true;
+    }
+
+    public void NonTriggerFirstButton()
+    {
+        firstButtonIsTriggered = false;
     }
     #endregion
 
