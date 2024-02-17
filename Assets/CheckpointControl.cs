@@ -19,7 +19,18 @@ public class CheckpointControl : MonoBehaviour
 
     public AK.Wwise.Event checkPointGetSound;
     public AK.Wwise.Event checkPointEnd;
+
+    [SerializeField]
     private bool shouldPlaySound = true;
+
+    [SerializeField]
+    private GameObject canvas;
+    [SerializeField]
+    private GameObject canvas2;
+    [SerializeField]
+    private bool isActivated;
+    [SerializeField]
+    private bool firstTime;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +39,8 @@ public class CheckpointControl : MonoBehaviour
         ps.Stop();
         animSwitch = true;
         deActivate = true;
-        
+        firstTime = true;
+        canvas.SetActive(false);
     }
 
     private void Update()
@@ -42,6 +54,8 @@ public class CheckpointControl : MonoBehaviour
             deActivate = false;
             shouldPlaySound = true;
             checkPointEnd.Post(this.gameObject);
+
+            isActivated = false;
         }
 
         if (activate == true)
@@ -56,19 +70,34 @@ public class CheckpointControl : MonoBehaviour
             if (shouldPlaySound) checkPointGetSound.Post(this.gameObject);
             shouldPlaySound = false;
             activate = false;
+
+            if (!isActivated && firstTime)
+            {
+                StartCoroutine(ShowUI());
+                firstTime = false;
+            }
+            
         }
 
+        if (isActivated)
+        {
+            canvas.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-
-        
+    {     
         if (other.gameObject.tag == ("FindScript"))
         {
             activate = true;
-            
         }
+    }
+
+    IEnumerator ShowUI()
+    {
+        canvas.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        isActivated = true;
     }
 
 

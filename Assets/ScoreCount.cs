@@ -167,7 +167,11 @@ public class ScoreCount : MonoBehaviour
             lvlData = lvl1Data;
         }
 
-        originalImgSize = p1MailImage.transform.localScale;
+        if(p1MailImage != null)
+        {
+            originalImgSize = p1MailImage.transform.localScale;
+        }
+
     }   
 
     // Update is called once per frame
