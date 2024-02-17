@@ -115,6 +115,9 @@ public class RespawnControl : MonoBehaviour
     bool p1Pass8;
     bool p2Pass8;
 
+    bool p1Pass9;
+    bool p2Pass9;
+
     [SerializeField]
     private GameObject t1, t2, t3, t4, t5, t6, t7,t8;
 
@@ -703,7 +706,7 @@ public class RespawnControl : MonoBehaviour
                 p1Pass1 = true;
                 LevelDialogue.ShowDevilPlayer1();
                 dRP1.Stop();
-                dRP1.StartDialogue("Package");
+                dRP1.StartDialogue("Packages");
          
                 Debug.Log("Print");
    
@@ -729,14 +732,14 @@ public class RespawnControl : MonoBehaviour
             }
         }
 
-        if (other.gameObject.tag == ("Jump_Tutorial"))
+        if (other.gameObject.tag == ("Push_Tutorial"))
         {
             if (isPlayer1 && !p1Pass2)
             {
                 p1Pass2 = true;
                 LevelDialogue.ShowDevilPlayer1();
                 dRP1.Stop();
-                dRP1.StartDialogue("P1Jump");
+                dRP1.StartDialogue("Push");
       
             
 
@@ -748,7 +751,7 @@ public class RespawnControl : MonoBehaviour
                 p2Pass2 = true;
                 LevelDialogue.ShowDevilPlayer2();
                 dRP2.Stop();
-                dRP2.StartDialogue("P2Jump");
+                dRP2.StartDialogue("Push2");
        
 
             }
@@ -788,6 +791,33 @@ public class RespawnControl : MonoBehaviour
             }
         }
 
+        if (other.gameObject.tag == ("Gold_Tutorial"))
+        {
+            if (isPlayer1 && !p1Pass9)
+            {
+                p1Pass9 = true;
+                LevelDialogue.ShowDevilPlayer1();
+                dRP1.Stop();
+                dRP1.StartDialogue("P1GoldSummoningSquare");
+
+            }
+
+            if (isPlayer2 && !p2Pass9)
+            {
+                p2Pass9 = true;
+                LevelDialogue.ShowDevilPlayer2();
+                dRP2.Stop();
+                dRP2.StartDialogue("P2GoldSummoningSquare");
+
+            }
+
+
+            if (p1Pass9 && p2Pass9)
+            {
+                Destroy(other.gameObject);
+            }
+        }
+
         if (other.gameObject.tag == ("Checkpoint_Tutorial"))
         {
             if (isPlayer1 && !p1Pass4)
@@ -822,7 +852,7 @@ public class RespawnControl : MonoBehaviour
                 p1Pass5 = true;
                 LevelDialogue.ShowDevilPlayer1();
                 dRP1.Stop();
-                dRP1.StartDialogue("P1SummoningCircle");
+                dRP1.StartDialogue("SummoningCircles");
             
 
             }
@@ -833,7 +863,7 @@ public class RespawnControl : MonoBehaviour
                 p2Pass5 = true;
                 LevelDialogue.ShowDevilPlayer2();
                 dRP2.Stop();
-                dRP2.StartDialogue("P2SummoningCircle");
+                dRP2.StartDialogue("SummoningCircles2");
             
             }
 
@@ -846,14 +876,14 @@ public class RespawnControl : MonoBehaviour
             
         }
 
-        if (other.gameObject.tag == ("Cooperation_Tutorial"))
+        if (other.gameObject.tag == ("Dual_Tutorial"))
         {
             if (isPlayer1 && !p1Pass6)
             {
                 p1Pass6 = true;
                 LevelDialogue.ShowDevilPlayer1();
                 dRP1.Stop();
-                dRP1.StartDialogue("Cooperation");
+                dRP1.StartDialogue("DualSummoningCircles");
 
             }
 
@@ -862,7 +892,7 @@ public class RespawnControl : MonoBehaviour
                 p2Pass6 = true;
                 LevelDialogue.ShowDevilPlayer2();
                 dRP2.Stop();
-                dRP2.StartDialogue("Cooperation2");
+                dRP2.StartDialogue("DualSummoningCircles2");
             }
 
             if (p1Pass6 && p2Pass6)
@@ -871,14 +901,14 @@ public class RespawnControl : MonoBehaviour
             }
         }
 
-        if (other.gameObject.tag == ("Sabotage_Tutorial"))
+        if (other.gameObject.tag == ("Specific_Tutorial"))
         {
             if (isPlayer1 && !p1Pass7)
             {
                 p1Pass7 = true;
                 LevelDialogue.ShowDevilPlayer1();
                 dRP1.Stop();
-                dRP1.StartDialogue("Sabotage");
+                dRP1.StartDialogue("P1PlayerSpecific");
 
             }
 
@@ -887,7 +917,7 @@ public class RespawnControl : MonoBehaviour
                 p2Pass7 = true;
                 LevelDialogue.ShowDevilPlayer2();
                 dRP2.Stop();
-                dRP2.StartDialogue("Sabotage2");
+                dRP2.StartDialogue("P2PlayerSpecific");
             }
 
             if (p1Pass7 && p2Pass7)
@@ -896,7 +926,7 @@ public class RespawnControl : MonoBehaviour
             }
         }
 
-        if (other.gameObject.tag == ("End_Tutorial"))
+        if (other.gameObject.tag == ("Sabotage_Tutorial"))
         {
 
             if (isPlayer1 && !p1Pass8)
@@ -904,7 +934,7 @@ public class RespawnControl : MonoBehaviour
                 p1Pass8 = true;
                 LevelDialogue.ShowDevilPlayer1();
                 dRP1.Stop();
-                dRP1.StartDialogue("End");
+                dRP1.StartDialogue("Sabotage");
             }
 
             if (isPlayer2 && !p2Pass8)
@@ -912,7 +942,7 @@ public class RespawnControl : MonoBehaviour
                 p2Pass8 = true;
                 LevelDialogue.ShowDevilPlayer2();
                 dRP2.Stop();
-                dRP2.StartDialogue("End2");
+                dRP2.StartDialogue("Sabotage2");
                
             }
 
