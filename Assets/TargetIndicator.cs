@@ -14,15 +14,15 @@ public class TargetIndicator : MonoBehaviour
     [SerializeField]
     private Image p2IndicatorImageOffScreen;
     [SerializeField]
-    private Image invisibleImage;
-    [SerializeField]
     private float outOfSigntOffSet;
 
     private float outOffSignOffset { get { return outOfSigntOffSet; } }
 
     [SerializeField]
     private GameObject package;
+    [SerializeField]
     private GameObject player1;
+    [SerializeField]
     private GameObject player2;
 
     [SerializeField]
@@ -70,6 +70,8 @@ public class TargetIndicator : MonoBehaviour
     {
         if(package != null)
         {
+            IndicatorImage.enabled = false;
+            p2IndicatorImageOffScreen.gameObject.SetActive(false);
             Vector3 indicatorPosition = p1Cam.WorldToScreenPoint(package.transform.position);
             //print("indicatorPosition" + indicatorPosition);
 
@@ -96,6 +98,8 @@ public class TargetIndicator : MonoBehaviour
 
         if(player2 != null)
         {
+            IndicatorImage.enabled = false;
+            IndicatorImageOffScreen.gameObject.SetActive(false);
             Vector3 indicatorPosition = p1Cam.WorldToScreenPoint(player2.transform.position);
             //print("indicatorPosition" + indicatorPosition);
 
@@ -151,6 +155,7 @@ public class TargetIndicator : MonoBehaviour
 
     private void targetOutOfSight(bool outOfSight, Vector3 indicatorPosition)
     {
+
         if (package != null)
         {
             if (outOfSight)
@@ -160,10 +165,10 @@ public class TargetIndicator : MonoBehaviour
                     IndicatorImageOffScreen.gameObject.SetActive(true);
                 }
 
-                if (IndicatorImage.isActiveAndEnabled == true)
-                {
-                    IndicatorImage.enabled = false;
-                }
+                //if (IndicatorImage.isActiveAndEnabled == true)
+                //{
+                //    IndicatorImage.enabled = false;
+                //}
 
                 IndicatorImageOffScreen.rectTransform.rotation = Quaternion.Euler(rotationOutOfSigntIndicator(indicatorPosition));
             }
@@ -178,17 +183,17 @@ public class TargetIndicator : MonoBehaviour
 
         if(player2 != null)
         {
+
             if (outOfSight)
             {
                 if (p2IndicatorImageOffScreen.gameObject.activeSelf == false)
                 {
                     p2IndicatorImageOffScreen.gameObject.SetActive(true);
                 }
-
-                if (invisibleImage.isActiveAndEnabled == true)
-                {
-                    invisibleImage.enabled = false;
-                }
+                //if (IndicatorImage.isActiveAndEnabled == true)
+                //{
+                //    IndicatorImage.enabled = false;
+                //}
 
                 p2IndicatorImageOffScreen.rectTransform.rotation = Quaternion.Euler(rotationOutOfSigntIndicator(indicatorPosition));
             }

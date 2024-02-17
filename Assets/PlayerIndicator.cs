@@ -19,7 +19,9 @@ public class PlayerIndicator : MonoBehaviour
 
     [SerializeField]
     private GameObject package;
+    [SerializeField]
     private GameObject player1;
+    [SerializeField]
     private GameObject player2;
 
     [SerializeField]
@@ -123,16 +125,16 @@ public class PlayerIndicator : MonoBehaviour
 
     private void targetOutOfSight(bool outOfSight, Vector3 indicatorPosition)
     {
+        if (IndicatorImage.isActiveAndEnabled == true)
+        {
+            IndicatorImage.enabled = false;
+        }
+
         if (outOfSight)
         {
             if (p1IndicatorImageOffScreen.gameObject.activeSelf == false)
             {
                 p1IndicatorImageOffScreen.gameObject.SetActive(true);
-            }
-
-            if (IndicatorImage.isActiveAndEnabled == true)
-            {
-                IndicatorImage.enabled = false;
             }
 
             p1IndicatorImageOffScreen.rectTransform.rotation = Quaternion.Euler(rotationOutOfSigntIndicator(indicatorPosition));
