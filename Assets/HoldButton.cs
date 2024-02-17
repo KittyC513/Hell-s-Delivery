@@ -70,14 +70,7 @@ public class HoldButton : MonoBehaviour
                 Square.SetBool("Activate", true);
 
             }
-            //else
-            //{
-            //    summoningActive = false;
 
-            //    onExit.Invoke();
-            //    activePlayer = null;
-            //    matChange.material = Default;
-            //}
 
         }
 
@@ -89,7 +82,7 @@ public class HoldButton : MonoBehaviour
         if (summoningActive)
         {
             onSummon.Invoke();
-        }
+        } 
     }
 
     private void FixedUpdate()
@@ -130,9 +123,8 @@ public class HoldButton : MonoBehaviour
                 players[i] = playerObj.GetComponent<TestCube>();
                 num = i + 1;
             }
-
-
         }
+
         
     }
 }

@@ -18,16 +18,22 @@ public class TargerObject : MonoBehaviour
     {
 
         UIController ui = GetComponentInParent<UIController>();
+        UIController uiTwo = GetComponentInParent<UIController>();
         if (ui == null)
         {
             ui = GameObject.Find("World").GetComponent<UIController>();
         }
 
+        if (uiTwo == null)
+        {
+            uiTwo = GameObject.Find("World").GetComponent<UIController>();
+        }
+
+
         if (ui == null) Debug.LogError("No UIController component found");
 
-        ui.AddTargetIndicator(this.gameObject);
-        
-
+        ui.AddTargetIndicator(this.gameObject, null);
+        uiTwo.AddPlayerIndicator(this.gameObject, null);
     }
 
 }
