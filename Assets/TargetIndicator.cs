@@ -20,7 +20,9 @@ public class TargetIndicator : MonoBehaviour
 
     [SerializeField]
     private GameObject package;
+    [SerializeField]
     private GameObject player1;
+    [SerializeField]
     private GameObject player2;
 
     [SerializeField]
@@ -45,6 +47,7 @@ public class TargetIndicator : MonoBehaviour
     {
         p1Cam = GameManager.instance.cam1.GetComponent<Camera>();
         p2Cam = GameManager.instance.cam2.GetComponent<Camera>();
+        //p2IndicatorImageOffScreen.gameObject.SetActive(false);
     }
 
     public void InitializeIndicator(GameObject package, GameObject player1, GameObject player2, Camera cam, Camera cam2, Canvas canvas, Canvas canvas2)
@@ -65,28 +68,61 @@ public class TargetIndicator : MonoBehaviour
 
     protected void SetIndicatorPos()
     {
-        Vector3 indicatorPosition = p1Cam.WorldToScreenPoint(package.transform.position);
-        //print("indicatorPosition" + indicatorPosition);
+        if(package != null)
+        {
+            IndicatorImage.enabled = false;
+            p2IndicatorImageOffScreen.gameObject.SetActive(false);
+            Vector3 indicatorPosition = p1Cam.WorldToScreenPoint(package.transform.position);
+            //print("indicatorPosition" + indicatorPosition);
 
-        if (indicatorPosition.z >= 0f & indicatorPosition.x <= canvasRect.rect.width / 2 * canvasRect.localScale.x
-        & indicatorPosition.y <= canvasRect.rect.height * canvasRect.localScale.x & indicatorPosition.x >= 0f & indicatorPosition.y >= 0f)
-        {
-            indicatorPosition.z = 0f;
-            targetOutOfSight(false, indicatorPosition);
-        }
-        else if(indicatorPosition.z >= 0f)
-        {
-            indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
-            targetOutOfSight(true, indicatorPosition);
-        }
-        else
-        {
-            indicatorPosition *= -1;
-            indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
-            targetOutOfSight(true, indicatorPosition);
+            if (indicatorPosition.z >= 0f & indicatorPosition.x <= canvasRect.rect.width / 2 * canvasRect.localScale.x
+            & indicatorPosition.y <= canvasRect.rect.height * canvasRect.localScale.x & indicatorPosition.x >= 0f & indicatorPosition.y >= 0f)
+            {
+                indicatorPosition.z = 0f;
+                targetOutOfSight(false, indicatorPosition);
+            }
+            else if (indicatorPosition.z >= 0f)
+            {
+                indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
+                targetOutOfSight(true, indicatorPosition);
+            }
+            else
+            {
+                indicatorPosition *= -1;
+                indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
+                targetOutOfSight(true, indicatorPosition);
+            }
+
+            rectTransform.position = indicatorPosition;
         }
 
-        rectTransform.position = indicatorPosition;
+        if(player2 != null)
+        {
+            IndicatorImage.enabled = false;
+            IndicatorImageOffScreen.gameObject.SetActive(false);
+            Vector3 indicatorPosition = p1Cam.WorldToScreenPoint(player2.transform.position);
+            //print("indicatorPosition" + indicatorPosition);
+
+            if (indicatorPosition.z >= 0f & indicatorPosition.x <= canvasRect.rect.width / 2 * canvasRect.localScale.x
+            & indicatorPosition.y <= canvasRect.rect.height * canvasRect.localScale.x & indicatorPosition.x >= 0f & indicatorPosition.y >= 0f)
+            {
+                indicatorPosition.z = 0f;
+                targetOutOfSight(false, indicatorPosition);
+            }
+            else if (indicatorPosition.z >= 0f)
+            {
+                indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
+                targetOutOfSight(true, indicatorPosition);
+            }
+            else
+            {
+                indicatorPosition *= -1;
+                indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
+                targetOutOfSight(true, indicatorPosition);
+            }
+
+            rectTransform.position = indicatorPosition;
+        }
 
     }
 
@@ -119,29 +155,60 @@ public class TargetIndicator : MonoBehaviour
 
     private void targetOutOfSight(bool outOfSight, Vector3 indicatorPosition)
     {
-        if (outOfSight)
+
+        if (package != null)
         {
-            if(IndicatorImageOffScreen.gameObject.activeSelf == false)
+            if (outOfSight)
             {
-                IndicatorImageOffScreen.gameObject.SetActive(true);
-            }
+                if (IndicatorImageOffScreen.gameObject.activeSelf == false)
+                {
+                    IndicatorImageOffScreen.gameObject.SetActive(true);
+                }
 
-            if(IndicatorImage.isActiveAndEnabled == true)
+                //if (IndicatorImage.isActiveAndEnabled == true)
+                //{
+                //    IndicatorImage.enabled = false;
+                //}
+
+                IndicatorImageOffScreen.rectTransform.rotation = Quaternion.Euler(rotationOutOfSigntIndicator(indicatorPosition));
+            }
+            else
             {
-                IndicatorImage.enabled = false;
-            }
-
-            IndicatorImageOffScreen.rectTransform.rotation = Quaternion.Euler(rotationOutOfSigntIndicator(indicatorPosition));
+                if (IndicatorImageOffScreen.gameObject.activeSelf == true)
+                {
+                    IndicatorImageOffScreen.gameObject.SetActive(false);
+                }
+            }           
         }
-        else
-        {
-            if(IndicatorImageOffScreen.gameObject.activeSelf == true)
-            {
-                IndicatorImageOffScreen.gameObject.SetActive(false);
-            }
 
+        if(player2 != null)
+        {
+
+            if (outOfSight)
+            {
+                if (p2IndicatorImageOffScreen.gameObject.activeSelf == false)
+                {
+                    p2IndicatorImageOffScreen.gameObject.SetActive(true);
+                }
+                //if (IndicatorImage.isActiveAndEnabled == true)
+                //{
+                //    IndicatorImage.enabled = false;
+                //}
+
+                p2IndicatorImageOffScreen.rectTransform.rotation = Quaternion.Euler(rotationOutOfSigntIndicator(indicatorPosition));
+            }
+            else
+            {
+                if (p2IndicatorImageOffScreen.gameObject.activeSelf == true)
+                {
+                    p2IndicatorImageOffScreen.gameObject.SetActive(false);
+                }
+
+            }
         }
     }
+               
+   
 
     private Vector3 rotationOutOfSigntIndicator(Vector3 indicatorPosition)
     {

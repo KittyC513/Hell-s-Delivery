@@ -620,22 +620,38 @@ public class GameManager : MonoBehaviour
                 {
                     if (!enterOffice)
                     {
+                        if (instructionText != null)
+                        {
+                            instructionText.SetActive(true);
+                        }
+
+                    }
+
+                }
+                else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
+                {
+                    if (instructionText != null)
+                    {
+                        instructionText.SetActive(false);
+                    }
+                }
+
+                
+                if (p1.withinEntranceRange || p2.withinEntranceRange)
+                {
+                    if(instructionText != null)
+                    {
                         instructionText.SetActive(true);
                     }
 
                 }
                 else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
                 {
-                    instructionText.SetActive(false);
-                }
+                    if (instructionText != null)
+                    {
+                        instructionText.SetActive(false);
+                    }
 
-                if (p1.withinEntranceRange || p2.withinEntranceRange)
-                {
-                    instructionText.SetActive(true);
-                }
-                else if (!p1.withinEntranceRange && !p2.withinEntranceRange)
-                {
-                    instructionText.SetActive(false);
                 }
             }
 
@@ -680,24 +696,21 @@ public class GameManager : MonoBehaviour
             {
                 noisy2.SetActive(true);
                 StartCoroutine(StopNoisyP2());
-                if (!p1.withinPushingRange)
-                {
-                    p2Ani.SetBool("beingPush", false);
-                    p1.p1pushed = false;
-                }
                 
+            } else
+            {
+                p2Ani.SetBool("beingPush", false);
             }
 
             if (p2.p2pushed)
             {
                 noisy1.SetActive(true);
                 StartCoroutine(StopNoisyP1());
-
-                if (!p2.withinPushingRange)
-                {
-                    p1Ani.SetBool("beingPush", false);
-                    p2.p2pushed = false;
-                }
+            }
+            else
+            {
+                p1Ani.SetBool("beingPush", false);
+ 
             }
         }
 
@@ -705,15 +718,21 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StopNoisyP2()
     {
+
         yield return new WaitForSeconds(waitingTime);
         noisy2.SetActive(false);
+        //p1.p1pushed = false;
+
 
 
     }
     IEnumerator StopNoisyP1()
     {
+
         yield return new WaitForSeconds(waitingTime);
         noisy1.SetActive(false);
+        //p2.p2pushed = false;
+
     }
 
     #region Package

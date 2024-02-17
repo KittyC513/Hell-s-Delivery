@@ -105,6 +105,15 @@ public class SceneControl : MonoBehaviour
     [Header("Level 1")]
     [SerializeField]
     private GameObject packageInstruction;
+    [SerializeField]
+    private GameObject packageInstruction2;
+    [SerializeField]
+    public bool firstButtonIsTriggered;
+    [SerializeField]
+    public bool firstButtonIsTriggered2;
+    [SerializeField]
+    public bool inDropArea;
+
 
     private void Awake()
     {
@@ -131,9 +140,11 @@ public class SceneControl : MonoBehaviour
             phoneRingText.SetActive(false);
             deliveryText.SetActive(false);
         }
-
-
-
+        if (GameManager.instance.p1 != null && GameManager.instance.p2 != null)
+        {
+            GameManager.instance.p1.withinPackageRange = false;
+            GameManager.instance.p2.withinPackageRange = false;
+        }
 
     }
 
@@ -386,21 +397,60 @@ public class SceneControl : MonoBehaviour
         packageInstruction.SetActive(true);
     }
 
+    public void ShowPackageInstruction2()
+    {
+        packageInstruction2.SetActive(true);
+    }
+
     public void ClosePackageInstruction()
     {
         packageInstruction.SetActive(false);
     }
 
+    public void ClosePackageInstruction2()
+    {
+        packageInstruction2.SetActive(false);
+    }
     public void PackageInstructionControl()
     {
-        if(GameManager.instance.p1.withinPackageRange || GameManager.instance.p2.withinPackageRange)
+        if(GameManager.instance.p1.withinPackageRange)
         {
-            ShowPackageInstruction();
+            if (!inDropArea)
+            {
+                ShowPackageInstruction();
+            }
+
         } 
-        else if (!GameManager.instance.p1.withinPackageRange && !GameManager.instance.p2.withinPackageRange)
+        else
         {
             ClosePackageInstruction();
         }
+
+        if (GameManager.instance.p2.withinPackageRange)
+        {
+            if (!inDropArea)
+            {
+                ShowPackageInstruction2();
+            }
+        }
+        else
+        {
+            ClosePackageInstruction2();
+        }
+    }
+
+    public void TriggerFirstButton()
+    {
+        firstButtonIsTriggered = true;
+    }
+    public void TriggerFirstButton2()
+    {
+        firstButtonIsTriggered2 = true;
+    }
+
+    public void NonTriggerFirstButton()
+    {
+        firstButtonIsTriggered = false;
     }
     #endregion
 

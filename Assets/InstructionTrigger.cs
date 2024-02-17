@@ -10,7 +10,7 @@ public class InstructionTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        canvasUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -23,15 +23,27 @@ public class InstructionTrigger : MonoBehaviour
     {
         if (other.CompareTag("Package"))
         {
-            canvasUI.SetActive(true);
+            if(!SceneControl.instance.firstButtonIsTriggered )
+            {
+                canvasUI.SetActive(true);
+                SceneControl.instance.inDropArea = true;
+            }
+            else 
+            {
+                canvasUI.SetActive(false);
+                SceneControl.instance.inDropArea = false;
+            }
+
+
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Package"))
+        if (other.CompareTag("Player") || other.CompareTag("Package"))
         {
             canvasUI.SetActive(false);
+            SceneControl.instance.firstButtonIsTriggered = false;
         }
     }
 }

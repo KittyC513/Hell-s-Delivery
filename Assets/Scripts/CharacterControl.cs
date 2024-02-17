@@ -435,7 +435,7 @@ public class CharacterControl : MonoBehaviour
         }
         else if (pState == playerStates.parachute)
         {
-            directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
+            directionSpeed = new Vector3(faceDir.x * parachutingSpeed, rb.velocity.y, faceDir.z * parachutingSpeed);
         }
 
         //if there is some input
@@ -824,5 +824,20 @@ public class CharacterControl : MonoBehaviour
 
     }
 
-    #endregion
-}
+    private void OnTriggerStay(Collider other)
+    {
+
+        //adding back geiser functionality
+        if (other.gameObject.tag == ("Geiser") && isParachuting)
+        {
+
+            //old sound code
+            //if (shouldPlayGeiser) playerSounds.windCatch.Post(this.gameObject);
+            //shouldPlayGeiser = false;
+            rb.AddForce(Vector3.up * 200);
+        
+        }
+    }
+
+        #endregion
+    }

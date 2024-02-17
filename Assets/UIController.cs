@@ -23,48 +23,55 @@ public class UIController : MonoBehaviour
 
     [SerializeField]
     private GameObject TargetIndicatorPrefab;
+    [SerializeField]
+    private GameObject PlayerIndicatorPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
         p1Cam = GameManager.instance.cam1.GetComponent<Camera>();
         p2Cam = GameManager.instance.cam2.GetComponent<Camera>();
-       
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(targetIndicators.Count > 0)
+
+        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
         {
-            for(int i = 0; i < targetIndicators.Count; i++)
+            if (canvas == null)
             {
-                targetIndicators[i].UpdateIndicator();
+                canvas = GameObject.FindWithTag("IndicatorCanvas").GetComponent<Canvas>();
+            }
+            if (targetIndicators.Count > 0)
+            {
+                for (int i = 0; i < targetIndicators.Count; i++)
+                {
+                    targetIndicators[i].UpdateIndicator();
+                }
+            }
+
+            if (playerIndicators.Count > 0)
+            {
+                for (int i = 0; i < playerIndicators.Count; i++)
+                {
+                    playerIndicators[i].UpdateIndicator();
+                }
             }
         }
-
-        //if (playerIndicators.Count > 0)
-        //{
-        //    for (int i = 0; i < playerIndicators.Count; i++)
-        //    {
-        //        playerIndicators[i].UpdateIndicator();
-        //    }
-        //}
-
-
     }
 
-    public void AddTargetIndicator(GameObject target)
+    public void AddTargetIndicator(GameObject target, GameObject player2)
     {
         TargetIndicator indicator = GameObject.Instantiate(TargetIndicatorPrefab, canvas.transform).GetComponent<TargetIndicator>();
         indicator.InitializeIndicator(target, player1, player2, p1Cam, p2Cam, canvas, canvas2);
         targetIndicators.Add(indicator);
-
     }
 
-    public void AddPlayerIndicator(GameObject target)
+    public void AddPlayerIndicator(GameObject target, GameObject player1)
     {
-        PlayerIndicator indicator = GameObject.Instantiate(TargetIndicatorPrefab, canvas.transform).GetComponent<PlayerIndicator>();
+        PlayerIndicator indicator = GameObject.Instantiate(PlayerIndicatorPrefab, canvas.transform).GetComponent<PlayerIndicator>();
         indicator.InitializeIndicator(target, player1, player2, p1Cam, p2Cam, canvas, canvas2);
         playerIndicators.Add(indicator);
     }
