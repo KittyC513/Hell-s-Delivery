@@ -38,6 +38,13 @@ public class SummoningCircle : MonoBehaviour
     public Animator circle;
     [SerializeField]
     private GameObject instruction;
+    [SerializeField]
+    private GameObject instruction2;
+
+    [SerializeField]
+    private bool isPlayer1;
+    [SerializeField]
+    private bool isPlayer2;
 
     private void Start()
     {
@@ -153,6 +160,22 @@ public class SummoningCircle : MonoBehaviour
                 GameObject playerObj = playerCollider[i].gameObject;
                 players[i] = playerObj.GetComponent<TestCube>();
                 num = i + 1;
+                if (playerObj.layer == LayerMask.NameToLayer("P1Collider"))
+                {
+                    isPlayer1 = true;
+                }
+                else
+                {
+                    isPlayer1 = false;
+                }
+
+                if (playerObj.layer == LayerMask.NameToLayer("P2Collider"))
+                {
+                    isPlayer2 = true;
+                } else
+                {
+                    isPlayer2 = false;
+                }
 
             }
 
@@ -190,13 +213,30 @@ public class SummoningCircle : MonoBehaviour
 
         }
 
-        if(num == 0)
+        if (num == 0)
         {
             instruction.SetActive(false);
         }
         else
         {
-            instruction.SetActive(true);
+            if (isPlayer1)
+            {
+                instruction.SetActive(true);
+            }
+            else
+            {
+                instruction.SetActive(false);
+            }
+
+            if (isPlayer2)
+            {
+                instruction2.SetActive(true);
+            }
+            else
+            {
+                instruction2.SetActive(false);
+            }
+
         }
      
     }

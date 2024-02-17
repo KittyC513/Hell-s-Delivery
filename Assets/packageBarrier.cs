@@ -10,6 +10,8 @@ public class packageBarrier : MonoBehaviour
     public Material passable;
     public Material solid;
     Renderer rend;
+    [SerializeField]
+    private Transform instruction;
 
 
     // Start is called before the first frame update
@@ -18,6 +20,8 @@ public class packageBarrier : MonoBehaviour
         blocking = true;
         Bc = gameObject.GetComponent<MeshCollider>();
         rend = gameObject.GetComponent<Renderer>();
+        instruction = this.gameObject.transform.Find("Canvas").transform;
+
     }
 
     // Update is called once per frame
@@ -28,17 +32,27 @@ public class packageBarrier : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "pTrigger")
+        if (other.gameObject.tag == "Package")
         {
             Bc.enabled = false;
             blocking = false;
             rend.material = passable;
+
+            instruction.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            instruction.gameObject.SetActive(true);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "pTrigger")
+        if (other.gameObject.tag == "Package")
         {
             Bc.enabled = true;
             blocking = true;
