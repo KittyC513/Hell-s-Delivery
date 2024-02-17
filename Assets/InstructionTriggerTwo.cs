@@ -24,7 +24,7 @@ public class InstructionTriggerTwo : MonoBehaviour
     {
         if (other.CompareTag("Package"))
         {
-            if (!SceneControl.instance.firstButtonIsTriggered)
+            if (!SceneControl.instance.firstButtonIsTriggered2)
             {
                 canvasUI.SetActive(true);
             }
@@ -43,7 +43,7 @@ public class InstructionTriggerTwo : MonoBehaviour
         if (other.CompareTag("Package"))
         {
             canvasUI.SetActive(false);
-            SceneControl.instance.firstButtonIsTriggered = false;
+            SceneControl.instance.firstButtonIsTriggered2 = false;
         }
     }
 }

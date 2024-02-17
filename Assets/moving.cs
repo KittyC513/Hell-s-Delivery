@@ -7,6 +7,7 @@ public class moving : MonoBehaviour
 
     public Transform platformTransform;
     public Transform playerTransform;
+    public Transform originalTransform;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -42,7 +43,7 @@ public class moving : MonoBehaviour
         {
             Debug.Log("success2Strigger");
 
-            playerTransform.parent = null;
+            playerTransform.parent = originalTransform;
 
         }
     }
@@ -53,7 +54,7 @@ public class moving : MonoBehaviour
         {
             Debug.Log("success2");
 
-            playerTransform.parent = null;
+            playerTransform.parent = originalTransform;
 
         }
     }

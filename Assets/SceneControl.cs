@@ -112,7 +112,11 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool firstButtonIsTriggered2;
     [SerializeField]
+    public bool firstButtonIsTriggered3;
+    [SerializeField]
     public bool inDropArea;
+    [SerializeField]
+    public ObjectGrabbable ob;
 
 
     private void Awake()
@@ -426,6 +430,12 @@ public class SceneControl : MonoBehaviour
             ClosePackageInstruction();
         }
 
+        if(!GameManager.instance.p1.withinPackageRange && !GameManager.instance.p2.withinPackageRange)
+        {
+            ClosePackageInstruction();
+            ClosePackageInstruction2();
+        }
+
         if (GameManager.instance.p2.withinPackageRange)
         {
             if (!inDropArea)
@@ -435,6 +445,12 @@ public class SceneControl : MonoBehaviour
         }
         else
         {
+            ClosePackageInstruction2();
+        }
+
+        if(ob.P1TakePackage || ob.P2TakePackage)
+        {
+            ClosePackageInstruction();
             ClosePackageInstruction2();
         }
     }
@@ -447,10 +463,18 @@ public class SceneControl : MonoBehaviour
     {
         firstButtonIsTriggered2 = true;
     }
+    public void TriggerFirstButton3()
+    {
+        firstButtonIsTriggered3 = true;
+    }
 
     public void NonTriggerFirstButton()
     {
         firstButtonIsTriggered = false;
+    }
+    public void NonTriggerFirstButton3()
+    {
+        firstButtonIsTriggered3 = false;
     }
     #endregion
 

@@ -441,7 +441,7 @@ public class TestCube : MonoBehaviour
 
     [Header("Heavy Package")]
     [SerializeField]
-    private bool tooHeavy;
+    public bool tooHeavy;
     [SerializeField]
     private float carryWeight;
 
@@ -585,7 +585,7 @@ public class TestCube : MonoBehaviour
     {
 
         DetectDirectionBetweenPlayerAndObject();
-        DetectPackageWight();
+        DetectPackageWeight();
         CastBlobShadow();
         CheckGrounded();
         //SpeedControl();
@@ -1682,7 +1682,7 @@ public class TestCube : MonoBehaviour
             }
         }
     }
-    private void DetectPackageWight()
+    private void DetectPackageWeight()
     {
         if (objectGrabbable != null)
         {
@@ -1699,12 +1699,6 @@ public class TestCube : MonoBehaviour
                         tooHeavy = false;
                     }
                 }
-                else
-                {
-                    tooHeavy = false;
-
-                }
-
             }
 
             if (isPlayer2)
@@ -1720,11 +1714,6 @@ public class TestCube : MonoBehaviour
                         tooHeavy = false;
                     }
                 }
-                else
-                {
-                    tooHeavy = false;
-                }
-
             }
         }
         else
@@ -2418,10 +2407,10 @@ public class TestCube : MonoBehaviour
         StartCoroutine(StopBeingPushedP1());
         //noisy2 = gameManager.noisy2;
 
-        if (rC.Player2isCarrying)
+        if (rC.Player1isCarrying)
         {
-            p1Steal = true;
-            gameManager.p2.objectGrabbable = null;
+            p2Steal = true;
+            gameManager.p1.objectGrabbable = null;
         }
 
         while (elapsedTime < duration)

@@ -163,18 +163,20 @@ public class SummoningCircle : MonoBehaviour
                 if (playerObj.layer == LayerMask.NameToLayer("P1Collider"))
                 {
                     isPlayer1 = true;
+                    if(playerCollider.Length <= 1)
+                    {
+                        isPlayer2 = false;
+                    }
                 }
-                else
-                {
-                    isPlayer1 = false;
-                }
+
 
                 if (playerObj.layer == LayerMask.NameToLayer("P2Collider"))
                 {
                     isPlayer2 = true;
-                } else
-                {
-                    isPlayer2 = false;
+                    if (playerCollider.Length <= 1)
+                    {
+                        isPlayer1 = false;
+                    }
                 }
 
             }
@@ -216,6 +218,7 @@ public class SummoningCircle : MonoBehaviour
         if (num == 0)
         {
             instruction.SetActive(false);
+            instruction2.SetActive(false);
         }
         else
         {

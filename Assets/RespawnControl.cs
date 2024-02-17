@@ -529,6 +529,7 @@ public class RespawnControl : MonoBehaviour
             objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
             objectGrabbable.P2TakePackage = true;
             objectGrabbable.P1TakePackage = false;
+           
 
             //Debug.Log("Player1Die");
         }
