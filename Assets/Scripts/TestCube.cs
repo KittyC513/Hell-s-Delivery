@@ -676,8 +676,9 @@ public class TestCube : MonoBehaviour
             
         }
 
-        if (curSceneName == "Level1" && isPlayer1)
+        if (curSceneName == "Level1")
         {
+
             playerObject.GetComponent<PlayerObject>().enabled = true;
         }
         else

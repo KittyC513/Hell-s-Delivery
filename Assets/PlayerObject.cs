@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerObject : MonoBehaviour
 {
-
+    [SerializeField]
+    private TestCube testCube; 
     private void Awake()
     {
 
@@ -21,7 +22,16 @@ public class PlayerObject : MonoBehaviour
 
         if (ui == null) Debug.LogError("No UIController component found");
 
-        ui.AddPlayerIndicator(this.gameObject);
+        if (testCube.isPlayer1)
+        {
+            ui.AddPlayerIndicator(this.gameObject);
+        }
+
+        if (testCube.isPlayer2)
+        {
+            ui.AddTargetIndicator(null, this.gameObject);
+        }
+
     }
 
     // Update is called once per frame

@@ -25,9 +25,8 @@ public class TargerObject : MonoBehaviour
 
         if (ui == null) Debug.LogError("No UIController component found");
 
-        ui.AddTargetIndicator(this.gameObject);
+        ui.AddTargetIndicator(this.gameObject, null);
         
-
     }
 
 }
