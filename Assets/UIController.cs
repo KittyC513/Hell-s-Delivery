@@ -69,7 +69,7 @@ public class UIController : MonoBehaviour
         targetIndicators.Add(indicator);
     }
 
-    public void AddPlayerIndicator(GameObject target)
+    public void AddPlayerIndicator(GameObject target, GameObject player1)
     {
         PlayerIndicator indicator = GameObject.Instantiate(PlayerIndicatorPrefab, canvas.transform).GetComponent<PlayerIndicator>();
         indicator.InitializeIndicator(target, player1, player2, p1Cam, p2Cam, canvas, canvas2);

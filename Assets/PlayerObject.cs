@@ -24,7 +24,7 @@ public class PlayerObject : MonoBehaviour
 
         if (testCube.isPlayer1)
         {
-            ui.AddPlayerIndicator(this.gameObject);
+            ui.AddPlayerIndicator(null, this.gameObject);
         }
 
         if (testCube.isPlayer2)
