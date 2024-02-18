@@ -532,7 +532,7 @@ public class RespawnControl : MonoBehaviour
             objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
             objectGrabbable.P2TakePackage = true;
             objectGrabbable.P1TakePackage = false;
-           
+            gameManager.p2.objectGrabbable = package.GetComponent<ObjectGrabbable>();
 
             //Debug.Log("Player1Die");
         }
@@ -561,7 +561,7 @@ public class RespawnControl : MonoBehaviour
             objectGrabbable.P2TakePackage = false;
             objectGrabbable.P1TakePackage = true;
             //Debug.Log("Player2Die");
-
+            gameManager.p1.objectGrabbable = package.GetComponent<ObjectGrabbable>();
         }
         
 
@@ -666,10 +666,9 @@ public class RespawnControl : MonoBehaviour
         //    Destroy(other.gameObject);
         //}
 
-        if (other.gameObject.tag == ("Start_Tutorial"))
+        if (other.gameObject.tag == ("Start_Tutorial") && TutorialCamControl.instance.cutsceneIsCompleted)
         {
         
-
             if (isPlayer1 && !p1Pass)
             {
                 p1Pass = true;

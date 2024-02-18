@@ -258,6 +258,8 @@ public class SceneControl : MonoBehaviour
 
         if (GameManager.instance.timesEnterHub == 1)
         {
+            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
             Lalah.SetActive(true);
             firstCustomer = true;
             phonePiece.SetActive(false);

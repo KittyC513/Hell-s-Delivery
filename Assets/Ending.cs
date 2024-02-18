@@ -15,6 +15,7 @@ public class Ending : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
+
             Loader.Load(Loader.Scene.ScoreCards);
         }
     }
