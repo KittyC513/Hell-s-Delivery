@@ -469,8 +469,8 @@ public class TutorialCamControl : MonoBehaviour
         GameManager.instance.cam2.SetActive(true);
         cam4.gameObject.SetActive(false);
 
-        //GameManager.instance.p1.isFreeze = false;
-        //GameManager.instance.p2.isFreeze = false;
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
 
     }
     #endregion
