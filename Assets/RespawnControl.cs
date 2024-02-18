@@ -666,10 +666,9 @@ public class RespawnControl : MonoBehaviour
         //    Destroy(other.gameObject);
         //}
 
-        if (other.gameObject.tag == ("Start_Tutorial"))
+        if (other.gameObject.tag == ("Start_Tutorial") && TutorialCamControl.instance.cutsceneIsCompleted)
         {
         
-
             if (isPlayer1 && !p1Pass)
             {
                 p1Pass = true;
