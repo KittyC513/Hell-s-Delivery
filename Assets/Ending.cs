@@ -15,7 +15,7 @@ public class Ending : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
-            GameManager.instance.timesEnterHub += 1;
+
             Loader.Load(Loader.Scene.ScoreCards);
         }
     }
