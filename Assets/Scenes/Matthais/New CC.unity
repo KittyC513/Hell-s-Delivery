@@ -12857,6 +12857,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 41741467}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1163076566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1163076568}
+  - component: {fileID: 1163076567}
+  m_Layer: 0
+  m_Name: BadgeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1163076567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163076566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a63fc2846664f3f46a1448d05f4e2859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allBadges:
+  - {fileID: 11400000, guid: 88e4d2ad35fd005409571d789a62d328, type: 2}
+  - {fileID: 11400000, guid: 60758279f8d35de459b66ab6ce0f8e66, type: 2}
+  goldBadgesPerLevel: 1
+  earnableSilverBadges: []
+  earnableGoldBadges: []
+--- !u!4 &1163076568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163076566}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1165182979
 GameObject:
   m_ObjectHideFlags: 0
@@ -17036,6 +17086,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformTransform: {fileID: 0}
   playerTransform: {fileID: 1736135498}
+  originalTransform: {fileID: 0}
 --- !u!136 &1566921898
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -18616,6 +18667,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   currentSpeed: 0
+  directionSpeed: {x: 0, y: 0, z: 0}
   rotationSpeed: 1800
   velocityTime: 0
   decelerationTime: 0
@@ -18627,6 +18679,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  rb: {fileID: 0}
   stickValue: {x: 0, y: 0}
   minQuickTurn: 0.9
   runMagnitude: 0.6
@@ -18762,6 +18815,7 @@ MonoBehaviour:
   jTime: 0
   isJumping: 0
   minJumpTime: 0.12
+  reachedMinJump: 0
   canJump: 1
   readJumpValue: 0
   jumpButtonGracePeriod: 0.2
@@ -18778,6 +18832,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   glideFallMax: 800
   slowDownMultiplier: 0.6
+  isSlow: 0
+  freezeState: 0
 --- !u!114 &1736135490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19006,6 +19062,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  push:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f8d47c8e-c8cd-4837-925b-352a38b4afc8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   isPicking: 0
   useNewMovement: 1
   movementForce: 1
@@ -19081,6 +19146,8 @@ MonoBehaviour:
   isGliding: 0
   numOfButtonPressed: 0
   parachuteObj: {fileID: 387793136}
+  pushCd: 0
+  pushTimer: 0
   pushForce: 2
   pushMask:
     serializedVersion: 2
@@ -19096,6 +19163,8 @@ MonoBehaviour:
   p2Anim: {fileID: 0}
   p1Steal: 0
   p2Steal: 0
+  pushStartTimer: 0
+  pushDuration: 0
   interactDistance: 2
   interactRadius: 0.5
   interactableMask:
@@ -19192,6 +19261,7 @@ MonoBehaviour:
   dashCdTimer: 0
   isDashing: 0
   startTimer: 0
+  playerObject: {fileID: 0}
   mailCount: 0
 --- !u!54 &1736135494
 Rigidbody:
@@ -19786,6 +19856,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   currentSpeed: 0
+  directionSpeed: {x: 0, y: 0, z: 0}
   rotationSpeed: 300
   velocityTime: 0
   decelerationTime: 0
@@ -19797,6 +19868,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  rb: {fileID: 0}
   stickValue: {x: 0, y: 0}
   minQuickTurn: 0.8
   runMagnitude: 0.6
@@ -19833,6 +19905,7 @@ MonoBehaviour:
   jTime: 0
   isJumping: 0
   minJumpTime: 0.5
+  reachedMinJump: 0
   canJump: 1
   readJumpValue: 0
   jumpButtonGracePeriod: 0.3
@@ -19849,6 +19922,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   glideFallMax: 800
   slowDownMultiplier: 0.6
+  isSlow: 0
+  freezeState: 0
 --- !u!1001 &1775902382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25416,3 +25491,4 @@ SceneRoots:
   - {fileID: 1657930048}
   - {fileID: 999035420}
   - {fileID: 291202264}
+  - {fileID: 1163076568}
