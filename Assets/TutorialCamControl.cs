@@ -10,7 +10,7 @@ public class TutorialCamControl : MonoBehaviour
 
     [Header("At Start")]
     [SerializeField]
-    private bool atStart;
+    public bool atStart;
     [SerializeField]
     private Transform[] cameraPositions;
     [SerializeField]
@@ -211,7 +211,7 @@ public class TutorialCamControl : MonoBehaviour
         }
     }
 
-    IEnumerator StopMoveCam()
+    public IEnumerator StopMoveCam()
     {
         yield return new WaitForSeconds(3f);
         GameManager.instance.cam1.SetActive(true);
@@ -221,6 +221,7 @@ public class TutorialCamControl : MonoBehaviour
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
         cutsceneIsCompleted = true;
+        SceneControl.instance.radialUI2.SetActive(false);
 
     }
 
@@ -594,8 +595,8 @@ public class TutorialCamControl : MonoBehaviour
         {
             GameManager.instance.cam1.SetActive(false);
             GameManager.instance.cam2.SetActive(false);
-            //GameManager.instance.p1.isFreeze = true;
-            //GameManager.instance.p2.isFreeze = true;
+            GameManager.instance.p1.isFreeze = true;
+            GameManager.instance.p2.isFreeze = true;
             cam7.gameObject.SetActive(true);
 
 

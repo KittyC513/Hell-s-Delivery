@@ -75,6 +75,8 @@ public class SceneControl : MonoBehaviour
     public bool p2AtDoor;
     [SerializeField]
     private GameObject radialUI;
+    [SerializeField]
+    public GameObject radialUI2;
 
 
     [Header("Weather Event")]
@@ -176,6 +178,11 @@ public class SceneControl : MonoBehaviour
         {
             PackageInstructionControl();
         }
+
+        if(GameManager.instance.curSceneName == "Tutorial")
+        {
+            SkipTutorialLevelOverview();
+        }
     }
 
     void SkipComic()
@@ -224,6 +231,19 @@ public class SceneControl : MonoBehaviour
         }
     }
 
+    void SkipTutorialLevelOverview()
+    {
+        if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
+        {
+            if (TutorialCamControl.instance.atStart)
+            {
+                StartCoroutine(TutorialCamControl.instance.StopMoveCam());
+                TutorialCamControl.instance.endTutorial = true;
+                
+            }
+        }
+        
+    }
 
     public void SwitchCameraToTV()
     {
