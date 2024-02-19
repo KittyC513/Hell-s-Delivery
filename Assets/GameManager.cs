@@ -212,6 +212,7 @@ public class GameManager : MonoBehaviour
         PushCheck();
         DetectPhone();
         //FindPackage();
+        ResetPlayer();
 
     }
 
@@ -788,6 +789,15 @@ public class GameManager : MonoBehaviour
         }
 
 
+    }
+
+    void ResetPlayer()
+    {
+        if(curSceneName == "Level1")
+        {
+            cam1.SetActive(true);
+            cam2.SetActive(true);
+        }
     }
 
 

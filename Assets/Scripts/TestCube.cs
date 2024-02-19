@@ -32,7 +32,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push;
+    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -519,6 +519,8 @@ public class TestCube : MonoBehaviour
         dash = player.FindAction("Dash");
         close = player.FindAction("Close");
         push = player.FindAction("Push");
+        skip = player.FindAction("Skip");
+        skipTrigger = player.FindAction("SkipTrigger");
 
         //player.FindAction("Join").started += DoTalk;
 
@@ -2050,6 +2052,8 @@ public class TestCube : MonoBehaviour
             if (ReadActionButton() && !isAnswered)
             {
                 SceneControl.instance.dR.StartDialogue("HubStart");
+                isFreeze = true;
+                SceneControl.instance.EnableUI();
                 isAnswered = true;
             }
         }
@@ -2907,6 +2911,18 @@ public class TestCube : MonoBehaviour
     public bool ReadCloseTagButton()
     {
         if (close.triggered) return true;
+        else return false;
+    }
+
+    public bool ReadSkipButton()
+    {
+        if (skip.triggered) return true;
+        else return false;
+    }
+
+    public bool ReadSkipTriggerButton()
+    {
+        if (skipTrigger.ReadValue<float>() == 1) return true;
         else return false;
     }
 

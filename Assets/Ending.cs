@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Ending : MonoBehaviour
 {
+
+    [SerializeField]
+    private GameObject canvas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,9 +19,31 @@ public class Ending : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
+
             Loader.Load(Loader.Scene.ScoreCards);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Package")
+        {
+            canvas.gameObject.SetActive(true);
+
+            Loader.Load(Loader.Scene.ScoreCards);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.gameObject.tag == "Package")
+        {
+            canvas.gameObject.SetActive(false);
+        }
+    }
+
+
 
 
     //private void OnTriggerEnter(Collider other)

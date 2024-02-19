@@ -6,6 +6,7 @@ public class packageBarrier : MonoBehaviour
 {
     public MeshCollider Bc;
     public ObjectGrabbable Og;
+    [SerializeField]
     bool blocking;
     public Material passable;
     public Material solid;
@@ -13,6 +14,8 @@ public class packageBarrier : MonoBehaviour
     [SerializeField]
     private Transform instruction;
 
+    [SerializeField]
+    PackagePass packagePass;
 
     // Start is called before the first frame update
     void Start()
@@ -55,9 +58,13 @@ public class packageBarrier : MonoBehaviour
     {
         if (other.gameObject.tag == "Package")
         {
-            Bc.enabled = true;
-            blocking = true;
-            rend.material = solid;
+            if (packagePass.packageIsDetected == false)
+            {
+                Bc.enabled = true;
+                blocking = true;
+                rend.material = solid;
+            }
+
         }
     }
 }

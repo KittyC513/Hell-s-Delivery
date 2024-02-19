@@ -7,7 +7,7 @@ using Yarn.Unity;
 public class SceneControl : MonoBehaviour
 {
     public static SceneControl instance;
-   
+
     [SerializeField]
     public Transform P1StartPoint;
     [SerializeField]
@@ -48,8 +48,8 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject Lv1, lv2;
     [SerializeField]
-    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, LalahUI, MichaelUI, nameTagNPC2,nameTagNPC3;
-   
+    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, LalahUI, MichaelUI, nameTagNPC2, nameTagNPC3;
+
     [Header("Title Page")]
     [SerializeField]
     private GameObject hightlightedDoor;
@@ -73,6 +73,9 @@ public class SceneControl : MonoBehaviour
     public bool p1AtDoor;
     [SerializeField]
     public bool p2AtDoor;
+    [SerializeField]
+    private GameObject radialUI;
+
 
     [Header("Weather Event")]
     [SerializeField]
@@ -101,6 +104,8 @@ public class SceneControl : MonoBehaviour
     public GameObject heavyPackage;
     [SerializeField]
     public bool showHeavyPackage;
+    [SerializeField]
+    public bool comicShowed;
 
     [Header("Level 1")]
     [SerializeField]
@@ -128,7 +133,7 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
-        if(GameManager.instance.curSceneName != "TitleScene" && GameManager.instance.player1 != null && GameManager.instance.player2 != null)
+        if (GameManager.instance.curSceneName != "TitleScene" && GameManager.instance.player1 != null && GameManager.instance.player2 != null)
         {
             GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
         }
@@ -158,18 +163,9 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.curSceneName == GameManager.instance.scene1)
         {
             HubStart();
+            SkipComic();
+            SkipDevilDialogue();
         }
-
-        if (Input.GetKey(KeyCode.E) && GameManager.instance.timesEnterHub < 1)
-        {
-            StopCoroutine(StartComicIntro());
-            Comic1.SetActive(false);
-            GameManager.instance.UnfreezePlayer();
-
-            phonePiece.SetActive(true);
-            phoneRingText.SetActive(true);
-        }
-
 
         if(GameManager.instance.curSceneName == GameManager.instance.scene3)
         {
@@ -182,12 +178,66 @@ public class SceneControl : MonoBehaviour
         }
     }
 
+    void SkipComic()
+    {
+        if (Input.GetKey(KeyCode.E) && GameManager.instance.timesEnterHub < 1)
+        {
+            StopCoroutine(StartComicIntro());
+            Comic1.SetActive(false);
+            GameManager.instance.UnfreezePlayer();
+
+            phonePiece.SetActive(true);
+            phoneRingText.SetActive(true);
+        }
+
+        if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+        {
+            if (GameManager.instance.timesEnterHub < 1 && comicShowed)
+            {
+                StopCoroutine(StartComicIntro());
+                Comic1.SetActive(false);
+                GameManager.instance.UnfreezePlayer();
+
+                phonePiece.SetActive(true);
+                phoneRingText.SetActive(true);
+                comicShowed = false;
+            }
+
+        }
+
+    }
+
+    void SkipDevilDialogue()
+    {
+        if(GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
+        {
+            if(GameManager.instance.timesEnterHub < 1)
+            {
+                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                {
+                    SceneControl.instance.dR.Stop();
+                    radialUI.SetActive(false);
+                    dialogueFin = true;
+                }
+            }
+
+        }
+    }
+
 
     public void SwitchCameraToTV()
     {
         MoveCamera(closeShootTV);
+
     }
 
+    IEnumerator SwitchCamToTutorialLevel()
+    {
+        SwitchCameraToTV();
+        yield return new WaitForSeconds(2f);
+        ShowDialogue.TutorialLevel();
+        dialogueFin = false;
+    }
 
     public void SwitchCameraToNpc()
     {
@@ -218,7 +268,6 @@ public class SceneControl : MonoBehaviour
         Npc3Cam.SetActive(false);
     }
 
-
     public void MoveCamera(Transform newPos)
     {
         float lerpSpeed = 5f;
@@ -232,6 +281,7 @@ public class SceneControl : MonoBehaviour
     public void StartComic()
     {
         StartCoroutine(StartComicIntro());
+        comicShowed = true;
     }
 
     IEnumerator StartComicIntro()
@@ -245,8 +295,6 @@ public class SceneControl : MonoBehaviour
 
     }
 
-
-
     void HubStart()
     {
 
@@ -258,6 +306,8 @@ public class SceneControl : MonoBehaviour
 
         if (GameManager.instance.timesEnterHub == 1)
         {
+            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
             Lalah.SetActive(true);
             firstCustomer = true;
             phonePiece.SetActive(false);
@@ -312,7 +362,7 @@ public class SceneControl : MonoBehaviour
 
         if (dialogueFin)
         {
-            SwitchCameraToTV();
+            StartCoroutine(SwitchCamToTutorialLevel());
             //dialogueFin = false;
         }
 
@@ -370,6 +420,11 @@ public class SceneControl : MonoBehaviour
             CloseConfirmDeliveryText();
             CloseDeliveryText();
         }
+    }
+
+    public void EnableUI()
+    {
+        radialUI.SetActive(true);
     }
 
 

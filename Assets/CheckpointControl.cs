@@ -40,7 +40,7 @@ public class CheckpointControl : MonoBehaviour
         animSwitch = true;
         deActivate = true;
         firstTime = true;
-        canvas.SetActive(false);
+        //canvas.SetActive(false);
     }
 
     private void Update()
@@ -73,7 +73,7 @@ public class CheckpointControl : MonoBehaviour
 
             if (!isActivated && firstTime)
             {
-                StartCoroutine(ShowUI());
+                //StartCoroutine(ShowUI());
                 firstTime = false;
             }
             
@@ -81,7 +81,7 @@ public class CheckpointControl : MonoBehaviour
 
         if (isActivated)
         {
-            canvas.SetActive(false);
+            //canvas.SetActive(false);
         }
     }
 

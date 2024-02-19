@@ -161,6 +161,24 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f559f1e-0098-4bce-80bb-0a2d623ad7c9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkipTrigger"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""f11382c8-b968-4b02-867b-747c64ca478b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -757,6 +775,72 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""action"": ""Close1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a93bcaf-4329-4e16-b5be-1c465e855dbc"",
+                    ""path"": ""<XInputController>/rightTrigger"",
+                    ""interactions"": ""Hold(duration=1.2,pressPoint=0.5)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""268ca2f1-dec2-4fd9-82bf-51623a8d242f"",
+                    ""path"": ""<DualShockGamepad>/rightTrigger"",
+                    ""interactions"": ""Hold(duration=1.2,pressPoint=0.5)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f95f333-48e3-4d8c-9748-d0d52c172738"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": ""Hold(duration=1.2,pressPoint=0.5)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e369a7d0-1b2d-4f0c-8a38-392e89965b5b"",
+                    ""path"": ""<DualShockGamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff7ad7bb-b2a9-4607-abbf-16d29bb940aa"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d3b7238-ecfa-4f6a-af26-7f29bba04bd7"",
+                    ""path"": ""<XInputController>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -930,6 +1014,8 @@ public partial class @Test: IInputActionCollection2, IDisposable
         m_Cube_Push = m_Cube.FindAction("Push", throwIfNotFound: true);
         m_Cube_Pull = m_Cube.FindAction("Pull", throwIfNotFound: true);
         m_Cube_Close1 = m_Cube.FindAction("Close1", throwIfNotFound: true);
+        m_Cube_Skip = m_Cube.FindAction("Skip", throwIfNotFound: true);
+        m_Cube_SkipTrigger = m_Cube.FindAction("SkipTrigger", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_StartDialogue = m_Dialogue.FindAction("StartDialogue", throwIfNotFound: true);
@@ -1015,6 +1101,8 @@ public partial class @Test: IInputActionCollection2, IDisposable
     private readonly InputAction m_Cube_Push;
     private readonly InputAction m_Cube_Pull;
     private readonly InputAction m_Cube_Close1;
+    private readonly InputAction m_Cube_Skip;
+    private readonly InputAction m_Cube_SkipTrigger;
     public struct CubeActions
     {
         private @Test m_Wrapper;
@@ -1034,6 +1122,8 @@ public partial class @Test: IInputActionCollection2, IDisposable
         public InputAction @Push => m_Wrapper.m_Cube_Push;
         public InputAction @Pull => m_Wrapper.m_Cube_Pull;
         public InputAction @Close1 => m_Wrapper.m_Cube_Close1;
+        public InputAction @Skip => m_Wrapper.m_Cube_Skip;
+        public InputAction @SkipTrigger => m_Wrapper.m_Cube_SkipTrigger;
         public InputActionMap Get() { return m_Wrapper.m_Cube; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1088,6 +1178,12 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Close1.started += instance.OnClose1;
             @Close1.performed += instance.OnClose1;
             @Close1.canceled += instance.OnClose1;
+            @Skip.started += instance.OnSkip;
+            @Skip.performed += instance.OnSkip;
+            @Skip.canceled += instance.OnSkip;
+            @SkipTrigger.started += instance.OnSkipTrigger;
+            @SkipTrigger.performed += instance.OnSkipTrigger;
+            @SkipTrigger.canceled += instance.OnSkipTrigger;
         }
 
         private void UnregisterCallbacks(ICubeActions instance)
@@ -1137,6 +1233,12 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @Close1.started -= instance.OnClose1;
             @Close1.performed -= instance.OnClose1;
             @Close1.canceled -= instance.OnClose1;
+            @Skip.started -= instance.OnSkip;
+            @Skip.performed -= instance.OnSkip;
+            @Skip.canceled -= instance.OnSkip;
+            @SkipTrigger.started -= instance.OnSkipTrigger;
+            @SkipTrigger.performed -= instance.OnSkipTrigger;
+            @SkipTrigger.canceled -= instance.OnSkipTrigger;
         }
 
         public void RemoveCallbacks(ICubeActions instance)
@@ -1314,6 +1416,8 @@ public partial class @Test: IInputActionCollection2, IDisposable
         void OnPush(InputAction.CallbackContext context);
         void OnPull(InputAction.CallbackContext context);
         void OnClose1(InputAction.CallbackContext context);
+        void OnSkip(InputAction.CallbackContext context);
+        void OnSkipTrigger(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {
