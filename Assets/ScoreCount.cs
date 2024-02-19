@@ -94,7 +94,7 @@ public class ScoreCount : MonoBehaviour
 
     [Space, Header("Scene Names")]
     [SerializeField] private string level1 = "Level1";
-    [SerializeField] private string level2 = "Level2";
+    [SerializeField] private string level2 = "MVPLevel";
     [SerializeField] private string level3 = "Level3";
     //need score for each value
     //need an expected outcome for each player
