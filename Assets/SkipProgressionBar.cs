@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SkipProgressionBar : MonoBehaviour
 {
+
     [SerializeField]
     private float timer;
     [SerializeField]
@@ -16,7 +17,7 @@ public class SkipProgressionBar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+   
     }
 
     // Update is called once per frame
@@ -46,5 +47,6 @@ public class SkipProgressionBar : MonoBehaviour
             timer = 0;
             radialUI.fillAmount = timer;
         }
+
     }
 }

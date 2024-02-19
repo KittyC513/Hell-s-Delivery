@@ -2052,6 +2052,8 @@ public class TestCube : MonoBehaviour
             if (ReadActionButton() && !isAnswered)
             {
                 SceneControl.instance.dR.StartDialogue("HubStart");
+                isFreeze = true;
+                SceneControl.instance.EnableUI();
                 isAnswered = true;
             }
         }
