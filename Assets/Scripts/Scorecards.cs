@@ -21,7 +21,7 @@ public class Scorecards : MonoBehaviour
     [SerializeField] private GameObject continueText;
 
     [SerializeField] private AK.Wwise.Event scoreCardSequence;
-    private enum scoreSection { scoreCards, leader }
+    private enum scoreSection { scoreCards, badge, leader }
     private scoreSection section = scoreSection.scoreCards;
 
     [Header("Objects")]
@@ -56,9 +56,10 @@ public class Scorecards : MonoBehaviour
 
     [Header("Cameras")]
     [SerializeField] private Camera cardCam;
-    [SerializeField] private Camera leader1;
+    [SerializeField] private Camera badgePillarCam;
     [SerializeField] private Camera player1Lead;
     [SerializeField] private Camera player2Lead;
+
 
     private bool hasStartedLeader = false;
 
@@ -94,7 +95,13 @@ public class Scorecards : MonoBehaviour
         //this could be from scorecards to employee of the month or from employee to exit scene
         if (section == scoreSection.scoreCards && canContinue)
         {
-            section = scoreSection.leader;
+            section = scoreSection.badge;
+            StartCoroutine(BadgeCycle());
+        }
+        else if (section == scoreSection.badge && canContinue)
+        {
+            //section = scoreSection.leader;
+            
         }
         else if (section == scoreSection.leader && canContinue)
         {
@@ -114,10 +121,13 @@ public class Scorecards : MonoBehaviour
                 if (canContinue)
                 {
                     //skip to next scene
-                  
+                    
                     
                 }
 
+                break;
+            case scoreSection.badge:
+                //start the coroutine
                 break;
             case scoreSection.leader:
                
@@ -135,55 +145,100 @@ public class Scorecards : MonoBehaviour
     private IEnumerator AnimationCycle()
     {
         yield return new WaitForSeconds(0.85f);
-
+        //cards are on screen, first category will play with sound
         //p1Stickers[0] = CheckScore(lvlData.p1Deaths, p1DeathSpot.position, categories.deaths);
         //p2Stickers[0] = CheckScore(lvlData.p2Deaths, p2DeathSpot.position, categories.deaths);
         CompareScore(lvlData.p1Deaths, lvlData.p2Deaths, categories.deaths, p1DeathSpot.position, p2DeathSpot.position, false);
         yield return new WaitForSeconds(0.44f);
         //scoreCardSequence.Post(this.gameObject);
+        //start the audio so that it lines up with the animations
         yield return new WaitForSeconds(0.31f);
+        //second category
         //p1Stickers[1] = CheckScore(lvlData.p1Deliver / (lvlData.p1Deliver + lvlData.p2Deliver), p1PackageSpot.position, categories.package);
         //p2Stickers[1] = CheckScore(lvlData.p2Deliver / (lvlData.p1Deliver + lvlData.p2Deliver), p2PackageSpot.position, categories.package);
         CompareScore(lvlData.p1Deliver, lvlData.p2Deliver, categories.deaths, p1PackageSpot.position, p2PackageSpot.position, true);
         yield return new WaitForSeconds(0.75f);
+        //third category
         //p1Stickers[2] = CheckScore(lvlData.completionTime, p1CompletionSpot.position, categories.completion);
         //p2Stickers[2] = CheckScore(lvlData.completionTime, p2CompletionSpot.position, categories.completion);
 
         yield return new WaitForSeconds(0.75f);
+        //give grade
         FinalGrade(p1TotalSpot.position, p1Stickers);
         FinalGrade(p2TotalSpot.position, p2Stickers);
         canContinue = true;
     }
 
+    private IEnumerator BadgeCycle()
+    {
+        //transition camera to the back of the characters on the pedastols
+        canContinue = false;
+        pedastols.SetActive(true);
+        badgePillarCam.gameObject.SetActive(true);
+        cardCam.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.45f);
+
+        //badge 1
+        yield return new WaitForSeconds(0.45f);
+        //badge 2
+
+        yield return new WaitForSeconds(0.45f);
+        //badge 3
+
+
+        //wait for player to be able to read badge info
+        yield return new WaitForSeconds(4);
+        //transition to player 2 badges
+        badgePillarCam.gameObject.GetComponent<Animator>().SetBool("p2Badge", true);
+        yield return new WaitForSeconds(0.25f);
+        //badge 1
+        yield return new WaitForSeconds(0.75f);
+        //badge 2
+        yield return new WaitForSeconds(0.75f);
+        //badge 3
+
+        yield return new WaitForSeconds(4);
+
+        //transition to pillars scene
+        badgePillarCam.gameObject.GetComponent<Animator>().SetBool("pillars", true);
+
+        yield return new WaitForSeconds(3);
+
+        section = scoreSection.leader;
+
+    }
+
     public IEnumerator CurrentLeaderCycle()
     {
         canContinue = false;
-        yield return new WaitForSeconds(0.75f);
-        pedastols.SetActive(true);
-        //transition to cam 1
-        leader1.gameObject.SetActive(true);
-        cardCam.gameObject.SetActive(false);
+
+      
+       
+
         yield return new WaitForSeconds(3);
+
+        badgePillarCam.gameObject.SetActive(false);
 
         if (playerScoreData.p1Overall > playerScoreData.p2Overall)
         {
             //player 1 score is higher
             player1Lead.gameObject.SetActive(true);
-            leader1.gameObject.SetActive(false);
+        
         }
         else if (playerScoreData.p1Overall == playerScoreData.p2Overall)
         {
             //have some tie state
-            leader1.gameObject.SetActive(false);
+          
         }
         else
         {
             //player 2 score is higher
             player2Lead.gameObject.SetActive(true);
-            leader1.gameObject.SetActive(false);
+      
         }
 
         yield return new WaitForSeconds(1);
+
         canContinue = true;
         //transition to winning player cam
     }

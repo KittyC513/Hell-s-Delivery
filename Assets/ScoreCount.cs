@@ -35,23 +35,6 @@ public class ScoreCount : MonoBehaviour
     [SerializeField] public LevelData lvl2Data;
     [SerializeField] public LevelData lvl3Data;
 
-    [Space, Header("Ratio Values")]
-    [SerializeField]
-    private float goodRatio = 1;
-    [SerializeField]
-    private float avgRatio = 0.7f;
-    [SerializeField]
-    private float badRatio = 0.5f;
-    [SerializeField]
-    private int totalPoints = 1200;
-    [SerializeField]
-    private float deathWeight = 0.3f;
-    [SerializeField]
-    private float packageTimeWeight = 0.4f;
-    [SerializeField]
-    private float completionWeight = 0.3f;
-
-
     private float p1CalculatedScore;
     private float p2CalculatedScore;
 
@@ -139,17 +122,11 @@ public class ScoreCount : MonoBehaviour
         lvlData.p2MailCount = 0;
     }
 
-    void Start()
+    public void StartLevel()
     {
-        lastKnobValue = 0;
-        knobValue = 0;
         StartLevelTime();
-        gameManager = Object.FindAnyObjectByType<GameManager>();
 
-        p1Score = InitialScore;
-        p2Score = p1Score;
-        p1scoreEffect.SetActive(false);
-        p2scoreEffect.SetActive(false);
+
         if (gameManager.curSceneName == level1)
         {
             lvlData = lvl1Data;
@@ -167,11 +144,25 @@ public class ScoreCount : MonoBehaviour
             lvlData = lvl1Data;
         }
 
-        if(p1MailImage != null)
+        if (p1MailImage != null)
         {
             originalImgSize = p1MailImage.transform.localScale;
         }
 
+        ResetValues();
+    }
+
+    void Start()
+    {
+        lastKnobValue = 0;
+        knobValue = 0;
+        
+        gameManager = Object.FindAnyObjectByType<GameManager>();
+
+        p1Score = InitialScore;
+        p2Score = p1Score;
+        p1scoreEffect.SetActive(false);
+        p2scoreEffect.SetActive(false);
     }   
 
     // Update is called once per frame
@@ -190,11 +181,11 @@ public class ScoreCount : MonoBehaviour
         lvlData.p2Deliver = p2PackageTime;
         lvlData.completionTime = completionTime;
         lvlData.p1MailCount = gameManager.p1.mailCount;
-        //lvlData.p2MailCount = gameManager.p2.mailCount;
+        lvlData.p2MailCount = gameManager.p2.mailCount;
 
         p1MailCount.text = lvlData.p1MailCount.ToString();
 
-        //p2MailCount.text = lvlData.p2MailCount.ToString();
+        p2MailCount.text = lvlData.p2MailCount.ToString();
 
         lvlData.p1FinalScore = p1CalculatedScore;
         lvlData.p2FinalScore = p2CalculatedScore;
@@ -218,42 +209,42 @@ public class ScoreCount : MonoBehaviour
 
     private void FixedUpdate()
     {
-        calculateScore(p1Deaths, p1PackageTime, p2Deaths, p2PackageTime, completionTime);
+        //calculateScore(p1Deaths, p1PackageTime, p2Deaths, p2PackageTime, completionTime);
         //TotalScoreCal();
     }
 
     //return a vector 2, x is player 1 score y is player 2 score
-    private void calculateScore(int p1Death, float p1PTime, float p2Death, float p2PTime, float compTime)
-    {
-        //k factor is always 32 idk tbh 
-        float kFactor = 32;
+    //private void calculateScore(int p1Death, float p1PTime, float p2Death, float p2PTime, float compTime)
+    //{
+    //    //k factor is always 32 idk tbh 
+    //    float kFactor = 32;
 
-        //each point type has a weight, for example the maximum points are 1200
-        //completion points takes 0.3 or 30% of 1200
-        //meaning if you get a maximum completion points score you get 30% of 1200 for it
-        int completionPoints = Mathf.RoundToInt(completionWeight * totalPoints);
-        int packagePoints = Mathf.RoundToInt(packageTimeWeight * totalPoints);
-        int deathPoints = Mathf.RoundToInt(deathWeight * totalPoints);
+    //    //each point type has a weight, for example the maximum points are 1200
+    //    //completion points takes 0.3 or 30% of 1200
+    //    //meaning if you get a maximum completion points score you get 30% of 1200 for it
+    //    int completionPoints = Mathf.RoundToInt(completionWeight * totalPoints);
+    //    int packagePoints = Mathf.RoundToInt(packageTimeWeight * totalPoints);
+    //    int deathPoints = Mathf.RoundToInt(deathWeight * totalPoints);
 
-        int p1DeathScore = CalculateScore(p1Death, lvlData.goodDeathValue, lvlData.avgDeathValue, goodRatio, avgRatio, badRatio, deathPoints, false);
-        int p2DeathScore = CalculateScore(p2Death, lvlData.goodDeathValue, lvlData.avgDeathValue, goodRatio, avgRatio, badRatio, deathPoints, false);
-        int p1PackageScore = CalculateScore(p1PTime / (p1PTime + p2PTime), lvlData.goodPackageTime, lvlData.avgPackageTime, goodRatio, avgRatio, badRatio, packagePoints, true);
-        int p2PackageScore = CalculateScore(p2PTime / (p1PTime + p2PTime), lvlData.goodPackageTime, lvlData.avgPackageTime, goodRatio, avgRatio, badRatio, packagePoints, true);
-        int completionScore = CalculateScore(compTime/60, lvlData.goodCompletionTime, lvlData.avgCompletionTime, goodRatio, avgRatio, badRatio, completionPoints, false);
+    //    int p1DeathScore = CalculateScore(p1Death, lvlData.goodDeathValue, lvlData.avgDeathValue, goodRatio, avgRatio, badRatio, deathPoints, false);
+    //    int p2DeathScore = CalculateScore(p2Death, lvlData.goodDeathValue, lvlData.avgDeathValue, goodRatio, avgRatio, badRatio, deathPoints, false);
+    //    int p1PackageScore = CalculateScore(p1PTime / (p1PTime + p2PTime), lvlData.goodPackageTime, lvlData.avgPackageTime, goodRatio, avgRatio, badRatio, packagePoints, true);
+    //    int p2PackageScore = CalculateScore(p2PTime / (p1PTime + p2PTime), lvlData.goodPackageTime, lvlData.avgPackageTime, goodRatio, avgRatio, badRatio, packagePoints, true);
+    //    int completionScore = CalculateScore(compTime/60, lvlData.goodCompletionTime, lvlData.avgCompletionTime, goodRatio, avgRatio, badRatio, completionPoints, false);
 
-        float p1Ra = p1DeathScore + p1PackageScore + completionScore;
-        float p2Ra = p2DeathScore + p2PackageScore + completionScore;
+    //    float p1Ra = p1DeathScore + p1PackageScore + completionScore;
+    //    float p2Ra = p2DeathScore + p2PackageScore + completionScore;
 
-        float p1Expected = 1 / (1 + 10 * (p2Ra - p1Ra) / 400);
-        float p2Expected = 1 / (1 + 10 * (p1Ra - p2Ra) / 400);
+    //    float p1Expected = 1 / (1 + 10 * (p2Ra - p1Ra) / 400);
+    //    float p2Expected = 1 / (1 + 10 * (p1Ra - p2Ra) / 400);
 
-        float p1Ratio = p1Ra + kFactor * (1 - p1Expected);
-        float p2Ratio = p2Ra + kFactor * (1 - p2Expected);
+    //    float p1Ratio = p1Ra + kFactor * (1 - p1Expected);
+    //    float p2Ratio = p2Ra + kFactor * (1 - p2Expected);
 
-        p1CalculatedScore = p1Ratio;
-        p2CalculatedScore = p2Ratio;
+    //    p1CalculatedScore = p1Ratio;
+    //    p2CalculatedScore = p2Ratio;
 
-    }
+    //}
 
     private int CalculateScore(float value, float goodValue, float avgValue, float goodRatio, float avgRatio, float badRatio, int totalPoints, bool higherBetter)
     {

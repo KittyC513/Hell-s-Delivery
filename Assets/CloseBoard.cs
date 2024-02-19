@@ -15,6 +15,8 @@ public class CloseBoard : MonoBehaviour
     [SerializeField]
     private bool start;
 
+    [SerializeField] private bool debug = true;
+
 
     private void Start()
     {
@@ -30,11 +32,19 @@ public class CloseBoard : MonoBehaviour
 
     private void Update()
     {
-        if (isUnfreezed)
+        if (isUnfreezed && !debug)
         {
             if (GameManager.instance.p1.ReadCloseTagButton() || GameManager.instance.p2.ReadCloseTagButton())
             {
                 Debug.Log("Close");
+                scoreScript.NextSection();
+            }
+        }
+
+        if (debug)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
                 scoreScript.NextSection();
             }
         }
