@@ -7,7 +7,7 @@ using Yarn.Unity;
 public class SceneControl : MonoBehaviour
 {
     public static SceneControl instance;
-   
+
     [SerializeField]
     public Transform P1StartPoint;
     [SerializeField]
@@ -48,8 +48,8 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject Lv1, lv2;
     [SerializeField]
-    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, LalahUI, MichaelUI, nameTagNPC2,nameTagNPC3;
-   
+    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, LalahUI, MichaelUI, nameTagNPC2, nameTagNPC3;
+
     [Header("Title Page")]
     [SerializeField]
     private GameObject hightlightedDoor;
@@ -128,7 +128,7 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
-        if(GameManager.instance.curSceneName != "TitleScene" && GameManager.instance.player1 != null && GameManager.instance.player2 != null)
+        if (GameManager.instance.curSceneName != "TitleScene" && GameManager.instance.player1 != null && GameManager.instance.player2 != null)
         {
             GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
         }
@@ -168,6 +168,20 @@ public class SceneControl : MonoBehaviour
 
             phonePiece.SetActive(true);
             phoneRingText.SetActive(true);
+        }
+
+        if (GameManager.instance.p1.ReadSkipButton()|| GameManager.instance.p2.ReadSkipButton())
+        {
+            if(GameManager.instance.timesEnterHub < 1)
+            {
+                StopCoroutine(StartComicIntro());
+                Comic1.SetActive(false);
+                GameManager.instance.UnfreezePlayer();
+
+                phonePiece.SetActive(true);
+                phoneRingText.SetActive(true);
+            }
+
         }
 
 
