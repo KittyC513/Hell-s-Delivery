@@ -190,6 +190,12 @@ public class ShowDialogue :DialogueViewBase
         SceneControl.instance.LalahdialogueEnds = true;
     }
 
+    [YarnCommand("LalahIsLeaving")]
+    public static void LalahLeaving()
+    {
+        SceneControl.instance.LalaLeave();
+    }
+
 
 
 

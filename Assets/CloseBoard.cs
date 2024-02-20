@@ -32,7 +32,7 @@ public class CloseBoard : MonoBehaviour
 
     private void Update()
     {
-        if (isUnfreezed && !debug)
+        if (isUnfreezed)
         {
             if (GameManager.instance.p1.ReadCloseTagButton() || GameManager.instance.p2.ReadCloseTagButton())
             {
@@ -53,7 +53,7 @@ public class CloseBoard : MonoBehaviour
 
     IEnumerator UnfreezeButton()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         isUnfreezed = true;
     }
 

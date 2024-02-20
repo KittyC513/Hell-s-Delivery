@@ -91,6 +91,8 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool showPackage;
     [SerializeField]
+    public bool showPackage1;
+    [SerializeField]
     public GameObject phonePiece;
     [SerializeField]
     public GameObject deliveryText;
@@ -108,6 +110,10 @@ public class SceneControl : MonoBehaviour
     public bool showHeavyPackage;
     [SerializeField]
     public bool comicShowed;
+    [SerializeField]
+    private LalahTrigger lalahTrigger;
+    [SerializeField]
+    private bool lalahIsGone;
 
     [Header("Level 1")]
     [SerializeField]
@@ -167,6 +173,20 @@ public class SceneControl : MonoBehaviour
             HubStart();
             SkipComic();
             SkipDevilDialogue();
+
+            if (GameManager.instance.timesEnterHub == 1)
+            {
+                SkipLalahDialogue();
+                SkipLalahEndDialogue();
+            }
+
+
+            if (GameManager.instance.timesEnterHub == 2)
+            {
+                SkipLalahEndDialogue();
+            }
+
+
         }
 
         if(GameManager.instance.curSceneName == GameManager.instance.scene3)
@@ -223,7 +243,7 @@ public class SceneControl : MonoBehaviour
             {
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
                 {
-                    SceneControl.instance.dR.Stop();
+                    dR.Stop();
                     radialUI.SetActive(false);
                     dialogueFin = true;
                 }
@@ -250,8 +270,36 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.Dialogue3 || GameManager.instance.p2.Dialogue3)
         {
-            SwitchCameraToMain();
-            LalahdialogueEnds = true;
+            if (!LalahdialogueEnds)
+            {
+                radialUI.SetActive(true);
+            }
+            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+            {
+                dR.Stop();
+                SwitchCameraToMain();
+                radialUI.SetActive(false);
+                LalahdialogueEnds = true;
+            }
+        }
+    }
+
+    void SkipLalahEndDialogue()
+    {
+        if (GameManager.instance.p1.Dialogue3_2 || GameManager.instance.p2.Dialogue3_2)
+        {
+            if (!LalahdialogueEnds)
+            {
+                radialUI.SetActive(true);
+            }
+            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+            {
+                dR.Stop();
+                SwitchCameraToMain();
+                radialUI.SetActive(false);
+                LalahdialogueEnds = true;
+                LalaLeave();
+            }
         }
     }
 
@@ -331,13 +379,14 @@ public class SceneControl : MonoBehaviour
 
     void HubStart()
     {
-
+        //Comic
         if (GameManager.instance.firstTimeEnterHub == true)
         {
             StartComic();
             GameManager.instance.firstTimeEnterHub = false;
         }
 
+        //Lalah
         if (GameManager.instance.timesEnterHub == 1)
         {
             GameManager.instance.p1.isFreeze = false;
@@ -346,10 +395,30 @@ public class SceneControl : MonoBehaviour
             firstCustomer = true;
             phonePiece.SetActive(false);
         }
-        else
+        else if (GameManager.instance.timesEnterHub != 1 && GameManager.instance.timesEnterHub != 2)
         {
             Lalah.SetActive(false);
             firstCustomer = false;
+        }
+
+        if(GameManager.instance.timesEnterHub == 2 && lalahTrigger.isLeaving == false)
+        {
+            showPackage = true;
+            lalahTrigger.npcArrived = true;
+            Lalah.SetActive(true);
+        }
+
+        //Weather
+        if (GameManager.instance.timesEnterHub == 2 && lalahIsGone && !secondCustomer)
+        {
+            StartCoroutine(ShowWeather());
+        }
+
+        IEnumerator ShowWeather()
+        {
+            yield return new WaitForSeconds(2f);
+            Weather.SetActive(true);
+            secondCustomer = true;
         }
 
         if (GameManager.instance.showWertherInstruction && !WeatherdialogueEnds)
@@ -400,10 +469,10 @@ public class SceneControl : MonoBehaviour
             //dialogueFin = false;
         }
 
-        if (WeatherdialogueEnds && !showPackage)
+        if (WeatherdialogueEnds && !showPackage1)
         {
             normalPackage.SetActive(true);
-            showPackage = true;
+            showPackage1 = true;
         }
         else if(!WeatherdialogueEnds)
         {
@@ -460,9 +529,6 @@ public class SceneControl : MonoBehaviour
     {
         radialUI.SetActive(true);
     }
-
-
-
 
 
     #endregion
@@ -565,9 +631,18 @@ public class SceneControl : MonoBehaviour
     {
         firstButtonIsTriggered3 = false;
     }
+
+    public void LalaLeave()
+    {
+        lalahTrigger.dialogueEnd = true;
+        lalahIsGone = true;
+    }
     #endregion
 
+    #region MVP Level
 
+
+    #endregion
 
 
 }

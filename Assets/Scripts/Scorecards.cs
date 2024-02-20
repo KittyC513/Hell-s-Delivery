@@ -16,8 +16,7 @@ public class Scorecards : MonoBehaviour
     public PlayerScoreData playerScoreData;
     [SerializeField] private int thumbsUpBonus = 50;
     [SerializeField] private int badgeBonus = 50;
-
-    private bool canContinue = false;
+    [SerializeField] private bool canContinue = false;
     [SerializeField] private GameObject continueText;
 
     [SerializeField] private AK.Wwise.Event scoreCardSequence;
@@ -109,7 +108,8 @@ public class Scorecards : MonoBehaviour
             //if (canContinue) SceneManager.LoadScene("HubEnd");
             if (GameManager.instance.p1.ReadCloseTagButton() || GameManager.instance.p2.ReadCloseTagButton())
             {
-                Loader.Load(Loader.Scene.HubEnd);
+                GameManager.instance.timesEnterHub += 1;
+                Loader.Load(Loader.Scene.HubStart);
             }
         }
     }

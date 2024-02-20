@@ -5,16 +5,21 @@ using Yarn.Unity;
 
 public class LalahTrigger : MonoBehaviour
 {
-    public DialogueRunner dialogueRunner;
+    [SerializeField]
+    public SceneControl sC;
     public bool hasTalkedBefore = false;
     [SerializeField]
     private Animator anim;
     [SerializeField]
     private GameObject npc;
     [SerializeField]
-    private GameObject smoke;
+    public GameObject smoke;
     [SerializeField]
-    private bool npcArrived;
+    public bool npcArrived;
+    [SerializeField]
+    public bool dialogueEnd;
+    [SerializeField]
+    public bool isLeaving;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +31,7 @@ public class LalahTrigger : MonoBehaviour
     void Update()
     {
         Arrive();
+        LalaLeave();
         //ArriveLalah();
         //if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == false)
         //{
@@ -60,6 +66,15 @@ public class LalahTrigger : MonoBehaviour
         {
             StartCoroutine(Walking());
         }
+
+        if (npcArrived && !dialogueEnd)
+        {
+            smoke.SetActive(false);
+        }
+        else if(dialogueEnd)
+        {
+            smoke.SetActive(true);
+        }
     }
 
 
@@ -70,6 +85,26 @@ public class LalahTrigger : MonoBehaviour
         smoke.SetActive(false);
         anim.SetBool("Arrived", false);
         npcArrived = true;
+    }
+
+    public void LalaLeave()
+    {
+        if (dialogueEnd && !isLeaving)
+        {           
+            StartCoroutine(Leaving());
+        }
+    }
+
+
+    IEnumerator Leaving()
+    {
+        
+        anim.SetTrigger("isLeaving");
+        yield return new WaitForSeconds(1.2f);
+        //smoke.SetActive(false);
+        //anim.SetBool("Arrived", false);
+        this.gameObject.SetActive(false);
+        isLeaving = true;
     }
     #endregion
 }

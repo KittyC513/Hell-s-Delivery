@@ -361,7 +361,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool Dialogue2;
     [SerializeField]
-    private bool Dialogue3;
+    public bool Dialogue3;
+    [SerializeField]
+    public bool Dialogue3_2;
     [SerializeField]
     private bool Dialogue4;
 
@@ -2032,13 +2034,13 @@ public class TestCube : MonoBehaviour
 
         }
 
-        if (withinEntranceRange)
+        if (withinEntranceRange && curSceneName == "TitleScene")
         {
             if(gameManager.player1 != null && gameManager.player2 != null)
             {
                 if (ReadActionButton())
                 {
-                    print("Enter");
+                    //print("Enter");
                     isEntered = true;
 
                     //SceneControl.instance.LoadScene("MVPLevel");
@@ -2086,9 +2088,8 @@ public class TestCube : MonoBehaviour
 
         if (NPC2Interacting)
         {
-            if (!Dialogue3)
-            {
-                print("interactiNPC2");
+            if (!Dialogue3 && gameManager.timesEnterHub == 1)
+            {               
                 //SceneControl.LV.SetActive(false);
                 SceneControl.instance.dR.StopAllCoroutines();
                 SceneControl.instance.phoneUI.SetActive(false);
@@ -2099,10 +2100,46 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.nameTagNPC3.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("LalahQuest");
 
-                NPCInteracting = false;
-                Dialogue3 = true;
+                NPC2Interacting = false;
+
+                if (isPlayer1)
+                {
+                    gameManager.p2.Dialogue3 = true;
+                    Dialogue3 = true;
+                }
+                if (isPlayer2)
+                {
+                    gameManager.p1.Dialogue3 = true;
+                    Dialogue3 = true;
+                }
+
                 //StartCoroutine(MovingCameraNPC2());
 
+            }
+
+            if(!Dialogue3_2 && gameManager.timesEnterHub == 2)
+            {
+                print("interactiNPC23_2");
+                SceneControl.instance.dR.StopAllCoroutines();
+                SceneControl.instance.phoneUI.SetActive(false);
+                SceneControl.instance.dialogueBox.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(false);
+                SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.nameTagNPC2.SetActive(true);
+                SceneControl.instance.nameTagNPC3.SetActive(false);
+                SceneControl.instance.dR.StartDialogue("LalahEnd");
+
+                NPC2Interacting = false;
+                if (isPlayer1)
+                {
+                    gameManager.p2.Dialogue3_2 = true;
+                    Dialogue3_2 = true;
+                }
+                if (isPlayer2)
+                {
+                    gameManager.p1.Dialogue3_2 = true;
+                    Dialogue3_2 = true;
+                }
             }
         }
 
@@ -2122,7 +2159,7 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.dR.StartDialogue("MichaelQuest");
 
                 //StartCoroutine(MovingCameraNPC3());
-                NPCInteracting = false;
+                NPC3Interacting = false;
                 Dialogue4 = true;
 
 

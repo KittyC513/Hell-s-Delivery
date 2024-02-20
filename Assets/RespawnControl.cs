@@ -305,12 +305,27 @@ public class RespawnControl : MonoBehaviour
 
             if( curSceneName == scene1)
             {
-                if (objectGrabbable == null)
+                if(gameManager.timesEnterHub == 1)
                 {
-                    package = GameObject.FindGameObjectWithTag("Package");
+                    if (objectGrabbable == null)
+                    {
+                        package = GameObject.FindGameObjectWithTag("Package");
 
-                    objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                    }
+                } 
+                else if(gameManager.timesEnterHub == 2)
+                {
+                    objectGrabbable = null;
+                    package = null;
+                    
+                    if (objectGrabbable == null)
+                    {
+                        package = GameObject.FindGameObjectWithTag("Package");
+                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                    }
                 }
+
             }
 
 
@@ -633,38 +648,6 @@ public class RespawnControl : MonoBehaviour
             }
 
         }
-
-
-
-
-
-        //if (other.gameObject.tag == ("TriggerStart"))
-        //{
-        //    //LevelDialogue.ShowDevilAll();
-        //    dRP1.StartDialogue("StartLevel");
-        //    Destroy(other.gameObject);
-        //}
-
-        //if (other.gameObject.tag == ("TriggerFirstLevel"))
-        //{
-        //    //LevelDialogue.ShowDevilAll();
-        //    dRP1.StartDialogue("FirstLevel");
-        //    Destroy(other.gameObject);
-        //}
-
-        //if (other.gameObject.tag == ("TriggerSecondLevel"))
-        //{
-        //    //LevelDialogue.ShowDevilAll();
-        //    dRP1.StartDialogue("SecondLevel");
-        //    Destroy(other.gameObject);
-        //}
-
-        //if (other.gameObject.tag == ("TriggerThirdLevel"))
-        //{
-        //    //LevelDialogue.ShowDevilAll();
-        //    dRP1.StartDialogue("ThirdLevel");
-        //    Destroy(other.gameObject);
-        //}
 
         if (other.gameObject.tag == ("Start_Tutorial") && TutorialCamControl.instance.cutsceneIsCompleted)
         {
@@ -1022,59 +1005,122 @@ public class RespawnControl : MonoBehaviour
         //}
         if (other.tag == "DeliveryArea")
         {
-            if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
+            //Level 1
+            if(gameManager.timesEnterHub == 1)
             {
-                if (isPlayer1 && Player1isCarrying )
+                if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
                 {
-                    if (!SceneControl.instance.ConfirmTextisActivated)
+                    if (isPlayer1 && Player1isCarrying)
                     {
-                        SceneControl.instance.ShowConfirmDeliveryText();
-                    }
-                    SceneControl.instance.CloseDeliveryText();
-                    SceneControl.instance.p1AtDoor = true;
-                    if (gameManager.p1.ReadActionButton())
-                    {
-                        if (SceneControl.instance.firstCustomer)
+                        if (!SceneControl.instance.ConfirmTextisActivated)
                         {
-                            Loader.Load(Loader.Scene.Level1);
+                            SceneControl.instance.ShowConfirmDeliveryText();
+                        }
+                        SceneControl.instance.CloseDeliveryText();
+                        SceneControl.instance.p1AtDoor = true;
+                        if (gameManager.p1.ReadActionButton())
+                        {
+                            if (SceneControl.instance.firstCustomer)
+                            {
+                                Loader.Load(Loader.Scene.Level1);
+                            }
+
                         }
 
                     }
-
-                }
-                else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
-                {
-                    SceneControl.instance.ShowDeliveryText();
-                    SceneControl.instance.CloseConfirmDeliveryText();
-                    SceneControl.instance.p1AtDoor = true;
-                }
-
-                if (isPlayer2 && Player2isCarrying)
-                {
-                    if (!SceneControl.instance.ConfirmTextisActivated)
+                    else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
                     {
-                        SceneControl.instance.ShowConfirmDeliveryText();
+                        SceneControl.instance.ShowDeliveryText();
+                        SceneControl.instance.CloseConfirmDeliveryText();
+                        SceneControl.instance.p1AtDoor = true;
                     }
-                    SceneControl.instance.CloseDeliveryText();
-                    SceneControl.instance.p2AtDoor = true;
-                    if (gameManager.p2.ReadActionButton())
+
+                    if (isPlayer2 && Player2isCarrying)
                     {
-                        if (SceneControl.instance.firstCustomer)
+                        if (!SceneControl.instance.ConfirmTextisActivated)
                         {
-                            Loader.Load(Loader.Scene.Level1);
+                            SceneControl.instance.ShowConfirmDeliveryText();
+                        }
+                        SceneControl.instance.CloseDeliveryText();
+                        SceneControl.instance.p2AtDoor = true;
+                        if (gameManager.p2.ReadActionButton())
+                        {
+                            if (SceneControl.instance.firstCustomer)
+                            {
+                                Loader.Load(Loader.Scene.Level1);
+                            }
                         }
                     }
+                    else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
+                    {
+                        SceneControl.instance.ShowDeliveryText();
+                        SceneControl.instance.CloseConfirmDeliveryText();
+                        SceneControl.instance.p2AtDoor = true;
+                    }
+
                 }
-                else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
+            }    //MVP Level
+            else if(gameManager.timesEnterHub == 2)
+            {
+                if (SceneControl.instance.showPackage1)
                 {
-                    SceneControl.instance.ShowDeliveryText();
-                    SceneControl.instance.CloseConfirmDeliveryText();
-                    SceneControl.instance.p2AtDoor = true;
+                    if (isPlayer1 && Player1isCarrying)
+                    {
+                        if (!SceneControl.instance.ConfirmTextisActivated)
+                        {
+                            SceneControl.instance.ShowConfirmDeliveryText();
+                        }
+                        SceneControl.instance.CloseDeliveryText();
+                        SceneControl.instance.p1AtDoor = true;
+
+                        if (gameManager.p1.ReadActionButton())
+                        {
+                            if (SceneControl.instance.secondCustomer)
+                            {
+                                Loader.Load(Loader.Scene.MVPLevel);
+                            }
+
+                        }
+
+                    }
+                    else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
+                    {
+                        SceneControl.instance.ShowDeliveryText();
+                        SceneControl.instance.CloseConfirmDeliveryText();
+                        SceneControl.instance.p1AtDoor = true;
+                    }
+
+                    if (isPlayer2 && Player2isCarrying)
+                    {
+                        if (!SceneControl.instance.ConfirmTextisActivated)
+                        {
+                            SceneControl.instance.ShowConfirmDeliveryText();
+                        }
+                        SceneControl.instance.CloseDeliveryText();
+                        SceneControl.instance.p2AtDoor = true;
+
+                        if (gameManager.p2.ReadActionButton())
+                        {
+                            if (SceneControl.instance.secondCustomer)
+                            {
+                                Loader.Load(Loader.Scene.MVPLevel);
+                            }
+                        }
+                    }
+                    else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
+                    {
+                        SceneControl.instance.ShowDeliveryText();
+                        SceneControl.instance.CloseConfirmDeliveryText();
+                        SceneControl.instance.p2AtDoor = true;
+                    }
+
                 }
 
             }
-
         }
+          
+         
+    
 
         if (other.gameObject.tag == ("Start_Tutorial"))
         {
@@ -1235,24 +1281,44 @@ public class RespawnControl : MonoBehaviour
     {
         if (other.tag == "DeliveryArea")
         {
-            if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
+            if(gameManager.timesEnterHub == 1)
             {
-                if (isPlayer1)
+                if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
                 {
-                    SceneControl.instance.p1AtDoor = false;
-                    print("not in deliveryArea1");
-                }
+                    if (isPlayer1)
+                    {
+                        SceneControl.instance.p1AtDoor = false;
+                        //print("not in deliveryArea1");
+                    }
 
-                if (isPlayer2)
+                    if (isPlayer2)
+                    {
+                        SceneControl.instance.p2AtDoor = false;
+                        //print("not in deliveryArea2");
+                    }
+
+                }
+            }
+            else if(gameManager.timesEnterHub == 2)
+            {
+                if (SceneControl.instance.showPackage1)
                 {
-                    SceneControl.instance.p2AtDoor = false;
-                    print("not in deliveryArea2");
+                    if (isPlayer1)
+                    {
+                        SceneControl.instance.p1AtDoor = false;
+                        //print("not in deliveryArea1");
+                    }
+
+                    if (isPlayer2)
+                    {
+                        SceneControl.instance.p2AtDoor = false;
+                        //print("not in deliveryArea2");
+                    }
+
                 }
-
-
-
 
             }
+
         }
 
                 if (other.gameObject.tag == ("Start_Tutorial"))
