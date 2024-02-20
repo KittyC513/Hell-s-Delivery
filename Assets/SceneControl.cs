@@ -137,6 +137,8 @@ public class SceneControl : MonoBehaviour
     public ObjectGrabbable ob;
     [SerializeField]
     public DialogueRunner dRP1, dRP2;
+    [SerializeField]
+    public bool p1isKilling, p2isKilling;
 
 
     private void Awake()

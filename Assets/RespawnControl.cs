@@ -253,6 +253,23 @@ public class RespawnControl : MonoBehaviour
 
     }
 
+    void SabotageBark()
+    {
+        if(curSceneName == "Level1")
+        {
+            if (SceneControl.instance.p1isKilling)
+            {
+                PlayRandomSabotageDialogue1();
+            }
+
+            if (SceneControl.instance.p2isKilling)
+            {
+                PlayRandomSabotageDialogue2();
+            }
+        }
+
+    }
+
     void SceneCheck()
     {
         if(gameManager == null)
@@ -388,6 +405,7 @@ public class RespawnControl : MonoBehaviour
 
     private void Update()
     {
+        SabotageBark();
         Partner = GameObject.FindGameObjectsWithTag("FindScript");
         //FindDR();
         SceneCheck();
@@ -1498,39 +1516,39 @@ public class RespawnControl : MonoBehaviour
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(SabotageChoice.Count);
-        dRP1.StartDialogue(SabotageChoice[index]);
+        SceneControl.instance.dRP1.StartDialogue(SabotageChoice[index]);
     }
     public void PlayRandomSabotageDialogue2()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(SabotageChoice.Count);
-        dRP2.StartDialogue(SabotageChoice[index]);
+        SceneControl.instance.dRP2.StartDialogue(SabotageChoice[index]);
     }
 
     public void PlayRandomCooperationDialogue1()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(CooperateChoice.Count);
-        dRP1.StartDialogue(CooperateChoice[index]);
+        SceneControl.instance.dRP1.StartDialogue(CooperateChoice[index]);
     }
     public void PlayRandomCooperationDialogue2()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(CooperateChoice.Count);
-        dRP2.StartDialogue(CooperateChoice[index]);
+        SceneControl.instance.dRP2.StartDialogue(CooperateChoice[index]);
     }
 
     public void PlayRandomPackageDialogue1()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(PackageReminders.Count);
-        dRP1.StartDialogue(PackageReminders[index]);
+        SceneControl.instance.dRP1.StartDialogue(PackageReminders[index]);
     }
     public void PlayRandomPackageDialogue2()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(PackageReminders.Count);
-        dRP2.StartDialogue(PackageReminders[index]);
+        SceneControl.instance.dRP2.StartDialogue(PackageReminders[index]);
     }
 
 
