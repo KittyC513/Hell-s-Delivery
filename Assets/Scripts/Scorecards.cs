@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class Scorecards : MonoBehaviour
 {
@@ -15,9 +17,15 @@ public class Scorecards : MonoBehaviour
     [SerializeField]
     public PlayerScoreData playerScoreData;
     [SerializeField] private int thumbsUpBonus = 50;
-    [SerializeField] private int badgeBonus = 50;
+    [SerializeField] private int badgeBonus = 15;
     [SerializeField] private bool canContinue = false;
     [SerializeField] private GameObject continueText;
+    private BadgeInfo[] p1Badges;
+    private BadgeInfo[] p2Badges;
+    private int p1LostMailCount = 0;
+    private int p2LostMailCount = 0;
+    private bool countUpMail = false;
+    private int frameSkipTemp;
 
     [SerializeField] private AK.Wwise.Event scoreCardSequence;
     private enum scoreSection { scoreCards, badge, leader }
@@ -27,12 +35,14 @@ public class Scorecards : MonoBehaviour
     [SerializeField] private GameObject cardLeft;
     [SerializeField] private GameObject cardRight;
     [SerializeField] private GameObject pedastols;
+    [SerializeField] private TextMeshProUGUI p1MailCount;
+    [SerializeField] private TextMeshProUGUI p2MailCount;
 
     [Header ("Stickers")]
     [SerializeField] private GameObject happySticker;
     [SerializeField] private GameObject neutralSticker;
     [SerializeField] private GameObject sadSticker;
-    [SerializeField] private GameObject blankBadge;
+
     //[SerializeField] private GameObject aGrade;
     //[SerializeField] private GameObject bGrade;
     //[SerializeField] private GameObject cGrade;
@@ -60,6 +70,22 @@ public class Scorecards : MonoBehaviour
     [SerializeField] private Camera player1Lead;
     [SerializeField] private Camera player2Lead;
 
+    [Header("Badges")]
+    [SerializeField] private GameObject blankBadge;
+    [SerializeField] private GameObject badgeUI;
+    [SerializeField] private RectTransform badge1Location;
+    [SerializeField] private RectTransform badge2Location;
+    [SerializeField] private RectTransform badge3Location;
+    [SerializeField] private GameObject text1;
+    [SerializeField] private GameObject text2;
+    [SerializeField] private GameObject text3;
+    [SerializeField] private TextMeshProUGUI badge1Title;
+    [SerializeField] private TextMeshProUGUI badge1Desc;
+    [SerializeField] private TextMeshProUGUI badge2Title;
+    [SerializeField] private TextMeshProUGUI badge2Desc;
+    [SerializeField] private TextMeshProUGUI badge3Title;
+    [SerializeField] private TextMeshProUGUI badge3Desc;
+    
 
     private bool hasStartedLeader = false;
 
@@ -72,6 +98,16 @@ public class Scorecards : MonoBehaviour
         //check our player's scores and place the circle accordingly
         p1Stickers = new stickerType[3];
         p2Stickers = new stickerType[3];
+        p1Badges = lvlData.p1Badges;
+        p2Badges = lvlData.p2Badges;
+
+        p1MailCount.text = ("x  ");
+        p2MailCount.text = ("x  ");
+
+        if (ScoreCount.instance != null)
+        {
+            lvlData = ScoreCount.instance.lvlData;
+        }
     }
 
     private Quaternion RandomRotation()
@@ -87,6 +123,13 @@ public class Scorecards : MonoBehaviour
         else continueText.SetActive(false);
 
         SectionUpdate();
+
+        if (countUpMail)
+        {
+            CountMail(1);
+            p1MailCount.text = ("x  " + p1LostMailCount);
+            p2MailCount.text = ("x  " + p2LostMailCount);
+        }
     }
 
     public void NextSection()
@@ -162,7 +205,7 @@ public class Scorecards : MonoBehaviour
         //third category
         //p1Stickers[2] = CheckScore(lvlData.completionTime, p1CompletionSpot.position, categories.completion);
         //p2Stickers[2] = CheckScore(lvlData.completionTime, p2CompletionSpot.position, categories.completion);
-
+        countUpMail = true;
         yield return new WaitForSeconds(0.75f);
         //give grade
         FinalGrade(p1TotalSpot.position, p1Stickers);
@@ -172,38 +215,99 @@ public class Scorecards : MonoBehaviour
 
     private IEnumerator BadgeCycle()
     {
+        GameObject badge1;
+        GameObject badge2;
+        GameObject badge3;
         //transition camera to the back of the characters on the pedastols
         canContinue = false;
         pedastols.SetActive(true);
         badgePillarCam.gameObject.SetActive(true);
         cardCam.gameObject.SetActive(false);
+        badgeUI.SetActive(true);
+        cardLeft.SetActive(false);
+        cardRight.SetActive(false);
         yield return new WaitForSeconds(0.45f);
-
         //badge 1
+        badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
+        badge1.GetComponent<Image>().sprite = lvlData.p1Badges[0].image;
+        badge1Title.text = lvlData.p1Badges[0].badgeName;
+        badge1Desc.text = lvlData.p1Badges[0].description;
+
+        yield return new WaitForSeconds(0.35f);
+        text1.SetActive(true);
+      
         yield return new WaitForSeconds(0.45f);
         //badge 2
+        badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
+        badge2.GetComponent<Image>().sprite = lvlData.p1Badges[1].image;
+        badge2Title.text = lvlData.p1Badges[1].badgeName;
+        badge2Desc.text = lvlData.p1Badges[1].description;
+
+        yield return new WaitForSeconds(0.35f);
+        text2.SetActive(true);
 
         yield return new WaitForSeconds(0.45f);
         //badge 3
+        badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
+        badge3.GetComponent<Image>().sprite = lvlData.p1Badges[2].image;
+        badge3Title.text = lvlData.p1Badges[2].badgeName;
+        badge3Desc.text = lvlData.p1Badges[2].description;
 
+        yield return new WaitForSeconds(0.35f);
+        text3.SetActive(true);
 
         //wait for player to be able to read badge info
         yield return new WaitForSeconds(4);
+        Destroy(badge1);
+        Destroy(badge2);
+        Destroy(badge3);
+        text1.SetActive(false);
+        text2.SetActive(false);
+        text3.SetActive(false);
+
         //transition to player 2 badges
         badgePillarCam.gameObject.GetComponent<Animator>().SetBool("p2Badge", true);
         yield return new WaitForSeconds(0.25f);
         //badge 1
-        yield return new WaitForSeconds(0.75f);
+        badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
+        badge1.GetComponent<Image>().sprite = lvlData.p2Badges[0].image;
+        badge1Title.text = lvlData.p2Badges[0].badgeName;
+        badge1Desc.text = lvlData.p2Badges[0].description;
+
+        yield return new WaitForSeconds(0.35f);
+        text1.SetActive(true);
+
+        yield return new WaitForSeconds(0.45f);
         //badge 2
-        yield return new WaitForSeconds(0.75f);
+        badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
+        badge2.GetComponent<Image>().sprite = lvlData.p2Badges[1].image;
+        badge2Title.text = lvlData.p2Badges[1].badgeName;
+        badge2Desc.text = lvlData.p2Badges[1].description;
+
+        yield return new WaitForSeconds(0.35f);
+        text2.SetActive(true);
+        yield return new WaitForSeconds(0.45f);
         //badge 3
+        badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
+        badge3.GetComponent<Image>().sprite = lvlData.p2Badges[2].image;
+        badge3Title.text = lvlData.p2Badges[2].badgeName;
+        badge3Desc.text = lvlData.p2Badges[2].description;
+
+        yield return new WaitForSeconds(0.35f);
+        text3.SetActive(true);
 
         yield return new WaitForSeconds(4);
-
+        Destroy(badge1);
+        Destroy(badge2);
+        Destroy(badge3);
+        text1.SetActive(false);
+        text2.SetActive(false);
+        text3.SetActive(false);
+        badgeUI.SetActive(false);
         //transition to pillars scene
         badgePillarCam.gameObject.GetComponent<Animator>().SetBool("pillars", true);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.1f);
 
         section = scoreSection.leader;
 
@@ -500,5 +604,29 @@ public class Scorecards : MonoBehaviour
         //{
         //    Instantiate(dGrade, stickerPoint, Quaternion.identity);
         //}
+    }
+
+    private void CountMail(int frameSkip)
+    {
+        if (frameSkipTemp < frameSkip)
+        {
+            frameSkipTemp++;
+        }
+        else
+        {
+            //add 1 to mail
+            frameSkipTemp = 0;
+            if (p1LostMailCount < lvlData.p1MailCount)
+            {
+                p1LostMailCount++;
+            }
+
+            if (p2LostMailCount < lvlData.p2MailCount)
+            {
+                p2LostMailCount++;
+            }
+
+
+        }
     }
 }

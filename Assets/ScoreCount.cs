@@ -29,7 +29,7 @@ public class ScoreCount : MonoBehaviour
     [SerializeField] private float completionTime = 0;
     private bool shouldCountTime = false;
 
-    private LevelData lvlData;
+    [HideInInspector] public LevelData lvlData;
     [SerializeField]
     public LevelData lvl1Data;
     [SerializeField] public LevelData lvl2Data;
