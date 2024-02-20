@@ -262,22 +262,21 @@ public class RespawnControl : MonoBehaviour
         if (gameManager.sceneChanged)
         {
             curSceneName = GameManager.instance.curSceneName;
-            if (curSceneName ==scene5 ) 
-            {
-                if (dRP1 == null)
-                {
-                    dRGameobject = GameObject.FindWithTag("DRP1");
-                    dRP1 = dRGameobject.GetComponent<DialogueRunner>();
-                }
+            //if (curSceneName ==scene5 ) 
+            //{
+            //    if (dRP1 == null)
+            //    {
+            //        dRGameobject = GameObject.FindWithTag("DRP1");
+            //        dRP1 = dRGameobject.GetComponent<DialogueRunner>();
+            //    }
 
-                if(dRP2 == null)
-                {
-                    dRGameobject2 = GameObject.FindWithTag("DRP2");
-                    dRP2 = dRGameobject2.GetComponent<DialogueRunner>();
-                }
+            //    if(dRP2 == null)
+            //    {
+            //        dRGameobject2 = GameObject.FindWithTag("DRP2");
+            //        dRP2 = dRGameobject2.GetComponent<DialogueRunner>();
+            //    }
 
-
-            }
+            //}
 
             if(curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene9)
             {
@@ -497,13 +496,13 @@ public class RespawnControl : MonoBehaviour
     {
         GameManager.instance.p1.isFreeze = true;
         p1Model.SetActive(false);
-        p1DeadScreen.SetActive(true);
+        //p1DeadScreen.SetActive(true);
         P1Indicator.SetActive(false);
         P1Shade.SetActive(false);
         yield return new WaitForSeconds(3);
         Respawn(respawnPoint);
         p1Model.SetActive(true);
-        p1DeadScreen.SetActive(false);
+        //p1DeadScreen.SetActive(false);
         P1Indicator.SetActive(true);
         P1Shade.SetActive(true);
         GameManager.instance.p1.isFreeze = false;
@@ -513,13 +512,13 @@ public class RespawnControl : MonoBehaviour
     {
         GameManager.instance.p2.isFreeze = true;
         p2Model.SetActive(false);
-        p2DeadScreen.SetActive(true);
+        //p2DeadScreen.SetActive(true);
         P2Indicator.SetActive(false);
         P2Shade.SetActive(false);
         yield return new WaitForSeconds(3);
         Respawn(respawnPoint);
         p2Model.SetActive(true);
-        p2DeadScreen.SetActive(false);
+        //p2DeadScreen.SetActive(false);
         P2Indicator.SetActive(true);
         P2Shade.SetActive(true);
         GameManager.instance.p2.isFreeze = false;
@@ -535,11 +534,11 @@ public class RespawnControl : MonoBehaviour
             StartCoroutine(ActivateP1UIForDuration(3f));
         }
 
-        if (curSceneName == scene2)
+        if (curSceneName == scene9)
         {
             //LevelDialogue.ShowDevilPlayer2();
-            dRP1.Stop();
-            PlayRandomDeathDialogue();
+            SceneControl.instance.dRP1.Stop();
+            PlayRandomDeathDialogue1();
         }
 
         if (Player1isCarrying && isPlayer1)
@@ -564,11 +563,11 @@ public class RespawnControl : MonoBehaviour
             StartCoroutine(ActivateP2UIForDuration(3f));
         }
 
-        if (curSceneName == scene2)
+        if (curSceneName == scene9)
         {
             //LevelDialogue.ShowDevilPlayer1();
-            dRP1.Stop();
-            PlayRandomDeathDialogue();
+            SceneControl.instance.dRP2.Stop();
+            PlayRandomDeathDialogue2();
         }
         if (Player2isCarrying && isPlayer2)
         {
@@ -596,7 +595,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
                 Player1Die = true;
-                print("Player1Die" + Player1Die);
+                print("Player1Die" + Player1Die);          
 
             }
             else
@@ -1479,34 +1478,58 @@ public class RespawnControl : MonoBehaviour
 
 
 
-    public void PlayRandomDeathDialogue()
+    public void PlayRandomDeathDialogue1()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(PlayerDeath.Count);
-        dRP1.StartDialogue(PlayerDeath[index]);
-        dRP2.StartDialogue(PlayerDeath[index]);
+        SceneControl.instance.dRP1.StartDialogue(PlayerDeath[index]);
+        print("DeathBark1");
     }
 
-    public void PlayRandomSabotageDialogue()
+    public void PlayRandomDeathDialogue2()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(PlayerDeath.Count);
+        SceneControl.instance.dRP2.StartDialogue(PlayerDeath[index]);
+        print("DeathBark2");
+    }
+
+    public void PlayRandomSabotageDialogue1()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(SabotageChoice.Count);
         dRP1.StartDialogue(SabotageChoice[index]);
+    }
+    public void PlayRandomSabotageDialogue2()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(SabotageChoice.Count);
         dRP2.StartDialogue(SabotageChoice[index]);
     }
-    public void PlayRandomCooperationDialogue()
+
+    public void PlayRandomCooperationDialogue1()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(CooperateChoice.Count);
         dRP1.StartDialogue(CooperateChoice[index]);
+    }
+    public void PlayRandomCooperationDialogue2()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(CooperateChoice.Count);
         dRP2.StartDialogue(CooperateChoice[index]);
     }
 
-    public void PlayRandomPackageDialogue()
+    public void PlayRandomPackageDialogue1()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(PackageReminders.Count);
         dRP1.StartDialogue(PackageReminders[index]);
+    }
+    public void PlayRandomPackageDialogue2()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(PackageReminders.Count);
         dRP2.StartDialogue(PackageReminders[index]);
     }
 

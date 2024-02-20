@@ -135,6 +135,8 @@ public class SceneControl : MonoBehaviour
     public bool inDropArea;
     [SerializeField]
     public ObjectGrabbable ob;
+    [SerializeField]
+    public DialogueRunner dRP1, dRP2;
 
 
     private void Awake()
