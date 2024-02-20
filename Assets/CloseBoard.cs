@@ -32,7 +32,7 @@ public class CloseBoard : MonoBehaviour
 
     private void Update()
     {
-        if (isUnfreezed)
+        if (isUnfreezed && !debug)
         {
             if (GameManager.instance.p1.ReadCloseTagButton() || GameManager.instance.p2.ReadCloseTagButton())
             {
