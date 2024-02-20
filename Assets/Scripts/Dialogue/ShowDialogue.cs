@@ -101,9 +101,9 @@ public class ShowDialogue :DialogueViewBase
     {
         LVPlayers = GameObject.Find("Line View Players");
         LVPlayers.SetActive(true);
-       // runner.StartDialogue("HubStart");
+        //runner.StartDialogue("HubStart");
 
-        Debug.Log("Here");
+        //Debug.Log("Here");
     }
 
     [YarnCommand("NPCShow")]
