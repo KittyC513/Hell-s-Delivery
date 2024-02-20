@@ -120,6 +120,8 @@ public class ScoreCount : MonoBehaviour
         lvlData.p2Collectable = false;
         lvlData.p1MailCount = 0;
         lvlData.p2MailCount = 0;
+        lvlData.p1Badges = new BadgeInfo[3];
+        lvlData.p2Badges = new BadgeInfo[3];
     }
 
     public void StartLevel()
