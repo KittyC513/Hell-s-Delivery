@@ -74,7 +74,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool p2AtDoor;
     [SerializeField]
-    private GameObject radialUI;
+    public GameObject radialUI;
     [SerializeField]
     public GameObject radialUI2;
 
@@ -185,6 +185,7 @@ public class SceneControl : MonoBehaviour
         }
     }
 
+    #region Skip Function
     void SkipComic()
     {
         if (Input.GetKey(KeyCode.E) && GameManager.instance.timesEnterHub < 1)
@@ -245,6 +246,18 @@ public class SceneControl : MonoBehaviour
         
     }
 
+    void SkipLalahDialogue()
+    {
+        if (GameManager.instance.p1.Dialogue3 || GameManager.instance.p2.Dialogue3)
+        {
+            SwitchCameraToMain();
+            LalahdialogueEnds = true;
+        }
+    }
+
+    #endregion
+
+    #region Camera Switching
     public void SwitchCameraToTV()
     {
         MoveCamera(closeShootTV);
@@ -295,8 +308,9 @@ public class SceneControl : MonoBehaviour
         mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
         //print("Camera");
     }
-    
-    
+
+    #endregion
+
     #region HubStart
     public void StartComic()
     {
