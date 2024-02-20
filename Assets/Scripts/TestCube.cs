@@ -357,7 +357,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool NPC3Interacting;
     [SerializeField]
-    private bool Dialogue1;
+    public bool Dialogue1;
+    [SerializeField]
+    public bool Dialogue1_2;
     [SerializeField]
     private bool Dialogue2;
     [SerializeField]
@@ -402,8 +404,10 @@ public class TestCube : MonoBehaviour
     private bool shouldPlayGeiser = false;
     private bool isOnGeiser = false;
 
-
+    [Header("Geiser")]
     public float geiserForce;
+    
+    
     [SerializeField]
     private bool wasFoundLV;
 
@@ -1880,7 +1884,6 @@ public class TestCube : MonoBehaviour
         {
             if (rC.Player2isCarrying)
             {
-
                 objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 if (tooHeavy)
                 {
@@ -2066,7 +2069,7 @@ public class TestCube : MonoBehaviour
     {
         if (NPCInteracting)
         {
-            if (!Dialogue1)
+            if (!Dialogue1 && gameManager.timesEnterHub == 2)
             {
                 print("interactiNPC1");
                 //SceneControl.LV.SetActive(false);
@@ -2077,12 +2080,48 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.nameTag.SetActive(false);
                 SceneControl.instance.nameTagNPC2.SetActive(false);
                 SceneControl.instance.nameTagNPC3.SetActive(false);
+                gameManager.p1.isFreeze = true;
+                gameManager.p2.isFreeze = true;
                 SceneControl.instance.dR.StartDialogue("BoomerQuest");
 
                 NPCInteracting = false;
-                Dialogue1 = true;
-                //StartCoroutine(MovingCameraWerther());
+                if (isPlayer1)
+                {
+                    gameManager.p2.Dialogue1 = true;
+                    Dialogue1 = true;
+                }
+                if (isPlayer2)
+                {
+                    gameManager.p1.Dialogue1 = true;
+                    Dialogue1 = true;
+                }           
+            }
+            if (!Dialogue1_2 && gameManager.timesEnterHub == 3)
+            {
+                print("interactiNPC1");
+                //SceneControl.LV.SetActive(false);
+                SceneControl.instance.dR.StopAllCoroutines();
+                SceneControl.instance.phoneUI.SetActive(false);
+                SceneControl.instance.dialogueBox.SetActive(true);
+                SceneControl.instance.nameTag1.SetActive(true);
+                SceneControl.instance.nameTag.SetActive(false);
+                SceneControl.instance.nameTagNPC2.SetActive(false);
+                SceneControl.instance.nameTagNPC3.SetActive(false);
+                gameManager.p1.isFreeze = true;
+                gameManager.p2.isFreeze = true;
+                SceneControl.instance.dR.StartDialogue("HubEnd");
 
+                NPCInteracting = false;
+                if (isPlayer1)
+                {
+                    gameManager.p2.Dialogue1_2 = true;
+                    Dialogue1_2 = true;
+                }
+                if (isPlayer2)
+                {
+                    gameManager.p1.Dialogue1_2 = true; 
+                    Dialogue1_2 = true;;
+                }
             }
         }
 
@@ -2099,6 +2138,9 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.nameTagNPC2.SetActive(true);
                 SceneControl.instance.nameTagNPC3.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("LalahQuest");
+
+                gameManager.p1.isFreeze = true;
+                gameManager.p2.isFreeze = true;
 
                 NPC2Interacting = false;
 
@@ -2128,6 +2170,11 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.nameTagNPC2.SetActive(true);
                 SceneControl.instance.nameTagNPC3.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("LalahEnd");
+                withinNPC2Range = false;
+                gameManager.showLalahInstruction = false;
+
+                gameManager.p1.isFreeze = true;
+                gameManager.p2.isFreeze = true;
 
                 NPC2Interacting = false;
                 if (isPlayer1)
@@ -3013,15 +3060,30 @@ public class TestCube : MonoBehaviour
             withinEntranceRange = true;
         }
 
-        if (other.CompareTag("NPC1"))
+        if (other.CompareTag("WeatherNPC"))
         {
-            withinNPCsRange = true;
+            if (!SceneControl.instance.weatherIsGone)
+            {
+                withinNPCsRange = true;
+            }
+            else
+            {
+                withinNPCsRange = false;
+            }
         }
 
         if (other.CompareTag("NPC3"))
         {
-            withinNPC2Range = true;
-            print("withinNPC2Range" + withinNPC2Range);
+            if (!SceneControl.instance.lalahIsGone)
+            {
+                withinNPC2Range = true;
+            }
+            else
+            {
+                withinNPC2Range = false;
+            }
+
+            
         }
 
         if (other.CompareTag("NPC4"))
@@ -3069,28 +3131,28 @@ public class TestCube : MonoBehaviour
         {
             camManager.instance.switchPuzzle2CamL();
             switchPuzzle2CamL = true;
-            print("Cam1On");
+            //print("Cam1On");
         }
 
         if (other.CompareTag("Puzzle2") && isPlayer2)
         {
             camManager.instance.switchPuzzle2CamR();
             switchPuzzle2CamR = true;
-            print("Cam1On");
+            //print("Cam1On");
         }
 
         if (other.CompareTag("puzzle2_2") && isPlayer1)
         {
             camManager.instance.switchPuzzle2CamP2();
             switchPuzzle2CamLP2 = true;
-            print("Cam1On");
+            //print("Cam1On");
         }
 
         if (other.CompareTag("puzzle2_2") && isPlayer2)
         {
             camManager.instance.switchPuzzle2CamP2();
             switchPuzzle2CamRP2 = true;
-            print("Cam2On");
+            //print("Cam2On");
         }
 
   
@@ -3129,7 +3191,7 @@ public class TestCube : MonoBehaviour
 
             camManager.instance.switchPuzzle2CamBack();
             switchPuzzle2CamL = false;
-            print("Cam1Off");
+            //print("Cam1Off");
 
         }
 
@@ -3137,7 +3199,7 @@ public class TestCube : MonoBehaviour
         {
             camManager.instance.switchPuzzle2CamBackR();
             switchPuzzle2CamR = false;
-            print("Cam2Off");
+            //print("Cam2Off");
         }
 
         if (other.CompareTag("puzzle2_2") && isPlayer1)
@@ -3145,7 +3207,7 @@ public class TestCube : MonoBehaviour
 
             camManager.instance.switchPuzzle2CamBackP2L();
             switchPuzzle2CamLP2 = false;
-            print("Cam1Off");
+            //print("Cam1Off");
 
         }
 
@@ -3153,7 +3215,7 @@ public class TestCube : MonoBehaviour
         {
             camManager.instance.switchPuzzle2CamBackP2();
             switchPuzzle2CamRP2 = false;
-            print("Cam2Off");
+            //print("Cam2Off");
         }
 
         if (other.CompareTag("PostOfficeDoor"))
@@ -3161,16 +3223,16 @@ public class TestCube : MonoBehaviour
             withinEntranceRange = false;
         }
 
-        if (other.CompareTag("NPC1"))
+        if (other.CompareTag("WeatherNPC"))
         {
             withinNPCsRange = false;
-            print("withinNPCsRange" + withinNPCsRange);
+            //print("withinNPCsRange" + withinNPCsRange);
         }
 
         if (other.CompareTag("NPC3"))
         {
             withinNPC2Range = false;
-            print("withinNPC2Range" + withinNPC2Range);
+            //print("withinNPC2Range" + withinNPC2Range);
         }
 
         if (other.CompareTag("NPC4"))

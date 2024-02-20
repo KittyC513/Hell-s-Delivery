@@ -15,11 +15,28 @@ public class NPCTrigger : MonoBehaviour
     [SerializeField]
     private GameObject smoke;
     [SerializeField]
-    private bool npcArrived;
+    public bool npcArrived;
+    [SerializeField]
+    public bool dialogueEnd;
+    [SerializeField]
+    public bool isLeaving;
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        if (GameManager.instance.timesEnterHub == 3)
+        {
+            this.gameObject.SetActive(true);
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
     void Start()
     {
+
 
     }
 
@@ -27,6 +44,7 @@ public class NPCTrigger : MonoBehaviour
     void Update()
     {
         Arrive();
+        WeatherLeave();
         //ArriveLalah();
         //if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == false)
         //{
@@ -40,12 +58,8 @@ public class NPCTrigger : MonoBehaviour
     }
     public void Repeat()
     {
-        if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == true)
-        {
-            GoToLevelScene();
-            dialogueRunner.Stop();
-            //dialogueRunner.StartDialogue("Repeat");
-        }
+
+
     }
 
     public void GoToLevelScene()
@@ -61,8 +75,15 @@ public class NPCTrigger : MonoBehaviour
         {
             StartCoroutine(Walking());
         }
+        if (npcArrived && !dialogueEnd)
+        {
+            smoke.SetActive(false);
+        }
+        else if (dialogueEnd)
+        {
+            smoke.SetActive(true);
+        }
     }
-
 
     IEnumerator Walking()
     {
@@ -72,6 +93,26 @@ public class NPCTrigger : MonoBehaviour
         anim.SetBool("Arrived", false);
         npcArrived = true;
 
+    }
+
+    public void WeatherLeave()
+    {
+        if (dialogueEnd && !isLeaving)
+        {
+            StartCoroutine(Leaving());
+        }
+
+    }
+
+
+    IEnumerator Leaving()
+    {
+        anim.SetTrigger("isLeaving");
+        yield return new WaitForSeconds(1.2f);
+        //smoke.SetActive(false);
+        //anim.SetBool("Arrived", false);
+        this.gameObject.SetActive(false);
+        isLeaving = true;
     }
     #endregion
 
