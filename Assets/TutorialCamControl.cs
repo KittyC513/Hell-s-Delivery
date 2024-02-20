@@ -76,6 +76,8 @@ public class TutorialCamControl : MonoBehaviour
     private bool isActivated4;
     [SerializeField]
     public bool endTutorial4;
+    [SerializeField]
+    private GameObject invisibleWall;
 
     [Header("Checkpoint")]
     [SerializeField]
@@ -440,6 +442,7 @@ public class TutorialCamControl : MonoBehaviour
         {
             StartCoroutine(StopMoveCam4());
             endTutorial4 = true;
+            invisibleWall.SetActive(false);
         }
     }
     IEnumerator MoveToNextCamera4()

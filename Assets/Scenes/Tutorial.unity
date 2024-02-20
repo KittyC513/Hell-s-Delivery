@@ -5182,14 +5182,19 @@ MonoBehaviour:
   WeatherdialogueEnds: 0
   normalPackage: {fileID: 0}
   showPackage: 0
+  showPackage1: 0
   phonePiece: {fileID: 0}
   deliveryText: {fileID: 0}
+  NPCTrigger: {fileID: 0}
+  weatherIsGone: 0
   Lalah: {fileID: 0}
   firstCustomer: 0
   LalahdialogueEnds: 0
   heavyPackage: {fileID: 0}
   showHeavyPackage: 0
   comicShowed: 0
+  lalahTrigger: {fileID: 0}
+  lalahIsGone: 0
   packageInstruction: {fileID: 0}
   packageInstruction2: {fileID: 0}
   firstButtonIsTriggered: 0
@@ -11491,6 +11496,7 @@ MonoBehaviour:
   - {fileID: 904678261}
   isActivated4: 0
   endTutorial4: 0
+  invisibleWall: {fileID: 1301817743}
   inCheckpointArea: 0
   cam5: {fileID: 683285449}
   cameraPositions5:
@@ -27741,13 +27747,6 @@ MonoBehaviour:
   lvl1Data: {fileID: 0}
   lvl2Data: {fileID: 0}
   lvl3Data: {fileID: 0}
-  goodRatio: 1
-  avgRatio: 0.7
-  badRatio: 0.5
-  totalPoints: 1200
-  deathWeight: 0.3
-  packageTimeWeight: 0.4
-  completionWeight: 0.3
   slider: {fileID: 1391409557}
   knob: {fileID: 1264763278}
   rotationSpeed: 0
@@ -35214,6 +35213,113 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37a2d1307c711344c9029431019b1612, type: 3}
+--- !u!1 &1301817743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1301817747}
+  - component: {fileID: 1301817746}
+  - component: {fileID: 1301817745}
+  - component: {fileID: 1301817744}
+  m_Layer: 3
+  m_Name: invisibleWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1301817744
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301817743}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1301817745
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301817743}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1301817746
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301817743}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1301817747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301817743}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -63.13675, y: 18.342556, z: 51.75}
+  m_LocalScale: {x: 1, y: 20, z: 30}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1306387185
 GameObject:
   m_ObjectHideFlags: 0
@@ -62453,6 +62559,7 @@ SceneRoots:
   - {fileID: 1007229361}
   - {fileID: 1306387186}
   - {fileID: 343459233}
+  - {fileID: 1301817747}
   - {fileID: 318438205}
   - {fileID: 1736961030}
   - {fileID: 1132200431}
