@@ -435,6 +435,11 @@ public class ObjectGrabbable : MonoBehaviour
         {
             TriggerbC.enabled = true;
         }
+        else
+        {
+            if(normalPackageCollider != null)
+            normalPackageCollider.enabled = true;
+        }
 
 
 
@@ -483,6 +488,11 @@ public class ObjectGrabbable : MonoBehaviour
         if (isHeavy)
         {
             TriggerbC.enabled = true;
+        }
+        else
+        {
+            if (normalPackageCollider != null)
+                normalPackageCollider.enabled = true;
         }
 
 

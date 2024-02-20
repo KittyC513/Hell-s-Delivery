@@ -319,7 +319,7 @@ public class RespawnControl : MonoBehaviour
                     objectGrabbable = null;
                     package = null;
                     
-                    if (objectGrabbable == null)
+                    if (SceneControl.instance.showPackage1)
                     {
                         package = GameObject.FindGameObjectWithTag("Package");
                         objectGrabbable = package.GetComponent<ObjectGrabbable>();

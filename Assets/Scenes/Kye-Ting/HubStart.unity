@@ -7347,6 +7347,8 @@ MonoBehaviour:
   npc: {fileID: 0}
   smoke: {fileID: 0}
   npcArrived: 0
+  dialogueEnd: 0
+  isLeaving: 0
 --- !u!23 &353496937
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8984,13 +8986,14 @@ GameObject:
   - component: {fileID: 581664684}
   - component: {fileID: 581664685}
   - component: {fileID: 581664686}
+  - component: {fileID: 581664687}
   m_Layer: 25
   m_Name: NPCWerther
-  m_TagString: NPC1
+  m_TagString: WeatherNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &581664679
 Transform:
   m_ObjectHideFlags: 0
@@ -9080,6 +9083,8 @@ MonoBehaviour:
   npc: {fileID: 248500878}
   smoke: {fileID: 211042348}
   npcArrived: 0
+  dialogueEnd: 0
+  isLeaving: 0
 --- !u!136 &581664684
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9146,6 +9151,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &581664687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581664678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a99cb9a58c7d143860c3045a6b1e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &656775674
 GameObject:
   m_ObjectHideFlags: 0
@@ -9582,7 +9599,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &730074144
 Transform:
   m_ObjectHideFlags: 0
@@ -10291,8 +10308,11 @@ MonoBehaviour:
   WeatherdialogueEnds: 0
   normalPackage: {fileID: 1593991863}
   showPackage: 0
+  showPackage1: 0
   phonePiece: {fileID: 1610108721}
   deliveryText: {fileID: 1595910829}
+  NPCTrigger: {fileID: 581664683}
+  weatherIsGone: 0
   Lalah: {fileID: 730074143}
   firstCustomer: 0
   LalahdialogueEnds: 0
@@ -11255,7 +11275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &980562537
 RectTransform:
   m_ObjectHideFlags: 0

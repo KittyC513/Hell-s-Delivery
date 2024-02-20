@@ -96,6 +96,11 @@ public class SceneControl : MonoBehaviour
     public GameObject phonePiece;
     [SerializeField]
     public GameObject deliveryText;
+    [SerializeField]
+    private NPCTrigger NPCTrigger;
+    [SerializeField]
+    public bool weatherIsGone;
+
 
     [Header("Lalah Event")]
     [SerializeField]
@@ -113,7 +118,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private LalahTrigger lalahTrigger;
     [SerializeField]
-    private bool lalahIsGone;
+    public bool lalahIsGone;
 
     [Header("Level 1")]
     [SerializeField]
@@ -177,13 +182,20 @@ public class SceneControl : MonoBehaviour
             if (GameManager.instance.timesEnterHub == 1)
             {
                 SkipLalahDialogue();
-                SkipLalahEndDialogue();
+                
             }
 
 
             if (GameManager.instance.timesEnterHub == 2)
             {
                 SkipLalahEndDialogue();
+                SkipWeatherDialogue();
+
+            }
+
+            if (GameManager.instance.timesEnterHub == 3)
+            {
+                SkipWeatherEndDialogue();
             }
 
 
@@ -280,6 +292,8 @@ public class SceneControl : MonoBehaviour
                 SwitchCameraToMain();
                 radialUI.SetActive(false);
                 LalahdialogueEnds = true;
+                GameManager.instance.p1.isFreeze = false;
+                GameManager.instance.p2.isFreeze = false;
             }
         }
     }
@@ -298,7 +312,46 @@ public class SceneControl : MonoBehaviour
                 SwitchCameraToMain();
                 radialUI.SetActive(false);
                 LalahdialogueEnds = true;
-                LalaLeave();
+                LalahLeave();
+            }
+        }
+    }
+
+    void SkipWeatherDialogue()
+    {
+        if (GameManager.instance.p1.Dialogue1 || GameManager.instance.p2.Dialogue1)
+        {
+            if (!WeatherdialogueEnds)
+            {
+                radialUI.SetActive(true);
+            }
+            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+            {
+                dR.Stop();
+                SwitchCameraToMain();
+                radialUI.SetActive(false);
+                WeatherdialogueEnds = true;
+                GameManager.instance.p1.isFreeze = false;
+                GameManager.instance.p2.isFreeze = false;
+            }
+        }
+    }
+
+    void SkipWeatherEndDialogue()
+    {
+        if (GameManager.instance.p1.Dialogue1_2 || GameManager.instance.p2.Dialogue1_2)
+        {
+            if (!WeatherdialogueEnds)
+            {
+                radialUI.SetActive(true);
+            }
+            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+            {
+                dR.Stop();
+                SwitchCameraToMain();
+                radialUI.SetActive(false);
+                WeatherdialogueEnds = true;
+                LalahLeave();
             }
         }
     }
@@ -324,7 +377,6 @@ public class SceneControl : MonoBehaviour
     {
         mainCamera.SetActive(false);
         WertherCam.SetActive(true);
-   
     }
 
     public void SwitchCameraToNpc2()
@@ -405,13 +457,33 @@ public class SceneControl : MonoBehaviour
         {
             showPackage = true;
             lalahTrigger.npcArrived = true;
-            Lalah.SetActive(true);
+            if (!lalahIsGone)
+            {
+                
+            }
+            else
+            {
+                Lalah.SetActive(false);
+            }
+
         }
 
         //Weather
         if (GameManager.instance.timesEnterHub == 2 && lalahIsGone && !secondCustomer)
         {
             StartCoroutine(ShowWeather());
+            print("Weather showing up");
+        }
+
+        //if(GameManager.instance.timesEnterHub == 3)
+        //{
+        //    Weather.SetActive(true);
+        //} 
+        //else
+        if (GameManager.instance.timesEnterHub != 2 && GameManager.instance.timesEnterHub != 3)
+        {
+            Weather.SetActive(false);
+            secondCustomer = false;
         }
 
         IEnumerator ShowWeather()
@@ -421,19 +493,35 @@ public class SceneControl : MonoBehaviour
             secondCustomer = true;
         }
 
+        if (GameManager.instance.timesEnterHub == 3 && NPCTrigger.isLeaving == false)
+        {
+            showPackage1 = true;
+            NPCTrigger.npcArrived = true;
+            if (!weatherIsGone)
+            {
+
+            }
+            else
+            {
+                Weather.SetActive(false);
+            }
+        }
+
         if (GameManager.instance.showWertherInstruction && !WeatherdialogueEnds)
         {
             WertherUI.SetActive(true);
+            print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
         }
-        else if(WeatherdialogueEnds && !GameManager.instance.showWertherInstruction)
+        else if(!GameManager.instance.showWertherInstruction || WeatherdialogueEnds)
         {
             WertherUI.SetActive(false);
+            print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
         }
 
         if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds)
         {
             LalahUI.SetActive(true);
-            print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
+
         }
         else if(LalahdialogueEnds || !GameManager.instance.showLalahInstruction)
         {
@@ -632,16 +720,24 @@ public class SceneControl : MonoBehaviour
         firstButtonIsTriggered3 = false;
     }
 
-    public void LalaLeave()
+    public void LalahLeave()
     {
         lalahTrigger.dialogueEnd = true;
         lalahIsGone = true;
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
     }
     #endregion
 
     #region MVP Level
 
-
+    public void WeatherLeave()
+    {
+        NPCTrigger.dialogueEnd = true;
+        weatherIsGone = true;
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+    }
     #endregion
 
 

@@ -563,7 +563,7 @@ public class GameManager : MonoBehaviour
                 showWertherInstruction = true;
                 //print("showWertherInstruction" + showWertherInstruction);
             } 
-            else if(!p1.withinNPCsRange || !p2.withinNPCsRange)
+            else if(!p1.withinNPCsRange && !p2.withinNPCsRange)
             {
                 showWertherInstruction = false;
                 //print("showWertherInstruction" + showWertherInstruction);
@@ -574,17 +574,17 @@ public class GameManager : MonoBehaviour
                 showLalahInstruction = true;
                 print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
             }
-            else if (!p1.withinNPC2Range || !p2.withinNPC2Range)
+            else if (!p1.withinNPC2Range && !p2.withinNPC2Range)
             {
                 showLalahInstruction = false;
-                print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
+                //print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
             }
 
             if (p1.withinNPC3Range || p2.withinNPC3Range)
             {
                 showMichaelInstruction = true;
             }
-            else if (!p1.withinNPC3Range || !p2.withinNPC3Range)
+            else if (!p1.withinNPC3Range && !p2.withinNPC3Range)
             {
                 showMichaelInstruction = false;
             }

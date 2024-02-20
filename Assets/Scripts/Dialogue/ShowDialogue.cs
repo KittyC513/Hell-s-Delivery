@@ -137,7 +137,6 @@ public class ShowDialogue :DialogueViewBase
     {
         SceneControl.instance.SwitchCameraToNpc();
 
-
     }
 
     [YarnCommand("SwitchCamNPC2")]
@@ -193,7 +192,13 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("LalahIsLeaving")]
     public static void LalahLeaving()
     {
-        SceneControl.instance.LalaLeave();
+        SceneControl.instance.LalahLeave();
+    }
+
+    [YarnCommand("WeatherIsLeaving")]
+    public static void WeatherLeaving()
+    {
+        SceneControl.instance.WeatherLeave();
     }
 
 
