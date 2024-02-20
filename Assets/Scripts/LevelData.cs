@@ -25,6 +25,8 @@ public class LevelData : ScriptableObject
     public float goodPackageTime = 0.8f;
 
     [Space, Header("Badges")]
+    public BadgeInfo[] p1Badges;
+    public BadgeInfo[] p2Badges;
 
     [Space, Header("Badge Values")]
     

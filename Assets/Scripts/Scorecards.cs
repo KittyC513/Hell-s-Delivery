@@ -33,6 +33,7 @@ public class Scorecards : MonoBehaviour
     [SerializeField] private GameObject happySticker;
     [SerializeField] private GameObject neutralSticker;
     [SerializeField] private GameObject sadSticker;
+    [SerializeField] private GameObject blankBadge;
     //[SerializeField] private GameObject aGrade;
     //[SerializeField] private GameObject bGrade;
     //[SerializeField] private GameObject cGrade;
