@@ -73,10 +73,7 @@ public class RespawnControl : MonoBehaviour
     private GameObject dRGameobject, dRGameobject2;
 
     public GameObject currentActive;
-    [SerializeField]
-    private GameObject p1DeadScreen;
-    [SerializeField]
-    private GameObject p2DeadScreen;
+
 
     [SerializeField]
     private GameObject P1Indicator;
@@ -140,6 +137,18 @@ public class RespawnControl : MonoBehaviour
     public bool p1AtDoor;
     [SerializeField]
     public bool p2AtDoor;
+
+    [Header("Death Screen")]
+    [SerializeField]
+    private GameObject p1DeadScreen;
+    [SerializeField]
+    private GameObject p2DeadScreen;
+    [SerializeField]
+    private Animator p1Anim;
+    [SerializeField]
+    private Animator p2Anim;
+
+
 
     //CheckpointControl activateFCP;
 
@@ -243,12 +252,6 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
-
-        //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
-
-
-
-        //testCube = player.GetComponent<TestCube>();
 
 
     }
@@ -512,44 +515,61 @@ public class RespawnControl : MonoBehaviour
     //}
     IEnumerator P1RespawnTimer()
     {
+        p1DeadScreen.SetActive(true);
+        p1Anim.SetBool("isDead", true);
+
         GameManager.instance.p1.isFreeze = true;
-        p1Model.SetActive(false);
+        //p1Model.SetActive(false);
         //p1DeadScreen.SetActive(true);
         P1Indicator.SetActive(false);
         P1Shade.SetActive(false);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
+        p1Anim.SetBool("isDead", false);
+        p1Anim.SetBool("isRespawn", true);
         Respawn(respawnPoint);
-        p1Model.SetActive(true);
+        //p1Model.SetActive(true);
         //p1DeadScreen.SetActive(false);
         P1Indicator.SetActive(true);
         P1Shade.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+        p1Anim.SetBool("isRespawn", false);
         GameManager.instance.p1.isFreeze = false;
     }
 
     IEnumerator P2RespawnTimer()
     {
+        p2DeadScreen.SetActive(true);
+        p2Anim.SetBool("isDead", true);
+
         GameManager.instance.p2.isFreeze = true;
-        p2Model.SetActive(false);
+        //p2Model.SetActive(false);
         //p2DeadScreen.SetActive(true);
         P2Indicator.SetActive(false);
         P2Shade.SetActive(false);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
+        p2Anim.SetBool("isDead", false);
+        p2Anim.SetBool("isRespawn", true);
         Respawn(respawnPoint);
-        p2Model.SetActive(true);
+        //p2Model.SetActive(true);
         //p2DeadScreen.SetActive(false);
         P2Indicator.SetActive(true);
         P2Shade.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+        p2Anim.SetBool("isRespawn", false);
         GameManager.instance.p2.isFreeze = false;
     }
 
 
     void P1Respawn()
     {
+
         StartCoroutine(P1RespawnTimer());
         if (curSceneName != scene5)
         {
             ScoreCount.instance.AddDeathsToP1(5);
-            StartCoroutine(ActivateP1UIForDuration(3f));
+            //StartCoroutine(ActivateP1UIForDuration(3f));
         }
 
         if (curSceneName == scene9)
@@ -578,7 +598,7 @@ public class RespawnControl : MonoBehaviour
         if (curSceneName != scene5)
         {
             ScoreCount.instance.AddDeathsToP2(5);
-            StartCoroutine(ActivateP2UIForDuration(3f));
+            //StartCoroutine(ActivateP2UIForDuration(3f));
         }
 
         if (curSceneName == scene9)

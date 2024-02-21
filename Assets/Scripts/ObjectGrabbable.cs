@@ -293,7 +293,7 @@ public class ObjectGrabbable : MonoBehaviour
         if (time >= 10)
         {
             ScoreCount.instance.AddPointToP1Package(3);
-            StartCoroutine(ActivateP1UIForDuration(3));
+            //StartCoroutine(ActivateP1UIForDuration(3));
             time = 0;
         }
         yield return null;
@@ -307,7 +307,7 @@ public class ObjectGrabbable : MonoBehaviour
         if (time >= 10)
         {
             ScoreCount.instance.AddPointToP2Package(3);
-            StartCoroutine(ActivateP2UIForDuration(3));
+            //StartCoroutine(ActivateP2UIForDuration(3));
             time = 0;
         }
         yield return null;
