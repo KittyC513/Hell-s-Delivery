@@ -29,18 +29,32 @@ public class LoadingProgressBar : MonoBehaviour
     void Update()
     {
         loadingSlider.value = Loader.GetLoadingProgress();
-        LoadingToTV();
+        LoadingScreens();
     }
 
-    public void LoadingToTV()
+
+
+    public void LoadingScreens()
     {
-        if (GameManager.instance.changeSceneTimes == 2)
+        if (GameManager.instance.changeSceneTimes == 1)
+        {
+            anim.SetBool("LoadingFight", true);
+        }
+        else if (GameManager.instance.changeSceneTimes == 2)
         {
             anim.SetBool("LoadingTV", true);
         }
-        else
+        else if (GameManager.instance.changeSceneTimes == 3)
         {
-            anim.SetBool("LoadingTV", false);
+            anim.SetBool("LoadingJuice", true);
+        }
+        else if (GameManager.instance.changeSceneTimes == 4)
+        {
+            anim.SetBool("LoadingLalah", true);
+        }
+        else if (GameManager.instance.changeSceneTimes == 5)
+        {
+            anim.SetBool("LoadingNails", true);
         }
 
     }
