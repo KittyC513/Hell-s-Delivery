@@ -35,7 +35,7 @@ public class SkipProgressionBar : MonoBehaviour
             radialUI.enabled = true;
             radialUI.fillAmount = timer;
 
-            print("timer" + timer);
+            //print("timer" + timer);
             if(timer >= maxTimer)
             {
                 timer = maxTimer;

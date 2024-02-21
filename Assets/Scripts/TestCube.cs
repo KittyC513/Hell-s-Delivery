@@ -2222,6 +2222,7 @@ public class TestCube : MonoBehaviour
             StartCoroutine(MovingCameraTV());
             if (onTv)
             {
+                GameManager.instance.changeSceneTimes += 1;
                 Loader.Load(Loader.Scene.MVPLevel);
                 onTv = false;
                 turnOnTV = false;
@@ -2243,6 +2244,7 @@ public class TestCube : MonoBehaviour
             StartCoroutine(gameManager.MovingCamera1());
             if (gameManager.camChanged1)
             {
+                GameManager.instance.changeSceneTimes += 1;
                 Loader.Load(Loader.Scene.HubStart);
 
                 isEntered = false;
@@ -2966,7 +2968,8 @@ public class TestCube : MonoBehaviour
     [YarnCommand("ChangeScene")]
     public static void GoToLevelScene()
     {
-
+        GameManager.instance.changeSceneTimes += 1;
+        GameManager.instance.sceneChanged = true;
         Loader.Load(Loader.Scene.MVPLevel);
 
     }

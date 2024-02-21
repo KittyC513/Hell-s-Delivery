@@ -11,6 +11,9 @@ public static class Loader
     {
         [SerializeField]
         Slider loadingSlider;
+        [SerializeField]
+        LoadingProgressBar lP;
+
     }
     public enum Scene
     {
@@ -33,9 +36,11 @@ public static class Loader
         onLoaderCallback = () =>
         {
             GameObject loadingGameObject = new GameObject("Loading Game Object");
+
             loadingGameObject.AddComponent<LoadingMonoBehaviour>().StartCoroutine(LoadSceneAsync(scene));
 
         };
+
 
         SceneManager.LoadScene(Scene.LoadingScene.ToString());
 
@@ -53,6 +58,7 @@ public static class Loader
 
     private static IEnumerator LoadSceneAsync(Scene scene)
     {
+
         yield return new WaitForSeconds(1.5f);
 
         asyncOperation = SceneManager.LoadSceneAsync(scene.ToString());

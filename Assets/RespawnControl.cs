@@ -517,7 +517,6 @@ public class RespawnControl : MonoBehaviour
     {
         p1DeadScreen.SetActive(true);
         p1Anim.SetBool("isDead", true);
-
         GameManager.instance.p1.isFreeze = true;
         //p1Model.SetActive(false);
         //p1DeadScreen.SetActive(true);
@@ -531,10 +530,10 @@ public class RespawnControl : MonoBehaviour
         //p1DeadScreen.SetActive(false);
         P1Indicator.SetActive(true);
         P1Shade.SetActive(true);
-
-        yield return new WaitForSeconds(3);
-        p1Anim.SetBool("isRespawn", false);
         GameManager.instance.p1.isFreeze = false;
+        yield return new WaitForSeconds(2);
+        p1Anim.SetBool("isRespawn", false);
+
     }
 
     IEnumerator P2RespawnTimer()
@@ -555,10 +554,10 @@ public class RespawnControl : MonoBehaviour
         //p2DeadScreen.SetActive(false);
         P2Indicator.SetActive(true);
         P2Shade.SetActive(true);
-
-        yield return new WaitForSeconds(3);
-        p2Anim.SetBool("isRespawn", false);
         GameManager.instance.p2.isFreeze = false;
+        yield return new WaitForSeconds(2);
+        p2Anim.SetBool("isRespawn", false);
+
     }
 
 

@@ -118,6 +118,7 @@ public class ShowDialogue :DialogueViewBase
     {
         GameManager.instance.sceneChanged = true;
         GameManager.instance.timesEnterHub += 1;
+        GameManager.instance.changeSceneTimes += 1;
         Loader.Load(Loader.Scene.Tutorial);
         
         //SceneManager.LoadScene("Tutorial");
@@ -127,6 +128,7 @@ public class ShowDialogue :DialogueViewBase
     public static void HubStart()
     {
         GameManager.instance.sceneChanged = true;
+        GameManager.instance.changeSceneTimes += 1;
         Loader.Load(Loader.Scene.HubStart);
 
         //SceneManager.LoadScene("Tutorial");
