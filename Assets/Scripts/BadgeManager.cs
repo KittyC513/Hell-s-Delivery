@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,7 +8,7 @@ public class BadgeManager : MonoBehaviour
 {
     public enum BadgeType { gold, silver }
     public enum BadgeCondition { more, less, specific, stat, nonsense }
-    public enum BadgeValues { walkDist, glideDist, numJumps, numButtons, fallDist }
+    public enum BadgeValues { walkDist, glideDist, numJumps, numButtons, fallDist, numPushes, numPushed }
 
     //all the badges we want to use in the game
     [SerializeField] public BadgeInfo[] allBadges;
@@ -19,6 +20,10 @@ public class BadgeManager : MonoBehaviour
     private List<BadgeInfo> availableGoldBadges;
     [SerializeField] private BadgeInfo[] earnableGoldBadges;
 
+    private List<BadgeInfo> p1CompletedBadges;
+    private List<BadgeInfo> p2CompletedBadges;
+
+    private LevelData lvlData;
 
     private void Start()
     {
@@ -28,6 +33,9 @@ public class BadgeManager : MonoBehaviour
         allGoldbadges = new List<BadgeInfo>();
         earnableSilverBadges = new List<BadgeInfo>();
         availableGoldBadges = new List<BadgeInfo>();
+        p1CompletedBadges = new List<BadgeInfo>();
+        p2CompletedBadges = new List<BadgeInfo>();
+        lvlData = ScoreCount.instance.lvlData;
 
         foreach (var badge in allBadges)
         {
@@ -74,5 +82,64 @@ public class BadgeManager : MonoBehaviour
         }
         
         
+    }
+
+    private void CheckCompletion()
+    {
+        //plays once at the end of the level
+        //do not run this function in update
+
+        foreach (var badge in earnableGoldBadges)
+        {
+            switch (badge.valueToRead)
+            {
+                case BadgeValues.walkDist:
+
+                    switch (badge.condition)
+                    {
+                        case BadgeCondition.more:
+                            
+                            break;
+                        case BadgeCondition.less:
+
+                            break;
+                        case BadgeCondition.specific:
+
+                            break;
+                        case BadgeCondition.stat:
+                            p1CompletedBadges.Add(badge);
+                            p2CompletedBadges.Add(badge);
+                            break;
+                        case BadgeCondition.nonsense:
+                            p1CompletedBadges.Add(badge);
+                            p2CompletedBadges.Add(badge);
+                            break;
+                    }
+
+                    break;
+                case BadgeValues.glideDist:
+
+                    break;
+                case BadgeValues.numJumps:
+
+                    break;
+                case BadgeValues.numButtons:
+
+                    break;
+                case BadgeValues.fallDist:
+
+                    break;
+                case BadgeValues.numPushes:
+
+                    break;
+                case BadgeValues.numPushed:
+                    break;
+            }
+        }
+
+        foreach (var badge in earnableSilverBadges)
+        {
+
+        }
     }
 }

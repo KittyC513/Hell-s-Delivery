@@ -11,11 +11,13 @@ public class CharacterControl : MonoBehaviour
 
     [Header("General")]
     [SerializeField] private playerStates pState = playerStates.idle;
-
+    private LevelData lvlData;
+    private ScoreCount scoreCount;
 
     private bool isThrown = false;
     private bool isDead = false;
     [SerializeField] private GameObject shadowRenderer;
+    private bool isPlayer1;
 
 
     [Header("Ground Movement")]
@@ -127,7 +129,8 @@ public class CharacterControl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         currentSpeed = 0;
         faceDir = Vector3.zero;
-
+        lvlData = ScoreCount.instance.lvlData;
+        scoreCount = ScoreCount.instance;
     }
 
     private void Update()
@@ -138,8 +141,9 @@ public class CharacterControl : MonoBehaviour
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
-    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle, bool isFreeze)
+    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle, bool isFreeze, bool player1)
     {
+        isPlayer1 = player1;
         camera = cam;
         
         StateMachineUpdate();
@@ -152,11 +156,12 @@ public class CharacterControl : MonoBehaviour
             if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
         }
 
-
+        
         //if we're on a summoning circle freeze movement
-        if (!isOnCircle)
+        if (!isOnCircle && !isFreeze)
         {
             MovementCalculations(camera);
+
             if (!isSlow)
             {
                 JumpCalculations(jump);
@@ -192,11 +197,18 @@ public class CharacterControl : MonoBehaviour
 
             }
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
+            
         }
 
         else if (!isGrounded)
         {
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
+
+        
+            if (pState == playerStates.parachute)
+            {
+                
+            }
           
         }
 
@@ -226,7 +238,7 @@ public class CharacterControl : MonoBehaviour
                 break;
             case playerStates.run:
                 //can transition to idle, jump, thrown or deadr
-
+                ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.walkDist, Mathf.RoundToInt(directionSpeed.magnitude * 0.05f * Time.fixedDeltaTime), isPlayer1);
                 //if we are grounded and have no speed we are now idle
                 if (isGrounded && currentSpeed <= 0) pState = playerStates.idle;
                 if (!isGrounded && !isJumping)
@@ -256,6 +268,9 @@ public class CharacterControl : MonoBehaviour
                 //can transition to land, parachute, thrown, dead
                 if (isParachuting) pState = playerStates.parachute;
                 if (isGrounded) pState = playerStates.land;
+
+
+                ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.fallDist, Mathf.RoundToInt(Mathf.Abs(ySpeed * 0.05f * Time.fixedDeltaTime)), isPlayer1);
                 break;
             case playerStates.land:
                 //can transition to idle, run, jump, thrown, dead
@@ -265,6 +280,12 @@ public class CharacterControl : MonoBehaviour
                 if (isJumping) pState = playerStates.jump;
                 break;
             case playerStates.parachute:
+
+                if (stickValue.magnitude> 0)
+                {
+                    ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.glideDist, Mathf.RoundToInt(parachutingSpeed * 0.05f * Time.fixedDeltaTime), isPlayer1);
+                }
+               
                 //can transition to fall, thrown, dead, land
                 if (!isGrounded && !isJumping && !isParachuting)
                 {
@@ -580,7 +601,9 @@ public class CharacterControl : MonoBehaviour
             //we are not jumping
             isJumping = true;
             jTime = 0;
-            
+
+            //we jumped
+            scoreCount.AddBadgeValue(BadgeManager.BadgeValues.numJumps, 1, isPlayer1);
         }
         else if (jump.ReadValue<float>() == 0 && !isGrounded && isJumping && reachedMinJump)
         {
