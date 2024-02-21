@@ -7,11 +7,12 @@ public class Ending : MonoBehaviour
 
     [SerializeField]
     private GameObject canvas;
+    private BadgeManager badgeManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        badgeManager = FindAnyObjectByType<BadgeManager>();
     }
 
     // Update is called once per frame
@@ -28,8 +29,12 @@ public class Ending : MonoBehaviour
     {
         if (other.gameObject.tag == "Package")
         {
-            canvas.gameObject.SetActive(true);
-
+            if (canvas != null)
+            {
+                canvas.gameObject.SetActive(true);
+            }
+            
+            badgeManager.RunFinalCheck();
             Loader.Load(Loader.Scene.ScoreCards);
         }
     }

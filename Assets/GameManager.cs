@@ -185,6 +185,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public int changeSceneTimes;
 
+    public LevelData lastLevelData;
+
 
     [SerializeField] private PlayerScoreData playerScore;
 

@@ -54,4 +54,20 @@ public class LevelData : ScriptableObject
     public int p1MailCount;
     [SerializeField]
     public int p2MailCount;
+
+    [Space, Header("Badge Information (do not change in editor)")]
+    [SerializeField] public int p1WalkDist;
+    [SerializeField] public int p2WalkDist;
+    [SerializeField] public int p1GlideDist;
+    [SerializeField] public int p2GlideDist;
+    [SerializeField] public int p1Jumps;
+    [SerializeField] public int p2Jumps;
+    [SerializeField] public int p1Buttons;
+    [SerializeField] public int p2Buttons;
+    [SerializeField] public int p1FallDist;
+    [SerializeField] public int p2FallDist;
+    [SerializeField] public int p1Pushes;
+    [SerializeField] public int p2Pushes;
+    [SerializeField] public int p1Pushed;
+    [SerializeField] public int p2Pushed;
 }

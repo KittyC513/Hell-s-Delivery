@@ -619,18 +619,18 @@ public class TestCube : MonoBehaviour
 
                 if (curSceneName == "TitleScene" || curSceneName == "HubStart")
                 {
-                    if(charController.rb != null && !isFreeze)
+                    if(charController.rb != null)
                     {
-                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);
+                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1);
                     }
 
                     //print("use new movementCal");
                 }
                 else
                 {
-                    if (charController.rb != null && !isFreeze)
+                    if (charController.rb != null)
                     {
-                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze);
+                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1);
                     }
 
                 }
@@ -678,7 +678,7 @@ public class TestCube : MonoBehaviour
             package = null; 
         }
 
-        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == scene1)
+        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == scene1 || curSceneName == "New CC")
         {
             package = GameObject.FindGameObjectWithTag("Package");
             
@@ -3030,6 +3030,8 @@ public class TestCube : MonoBehaviour
         //move player towards
         isOnCircle = true;
         activeCircle = circle;
+
+        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numButtons, 1, isPlayer1);
     }
 
     public void OnSummoningExit()

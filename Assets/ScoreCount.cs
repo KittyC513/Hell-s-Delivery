@@ -108,6 +108,7 @@ public class ScoreCount : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        gameManager = Object.FindAnyObjectByType<GameManager>();
     }
 
     private void ResetValues()
@@ -122,6 +123,20 @@ public class ScoreCount : MonoBehaviour
         lvlData.p2MailCount = 0;
         lvlData.p1Badges = new BadgeInfo[3];
         lvlData.p2Badges = new BadgeInfo[3];
+        lvlData.p1WalkDist = 0;
+        lvlData.p2WalkDist = 0;
+        lvlData.p1GlideDist = 0;
+        lvlData.p2GlideDist = 0;
+        lvlData.p1Jumps = 0;
+        lvlData.p2Jumps = 0;
+        lvlData.p1Buttons = 0;
+        lvlData.p2Buttons = 0;
+        lvlData.p1FallDist = 0;
+        lvlData.p2FallDist = 0;
+        lvlData.p1Pushes = 0;
+        lvlData.p2Pushes = 0;
+        lvlData.p1Pushed = 0;
+        lvlData.p2Pushed = 0;
     }
 
     public void StartLevel()
@@ -155,7 +170,7 @@ public class ScoreCount : MonoBehaviour
         lastKnobValue = 0;
         knobValue = 0;
         
-        gameManager = Object.FindAnyObjectByType<GameManager>();
+       
 
         p1Score = InitialScore;
         p2Score = p1Score;
@@ -214,6 +229,7 @@ public class ScoreCount : MonoBehaviour
 
         AddScore();
         AnimateMailImage();
+        gameManager.lastLevelData = lvlData;
     }
 
     private void FixedUpdate()
@@ -684,4 +700,62 @@ public class ScoreCount : MonoBehaviour
         p2TargetScaleMultiplier += 0.2f;
     }
 
+    public void AddBadgeValue(BadgeManager.BadgeValues valueType, int value, bool isPlayer1)
+    {
+        if (isPlayer1)
+        {
+            switch (valueType)
+            {
+                case BadgeManager.BadgeValues.walkDist:
+                    lvlData.p1WalkDist += value;
+                    break;
+                case BadgeManager.BadgeValues.glideDist:
+                    lvlData.p1GlideDist += value;
+                    break;
+                case BadgeManager.BadgeValues.numJumps:
+                    lvlData.p1Jumps += value;
+                    break;
+                case BadgeManager.BadgeValues.numButtons:
+                    lvlData.p1Buttons += value;
+                    break;
+                case BadgeManager.BadgeValues.fallDist:
+                    lvlData.p1FallDist += value;
+                    break;
+                case BadgeManager.BadgeValues.numPushes:
+                    lvlData.p1Pushes += value;
+                    break;
+                case BadgeManager.BadgeValues.numPushed:
+                    lvlData.p1Pushed += value;
+                    break;
+            }
+        }
+        else
+        {
+            switch (valueType)
+            {
+                case BadgeManager.BadgeValues.walkDist:
+                    lvlData.p2WalkDist += value;
+                    break;
+                case BadgeManager.BadgeValues.glideDist:
+                    lvlData.p2GlideDist += value;
+                    break;
+                case BadgeManager.BadgeValues.numJumps:
+                    lvlData.p2Jumps += value;
+                    break;
+                case BadgeManager.BadgeValues.numButtons:
+                    lvlData.p2Buttons += value;
+                    break;
+                case BadgeManager.BadgeValues.fallDist:
+                    lvlData.p2FallDist += value;
+                    break;
+                case BadgeManager.BadgeValues.numPushes:
+                    lvlData.p2Pushes += value;
+                    break;
+                case BadgeManager.BadgeValues.numPushed:
+                    lvlData.p2Pushed += value;
+                    break;
+            }
+        }
+      
+    }
 }
