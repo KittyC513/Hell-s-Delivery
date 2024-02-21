@@ -229,6 +229,7 @@ public class ScoreCount : MonoBehaviour
 
         AddScore();
         AnimateMailImage();
+        gameManager.lastLevelData = lvlData;
     }
 
     private void FixedUpdate()

@@ -678,7 +678,7 @@ public class TestCube : MonoBehaviour
             package = null; 
         }
 
-        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == scene1)
+        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == scene1 || curSceneName == "New CC")
         {
             package = GameObject.FindGameObjectWithTag("Package");
             

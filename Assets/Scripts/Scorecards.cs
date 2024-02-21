@@ -17,7 +17,8 @@ public class Scorecards : MonoBehaviour
     [SerializeField]
     public PlayerScoreData playerScoreData;
     [SerializeField] private int thumbsUpBonus = 50;
-    [SerializeField] private int badgeBonus = 15;
+    [SerializeField] private int silverBadgeBonus = 15;
+    [SerializeField] private int goldBadgeBonus = 30;
     [SerializeField] private bool canContinue = false;
     [SerializeField] private GameObject continueText;
     private BadgeInfo[] p1Badges;
@@ -104,10 +105,8 @@ public class Scorecards : MonoBehaviour
         p1MailCount.text = ("x  ");
         p2MailCount.text = ("x  ");
 
-        if (ScoreCount.instance != null)
-        {
-            lvlData = ScoreCount.instance.lvlData;
-        }
+        lvlData = GameManager.instance.lastLevelData;
+        
     }
 
     private Quaternion RandomRotation()
@@ -232,7 +231,7 @@ public class Scorecards : MonoBehaviour
         badge1.GetComponent<Image>().sprite = lvlData.p1Badges[0].image;
         badge1Title.text = lvlData.p1Badges[0].badgeName;
         badge1Desc.text = lvlData.p1Badges[0].description;
-
+        AddBadgeToScore(lvlData.p1Badges[0], true);
         yield return new WaitForSeconds(0.35f);
         text1.SetActive(true);
       
@@ -242,7 +241,7 @@ public class Scorecards : MonoBehaviour
         badge2.GetComponent<Image>().sprite = lvlData.p1Badges[1].image;
         badge2Title.text = lvlData.p1Badges[1].badgeName;
         badge2Desc.text = lvlData.p1Badges[1].description;
-
+        AddBadgeToScore(lvlData.p1Badges[1], true);
         yield return new WaitForSeconds(0.35f);
         text2.SetActive(true);
 
@@ -252,7 +251,7 @@ public class Scorecards : MonoBehaviour
         badge3.GetComponent<Image>().sprite = lvlData.p1Badges[2].image;
         badge3Title.text = lvlData.p1Badges[2].badgeName;
         badge3Desc.text = lvlData.p1Badges[2].description;
-
+        AddBadgeToScore(lvlData.p1Badges[2], true);
         yield return new WaitForSeconds(0.35f);
         text3.SetActive(true);
 
@@ -273,7 +272,7 @@ public class Scorecards : MonoBehaviour
         badge1.GetComponent<Image>().sprite = lvlData.p2Badges[0].image;
         badge1Title.text = lvlData.p2Badges[0].badgeName;
         badge1Desc.text = lvlData.p2Badges[0].description;
-
+        AddBadgeToScore(lvlData.p2Badges[0], false);
         yield return new WaitForSeconds(0.35f);
         text1.SetActive(true);
 
@@ -283,7 +282,7 @@ public class Scorecards : MonoBehaviour
         badge2.GetComponent<Image>().sprite = lvlData.p2Badges[1].image;
         badge2Title.text = lvlData.p2Badges[1].badgeName;
         badge2Desc.text = lvlData.p2Badges[1].description;
-
+        AddBadgeToScore(lvlData.p2Badges[1], false);
         yield return new WaitForSeconds(0.35f);
         text2.SetActive(true);
         yield return new WaitForSeconds(0.45f);
@@ -292,7 +291,7 @@ public class Scorecards : MonoBehaviour
         badge3.GetComponent<Image>().sprite = lvlData.p2Badges[2].image;
         badge3Title.text = lvlData.p2Badges[2].badgeName;
         badge3Desc.text = lvlData.p2Badges[2].description;
-
+        AddBadgeToScore(lvlData.p2Badges[2], false);
         yield return new WaitForSeconds(0.35f);
         text3.SetActive(true);
 
@@ -398,8 +397,32 @@ public class Scorecards : MonoBehaviour
         }
     }
 
-    
 
+    private void AddBadgeToScore(BadgeInfo badge, bool isPlayer1)
+    {
+        if (badge.badgeType == BadgeManager.BadgeType.gold)
+        {
+            if (isPlayer1)
+            {
+                playerScoreData.p1Overall += goldBadgeBonus;
+            }
+            else
+            {
+                playerScoreData.p2Overall += goldBadgeBonus;
+            }
+        }
+        else
+        {
+            if (isPlayer1)
+            {
+                playerScoreData.p1Overall += silverBadgeBonus;
+            }
+            else
+            {
+                playerScoreData.p2Overall += silverBadgeBonus;
+            }
+        }
+    }
     
 
     //each category needs to have it's score checked
