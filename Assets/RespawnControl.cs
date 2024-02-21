@@ -522,7 +522,7 @@ public class RespawnControl : MonoBehaviour
         //p1DeadScreen.SetActive(true);
         P1Indicator.SetActive(false);
         P1Shade.SetActive(false);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2.5f);
         p1Anim.SetBool("isDead", false);
         p1Anim.SetBool("isRespawn", true);
         Respawn(respawnPoint);
@@ -546,7 +546,7 @@ public class RespawnControl : MonoBehaviour
         //p2DeadScreen.SetActive(true);
         P2Indicator.SetActive(false);
         P2Shade.SetActive(false);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2.5f);
         p2Anim.SetBool("isDead", false);
         p2Anim.SetBool("isRespawn", true);
         Respawn(respawnPoint);
@@ -676,10 +676,12 @@ public class RespawnControl : MonoBehaviour
         {
             if(isPlayer1 && Player1isCarrying)
             {
+                gameManager.changeSceneTimes += 1;
                 Loader.Load(Loader.Scene.ScoreCards);
             }
             if (isPlayer2 && Player2isCarrying)
             {
+                gameManager.changeSceneTimes += 1;
                 Loader.Load(Loader.Scene.ScoreCards);
             }
 
@@ -840,6 +842,7 @@ public class RespawnControl : MonoBehaviour
         {
             if (isPlayer1 && !p1Pass4)
             {
+                StartCoroutine(ActivateP1UIForDuration(3f));
                 p1Pass4 = true;
                 LevelDialogue.ShowDevilPlayer1();
                 dRP1.Stop();
@@ -849,6 +852,7 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2 && !p2Pass4)
             {
+                StartCoroutine(ActivateP2UIForDuration(3f));
                 p2Pass4 = true;
                 LevelDialogue.ShowDevilPlayer2();
                 dRP2.Stop();
@@ -984,13 +988,14 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-
+                StartCoroutine(ActivateP1UIForDuration(3f));
                 P1RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = P1RespawnRotation;
             }
 
             if (isPlayer2)
             {
+                StartCoroutine(ActivateP2UIForDuration(3f));
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P1RespawnRotation = P2RespawnRotation;
@@ -1573,24 +1578,24 @@ public class RespawnControl : MonoBehaviour
 
     IEnumerator ActivateP1UIForDuration(float duration)
     {
-        gameManager.p1UIMinus.SetActive(true);
+        gameManager.p1UI.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(duration);
 
         // Deactivate the UI after the specified duration
-        gameManager.p1UIMinus.SetActive(false);
+        gameManager.p1UI.SetActive(false);
     }
 
     IEnumerator ActivateP2UIForDuration(float duration)
     {
-        gameManager.p2UIMinus.SetActive(true);
+        gameManager.p2UI.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(duration);
 
         // Deactivate the UI after the specified duration
-        gameManager.p2UIMinus.SetActive(false);
+        gameManager.p2UI.SetActive(false);
     }
 
 
