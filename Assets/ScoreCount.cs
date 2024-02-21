@@ -29,7 +29,7 @@ public class ScoreCount : MonoBehaviour
     [SerializeField] private float completionTime = 0;
     private bool shouldCountTime = false;
 
-    [HideInInspector] public LevelData lvlData;
+    public LevelData lvlData;
     [SerializeField]
     public LevelData lvl1Data;
     [SerializeField] public LevelData lvl2Data;
@@ -146,10 +146,6 @@ public class ScoreCount : MonoBehaviour
             lvlData = lvl1Data;
         }
 
-        if (p1MailImage != null)
-        {
-            originalImgSize = p1MailImage.transform.localScale;
-        }
 
         ResetValues();
     }
@@ -165,6 +161,12 @@ public class ScoreCount : MonoBehaviour
         p2Score = p1Score;
         p1scoreEffect.SetActive(false);
         p2scoreEffect.SetActive(false);
+
+
+        if (p1MailImage != null)
+        {
+            originalImgSize = p1MailImage.transform.localScale;
+        }
     }   
 
     // Update is called once per frame
@@ -183,7 +185,12 @@ public class ScoreCount : MonoBehaviour
         lvlData.p2Deliver = p2PackageTime;
         lvlData.completionTime = completionTime;
         lvlData.p1MailCount = gameManager.p1.mailCount;
-        lvlData.p2MailCount = gameManager.p2.mailCount;
+
+        if (gameManager.p2 != null)
+        {
+            lvlData.p2MailCount = gameManager.p2.mailCount;
+        }
+       
 
         p1MailCount.text = lvlData.p1MailCount.ToString();
 
@@ -608,6 +615,13 @@ public class ScoreCount : MonoBehaviour
 
     private void AnimateMailImage()
     {
+
+        p1TargetScaleMultiplier = Mathf.Clamp(p1TargetScaleMultiplier, 1, 2);
+        p2TargetScaleMultiplier = Mathf.Clamp(p2TargetScaleMultiplier, 1, 2);
+
+        p1ScaleMultiplier = Mathf.Clamp(p1ScaleMultiplier, 1, 2);
+        p2ScaleMultiplier = Mathf.Clamp(p2ScaleMultiplier, 1, 2);
+
         if (p1LocalMail != lvlData.p1MailCount)
         {
 

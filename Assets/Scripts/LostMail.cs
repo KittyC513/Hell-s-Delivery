@@ -10,60 +10,124 @@ public class LostMail : MonoBehaviour
     //destroy this object once moved and add to the player's count
     //move from the screen to the top left ui
     //can get the camera to world point position of the UI
-    private bool collected = false;
+    public bool collected = false;
     private RectTransform p1MailSlot;
     private RectTransform p2MailSlot;
     private float time = 0;
     private bool p1 = false;
     private PlayerCollector collector;
     private Vector3 position;
+    public bool goldenMail = false;
+    [HideInInspector] public int goldMailValue = 5;
+    public bool cosmeticOnly = false;
 
     private Animator anim;
     [SerializeField] private GameObject shadow;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private GameObject mailObj;
+    [SerializeField] private Material goldMaterial;
+    [SerializeField] private GameObject mailObjPrefab;
+
+    private List<LostMail> extraMail;
+    private bool spawned = false;
+    private Vector3 startPos;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+        extraMail = new List<LostMail>();
+        startPos = transform.position;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("CollectHitbox"))
+        if (this.GetComponent<SphereCollider>() != null)
         {
-            if (!collected)
+            if (other.gameObject.CompareTag("CollectHitbox"))
             {
-                collector = other.GetComponent<PlayerCollector>();
-
-                AddScoreToPlayer(collector);
-
-                p1MailSlot = collector.scoreCount.p1MailSlot;
-                p2MailSlot = collector.scoreCount.p2MailSlot;
-
-                if (other.GetComponent<PlayerCollector>().isPlayer1)
+                if (!collected)
                 {
-                    p1 = true;
+                    if (!cosmeticOnly)
+                    {
+                        collector = other.GetComponent<PlayerCollector>();
+
+                        AddScoreToPlayer(collector, 1);
+   
+
+                        p1MailSlot = collector.scoreCount.p1MailSlot;
+                        p2MailSlot = collector.scoreCount.p2MailSlot;
+
+                        if (other.GetComponent<PlayerCollector>().isPlayer1)
+                        {
+                            p1 = true;
+                        }
+                        else
+                        {
+                            p1 = false;
+                        }
+                        time = Time.time;
+                        anim.SetBool("Collected", true);
+                        collected = true;
+
+                        if (goldenMail) Destroy(this.gameObject, 0.3f);
+                        else Destroy(this.gameObject, 0.3f);
+
+
+                    }
+
                 }
-                else
-                {
-                    p1 = false;
-                }
-                time = Time.time;
-                anim.SetBool("Collected", true);
-                collected = true;
-                Destroy(this.gameObject, 0.3f);
+
             }
-            
         }
+        
+    }
+
+    public void SpawnCosmetic(float timeOffSet, PlayerCollector pCollector)
+    {
+        StartCoroutine(CosmeticAnimation(timeOffSet));
+        collector = pCollector;
+        p1MailSlot = collector.scoreCount.p1MailSlot;
+        p2MailSlot = collector.scoreCount.p2MailSlot;
+
+        if (pCollector.isPlayer1)
+        {
+            p1 = true;
+        }
+        else
+        {
+            p1 = false;
+        }
+
+        anim = GetComponent<Animator>();
+        anim.SetBool("Collected", true);
+
+    }
+
+    private IEnumerator CosmeticAnimation(float offset)
+    {
+        yield return new WaitForSeconds(offset);
+        time = Time.time;
+  
+        AddScoreToPlayer(collector, 1);
+        collected = true;
+        Destroy(this.gameObject, 0.3f);
+       
     }
 
     private void Update()
     {
         MoveToUI();
+
         if (collected)
         {
             if (p1) GetPositionToUI(p1MailSlot);
             else GetPositionToUI(p1MailSlot);
             LookAtCamera(collector.cam);
+        }
+
+   
+        if (goldenMail)
+        {
+            mailObj.GetComponent<MeshRenderer>().material = goldMaterial;
         }
 
         CastBlobShadow(shadow);
@@ -73,7 +137,7 @@ public class LostMail : MonoBehaviour
         this.transform.LookAt(cam.transform, cam.transform.up);
     }
 
-    private void AddScoreToPlayer(PlayerCollector player)
+    private void AddScoreToPlayer(PlayerCollector player, int value)
     {
         if (!collected) player.player.mailCount++;
        
@@ -94,13 +158,35 @@ public class LostMail : MonoBehaviour
         {
            
         }
-        else
+        else if (!goldenMail && collected)
         {
             float percent = (Time.time - time);
        
 
             //collector.cam.WorldToScreenPoint(position);
             
+            transform.position = Vector3.Lerp(transform.position, position, percent);
+        }
+        else if (collected)
+        {
+            float percent = (Time.time - time);
+
+            if (!spawned)
+            {
+                
+                //collector.cam.WorldToScreenPoint(position);
+                for (int i = 0; i < goldMailValue; i++)
+                {
+                    LostMail tempMail = Instantiate(mailObjPrefab, collector.transform.position, Quaternion.identity).GetComponent<LostMail>();
+                    tempMail.cosmeticOnly = true;
+                    extraMail.Add(tempMail);
+                    tempMail.SpawnCosmetic((i + 1) * 0.06f, collector);
+             
+                }
+
+                spawned = true;
+            }
+
             transform.position = Vector3.Lerp(transform.position, position, percent);
         }
 
@@ -110,8 +196,9 @@ public class LostMail : MonoBehaviour
     private void CastBlobShadow(GameObject shadowRenderer)
     {
         RaycastHit hit;
+        Vector3 position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
 
-        if (Physics.SphereCast(transform.position, 1, -Vector3.up, out hit, Mathf.Infinity, groundLayer))
+        if (Physics.SphereCast(position, 1, -Vector3.up, out hit, Mathf.Infinity, groundLayer))
         {
             shadowRenderer.SetActive(true);
             shadowRenderer.transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);

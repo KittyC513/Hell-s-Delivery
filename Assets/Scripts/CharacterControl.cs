@@ -546,6 +546,7 @@ public class CharacterControl : MonoBehaviour
                 {
                     //apply a curve in the same way we applied the velocity but for when we want to slow down
                     airSpeed = (lastSpeedValue * airQuickTurnCurve.Evaluate(quickTurnTime));
+                    parachutingSpeed = (lastSpeedValue * airQuickTurnCurve.Evaluate(decelerationTime));
                 }
                 else
                 {
@@ -592,9 +593,6 @@ public class CharacterControl : MonoBehaviour
             //reset our jump time
             jTime += 0.2f;
            
-        }else if (isGrounded && jump.ReadValue<float>() == 0)
-        {
-            isJumping = false;
         }
 
         //if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
