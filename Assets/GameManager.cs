@@ -181,6 +181,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private ObjectGrabbable oG;
 
+    [Header("Loading Screen Control")]
+    [SerializeField]
+    public int changeSceneTimes;
+
 
     [SerializeField] private PlayerScoreData playerScore;
 
@@ -236,7 +240,7 @@ public class GameManager : MonoBehaviour
         // Change skybox based on the scene name
         if (sceneChanged)
         {
-            if(curSceneName == scene3)
+            if (curSceneName == scene3)
             {
                 RenderSettings.skybox = skyboxScene1;
             }

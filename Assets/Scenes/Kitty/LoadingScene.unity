@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadingScreen_canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3817159120594118938, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1308744905}
     - target: {fileID: 4276777676285033781, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_text
       value: '    LOADING...'
@@ -154,6 +158,14 @@ PrefabInstance:
     - target: {fileID: 5228470330574713654, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311026263411056034, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311026263411056034, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7034559536869938880, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_Pivot.x
@@ -271,6 +283,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 57
       objectReference: {fileID: 0}
+    - target: {fileID: 8638389106542308871, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: m_Name
+      value: Weather
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638389106542308871, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8878080601873285364, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
       propertyPath: m_UiScaleMode
       value: 1
@@ -296,6 +316,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+--- !u!95 &1308744905 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1292540691736513178, guid: fa9fa2b3508b3704b9b19c80ea70065d, type: 3}
+  m_PrefabInstance: {fileID: 1308744904}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1363444404
 GameObject:
   m_ObjectHideFlags: 0

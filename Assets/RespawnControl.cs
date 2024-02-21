@@ -73,10 +73,7 @@ public class RespawnControl : MonoBehaviour
     private GameObject dRGameobject, dRGameobject2;
 
     public GameObject currentActive;
-    [SerializeField]
-    private GameObject p1DeadScreen;
-    [SerializeField]
-    private GameObject p2DeadScreen;
+
 
     [SerializeField]
     private GameObject P1Indicator;
@@ -140,6 +137,18 @@ public class RespawnControl : MonoBehaviour
     public bool p1AtDoor;
     [SerializeField]
     public bool p2AtDoor;
+
+    [Header("Death Screen")]
+    [SerializeField]
+    private GameObject p1DeadScreen;
+    [SerializeField]
+    private GameObject p2DeadScreen;
+    [SerializeField]
+    private Animator p1Anim;
+    [SerializeField]
+    private Animator p2Anim;
+
+
 
     //CheckpointControl activateFCP;
 
@@ -243,12 +252,6 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
-
-        //dRP1 = Object.FindAnyObjectByType<DialogueRunner>();
-
-
-
-        //testCube = player.GetComponent<TestCube>();
 
 
     }
@@ -512,44 +515,60 @@ public class RespawnControl : MonoBehaviour
     //}
     IEnumerator P1RespawnTimer()
     {
+        p1DeadScreen.SetActive(true);
+        p1Anim.SetBool("isDead", true);
         GameManager.instance.p1.isFreeze = true;
-        p1Model.SetActive(false);
+        //p1Model.SetActive(false);
         //p1DeadScreen.SetActive(true);
         P1Indicator.SetActive(false);
         P1Shade.SetActive(false);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2.5f);
+        p1Anim.SetBool("isDead", false);
+        p1Anim.SetBool("isRespawn", true);
         Respawn(respawnPoint);
-        p1Model.SetActive(true);
+        //p1Model.SetActive(true);
         //p1DeadScreen.SetActive(false);
         P1Indicator.SetActive(true);
         P1Shade.SetActive(true);
         GameManager.instance.p1.isFreeze = false;
+        yield return new WaitForSeconds(2);
+        p1Anim.SetBool("isRespawn", false);
+
     }
 
     IEnumerator P2RespawnTimer()
     {
+        p2DeadScreen.SetActive(true);
+        p2Anim.SetBool("isDead", true);
+
         GameManager.instance.p2.isFreeze = true;
-        p2Model.SetActive(false);
+        //p2Model.SetActive(false);
         //p2DeadScreen.SetActive(true);
         P2Indicator.SetActive(false);
         P2Shade.SetActive(false);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2.5f);
+        p2Anim.SetBool("isDead", false);
+        p2Anim.SetBool("isRespawn", true);
         Respawn(respawnPoint);
-        p2Model.SetActive(true);
+        //p2Model.SetActive(true);
         //p2DeadScreen.SetActive(false);
         P2Indicator.SetActive(true);
         P2Shade.SetActive(true);
         GameManager.instance.p2.isFreeze = false;
+        yield return new WaitForSeconds(2);
+        p2Anim.SetBool("isRespawn", false);
+
     }
 
 
     void P1Respawn()
     {
+
         StartCoroutine(P1RespawnTimer());
         if (curSceneName != scene5)
         {
             ScoreCount.instance.AddDeathsToP1(5);
-            StartCoroutine(ActivateP1UIForDuration(3f));
+            //StartCoroutine(ActivateP1UIForDuration(3f));
         }
 
         if (curSceneName == scene9)
@@ -578,7 +597,7 @@ public class RespawnControl : MonoBehaviour
         if (curSceneName != scene5)
         {
             ScoreCount.instance.AddDeathsToP2(5);
-            StartCoroutine(ActivateP2UIForDuration(3f));
+            //StartCoroutine(ActivateP2UIForDuration(3f));
         }
 
         if (curSceneName == scene9)
@@ -657,10 +676,12 @@ public class RespawnControl : MonoBehaviour
         {
             if(isPlayer1 && Player1isCarrying)
             {
+                gameManager.changeSceneTimes += 1;
                 Loader.Load(Loader.Scene.ScoreCards);
             }
             if (isPlayer2 && Player2isCarrying)
             {
+                gameManager.changeSceneTimes += 1;
                 Loader.Load(Loader.Scene.ScoreCards);
             }
 
@@ -821,6 +842,7 @@ public class RespawnControl : MonoBehaviour
         {
             if (isPlayer1 && !p1Pass4)
             {
+                StartCoroutine(ActivateP1UIForDuration(3f));
                 p1Pass4 = true;
                 LevelDialogue.ShowDevilPlayer1();
                 dRP1.Stop();
@@ -830,6 +852,7 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2 && !p2Pass4)
             {
+                StartCoroutine(ActivateP2UIForDuration(3f));
                 p2Pass4 = true;
                 LevelDialogue.ShowDevilPlayer2();
                 dRP2.Stop();
@@ -965,13 +988,14 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-
+                StartCoroutine(ActivateP1UIForDuration(3f));
                 P1RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = P1RespawnRotation;
             }
 
             if (isPlayer2)
             {
+                StartCoroutine(ActivateP2UIForDuration(3f));
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P1RespawnRotation = P2RespawnRotation;
@@ -1554,24 +1578,24 @@ public class RespawnControl : MonoBehaviour
 
     IEnumerator ActivateP1UIForDuration(float duration)
     {
-        gameManager.p1UIMinus.SetActive(true);
+        gameManager.p1UI.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(duration);
 
         // Deactivate the UI after the specified duration
-        gameManager.p1UIMinus.SetActive(false);
+        gameManager.p1UI.SetActive(false);
     }
 
     IEnumerator ActivateP2UIForDuration(float duration)
     {
-        gameManager.p2UIMinus.SetActive(true);
+        gameManager.p2UI.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(duration);
 
         // Deactivate the UI after the specified duration
-        gameManager.p2UIMinus.SetActive(false);
+        gameManager.p2UI.SetActive(false);
     }
 
 

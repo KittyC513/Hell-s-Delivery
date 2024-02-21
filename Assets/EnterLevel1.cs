@@ -29,15 +29,18 @@ public class EnterLevel1 : MonoBehaviour
         if (Input.GetKey(KeyCode.R))
         {
             EnterLevel();
+            GameManager.instance.changeSceneTimes += 1;
         }
         if (Input.GetKey(KeyCode.T))
         {
             EnterTutorial();
+            GameManager.instance.changeSceneTimes += 1;
         }
 
         if (Input.GetKey(KeyCode.Y))
         {
             EnterMVPLevel();
+            GameManager.instance.changeSceneTimes += 1;
         }
     }
 
@@ -46,37 +49,30 @@ public class EnterLevel1 : MonoBehaviour
         GameManager.instance.sceneChanged = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
-
+        GameManager.instance.changeSceneTimes += 1;
         Loader.Load(Loader.Scene.Level1);
     }
 
     public void EnterTutorial()
     {
-        //GameManager.instance.sceneChanged = true;
-        //GameManager.instance.p1.isFreeze = false;
-        //GameManager.instance.p2.isFreeze = false;
-
-        //Loader.Load(Loader.Scene.Tutorial);
-        StartCoroutine(LoadTutorial());
-
-    }
-
-    IEnumerator LoadTutorial()
-    {
-        transition.SetActive(true);
-        sceneTransitionAnim.SetTrigger("End");
-        Char1Anim.SetTrigger("End");
-        Char2Anim.SetTrigger("End");
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
-        sceneTransitionAnim.SetTrigger("Start");
-        Char1Anim.SetTrigger("Start");
-        Char2Anim.SetTrigger("Start");
+        //transition.SetActive(true);
+        //sceneTransitionAnim.SetTrigger("End");
+        //Char1Anim.SetTrigger("End");
+        //Char2Anim.SetTrigger("End");
+        //yield return new WaitForSeconds(1);
+        //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+        //sceneTransitionAnim.SetTrigger("Start");
+        //Char1Anim.SetTrigger("Start");
+        //Char2Anim.SetTrigger("Start");
+        GameManager.instance.changeSceneTimes += 1;
+        GameManager.instance.sceneChanged = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        Loader.Load(Loader.Scene.Tutorial);
     }
     public void EnterMVPLevel()
     {
+        GameManager.instance.changeSceneTimes += 1;
         GameManager.instance.sceneChanged = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
