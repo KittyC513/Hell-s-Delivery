@@ -65,6 +65,7 @@ public class CharacterControl : MonoBehaviour
     //air velocity curve will build more slowly than a normal grounded acceleration to give the player a more controlled turn around
     [SerializeField] private AnimationCurve airVelocityCurve;
     [SerializeField] private AnimationCurve airDecelerationCurve;
+    [SerializeField] private AnimationCurve parachuteDecelerationCurve;
     [SerializeField] public float ySpeed = 0;
     private float fTime = 0;
     public float jTime = 0;
@@ -358,42 +359,46 @@ public class CharacterControl : MonoBehaviour
 
         Vector3 relativeStick = GetRelativeInputDirection(cam, stickValue);
 
-        //when the player makes a quick turn we should stop/cut their momentum to give them more control over a quick turn around
-        if (relativeStick.x != 0 || relativeStick.y != 0)
+        if (stickValue.magnitude > 0.5f)
         {
-            if (isGrounded)
+            //when the player makes a quick turn we should stop/cut their momentum to give them more control over a quick turn around
+            if (relativeStick.x != 0 || relativeStick.y != 0)
             {
-                //get the player's facing direction and check if our new input is far enough away from our facing direction
-                if (lookDir.x - relativeStick.x > minQuickTurn || lookDir.x - relativeStick.x < -minQuickTurn)
+                if (isGrounded)
                 {
-                    
-                    if (!quickTurn) quickTurn = true;
-                    //Debug.Log(quickTurn);
-                }
+                    //get the player's facing direction and check if our new input is far enough away from our facing direction
+                    if (lookDir.x - relativeStick.x > minQuickTurn || lookDir.x - relativeStick.x < -minQuickTurn)
+                    {
 
-                if (lookDir.z - relativeStick.z > minQuickTurn || lookDir.z - relativeStick.z < -minQuickTurn)
+                        if (!quickTurn) quickTurn = true;
+                        //Debug.Log(quickTurn);
+                    }
+
+                    if (lookDir.z - relativeStick.z > minQuickTurn || lookDir.z - relativeStick.z < -minQuickTurn)
+                    {
+                        if (!quickTurn) quickTurn = true;
+                        //Debug.Log(quickTurn);
+                    }
+
+                }
+                else
                 {
-                    if (!quickTurn) quickTurn = true;
-                    //Debug.Log(quickTurn);
-                }
+                    //get the player's facing direction and check if our new input is far enough away from our facing direction
+                    if (lookDir.x - relativeStick.x > airQuickTurn || lookDir.x - relativeStick.x < -airQuickTurn)
+                    {
+                        if (!quickTurn) quickTurn = true;
+                        //Debug.Log(quickTurn);
+                    }
 
+                    if (lookDir.z - relativeStick.z > airQuickTurn || lookDir.z - relativeStick.z < -airQuickTurn)
+                    {
+                        if (!quickTurn) quickTurn = true;
+                        //Debug.Log(quickTurn);
+                    }
+
+                }
             }
-            else
-            {
-                //get the player's facing direction and check if our new input is far enough away from our facing direction
-                if (lookDir.x - relativeStick.x > airQuickTurn || lookDir.x - relativeStick.x < -airQuickTurn)
-                {
-                    if (!quickTurn) quickTurn = true;
-                    //Debug.Log(quickTurn);
-                }
-
-                if (lookDir.z - relativeStick.z > airQuickTurn || lookDir.z - relativeStick.z < -airQuickTurn)
-                {
-                    if (!quickTurn) quickTurn = true;
-                    //Debug.Log(quickTurn);
-                }
-
-            }
+    
 
             //if we have a new input
             if (relativeStick.x != lastInput.x || relativeStick.y != lastInput.y)
@@ -526,7 +531,7 @@ public class CharacterControl : MonoBehaviour
                     //apply a curve in the same way we applied the velocity but for when we want to slow down
                     airSpeed = (lastSpeedValue * airDecelerationCurve.Evaluate(decelerationTime));
 
-                    parachutingSpeed = (lastSpeedValue * airDecelerationCurve.Evaluate(decelerationTime));
+                    parachutingSpeed = (lastSpeedValue * parachuteDecelerationCurve.Evaluate(decelerationTime));
                 }
                 else
                 {

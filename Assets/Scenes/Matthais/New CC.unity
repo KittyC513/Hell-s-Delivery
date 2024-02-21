@@ -13737,8 +13737,6 @@ MonoBehaviour:
   dRGameobject: {fileID: 0}
   dRGameobject2: {fileID: 0}
   currentActive: {fileID: 0}
-  p1DeadScreen: {fileID: 263865552}
-  p2DeadScreen: {fileID: 823701027}
   P1Indicator: {fileID: 0}
   P2Indicator: {fileID: 0}
   P1Shade: {fileID: 0}
@@ -13766,6 +13764,10 @@ MonoBehaviour:
   inDeliveryArea: 0
   p1AtDoor: 0
   p2AtDoor: 0
+  p1DeadScreen: {fileID: 263865552}
+  p2DeadScreen: {fileID: 823701027}
+  p1Anim: {fileID: 0}
+  p2Anim: {fileID: 0}
 --- !u!114 &1566921897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15224,6 +15226,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  parachuteDecelerationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   ySpeed: 0
   jTime: 0
   isJumping: 0
@@ -16386,6 +16394,12 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   airDecelerationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  parachuteDecelerationCurve:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
@@ -20545,10 +20559,6 @@ PrefabInstance:
     - target: {fileID: 4648375590135091751, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -42.154152
-      objectReference: {fileID: 0}
-    - target: {fileID: 4668977514111044480, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
-      propertyPath: airDecelerationCurve.m_Curve.Array.data[1].time
-      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4692086341395662093, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
