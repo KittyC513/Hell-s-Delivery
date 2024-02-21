@@ -148,8 +148,11 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     bool conversationStart;
     bool hubStart, hubEnd;
+
+    [Header("Freeze")]
     [SerializeField]
     public bool isFreeze;
+
     [SerializeField]
     UnityEngine.SceneManagement.Scene currentScene;
     [SerializeField]
@@ -495,6 +498,7 @@ public class TestCube : MonoBehaviour
     //float dropForce;
     private void Awake()
     {
+        isFreeze = false;
         inputAsset = this.GetComponent<PlayerInput>().actions;
         player = inputAsset.FindActionMap("Cube");
         dialogue = inputAsset.FindActionMap("Dialogue");

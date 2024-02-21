@@ -10,10 +10,10 @@ public class LevelDialogue : MonoBehaviour
     private static LevelDialogue instance;
 
     [SerializeField]
-    public DialogueRunner dRP1, dRP2;
+    public DialogueRunner dRP1, dRP2, drAll;
     
     [SerializeField]
-    private static GameObject LV, DRP1, DRP2;
+    private static GameObject LV, DRP1, DRP2, DRAll;
 
 
 
@@ -32,9 +32,12 @@ public class LevelDialogue : MonoBehaviour
 
         DRP2 = GameObject.Find("DRP2");
         //print("DRP2 found" + DRP1);
+
+        DRAll = GameObject.Find("DRAll");
         
         DRP1.SetActive(false);
         DRP2.SetActive(false);
+        DRAll.SetActive(false);
         //LV.SetActive(false);
     }
 
@@ -72,6 +75,11 @@ public class LevelDialogue : MonoBehaviour
     {
         DRP2.SetActive(true);
         //DRP1.SetActive(false);
+    }
+
+    public static void ShowDevilPlayerAll()
+    {
+        DRAll.SetActive(true);
     }
 
     //public static void ShowBoth()
