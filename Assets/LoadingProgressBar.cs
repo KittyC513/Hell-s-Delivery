@@ -46,6 +46,7 @@ public class LoadingProgressBar : MonoBehaviour
         }
         else if (GameManager.instance.changeSceneTimes == 3)
         {
+            //out of TV
             anim.SetBool("LoadingJuice", true);
         }
         else if (GameManager.instance.changeSceneTimes == 4)
@@ -55,6 +56,10 @@ public class LoadingProgressBar : MonoBehaviour
         else if (GameManager.instance.changeSceneTimes == 5)
         {
             anim.SetBool("LoadingNails", true);
+        }
+        else if (GameManager.instance.changeSceneTimes == 6)
+        {
+            //default 
         }
 
     }

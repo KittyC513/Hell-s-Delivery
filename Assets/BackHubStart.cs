@@ -9,6 +9,7 @@ public class BackHubStart : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            GameManager.instance.changeSceneTimes += 1;
             Loader.Load(Loader.Scene.HubStart);
         }
     }
@@ -17,6 +18,7 @@ public class BackHubStart : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
+            GameManager.instance.changeSceneTimes += 1;
             Loader.Load(Loader.Scene.HubStart);
         }
     }

@@ -994,6 +994,7 @@ public class RespawnControl : MonoBehaviour
                         {
                             if (SceneControl.instance.firstCustomer)
                             {
+                                GameManager.instance.changeSceneTimes += 1;
                                 Loader.Load(Loader.Scene.Level1);
                             }
 
@@ -1019,6 +1020,7 @@ public class RespawnControl : MonoBehaviour
                         {
                             if (SceneControl.instance.firstCustomer)
                             {
+                                GameManager.instance.changeSceneTimes += 1;
                                 Loader.Load(Loader.Scene.Level1);
                             }
                         }
@@ -1049,6 +1051,7 @@ public class RespawnControl : MonoBehaviour
                         {
                             if (SceneControl.instance.secondCustomer)
                             {
+                                GameManager.instance.changeSceneTimes += 1;
                                 Loader.Load(Loader.Scene.MVPLevel);
                             }
 
@@ -1075,6 +1078,7 @@ public class RespawnControl : MonoBehaviour
                         {
                             if (SceneControl.instance.secondCustomer)
                             {
+                                GameManager.instance.changeSceneTimes += 1;
                                 Loader.Load(Loader.Scene.MVPLevel);
                             }
                         }
