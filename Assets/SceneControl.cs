@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Yarn.Unity;
 
@@ -138,7 +139,9 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public DialogueRunner dRP1, dRP2, drAll;
     [SerializeField]
-    public bool p1isKilling, p2isKilling;
+    public bool p1isKilling, p2isKilling, p1IsSaving, p2IsSaving;
+    [SerializeField]
+    public bool p1isInZone1, p2isInZone1;
 
     [Header("Tutorial")]
     [SerializeField]
@@ -217,6 +220,7 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.curSceneName == "Level1")
         {
             PackageInstructionControl();
+            SkipLevel1OverviewCutScene();
         }
 
         if (GameManager.instance.curSceneName == "Tutorial")
@@ -259,6 +263,7 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
         {
+            
             if (GameManager.instance.timesEnterHub < 1)
             {
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
@@ -276,12 +281,15 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
         {
+            radialUI.SetActive(true);
+
             if (!TutorialCamControl.instance.cutsceneIsCompleted)
             {
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
                 {
                     StartCoroutine(TutorialCamControl.instance.StopMoveCam());
                     TutorialCamControl.instance.endTutorial = true;
+                    radialUI.SetActive(false);
                 }
             }
        
@@ -363,6 +371,21 @@ public class SceneControl : MonoBehaviour
                 radialUI.SetActive(false);
                 WeatherdialogueEnds = true;
                 LalahLeave();
+            }
+        }
+    }
+
+    void SkipLevel1OverviewCutScene()
+    {
+        if (!Level1CamControl.instance.cutsceneIsCompleted)
+        {
+            radialUI.SetActive(true);
+
+            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+            {
+                StartCoroutine(Level1CamControl.instance.StopMoveCam());
+                //TutorialCamControl.instance.endTutorial = true;
+                radialUI.SetActive(false);       
             }
         }
     }
