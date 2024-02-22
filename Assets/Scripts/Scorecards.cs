@@ -92,7 +92,11 @@ public class Scorecards : MonoBehaviour
 
     private void Start()
     {
-        lvlData = GameManager.instance.lastLevelData;
+        if (GameManager.instance != null)
+        {
+            lvlData = GameManager.instance.lastLevelData;
+        }
+        
         player1Score = lvlData.p1FinalScore;
         player2Score = lvlData.p2FinalScore;
         //first run animation 
@@ -366,11 +370,13 @@ public class Scorecards : MonoBehaviour
             //give a thumbs up sticker to player 1 
             sticker1 = Instantiate(happySticker, p1StickerPoint, Quaternion.identity, cardLeft.transform);
             sticker1.transform.rotation = RandomRotation();
+            p1Stickers[0] = stickerType.happy;
             //give 50 points to player 1
             playerScoreData.p1Overall += 50;
 
             sticker2 = Instantiate(sadSticker, p2StickerPoint, Quaternion.identity, cardRight.transform);
             sticker2.transform.rotation = RandomRotation();
+            p2Stickers[0] = stickerType.sad;
         }
         else if (p2Score > p1Score)
         {
@@ -378,12 +384,14 @@ public class Scorecards : MonoBehaviour
             sticker1 = Instantiate(sadSticker, p1StickerPoint, Quaternion.identity, cardLeft.transform);
             sticker1.transform.rotation = RandomRotation();
             //do not give player 1 any points
+            p1Stickers[1] = stickerType.sad;
 
             //give a thumbs up sticker to player 2
             sticker2 = Instantiate(happySticker, p2StickerPoint, Quaternion.identity, cardRight.transform);
             sticker2.transform.rotation = RandomRotation();
             //give player 2 50 points
             playerScoreData.p2Overall += 50;
+            p2Stickers[1] = stickerType.happy;
             
         }
         else if (p1Score == p2Score)
