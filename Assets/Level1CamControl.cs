@@ -15,7 +15,7 @@ public class Level1CamControl : MonoBehaviour
 
     [Header("Level 1")]
     [SerializeField]
-    private bool atStart;
+    public bool atStart;
     [SerializeField]
     private Transform[] cameraPositions;
     [SerializeField]
@@ -94,7 +94,7 @@ public class Level1CamControl : MonoBehaviour
         }
     }
 
-    IEnumerator StopMoveCam()
+    public IEnumerator StopMoveCam()
     {
         yield return new WaitForSeconds(1f);
         GameManager.instance.cam1.SetActive(true);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -150,6 +151,11 @@ public class RespawnControl : MonoBehaviour
     private Animator p2Anim;
 
 
+    [Header("Bard")]
+    [SerializeField]
+    public int previousIndex;
+    [SerializeField]
+    public int multiple;
 
     //CheckpointControl activateFCP;
 
@@ -231,29 +237,27 @@ public class RespawnControl : MonoBehaviour
         "WorstThing",
     };
 
-    List<string> PackageReminders = new List<string>
+    List<string> WithPackageReminders = new List<string>
     {
-        "NiceOfYou",
-        "Hog",
-        "Credit",
-        "Hold",
-        "Steal",
         "Selfish",
         "Tired",
         "Promotion",
-        "Second",
-        "Share",
-        "ICanSee",
-        "NotDoing",
-        "Obvious",
         "OnePerson",
         "Hogging",
-        "GoingToPick",
+    };
+
+    List<string> WithoutPackageReminders = new List<string>
+    {
+        "NiceOfYou",
+        "Credit",
+        "Steal",
+        "OnePerson",
+        "Hogging",
     };
 
     private void Start()
     {
-
+        multiple = 1;
 
     }
 
@@ -261,17 +265,81 @@ public class RespawnControl : MonoBehaviour
     {
         if(curSceneName == "Level1")
         {
-            if (SceneControl.instance.p1isKilling)
+            if (SceneControl.instance.p1isKilling && SceneControl.instance.p2isInZone1)
             {
                 PlayRandomSabotageDialogue1();
             }
 
-            if (SceneControl.instance.p2isKilling)
+            if (SceneControl.instance.p2isKilling && SceneControl.instance.p1isInZone1)
             {
                 PlayRandomSabotageDialogue2();
             }
         }
 
+    }
+
+    void SavingBark()
+    {
+        if (curSceneName == "Level1")
+        {
+            if (SceneControl.instance.p1IsSaving && SceneControl.instance.p2isInZone1)
+            {
+                PlayRandomCooperationDialogue1();
+            }
+
+            if (SceneControl.instance.p2IsSaving && SceneControl.instance.p1isInZone1)
+            {
+                PlayRandomCooperationDialogue2();
+            }
+        }
+
+    }
+
+
+    void PackageBark()
+    {
+        if(ScoreCount.instance != null && ScoreCount.instance != null)
+        {
+            if (ScoreCount.instance.lvlData.p1Deliver >= 120 * multiple || ScoreCount.instance.lvlData.p2Deliver >= 120 * multiple)
+            {
+                if (!SceneControl.instance.p1isKilling && !SceneControl.instance.p2isKilling && !SceneControl.instance.p1IsSaving && !SceneControl.instance.p2IsSaving)
+                {
+                    {
+                        if (ScoreCount.instance.lvlData.p1Deliver >= 120 * multiple)
+                        {
+                            int i = Random.Range(1, 10);
+                            if (i <= 5)
+                            {
+                                PlayRandomPackageDialogue1();
+                                multiple += 1;
+                            }
+                            else
+                            {
+                                PlayRandomPackageDialogue4();
+                                multiple += 1;
+                            }
+
+                        }
+                        else if (ScoreCount.instance.lvlData.p2Deliver >= 120 * multiple)
+                        {
+                            int i = Random.RandomRange(1, 10);
+                            if (i <= 5)
+                            {
+                                PlayRandomPackageDialogue2();
+                                multiple += 1;
+                            }
+                            else
+                            {
+                                PlayRandomPackageDialogue3();
+                                multiple += 1;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+       
     }
 
     void SceneCheck()
@@ -412,7 +480,14 @@ public class RespawnControl : MonoBehaviour
 
     private void Update()
     {
-        SabotageBark();
+
+        if(curSceneName == "Level1")
+        {
+            SabotageBark();
+            SavingBark();
+            PackageBark();
+        }
+
         Partner = GameObject.FindGameObjectsWithTag("FindScript");
         //FindDR();
         SceneCheck();
@@ -626,6 +701,18 @@ public class RespawnControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.gameObject.tag == ("ChooseZone"))
+        {
+            if (isPlayer1)
+            {
+                SceneControl.instance.p1isInZone1 = true;
+            }
+
+            if (isPlayer2)
+            {
+                SceneControl.instance.p2isInZone1 = true;
+            }
+        }
         if (other.gameObject.tag == ("Hazard") || other.gameObject.tag == ("hazard2"))
         {
             //Debug.Log("Hazard name =" + other.gameObject);
@@ -986,14 +1073,14 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-                StartCoroutine(ActivateP1UIForDuration(3f));
+                //StartCoroutine(ActivateP1UIForDuration(3f));
                 P1RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = P1RespawnRotation;
             }
 
             if (isPlayer2)
             {
-                StartCoroutine(ActivateP2UIForDuration(3f));
+                //StartCoroutine(ActivateP2UIForDuration(3f));
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P1RespawnRotation = P2RespawnRotation;
@@ -1322,6 +1409,18 @@ public class RespawnControl : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.tag == ("ChooseZone"))
+        {
+            if (isPlayer1)
+            {
+                SceneControl.instance.p1isInZone1 = false;
+            }
+
+            if (isPlayer2)
+            {
+                SceneControl.instance.p2isInZone1 = false;
+            }
+        }
         if (other.tag == "DeliveryArea")
         {
             if(gameManager.timesEnterHub == 1)
@@ -1517,16 +1616,25 @@ public class RespawnControl : MonoBehaviour
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(PlayerDeath.Count);
+        if(previousIndex == index)
+        {
+            index = rnd.Next(PlayerDeath.Count);
+        }
         SceneControl.instance.dRP1.StartDialogue(PlayerDeath[index]);
-        print("DeathBark1");
+        previousIndex = index;
+        //print("DeathBark1");
     }
 
     public void PlayRandomDeathDialogue2()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(PlayerDeath.Count);
+        if (previousIndex == index)
+        {
+            index = rnd.Next(PlayerDeath.Count);
+        }
         SceneControl.instance.dRP2.StartDialogue(PlayerDeath[index]);
-        print("DeathBark2");
+        //print("DeathBark2");
     }
 
     public void PlayRandomSabotageDialogue1()
@@ -1558,14 +1666,27 @@ public class RespawnControl : MonoBehaviour
     public void PlayRandomPackageDialogue1()
     {
         System.Random rnd = new System.Random();
-        int index = rnd.Next(PackageReminders.Count);
-        SceneControl.instance.dRP1.StartDialogue(PackageReminders[index]);
+        int index = rnd.Next(WithPackageReminders.Count);
+        SceneControl.instance.dRP1.StartDialogue(WithPackageReminders[index]);
     }
     public void PlayRandomPackageDialogue2()
     {
         System.Random rnd = new System.Random();
-        int index = rnd.Next(PackageReminders.Count);
-        SceneControl.instance.dRP2.StartDialogue(PackageReminders[index]);
+        int index = rnd.Next(WithPackageReminders.Count);
+        SceneControl.instance.dRP2.StartDialogue(WithPackageReminders[index]);
+    }
+    public void PlayRandomPackageDialogue3()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(WithPackageReminders.Count);
+        SceneControl.instance.dRP1.StartDialogue(WithoutPackageReminders[index]);
+    }
+
+    public void PlayRandomPackageDialogue4()
+    {
+        System.Random rnd = new System.Random();
+        int index = rnd.Next(WithPackageReminders.Count);
+        SceneControl.instance.dRP2.StartDialogue(WithoutPackageReminders[index]);
     }
 
 

@@ -109,7 +109,11 @@ public class ScoreCount : MonoBehaviour
     {
         instance = this;
         gameManager = Object.FindAnyObjectByType<GameManager>();
+
+        StartLevel();
     }
+
+    
 
     private void ResetValues()
     {
@@ -169,14 +173,14 @@ public class ScoreCount : MonoBehaviour
     {
         lastKnobValue = 0;
         knobValue = 0;
-        
-       
 
+        p1PackageTime = 0;
+        p2PackageTime = 0;
         p1Score = InitialScore;
         p2Score = p1Score;
         p1scoreEffect.SetActive(false);
         p2scoreEffect.SetActive(false);
-
+        
 
         if (p1MailImage != null)
         {
@@ -376,6 +380,11 @@ public class ScoreCount : MonoBehaviour
     public void AddTimeToP2Package(float time)
     {
         p2PackageTime = time;
+    }
+
+    void AddTimer()
+    {
+        
     }
 
     //IEnumerator P1PackageTimer(int value)

@@ -2383,20 +2383,14 @@ public class TestCube : MonoBehaviour
         if(isPlayer1 && p1pushed)
         {
             P1Push();
-            if (ScoreCount.instance != null)
-            {
-                ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, isPlayer1);
-            }
+           
  
         }
 
         if (isPlayer2 && p2pushed)
         {
             P2Push();
-            if (ScoreCount.instance != null)
-            {
-                ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, isPlayer1);
-            }
+           
  
         }
     }
@@ -2447,10 +2441,7 @@ public class TestCube : MonoBehaviour
 
         p2Anim.SetBool("beingPush", true);
 
-        if (ScoreCount.instance != null)
-        {
-            ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, false);
-        }
+      
      
         StartCoroutine(StopBeingPushedP2());
         //noisy2 = gameManager.noisy2;
@@ -2515,10 +2506,7 @@ public class TestCube : MonoBehaviour
 
         p1Anim.SetBool("beingPush", true);
 
-        if (ScoreCount.instance != null)
-        {
-            ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, true);
-        }
+       
         
         StartCoroutine(StopBeingPushedP1());
         //noisy2 = gameManager.noisy2;
@@ -3399,6 +3387,12 @@ public class TestCube : MonoBehaviour
                     p1pushed = true;
                     pushStartTimer = false;
 
+                    if (ScoreCount.instance != null)
+                    {
+                        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, true);
+                        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, false);
+                    }
+
                     Invoke(nameof(ResetPush), pushDuration);
                 }
 
@@ -3406,6 +3400,12 @@ public class TestCube : MonoBehaviour
                 {
                     p2pushed = true;
                     pushStartTimer = false;
+
+                    if (ScoreCount.instance != null)
+                    {
+                        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, false);
+                        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, true);
+                    }
 
                     Invoke(nameof(ResetPush), pushDuration);
                 }

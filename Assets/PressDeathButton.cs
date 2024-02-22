@@ -10,6 +10,18 @@ public class PressDeathButton : MonoBehaviour
     private float timer2;
     [SerializeField]
     private float pressingTimer;
+    [SerializeField]
+    private bool hasTriggered1;
+    [SerializeField]
+    private bool hasTriggered2;
+    [SerializeField]
+    private bool isSaving;
+    [SerializeField]
+    private bool isSaving1;
+    [SerializeField]
+    private bool isKilling;
+    [SerializeField]
+    private bool isKilling1;
 
     // Start is called before the first frame update
     void Start()
@@ -27,28 +39,63 @@ public class PressDeathButton : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("P1Collider"))
+            if (other.gameObject.layer == LayerMask.NameToLayer("P1Collider") && this.gameObject.tag == "OnDeathButton")
             {
                 if (GameManager.instance.p1.ReadActionButton())
                 {
                     timer1 += Time.deltaTime;
+                    isKilling = true;
                 }
                 else
                 {
+                    isKilling = false;
                     timer1 = 0;
+                    SceneControl.instance.p1isKilling = false;
+                }
+            } else if(other.gameObject.layer == LayerMask.NameToLayer("P1Collider") && this.gameObject.tag == "OnSavingButton")
+            {
+                if (GameManager.instance.p1.ReadActionButton())
+                {
+                    timer1 += Time.deltaTime;
+                    isSaving = true;
+                }
+                else
+                {
+                    isSaving = false;
+                    timer1 = 0;
+                    SceneControl.instance.p1isKilling = false;             
                 }
             }
-            if (other.gameObject.layer == LayerMask.NameToLayer("P2Collider"))
+
+            if (other.gameObject.layer == LayerMask.NameToLayer("P2Collider") && this.gameObject.tag == "OnDeathButton")
             {
                 if (GameManager.instance.p2.ReadActionButton())
                 {
+                    isKilling1 = true;
                     timer2 += Time.deltaTime;
                 }
                 else
                 {
+                    isKilling1 = false;
                     timer2 = 0;
+                    SceneControl.instance.p2isKilling = false;
+                }
+            }else if(other.gameObject.layer == LayerMask.NameToLayer("P2Collider") && this.gameObject.tag == "OnSavingButton")
+            {
+                if (GameManager.instance.p2.ReadActionButton())
+                {
+                    isSaving1 = true;
+                    timer2 += Time.deltaTime;
+                }
+                else
+                {
+                    isSaving1 = false;
+                    timer2 = 0;
+                    SceneControl.instance.p2isKilling = false;
                 }
             }
+
+
 
         }
     }
@@ -59,11 +106,20 @@ public class PressDeathButton : MonoBehaviour
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("P1Collider"))
             {
+                isKilling = false;
+                isSaving = false;
                 timer1 = 0;
+                SceneControl.instance.p1isKilling = false;
+                hasTriggered1 = false;
+
             }
             if (other.gameObject.layer == LayerMask.NameToLayer("P2Collider"))
             {
+                isKilling1 = false;
+                isSaving1 = false;
                 timer2 = 0;
+                SceneControl.instance.p2isKilling = false;
+                hasTriggered2 = false;
             }
 
         }
@@ -72,17 +128,43 @@ public class PressDeathButton : MonoBehaviour
 
     void Sabotage()
     {
-        if(timer1 >= pressingTimer)
+        if (isKilling)
         {
-            SceneControl.instance.p1isKilling = true;
-            timer1 = 0;
-
+            if (timer1 >= pressingTimer && !hasTriggered1)
+            {
+                SceneControl.instance.p1isKilling = true;
+                timer1 = 0;
+                hasTriggered1 = true;
+            }
+        } else if (isSaving)
+        {
+            if (timer1 >= pressingTimer && !hasTriggered1)
+            {
+                SceneControl.instance.p1IsSaving = true;
+                timer1 = 0;
+                hasTriggered1 = true;
+            }
         }
 
-        if (timer2 >= pressingTimer)
+        if (isKilling1)
         {
-            SceneControl.instance.p2isKilling = true;
-            timer2 = 0;
+            if (timer2 >= pressingTimer && !hasTriggered2)
+            {
+                SceneControl.instance.p2isKilling = true;
+                timer2 = 0;
+                hasTriggered2 = true;
+            }
+        } else if (isSaving1)
+        {
+            if (timer2 >= pressingTimer && !hasTriggered2)
+            {
+                SceneControl.instance.p2IsSaving = true;
+                timer2 = 0;
+                hasTriggered2 = true;
+            }
         }
+
+
     }
+
 }

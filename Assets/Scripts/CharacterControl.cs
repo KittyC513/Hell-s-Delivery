@@ -130,6 +130,11 @@ public class CharacterControl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         currentSpeed = 0;
         faceDir = Vector3.zero;
+       
+    }
+
+    public void OnLevelStart()
+    {
         lvlData = ScoreCount.instance.lvlData;
         scoreCount = ScoreCount.instance;
     }
