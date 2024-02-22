@@ -3623,27 +3623,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pState: 0
   shadowRenderer: {fileID: 7779702081062308929}
+  footStepRate: 80
   peakSpeed: 800
+  walkSpeed: 300
   velocityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 1.0433656
-      outSlope: 1.0433656
+      value: -0.000002170913
+      inSlope: 11.862137
+      outSlope: 11.862137
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.054255318
+      outWeight: 0.050224207
     - serializedVersion: 3
-      time: 0.14976355
-      value: 0.99907637
-      inSlope: 12.9408455
-      outSlope: 12.9408455
+      time: 0.19999999
+      value: 1.0000072
+      inSlope: 1.6288033
+      outSlope: 1.6288033
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.042553168
+      inWeight: 0.06541916
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -3877,27 +3879,27 @@ MonoBehaviour:
   coyoteTime: 0.07
   coyote: 0
   maxGlideSpeed: 1000
-  glideAccelerationSpeed: 50
+  glideAccelerationSpeed: 100
   glideAcceleration:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: -0.00047683716
+      value: -0.0023498535
+      inSlope: 3.1114764
+      outSlope: 3.1114764
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.0807613
     - serializedVersion: 3
       time: 0.45
       value: 1
-      inSlope: 4.395918
-      outSlope: 4.395918
+      inSlope: 1.2316574
+      outSlope: 1.2316574
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.045115776
+      inWeight: 0.059511386
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

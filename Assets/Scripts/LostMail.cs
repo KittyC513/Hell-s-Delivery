@@ -28,6 +28,8 @@ public class LostMail : MonoBehaviour
     [SerializeField] private Material goldMaterial;
     [SerializeField] private GameObject mailObjPrefab;
 
+    [SerializeField] private AK.Wwise.Event collectSound;
+
     private List<LostMail> extraMail;
     private bool spawned = false;
     private Vector3 startPos;
@@ -51,8 +53,8 @@ public class LostMail : MonoBehaviour
                         collector = other.GetComponent<PlayerCollector>();
 
                         AddScoreToPlayer(collector, 1);
-   
 
+                        collectSound.Post(this.gameObject);
                         p1MailSlot = collector.scoreCount.p1MailSlot;
                         p2MailSlot = collector.scoreCount.p2MailSlot;
 
@@ -108,6 +110,7 @@ public class LostMail : MonoBehaviour
         time = Time.time;
   
         AddScoreToPlayer(collector, 1);
+        collectSound.Post(this.gameObject);
         collected = true;
         Destroy(this.gameObject, 0.3f);
        
@@ -181,7 +184,7 @@ public class LostMail : MonoBehaviour
                     tempMail.cosmeticOnly = true;
                     extraMail.Add(tempMail);
                     tempMail.SpawnCosmetic((i + 1) * 0.06f, collector);
-             
+                    
                 }
 
                 spawned = true;
