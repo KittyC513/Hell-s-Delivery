@@ -140,6 +140,10 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool p1isKilling, p2isKilling;
 
+    [Header("Tutorial")]
+    [SerializeField]
+    public bool packageDialogueEnd, packageDialogueStart;
+
 
     private void Awake()
     {
@@ -186,7 +190,7 @@ public class SceneControl : MonoBehaviour
             if (GameManager.instance.timesEnterHub == 1)
             {
                 SkipLalahDialogue();
-                
+
             }
 
 
@@ -205,17 +209,17 @@ public class SceneControl : MonoBehaviour
 
         }
 
-        if(GameManager.instance.curSceneName == GameManager.instance.scene3)
+        if (GameManager.instance.curSceneName == GameManager.instance.scene3)
         {
             ShowHightlightedDoor();
         }
 
-        if(GameManager.instance.curSceneName == "Level1")
+        if (GameManager.instance.curSceneName == "Level1")
         {
             PackageInstructionControl();
         }
 
-        if(GameManager.instance.curSceneName == "Tutorial")
+        if (GameManager.instance.curSceneName == "Tutorial")
         {
             SkipTutorialLevelOverview();
         }
@@ -253,9 +257,9 @@ public class SceneControl : MonoBehaviour
 
     void SkipDevilDialogue()
     {
-        if(GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
+        if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
         {
-            if(GameManager.instance.timesEnterHub < 1)
+            if (GameManager.instance.timesEnterHub < 1)
             {
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
                 {
@@ -272,14 +276,17 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
         {
-            if (TutorialCamControl.instance.atStart)
+            if (!TutorialCamControl.instance.cutsceneIsCompleted)
             {
-                StartCoroutine(TutorialCamControl.instance.StopMoveCam());
-                TutorialCamControl.instance.endTutorial = true;
-                
+                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                {
+                    StartCoroutine(TutorialCamControl.instance.StopMoveCam());
+                    TutorialCamControl.instance.endTutorial = true;
+                }
             }
+       
         }
-        
+
     }
 
     void SkipLalahDialogue()
@@ -457,13 +464,13 @@ public class SceneControl : MonoBehaviour
             firstCustomer = false;
         }
 
-        if(GameManager.instance.timesEnterHub == 2 && lalahTrigger.isLeaving == false)
+        if (GameManager.instance.timesEnterHub == 2 && lalahTrigger.isLeaving == false)
         {
             showPackage = true;
             lalahTrigger.npcArrived = true;
             if (!lalahIsGone)
             {
-                
+
             }
             else
             {
@@ -516,7 +523,7 @@ public class SceneControl : MonoBehaviour
             WertherUI.SetActive(true);
             print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
         }
-        else if(!GameManager.instance.showWertherInstruction || WeatherdialogueEnds)
+        else if (!GameManager.instance.showWertherInstruction || WeatherdialogueEnds)
         {
             WertherUI.SetActive(false);
             print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
@@ -527,7 +534,7 @@ public class SceneControl : MonoBehaviour
             LalahUI.SetActive(true);
 
         }
-        else if(LalahdialogueEnds || !GameManager.instance.showLalahInstruction)
+        else if (LalahdialogueEnds || !GameManager.instance.showLalahInstruction)
         {
             LalahUI.SetActive(false);
         }
@@ -566,7 +573,7 @@ public class SceneControl : MonoBehaviour
             normalPackage.SetActive(true);
             showPackage1 = true;
         }
-        else if(!WeatherdialogueEnds)
+        else if (!WeatherdialogueEnds)
         {
             normalPackage.SetActive(false);
         }
@@ -578,7 +585,7 @@ public class SceneControl : MonoBehaviour
         }
         else if (!LalahdialogueEnds)
         {
-           heavyPackage.SetActive(false);
+            heavyPackage.SetActive(false);
         }
         TextControl();
     }
@@ -610,7 +617,7 @@ public class SceneControl : MonoBehaviour
 
     void TextControl()
     {
-        if(!p1AtDoor && !p2AtDoor)
+        if (!p1AtDoor && !p2AtDoor)
         {
             CloseConfirmDeliveryText();
             CloseDeliveryText();
@@ -629,7 +636,7 @@ public class SceneControl : MonoBehaviour
 
     private void ShowHightlightedDoor()
     {
-        if(GameManager.instance.player1 != null && GameManager.instance.player2 != null)
+        if (GameManager.instance.player1 != null && GameManager.instance.player2 != null)
         {
             hightlightedDoor.SetActive(true);
             print("Door");
@@ -640,6 +647,20 @@ public class SceneControl : MonoBehaviour
 
     #endregion
 
+    #region Tutorial
+    public void PackageDilaogueEnds()
+    {
+        packageDialogueEnd = true;
+        packageDialogueStart = false;
+    }
+
+    public void PackageDilaogueStarts()
+    {
+        packageDialogueStart= true;
+
+    }
+
+    #endregion
 
     #region Level 1
 

@@ -239,7 +239,11 @@ public class CharacterControl : MonoBehaviour
                 break;
             case playerStates.run:
                 //can transition to idle, jump, thrown or deadr
-                //ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.walkDist, Mathf.RoundToInt(directionSpeed.magnitude * 0.05f * Time.fixedDeltaTime), isPlayer1);
+                if(scoreCount != null)
+                {
+                    ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.walkDist, Mathf.RoundToInt(directionSpeed.magnitude * 0.05f * Time.fixedDeltaTime), isPlayer1);
+                }
+
                 //if we are grounded and have no speed we are now idle
                 if (isGrounded && currentSpeed <= 0) pState = playerStates.idle;
                 if (!isGrounded && !isJumping)
@@ -270,11 +274,20 @@ public class CharacterControl : MonoBehaviour
                 if (isParachuting) pState = playerStates.parachute;
                 if (isGrounded) pState = playerStates.land;
 
+                if(scoreCount != null)
+                {
+                    ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.fallDist, Mathf.RoundToInt(Mathf.Abs(ySpeed * 0.05f * Time.fixedDeltaTime)), isPlayer1);
+                }
 
-                //ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.fallDist, Mathf.RoundToInt(Mathf.Abs(ySpeed * 0.05f * Time.fixedDeltaTime)), isPlayer1);
                 break;
             case playerStates.land:
                 //can transition to idle, run, jump, thrown, dead
+                if (hasLeftGround)
+                {
+                    isJumping = false;
+                }
+                
+                if (isGrounded && currentSpeed == 0) pState = playerStates.idle;
 
                 if (isGrounded && currentSpeed > 0) pState = playerStates.run;
                 if (!isGrounded && !isJumping) pState = playerStates.fall;
@@ -284,7 +297,11 @@ public class CharacterControl : MonoBehaviour
 
                 if (stickValue.magnitude> 0)
                 {
-                    ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.glideDist, Mathf.RoundToInt(parachutingSpeed * 0.05f * Time.fixedDeltaTime), isPlayer1);
+                    if(scoreCount != null)
+                    {
+                        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.glideDist, Mathf.RoundToInt(parachutingSpeed * 0.05f * Time.fixedDeltaTime), isPlayer1);
+                    }
+                    
                 }
                
                 //can transition to fall, thrown, dead, land
@@ -608,7 +625,11 @@ public class CharacterControl : MonoBehaviour
             jTime = 0;
 
             //we jumped
-            scoreCount.AddBadgeValue(BadgeManager.BadgeValues.numJumps, 1, isPlayer1);
+            if(scoreCount != null)
+            {
+                scoreCount.AddBadgeValue(BadgeManager.BadgeValues.numJumps, 1, isPlayer1);
+            }
+
         }
         else if (jump.ReadValue<float>() == 0 && !isGrounded && isJumping && reachedMinJump)
         {
@@ -622,6 +643,11 @@ public class CharacterControl : MonoBehaviour
             jTime += 0.2f;
            
         }
+
+        //if (canJump)
+        //{
+        //    isJumping = false;
+        //}
 
         //if (isGrounded && jump.ReadValue<float>() == 1 && canJump)
         //{

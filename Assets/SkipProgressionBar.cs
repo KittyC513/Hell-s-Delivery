@@ -12,6 +12,8 @@ public class SkipProgressionBar : MonoBehaviour
     private float maxTimer;
     [SerializeField]
     private Image radialUI;
+    [SerializeField]
+    private bool origiTimer;
 
 
     // Start is called before the first frame update
@@ -31,6 +33,11 @@ public class SkipProgressionBar : MonoBehaviour
     {
         if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
         {
+            if (GameManager.instance.curSceneName == "Tutorial" && !origiTimer)
+            {
+                timer = 1f;
+                origiTimer = true;
+            }
             timer += Time.deltaTime;
             radialUI.enabled = true;
             radialUI.fillAmount = timer;

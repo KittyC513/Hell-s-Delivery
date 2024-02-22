@@ -78,6 +78,8 @@ public class TutorialCamControl : MonoBehaviour
     public bool endTutorial4;
     [SerializeField]
     private GameObject invisibleWall;
+    [SerializeField]
+    private bool wallIsGone;
 
     [Header("Checkpoint")]
     [SerializeField]
@@ -159,14 +161,15 @@ public class TutorialCamControl : MonoBehaviour
     {
         AtStartCam();
         PackageArea();
-        PushArea();
+        //PushArea();
         PressurePlateArea();
-        GoldSummoningArea();
+        //GoldSummoningArea();
+        InvisibleWall();
         CheckpointArea();
         SummoningCircleArea();
         SabptageArea();
         DualSummoningArea();
-        PlayerSpecificArea();
+        //PlayerSpecificArea();
     }
 
     #region At Start
@@ -208,7 +211,7 @@ public class TutorialCamControl : MonoBehaviour
         while (currentPositionIndex < cameraPositions.Length)
         {
             Transform targetPosition = cameraPositions[currentPositionIndex];
-            yield return StartCoroutine(MoveCamera(targetPosition, transitionSpeed, mainCam));
+            yield return StartCoroutine(MoveCamera(targetPosition, transitionSpeed + 1, mainCam));
             currentPositionIndex++;
         }
     }
@@ -273,7 +276,7 @@ public class TutorialCamControl : MonoBehaviour
     }
     IEnumerator MoveToNextCamera1()
     {
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         while (currentPositionIndex1 < cameraPositions1.Length)
         {
             Transform targetPosition = cameraPositions1[currentPositionIndex1];
@@ -423,6 +426,21 @@ public class TutorialCamControl : MonoBehaviour
     #endregion
 
     #region GoldSummoning Area
+
+    private void InvisibleWall()
+    {
+        if (inGoldSummningArea && !wallIsGone)
+        {
+            StartCoroutine(SetInvisibleWall());
+        }
+    }
+
+    IEnumerator SetInvisibleWall()
+    {
+        yield return new WaitForSeconds(1f);
+        invisibleWall.SetActive(false);
+        wallIsGone = true;
+    }
     private void GoldSummoningArea()
     {
         if (inGoldSummningArea && !isActivated4)

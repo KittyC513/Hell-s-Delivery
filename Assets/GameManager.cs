@@ -185,6 +185,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public int changeSceneTimes;
 
+    [Header("Title Scene")]
+    [SerializeField]
+    private GameObject Maincanvas;
+    [SerializeField]
+    private GameObject sign;
+
     public LevelData lastLevelData;
 
 
@@ -201,7 +207,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-
+        sign.SetActive(false);
         sceneChanged = false;
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
@@ -257,7 +263,7 @@ public class GameManager : MonoBehaviour
 
     void DetectScene()
     {
-        if (p1 != null && p2 != null)
+        if (p1 != null || p2 != null)
         {
 
             currentScene = SceneManager.GetActiveScene();
@@ -271,16 +277,24 @@ public class GameManager : MonoBehaviour
             {
                 if (!enterOffice)
                 {
-                    MoveCamera(cameraPosition, 5f);
-                    animTitle.SetBool("isEnded", true);
+                    Maincanvas.gameObject.SetActive(false);
+                    MoveCamera(cameraPosition, 1f);
+                    //animTitle.SetBool("isEnded", true);
+                    StartCoroutine(TurnOnLight());
                     text.SetActive(false);
                 }
 
             }
 
-
         }
 
+    }
+    IEnumerator TurnOnLight()
+    {
+        yield return new WaitForSeconds(1f);
+        animTitle.SetBool("isEnded", true);
+        yield return new WaitForSeconds(1f);
+        sign.SetActive(true);
     }
 
 
@@ -801,8 +815,8 @@ public class GameManager : MonoBehaviour
     {
         if(curSceneName == "Level1")
         {
-            cam1.SetActive(true);
-            cam2.SetActive(true);
+            //cam1.SetActive(true);
+            //cam2.SetActive(true);
         }
     }
 

@@ -10,7 +10,7 @@ public class JumpTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canvas.gameObject.SetActive(false);
+        //canvas.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -23,7 +23,16 @@ public class JumpTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            canvas.gameObject.SetActive(true);
+            //canvas.gameObject.SetActive(true);
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+           // canvas.gameObject.SetActive(false);
+        }
+    }
+
 }

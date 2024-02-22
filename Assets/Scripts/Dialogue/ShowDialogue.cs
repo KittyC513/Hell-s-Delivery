@@ -203,6 +203,18 @@ public class ShowDialogue :DialogueViewBase
         SceneControl.instance.WeatherLeave();
     }
 
+    [YarnCommand("PackageDialogueEndDetect")]
+    public static void PackageDialogueEnd()
+    {
+        SceneControl.instance.PackageDilaogueEnds();
+    }
+
+    [YarnCommand("PackageDialogueStartDetect")]
+    public static void PackageDialogueStart()
+    {
+        SceneControl.instance.PackageDilaogueStarts();
+    }
+
 
 
 
