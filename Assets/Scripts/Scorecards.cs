@@ -44,10 +44,10 @@ public class Scorecards : MonoBehaviour
     [SerializeField] private GameObject neutralSticker;
     [SerializeField] private GameObject sadSticker;
 
-    //[SerializeField] private GameObject aGrade;
-    //[SerializeField] private GameObject bGrade;
-    //[SerializeField] private GameObject cGrade;
-    //[SerializeField] private GameObject dGrade;
+    [SerializeField] private GameObject aGrade;
+    [SerializeField] private GameObject bGrade;
+    [SerializeField] private GameObject cGrade;
+    [SerializeField] private GameObject dGrade;
 
     [Header ("Sticker Spots")]
     [SerializeField] private Transform p1DeathSpot;
@@ -92,20 +92,21 @@ public class Scorecards : MonoBehaviour
 
     private void Start()
     {
+        lvlData = GameManager.instance.lastLevelData;
         player1Score = lvlData.p1FinalScore;
         player2Score = lvlData.p2FinalScore;
         //first run animation 
         StartCoroutine(AnimationCycle());
         //check our player's scores and place the circle accordingly
-        p1Stickers = new stickerType[3];
-        p2Stickers = new stickerType[3];
+        p1Stickers = new stickerType[2];
+        p2Stickers = new stickerType[2];
         p1Badges = lvlData.p1Badges;
         p2Badges = lvlData.p2Badges;
 
         p1MailCount.text = ("x  ");
         p2MailCount.text = ("x  ");
 
-        lvlData = GameManager.instance.lastLevelData;
+        
         
     }
 
@@ -193,7 +194,7 @@ public class Scorecards : MonoBehaviour
         //p2Stickers[0] = CheckScore(lvlData.p2Deaths, p2DeathSpot.position, categories.deaths);
         CompareScore(lvlData.p1Deaths, lvlData.p2Deaths, categories.deaths, p1DeathSpot.position, p2DeathSpot.position, false);
         yield return new WaitForSeconds(0.44f);
-        //scoreCardSequence.Post(this.gameObject);
+        scoreCardSequence.Post(this.gameObject);
         //start the audio so that it lines up with the animations
         yield return new WaitForSeconds(0.31f);
         //second category
@@ -207,8 +208,8 @@ public class Scorecards : MonoBehaviour
         countUpMail = true;
         yield return new WaitForSeconds(0.75f);
         //give grade
-        FinalGrade(p1TotalSpot.position, p1Stickers);
-        FinalGrade(p2TotalSpot.position, p2Stickers);
+        FinalGrade(p1TotalSpot.position, p1Stickers, lvlData.p1MailCount, lvlData.p2MailCount);
+        FinalGrade(p2TotalSpot.position, p2Stickers, lvlData.p2MailCount, lvlData.p1MailCount);
         canContinue = true;
     }
 
@@ -383,6 +384,7 @@ public class Scorecards : MonoBehaviour
             sticker2.transform.rotation = RandomRotation();
             //give player 2 50 points
             playerScoreData.p2Overall += 50;
+            
         }
         else if (p1Score == p2Score)
         {
@@ -591,7 +593,7 @@ public class Scorecards : MonoBehaviour
         return stickerType.neutral;
     }
 
-    private void FinalGrade(Vector3 stickerPoint, stickerType[] stickers)
+    private void FinalGrade(Vector3 stickerPoint, stickerType[] stickers, float playerMailValue, float opposingMailValue)
     {
         int score = 0;
 
@@ -611,22 +613,27 @@ public class Scorecards : MonoBehaviour
             }
         }
 
-        //if (score == 9)
-        //{
-        //    Instantiate(aGrade, stickerPoint, Quaternion.identity);
-        //}
-        //else if (score >= 6)
-        //{
-        //    Instantiate(bGrade, stickerPoint, Quaternion.identity);
-        //}
-        //else if (score >= 4)
-        //{
-        //    Instantiate(cGrade, stickerPoint, Quaternion.identity);
-        //}
-        //else if (score <= 3)
-        //{
-        //    Instantiate(dGrade, stickerPoint, Quaternion.identity);
-        //}
+        if (playerMailValue > opposingMailValue)
+        {
+            score += 1;
+        }
+
+        if (score >= 6)
+        {
+            Instantiate(aGrade, stickerPoint, Quaternion.identity);
+        }
+        else if (score >= 5)
+        {
+            Instantiate(bGrade, stickerPoint, Quaternion.identity);
+        }
+        else if (score >= 3)
+        {
+            Instantiate(cGrade, stickerPoint, Quaternion.identity);
+        }
+        else if (score <= 2)
+        {
+            Instantiate(dGrade, stickerPoint, Quaternion.identity);
+        }
     }
 
     private void CountMail(int frameSkip)

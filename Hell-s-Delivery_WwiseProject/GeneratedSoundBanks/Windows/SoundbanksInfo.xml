@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{7B495CFA-7F91-0763-5BCF-570343D4A427}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{CF946C92-AC6C-C7AE-4F19-2E0F2FE6F207}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -38,6 +38,10 @@
 				<File Id="40513669" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>PlatformsPhaseOut.wav</ShortName>
 					<CachePath>SFX/PlatformsPhaseOut_10C4C929.wem</CachePath>
+				</File>
+				<File Id="50289279" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MailCollectAlt3.wav</ShortName>
+					<CachePath>SFX/MailCollectAlt3_10C4C929.wem</CachePath>
 				</File>
 				<File Id="71935411" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Apartment Complex v1.wav</ShortName>
@@ -131,6 +135,10 @@
 					<ShortName>Landing.wav</ShortName>
 					<CachePath>SFX/Landing_10C4C929.wem</CachePath>
 				</File>
+				<File Id="809356602" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MailCollectAlt2.wav</ShortName>
+					<CachePath>SFX/MailCollectAlt2_10C4C929.wem</CachePath>
+				</File>
 				<File Id="813925287" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Landing_2.wav</ShortName>
 					<CachePath>SFX/Landing_2_10C4C929.wem</CachePath>
@@ -138,6 +146,10 @@
 				<File Id="815243639" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Landing_3.wav</ShortName>
 					<CachePath>SFX/Landing_3_10C4C929.wem</CachePath>
+				</File>
+				<File Id="860670550" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MailCollect.wav</ShortName>
+					<CachePath>SFX/MailCollect_10C4C929.wem</CachePath>
 				</File>
 				<File Id="948208631" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>HighUpAmbience.wav</ShortName>
@@ -196,6 +208,13 @@
 						<MediaRef Id="755542444"/>
 						<MediaRef Id="813925287"/>
 						<MediaRef Id="815243639"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1193902087" Name="Play_Mail" DurationType="OneShot" DurationMin="0.4310573" DurationMax="0.4838455">
+					<MediaRefs>
+						<MediaRef Id="50289279"/>
+						<MediaRef Id="809356602"/>
+						<MediaRef Id="860670550"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="2180111060" Name="Play_MetalLanding" DurationType="OneShot" DurationMin="0.5" DurationMax="0.62996054">
@@ -312,5 +331,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{F44C2D2A-E044-10BA-E5C0-B2DFC10E32BC}</FileHash>
+	<FileHash>{4BB0EEDC-FB4A-BFDB-C21E-21C1A3F1851D}</FileHash>
 </SoundBanksInfo>

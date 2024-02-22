@@ -20,6 +20,7 @@ namespace AK
         static const AkUniqueID PLAY_HIGHUPAMBIENCE = 1431564541U;
         static const AkUniqueID PLAY_HUB_MUSIC = 4050862303U;
         static const AkUniqueID PLAY_LANDINGS = 1019246482U;
+        static const AkUniqueID PLAY_MAIL = 1193902087U;
         static const AkUniqueID PLAY_METALLANDING = 2180111060U;
         static const AkUniqueID PLAY_METALSTEPS = 296643996U;
         static const AkUniqueID PLAY_PACKAGEIMPACT = 246128500U;

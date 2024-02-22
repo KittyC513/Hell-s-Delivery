@@ -830,19 +830,7 @@ public class TestCube : MonoBehaviour
         }
 
         //if is moving
-        //if (shouldStep && isGrounded)
-        //{
-        //    PlayGroundSound(groundMaterial);
-        //    lastStepTime = Time.time;
-        //    shouldStep = false;
-        //}
-        //else if (currentSpeed > 0)
-        //{
-        //    if (Time.time - lastStepTime > (footstepRate / currentSpeed) * Time.deltaTime)
-        //    {
-        //        shouldStep = true;
-        //    }
-        //}
+
 
         if (!useNewMovement)
         {
@@ -2906,7 +2894,7 @@ public class TestCube : MonoBehaviour
 
                 if (!isGliding)
                 {
-                    playerSounds.parachuteOpen.Post(this.gameObject);
+                    
                 }
 
                 if (!useNewMovement)
