@@ -136,7 +136,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public ObjectGrabbable ob;
     [SerializeField]
-    public DialogueRunner dRP1, dRP2;
+    public DialogueRunner dRP1, dRP2, drAll;
     [SerializeField]
     public bool p1isKilling, p2isKilling;
 

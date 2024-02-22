@@ -239,7 +239,7 @@ public class CharacterControl : MonoBehaviour
                 break;
             case playerStates.run:
                 //can transition to idle, jump, thrown or deadr
-                ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.walkDist, Mathf.RoundToInt(directionSpeed.magnitude * 0.05f * Time.fixedDeltaTime), isPlayer1);
+                //ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.walkDist, Mathf.RoundToInt(directionSpeed.magnitude * 0.05f * Time.fixedDeltaTime), isPlayer1);
                 //if we are grounded and have no speed we are now idle
                 if (isGrounded && currentSpeed <= 0) pState = playerStates.idle;
                 if (!isGrounded && !isJumping)
@@ -271,7 +271,7 @@ public class CharacterControl : MonoBehaviour
                 if (isGrounded) pState = playerStates.land;
 
 
-                ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.fallDist, Mathf.RoundToInt(Mathf.Abs(ySpeed * 0.05f * Time.fixedDeltaTime)), isPlayer1);
+                //ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.fallDist, Mathf.RoundToInt(Mathf.Abs(ySpeed * 0.05f * Time.fixedDeltaTime)), isPlayer1);
                 break;
             case playerStates.land:
                 //can transition to idle, run, jump, thrown, dead
