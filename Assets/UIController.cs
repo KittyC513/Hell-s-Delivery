@@ -38,7 +38,7 @@ public class UIController : MonoBehaviour
     void Update()
     {
 
-        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel" || GameManager.instance.curSceneName == "Tutorial")
         {
             if (canvas == null)
             {

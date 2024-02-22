@@ -688,7 +688,7 @@ public class TestCube : MonoBehaviour
             
         }
 
-        if (curSceneName == "Level1")
+        if (curSceneName == "Level1" || curSceneName == "Tutorial" || curSceneName == "MVPLevel")
         {
 
             playerObject.GetComponent<PlayerObject>().enabled = true;
