@@ -10,7 +10,7 @@ public class LevelDialogue : MonoBehaviour
     private static LevelDialogue instance;
 
     [SerializeField]
-    public DialogueRunner dRP1, dRP2;
+    public DialogueRunner dRP1, dRP2, drAll;
     
     [SerializeField]
     private static GameObject LV, DRP1, DRP2, DRAll;
@@ -34,7 +34,7 @@ public class LevelDialogue : MonoBehaviour
         //print("DRP2 found" + DRP1);
 
         DRAll = GameObject.Find("DRAll");
-
+        
         DRP1.SetActive(false);
         DRP2.SetActive(false);
         DRAll.SetActive(false);

@@ -156,40 +156,59 @@ public class RespawnControl : MonoBehaviour
     List<string> PlayerDeath = new List<string>
     {
         "Huhu",
-        "Sigh",
         "Skill",
-        "Employee",
-        "NoPromotion",
-        "WantPromotion",
-        "Hmph",
-        "Nothing",
-        "Embarrassing",
-        "Oof",
         "Imagine",
+        "Oof",
+        "Hmph",
         "Live",
+        "Payless",
+        "NoPromotion",
+        "Employee",
+        "WantPromotion",
         "DyingPurpose",
         "NotLiving",
         "Unaliving",
-        "Recurring",
-        "DoYourJob",
-        "DoIt",
-        "Slay",
+        "USuck",
+        "GetGud",
+        "Avoid",
         "Womp",
+        "Recurring",
+        "Disappointing",
+        "DoYourJob",
+        "Goal",
+        "Good",
+        "Sigh",
+        "SlayedThat",
+        "Slay",
+        "Talent",
+        "GotSlayed",
+        "Icon",
+        "DoIt",
+        "Juice",
+        "Bruh",
+        "Nothing",
+        "Embarrassing",
+        "Zero",
         "Hug"
     };
 
     List<string> SabotageChoice = new List<string>
     {
         "Eenie",
+        "WhoCares",
         "HardDecision",
+        "MightExplode",
+        "WeRoll",
+        "LetMePick",
+        "Accidentally",
         "RealDemon",
-        "TooDifficult",
         "AnyThoughts",
         "OMMe",
+        "Indecisive",
         "PickAlready",
         "BigDemonPants",
+        "TooDifficult",
         "GoingToPick",
-        "WhoCares"
     };
 
     List<string> CooperateChoice = new List<string>
@@ -197,33 +216,38 @@ public class RespawnControl : MonoBehaviour
         "NoFun",
         "InHell",
         "Nice",
+        "Noo",
+        "Wow",
         "WorkForMe",
         "GuardianAngel",
         "Sweet",
         "Teamwork",
         "InLove",
         "Respectfully",
+        "Real",
+        "AChoice",
         "Interesting",
+        "WorstThing",
     };
 
-    List<string> PackageRemindersWithPackage = new List<string>
+    List<string> PackageReminders = new List<string>
     {
+        "NiceOfYou",
+        "Hog",
+        "Credit",
+        "Hold",
+        "Steal",
         "Selfish",
         "Tired",
         "Promotion",
+        "Second",
+        "Share",
+        "ICanSee",
         "NotDoing",
+        "Obvious",
         "OnePerson",
         "Hogging",
-    };
-
-    List<string> PackageRemindersWithoutPackage = new List<string>
-    {
-        "NiceOfYou",
-        "Credit",
-        "Steal",
-        "NotDoing",
-        "OnePerson",
-        "Hogging",
+        "GoingToPick",
     };
 
     private void Start()
@@ -670,8 +694,8 @@ public class RespawnControl : MonoBehaviour
             {
                 p1Pass = true;
                 LevelDialogue.ShowDevilPlayer1();
-                //dRP1.Stop();
-                dRP1.StartDialogue("LookAround");
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP1.StartDialogue("LookAround");
     
             
             }
@@ -681,8 +705,8 @@ public class RespawnControl : MonoBehaviour
             {
                 p2Pass = true;
                 LevelDialogue.ShowDevilPlayer2();
-                //dRP2.Stop();
-                dRP2.StartDialogue("LookAround2");
+                SceneControl.instance.dRP2.Stop();
+                SceneControl.instance.dRP2.StartDialogue("LookAround2");
           
 
             }
@@ -701,11 +725,14 @@ public class RespawnControl : MonoBehaviour
             {
                 p1Pass1 = true;
                 LevelDialogue.ShowDevilPlayerAll();
-                //dRP1.Stop();
-                dRP1.StartDialogue("Packages");
-
+                SceneControl.instance.drAll.Stop();
+                SceneControl.instance.drAll.StartDialogue("Packages");
+         
                 Debug.Log("Print");
+   
+
             }
+
 
             if (p1Pass1)
             {
@@ -720,12 +747,13 @@ public class RespawnControl : MonoBehaviour
             {
                 p1Pass2 = true;
                 LevelDialogue.ShowDevilPlayerAll();
-                dRP1.Stop();
-                dRP1.StartDialogue("Push");
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP1.StartDialogue("Push");
       
             
 
             }
+
 
             if  (p1Pass2)
             {
@@ -740,8 +768,8 @@ public class RespawnControl : MonoBehaviour
             {
                 p1Pass3 = true;
                 LevelDialogue.ShowDevilPlayerAll();
-                dRP1.Stop();
-                dRP1.StartDialogue("PressurePlate");
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP1.StartDialogue("PressurePlate");
            
 
             }
@@ -758,8 +786,8 @@ public class RespawnControl : MonoBehaviour
             {
                 p1Pass9 = true;
                 LevelDialogue.ShowDevilPlayer1();
-                dRP1.Stop();
-                dRP1.StartDialogue("P1GoldSummoningSquare");
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP1.StartDialogue("P1GoldSummoningSquare");
 
             }
 
@@ -767,8 +795,8 @@ public class RespawnControl : MonoBehaviour
             {
                 p2Pass9 = true;
                 LevelDialogue.ShowDevilPlayer2();
-                dRP2.Stop();
-                dRP2.StartDialogue("P2GoldSummoningSquare");
+                SceneControl.instance.dRP2.Stop();
+                SceneControl.instance.dRP2.StartDialogue("P2GoldSummoningSquare");
 
             }
 
@@ -786,8 +814,8 @@ public class RespawnControl : MonoBehaviour
                 StartCoroutine(ActivateP1UIForDuration(3f));
                 p1Pass4 = true;
                 LevelDialogue.ShowDevilPlayerAll();
-                dRP1.Stop();
-                dRP1.StartDialogue("Checkpoints");
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP1.StartDialogue("Checkpoints");
 
             }
 
@@ -803,8 +831,8 @@ public class RespawnControl : MonoBehaviour
             {
                 p1Pass5 = true;
                 LevelDialogue.ShowDevilPlayerAll();
-                dRP1.Stop();
-                dRP1.StartDialogue("SummoningCircles");
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP1.StartDialogue("SummoningCircles");
             
 
             }
@@ -824,8 +852,8 @@ public class RespawnControl : MonoBehaviour
             {
                 p1Pass6 = true;
                 LevelDialogue.ShowDevilPlayerAll();
-                dRP1.Stop();
-                dRP1.StartDialogue("DualSummoningCircles");
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP1.StartDialogue("DualSummoningCircles");
 
             }
 
@@ -841,8 +869,8 @@ public class RespawnControl : MonoBehaviour
             {
                 p1Pass7 = true;
                 LevelDialogue.ShowDevilPlayer1();
-                dRP1.Stop();
-                dRP1.StartDialogue("P1PlayerSpecific");
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP1.StartDialogue("P1PlayerSpecific");
 
             }
 
@@ -850,8 +878,8 @@ public class RespawnControl : MonoBehaviour
             {
                 p2Pass7 = true;
                 LevelDialogue.ShowDevilPlayer2();
-                dRP2.Stop();
-                dRP2.StartDialogue("P2PlayerSpecific");
+                SceneControl.instance.dRP2.Stop();
+                SceneControl.instance.dRP2.StartDialogue("P2PlayerSpecific");
             }
 
             if (p1Pass7 && p2Pass7)
@@ -867,9 +895,10 @@ public class RespawnControl : MonoBehaviour
             {
                 p1Pass8 = true;
                 LevelDialogue.ShowDevilPlayerAll();
-                dRP1.Stop();
-                dRP1.StartDialogue("Sabotage");
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP1.StartDialogue("Sabotage");
             }
+
 
             if (p1Pass8)
             {
@@ -1464,31 +1493,19 @@ public class RespawnControl : MonoBehaviour
         SceneControl.instance.dRP2.StartDialogue(CooperateChoice[index]);
     }
 
-    public void PlayRandomPackageWithoutPackageDialogue1()
+    public void PlayRandomPackageDialogue1()
     {
         System.Random rnd = new System.Random();
-        int index = rnd.Next(PackageRemindersWithoutPackage.Count);
-        SceneControl.instance.dRP1.StartDialogue(PackageRemindersWithoutPackage[index]);
+        int index = rnd.Next(PackageReminders.Count);
+        SceneControl.instance.dRP1.StartDialogue(PackageReminders[index]);
     }
-    public void PlayRandomPackageWithoutPackageDialogue2()
+    public void PlayRandomPackageDialogue2()
     {
         System.Random rnd = new System.Random();
-        int index = rnd.Next(PackageRemindersWithoutPackage.Count);
-        SceneControl.instance.dRP2.StartDialogue(PackageRemindersWithoutPackage[index]);
+        int index = rnd.Next(PackageReminders.Count);
+        SceneControl.instance.dRP2.StartDialogue(PackageReminders[index]);
     }
 
-    public void PlayRandomPackageWithPackageDialogue1()
-    {
-        System.Random rnd = new System.Random();
-        int index = rnd.Next(PackageRemindersWithPackage.Count);
-        SceneControl.instance.dRP1.StartDialogue(PackageRemindersWithPackage[index]);
-    }
-    public void PlayRandomPackageWithPackageDialogue2()
-    {
-        System.Random rnd = new System.Random();
-        int index = rnd.Next(PackageRemindersWithPackage.Count);
-        SceneControl.instance.dRP2.StartDialogue(PackageRemindersWithPackage[index]);
-    }
 
     IEnumerator ActivateP1UIForDuration(float duration)
     {
