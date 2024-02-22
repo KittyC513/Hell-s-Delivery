@@ -22,33 +22,71 @@ public class PlayerObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Level1CamControl.instance.endCutScene && !isFound)
+        if(GameManager.instance.curSceneName == " Level1" )
         {
-            UIController ui = FindAnyObjectByType<UIController>();
-
-
-            if (ui == null && Level1CamControl.instance.endCutScene)
+            if (Level1CamControl.instance.endCutScene && !isFound)
             {
-                ui = GameObject.Find("World").GetComponent<UIController>();
-            }
+                UIController ui = FindAnyObjectByType<UIController>();
 
-            if (ui == null) Debug.LogError("No UIController component found");
 
-            if (ui != null)
-            {
-                if (testCube.isPlayer1)
+                if (ui == null && Level1CamControl.instance.endCutScene)
                 {
-                    ui.AddPlayerIndicator(null, this.gameObject);
+                    ui = GameObject.Find("World").GetComponent<UIController>();
                 }
 
-                if (testCube.isPlayer2)
-                {
-                    ui.AddTargetIndicator(null, this.gameObject);
-                }
+                if (ui == null) Debug.LogError("No UIController component found");
 
-                isFound = true;
+                if (ui != null)
+                {
+                    if (testCube.isPlayer1)
+                    {
+                        ui.AddPlayerIndicator(null, this.gameObject);
+                    }
+
+                    if (testCube.isPlayer2)
+                    {
+                        ui.AddTargetIndicator(null, this.gameObject);
+                    }
+
+                    isFound = true;
+                }
             }
         }
+        if(GameManager.instance.curSceneName == " Tutorial")
+        {
+            if (!isFound)
+            {
+                UIController ui = FindAnyObjectByType<UIController>();
+
+
+                if (ui == null)
+                {
+                    ui = GameObject.Find("World").GetComponent<UIController>();
+                }
+
+                if (ui == null) Debug.LogError("No UIController component found");
+
+                if (ui != null)
+                {
+                    if (testCube.isPlayer1)
+                    {
+                        ui.AddPlayerIndicator(null, this.gameObject);
+                    }
+
+                    if (testCube.isPlayer2)
+                    {
+                        ui.AddTargetIndicator(null, this.gameObject);
+                    }
+
+                    isFound = true;
+                }
+            }
+        }
+
+
+
+       
+      
 
 
     }

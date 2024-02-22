@@ -49,12 +49,16 @@ public class Level1CamControl : MonoBehaviour
     void Update()
     {
 
-        if(GameManager.instance.curSceneName == "Level1")
+        if (GameManager.instance.curSceneName == "Level1")
+        {
+            AtStartCam();
+        }
+        if (GameManager.instance.curSceneName == "MVP")
         {
             AtStartCam();
         }
 
-
+        AtStartCam();
     }
 
 
@@ -96,7 +100,7 @@ public class Level1CamControl : MonoBehaviour
 
     public IEnumerator StopMoveCam()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         GameManager.instance.cam1.SetActive(true);
         GameManager.instance.cam2.SetActive(true);
         mainCam.gameObject.SetActive(false);
