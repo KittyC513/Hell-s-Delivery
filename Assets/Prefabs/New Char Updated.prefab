@@ -561,6 +561,8 @@ MonoBehaviour:
   p2DeadScreen: {fileID: 6687115631195399112}
   p1Anim: {fileID: 7779615851065542265}
   p2Anim: {fileID: 9113243855570146137}
+  previousIndex: 0
+  multiple: 0
 --- !u!114 &1936537124406388785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7185,7 +7187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3744829075321147806}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.04077959, y: -0.16502135, z: 0.15175433, w: 0.9736918}
+  m_LocalRotation: {x: -0.04077953, y: -0.16502135, z: 0.15175432, w: 0.9736918}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11941,7 +11943,7 @@ GameObject:
   - component: {fileID: 4580921287512545754}
   m_Layer: 0
   m_Name: P2Death
-  m_TagString: Untagged
+  m_TagString: noOutline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16833,7 +16835,7 @@ GameObject:
   - component: {fileID: 8812585817344898131}
   m_Layer: 0
   m_Name: P1Death
-  m_TagString: Untagged
+  m_TagString: noOutline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
