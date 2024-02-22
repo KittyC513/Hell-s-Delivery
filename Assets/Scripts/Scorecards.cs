@@ -92,6 +92,7 @@ public class Scorecards : MonoBehaviour
 
     private void Start()
     {
+        lvlData = GameManager.instance.lastLevelData;
         player1Score = lvlData.p1FinalScore;
         player2Score = lvlData.p2FinalScore;
         //first run animation 
@@ -105,7 +106,7 @@ public class Scorecards : MonoBehaviour
         p1MailCount.text = ("x  ");
         p2MailCount.text = ("x  ");
 
-        lvlData = GameManager.instance.lastLevelData;
+        
         
     }
 

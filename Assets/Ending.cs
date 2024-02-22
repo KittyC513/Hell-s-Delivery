@@ -20,7 +20,7 @@ public class Ending : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
-
+            badgeManager.RunFinalCheck();
             Loader.Load(Loader.Scene.ScoreCards);
         }
     }

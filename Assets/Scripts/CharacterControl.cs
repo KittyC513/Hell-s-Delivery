@@ -138,9 +138,14 @@ public class CharacterControl : MonoBehaviour
         currentSpeed = 0;
         faceDir = Vector3.zero;
         soundBank = this.GetComponent<PlayerSoundbank>();
+      
+     
+    }
+
+    public void OnLevelStart()
+    {
         lvlData = ScoreCount.instance.lvlData;
         scoreCount = ScoreCount.instance;
-     
     }
 
     private void Update()
