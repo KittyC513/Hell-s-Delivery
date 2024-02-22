@@ -10339,6 +10339,12 @@ MonoBehaviour:
   p2isInZone1: 0
   packageDialogueEnd: 0
   packageDialogueStart: 0
+  multiple: 0
+  oriValue: 0
+  play1WithPackageDialogue: 0
+  play2WithPackageDialogue: 0
+  play1WithoutPackageDialogue: 0
+  play2WithoutPackageDialogue: 0
 --- !u!4 &835677023
 Transform:
   m_ObjectHideFlags: 0
@@ -23333,6 +23339,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 664514345712760714, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 782815847746230905, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 925923699060937176, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -23368,6 +23382,10 @@ PrefabInstance:
     - target: {fileID: 5276816636105185173, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8496534832254342108, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8735343089067886010, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_SizeDelta.x
