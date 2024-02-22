@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
@@ -18,10 +19,16 @@ public class CharacterControl : MonoBehaviour
     private bool isDead = false;
     [SerializeField] private GameObject shadowRenderer;
     private bool isPlayer1;
+    private PlayerSoundbank soundBank;
+    private string groundMaterial = "nothing";
+    private bool shouldStep;
+    private float lastStepTime;
+    [SerializeField] private float footStepRate = 1;
 
 
     [Header("Ground Movement")]
     [SerializeField] private float peakSpeed = 500;
+    [SerializeField] private float walkSpeed = 300;
     [SerializeField] private AnimationCurve velocityCurve;
     [SerializeField] private AnimationCurve decelerationCurve;
     [SerializeField] private AnimationCurve airQuickTurnCurve;
@@ -126,12 +133,14 @@ public class CharacterControl : MonoBehaviour
     #region Essential Functions
     private void Start()
     {
-    
+       
         rb = GetComponent<Rigidbody>();
         currentSpeed = 0;
         faceDir = Vector3.zero;
+        soundBank = this.GetComponent<PlayerSoundbank>();
         lvlData = ScoreCount.instance.lvlData;
         scoreCount = ScoreCount.instance;
+     
     }
 
     private void Update()
@@ -446,7 +455,7 @@ public class CharacterControl : MonoBehaviour
             {
                 if (rawInput.magnitude > 0)
                 {
-                    directionSpeed = new Vector3((faceDir.x * currentSpeed) * rawInput.magnitude, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude);
+                    directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude);
                 }
                 else
                 {
@@ -458,7 +467,7 @@ public class CharacterControl : MonoBehaviour
             {
                 if (rawInput.magnitude > 0)
                 {
-                    directionSpeed = new Vector3((faceDir.x * currentSpeed) * rawInput.magnitude * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
+                    directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
                 }
                 else
                 {
@@ -501,17 +510,26 @@ public class CharacterControl : MonoBehaviour
             {
                 //this facing direction means even if we are not inputting anything we are still facing somewhere
                 //this is used to keep applying speed for a short time after we input to get a deceleration
-               
+                PlayWalkSound();
                 decelerationTime = 0;
                 velocityTime += Time.deltaTime;
 
                 //if we are on the ground we want to use our grounded velocity curve, otherwise we use the aerial one
                 //multiply our peak speed by our place on the velocity curve
                 //if we are at the peak our velocity will be our peak speed times 1, so our peak speed
-                currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
+                if (rawInput.magnitude > 0.5f)
+                {
+                    currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
+                    airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+                }
+                else
+                {
+                    currentSpeed = (walkSpeed * velocityCurve.Evaluate(velocityTime));
+                    airSpeed = (walkSpeed * airVelocityCurve.Evaluate(velocityTime));
+                }
 
                 //if we aren't grounded we evaluate the air movement curve
-                airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+          
 
                 if (pState == playerStates.parachute)
                 {
@@ -532,7 +550,7 @@ public class CharacterControl : MonoBehaviour
                 }
 
                 //what was the player's speed the last time they were inputting
-                lastSpeedValue = currentSpeed * rawInput.magnitude;
+                lastSpeedValue = currentSpeed; //* rawInput.magnitude;
 
             }
             else
@@ -755,11 +773,19 @@ public class CharacterControl : MonoBehaviour
         {
             if (button.ReadValue<float>() == 1)
             {
+                if (!isParachuting)
+                {
+                    soundBank.parachuteOpen.Post(this.gameObject);
+                }
                 //parachute
                 isParachuting = true;
             }
             else
             {
+                if (isParachuting)
+                {
+                    soundBank.parachuteClose.Post(this.gameObject);
+                }
                 isParachuting = false;
             }
         }
@@ -776,11 +802,11 @@ public class CharacterControl : MonoBehaviour
     
         if (rawInput.magnitude < runMagnitude)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, (rotationSpeed *  rawInput.magnitude) * Time.fixedDeltaTime);
         }
         else
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, slowRotationSpeed * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, (slowRotationSpeed * rawInput.magnitude) * Time.fixedDeltaTime);
         }
        
 
@@ -792,6 +818,15 @@ public class CharacterControl : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(groundCheck.position, groundCheckRadius, Vector3.down, out hit, groundCheckDist, groundLayer))
         {
+            if (!isGrounded)
+            {
+                if (groundMaterial == "Metal") soundBank.metalLand.Post(this.gameObject);
+                else if (groundMaterial == "Wood") soundBank.woodLand.Post(this.gameObject);
+                else soundBank.land.Post(this.gameObject);
+                isJumping = false;
+            }
+
+            groundMaterial = hit.transform.tag;
             isGrounded = true;
             //isJumping = false;
             //if the player isn't jumping and the distance between them and the ground is smaller than some number, snap them to the floor
@@ -874,6 +909,40 @@ public class CharacterControl : MonoBehaviour
             shadowRenderer.SetActive(false);
         }
 
+    }
+
+    private void PlayGroundSound(string material)
+    {
+        if (material == "Metal")
+        {
+            soundBank.metalStep.Post(this.gameObject);
+        }
+        else if (material == "Wood")
+        {
+            soundBank.woodStep.Post(this.gameObject);
+        }
+        else
+        {
+            soundBank.steps.Post(this.gameObject);
+        }
+
+    }
+
+    private void PlayWalkSound()
+    {
+        if (shouldStep && isGrounded)
+        {
+            PlayGroundSound(groundMaterial);
+            lastStepTime = Time.time;
+            shouldStep = false;
+        }
+        else if (currentSpeed > 0)
+        {
+            if (Time.time - lastStepTime > (footStepRate / (currentSpeed / 100)) * Time.deltaTime)
+            {
+                shouldStep = true;
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
