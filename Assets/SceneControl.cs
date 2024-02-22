@@ -148,6 +148,19 @@ public class SceneControl : MonoBehaviour
     public bool packageDialogueEnd, packageDialogueStart;
 
 
+    [Header("Bark")]
+    [SerializeField]
+    public int multiple;
+    [SerializeField]
+    public int oriValue;
+
+    //public bool p1BarkTriggered;
+    //public bool p2BarkTriggered;
+    public bool play1WithPackageDialogue;
+    public bool play2WithPackageDialogue;
+    public bool play1WithoutPackageDialogue;
+    public bool play2WithoutPackageDialogue;
+
     private void Awake()
     {
         instance = this;
@@ -178,6 +191,9 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.p1.withinPackageRange = false;
             GameManager.instance.p2.withinPackageRange = false;
         }
+
+        multiple = 1;
+        oriValue = multiple;
 
     }
 
@@ -221,6 +237,7 @@ public class SceneControl : MonoBehaviour
         {
             PackageInstructionControl();
             SkipLevel1OverviewCutScene();
+            DetectPackgeScore();
         }
 
         if (GameManager.instance.curSceneName == "Tutorial")
@@ -788,5 +805,74 @@ public class SceneControl : MonoBehaviour
     }
     #endregion
 
+    #region Bark
+    void DetectPackgeScore()
+    {
+        if (ScoreCount.instance != null && ScoreCount.instance != null)
+        {
+            if (ScoreCount.instance.lvlData.p1Deliver >= 120 * multiple || ScoreCount.instance.lvlData.p2Deliver >= 120 * multiple)
+            {
+                if (!SceneControl.instance.p1isKilling && !SceneControl.instance.p2isKilling && !SceneControl.instance.p1IsSaving && !SceneControl.instance.p2IsSaving)
+                {
+                    {
+                        if (ScoreCount.instance.lvlData.p1Deliver >= 120 * multiple)
+                        {
+                            if(!play1WithPackageDialogue && !play2WithoutPackageDialogue)
+                            {
+                                int i = Random.Range(1, 10);
+                                print("i = " + i);
+                                if (i <= 5)
+                                {
+                                    //p1BarkTriggered = true;
+                                    //PlayRandomPackageDialogue1();
+                                    multiple += 1;
+                                    play1WithPackageDialogue = true;
 
+                                }
+                                else
+                                {
+                                    //p2BarkTriggered = true;
+                                    //PlayRandomPackageDialogue4();
+                                    oriValue = multiple;
+                                    multiple += 1;
+                                    play2WithoutPackageDialogue = true;
+                                }
+                            }
+
+                         }                        
+                         else if (ScoreCount.instance.lvlData.p2Deliver >= 120 * multiple)
+                         {
+                            if(!play2WithPackageDialogue &&!play1WithoutPackageDialogue)
+                            {
+                                int i = Random.RandomRange(1, 10);
+                                print("i = " + i);
+
+                                if (i <= 5)
+                                {
+                                    //PlayRandomPackageDialogue2();
+                                    //oriValue = multiple;
+                                    //p2BarkTriggered = true;
+                                    multiple += 1;
+                                    play2WithPackageDialogue = true;
+                                }
+                                else
+                                {
+                                    //PlayRandomPackageDialogue3();
+                                    //oriValue = multiple;
+                                    //p1BarkTriggered = true;
+                                    multiple += 1;
+                                    play1WithoutPackageDialogue = true;
+                                }
+                            }
+                            
+                        }
+
+                    }
+                }
+            }
+
+        }
+    }
+
+    #endregion
 }

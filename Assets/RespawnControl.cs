@@ -155,7 +155,9 @@ public class RespawnControl : MonoBehaviour
     [SerializeField]
     public int previousIndex;
     [SerializeField]
-    public int multiple;
+    private bool isTriggered;
+
+
 
     //CheckpointControl activateFCP;
 
@@ -257,7 +259,7 @@ public class RespawnControl : MonoBehaviour
 
     private void Start()
     {
-        multiple = 1;
+
 
     }
 
@@ -298,48 +300,33 @@ public class RespawnControl : MonoBehaviour
 
     void PackageBark()
     {
-        if(ScoreCount.instance != null && ScoreCount.instance != null)
+
+        if (SceneControl.instance.play1WithPackageDialogue)
         {
-            if (ScoreCount.instance.lvlData.p1Deliver >= 120 * multiple || ScoreCount.instance.lvlData.p2Deliver >= 120 * multiple)
-            {
-                if (!SceneControl.instance.p1isKilling && !SceneControl.instance.p2isKilling && !SceneControl.instance.p1IsSaving && !SceneControl.instance.p2IsSaving)
-                {
-                    {
-                        if (ScoreCount.instance.lvlData.p1Deliver >= 120 * multiple)
-                        {
-                            int i = Random.Range(1, 10);
-                            if (i <= 5)
-                            {
-                                PlayRandomPackageDialogue1();
-                                multiple += 1;
-                            }
-                            else
-                            {
-                                PlayRandomPackageDialogue4();
-                                multiple += 1;
-                            }
+            PlayRandomPackageDialogue1();
+            //SceneControl.instance.p1BarkTriggered = true;
 
-                        }
-                        else if (ScoreCount.instance.lvlData.p2Deliver >= 120 * multiple)
-                        {
-                            int i = Random.RandomRange(1, 10);
-                            if (i <= 5)
-                            {
-                                PlayRandomPackageDialogue2();
-                                multiple += 1;
-                            }
-                            else
-                            {
-                                PlayRandomPackageDialogue3();
-                                multiple += 1;
-                            }
-
-                        }
-                    }
-                }
-            }
         }
-       
+
+        if (SceneControl.instance.play2WithPackageDialogue)
+        {
+            PlayRandomPackageDialogue2();
+            //SceneControl.instance.p2BarkTriggered = true;
+        }
+
+        if (SceneControl.instance.play1WithoutPackageDialogue)
+        {
+            PlayRandomPackageDialogue3();
+            //SceneControl.instance.p1BarkTriggered = true;
+        }
+
+        if (SceneControl.instance.play2WithoutPackageDialogue)
+        {
+            PlayRandomPackageDialogue4();
+            //SceneControl.instance.p2BarkTriggered = true;
+        }
+        
+
     }
 
     void SceneCheck()
@@ -1668,18 +1655,38 @@ public class RespawnControl : MonoBehaviour
         System.Random rnd = new System.Random();
         int index = rnd.Next(WithPackageReminders.Count);
         SceneControl.instance.dRP1.StartDialogue(WithPackageReminders[index]);
+        //SceneControl.instance.p1BarkTriggered = true;
+        //SceneControl.instance.p2BarkTriggered = true;
+        SceneControl.instance.play1WithPackageDialogue = false;
+        SceneControl.instance.play2WithPackageDialogue = false;
+        SceneControl.instance.play1WithoutPackageDialogue = false;
+        SceneControl.instance.play2WithoutPackageDialogue = false;
     }
     public void PlayRandomPackageDialogue2()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(WithPackageReminders.Count);
         SceneControl.instance.dRP2.StartDialogue(WithPackageReminders[index]);
+        //SceneControl.instance.p1BarkTriggered = true;
+        //SceneControl.instance.p2BarkTriggered = true;
+        SceneControl.instance.play1WithPackageDialogue = false;
+        SceneControl.instance.play2WithPackageDialogue = false;
+        SceneControl.instance.play1WithoutPackageDialogue = false;
+        SceneControl.instance.play2WithoutPackageDialogue = false;
+
     }
     public void PlayRandomPackageDialogue3()
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(WithPackageReminders.Count);
         SceneControl.instance.dRP1.StartDialogue(WithoutPackageReminders[index]);
+        //SceneControl.instance.p1BarkTriggered = true;
+        //SceneControl.instance.p2BarkTriggered = true;
+        SceneControl.instance.play1WithPackageDialogue = false;
+        SceneControl.instance.play2WithPackageDialogue = false;
+        SceneControl.instance.play1WithoutPackageDialogue = false;
+        SceneControl.instance.play2WithoutPackageDialogue = false;
+
     }
 
     public void PlayRandomPackageDialogue4()
@@ -1687,6 +1694,13 @@ public class RespawnControl : MonoBehaviour
         System.Random rnd = new System.Random();
         int index = rnd.Next(WithPackageReminders.Count);
         SceneControl.instance.dRP2.StartDialogue(WithoutPackageReminders[index]);
+        //SceneControl.instance.p1BarkTriggered = true;
+        //SceneControl.instance.p2BarkTriggered = true;
+        SceneControl.instance.play1WithPackageDialogue = false;
+        SceneControl.instance.play2WithPackageDialogue = false;
+        SceneControl.instance.play1WithoutPackageDialogue = false;
+        SceneControl.instance.play2WithoutPackageDialogue = false;
+
     }
 
 
