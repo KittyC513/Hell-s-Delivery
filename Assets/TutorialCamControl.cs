@@ -159,14 +159,14 @@ public class TutorialCamControl : MonoBehaviour
     {
         AtStartCam();
         PackageArea();
-        PushArea();
+        //PushArea();
         PressurePlateArea();
-        GoldSummoningArea();
+        //GoldSummoningArea();
         CheckpointArea();
         SummoningCircleArea();
         SabptageArea();
         DualSummoningArea();
-        PlayerSpecificArea();
+        //PlayerSpecificArea();
     }
 
     #region At Start
@@ -208,7 +208,7 @@ public class TutorialCamControl : MonoBehaviour
         while (currentPositionIndex < cameraPositions.Length)
         {
             Transform targetPosition = cameraPositions[currentPositionIndex];
-            yield return StartCoroutine(MoveCamera(targetPosition, transitionSpeed, mainCam));
+            yield return StartCoroutine(MoveCamera(targetPosition, transitionSpeed + 1, mainCam));
             currentPositionIndex++;
         }
     }
@@ -273,7 +273,7 @@ public class TutorialCamControl : MonoBehaviour
     }
     IEnumerator MoveToNextCamera1()
     {
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         while (currentPositionIndex1 < cameraPositions1.Length)
         {
             Transform targetPosition = cameraPositions1[currentPositionIndex1];

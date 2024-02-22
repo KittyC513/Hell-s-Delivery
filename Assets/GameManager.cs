@@ -185,6 +185,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public int changeSceneTimes;
 
+    [Header("Title Scene")]
+    private GameObject Maincanvas;
+
     public LevelData lastLevelData;
 
 
@@ -271,6 +274,7 @@ public class GameManager : MonoBehaviour
             {
                 if (!enterOffice)
                 {
+                    Maincanvas.gameObject.SetActive(false);
                     MoveCamera(cameraPosition, 5f);
                     animTitle.SetBool("isEnded", true);
                     text.SetActive(false);
@@ -801,8 +805,8 @@ public class GameManager : MonoBehaviour
     {
         if(curSceneName == "Level1")
         {
-            cam1.SetActive(true);
-            cam2.SetActive(true);
+            //cam1.SetActive(true);
+            //cam2.SetActive(true);
         }
     }
 

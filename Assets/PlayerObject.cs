@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerObject : MonoBehaviour
 {
     [SerializeField]
-    private TestCube testCube; 
+    private TestCube testCube;
+    [SerializeField]
+    private bool isFound;
     private void Awake()
     {
 
@@ -13,30 +15,41 @@ public class PlayerObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UIController ui = FindAnyObjectByType<UIController>();
 
-        if (ui == null)
-        {
-            ui = GameObject.Find("World").GetComponent<UIController>();
-        }
-
-        if (ui == null) Debug.LogError("No UIController component found");
-
-        if (testCube.isPlayer1)
-        {
-            ui.AddPlayerIndicator(null, this.gameObject);
-        }
-
-        if (testCube.isPlayer2)
-        {
-            ui.AddTargetIndicator(null, this.gameObject);
-        }
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Level1CamControl.instance.endCutScene && !isFound)
+        {
+            UIController ui = FindAnyObjectByType<UIController>();
+
+
+            if (ui == null && Level1CamControl.instance.endCutScene)
+            {
+                ui = GameObject.Find("World").GetComponent<UIController>();
+            }
+
+            if (ui == null) Debug.LogError("No UIController component found");
+
+            if (ui != null)
+            {
+                if (testCube.isPlayer1)
+                {
+                    ui.AddPlayerIndicator(null, this.gameObject);
+                }
+
+                if (testCube.isPlayer2)
+                {
+                    ui.AddTargetIndicator(null, this.gameObject);
+                }
+
+                isFound = true;
+            }
+        }
+
 
     }
 }

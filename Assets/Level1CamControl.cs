@@ -8,8 +8,12 @@ public class Level1CamControl : MonoBehaviour
 
     [SerializeField]
     private float waitingTime;
+    [SerializeField]
+    private GameObject indicator;
+    [SerializeField]
+    private GameObject indicatorCanvas;
 
-    [Header("At Start")]
+    [Header("Level 1")]
     [SerializeField]
     private bool atStart;
     [SerializeField]
@@ -23,39 +27,57 @@ public class Level1CamControl : MonoBehaviour
     [SerializeField]
     public bool cutsceneIsCompleted;
     [SerializeField]
-    public bool endTutorial;
+    public bool endCutScene;
+
     // Start is called before the first frame update
+    private void Awake()
+    {
+
+    }
     void Start()
     {
         instance = this;
+
         atStart = true;
+     
+
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        AtStartCam();
+
+        if(GameManager.instance.curSceneName == "Level1")
+        {
+            AtStartCam();
+        }
+
+
     }
 
-    #region At Start
+
+    #region Level 1
     void AtStartCam()
     {
         if (atStart)
         {
-            //GameManager.instance.cam1.SetActive(false);
-            //GameManager.instance.cam2.SetActive(false);
-            //GameManager.instance.p1.isFreeze = true;
-            //GameManager.instance.p2.isFreeze = true;
+            indicator.SetActive(false);
+            indicatorCanvas.SetActive(false);
+            GameManager.instance.cam1.SetActive(false);
+            GameManager.instance.cam2.SetActive(false);
+            GameManager.instance.p1.isFreeze = true;
+            GameManager.instance.p2.isFreeze = true;
             mainCam.gameObject.SetActive(true);
-
             StartCoroutine(MoveToNextCamera());
             atStart = false;
         }
 
-        if (currentPositionIndex >= cameraPositions.Length - 1 && !endTutorial)
+        if (currentPositionIndex >= cameraPositions.Length - 1 && !endCutScene)
         {
             StartCoroutine(StopMoveCam());
-            endTutorial = true;
+            
         }
 
 
@@ -63,7 +85,7 @@ public class Level1CamControl : MonoBehaviour
 
     IEnumerator MoveToNextCamera()
     {
-
+        yield return new WaitForSeconds(1f);
         while (currentPositionIndex < cameraPositions.Length)
         {
             Transform targetPosition = cameraPositions[currentPositionIndex];
@@ -74,14 +96,18 @@ public class Level1CamControl : MonoBehaviour
 
     IEnumerator StopMoveCam()
     {
-        yield return new WaitForSeconds(3f);
-        //GameManager.instance.cam1.SetActive(true);
-        //GameManager.instance.cam2.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        GameManager.instance.cam1.SetActive(true);
+        GameManager.instance.cam2.SetActive(true);
         mainCam.gameObject.SetActive(false);
 
-        //GameManager.instance.p1.isFreeze = false;
-        //GameManager.instance.p2.isFreeze = false;
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
         cutsceneIsCompleted = true;
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
+        endCutScene = true;
+
 
     }
 
