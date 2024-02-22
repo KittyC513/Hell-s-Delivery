@@ -748,12 +748,18 @@ public class RespawnControl : MonoBehaviour
 
                     if(!SceneControl.instance.packageDialogueStart || SceneControl.instance.packageDialogueEnd)
                     {
-                        LevelDialogue.ShowDevilPlayerAll();
-                        SceneControl.instance.drAll.Stop();
-                        SceneControl.instance.drAll.StartDialogue("Packages");
+
+                        StartCoroutine(StartPackageDialogue());
+
                     }
 
                 }         
+            }
+
+
+            if(p1Pass1 || p2Pass1)
+            {
+                Destroy(other.gameObject);
             }
 
 
@@ -767,12 +773,21 @@ public class RespawnControl : MonoBehaviour
         {
             if (isPlayer1 && !p1Pass2)
             {
-                p1Pass2 = true;
-                push_T1.SetActive(true);
+                p1Pass2 = true;            
                 LevelDialogue.ShowDevilPlayer1();
                 SceneControl.instance.dRP1.Stop();
                 SceneControl.instance.dRP1.StartDialogue("Push");      
             }
+            if (isPlayer1)
+            {
+                push_T1.SetActive(true);
+            }
+            if (isPlayer2)
+            {
+                push_T2.SetActive(true);
+            }
+
+
             if (isPlayer2 && !p2Pass2)
             {
                 p2Pass2 = true;
@@ -797,10 +812,17 @@ public class RespawnControl : MonoBehaviour
                     p1Pass3 = true;
                     p2Pass3 = true;
                     LevelDialogue.ShowDevilPlayerAll();
+                    SceneControl.instance.dRP1.Stop();
+                    SceneControl.instance.dRP2.Stop();
                     SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("PressurePlate");
                 }
 
+            }
+
+            if (p1Pass3 || p2Pass3)
+            {
+                Destroy(other.gameObject);
             }
 
         }
@@ -810,7 +832,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1 && !p1Pass9)
             {
                 p1Pass9 = true;
-                PressurePlate_T1.SetActive(true);
+                //PressurePlate_T1.SetActive(true);
                 LevelDialogue.ShowDevilPlayer1();
                 SceneControl.instance.dRP1.Stop();
                 SceneControl.instance.dRP1.StartDialogue("P1GoldSummoningSquare");
@@ -820,7 +842,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2 && !p2Pass9)
             {
                 p2Pass9 = true;
-                PressurePlate_T2.SetActive(true);
+                //PressurePlate_T2.SetActive(true);
                 LevelDialogue.ShowDevilPlayer2();
                 SceneControl.instance.dRP2.Stop();
                 SceneControl.instance.dRP2.StartDialogue("P2GoldSummoningSquare");
@@ -845,10 +867,17 @@ public class RespawnControl : MonoBehaviour
                     p1Pass4 = true;
                     p2Pass4 = true;
                     LevelDialogue.ShowDevilPlayerAll();
+                    SceneControl.instance.dRP1.Stop();
+                    SceneControl.instance.dRP2.Stop();
                     SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("Checkpoints");
                 }
 
+            }
+
+            if (p2Pass4 || p1Pass4)
+            {
+                Destroy(other.gameObject);
             }
         }
 
@@ -861,12 +890,19 @@ public class RespawnControl : MonoBehaviour
                     p1Pass5 = true;
                     p2Pass5 = true;
                     LevelDialogue.ShowDevilPlayerAll();
+                    SceneControl.instance.dRP1.Stop();
+                    SceneControl.instance.dRP2.Stop();
                     SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("SummoningCircles");
                 }
 
             }
 
+
+            if (p2Pass5 || p1Pass5)
+            {
+                Destroy(other.gameObject);
+            }
         }
 
         if (other.gameObject.tag == ("Dual_Tutorial"))
@@ -878,10 +914,17 @@ public class RespawnControl : MonoBehaviour
                     p1Pass6 = true;
                     p2Pass6 = true;
                     LevelDialogue.ShowDevilPlayerAll();
+                    SceneControl.instance.dRP1.Stop();
+                    SceneControl.instance.dRP2.Stop();
                     SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("DualSummoningCircles");
                 }
 
+            }
+
+            if (p2Pass6 || p1Pass6)
+            {
+                Destroy(other.gameObject);
             }
         }
 
@@ -916,10 +959,17 @@ public class RespawnControl : MonoBehaviour
                     p1Pass8 = true;
                     p2Pass8 = true;
                     LevelDialogue.ShowDevilPlayerAll();
+                    SceneControl.instance.dRP1.Stop();
+                    SceneControl.instance.dRP2.Stop();
                     SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("Sabotage");
                 }
 
+            }
+
+            if (p2Pass8 || p1Pass8)
+            {
+                Destroy(other.gameObject);
             }
         }
         //Debug.Log("newcheckpoint");
@@ -1427,13 +1477,13 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
 
-                PressurePlate_T1.SetActive(false);
+                //PressurePlate_T1.SetActive(false);
 
             }
 
             if (isPlayer2)
             {
-                PressurePlate_T1.SetActive(false);
+                //PressurePlate_T1.SetActive(false);
             }
 
         }
@@ -1547,7 +1597,17 @@ public class RespawnControl : MonoBehaviour
     {
         Destroy(gameObject);
         return null;
+    }
 
+
+    IEnumerator StartPackageDialogue()
+    {
+        LevelDialogue.ShowDevilPlayerAll();
+        SceneControl.instance.drAll.Stop();
+        SceneControl.instance.dRP1.Stop();
+        SceneControl.instance.dRP2.Stop();
+        yield return new WaitForSeconds(2f);
+        SceneControl.instance.drAll.StartDialogue("Packages");
     }
 
 }

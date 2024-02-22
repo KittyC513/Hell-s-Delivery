@@ -78,6 +78,8 @@ public class TutorialCamControl : MonoBehaviour
     public bool endTutorial4;
     [SerializeField]
     private GameObject invisibleWall;
+    [SerializeField]
+    private bool wallIsGone;
 
     [Header("Checkpoint")]
     [SerializeField]
@@ -162,6 +164,7 @@ public class TutorialCamControl : MonoBehaviour
         //PushArea();
         PressurePlateArea();
         //GoldSummoningArea();
+        InvisibleWall();
         CheckpointArea();
         SummoningCircleArea();
         SabptageArea();
@@ -423,6 +426,21 @@ public class TutorialCamControl : MonoBehaviour
     #endregion
 
     #region GoldSummoning Area
+
+    private void InvisibleWall()
+    {
+        if (inGoldSummningArea && !wallIsGone)
+        {
+            StartCoroutine(SetInvisibleWall());
+        }
+    }
+
+    IEnumerator SetInvisibleWall()
+    {
+        yield return new WaitForSeconds(1f);
+        invisibleWall.SetActive(false);
+        wallIsGone = true;
+    }
     private void GoldSummoningArea()
     {
         if (inGoldSummningArea && !isActivated4)
