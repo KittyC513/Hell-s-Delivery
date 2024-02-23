@@ -23,6 +23,7 @@ public class Ending : MonoBehaviour
             GameManager.instance.changeSceneTimes += 1;
             badgeManager.RunFinalCheck();
             Loader.Load(Loader.Scene.ScoreCards);
+
         }
     }
 

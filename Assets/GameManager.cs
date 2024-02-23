@@ -210,11 +210,12 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        instructionText.SetActive(false);
-        instance = this;
+
     }
     private void Start()
     {
+        instructionText.SetActive(false);
+        instance = this;
         lighting1.SetActive(false);
         lighting2.SetActive(false);
         lighting3.SetActive(false);

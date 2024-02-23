@@ -105,7 +105,7 @@ public class NPCTrigger : MonoBehaviour
     }
 
 
-    IEnumerator Leaving()
+    public IEnumerator Leaving()
     {
         anim.SetTrigger("isLeaving");
         yield return new WaitForSeconds(1.2f);

@@ -417,7 +417,7 @@ public class SceneControl : MonoBehaviour
                 SwitchCameraToMain();
                 radialUI.SetActive(false);
                 WeatherdialogueEnds = true;
-                LalahLeave();
+                WeatherLeave();
             }
             if (WeatherdialogueEnds)
             {
@@ -946,7 +946,7 @@ public class SceneControl : MonoBehaviour
     public void TurnOnCanvas()
     {
         endCanvas.SetActive(true);
-        endCanvasAnim.SetTrigger("end");
+        endCanvasAnim.SetTrigger("End");
     }
 
     public void QuitGame()
