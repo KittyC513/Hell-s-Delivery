@@ -11514,6 +11514,7 @@ GameObject:
   - component: {fileID: 1078003550}
   - component: {fileID: 1078003552}
   - component: {fileID: 1078003551}
+  - component: {fileID: 1078003553}
   m_Layer: 0
   m_Name: cuboid_36
   m_TagString: Untagged
@@ -11588,6 +11589,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078003549}
   m_Mesh: {fileID: -7427627118920025564, guid: 4fcfe99b68743a6438f3da91c836ae01, type: 3}
+--- !u!114 &1078003553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078003549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d57911cb49a17a4baac7f4133db5428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1079302995 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5838600737487669701, guid: 4fcfe99b68743a6438f3da91c836ae01, type: 3}
@@ -20735,13 +20748,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3960656519623105974, guid: 640ee2f337278d94db9f8fac77f9e9bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1870970897}
   m_SourcePrefab: {fileID: 100100000, guid: 640ee2f337278d94db9f8fac77f9e9bc, type: 3}
 --- !u!4 &1870970895 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 640ee2f337278d94db9f8fac77f9e9bc, type: 3}
   m_PrefabInstance: {fileID: 1870970894}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1870970896 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3960656519623105974, guid: 640ee2f337278d94db9f8fac77f9e9bc, type: 3}
+  m_PrefabInstance: {fileID: 1870970894}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1870970897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870970896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d57911cb49a17a4baac7f4133db5428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1877013468
 GameObject:
   m_ObjectHideFlags: 0
