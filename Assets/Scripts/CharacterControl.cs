@@ -24,6 +24,7 @@ public class CharacterControl : MonoBehaviour
     private bool shouldStep;
     private float lastStepTime;
     [SerializeField] private float footStepRate = 1;
+    [SerializeField] public PlayerCollector playerCollector;
 
 
     [Header("Ground Movement")]

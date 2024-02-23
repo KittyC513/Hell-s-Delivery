@@ -11,10 +11,14 @@ public class PlayerCollector : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        scoreCount = FindFirstObjectByType<ScoreCount>();
+        
         isPlayer1 = player.isPlayer1;
         cam = player.playerCamera;
     }
 
+    public void OnLevelStart()
+    {
+        scoreCount = FindFirstObjectByType<ScoreCount>();
+    }
 
 }

@@ -17,6 +17,9 @@ public class LevelStart : MonoBehaviour
 
         GameManager.instance.p1.gameObject.GetComponent<CharacterControl>().OnLevelStart();
         GameManager.instance.p2.gameObject.GetComponent<CharacterControl>().OnLevelStart();
+
+        GameManager.instance.p1.gameObject.GetComponent<CharacterControl>().playerCollector.OnLevelStart();
+        GameManager.instance.p2.gameObject.GetComponent<CharacterControl>().playerCollector.OnLevelStart();
     }
 
 }
