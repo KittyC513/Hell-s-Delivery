@@ -371,7 +371,15 @@ public class RespawnControl : MonoBehaviour
                         }
                     }
 
-                    package = GameObject.FindGameObjectWithTag("Package");
+                    if(curSceneName == "Tutorial")
+                    {
+                        package = SceneControl.instance.packageTutorial;
+                    }
+                    else
+                    {
+                        package = GameObject.FindGameObjectWithTag("Package");
+                    }
+
                     //package = GameObject.FindGameObjectWithTag("HeavyPackage");
 
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
@@ -822,8 +830,12 @@ public class RespawnControl : MonoBehaviour
 
                     if(!SceneControl.instance.packageDialogueStart || SceneControl.instance.packageDialogueEnd)
                     {
-
-                        StartCoroutine(StartPackageDialogue());
+                        LevelDialogue.ShowDevilPlayerAll();
+                        SceneControl.instance.dRP1.Stop();
+                        SceneControl.instance.dRP2.Stop();
+                        SceneControl.instance.drAll.Stop();
+                        SceneControl.instance.drAll.StartDialogue("Packages");
+                        //StartCoroutine(StartPackageDialogue());
 
                     }
 
@@ -834,6 +846,8 @@ public class RespawnControl : MonoBehaviour
             if(p1Pass1 || p2Pass1)
             {
                 Destroy(other.gameObject);
+                SceneControl.instance.dRP1.enabled = true;
+                SceneControl.instance.dRP2.enabled = true;
             }
 
 
@@ -1739,8 +1753,8 @@ public class RespawnControl : MonoBehaviour
     {
         LevelDialogue.ShowDevilPlayerAll();
         SceneControl.instance.drAll.Stop();
-        SceneControl.instance.dRP1.Stop();
-        SceneControl.instance.dRP2.Stop();
+        SceneControl.instance.dRP1.enabled = false;
+        SceneControl.instance.dRP2.enabled = false;
         yield return new WaitForSeconds(2f);
         SceneControl.instance.drAll.StartDialogue("Packages");
     }

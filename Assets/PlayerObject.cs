@@ -8,6 +8,8 @@ public class PlayerObject : MonoBehaviour
     private TestCube testCube;
     [SerializeField]
     private bool isFound;
+    [SerializeField]
+    private bool isFound1;
     private void Awake()
     {
 
@@ -52,9 +54,9 @@ public class PlayerObject : MonoBehaviour
                 }
             }
         }
-        if(GameManager.instance.curSceneName == " Tutorial")
+        if(GameManager.instance.curSceneName == "Tutorial")
         {
-            if (!isFound)
+            if (!isFound1)
             {
                 UIController ui = FindAnyObjectByType<UIController>();
 
@@ -78,7 +80,7 @@ public class PlayerObject : MonoBehaviour
                         ui.AddTargetIndicator(null, this.gameObject);
                     }
 
-                    isFound = true;
+                    isFound1 = true;
                 }
             }
         }

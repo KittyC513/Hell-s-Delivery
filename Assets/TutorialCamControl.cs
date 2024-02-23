@@ -23,6 +23,10 @@ public class TutorialCamControl : MonoBehaviour
     public bool cutsceneIsCompleted;
     [SerializeField]
     public bool endTutorial;
+    [SerializeField]
+    private GameObject indicator;
+    [SerializeField]
+    private GameObject indicatorCanvas;
 
     [Header("Package")]
     [SerializeField]
@@ -154,6 +158,8 @@ public class TutorialCamControl : MonoBehaviour
     {
         instance = this;
         atStart = true;
+        indicator.SetActive(false);
+        indicatorCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -227,6 +233,8 @@ public class TutorialCamControl : MonoBehaviour
         GameManager.instance.p2.isFreeze = false;
         cutsceneIsCompleted = true;
         SceneControl.instance.radialUI2.SetActive(false);
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
 
     }
 
@@ -257,6 +265,8 @@ public class TutorialCamControl : MonoBehaviour
     {
         if (inPackageArea && !isActivated)
         {
+            //indicator.SetActive(false);
+            indicatorCanvas.SetActive(false);
             GameManager.instance.cam1.SetActive(false);
             GameManager.instance.cam2.SetActive(false);
             GameManager.instance.p1.isFreeze = true;
@@ -305,6 +315,8 @@ public class TutorialCamControl : MonoBehaviour
 
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        //indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
 
     }
     #endregion
@@ -374,6 +386,8 @@ public class TutorialCamControl : MonoBehaviour
     {
         if (inPressurePlateArea && !isActivated3)
         {
+            indicator.SetActive(false);
+            indicatorCanvas.SetActive(false);
             GameManager.instance.cam1.SetActive(false);
             GameManager.instance.cam2.SetActive(false);
             GameManager.instance.p1.isFreeze = true;
@@ -421,6 +435,8 @@ public class TutorialCamControl : MonoBehaviour
 
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
 
     }
     #endregion
@@ -502,6 +518,8 @@ public class TutorialCamControl : MonoBehaviour
     {
         if (inCheckpointArea && !isActivated5)
         {
+            indicator.SetActive(false);
+            indicatorCanvas.SetActive(false);
             GameManager.instance.cam1.SetActive(false);
             GameManager.instance.cam2.SetActive(false);
             GameManager.instance.p1.isFreeze = true;
@@ -549,6 +567,8 @@ public class TutorialCamControl : MonoBehaviour
 
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
 
     }
     #endregion
@@ -558,6 +578,8 @@ public class TutorialCamControl : MonoBehaviour
     {
         if (inSummoningCircleArea && !isActivated6)
         {
+            indicator.SetActive(false);
+            indicatorCanvas.SetActive(false);
             GameManager.instance.cam1.SetActive(false);
             GameManager.instance.cam2.SetActive(false);
             GameManager.instance.p1.isFreeze = true;
@@ -605,6 +627,8 @@ public class TutorialCamControl : MonoBehaviour
 
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
 
     }
     #endregion
@@ -614,6 +638,8 @@ public class TutorialCamControl : MonoBehaviour
     {
         if (inSabptageArea && !isActivated7)
         {
+            indicator.SetActive(false);
+            indicatorCanvas.SetActive(false);
             GameManager.instance.cam1.SetActive(false);
             GameManager.instance.cam2.SetActive(false);
             GameManager.instance.p1.isFreeze = true;
@@ -661,6 +687,8 @@ public class TutorialCamControl : MonoBehaviour
 
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
 
     }
     #endregion
@@ -670,6 +698,8 @@ public class TutorialCamControl : MonoBehaviour
     {
         if (inDualSummoningArea && !isActivated8)
         {
+            indicator.SetActive(false);
+            indicatorCanvas.SetActive(false);
             GameManager.instance.cam1.SetActive(false);
             GameManager.instance.cam2.SetActive(false);
             GameManager.instance.p1.isFreeze = true;
@@ -717,6 +747,8 @@ public class TutorialCamControl : MonoBehaviour
 
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
 
     }
     #endregion

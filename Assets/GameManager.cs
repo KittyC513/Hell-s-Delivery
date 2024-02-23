@@ -190,6 +190,14 @@ public class GameManager : MonoBehaviour
     private GameObject Maincanvas;
     [SerializeField]
     private GameObject sign;
+    [SerializeField]
+    private Animator van;
+    [SerializeField]
+    public GameObject lighting1;
+    [SerializeField]
+    public GameObject lighting2;
+    [SerializeField]
+    public GameObject lighting3;
 
     public LevelData lastLevelData;
 
@@ -207,6 +215,9 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        lighting1.SetActive(false);
+        lighting2.SetActive(false);
+        lighting3.SetActive(false);
         sign.SetActive(false);
         sceneChanged = false;
         currentScene = SceneManager.GetActiveScene();
