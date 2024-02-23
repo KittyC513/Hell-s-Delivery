@@ -46,6 +46,13 @@ public class SummoningCircle : MonoBehaviour
     [SerializeField]
     private bool isPlayer2;
 
+    private bool isPlayingSound = false;
+
+    [SerializeField] AK.Wwise.Event summoningPlay;
+    [SerializeField] AK.Wwise.Event summoningStop;
+
+    private bool shouldPlay = true;
+
     private void Start()
     {
 
@@ -88,6 +95,8 @@ public class SummoningCircle : MonoBehaviour
             {
                 summoningActive = false;
                 activePlayer.OnSummoningExit();
+                summoningStop.Post(this.gameObject);
+                isPlayingSound = false;
                 onExit.Invoke();
                 activePlayer = null;
                 matChange.material = Default;
@@ -104,6 +113,9 @@ public class SummoningCircle : MonoBehaviour
             //if summoning is active and we let go of the action button exit the summon
             summoningActive = false;
             activePlayer.OnSummoningExit();
+         
+            summoningStop.Post(this.gameObject);
+            isPlayingSound = false;
             onExit.Invoke();
             activePlayer = null;
             matChange.material = Default;
@@ -129,6 +141,12 @@ public class SummoningCircle : MonoBehaviour
         if (summoningActive)
         {
             onSummon.Invoke();
+            if (!isPlayingSound)
+            {
+                summoningPlay.Post(this.gameObject);
+                isPlayingSound = true;
+            }
+          
         }
     }
 
