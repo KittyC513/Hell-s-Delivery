@@ -29,6 +29,8 @@ public class Scorecards : MonoBehaviour
     private int frameSkipTemp;
 
     [SerializeField] private AK.Wwise.Event scoreCardSequence;
+    [SerializeField] private AK.Wwise.Event badgeSequence;
+    [SerializeField] private AK.Wwise.Event crownSequence;
     private enum scoreSection { scoreCards, badge, leader }
     private scoreSection section = scoreSection.scoreCards;
 
@@ -217,6 +219,12 @@ public class Scorecards : MonoBehaviour
         canContinue = true;
     }
 
+    private IEnumerator StartBadgeAudio()
+    {
+        yield return new WaitForSeconds(0.38f);
+        badgeSequence.Post(this.gameObject);
+    }
+
     private IEnumerator BadgeCycle()
     {
         GameObject badge1;
@@ -230,34 +238,38 @@ public class Scorecards : MonoBehaviour
         badgeUI.SetActive(true);
         cardLeft.SetActive(false);
         cardRight.SetActive(false);
+
+        
+
         yield return new WaitForSeconds(0.45f);
+        StartCoroutine(StartBadgeAudio());
         //badge 1
         badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
         badge1.GetComponent<Image>().sprite = lvlData.p1Badges[0].image;
         badge1Title.text = lvlData.p1Badges[0].badgeName;
         badge1Desc.text = lvlData.p1Badges[0].description;
         AddBadgeToScore(lvlData.p1Badges[0], true);
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.33f);
         text1.SetActive(true);
-      
-        yield return new WaitForSeconds(0.45f);
+        yield return new WaitForSeconds(0.33f);
+
         //badge 2
         badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
         badge2.GetComponent<Image>().sprite = lvlData.p1Badges[1].image;
         badge2Title.text = lvlData.p1Badges[1].badgeName;
         badge2Desc.text = lvlData.p1Badges[1].description;
         AddBadgeToScore(lvlData.p1Badges[1], true);
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.33f);
         text2.SetActive(true);
+        yield return new WaitForSeconds(0.33f);
 
-        yield return new WaitForSeconds(0.45f);
         //badge 3
         badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
         badge3.GetComponent<Image>().sprite = lvlData.p1Badges[2].image;
         badge3Title.text = lvlData.p1Badges[2].badgeName;
         badge3Desc.text = lvlData.p1Badges[2].description;
         AddBadgeToScore(lvlData.p1Badges[2], true);
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.33f);
         text3.SetActive(true);
 
         //wait for player to be able to read badge info
@@ -272,32 +284,33 @@ public class Scorecards : MonoBehaviour
         //transition to player 2 badges
         badgePillarCam.gameObject.GetComponent<Animator>().SetBool("p2Badge", true);
         yield return new WaitForSeconds(0.25f);
+        StartCoroutine(StartBadgeAudio());
         //badge 1
         badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
         badge1.GetComponent<Image>().sprite = lvlData.p2Badges[0].image;
         badge1Title.text = lvlData.p2Badges[0].badgeName;
         badge1Desc.text = lvlData.p2Badges[0].description;
         AddBadgeToScore(lvlData.p2Badges[0], false);
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.33f);
         text1.SetActive(true);
 
-        yield return new WaitForSeconds(0.45f);
+        yield return new WaitForSeconds(0.33f);
         //badge 2
         badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
         badge2.GetComponent<Image>().sprite = lvlData.p2Badges[1].image;
         badge2Title.text = lvlData.p2Badges[1].badgeName;
         badge2Desc.text = lvlData.p2Badges[1].description;
         AddBadgeToScore(lvlData.p2Badges[1], false);
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.33f);
         text2.SetActive(true);
-        yield return new WaitForSeconds(0.45f);
+        yield return new WaitForSeconds(0.33f);
         //badge 3
         badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
         badge3.GetComponent<Image>().sprite = lvlData.p2Badges[2].image;
         badge3Title.text = lvlData.p2Badges[2].badgeName;
         badge3Desc.text = lvlData.p2Badges[2].description;
         AddBadgeToScore(lvlData.p2Badges[2], false);
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.33f);
         text3.SetActive(true);
 
         yield return new WaitForSeconds(4);
@@ -321,10 +334,10 @@ public class Scorecards : MonoBehaviour
     {
         canContinue = false;
 
-      
-       
 
-        yield return new WaitForSeconds(3);
+        crownSequence.Post(this.gameObject);
+
+        yield return new WaitForSeconds(4.8f);
 
         badgePillarCam.gameObject.SetActive(false);
 

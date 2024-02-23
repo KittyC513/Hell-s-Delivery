@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{CF946C92-AC6C-C7AE-4F19-2E0F2FE6F207}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{D98928BE-5806-55B5-5D19-7C62CA19A488}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -50,6 +50,10 @@
 				<File Id="95162724" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>TutorialMusic.wav</ShortName>
 					<CachePath>SFX/TutorialMusic_F33C1FD4.wem</CachePath>
+				</File>
+				<File Id="143031910" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>CrownSequence.wav</ShortName>
+					<CachePath>SFX/CrownSequence_10C4C929.wem</CachePath>
 				</File>
 				<File Id="151202581" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodStep_1.wav</ShortName>
@@ -78,6 +82,10 @@
 				<File Id="382886941" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ScoreSceneMusic.wav</ShortName>
 					<CachePath>SFX/ScoreSceneMusic_1633EC5B.wem</CachePath>
+				</File>
+				<File Id="428943920" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>BadgeSequence.wav</ShortName>
+					<CachePath>SFX/BadgeSequence_10C4C929.wem</CachePath>
 				</File>
 				<File Id="431873265" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Fan_All.wav</ShortName>
@@ -178,9 +186,19 @@
 						<MediaRef Id="71935411"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="3272596896" Name="Play_BadgeSequence" DurationType="OneShot" DurationMin="3.6666667" DurationMax="3.6666667">
+					<MediaRefs>
+						<MediaRef Id="428943920"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="1359342141" Name="Play_Checkpoint_Get" MaxAttenuation="20" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="612044681"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2686563660" Name="Play_CrownSequence" DurationType="OneShot" DurationMin="7.2" DurationMax="7.2">
+					<MediaRefs>
+						<MediaRef Id="143031910"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="2640074606" Name="Play_Devil_Theme" DurationType="Infinite">
@@ -331,5 +349,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{4BB0EEDC-FB4A-BFDB-C21E-21C1A3F1851D}</FileHash>
+	<FileHash>{612BB8B1-551A-68D5-413F-44931C485785}</FileHash>
 </SoundBanksInfo>

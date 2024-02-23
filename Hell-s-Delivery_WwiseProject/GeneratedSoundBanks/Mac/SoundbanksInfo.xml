@@ -23,7 +23,7 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{F4E6A89B-CF37-A2E4-397E-663E6423FD0D}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{D98928BE-5806-55B5-5D19-7C62CA19A488}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -39,6 +39,10 @@
 					<ShortName>PlatformsPhaseOut.wav</ShortName>
 					<CachePath>SFX/PlatformsPhaseOut_10C4C929.wem</CachePath>
 				</File>
+				<File Id="50289279" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MailCollectAlt3.wav</ShortName>
+					<CachePath>SFX/MailCollectAlt3_10C4C929.wem</CachePath>
+				</File>
 				<File Id="71935411" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Apartment Complex v1.wav</ShortName>
 					<CachePath>SFX/Apartment Complex v1_9D5A64B3.wem</CachePath>
@@ -46,6 +50,10 @@
 				<File Id="95162724" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>TutorialMusic.wav</ShortName>
 					<CachePath>SFX/TutorialMusic_F33C1FD4.wem</CachePath>
+				</File>
+				<File Id="143031910" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>CrownSequence.wav</ShortName>
+					<CachePath>SFX/CrownSequence_10C4C929.wem</CachePath>
 				</File>
 				<File Id="151202581" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodStep_1.wav</ShortName>
@@ -74,6 +82,10 @@
 				<File Id="382886941" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ScoreSceneMusic.wav</ShortName>
 					<CachePath>SFX/ScoreSceneMusic_1633EC5B.wem</CachePath>
+				</File>
+				<File Id="428943920" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>BadgeSequence.wav</ShortName>
+					<CachePath>SFX/BadgeSequence_10C4C929.wem</CachePath>
 				</File>
 				<File Id="431873265" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Fan_All.wav</ShortName>
@@ -131,6 +143,10 @@
 					<ShortName>Landing.wav</ShortName>
 					<CachePath>SFX/Landing_10C4C929.wem</CachePath>
 				</File>
+				<File Id="809356602" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MailCollectAlt2.wav</ShortName>
+					<CachePath>SFX/MailCollectAlt2_10C4C929.wem</CachePath>
+				</File>
 				<File Id="813925287" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Landing_2.wav</ShortName>
 					<CachePath>SFX/Landing_2_10C4C929.wem</CachePath>
@@ -138,6 +154,10 @@
 				<File Id="815243639" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Landing_3.wav</ShortName>
 					<CachePath>SFX/Landing_3_10C4C929.wem</CachePath>
+				</File>
+				<File Id="860670550" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MailCollect.wav</ShortName>
+					<CachePath>SFX/MailCollect_10C4C929.wem</CachePath>
 				</File>
 				<File Id="948208631" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>HighUpAmbience.wav</ShortName>
@@ -166,9 +186,19 @@
 						<MediaRef Id="71935411"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="3272596896" Name="Play_BadgeSequence" DurationType="OneShot" DurationMin="3.6666667" DurationMax="3.6666667">
+					<MediaRefs>
+						<MediaRef Id="428943920"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="1359342141" Name="Play_Checkpoint_Get" MaxAttenuation="20" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="612044681"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2686563660" Name="Play_CrownSequence" DurationType="OneShot" DurationMin="7.2" DurationMax="7.2">
+					<MediaRefs>
+						<MediaRef Id="143031910"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="2640074606" Name="Play_Devil_Theme" DurationType="Infinite">
@@ -196,6 +226,13 @@
 						<MediaRef Id="755542444"/>
 						<MediaRef Id="813925287"/>
 						<MediaRef Id="815243639"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1193902087" Name="Play_Mail" DurationType="OneShot" DurationMin="0.4310573" DurationMax="0.4838455">
+					<MediaRefs>
+						<MediaRef Id="50289279"/>
+						<MediaRef Id="809356602"/>
+						<MediaRef Id="860670550"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="2180111060" Name="Play_MetalLanding" DurationType="OneShot" DurationMin="0.5" DurationMax="0.62996054">
@@ -312,5 +349,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{6699FA9F-D782-6970-FF9D-7041D13A535D}</FileHash>
+	<FileHash>{11A45FC4-F5CD-D7C8-5226-E9EE273642C5}</FileHash>
 </SoundBanksInfo>
