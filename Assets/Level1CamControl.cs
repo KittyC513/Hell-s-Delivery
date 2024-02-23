@@ -49,16 +49,16 @@ public class Level1CamControl : MonoBehaviour
     void Update()
     {
 
-        if (GameManager.instance.curSceneName == "Level1")
-        {
-            AtStartCam();
-        }
-        if (GameManager.instance.curSceneName == "MVP")
-        {
-            AtStartCam();
-        }
-
+        //if (GameManager.instance.curSceneName == "Level1")
+        //{
+        //    AtStartCam();
+        //}
+        //if (GameManager.instance.curSceneName == "MVP")
+        //{
+            
+        //}
         AtStartCam();
+        ///AtStartCam();
     }
 
 

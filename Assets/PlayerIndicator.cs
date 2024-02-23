@@ -81,20 +81,20 @@ public class PlayerIndicator : MonoBehaviour
             {
                 indicatorPosition.z = 0f;
                 targetOutOfSight(false, indicatorPosition);
-                print("InSight");
+                //print("InSight");
             }
             else if (indicatorPosition.z >= 0f)
             {
                 indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
                 targetOutOfSight(true, indicatorPosition);
-                print("OutOfSight");
+                //print("OutOfSight");
             }
             else
             {
                 indicatorPosition *= -1;
                 indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
                 targetOutOfSight(true, indicatorPosition);
-                print("OutOfSight");
+                //print("OutOfSight");
             }
 
 
@@ -114,20 +114,20 @@ public class PlayerIndicator : MonoBehaviour
             {
                 indicatorPosition.z = 0f;
                 targetOutOfSight(false, indicatorPosition);
-                print("InSight");
+                //print("InSight");
             }
             else if (indicatorPosition.z >= 0f)
             {
                 indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
                 targetOutOfSight(true, indicatorPosition);
-                print("OutOfSight");
+                //print("OutOfSight");
             }
             else
             {
                 indicatorPosition *= -1;
                 indicatorPosition = OutOfRangeIndicatorPosition(indicatorPosition);
                 targetOutOfSight(true, indicatorPosition);
-                print("OutOfSight");
+                //print("OutOfSight");
             }
             rectTransform.position = indicatorPosition;
         }

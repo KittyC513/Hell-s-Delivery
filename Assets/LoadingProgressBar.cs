@@ -55,11 +55,11 @@ public class LoadingProgressBar : MonoBehaviour
         }
         else if (GameManager.instance.changeSceneTimes == 5)
         {
-            anim.SetBool("LoadingNails", true);
+            
         }
         else if (GameManager.instance.changeSceneTimes == 6)
         {
-            //default 
+            anim.SetBool("LoadingMVP", true);
         }
 
     }

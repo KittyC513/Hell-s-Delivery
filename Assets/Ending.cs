@@ -20,6 +20,7 @@ public class Ending : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
+            GameManager.instance.changeSceneTimes += 1;
             badgeManager.RunFinalCheck();
             Loader.Load(Loader.Scene.ScoreCards);
         }
@@ -45,7 +46,7 @@ public class Ending : MonoBehaviour
 
         if (other.gameObject.tag == "Package")
         {
-            canvas.gameObject.SetActive(false);
+            //canvas.gameObject.SetActive(false);
         }
     }
 

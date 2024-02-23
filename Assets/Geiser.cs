@@ -44,7 +44,7 @@ public class Geiser : MonoBehaviour
     {
         if (activeSwitch)
         {
-            Debug.Log("FanActive");
+            //Debug.Log("FanActive");
             active = true;
             ps.Play();
             bc.enabled = true;
@@ -58,7 +58,7 @@ public class Geiser : MonoBehaviour
     {
         if (activeSwitch == false)
         {
-            Debug.Log("FanDeactive");
+            //Debug.Log("FanDeactive");
             active = false;
             ps.Stop();
             bc.enabled = false;
