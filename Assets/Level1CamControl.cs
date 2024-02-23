@@ -98,7 +98,7 @@ public class Level1CamControl : MonoBehaviour
         }
     }
 
-    public IEnumerator StopMoveCam()
+    IEnumerator StopMoveCam()
     {
         yield return new WaitForSeconds(3f);
         GameManager.instance.cam1.SetActive(true);
@@ -111,8 +111,21 @@ public class Level1CamControl : MonoBehaviour
         indicator.SetActive(true);
         indicatorCanvas.SetActive(true);
         endCutScene = true;
+    }
 
+    public IEnumerator StopMoveCam1()
+    {
+        yield return new WaitForSeconds(0.2f);
+        GameManager.instance.cam1.SetActive(true);
+        GameManager.instance.cam2.SetActive(true);
+        mainCam.gameObject.SetActive(false);
 
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+        cutsceneIsCompleted = true;
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
+        endCutScene = true;
     }
 
     IEnumerator MoveCamera(Transform targetPos, float lerpSpeed, Camera cam)

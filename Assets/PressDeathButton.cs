@@ -45,6 +45,7 @@ public class PressDeathButton : MonoBehaviour
                 {
                     timer1 += Time.deltaTime;
                     isKilling = true;
+                  
                 }
                 else
                 {
@@ -52,7 +53,9 @@ public class PressDeathButton : MonoBehaviour
                     timer1 = 0;
                     SceneControl.instance.p1isKilling = false;
                 }
-            } else if(other.gameObject.layer == LayerMask.NameToLayer("P1Collider") && this.gameObject.tag == "OnSavingButton")
+            }  
+            
+            if(other.gameObject.layer == LayerMask.NameToLayer("P1Collider") && this.gameObject.tag == "OnSavingButton")
             {
                 if (GameManager.instance.p1.ReadActionButton())
                 {
@@ -63,7 +66,7 @@ public class PressDeathButton : MonoBehaviour
                 {
                     isSaving = false;
                     timer1 = 0;
-                    SceneControl.instance.p1isKilling = false;             
+                    SceneControl.instance.p1IsSaving = false;             
                 }
             }
 
@@ -80,7 +83,8 @@ public class PressDeathButton : MonoBehaviour
                     timer2 = 0;
                     SceneControl.instance.p2isKilling = false;
                 }
-            }else if(other.gameObject.layer == LayerMask.NameToLayer("P2Collider") && this.gameObject.tag == "OnSavingButton")
+            }
+            if(other.gameObject.layer == LayerMask.NameToLayer("P2Collider") && this.gameObject.tag == "OnSavingButton")
             {
                 if (GameManager.instance.p2.ReadActionButton())
                 {
@@ -91,7 +95,7 @@ public class PressDeathButton : MonoBehaviour
                 {
                     isSaving1 = false;
                     timer2 = 0;
-                    SceneControl.instance.p2isKilling = false;
+                    SceneControl.instance.p2IsSaving = false;
                 }
             }
 
@@ -110,6 +114,7 @@ public class PressDeathButton : MonoBehaviour
                 isSaving = false;
                 timer1 = 0;
                 SceneControl.instance.p1isKilling = false;
+                SceneControl.instance.p1IsSaving = false;
                 hasTriggered1 = false;
 
             }
@@ -119,6 +124,7 @@ public class PressDeathButton : MonoBehaviour
                 isSaving1 = false;
                 timer2 = 0;
                 SceneControl.instance.p2isKilling = false;
+                SceneControl.instance.p2IsSaving = false;
                 hasTriggered2 = false;
             }
 

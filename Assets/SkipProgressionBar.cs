@@ -25,6 +25,10 @@ public class SkipProgressionBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+    }
+    private void FixedUpdate()
+    {
         ButtonTrigger();
     }
 
@@ -33,7 +37,6 @@ public class SkipProgressionBar : MonoBehaviour
     {
         if(GameManager.instance.curSceneName == "Tutorial")
         {
-            print("Hello");
             if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
             {
                 timer += Time.deltaTime;
@@ -55,11 +58,10 @@ public class SkipProgressionBar : MonoBehaviour
         }
         else if (GameManager.instance.curSceneName == "HubStart")
         {
-            print("Hello1");
             if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
             {
                 timer += Time.deltaTime;
-                print("timer" + timer);
+                //print("timer" + timer);
                 radialUI.enabled = true;
                 radialUI.fillAmount = timer;
                 //print("radialUI" + radialUI);
@@ -72,6 +74,29 @@ public class SkipProgressionBar : MonoBehaviour
                 }
             }
             else if(!GameManager.instance.p1.ReadSkipTriggerButton() && !GameManager.instance.p2.ReadSkipTriggerButton())
+            {
+                timer = 0;
+                radialUI.fillAmount = timer;
+            }
+        }
+        else if (GameManager.instance.curSceneName == "Level1")
+        {
+            if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
+            {
+                timer += Time.deltaTime;
+                //print("timer" + timer);
+                radialUI.enabled = true;
+                radialUI.fillAmount = timer;
+                //print("radialUI" + radialUI);
+
+                //print("timer" + timer);
+                if (timer >= maxTimer)
+                {
+                    timer = maxTimer;
+                    radialUI.fillAmount = maxTimer;
+                }
+            }
+            else if (!GameManager.instance.p1.ReadSkipTriggerButton() && !GameManager.instance.p2.ReadSkipTriggerButton())
             {
                 timer = 0;
                 radialUI.fillAmount = timer;

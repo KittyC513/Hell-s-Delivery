@@ -215,6 +215,12 @@ public class ShowDialogue :DialogueViewBase
         SceneControl.instance.PackageDilaogueStarts();
     }
 
+    [YarnCommand("GameEnd")]
+    public static void GameEnds()
+    {
+        SceneControl.instance.TurnOnCanvas();
+    }
+
 
 
 

@@ -2246,7 +2246,7 @@ public class TestCube : MonoBehaviour
         if (isEntered)
         {
             gameManager.enterOffice = true;
-            print("Enter Office");
+            //print("Enter Office");
             gameManager.sceneChanged = true;
             gameManager.firstTimeEnterHub = true;
 
@@ -2737,7 +2737,7 @@ public class TestCube : MonoBehaviour
             {
                 if (obj.layer == layerToFind2)
                 {
-                    Debug.Log("Found GameObject on layer: " + obj.name);
+                    //Debug.Log("Found GameObject on layer: " + obj.name);
                     Transform parentTransform = obj.transform;
 
                     foreach (Transform child in parentTransform)
@@ -2745,7 +2745,7 @@ public class TestCube : MonoBehaviour
                         if (child.CompareTag(tagToFind))
                         {
                             p2rc = child.gameObject.GetComponent<RespawnControl>();
-                            Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+                            //Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
                         }
                     }
                 }
@@ -2762,7 +2762,7 @@ public class TestCube : MonoBehaviour
 
                 if (obj.layer == layerToFind1)
                 {
-                    Debug.Log("Found GameObject on layer: " + obj.name);
+                    //Debug.Log("Found GameObject on layer: " + obj.name);
                     Transform parentTransform = obj.transform;
 
                     foreach (Transform child in parentTransform)
@@ -2770,7 +2770,7 @@ public class TestCube : MonoBehaviour
                         if (child.CompareTag(tagToFind))
                         {
                             p1rc = child.gameObject.GetComponent<RespawnControl>();
-                            Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
+                            //Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
                         }
                     }
                 }

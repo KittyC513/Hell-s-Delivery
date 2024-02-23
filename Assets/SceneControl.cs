@@ -155,6 +155,11 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public int oriValue;
 
+    [Header("Bark")]
+    [SerializeField]
+    public GameObject endCanvas;
+    [SerializeField]
+    public Animator endCanvasAnim;
     //public bool p1BarkTriggered;
     //public bool p2BarkTriggered;
     public bool play1WithPackageDialogue;
@@ -245,6 +250,11 @@ public class SceneControl : MonoBehaviour
         {
             SkipTutorialLevelOverview();
         }
+
+        if (GameManager.instance.curSceneName == "MVPLevel")
+        {
+            SkipMVPLevelOverviewCutscene();
+        }
     }
 
     #region Skip Function
@@ -291,9 +301,16 @@ public class SceneControl : MonoBehaviour
                     radialUI.SetActive(false);
                     dialogueFin = true;
                 }
+
+                if (dialogueFin)
+                {
+                    radialUI.SetActive(false);
+                }
             }
 
         }
+
+
     }
 
     void SkipTutorialLevelOverview()
@@ -305,7 +322,7 @@ public class SceneControl : MonoBehaviour
             {
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
                 {
-                    StartCoroutine(TutorialCamControl.instance.StopMoveCam());
+                    StartCoroutine(TutorialCamControl.instance.StopMoveCamStart1());
                     TutorialCamControl.instance.endTutorial = true;
                     radialUI.SetActive(false);
                 }
@@ -332,6 +349,10 @@ public class SceneControl : MonoBehaviour
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
             }
+            if (LalahdialogueEnds)
+            {
+                radialUI.SetActive(false);
+            }
         }
     }
 
@@ -350,6 +371,10 @@ public class SceneControl : MonoBehaviour
                 radialUI.SetActive(false);
                 LalahdialogueEnds = true;
                 LalahLeave();
+            }
+            if (LalahdialogueEnds)
+            {
+                radialUI.SetActive(false);
             }
         }
     }
@@ -371,6 +396,10 @@ public class SceneControl : MonoBehaviour
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
             }
+            if (WeatherdialogueEnds)
+            {
+                radialUI.SetActive(false);
+            }
         }
     }
 
@@ -390,6 +419,10 @@ public class SceneControl : MonoBehaviour
                 WeatherdialogueEnds = true;
                 LalahLeave();
             }
+            if (WeatherdialogueEnds)
+            {
+                radialUI.SetActive(false);
+            }
         }
     }
 
@@ -401,13 +434,35 @@ public class SceneControl : MonoBehaviour
 
             if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
             {
-                StartCoroutine(Level1CamControl.instance.StopMoveCam());
+                StartCoroutine(Level1CamControl.instance.StopMoveCam1());
                 //TutorialCamControl.instance.endTutorial = true;
                 radialUI.SetActive(false);       
             }
         }
+        if (Level1CamControl.instance.cutsceneIsCompleted)
+        {
+            radialUI.SetActive(false);
+        }
     }
 
+    void SkipMVPLevelOverviewCutscene()
+    {
+        if (!Level1CamControl.instance.cutsceneIsCompleted)
+        {
+            radialUI.SetActive(true);
+
+            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+            {
+                StartCoroutine(Level1CamControl.instance.StopMoveCam1());
+                //TutorialCamControl.instance.endTutorial = true;
+                radialUI.SetActive(false);
+            }
+        }
+        if (Level1CamControl.instance.cutsceneIsCompleted)
+        {
+            radialUI.SetActive(false);
+        }
+    }
     #endregion
 
     #region Camera Switching
@@ -479,6 +534,7 @@ public class SceneControl : MonoBehaviour
         phonePiece.SetActive(true);
         phoneRingText.SetActive(true);
 
+
     }
 
     void HubStart()
@@ -487,7 +543,14 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.firstTimeEnterHub == true)
         {
             StartComic();
+
             GameManager.instance.firstTimeEnterHub = false;
+
+        }
+
+        if (GameManager.instance.timesEnterHub >= 1)
+        {
+            phonePiece.SetActive(false);
         }
 
         //Lalah
@@ -497,7 +560,7 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.p2.isFreeze = false;
             Lalah.SetActive(true);
             firstCustomer = true;
-            phonePiece.SetActive(false);
+            
         }
         else if (GameManager.instance.timesEnterHub != 1 && GameManager.instance.timesEnterHub != 2)
         {
@@ -680,7 +743,7 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.player1 != null && GameManager.instance.player2 != null)
         {
             hightlightedDoor.SetActive(true);
-            print("Door");
+            //print("Door");
         }
 
     }
@@ -803,6 +866,7 @@ public class SceneControl : MonoBehaviour
         weatherIsGone = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        TurnOnCanvas();
     }
     #endregion
 
@@ -873,6 +937,21 @@ public class SceneControl : MonoBehaviour
             }
 
         }
+    }
+
+    #endregion
+
+
+    #region Quit
+    public void TurnOnCanvas()
+    {
+        endCanvas.SetActive(true);
+        endCanvasAnim.SetTrigger("end");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     #endregion

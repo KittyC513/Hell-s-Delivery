@@ -56,7 +56,7 @@ public class PlayerObject : MonoBehaviour
                 }
             }
         }
-        if (GameManager.instance.curSceneName == " Level1")
+        if (GameManager.instance.curSceneName == "Level1")
         {
             if (Level1CamControl.instance.endCutScene && !isFound)
             {
@@ -118,8 +118,6 @@ public class PlayerObject : MonoBehaviour
         }
 
 
-
-       
       
 
 

@@ -238,6 +238,22 @@ public class TutorialCamControl : MonoBehaviour
 
     }
 
+    public IEnumerator StopMoveCamStart1()
+    {
+        yield return new WaitForSeconds(0.2f);
+        GameManager.instance.cam1.SetActive(true);
+        GameManager.instance.cam2.SetActive(true);
+        mainCam.gameObject.SetActive(false);
+
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+        cutsceneIsCompleted = true;
+        SceneControl.instance.radialUI2.SetActive(false);
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
+
+    }
+
     IEnumerator MoveCamera(Transform targetPos, float lerpSpeed, Camera cam)
     {
         while (Vector3.Distance(mainCam.transform.position, targetPos.position) > 0.1f)
