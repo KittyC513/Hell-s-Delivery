@@ -490,8 +490,10 @@ public class TestCube : MonoBehaviour
     [Header("Collectables")]
     public int mailCount;
 
+    private bool lightsOn;
 
-    
+
+
     //[SerializeField]
     //float dropValue;
     //[SerializeField]
@@ -2223,6 +2225,21 @@ public class TestCube : MonoBehaviour
         }
     }
 
+
+    IEnumerator TurnOnLight()
+    {
+        gameManager.lighting1.SetActive(true);
+        gameManager.lighting2.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        gameManager.lighting3.SetActive(true);
+        gameManager.lighting1.SetActive(false);
+        gameManager.lighting2.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        gameManager.lighting1.SetActive(true);
+        gameManager.lighting2.SetActive(true);
+        lightsOn = true;
+
+    }
     void EnterOffice()
     {
 
@@ -2234,6 +2251,13 @@ public class TestCube : MonoBehaviour
             gameManager.firstTimeEnterHub = true;
 
             StartCoroutine(gameManager.MovingCamera1());
+
+            if (!lightsOn)
+            {
+                StartCoroutine(TurnOnLight());
+            }
+
+
             if (gameManager.camChanged1)
             {
                 GameManager.instance.changeSceneTimes += 1;

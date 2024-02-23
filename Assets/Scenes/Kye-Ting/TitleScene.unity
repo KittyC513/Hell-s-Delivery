@@ -2006,6 +2006,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1605914650}
   m_SourcePrefab: {fileID: 100100000, guid: 3ef8a7872b1bbfc46b9b25171022a1e6, type: 3}
+--- !u!1 &265968677 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1749985841633278694, guid: 4fcfe99b68743a6438f3da91c836ae01, type: 3}
+  m_PrefabInstance: {fileID: 1738282817}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &275218425
 GameObject:
   m_ObjectHideFlags: 0
@@ -2502,7 +2507,7 @@ Transform:
   m_GameObject: {fileID: 340756828}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13953112, y: -0, z: -0, w: 0.99021775}
-  m_LocalPosition: {x: 5.98, y: 5, z: -17.62}
+  m_LocalPosition: {x: 5.98, y: 8.03, z: -24.32}
   m_LocalScale: {x: 1, y: 1, z: 1.5189}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10344,6 +10349,10 @@ MonoBehaviour:
   changeSceneTimes: 0
   Maincanvas: {fileID: 56517863}
   sign: {fileID: 1268016598}
+  van: {fileID: 0}
+  lighting1: {fileID: 1515804287}
+  lighting2: {fileID: 265968677}
+  lighting3: {fileID: 1079302995}
   lastLevelData: {fileID: 0}
   playerScore: {fileID: 0}
 --- !u!4 &977069486
@@ -11573,6 +11582,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078003549}
   m_Mesh: {fileID: -7427627118920025564, guid: 4fcfe99b68743a6438f3da91c836ae01, type: 3}
+--- !u!1 &1079302995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5838600737487669701, guid: 4fcfe99b68743a6438f3da91c836ae01, type: 3}
+  m_PrefabInstance: {fileID: 1738282817}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1103329888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15899,8 +15913,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8851795, y: 1.9831295, z: 2.4614458}
-  m_Center: {x: 0.028614204, y: 0.49156338, z: -0.7307226}
+  m_Size: {x: 1.8851795, y: 1.9831295, z: 2.951656}
+  m_Center: {x: 0.028614204, y: 0.4915635, z: -0.9758274}
 --- !u!1 &1438241893
 GameObject:
   m_ObjectHideFlags: 0
@@ -16742,6 +16756,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6417756ae9ff8314fbd51a1ae2c2a5c3, type: 3}
   m_PrefabInstance: {fileID: 247377470}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1515804287 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -602092569961818331, guid: 4fcfe99b68743a6438f3da91c836ae01, type: 3}
+  m_PrefabInstance: {fileID: 1738282817}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1531913603 stripped
 GameObject:
@@ -18816,7 +18835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f66044daba2e3145ad262acb7dba52b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.456734
+      value: 18.58
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f66044daba2e3145ad262acb7dba52b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -19338,6 +19357,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: ff866fe830b622c44a16da1353f7e333, type: 2}
+    - target: {fileID: 4863526923584643307, guid: 4fcfe99b68743a6438f3da91c836ae01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5838600737487669701, guid: 4fcfe99b68743a6438f3da91c836ae01, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -22140,8 +22163,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056256870}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.34}
-  m_LocalScale: {x: 0.0033333334, y: 0.0033333334, z: 0.0033333334}
+  m_LocalPosition: {x: 0, y: 0, z: -3.074}
+  m_LocalScale: {x: 0.00433333, y: 0.00433333, z: 0.0033333334}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1642737324}
@@ -22149,7 +22172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.021300316, y: 1.07}
+  m_AnchoredPosition: {x: -0.035, y: 1.437}
   m_SizeDelta: {x: 476.2125, y: 123.2016}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2056256872

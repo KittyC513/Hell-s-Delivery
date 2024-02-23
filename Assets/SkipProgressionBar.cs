@@ -31,29 +31,49 @@ public class SkipProgressionBar : MonoBehaviour
 
     void ButtonTrigger()
     {
-        if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
+        if(GameManager.instance.curSceneName == "Tutorial")
         {
-            if (GameManager.instance.curSceneName == "Tutorial" && !origiTimer)
+            if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
             {
-                timer = 1f;
-                origiTimer = true;
-            }
-            timer += Time.deltaTime;
-            radialUI.enabled = true;
-            radialUI.fillAmount = timer;
+                timer += Time.deltaTime;
+                radialUI.enabled = true;
+                radialUI.fillAmount = timer;
 
-            //print("timer" + timer);
-            if(timer >= maxTimer)
+                //print("timer" + timer);
+                if (timer >= maxTimer)
+                {
+                    timer = maxTimer;
+                    radialUI.fillAmount = maxTimer;
+                }
+            }
+            else
             {
-                timer = maxTimer;
-                radialUI.fillAmount = maxTimer;
+                timer = 0;
+                radialUI.fillAmount = timer;
             }
         }
         else
         {
-            timer = 0;
-            radialUI.fillAmount = timer;
+            if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
+            {
+                timer += Time.deltaTime;
+                radialUI.enabled = true;
+                radialUI.fillAmount = timer;
+
+                //print("timer" + timer);
+                if (timer >= maxTimer)
+                {
+                    timer = maxTimer;
+                    radialUI.fillAmount = maxTimer;
+                }
+            }
+            else
+            {
+                timer = 0;
+                radialUI.fillAmount = timer;
+            }
         }
+
 
     }
 }

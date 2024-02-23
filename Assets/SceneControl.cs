@@ -146,7 +146,8 @@ public class SceneControl : MonoBehaviour
     [Header("Tutorial")]
     [SerializeField]
     public bool packageDialogueEnd, packageDialogueStart;
-
+    [SerializeField]
+    public GameObject packageTutorial;
 
     [Header("Bark")]
     [SerializeField]
@@ -296,10 +297,9 @@ public class SceneControl : MonoBehaviour
 
     void SkipTutorialLevelOverview()
     {
-        if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
+        if (!TutorialCamControl.instance.endTutorial)
         {
             radialUI.SetActive(true);
-
             if (!TutorialCamControl.instance.cutsceneIsCompleted)
             {
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
@@ -309,9 +309,9 @@ public class SceneControl : MonoBehaviour
                     radialUI.SetActive(false);
                 }
             }
-       
         }
 
+             
     }
 
     void SkipLalahDialogue()
