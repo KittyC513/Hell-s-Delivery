@@ -40,7 +40,7 @@ public class EnterLevel1 : MonoBehaviour
         if (Input.GetKey(KeyCode.Y))
         {
             EnterMVPLevel();
-            GameManager.instance.changeSceneTimes = 5;
+            GameManager.instance.changeSceneTimes = 6;
         }
     }
 
@@ -72,7 +72,7 @@ public class EnterLevel1 : MonoBehaviour
     }
     public void EnterMVPLevel()
     {
-        GameManager.instance.changeSceneTimes = 5;
+        GameManager.instance.changeSceneTimes = 6;
         GameManager.instance.sceneChanged = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;

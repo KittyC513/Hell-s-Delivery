@@ -561,12 +561,12 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.showWertherInstruction && !WeatherdialogueEnds)
         {
             WertherUI.SetActive(true);
-            print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
+            //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
         }
         else if (!GameManager.instance.showWertherInstruction || WeatherdialogueEnds)
         {
             WertherUI.SetActive(false);
-            print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
+            //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
         }
 
         if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds)

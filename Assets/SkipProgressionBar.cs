@@ -33,6 +33,7 @@ public class SkipProgressionBar : MonoBehaviour
     {
         if(GameManager.instance.curSceneName == "Tutorial")
         {
+            print("Hello");
             if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
             {
                 timer += Time.deltaTime;
@@ -52,8 +53,9 @@ public class SkipProgressionBar : MonoBehaviour
                 radialUI.fillAmount = timer;
             }
         }
-        else
+        else if (GameManager.instance.curSceneName == "HubStart")
         {
+            print("Hello1");
             if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
             {
                 timer += Time.deltaTime;
