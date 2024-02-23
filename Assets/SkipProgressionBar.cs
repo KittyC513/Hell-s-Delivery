@@ -47,7 +47,7 @@ public class SkipProgressionBar : MonoBehaviour
                     radialUI.fillAmount = maxTimer;
                 }
             }
-            else
+            else if (!GameManager.instance.p1.ReadSkipTriggerButton() && !GameManager.instance.p2.ReadSkipTriggerButton())
             {
                 timer = 0;
                 radialUI.fillAmount = timer;
@@ -59,8 +59,10 @@ public class SkipProgressionBar : MonoBehaviour
             if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
             {
                 timer += Time.deltaTime;
+                print("timer" + timer);
                 radialUI.enabled = true;
                 radialUI.fillAmount = timer;
+                //print("radialUI" + radialUI);
 
                 //print("timer" + timer);
                 if (timer >= maxTimer)
@@ -69,7 +71,7 @@ public class SkipProgressionBar : MonoBehaviour
                     radialUI.fillAmount = maxTimer;
                 }
             }
-            else
+            else if(!GameManager.instance.p1.ReadSkipTriggerButton() && !GameManager.instance.p2.ReadSkipTriggerButton())
             {
                 timer = 0;
                 radialUI.fillAmount = timer;

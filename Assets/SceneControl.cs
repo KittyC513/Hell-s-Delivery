@@ -250,6 +250,7 @@ public class SceneControl : MonoBehaviour
     #region Skip Function
     void SkipComic()
     {
+
         if (Input.GetKey(KeyCode.E) && GameManager.instance.timesEnterHub < 1)
         {
             StopCoroutine(StartComicIntro());
