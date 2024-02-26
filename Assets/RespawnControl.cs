@@ -88,13 +88,13 @@ public class RespawnControl : MonoBehaviour
 
     bool p1Pass;
     bool p2Pass;
-    
+
     bool p1Pass1;
     bool p2Pass1;
-    
+
     bool p1Pass2;
     bool p2Pass2;
-    
+
     bool p1Pass3;
     bool p2Pass3;
 
@@ -265,7 +265,7 @@ public class RespawnControl : MonoBehaviour
 
     void SabotageBark()
     {
-        if(curSceneName == "Level1")
+        if (curSceneName == "Level1")
         {
             if (SceneControl.instance.p1isKilling && SceneControl.instance.p2isInZone1)
             {
@@ -325,13 +325,13 @@ public class RespawnControl : MonoBehaviour
             PlayRandomPackageDialogue4();
             //SceneControl.instance.p2BarkTriggered = true;
         }
-        
+
 
     }
 
     void SceneCheck()
     {
-        if(gameManager == null)
+        if (gameManager == null)
         {
             gameManager = Object.FindAnyObjectByType<GameManager>();
         }
@@ -354,11 +354,11 @@ public class RespawnControl : MonoBehaviour
 
             //}
 
-            if(curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene9)
+            if (curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene9)
             {
                 if (objectGrabbable == null)
                 {
-                    if(curSceneName == scene4 || curSceneName == scene9)
+                    if (curSceneName == scene4 || curSceneName == scene9)
                     {
                         cpParent = GameObject.FindWithTag("cpParent");
 
@@ -371,7 +371,7 @@ public class RespawnControl : MonoBehaviour
                         }
                     }
 
-                    if(curSceneName == "Tutorial")
+                    if (curSceneName == "Tutorial")
                     {
                         package = SceneControl.instance.packageTutorial;
                     }
@@ -386,9 +386,9 @@ public class RespawnControl : MonoBehaviour
                 }
             }
 
-            if( curSceneName == scene1)
+            if (curSceneName == scene1)
             {
-                if(gameManager.timesEnterHub == 1)
+                if (gameManager.timesEnterHub == 1)
                 {
                     if (objectGrabbable == null)
                     {
@@ -396,12 +396,12 @@ public class RespawnControl : MonoBehaviour
 
                         objectGrabbable = package.GetComponent<ObjectGrabbable>();
                     }
-                } 
-                else if(gameManager.timesEnterHub == 2)
+                }
+                else if (gameManager.timesEnterHub == 2)
                 {
                     objectGrabbable = null;
                     package = null;
-                    
+
                     if (SceneControl.instance.showPackage1)
                     {
                         package = GameObject.FindGameObjectWithTag("Package");
@@ -476,7 +476,7 @@ public class RespawnControl : MonoBehaviour
     private void Update()
     {
 
-        if(curSceneName == "Level1")
+        if (curSceneName == "Level1")
         {
             SabotageBark();
             SavingBark();
@@ -487,7 +487,7 @@ public class RespawnControl : MonoBehaviour
         //FindDR();
         SceneCheck();
         PlayerDetector();
-        if(objectGrabbable != null)
+        if (objectGrabbable != null)
         {
 
             //Debug.Log("check");
@@ -540,14 +540,14 @@ public class RespawnControl : MonoBehaviour
 
     public void Respawn(Vector3 respawnPos)
     {
-        if(curSceneName == scene5)
+        if (curSceneName == scene5)
         {
             player.transform.position = respawnPos;
             P1RespawnRotation = SceneControl.instance.P1Rotation;
             P2RespawnRotation = P1RespawnRotation;
             player.transform.rotation = P1RespawnRotation.rotation;
-        } 
-        else if(curSceneName == scene4 || curSceneName == scene9)
+        }
+        else if (curSceneName == scene4 || curSceneName == scene9)
         {
             player.transform.position = respawnPos;
             if (isPlayer1)
@@ -557,12 +557,12 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer2)
             {
-                
+
                 player.transform.rotation = P2RespawnRotation.rotation;
             }
 
         }
-        else if(curSceneName != scene4 && curSceneName != scene5 && curSceneName != scene9)
+        else if (curSceneName != scene4 && curSceneName != scene5 && curSceneName != scene9)
         {
             player.transform.position = respawnPos;
         }
@@ -688,7 +688,7 @@ public class RespawnControl : MonoBehaviour
             //Debug.Log("Player2Die");
             gameManager.p1.objectGrabbable = package.GetComponent<ObjectGrabbable>();
         }
-        
+
 
         Player2Die = false;
     }
@@ -696,7 +696,7 @@ public class RespawnControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == ("ChooseZone"))
+        if (other.gameObject.tag == ("ChooseZone"))
         {
             if (isPlayer1)
             {
@@ -718,7 +718,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
                 Player1Die = true;
-                print("Player1Die" + Player1Die);          
+                print("Player1Die" + Player1Die);
 
             }
             else
@@ -735,12 +735,12 @@ public class RespawnControl : MonoBehaviour
             else
             {
                 //dR.Stop();
-            }        
+            }
 
         }
         else if (other.tag == "CheckPoint")
         {
-            
+
             respawnPoint = other.transform.position;
             if (isPlayer1)
             {
@@ -751,16 +751,16 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
-       
+
             }
 
             objectGrabbable.respawnPoint = respawnPoint;
             //Debug.Log("RespawnPoint =" + respawnPoint);
         }
 
-        if(other.tag == "EndingPoint")
+        if (other.tag == "EndingPoint")
         {
-            if(isPlayer1 && Player1isCarrying)
+            if (isPlayer1 && Player1isCarrying)
             {
                 gameManager.changeSceneTimes += 1;
                 Loader.Load(Loader.Scene.ScoreCards);
@@ -775,14 +775,14 @@ public class RespawnControl : MonoBehaviour
 
         if (other.gameObject.tag == ("Start_Tutorial") && TutorialCamControl.instance.cutsceneIsCompleted)
         {
-        
+
             if (isPlayer1 && !p1Pass)
             {
                 p1Pass = true;
                 LevelDialogue.ShowDevilPlayer1();
                 SceneControl.instance.dRP1.Stop();
                 SceneControl.instance.dRP1.StartDialogue("LookAround");
-            
+
             }
 
             if (isPlayer2 && !p2Pass)
@@ -790,9 +790,9 @@ public class RespawnControl : MonoBehaviour
                 p2Pass = true;
                 LevelDialogue.ShowDevilPlayer2();
                 SceneControl.instance.dRP2.Stop();
-                SceneControl.instance.dRP2.StartDialogue("LookAround2");          
+                SceneControl.instance.dRP2.StartDialogue("LookAround2");
             }
- 
+
             //if (p1Pass && p2Pass)
             //{
             //    Destroy(other.gameObject);
@@ -804,7 +804,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1 && !SceneControl.instance.packageDialogueStart)
             {
                 Jump_T1.SetActive(true);
-             
+
             }
 
 
@@ -818,7 +818,7 @@ public class RespawnControl : MonoBehaviour
         {
             if (!p1Pass1 && !p2Pass1)
             {
-                if(isPlayer1 || isPlayer2)
+                if (isPlayer1 || isPlayer2)
                 {
                     p1Pass1 = true;
                     p2Pass1 = true;
@@ -828,7 +828,7 @@ public class RespawnControl : MonoBehaviour
                         throwPackag_T2.SetActive(true);
                     }
 
-                    if(!SceneControl.instance.packageDialogueStart || SceneControl.instance.packageDialogueEnd)
+                    if (!SceneControl.instance.packageDialogueStart || SceneControl.instance.packageDialogueEnd)
                     {
                         LevelDialogue.ShowDevilPlayerAll();
                         SceneControl.instance.dRP1.Stop();
@@ -839,11 +839,11 @@ public class RespawnControl : MonoBehaviour
 
                     }
 
-                }         
+                }
             }
 
 
-            if(p1Pass1 || p2Pass1)
+            if (p1Pass1 || p2Pass1)
             {
                 Destroy(other.gameObject);
                 SceneControl.instance.dRP1.enabled = true;
@@ -861,10 +861,10 @@ public class RespawnControl : MonoBehaviour
         {
             if (isPlayer1 && !p1Pass2)
             {
-                p1Pass2 = true;            
+                p1Pass2 = true;
                 LevelDialogue.ShowDevilPlayer1();
                 SceneControl.instance.dRP1.Stop();
-                SceneControl.instance.dRP1.StartDialogue("Push");      
+                SceneControl.instance.dRP1.StartDialogue("Push");
             }
             if (isPlayer1)
             {
@@ -942,7 +942,7 @@ public class RespawnControl : MonoBehaviour
         {
             if (!p2Pass4 && !p1Pass4)
             {
-                if(isPlayer1 || isPlayer2)
+                if (isPlayer1 || isPlayer2)
                 {
                     if (isPlayer1)
                     {
@@ -973,7 +973,7 @@ public class RespawnControl : MonoBehaviour
         {
             if (!p2Pass5 && !p1Pass5)
             {
-                if(isPlayer1 || isPlayer2)
+                if (isPlayer1 || isPlayer2)
                 {
                     p1Pass5 = true;
                     p2Pass5 = true;
@@ -997,7 +997,7 @@ public class RespawnControl : MonoBehaviour
         {
             if (!p2Pass6 && !p1Pass6)
             {
-                if(isPlayer1 || isPlayer2)
+                if (isPlayer1 || isPlayer2)
                 {
                     p1Pass6 = true;
                     p2Pass6 = true;
@@ -1042,7 +1042,7 @@ public class RespawnControl : MonoBehaviour
 
             if (!p2Pass8 && !p1Pass8)
             {
-                if(isPlayer1 || isPlayer2)
+                if (isPlayer1 || isPlayer2)
                 {
                     p1Pass8 = true;
                     p2Pass8 = true;
@@ -1063,7 +1063,7 @@ public class RespawnControl : MonoBehaviour
         //Debug.Log("newcheckpoint");
         if (other.gameObject.tag == ("fCheckpoint"))
         {
-            
+
             respawnPoint = other.transform.position;
 
 
@@ -1092,7 +1092,7 @@ public class RespawnControl : MonoBehaviour
             {
                 Debug.Log("deactivatetrue");
                 checkpc.deActivate = true;
-                
+
 
             }
 
@@ -1110,7 +1110,7 @@ public class RespawnControl : MonoBehaviour
                 }
                 //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
             }
-            
+
         }
 
 
@@ -1133,7 +1133,7 @@ public class RespawnControl : MonoBehaviour
         if (other.tag == "DeliveryArea")
         {
             //Level 1
-            if(gameManager.timesEnterHub == 1)
+            if (gameManager.timesEnterHub == 1)
             {
                 if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
                 {
@@ -1189,7 +1189,7 @@ public class RespawnControl : MonoBehaviour
 
                 }
             }    //MVP Level
-            else if(gameManager.timesEnterHub == 2)
+            else if (gameManager.timesEnterHub == 2)
             {
                 if (SceneControl.instance.showPackage1)
                 {
@@ -1249,9 +1249,9 @@ public class RespawnControl : MonoBehaviour
 
             }
         }
-          
-         
-    
+
+
+
 
         if (other.gameObject.tag == ("Start_Tutorial"))
         {
@@ -1260,7 +1260,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
 
-               
+
 
             }
 
@@ -1268,7 +1268,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
 
-            
+
 
             }
 
@@ -1283,7 +1283,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
 
-           
+
 
             }
 
@@ -1291,7 +1291,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
 
-             
+
             }
 
 
@@ -1302,7 +1302,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
 
-              
+
 
             }
 
@@ -1310,7 +1310,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
 
-               
+
 
             }
 
@@ -1330,7 +1330,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
 
-               
+
             }
 
 
@@ -1340,13 +1340,13 @@ public class RespawnControl : MonoBehaviour
         {
             if (isPlayer1)
             {
-            
+
 
             }
 
             if (isPlayer2)
             {
-              
+
 
             }
 
@@ -1357,13 +1357,13 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
 
-              
+
             }
 
 
             if (isPlayer2)
             {
-             
+
 
             }
 
@@ -1377,13 +1377,13 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
 
-           
+
 
             }
 
             if (isPlayer2)
             {
-               
+
 
             }
 
@@ -1424,7 +1424,7 @@ public class RespawnControl : MonoBehaviour
         }
         if (other.tag == "DeliveryArea")
         {
-            if(gameManager.timesEnterHub == 1)
+            if (gameManager.timesEnterHub == 1)
             {
                 if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
                 {
@@ -1442,7 +1442,7 @@ public class RespawnControl : MonoBehaviour
 
                 }
             }
-            else if(gameManager.timesEnterHub == 2)
+            else if (gameManager.timesEnterHub == 2)
             {
                 if (SceneControl.instance.showPackage1)
                 {
@@ -1470,7 +1470,7 @@ public class RespawnControl : MonoBehaviour
 
             if (isPlayer1)
             {
-                lookAround_T1.SetActive(false);  
+                lookAround_T1.SetActive(false);
             }
 
 
@@ -1617,7 +1617,7 @@ public class RespawnControl : MonoBehaviour
     {
         System.Random rnd = new System.Random();
         int index = rnd.Next(PlayerDeath.Count);
-        if(previousIndex == index)
+        if (previousIndex == index)
         {
             index = rnd.Next(PlayerDeath.Count);
         }
@@ -1757,6 +1757,24 @@ public class RespawnControl : MonoBehaviour
         SceneControl.instance.dRP2.enabled = false;
         yield return new WaitForSeconds(2f);
         SceneControl.instance.drAll.StartDialogue("Packages");
+    }
+
+    boxingMinigame bM;
+    GameObject minigame;
+
+    public void startminigame()
+    {
+        minigame = GameObject.FindGameObjectWithTag("boxing");
+        bM = minigame.GetComponent<boxingMinigame>();
+        if (isPlayer1)
+        {
+            player.transform.position = bM.spawnpointp1;
+        }
+        if (isPlayer2)
+        {
+            player.transform.position = bM.spawnpointp2;
+        }
+
     }
 
 }

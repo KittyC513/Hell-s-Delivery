@@ -492,6 +492,14 @@ public class TestCube : MonoBehaviour
 
     private bool lightsOn;
 
+    [SerializeField]
+    Camera boxcam;
+    [SerializeField]
+    GameObject boxcamHolder;
+    boxingMinigame bM;
+    GameObject minigame;
+
+
 
 
     //[SerializeField]
@@ -610,6 +618,10 @@ public class TestCube : MonoBehaviour
         ItemDetector();
         CameraSwitch();
         AnimationAndSound();
+        if (curSceneName == "Level1")
+        {
+            initBoxing();
+        }
 
         playerPos = this.transform;
 
@@ -631,6 +643,13 @@ public class TestCube : MonoBehaviour
                     }
 
                     //print("use new movementCal");
+                }else if (curSceneName == "Level1" && bM.isboxing)
+                {
+                    if (charController.rb != null)
+                        {
+                            charController.RunMovement(boxcam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1);
+                        }
+                    
                 }
                 else
                 {
@@ -3425,6 +3444,17 @@ public class TestCube : MonoBehaviour
         }
     }
 
+    private void initBoxing()
+    {
+        minigame = GameObject.FindGameObjectWithTag("boxing");
+        bM = minigame.GetComponent<boxingMinigame>();
+        boxcamHolder = GameObject.FindGameObjectWithTag("boxcam");
+        if (boxcamHolder != null)
+        {
+            boxcam = boxcamHolder.GetComponent<Camera>();
+        }
+        
+    }
 
     private void ResetPush()
     {

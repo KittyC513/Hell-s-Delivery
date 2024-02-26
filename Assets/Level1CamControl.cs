@@ -25,6 +25,8 @@ public class Level1CamControl : MonoBehaviour
     [SerializeField]
     private Camera mainCam;
     [SerializeField]
+    private Camera miniCam;
+    [SerializeField]
     public bool cutsceneIsCompleted;
     [SerializeField]
     public bool endCutScene;
@@ -146,4 +148,24 @@ public class Level1CamControl : MonoBehaviour
     }
 
     #endregion
+
+    public void minigameCam()
+    {
+        indicator.SetActive(false);
+        indicatorCanvas.SetActive(false);
+        GameManager.instance.cam1.SetActive(false);
+        GameManager.instance.cam2.SetActive(false);
+        GameManager.instance.p1.isFreeze = true;
+        GameManager.instance.p2.isFreeze = true;
+        miniCam.gameObject.SetActive(true);
+        StartCoroutine(minigameCutscene());
+    }
+
+    IEnumerator minigameCutscene()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+    }
+
 }
