@@ -12,6 +12,10 @@ public class Level1CamControl : MonoBehaviour
     private GameObject indicator;
     [SerializeField]
     private GameObject indicatorCanvas;
+    [SerializeField]
+    private GameObject dialogueCanvasP1;
+    [SerializeField]
+    private GameObject dialogueCanvasP2;
 
     [Header("Level 1")]
     [SerializeField]
@@ -153,19 +157,46 @@ public class Level1CamControl : MonoBehaviour
     {
         indicator.SetActive(false);
         indicatorCanvas.SetActive(false);
-        GameManager.instance.cam1.SetActive(false);
-        GameManager.instance.cam2.SetActive(false);
-        GameManager.instance.p1.isFreeze = true;
-        GameManager.instance.p2.isFreeze = true;
-        miniCam.gameObject.SetActive(true);
+        
         StartCoroutine(minigameCutscene());
+    }
+
+    public void endminigameCam()
+    {
+        
+        StartCoroutine(endminigameCutscene());
     }
 
     IEnumerator minigameCutscene()
     {
-        yield return new WaitForSeconds(1f);
+        GameManager.instance.p1.isFreeze = true;
+        GameManager.instance.p2.isFreeze = true;
+        GameManager.instance.cam1.SetActive(false);
+        GameManager.instance.cam2.SetActive(false);
+        miniCam.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+    }
+
+    IEnumerator endminigameCutscene()
+    {
+        GameManager.instance.p1.isFreeze = true;
+        GameManager.instance.p2.isFreeze = true;
+        dialogueCanvasP1.SetActive(false);
+        dialogueCanvasP2.SetActive(false);
+        yield return new WaitForSeconds(3f);
+        indicator.SetActive(true);
+        indicatorCanvas.SetActive(true);
+        GameManager.instance.cam1.SetActive(true);
+        GameManager.instance.cam2.SetActive(true);
+        miniCam.gameObject.SetActive(false);
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+        dialogueCanvasP1.SetActive(true);
+        dialogueCanvasP2.SetActive(true);
+        GameManager.instance.p1.transform.position = new Vector3(393, 18, -271);
+        GameManager.instance.p2.transform.position = new Vector3(393, 18, -271);
     }
 
 }

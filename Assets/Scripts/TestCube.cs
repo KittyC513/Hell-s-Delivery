@@ -2454,6 +2454,11 @@ public class TestCube : MonoBehaviour
         otherRB = gameManager.p2.charController.rb;
         p2Anim = GameManager.instance.p2Ani;
 
+        if (bM.isboxing)
+        {
+            bM.p1pushedcount++;
+        }
+
         otherRB.useGravity = false;
 
         // Calculate force direction and distance
@@ -2518,6 +2523,11 @@ public class TestCube : MonoBehaviour
     {
         otherRB = gameManager.p1.charController.rb;
         p1Anim = GameManager.instance.p1Ani;
+
+        if (bM.isboxing)
+        {
+            bM.p2pushedcount++;
+        }
 
         otherRB.useGravity = false;
 
@@ -3418,6 +3428,9 @@ public class TestCube : MonoBehaviour
                     p1pushed = true;
                     pushStartTimer = false;
 
+                    
+
+
                     if (ScoreCount.instance != null)
                     {
                         ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, true);
@@ -3431,6 +3444,8 @@ public class TestCube : MonoBehaviour
                 {
                     p2pushed = true;
                     pushStartTimer = false;
+
+                    
 
                     if (ScoreCount.instance != null)
                     {
