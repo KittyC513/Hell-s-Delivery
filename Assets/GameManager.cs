@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     public GameObject text;
     [SerializeField]
     private GameObject instructionText;
-
+    GameObject[] objectsInScene;
 
 
     public string layerNameToFind1 = "P1Collider";
@@ -225,6 +225,9 @@ public class GameManager : MonoBehaviour
         curSceneName = currentScene.name;
         //playerScore.p1Overall = 0;
         //playerScore.p2Overall = 0;
+
+        
+
     }
 
     private void Update()
@@ -327,98 +330,104 @@ public class GameManager : MonoBehaviour
     {
         int layerToFind1 = LayerMask.NameToLayer(layerNameToFind1);
         int layerToFind2 = LayerMask.NameToLayer(layerNameToFind2);
-        GameObject[] objectsInScene = GameObject.FindObjectsOfType<GameObject>();
 
-        foreach (GameObject obj in objectsInScene)
+        if (p1 == null || p2 == null)
         {
-            if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1 &&!isNoisy1 && !camFound1)
+            objectsInScene = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+            foreach (GameObject obj in objectsInScene)
             {
-                player1 = obj;
-                p1 = obj.GetComponent<TestCube>();
-                p1Ani = p1.playerAnimator;
-
-
-                Transform parentTransform = player1.transform;
-
-                foreach (Transform child in parentTransform)
+                if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1 && !isNoisy1 && !camFound1)
                 {
-                    if (p1Ani != null)
+                    player1 = obj;
+                    p1 = obj.GetComponent<TestCube>();
+                    p1Ani = p1.playerAnimator;
+
+
+                    Transform parentTransform = player1.transform;
+
+                    foreach (Transform child in parentTransform)
                     {
-                        p1AnimFound = true;
+                        if (p1Ani != null)
+                        {
+                            p1AnimFound = true;
+                        }
+
+                        if (child.CompareTag("InGameUI"))
+                        {
+                            p1UI = child.gameObject;
+                            p1UIFound = true;
+                        }
+
+                        if (child.CompareTag("Minus"))
+                        {
+                            p1UIMinus = child.gameObject;
+                            p1UIFound1 = true;
+                        }
+
+                        if (child.CompareTag("Noisy"))
+                        {
+                            noisy1 = child.gameObject;
+                            isNoisy1 = true;
+                            noisy1.SetActive(false);
+                        }
+
+                        if (child.CompareTag("Camera"))
+                        {
+                            cam1 = child.gameObject;
+                            camFound1 = true;
+                        }
+
                     }
 
-                    if (child.CompareTag("InGameUI"))
-                    {
-                        p1UI = child.gameObject;
-                        p1UIFound = true;
-                    }
-                    
-                    if (child.CompareTag("Minus"))
-                    {
-                        p1UIMinus = child.gameObject;
-                        p1UIFound1 = true;
-                    }
-
-                    if (child.CompareTag("Noisy"))
-                    {
-                        noisy1 = child.gameObject;
-                        isNoisy1 = true;
-                        noisy1.SetActive(false);
-                    }
-
-                    if (child.CompareTag("Camera"))
-                    {
-                        cam1 = child.gameObject;
-                        camFound1 = true;
-                    }
 
                 }
 
-
-            }
-
-            if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2 && !isNoisy2 && !camFound2)
-            {
-                player2 = obj;
-                p2 = obj.GetComponent<TestCube>();
-                p2Ani = p2.playerAnimator2;
-
-
-                Transform parentTransform = player2.transform;
-
-                foreach (Transform child in parentTransform)
+                if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2 && !isNoisy2 && !camFound2)
                 {
-                    if (p2Ani != null)
-                    {
-                        p2AnimFound = true; 
-                    }
+                    player2 = obj;
+                    p2 = obj.GetComponent<TestCube>();
+                    p2Ani = p2.playerAnimator2;
 
-                    if (child.CompareTag("InGameUI"))
-                    {
-                        p2UI = child.gameObject;
-                        p2UIFound = true;
-                    }
-                    if (child.CompareTag("Minus"))
-                    {
-                        p2UIMinus = child.gameObject;
-                        p2UIFound2 = true;
-                    }
 
-                    if (child.CompareTag("Noisy"))
-                    {
-                        noisy2 = child.gameObject;
-                        isNoisy2 = true;
-                        noisy2.SetActive(false);
-                    }
+                    Transform parentTransform = player2.transform;
 
-                    if (child.CompareTag("Camera"))
+                    foreach (Transform child in parentTransform)
                     {
-                        cam2 = child.gameObject;
-                        camFound2 = true;
+                        if (p2Ani != null)
+                        {
+                            p2AnimFound = true;
+                        }
+
+                        if (child.CompareTag("InGameUI"))
+                        {
+                            p2UI = child.gameObject;
+                            p2UIFound = true;
+                        }
+                        if (child.CompareTag("Minus"))
+                        {
+                            p2UIMinus = child.gameObject;
+                            p2UIFound2 = true;
+                        }
+
+                        if (child.CompareTag("Noisy"))
+                        {
+                            noisy2 = child.gameObject;
+                            isNoisy2 = true;
+                            noisy2.SetActive(false);
+                        }
+
+                        if (child.CompareTag("Camera"))
+                        {
+                            cam2 = child.gameObject;
+                            camFound2 = true;
+                        }
                     }
                 }
             }
+
         }
+
 
         //two players join the game, it loads to the Title Scene
 

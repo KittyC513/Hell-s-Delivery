@@ -8946,22 +8946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd5e5f0a92e36ef4989874dc9f0a222f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players:
-  - collider: {fileID: 0}
-    obj: {fileID: 7027613119376561721}
-    trailObjs: []
-    cc: {fileID: 0}
-    trailNum: 0
-  - collider: {fileID: 0}
-    obj: {fileID: 1772086803}
-    trailObjs: []
-    cc: {fileID: 0}
-    trailNum: 0
-  - collider: {fileID: 0}
-    obj: {fileID: 1736135488}
-    trailObjs: []
-    cc: {fileID: 0}
-    trailNum: 0
+  players: []
   hitBoxesActive: 0
   slowMotion: 0
   playerTrail: 0
@@ -13911,6 +13896,8 @@ MonoBehaviour:
   p2DeadScreen: {fileID: 823701027}
   p1Anim: {fileID: 0}
   p2Anim: {fileID: 0}
+  previousIndex: 0
+  isTriggered: 0
 --- !u!114 &1566921897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15150,6 +15137,7 @@ MonoBehaviour:
   pState: 0
   shadowRenderer: {fileID: 0}
   footStepRate: 1
+  playerCollector: {fileID: 0}
   peakSpeed: 800
   walkSpeed: 300
   velocityCurve:
@@ -15829,6 +15817,8 @@ MonoBehaviour:
   startTimer: 0
   playerObject: {fileID: 0}
   mailCount: 0
+  boxcam: {fileID: 0}
+  boxcamHolder: {fileID: 0}
 --- !u!54 &1736135494
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16460,6 +16450,7 @@ MonoBehaviour:
   pState: 0
   shadowRenderer: {fileID: 0}
   footStepRate: 1
+  playerCollector: {fileID: 0}
   peakSpeed: 500
   walkSpeed: 300
   velocityCurve:
@@ -21153,11 +21144,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e9c9520a1400d448bb37289394edc12, type: 3}
---- !u!1 &7027613119376561721 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1386880776647401044, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
-  m_PrefabInstance: {fileID: 5271633625208371586}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7745100397664372907
 PrefabInstance:
   m_ObjectHideFlags: 0

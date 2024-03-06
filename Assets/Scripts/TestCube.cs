@@ -17,7 +17,7 @@ using static UnityEngine.UI.Image;
 
 public class TestCube : MonoBehaviour
 {
-
+    GameObject[] objectsInScene;
     [SerializeField]
     public DialogueRunner dR;
     [SerializeField]
@@ -598,7 +598,7 @@ public class TestCube : MonoBehaviour
         canJump = true;
         lastStepTime = Time.time;
         charController = GetComponent<CharacterControl>();
-
+        objectsInScene = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
 
 
     }
@@ -2745,21 +2745,26 @@ public class TestCube : MonoBehaviour
         int layerToFind1 = LayerMask.NameToLayer(layerNameToFind1);
         int layerToFind2 = LayerMask.NameToLayer(layerNameToFind2);
 
-        if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind1) && !isPlayer1)
+        if (!isPlayer1 && !isPlayer2)
         {
-            circle1.SetActive(true);
-            circle2.SetActive(false);
-            isPlayer1 = true;
+            if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind1) && !isPlayer1)
+            {
+                circle1.SetActive(true);
+                circle2.SetActive(false);
+                isPlayer1 = true;
+
+            }
+            if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind2) && !isPlayer2)
+            {
+                circle1.SetActive(false);
+                circle2.SetActive(true);
+                isPlayer2 = true;
+            }
 
         }
-        if (this.gameObject.layer == LayerMask.NameToLayer(layerNameToFind2) && !isPlayer2)
-        {
-            circle1.SetActive(false);
-            circle2.SetActive(true);
-            isPlayer2 = true;
-        }
 
-        GameObject[] objectsInScene = GameObject.FindObjectsOfType<GameObject>();
+
+
         if (isPlayer1 && p2rc == null)
         {
             // Debug.Log("Trigger1");
