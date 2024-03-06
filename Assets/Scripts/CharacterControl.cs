@@ -951,6 +951,8 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
+    public GameObject dragon;
+
     private void OnTriggerStay(Collider other)
     {
 
@@ -963,6 +965,16 @@ public class CharacterControl : MonoBehaviour
             //shouldPlayGeiser = false;
             rb.AddForce(Vector3.up * 200);
         
+        }
+
+        if (other.gameObject.tag == "dragonMouth")
+        {
+
+            //old sound code
+            //if (shouldPlayGeiser) playerSounds.windCatch.Post(this.gameObject);
+            //shouldPlayGeiser = false;
+            rb.AddForce(dragon.transform.forward * 200);
+
         }
     }
 
