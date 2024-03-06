@@ -25,7 +25,8 @@ public static class Loader
         Tutorial,
         LoadingScene,
         ScoreCards,
-        Level1
+        Level1,
+        Level3
 
     }
 

@@ -79,4 +79,14 @@ public class EnterLevel1 : MonoBehaviour
 
         Loader.Load(Loader.Scene.MVPLevel);
     }
+
+    public void EnterLeve3()
+    {
+        GameManager.instance.changeSceneTimes = 7;
+        GameManager.instance.sceneChanged = true;
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+
+        Loader.Load(Loader.Scene.Level3);
+    }
 }
