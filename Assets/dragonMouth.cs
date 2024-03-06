@@ -11,12 +11,17 @@ public class dragonMouth : MonoBehaviour
     public Animator anim;
     public Renderer e1;
     public Renderer e2;
+    public ParticleSystem ps;
+    public ParticleSystem ps2;
+    bool psSwitch = false;
+    public GameObject lighting;
+    public int force;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        lighting.SetActive(false);
     }
 
     // Update is called once per frame
@@ -31,6 +36,14 @@ public class dragonMouth : MonoBehaviour
         active = true;
         e1.material = onActive;
         e2.material = onActive;
+        if (psSwitch == false)
+        {
+            ps.Play();
+            ps2.Play();
+            psSwitch = true;
+        }
+        lighting.SetActive(true);
+        
     }
 
     public void Deactivate()
@@ -39,6 +52,13 @@ public class dragonMouth : MonoBehaviour
         active = false;
         e1.material = defaulttex;
         e2.material = defaulttex;
+        if (psSwitch == true)
+        {
+            ps.Stop();
+            ps2.Stop();
+            psSwitch = false;
+        }
+        lighting.SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
@@ -51,7 +71,7 @@ public class dragonMouth : MonoBehaviour
             {
 
                 Debug.Log("success");
-                rb.AddForce(-transform.forward * 2000);
+                rb.AddForce(-transform.forward * force);
             }
         }
     }
