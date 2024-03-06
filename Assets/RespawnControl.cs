@@ -432,7 +432,6 @@ public class RespawnControl : MonoBehaviour
                 summoningCircle_T2.SetActive(false);
                 push_T2.SetActive(false);
 
-
             }
 
         }
@@ -450,9 +449,6 @@ public class RespawnControl : MonoBehaviour
     //    }
 
     //}
-
-
-
     void ResetInitialRespawnPoint()
     {
 
@@ -475,7 +471,6 @@ public class RespawnControl : MonoBehaviour
 
     private void Update()
     {
-
         if (curSceneName == "Level1")
         {
             SabotageBark();
@@ -489,9 +484,7 @@ public class RespawnControl : MonoBehaviour
         PlayerDetector();
         if (objectGrabbable != null)
         {
-
             //Debug.Log("check");
-
             Player1isCarrying = objectGrabbable.P1TakePackage;
             Player2isCarrying = objectGrabbable.P2TakePackage;
         }
@@ -506,8 +499,6 @@ public class RespawnControl : MonoBehaviour
             ResetInitialRespawnPoint();
             resetRespawnP = true;
         }
-
-
     }
 
     private void FixedUpdate()
@@ -711,15 +702,12 @@ public class RespawnControl : MonoBehaviour
         if (other.gameObject.tag == ("Hazard") || other.gameObject.tag == ("hazard2"))
         {
             //Debug.Log("Hazard name =" + other.gameObject);
-
             //Respawn(respawnPoint);
-
 
             if (isPlayer1)
             {
                 Player1Die = true;
                 print("Player1Die" + Player1Die);
-
             }
             else
             {
@@ -1795,8 +1783,5 @@ public class RespawnControl : MonoBehaviour
        // {
             //player.transform.position = bM.spawnpointExit;
      //   }
-
     }
-
-
 }

@@ -112,6 +112,9 @@ public class ObjectGrabbable : MonoBehaviour
     [Header("Level 1")]
     public Transform world;
 
+    [Header("Cooldown Timer")]
+    private float timer;
+    private bool backToLocation;
 
     [SerializeField] private AK.Wwise.Event packageImpact;
 
@@ -200,7 +203,7 @@ public class ObjectGrabbable : MonoBehaviour
         P1Steal();
         P2Steal();
         ShowDeliveryArea();
-
+        PackageCooldown();
         //CheckGrounded();
     }
 
@@ -261,7 +264,6 @@ public class ObjectGrabbable : MonoBehaviour
                 P1TakePackage = false;
                 P2TakePackage = true;
                 GameManager.instance.p1.objectGrabbable = null;
-
 
             }
         }
@@ -680,4 +682,34 @@ public class ObjectGrabbable : MonoBehaviour
         }
     }
 
+    #region Package Cooldown Timer
+    void PackageCooldown()
+    {
+        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+        {
+            if (P1TakePackage == false && P2TakePackage == false)
+            {
+                if (timer < 30)
+                {
+                    timer += Time.deltaTime;
+                }
+                else
+                {
+                    if (!backToLocation)
+                    {
+                        this.transform.position = respawnPoint;
+                        backToLocation = true;
+                        timer = 0;
+                    }
+                }
+            }
+            else if(P1TakePackage || P2TakePackage)
+            {
+                backToLocation = false;
+                timer = 0;
+            }
+        }
+    }
+
+    #endregion
 }
