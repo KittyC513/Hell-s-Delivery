@@ -143,6 +143,7 @@ public class TestCube : MonoBehaviour
     string scene7 = "Tutorial";
     string scene8 = "ScoreCards";
     string scene9 = "Level1";
+    string scene10 = "Level3";
     [SerializeField]
     bool withinDialogueRange;
     [SerializeField]
@@ -703,13 +704,13 @@ public class TestCube : MonoBehaviour
             package = null; 
         }
 
-        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == scene1 || curSceneName == "New CC")
+        if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == scene1 || curSceneName == "New CC" || curSceneName == scene10)
         {
             package = GameObject.FindGameObjectWithTag("Package");
             
         }
 
-        if (curSceneName == "Level1" || curSceneName == "Tutorial" || curSceneName == "MVPLevel")
+        if (curSceneName == "Level1" || curSceneName == "Tutorial" || curSceneName == "MVPLevel" || curSceneName == "Level3")
         {
 
             playerObject.GetComponent<PlayerObject>().enabled = true;
@@ -719,7 +720,7 @@ public class TestCube : MonoBehaviour
             playerObject.GetComponent<PlayerObject>().enabled = false;
         }
 
-        if (curSceneName == scene5 || curSceneName == "New CC")
+        if (curSceneName == scene5 || curSceneName == "New CC" || curSceneName == scene10)
         {
             canParachute = true;
         }
@@ -972,7 +973,7 @@ public class TestCube : MonoBehaviour
             movementCamera = mainCam;
 
         }
-        else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == "New CC")
+        else if (curSceneName == scene2 || curSceneName == scene4 || curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == "New CC" || curSceneName == scene10)
         {
             playerCamera.enabled = true;
             mainCam = null;
@@ -2939,7 +2940,7 @@ public class TestCube : MonoBehaviour
 
     void DoParachute(InputAction.CallbackContext obj)
     {
-        if (curSceneName == scene5 || curSceneName == "New CC")
+        if (curSceneName == scene5 || curSceneName == "New CC" || curSceneName == scene10)
         {
             canParachute = true;
             if (isInAir || isJumping)

@@ -18,5 +18,9 @@ public class mvpSwitcher : MonoBehaviour
         {
             SceneManager.LoadScene("MVPLevel");
         }
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            SceneManager.LoadScene("Level3");
+        }
     }
 }
