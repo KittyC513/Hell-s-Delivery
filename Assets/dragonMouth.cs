@@ -16,18 +16,32 @@ public class dragonMouth : MonoBehaviour
     bool psSwitch = false;
     public GameObject lighting;
     public int force;
+    public bool startActivated = false;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         lighting.SetActive(false);
+
+        if (startActivated)
+        {
+            anim.SetBool("Activate", true);
+            active = true;
+            e1.material = onActive;
+            e2.material = onActive;
+            ps.Play();
+            ps2.Play();
+            psSwitch = true;
+            lighting.SetActive(true);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Activate()
@@ -70,8 +84,12 @@ public class dragonMouth : MonoBehaviour
             if (rb != null)
             {
 
-                Debug.Log("success");
-                rb.AddForce(-transform.forward * force);
+               
+                Vector3 direction = other.transform.position - transform.position;
+                float distance = direction.magnitude;
+
+                Debug.Log(distance);
+                rb.AddForce(-transform.forward * force/ (distance / 10));
             }
         }
     }
