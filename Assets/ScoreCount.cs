@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEditor;
+using Unity.VisualScripting;
 
 public class ScoreCount : MonoBehaviour
 {
@@ -91,6 +92,17 @@ public class ScoreCount : MonoBehaviour
     private float p2ScaleMultiplier = 1;
 
     [SerializeField] private float mailScaleSpeed = 1;
+
+    [SerializeField] private TextMeshProUGUI p1DeathCount;
+    [SerializeField] private TextMeshProUGUI p2DeathCount;
+    [SerializeField] private int p1DeathValue;
+    [SerializeField] private int p2DeathValue;
+    [SerializeField] public int p1PackageValue;
+    [SerializeField] public int p2PackageValue;
+    [SerializeField] public TextMeshProUGUI p1PackageCount;
+    [SerializeField] public TextMeshProUGUI p2PackageCount;
+    [SerializeField] private int p1Multiply = 1;
+    [SerializeField] private int p2Multiply = 1;
 
     [Space, Header("Scene Names")]
     [SerializeField] private string level1 = "Level1";
@@ -355,6 +367,8 @@ public class ScoreCount : MonoBehaviour
         p2Score += value;
         p2AddScore = true;
         p1Deaths += 1;
+        p1DeathValue += 1;
+        p1DeathCount.text = p1DeathValue.ToString();
         //p1Score += p1Deaths;
 
         //deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
@@ -369,17 +383,33 @@ public class ScoreCount : MonoBehaviour
         //StartCoroutine(RotateToPosition(knobValue, 0.3f));
         p1Score += value;
         p1AddScore = true;
+
+
       
     }
 
     public void AddTimeToP1Package(float time)
     {
         p1PackageTime = time;
+        
+        if(p1PackageTime >= 60 * p1Multiply)
+        {
+            p1PackageValue += 1;
+            p1PackageCount.text = p1PackageValue.ToString();
+            p1Multiply += 1;
+        }
     }
 
     public void AddTimeToP2Package(float time)
     {
         p2PackageTime = time;
+
+        if (p2PackageTime >= 60 * p2Multiply)
+        {
+            p2PackageValue += 1;
+            p2PackageCount.text = p2PackageValue.ToString();
+            p2Multiply += 1;
+        }
     }
 
     void AddTimer()
@@ -423,6 +453,8 @@ public class ScoreCount : MonoBehaviour
         p1AddScore = true;
 
         p2Deaths += 1;
+        p2DeathValue += 1;
+        p2DeathCount.text = p2DeathValue.ToString();
         //p2Score += p2Deaths;
         //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
     }
@@ -434,7 +466,7 @@ public class ScoreCount : MonoBehaviour
         //StartCoroutine(RotateToPositionP2(-knobValue, 0.3f));
         p2Score += value;
         p2AddScore = true;
-      
+
     }
 
     void AddScore()

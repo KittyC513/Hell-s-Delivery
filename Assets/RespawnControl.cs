@@ -149,6 +149,15 @@ public class RespawnControl : MonoBehaviour
     private Animator p1Anim;
     [SerializeField]
     private Animator p2Anim;
+    [SerializeField]
+    private GameObject deathCam;
+    [SerializeField]
+    private Transform camPosition;
+    [SerializeField]
+    private Transform camOriPosition;
+    [SerializeField]
+    private GameObject oriCam;
+
 
 
     [Header("Bard")]
@@ -595,11 +604,19 @@ public class RespawnControl : MonoBehaviour
         //p1DeadScreen.SetActive(false);
         P1Indicator.SetActive(true);
         P1Shade.SetActive(true);
-        GameManager.instance.p1.isFreeze = false;
         yield return new WaitForSeconds(2);
+        GameManager.instance.p1.isFreeze = false;
         p1Anim.SetBool("isRespawn", false);
 
     }
+
+    //void MoveCam(Transform newPos)
+    //{
+    //    float lerpSpeed = 10f;
+    //    deathCam.transform.position = Vector3.Lerp(deathCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
+    //    deathCam.transform.rotation = Quaternion.Lerp(deathCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
+    //    print("Camera is moving");
+    //}
 
     IEnumerator P2RespawnTimer()
     {
@@ -619,8 +636,8 @@ public class RespawnControl : MonoBehaviour
         //p2DeadScreen.SetActive(false);
         P2Indicator.SetActive(true);
         P2Shade.SetActive(true);
-        GameManager.instance.p2.isFreeze = false;
         yield return new WaitForSeconds(2);
+        GameManager.instance.p2.isFreeze = false;
         p2Anim.SetBool("isRespawn", false);
 
     }
@@ -645,6 +662,7 @@ public class RespawnControl : MonoBehaviour
 
         if (Player1isCarrying && isPlayer1)
         {
+
             objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
             objectGrabbable.P2TakePackage = true;
             objectGrabbable.P1TakePackage = false;
