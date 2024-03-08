@@ -368,7 +368,11 @@ public class ScoreCount : MonoBehaviour
         p2AddScore = true;
         p1Deaths += 1;
         p1DeathValue += 1;
-        p1DeathCount.text = p1DeathValue.ToString();
+        if(p1DeathCount != null)
+        {
+            p1DeathCount.text = p1DeathValue.ToString();
+        }
+
         //p1Score += p1Deaths;
 
         //deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
@@ -383,8 +387,6 @@ public class ScoreCount : MonoBehaviour
         //StartCoroutine(RotateToPosition(knobValue, 0.3f));
         p1Score += value;
         p1AddScore = true;
-
-
       
     }
 
@@ -395,7 +397,11 @@ public class ScoreCount : MonoBehaviour
         if(p1PackageTime >= 60 * p1Multiply)
         {
             p1PackageValue += 1;
-            p1PackageCount.text = p1PackageValue.ToString();
+
+            if(p1PackageCount != null)
+            {
+                p1PackageCount.text = p1PackageValue.ToString();
+            }
             p1Multiply += 1;
         }
     }
@@ -407,7 +413,10 @@ public class ScoreCount : MonoBehaviour
         if (p2PackageTime >= 60 * p2Multiply)
         {
             p2PackageValue += 1;
-            p2PackageCount.text = p2PackageValue.ToString();
+            if(p2PackageCount != null)
+            {
+                p2PackageCount.text = p2PackageValue.ToString();
+            }
             p2Multiply += 1;
         }
     }
@@ -454,7 +463,12 @@ public class ScoreCount : MonoBehaviour
 
         p2Deaths += 1;
         p2DeathValue += 1;
-        p2DeathCount.text = p2DeathValue.ToString();
+
+        if(p2DeathCount != null)
+        {
+            p2DeathCount.text = p2DeathValue.ToString();
+        }
+
         //p2Score += p2Deaths;
         //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
     }
