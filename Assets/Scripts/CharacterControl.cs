@@ -30,6 +30,7 @@ public class CharacterControl : MonoBehaviour
     [Header("Ground Movement")]
     [SerializeField] private float peakSpeed = 500;
     [SerializeField] private float walkSpeed = 300;
+    [SerializeField] private float runSpeed = 1000;
     [SerializeField] private AnimationCurve velocityCurve;
     [SerializeField] private AnimationCurve decelerationCurve;
     [SerializeField] private AnimationCurve airQuickTurnCurve;
@@ -109,6 +110,11 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float slowDownMultiplier = 0.6f;
     [SerializeField] private bool isSlow = false;
     [SerializeField] private bool freezeState = false;
+    [SerializeField] private ParticleSystem dustGen;
+    private bool reachedMaxSpeed = false;
+    private float runTime = 1;
+    private float runTemp = 0;
+    private bool running = false;
 
     [Space, Header("Input Asset Variables")]
     public Test inputAsset;
@@ -153,7 +159,7 @@ public class CharacterControl : MonoBehaviour
     {
      
         CheckGrounded();
-       
+        
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
@@ -300,8 +306,15 @@ public class CharacterControl : MonoBehaviour
                 if (hasLeftGround)
                 {
                     isJumping = false;
+                    
                 }
-                
+               
+                if (!isJumping)
+                {
+                    GenerateDust();
+                    GenerateDust();
+                }
+               
                 if (isGrounded && currentSpeed == 0) pState = playerStates.idle;
 
                 if (isGrounded && currentSpeed > 0) pState = playerStates.run;
@@ -355,6 +368,10 @@ public class CharacterControl : MonoBehaviour
         //if mid jump, shorten the jump and start losing height
     }
 
+    private void GenerateDust()
+    {
+        dustGen.Play();
+    }
     private Vector3 GetRelativeInputDirection(Camera camera, Vector2 inputValue)
     {
         //get camera forward and right
@@ -401,15 +418,26 @@ public class CharacterControl : MonoBehaviour
                     //get the player's facing direction and check if our new input is far enough away from our facing direction
                     if (lookDir.x - relativeStick.x > minQuickTurn || lookDir.x - relativeStick.x < -minQuickTurn)
                     {
-
+                        if (currentSpeed >= peakSpeed / 2)
+                        {
+                            GenerateDust();
+                        }
                         if (!quickTurn) quickTurn = true;
                         //Debug.Log(quickTurn);
+
+                    
                     }
 
                     if (lookDir.z - relativeStick.z > minQuickTurn || lookDir.z - relativeStick.z < -minQuickTurn)
                     {
+
+                        if (currentSpeed >= peakSpeed / 2)
+                        {
+                            GenerateDust();
+                        }
                         if (!quickTurn) quickTurn = true;
                         //Debug.Log(quickTurn);
+
                     }
 
                 }
@@ -461,7 +489,7 @@ public class CharacterControl : MonoBehaviour
             {
                 if (rawInput.magnitude > 0)
                 {
-                    directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude);
+                    directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
                 }
                 else
                 {
@@ -525,8 +553,17 @@ public class CharacterControl : MonoBehaviour
                 //if we are at the peak our velocity will be our peak speed times 1, so our peak speed
                 if (rawInput.magnitude > 0.5f)
                 {
-                    currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
-                    airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+                    if (running)
+                    {
+                        currentSpeed = (runSpeed * velocityCurve.Evaluate(velocityTime));
+                        airSpeed = (runSpeed * airVelocityCurve.Evaluate(velocityTime));
+                    }
+                    else
+                    {
+                        currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
+                        airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+                    }
+                   
                 }
                 else
                 {
@@ -535,7 +572,37 @@ public class CharacterControl : MonoBehaviour
                 }
 
                 //if we aren't grounded we evaluate the air movement curve
-          
+                if(currentSpeed >= peakSpeed)
+                {
+                    if (!reachedMaxSpeed)
+                    {
+                        reachedMaxSpeed = true;
+                        
+                    }
+                   
+                }
+                else
+                {
+                    reachedMaxSpeed = false;
+                }
+
+
+               
+
+                if (runTemp >= runTime)
+                {
+                    if (!running)
+                    {
+                        GenerateDust();
+                        running = true;
+                    }
+                }
+                else if (rawInput.magnitude > 0.5f && isGrounded)
+                {
+                    runTemp += 1 * Time.deltaTime;
+                }
+
+
 
                 if (pState == playerStates.parachute)
                 {
@@ -561,6 +628,14 @@ public class CharacterControl : MonoBehaviour
             }
             else
             {
+                if (running)
+                {
+                    GenerateDust();
+                }
+
+                running = false;
+                runTemp = 0;
+
                 velocityTime = 0;
                 decelerationTime += Time.deltaTime;
 
@@ -588,7 +663,8 @@ public class CharacterControl : MonoBehaviour
         }
         else
         {
-            
+            running = false;
+            runTemp = 0;
             quickTurnTime += Time.deltaTime;
 
             if (isGrounded)
@@ -625,6 +701,13 @@ public class CharacterControl : MonoBehaviour
 
             }
 
+            if (stickValue.magnitude == 0)
+            {
+                quickTurn = false;
+                velocityTime = 0;
+                quickTurnTime = 0;
+            }
+
         }
 
 
@@ -635,11 +718,13 @@ public class CharacterControl : MonoBehaviour
         //if the jump button is pressed
         if (readJumpValue && shouldJump && !isJumping && canJump)
         {
+            
             canJump = false;
             if (!isJumping && shouldJump)
             {
                 //lets get our starting y vector
                 lastStandingVector = transform.position;
+                GenerateDust();
             }
             //reset the reached minimum jump variable
             reachedMinJump = false;
