@@ -261,7 +261,9 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool pushStartTimer;
     [SerializeField]
-    private float pushDuration;
+    private float pushDuration; 
+    [SerializeField]
+    private float pushHoldDuration;
 
 
     [Header("Interact")]
@@ -692,6 +694,7 @@ public class TestCube : MonoBehaviour
                 }
             }
             Push();
+            NewPush();
             DoPush();
                 
 
@@ -2426,38 +2429,17 @@ public class TestCube : MonoBehaviour
  
         }
     }
-    //private void DoPush(InputAction.CallbackContext obj)
-    //{
-
-    //    if (withinPushingRange)
-    //    {
-    //        if (isPlayer1)
-    //        {
-    //            P1Push();
-    //            //objectGrabbable = null;
-    //            //p1pushed = true;
-
-
-    //        }
-
-    //        if (isPlayer2)
-    //        {
-    //            P2Push();
-    //            //objectGrabbable = null;
-    //        }
-
-
-    //    }
-
-    //}
     IEnumerator P1PushCoroutine()
     {
         otherRB = gameManager.p2.charController.rb;
         p2Anim = GameManager.instance.p2Ani;
 
-        if (bM.isboxing)
+        if (curSceneName == "Level1")
         {
-            bM.p1pushedcount++;
+            if (bM.isboxing)
+            {
+                bM.p1pushedcount++;
+            }
         }
 
         otherRB.useGravity = false;
@@ -2471,7 +2453,8 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce;
+        float forceMagnitude = pushForce * (pushHoldDuration + 1);
+        print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
@@ -2525,10 +2508,14 @@ public class TestCube : MonoBehaviour
         otherRB = gameManager.p1.charController.rb;
         p1Anim = GameManager.instance.p1Ani;
 
-        if (bM.isboxing)
+        if(curSceneName == "Level1")
         {
-            bM.p2pushedcount++;
+            if (bM.isboxing)
+            {
+                bM.p2pushedcount++;
+            }
         }
+
 
         otherRB.useGravity = false;
 
@@ -2541,7 +2528,8 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce;
+        float forceMagnitude = pushForce * (pushHoldDuration+1);
+        print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
@@ -2591,92 +2579,20 @@ public class TestCube : MonoBehaviour
         
     }
 
-
-
-
-    //void P2Push()
-    //{
-
-    //    otherRB = gameManager.player1.GetComponent<Rigidbody>();
-    //    p1Anim = GameManager.instance.p1Ani;
-
-    //    otherRB.useGravity = false;
-    //    //otherRB.isKinematic = true;
-    //    Vector3 forceDir = otherRB.transform.position - transform.position;
-    //    Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
-
-    //    gameManager.p1.charController.rb.AddForce(forcePosition.normalized * pushForce * Time.deltaTime, ForceMode.Force);
-
-    //    //forceDir = otherRB.transform.position - transform.position;
-
-    //    ////Vector3 forcePosition = gameManager.player1.transform.position + forceDir * pushForce;
-    //    //charController.rb.velocity = new Vector3(charController.directionSpeed.x * Time.fixedDeltaTime * pushForce, charController.ySpeed * Time.fixedDeltaTime, charController.directionSpeed.z * Time.fixedDeltaTime * pushForce);
-
-
-    //    //print("forcePosition" + forcePosition);
-    //    //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.z * pushForce;
-    //    //gameManager.p1.forceDirection += gameManager.player1.transform.position * forceDir.x * pushForce;
-
-    //    //if (curSceneName == scene1 || curSceneName == scene3 || curSceneName == scene6)
-    //    //{
-
-    //    //    gameManager.p1.forceDirection += forceDir.z * GetCameraForward(mainCam) * pushForce;
-    //    //    gameManager.p1.forceDirection += forceDir.x * GetCameraRight(mainCam) * pushForce;
-    //    //}
-    //    //else
-    //    //{
-    //    //    gameManager.p1.forceDirection += forceDir.z * gameManager.p1.GetCameraForward(playerCamera) * pushForce;
-    //    //    gameManager.p1.forceDirection += forceDir.x * gameManager.p1.GetCameraRight(playerCamera) * pushForce;
-    //    //}
-
-    //    //otherRB.AddForce(forcePosition.normalized * pushForce, ForceMode.Force);
-
-    //    //float randomTorque = Random.Range(-5f, 5f);
-    //    //otherRB.AddTorque(new Vector3(randomTorque, randomTorque, randomTorque));
-    //    //Vector3 newPosition = Vector3.Lerp(otherRB.transform.position, forcePosition, Time.deltaTime * lerpSpeed);
-    //    //otherRB.MovePosition(newPosition);
-    //    //StartCoroutine(SlideToPosition(forcePosition));
-
-    //    p1Anim.SetBool("beingPush", true);
-    //    StartCoroutine(StopBeingPushedP1());
-    //    //noisy1 = gameManager.noisy1;
-
-    //    if (rC.Player1isCarrying)
-    //    {
-    //        p2Steal = true;
-    //        gameManager.p1.objectGrabbable = null;
-
-    //    }
-    //}
-
     IEnumerator StopBeingPushedP1()
     {
         yield return new WaitForSeconds(1f);
-        p1Anim.SetBool("beingPush", false); 
+        p1Anim.SetBool("beingPush", false);
+        p1Anim.SetFloat("speed", 0f);
     }
 
     IEnumerator StopBeingPushedP2()
     {
         yield return new WaitForSeconds(1f);
-        p2Anim.SetBool("beingPush", false); ;
+        p2Anim.SetBool("beingPush", false);
+        p2Anim.SetFloat("speed", 0f);
     }
 
-    //IEnumerator SlideToPosition(Vector3 targetPosition)
-    //{
-    //    float elapsedTime = 0f;
-
-    //    while (elapsedTime < slideTime)
-    //    {
-    //        otherRB.MovePosition(Vector3.Lerp(startingPosition, targetPosition, elapsedTime / slideTime));
-    //        elapsedTime += Time.deltaTime;
-    //        yield return null;
-    //    }
-
-    //    // Ensure the object reaches the exact target position at the end
-    //    otherRB.MovePosition(targetPosition);
-    //    yield return null;
-
-    //}
     
     #endregion
 
@@ -2718,23 +2634,6 @@ public class TestCube : MonoBehaviour
                 //rC.Player2Die = false;
             }
         }
-
-        //if (isPlayer2)
-        //{
-        //    if (p1rc.Player1Die)
-        //    {
-        //        objectGrabbable = package.GetComponent<ObjectGrabbable>();
-        //        p1rc.Player1Die = false;
-        //    }
-        //    else if (rC.Player2Die)
-        //    {
-        //        Debug.Log("Player2die" + rC.Player2Die);
-        //        objectGrabbable = null;
-        //        rC.Player2Die = false;
-        //    }
-        //}
-
-
 
     }
     void PlayerDetector()
@@ -3422,7 +3321,28 @@ public class TestCube : MonoBehaviour
     }
 
     #endregion
+    private void NewPush()
+    {
+        if (ReadPushButton())
+        {
+            if(pushHoldDuration < 1)
+            {
+                pushHoldDuration += Time.deltaTime;
 
+            }
+            else
+            {
+                pushHoldDuration = 1;
+            }
+
+        }
+        else
+        {
+            pushHoldDuration = 0;
+        }
+
+        print("PushHoldDuration" + pushHoldDuration);
+    }
     private void Push()
     {
         if (ReadPushButton())
@@ -3433,9 +3353,7 @@ public class TestCube : MonoBehaviour
                 {
                     p1pushed = true;
                     pushStartTimer = false;
-
-                    
-
+                 
 
                     if (ScoreCount.instance != null)
                     {

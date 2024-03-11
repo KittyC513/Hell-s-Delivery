@@ -157,6 +157,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ReleasePush",
+                    "type": "PassThrough",
+                    "id": "44cc6db3-4385-49d4-9e28-206e1e25f03f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -817,6 +826,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "SkipTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fbfa1ad7-df7e-406d-97ef-a1aa22bf94ed",
+                    "path": "<XInputController>/buttonNorth",
+                    "interactions": "Press(pressPoint=0.1,behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReleasePush",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "212933a3-3d7f-4311-a99f-86855171190c",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "Press(pressPoint=0.1,behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReleasePush",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b2a5eff-e4a7-49fa-add2-57c16f28d026",
+                    "path": "<DualShockGamepad>/buttonNorth",
+                    "interactions": "Press(pressPoint=0.1,behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReleasePush",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
