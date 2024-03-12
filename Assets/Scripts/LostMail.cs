@@ -39,6 +39,7 @@ public class LostMail : MonoBehaviour
         anim = GetComponent<Animator>();
         extraMail = new List<LostMail>();
         startPos = transform.position;
+        CastBlobShadow(shadow);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -133,7 +134,7 @@ public class LostMail : MonoBehaviour
             mailObj.GetComponent<MeshRenderer>().material = goldMaterial;
         }
 
-        CastBlobShadow(shadow);
+        
     }
     private void LookAtCamera(Camera cam)
     {
