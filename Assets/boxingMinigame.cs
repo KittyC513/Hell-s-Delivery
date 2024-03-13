@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class boxingMinigame : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class boxingMinigame : MonoBehaviour
     public Image healthP2;
     public GameObject boxingCanvas;
     public Animator anim;
+    string sceneString;
+
 
 
 
@@ -32,6 +35,10 @@ public class boxingMinigame : MonoBehaviour
         spawnpointp1 = waypointp1.transform.position;
         spawnpointp2 = waypointp2.transform.position;
         spawnpointExit = waypointExit.transform.position;
+        Scene scene = SceneManager.GetActiveScene();
+
+
+        sceneString = scene.name;
     }
 
     // Update is called once per frame
@@ -39,30 +46,9 @@ public class boxingMinigame : MonoBehaviour
     {
         if (isboxing)
         {
-            if (p1pushedcount >= maxDamage)
+            if(sceneString == "Level1")
             {
-                // Find all game objects with the tag "Findscript"
-                GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
-
-                // Loop through each object found
-                foreach (GameObject obj in objectsWithTag)
-                {
-                    // Check if the object has a component of type RespawnControl
-                    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
-
-                    // If the RespawnControl component is found, do something with it
-                    if (respawnControl != null)
-                    {
-                        // You can access methods and properties of the RespawnControl script here
-                        // For example:
-                        respawnControl.endminigamep1();
-                    }
-                }
-                endMinigame();
-            }
-            if (p2pushedcount >= maxDamage)
-            {
-                if (p2pushedcount >= maxDamage)
+                if (p1pushedcount >= maxDamage)
                 {
                     // Find all game objects with the tag "Findscript"
                     GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
@@ -78,16 +64,81 @@ public class boxingMinigame : MonoBehaviour
                         {
                             // You can access methods and properties of the RespawnControl script here
                             // For example:
-                            respawnControl.endminigamep2();
+                            respawnControl.endminigamep1();
                         }
                     }
                     endMinigame();
                 }
+                if (p2pushedcount >= maxDamage)
+                {
+                    if (p2pushedcount >= maxDamage)
+                    {
+                        // Find all game objects with the tag "Findscript"
+                        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
+
+                        // Loop through each object found
+                        foreach (GameObject obj in objectsWithTag)
+                        {
+                            // Check if the object has a component of type RespawnControl
+                            RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
+
+                            // If the RespawnControl component is found, do something with it
+                            if (respawnControl != null)
+                            {
+                                // You can access methods and properties of the RespawnControl script here
+                                // For example:
+                                respawnControl.endminigamep2();
+                            }
+                        }
+                        endMinigame();
+                    }
+                }
+            }
+            
+
+
+
+
+            if (sceneString == "MVPLevel")
+            {
+                Debug.Log("sccessful");
+                // Find all game objects with the tag "Findscript"
+                GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
+
+                // Loop through each object found
+                foreach (GameObject obj in objectsWithTag)
+                {
+                    // Check if the object has a component of type RespawnControl
+                    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
+
+                    // If the RespawnControl component is found, do something with it
+                    if (respawnControl != null)
+                    {
+                        // You can access methods and properties of the RespawnControl script here
+                        // For example:
+                        if (respawnControl.Player1Die)
+                        {
+                            respawnControl.endminigamep1();
+                            endMinigame();
+                            
+
+                        }
+                        if (respawnControl.Player2Die)
+                        {
+                            respawnControl.endminigamep2();
+                            endMinigame();
+
+                        }
+                    }
+                }
+
             }
         }
 
         healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
         healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
+
+        
 
 
     }
@@ -120,7 +171,7 @@ public class boxingMinigame : MonoBehaviour
         }
     }
 
-    void endMinigame()
+    public void endMinigame()
     {
         boxingCanvas.SetActive(false);
         isboxing = false;

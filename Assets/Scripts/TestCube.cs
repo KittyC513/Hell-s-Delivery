@@ -621,7 +621,7 @@ public class TestCube : MonoBehaviour
         ItemDetector();
         CameraSwitch();
         AnimationAndSound();
-        if (curSceneName == "Level1")
+        if (curSceneName == "Level1" || curSceneName == "MVPLevel")
         {
             initBoxing();
         }
@@ -646,7 +646,7 @@ public class TestCube : MonoBehaviour
                     }
 
                     //print("use new movementCal");
-                }else if (curSceneName == "Level1" && bM.isboxing)
+                }else if (curSceneName == "Level1" && bM.isboxing || curSceneName == "MVPLevel" && bM.isboxing)
                 {
                     if (charController.rb != null)
                         {
@@ -3394,6 +3394,8 @@ public class TestCube : MonoBehaviour
         }
         
     }
+
+
 
     private void ResetPush()
     {
