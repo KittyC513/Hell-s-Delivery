@@ -508,6 +508,9 @@ public class RespawnControl : MonoBehaviour
             ResetInitialRespawnPoint();
             resetRespawnP = true;
         }
+
+        Debug.Log("p1dead" + p1dead);
+        Debug.Log("p2dead" + p2dead);
     }
 
     private void FixedUpdate()
@@ -538,6 +541,8 @@ public class RespawnControl : MonoBehaviour
 
     }
 
+
+
     public void Respawn(Vector3 respawnPos)
     {
         if (curSceneName == scene5)
@@ -550,12 +555,12 @@ public class RespawnControl : MonoBehaviour
         else if (curSceneName == scene4 || curSceneName == scene9)
         {
             player.transform.position = respawnPos;
-            if (isPlayer1)
+            if (isPlayer1 && P1RespawnRotation != null)
             {
                 player.transform.rotation = P1RespawnRotation.rotation;
             }
 
-            if (isPlayer2)
+            if (isPlayer2 && P2RespawnRotation != null)
             {
 
                 player.transform.rotation = P2RespawnRotation.rotation;
@@ -587,8 +592,13 @@ public class RespawnControl : MonoBehaviour
     //    }
 
     //}
+
+    public bool p1dead;
+    public bool p2dead;
+
     IEnumerator P1RespawnTimer()
     {
+        p1dead = true;
         p1DeadScreen.SetActive(true);
         p1Anim.SetBool("isDead", true);
         GameManager.instance.p1.isFreeze = true;
@@ -607,6 +617,7 @@ public class RespawnControl : MonoBehaviour
         yield return new WaitForSeconds(2);
         GameManager.instance.p1.isFreeze = false;
         p1Anim.SetBool("isRespawn", false);
+        p1dead = false;
 
     }
 
@@ -622,7 +633,7 @@ public class RespawnControl : MonoBehaviour
     {
         p2DeadScreen.SetActive(true);
         p2Anim.SetBool("isDead", true);
-
+        p2dead = true;
         GameManager.instance.p2.isFreeze = true;
         //p2Model.SetActive(false);
         //p2DeadScreen.SetActive(true);
@@ -639,6 +650,7 @@ public class RespawnControl : MonoBehaviour
         yield return new WaitForSeconds(2);
         GameManager.instance.p2.isFreeze = false;
         p2Anim.SetBool("isRespawn", false);
+        p2dead = false;
 
     }
 
@@ -676,6 +688,7 @@ public class RespawnControl : MonoBehaviour
 
     void P2Respawn()
     {
+
         StartCoroutine(P2RespawnTimer());
         if (curSceneName != scene5)
         {

@@ -207,8 +207,8 @@ public class Level1CamControl : MonoBehaviour
         {
             dialogueCanvasP2.SetActive(true);
         }
-        GameManager.instance.p1.transform.position = new Vector3(-38, -27, 4.7f);
-        GameManager.instance.p2.transform.position = new Vector3(-38, -27, 4.7f);
+        GameManager.instance.p1.transform.position = new Vector3(-173, 61, -297);
+        GameManager.instance.p2.transform.position = new Vector3(-173, 61, -297);
     }
 
 }

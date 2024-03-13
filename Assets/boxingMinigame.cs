@@ -24,6 +24,7 @@ public class boxingMinigame : MonoBehaviour
     public GameObject boxingCanvas;
     public Animator anim;
     string sceneString;
+    bool endswitch = false;
 
 
 
@@ -93,15 +94,19 @@ public class boxingMinigame : MonoBehaviour
                         endMinigame();
                     }
                 }
+
+                healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
+                healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
+
             }
             
 
 
 
 
-            if (sceneString == "MVPLevel")
+            if (sceneString == "MVPLevel" && endswitch == true)
             {
-                Debug.Log("sccessful");
+                Debug.Log("successful");
                 // Find all game objects with the tag "Findscript"
                 GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
 
@@ -110,24 +115,32 @@ public class boxingMinigame : MonoBehaviour
                 {
                     // Check if the object has a component of type RespawnControl
                     RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
-
+                    Debug.Log(respawnControl.p1dead);
+                    Debug.Log(respawnControl.p2dead);
                     // If the RespawnControl component is found, do something with it
                     if (respawnControl != null)
                     {
                         // You can access methods and properties of the RespawnControl script here
                         // For example:
-                        if (respawnControl.Player1Die)
+                        if (respawnControl.p1dead)
                         {
+                            respawnControl.p1dead = false;
+                            respawnControl.p2dead = false;
                             respawnControl.endminigamep1();
                             endMinigame();
+                            Debug.Log("endminigame p1 die");
+                            endswitch = false;
                             
-
                         }
-                        if (respawnControl.Player2Die)
+                        if (respawnControl.p2dead)
                         {
+                            respawnControl.p1dead = false;
+                            respawnControl.p2dead = false;
                             respawnControl.endminigamep2();
                             endMinigame();
-
+                            Debug.Log("endminigame p2 die");
+                            endswitch = false;
+                            
                         }
                     }
                 }
@@ -135,8 +148,7 @@ public class boxingMinigame : MonoBehaviour
             }
         }
 
-        healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
-        healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
+        
 
         
 
@@ -166,7 +178,10 @@ public class boxingMinigame : MonoBehaviour
             {
                 // You can access methods and properties of the RespawnControl script here
                 // For example:
+                respawnControl.p1dead = false;
+                respawnControl.p2dead = false;
                 respawnControl.startminigame();
+                endswitch = true;
             }
         }
     }

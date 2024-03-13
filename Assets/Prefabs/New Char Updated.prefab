@@ -567,6 +567,8 @@ MonoBehaviour:
   oriCam: {fileID: 6258548748242453789}
   previousIndex: 0
   isTriggered: 0
+  p1dead: 0
+  p2dead: 0
 --- !u!114 &1936537124406388785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8211,7 +8213,7 @@ MonoBehaviour:
   parachuteObj: {fileID: 4786678468063173969}
   pushCd: 1.1
   pushTimer: 1.1
-  pushForce: 50
+  pushForce: 250
   pushMask:
     serializedVersion: 2
     m_Bits: 3072
@@ -8228,6 +8230,7 @@ MonoBehaviour:
   p2Steal: 0
   pushStartTimer: 0
   pushDuration: 0.25
+  pushHoldDuration: 0
   interactDistance: 2
   interactRadius: 0.5
   interactableMask:
@@ -13927,7 +13930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4838951723700839669}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0830396, y: 0.00000011920929, z: -0.000000052154064, w: 0.99654627}
+  m_LocalRotation: {x: -0.08303958, y: 0.00000014901161, z: -0.000000067055225, w: 0.99654627}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20910,7 +20913,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6258548748242453789}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.088292494, y: 0.9115858, z: -0.2760059, w: 0.2916103}
+  m_LocalRotation: {x: 0.08829249, y: 0.9115858, z: -0.27600592, w: 0.29161027}
   m_LocalPosition: {x: -6.96473, y: 7.9999995, z: 9.77203}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
