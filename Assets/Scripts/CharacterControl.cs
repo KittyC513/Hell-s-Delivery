@@ -109,6 +109,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float glideFallMax = 800;
     [SerializeField] private float slowDownMultiplier = 0.6f;
     [SerializeField] private bool isSlow = false;
+    [SerializeField] private bool buttonHold = false;
     [SerializeField] private bool freezeState = false;
     [SerializeField] private ParticleSystem dustGen;
     private bool reachedMaxSpeed = false;
@@ -163,7 +164,7 @@ public class CharacterControl : MonoBehaviour
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
-    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle, bool isFreeze, bool player1)
+    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle, bool isFreeze, bool player1, bool holdPushButton)
     {
         isPlayer1 = player1;
         camera = cam;
@@ -205,6 +206,7 @@ public class CharacterControl : MonoBehaviour
         if (isParachuting) parachuteObj.SetActive(true);
         else parachuteObj.SetActive(false);
         isSlow = bigPackage;
+        buttonHold = holdPushButton;
         freezeState = isFreeze;
     }
 
@@ -485,7 +487,7 @@ public class CharacterControl : MonoBehaviour
         if (isGrounded)
         {
             //if the player is inputting anything at all we should multiply the speed by their stick input to get a variable push rate
-            if (!isSlow)
+            if (!isSlow && !buttonHold)
             {
                 if (rawInput.magnitude > 0)
                 {
@@ -497,7 +499,7 @@ public class CharacterControl : MonoBehaviour
                     directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
                 }
             }
-            else
+            else if(isSlow || buttonHold)
             {
                 if (rawInput.magnitude > 0)
                 {

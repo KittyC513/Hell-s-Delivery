@@ -264,6 +264,12 @@ public class TestCube : MonoBehaviour
     private float pushDuration; 
     [SerializeField]
     private float pushHoldDuration;
+    [SerializeField]
+    public bool holdPush;
+    [SerializeField]
+    private GameObject p1Particle;
+    [SerializeField]
+    private GameObject p2Particle;
 
 
     [Header("Interact")]
@@ -584,7 +590,7 @@ public class TestCube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         isCameraLocked = false;
         gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
@@ -642,7 +648,7 @@ public class TestCube : MonoBehaviour
                 {
                     if(charController.rb != null)
                     {
-                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1);
+                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, holdPush);
                     }
 
                     //print("use new movementCal");
@@ -650,7 +656,7 @@ public class TestCube : MonoBehaviour
                 {
                     if (charController.rb != null)
                         {
-                            charController.RunMovement(boxcam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1);
+                            charController.RunMovement(boxcam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, holdPush);
                         }
                     
                 }
@@ -658,7 +664,7 @@ public class TestCube : MonoBehaviour
                 {
                     if (charController.rb != null)
                     {
-                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1);
+                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, holdPush);
                     }
 
                 }
@@ -696,6 +702,7 @@ public class TestCube : MonoBehaviour
             Push();
             NewPush();
             DoPush();
+
                 
 
          }
@@ -1020,6 +1027,7 @@ public class TestCube : MonoBehaviour
                     {
                         if (!isCameraLocked)
                         {
+
                             if (!isDashing)
                             {
                                 if(mainCam != null)
@@ -1067,6 +1075,7 @@ public class TestCube : MonoBehaviour
 
                         if (!isCameraLocked)
                         {
+
                             if (!isDashing)
                             {
                                 if(playerCamera != null)
@@ -1092,8 +1101,10 @@ public class TestCube : MonoBehaviour
                         {
                             if(playerCamera != null)
                             {
+
                                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
+
                             }
 
                             //MoveTowardFacingDirection();
@@ -1244,7 +1255,7 @@ public class TestCube : MonoBehaviour
                         }
                         else
                         {
-                            if(playerAnimator2 != null)
+                            if(playerCamera != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
@@ -2453,7 +2464,7 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * (pushHoldDuration + 1);
+        float forceMagnitude = pushForce * pushHoldDuration;
         print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
@@ -2528,7 +2539,7 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * (pushHoldDuration+1);
+        float forceMagnitude = pushForce * pushHoldDuration;
         print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
@@ -3320,23 +3331,57 @@ public class TestCube : MonoBehaviour
     {
         if (ReadPushButton())
         {
-            if(pushHoldDuration < 1)
+            holdPush = true;
+            isCameraLocked = true;
+
+            if(pushHoldDuration < 3)
             {
                 pushHoldDuration += Time.deltaTime;
+
+                if (pushHoldDuration < 1)
+                {
+                    pushHoldDuration = 1;
+                }
 
             }
             else
             {
-                pushHoldDuration = 1;
+                pushHoldDuration = 3;
+            }
+
+            if (isPlayer1)
+            {
+                p1Particle.SetActive(true);
+            }
+
+            if (isPlayer2)
+            {
+                p2Particle.SetActive(true);
             }
 
         }
         else
         {
             pushHoldDuration = 0;
+            holdPush = false;
+
+            if (!isPulling)
+            {
+                isCameraLocked = false;
+            }
+            if (isPlayer1)
+            {
+                p1Particle.SetActive(false);
+            }
+
+            if (isPlayer2)
+            {
+                p2Particle.SetActive(false);
+            }
+
         }
 
-        print("PushHoldDuration" + pushHoldDuration);
+        //print("PushHoldDuration" + pushHoldDuration);
     }
     private void Push()
     {
@@ -3348,7 +3393,7 @@ public class TestCube : MonoBehaviour
                 {
                     p1pushed = true;
                     pushStartTimer = false;
-                 
+                   
 
                     if (ScoreCount.instance != null)
                     {
@@ -3363,8 +3408,8 @@ public class TestCube : MonoBehaviour
                 {
                     p2pushed = true;
                     pushStartTimer = false;
+              
 
-                    
 
                     if (ScoreCount.instance != null)
                     {
@@ -3376,6 +3421,7 @@ public class TestCube : MonoBehaviour
                 }
             }
         }
+
     }
 
     private void initBoxing()
