@@ -3081,7 +3081,12 @@ public class TestCube : MonoBehaviour
             //we are now on a geiser
             if (shouldPlayGeiser) playerSounds.windCatch.Post(this.gameObject);
             shouldPlayGeiser = false;
-            rb.AddForce(Vector3.up * geiserForce);
+            Vector3 direction = other.transform.position - transform.position;
+            float distance = direction.magnitude;
+
+            Debug.Log(distance + "Distance");
+            Debug.Log(transform.up * geiserForce / (distance) + "force");
+            //rb.AddForce(transform.up * geiserForce / (distance * 100));
         }
 
         if (other.CompareTag("Puzzle1") && isPlayer1)

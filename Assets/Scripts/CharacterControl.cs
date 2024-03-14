@@ -1048,8 +1048,28 @@ public class CharacterControl : MonoBehaviour
             //old sound code
             //if (shouldPlayGeiser) playerSounds.windCatch.Post(this.gameObject);
             //shouldPlayGeiser = false;
-            rb.AddForce(Vector3.up * 200);
-        
+            Vector3 direction = other.transform.position - transform.position;
+            float distance = direction.magnitude;
+
+            Debug.Log(distance + "Distance");
+            Debug.Log(transform.up * 200 / (distance) + "force");
+            if (distance <= 15)
+            {
+                rb.AddForce(transform.up * 200);
+            } else if (distance > 15 && distance <= 20)
+            {
+                rb.AddForce(transform.up * 150);
+            }
+            else if (distance > 20 && distance <= 25)
+            {
+                rb.AddForce(transform.up * 100);
+            }
+            else if (distance > 25)
+            {
+                rb.AddForce(transform.up * 50);
+            }
+
+
         }
     }
 
