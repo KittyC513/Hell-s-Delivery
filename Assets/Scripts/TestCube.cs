@@ -2664,54 +2664,49 @@ public class TestCube : MonoBehaviour
 
 
 
-        if (isPlayer1 && p2rc == null)
-        {
-            // Debug.Log("Trigger1");
-            foreach (GameObject obj in objectsInScene)
-            {
-                if (obj.layer == layerToFind2)
-                {
-                    //Debug.Log("Found GameObject on layer: " + obj.name);
-                    Transform parentTransform = obj.transform;
+        //if (isPlayer1 && p2rc == null)
+        //{
+        //    foreach (GameObject obj in objectsInScene)
+        //    {
+        //        if (obj.layer == layerToFind2)
+        //        {
+        //            Transform parentTransform = obj.transform;
 
-                    foreach (Transform child in parentTransform)
-                    {
-                        if (child.CompareTag(tagToFind))
-                        {
-                            p2rc = child.gameObject.GetComponent<RespawnControl>();
-                            //Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
-                        }
-                    }
-                }
+        //            foreach (Transform child in parentTransform)
+        //            {
+        //                if (child.CompareTag(tagToFind))
+        //                {
+        //                    p2rc = child.gameObject.GetComponent<RespawnControl>();
+        //                }
+        //            }
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
-        if (isPlayer2 && p1rc == null)
-        {
-            Debug.Log("Trigger1");
-            foreach (GameObject obj in objectsInScene)
-            {
+        //if (isPlayer2 && p1rc == null)
+        //{
+        //    foreach (GameObject obj in objectsInScene)
+        //    {
 
-                if (obj.layer == layerToFind1)
-                {
-                    //Debug.Log("Found GameObject on layer: " + obj.name);
-                    Transform parentTransform = obj.transform;
+        //        if (obj.layer == layerToFind1)
+        //        {
+        //            Transform parentTransform = obj.transform;
 
-                    foreach (Transform child in parentTransform)
-                    {
-                        if (child.CompareTag(tagToFind))
-                        {
-                            p1rc = child.gameObject.GetComponent<RespawnControl>();
-                            //Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
-                        }
-                    }
-                }
+        //            foreach (Transform child in parentTransform)
+        //            {
+        //                if (child.CompareTag(tagToFind))
+        //                {
+        //                    p1rc = child.gameObject.GetComponent<RespawnControl>();
+                            
+        //                }
+        //            }
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
 
 

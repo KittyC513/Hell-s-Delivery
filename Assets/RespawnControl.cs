@@ -157,10 +157,13 @@ public class RespawnControl : MonoBehaviour
     private Transform camOriPosition;
     [SerializeField]
     private GameObject oriCam;
+    [SerializeField]
+    private bool addScore1;
+    [SerializeField]
+    private bool addScore2;
 
 
-
-    [Header("Bard")]
+    [Header("Bark")]
     [SerializeField]
     public int previousIndex;
     [SerializeField]
@@ -618,6 +621,7 @@ public class RespawnControl : MonoBehaviour
         GameManager.instance.p1.isFreeze = false;
         p1Anim.SetBool("isRespawn", false);
         p1dead = false;
+        addScore2 = false;
 
     }
 
@@ -651,6 +655,7 @@ public class RespawnControl : MonoBehaviour
         GameManager.instance.p2.isFreeze = false;
         p2Anim.SetBool("isRespawn", false);
         p2dead = false;
+        addScore1 = false;
 
     }
 
@@ -659,9 +664,10 @@ public class RespawnControl : MonoBehaviour
     {
 
         StartCoroutine(P1RespawnTimer());
-        if (curSceneName != scene5)
+        if (curSceneName != scene5 && !addScore2)
         {
             ScoreCount.instance.AddDeathsToP1(5);
+            addScore2 = true;
             //StartCoroutine(ActivateP1UIForDuration(3f));
         }
 
@@ -690,9 +696,10 @@ public class RespawnControl : MonoBehaviour
     {
 
         StartCoroutine(P2RespawnTimer());
-        if (curSceneName != scene5)
+        if (curSceneName != scene5 && !addScore1)
         {
             ScoreCount.instance.AddDeathsToP2(5);
+            addScore1 = true;
             //StartCoroutine(ActivateP2UIForDuration(3f));
         }
 
@@ -773,7 +780,11 @@ public class RespawnControl : MonoBehaviour
 
             }
 
-            objectGrabbable.respawnPoint = respawnPoint;
+            if (objectGrabbable != null)
+            {
+                objectGrabbable.respawnPoint = respawnPoint;
+            }
+
             //Debug.Log("RespawnPoint =" + respawnPoint);
         }
 
@@ -1101,7 +1112,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
                 //StartCoroutine(ActivateP2UIForDuration(3f));
-                P2RespawnRotation = other.transform.Find("Rotation").transform;
+                P1RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P1RespawnRotation = P2RespawnRotation;
             }
