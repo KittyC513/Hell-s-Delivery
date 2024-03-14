@@ -264,6 +264,9 @@ public class TestCube : MonoBehaviour
     private float pushDuration; 
     [SerializeField]
     private float pushHoldDuration;
+    [SerializeField]
+    public bool holdPush;
+
 
 
     [Header("Interact")]
@@ -3348,7 +3351,7 @@ public class TestCube : MonoBehaviour
                 {
                     p1pushed = true;
                     pushStartTimer = false;
-                 
+                    holdPush = true;
 
                     if (ScoreCount.instance != null)
                     {
@@ -3363,8 +3366,8 @@ public class TestCube : MonoBehaviour
                 {
                     p2pushed = true;
                     pushStartTimer = false;
+                    holdPush = true;
 
-                    
 
                     if (ScoreCount.instance != null)
                     {
@@ -3375,6 +3378,10 @@ public class TestCube : MonoBehaviour
                     Invoke(nameof(ResetPush), pushDuration);
                 }
             }
+        }
+        else
+        {
+            holdPush = false;
         }
     }
 
