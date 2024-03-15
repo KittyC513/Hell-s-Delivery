@@ -32,7 +32,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger;
+    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger,pushRelease;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -550,6 +550,7 @@ public class TestCube : MonoBehaviour
         push = player.FindAction("Push");
         skip = player.FindAction("Skip");
         skipTrigger = player.FindAction("SkipTrigger");
+        pushRelease = player.FindAction("ReleasePush");
 
         //player.FindAction("Join").started += DoTalk;
 
@@ -2429,16 +2430,14 @@ public class TestCube : MonoBehaviour
         if(isPlayer1 && p1pushed)
         {
             P1Push();
-           
- 
+
         }
 
         if (isPlayer2 && p2pushed)
         {
             P2Push();
-           
- 
         }
+
     }
     IEnumerator P1PushCoroutine()
     {
@@ -2465,6 +2464,10 @@ public class TestCube : MonoBehaviour
 
         // Calculate the force to be applied
         float forceMagnitude = pushForce * pushHoldDuration;
+        if(forceMagnitude < pushForce)
+        {
+            forceMagnitude = pushForce;
+        }
         print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
@@ -2540,6 +2543,11 @@ public class TestCube : MonoBehaviour
 
         // Calculate the force to be applied
         float forceMagnitude = pushForce * pushHoldDuration;
+        
+        if(forceMagnitude < pushForce)
+        {
+            forceMagnitude = pushForce;
+        }
         print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
@@ -2949,6 +2957,12 @@ public class TestCube : MonoBehaviour
     }
 
     #region Read Button
+    public bool ReadPushReleaseButton()
+    {
+        if (pushRelease.triggered) return true;
+        else return false;
+
+    }
     public bool ReadActionButton()
     {
         if (triggerButton.ReadValue<float>() == 1) return true;
@@ -3336,13 +3350,17 @@ public class TestCube : MonoBehaviour
     {
         if (ReadPushButton())
         {
+            print("ReadPushButton" + ReadPushButton());
+        }
+        if (ReadPushButton())
+        {
             holdPush = true;
             isCameraLocked = true;
 
             if(pushHoldDuration < 3)
             {
                 pushHoldDuration += Time.deltaTime;
-
+              
                 if (pushHoldDuration < 1)
                 {
                     pushHoldDuration = 1;
@@ -3367,8 +3385,7 @@ public class TestCube : MonoBehaviour
         }
         else
         {
-            pushHoldDuration = 0;
-            holdPush = false;
+            StartCoroutine(RestoreHoldPushForce());
 
             if (!isPulling)
             {
@@ -3388,10 +3405,19 @@ public class TestCube : MonoBehaviour
 
         //print("PushHoldDuration" + pushHoldDuration);
     }
+
+    IEnumerator RestoreHoldPushForce()
+    {
+        yield return new WaitForSeconds(0.3f);
+        pushHoldDuration = 0;
+        holdPush = false;
+    }
     private void Push()
     {
-        if (ReadPushButton())
+        //if (ReadPushButton())
+        if(ReadPushReleaseButton())
         {
+
             if(pushTimer >= pushCd)
             {
                 if(isPlayer1 && withinPushingRange)
@@ -3425,6 +3451,10 @@ public class TestCube : MonoBehaviour
                     Invoke(nameof(ResetPush), pushDuration);
                 }
             }
+
+            pushHoldDuration = 0;
+            holdPush = false;
+            StopCoroutine(RestoreHoldPushForce());
         }
 
     }
