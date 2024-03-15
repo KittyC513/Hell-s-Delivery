@@ -5,12 +5,32 @@ tags:
 //Do these work for Lalah?
 <<NPCShow>>
 <<SwitchCamNPC2>>
+<<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
 
-Lalah: Woah, this place is like, real! It's got, like, boxes and everything. |°□°| #line:0711214 
-Lalah: Anyway... I've been getting emails from "Hell's Revenue Service" saying I'm committing <color=red>tax evasion?</color>  ლ|°ω°|ლ #line:0230ee8 
+<<Hide SpriteLalah_Neutral>>
+<<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
+Lalah: Woah, this place is like, real! It's got, like, boxes and everything. |°□°| #line:0711214
+<<Act Lalah SpriteLalah_Neutral>> 
+
+<<Hide SpriteLalah_Neutral>>
+<<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
+Lalah: Anyway... I've been getting emails from "Hell's Revenue Service" saying I'm committing <color=red>tax evasion?</color>  ლ|°ω°|ლ #line:0230ee8
+<<Act Lalah SpriteLalah_Neutral>>  
+
+<<Hide SpriteLalah_Neutral>>
+<<Act Lalah SpriteLalah_Confused 0.45 0.03 white>>
 Lalah: And like, I've been sending emails back, but I don't think they're getting them? |°-°| #line:013e25e 
-Lalah: You put the mail in this slot thingy, right? They're, like, getting stuck though! ╰|⁰ᗣ⁰|╯ #line:03bb3b9 
+<<Act Lalah SpriteLalah_Neutral>>
+
+<<Hide SpriteLalah_Neutral>>
+<<Act Lalah SpriteLalah_Confused 0.45 0.03 white>>
+Lalah: You put the mail in this slot thingy, right? They're, like, getting stuck though! ╰|⁰ᗣ⁰|╯ #line:03bb3b9
+<<Act Lalah SpriteLalah_Neutral>>
+
+<<Hide SpriteLalah_Neutral>>
+<<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
 Lalah: Can you <color=red>send this</color> to the Hell's... uh... whatever Service, please? |｢ °◡°|｢ #line:097248e 
+<<Act Lalah SpriteLalah_Neutral>>
 
 <<Draw Background 1 center>>
 <<Draw Lalah_PC 1 0.60>>
@@ -20,16 +40,16 @@ Lalah: Can you <color=red>send this</color> to the Hell's... uh... whatever Serv
 <<Hide Lalah_PC>>
 <<Hide Background>>
 
+<<Hide SpriteLalah_Neutral>>
+<<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
 Lalah: I have a stamp for you to use! Don't worry, I've pre-licked it. |°◡°| #line:0f818b0 
+<<Act Lalah SpriteLalah_Neutral>>
+
+<<Hide SpriteLalah_Neutral>>
+<<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
 Lalah: Oh, you don't need it? Okay, bye-bye! |°◡°♡| #line:0b7ca85 
+<<Act Lalah SpriteLalah_Neutral>>
 
 <<SwitchCamMain>>
 <<LalahDialogueEnd>>
-===
-
-//If interacted with at the wrong time
-title: NoDeliveryLalah
-tags:
----
-Lalah: ...What? Oh, I don't work here. |°◡°| #line:0c8b13c 
 ===
