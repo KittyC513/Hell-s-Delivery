@@ -32,7 +32,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger;
+    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger,pushRelease;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -264,6 +264,12 @@ public class TestCube : MonoBehaviour
     private float pushDuration; 
     [SerializeField]
     private float pushHoldDuration;
+    [SerializeField]
+    public bool holdPush;
+    [SerializeField]
+    private GameObject p1Particle;
+    [SerializeField]
+    private GameObject p2Particle;
 
 
     [Header("Interact")]
@@ -544,6 +550,7 @@ public class TestCube : MonoBehaviour
         push = player.FindAction("Push");
         skip = player.FindAction("Skip");
         skipTrigger = player.FindAction("SkipTrigger");
+        pushRelease = player.FindAction("ReleasePush");
 
         //player.FindAction("Join").started += DoTalk;
 
@@ -584,7 +591,7 @@ public class TestCube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         isCameraLocked = false;
         gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
@@ -621,7 +628,7 @@ public class TestCube : MonoBehaviour
         ItemDetector();
         CameraSwitch();
         AnimationAndSound();
-        if (curSceneName == "Level1")
+        if (curSceneName == "Level1" || curSceneName == "MVPLevel")
         {
             initBoxing();
         }
@@ -642,15 +649,15 @@ public class TestCube : MonoBehaviour
                 {
                     if(charController.rb != null)
                     {
-                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1);
+                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, holdPush);
                     }
 
                     //print("use new movementCal");
-                }else if (curSceneName == "Level1" && bM.isboxing)
+                }else if (curSceneName == "Level1" && bM.isboxing || curSceneName == "MVPLevel" && bM.isboxing)
                 {
                     if (charController.rb != null)
                         {
-                            charController.RunMovement(boxcam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1);
+                            charController.RunMovement(boxcam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, holdPush);
                         }
                     
                 }
@@ -658,7 +665,7 @@ public class TestCube : MonoBehaviour
                 {
                     if (charController.rb != null)
                     {
-                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1);
+                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, holdPush);
                     }
 
                 }
@@ -696,6 +703,7 @@ public class TestCube : MonoBehaviour
             Push();
             NewPush();
             DoPush();
+
                 
 
          }
@@ -1020,6 +1028,7 @@ public class TestCube : MonoBehaviour
                     {
                         if (!isCameraLocked)
                         {
+
                             if (!isDashing)
                             {
                                 if(mainCam != null)
@@ -1067,6 +1076,7 @@ public class TestCube : MonoBehaviour
 
                         if (!isCameraLocked)
                         {
+
                             if (!isDashing)
                             {
                                 if(playerCamera != null)
@@ -1092,8 +1102,10 @@ public class TestCube : MonoBehaviour
                         {
                             if(playerCamera != null)
                             {
+
                                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
+
                             }
 
                             //MoveTowardFacingDirection();
@@ -1244,7 +1256,7 @@ public class TestCube : MonoBehaviour
                         }
                         else
                         {
-                            if(playerAnimator2 != null)
+                            if(playerCamera != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
@@ -2418,16 +2430,14 @@ public class TestCube : MonoBehaviour
         if(isPlayer1 && p1pushed)
         {
             P1Push();
-           
- 
+
         }
 
         if (isPlayer2 && p2pushed)
         {
             P2Push();
-           
- 
         }
+
     }
     IEnumerator P1PushCoroutine()
     {
@@ -2453,7 +2463,11 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * (pushHoldDuration + 1);
+        float forceMagnitude = pushForce * pushHoldDuration;
+        if(forceMagnitude < pushForce)
+        {
+            forceMagnitude = pushForce;
+        }
         print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
@@ -2528,7 +2542,12 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * (pushHoldDuration+1);
+        float forceMagnitude = pushForce * pushHoldDuration;
+        
+        if(forceMagnitude < pushForce)
+        {
+            forceMagnitude = pushForce;
+        }
         print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
@@ -2664,54 +2683,49 @@ public class TestCube : MonoBehaviour
 
 
 
-        if (isPlayer1 && p2rc == null)
-        {
-            // Debug.Log("Trigger1");
-            foreach (GameObject obj in objectsInScene)
-            {
-                if (obj.layer == layerToFind2)
-                {
-                    //Debug.Log("Found GameObject on layer: " + obj.name);
-                    Transform parentTransform = obj.transform;
+        //if (isPlayer1 && p2rc == null)
+        //{
+        //    foreach (GameObject obj in objectsInScene)
+        //    {
+        //        if (obj.layer == layerToFind2)
+        //        {
+        //            Transform parentTransform = obj.transform;
 
-                    foreach (Transform child in parentTransform)
-                    {
-                        if (child.CompareTag(tagToFind))
-                        {
-                            p2rc = child.gameObject.GetComponent<RespawnControl>();
-                            //Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
-                        }
-                    }
-                }
+        //            foreach (Transform child in parentTransform)
+        //            {
+        //                if (child.CompareTag(tagToFind))
+        //                {
+        //                    p2rc = child.gameObject.GetComponent<RespawnControl>();
+        //                }
+        //            }
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
-        if (isPlayer2 && p1rc == null)
-        {
-            Debug.Log("Trigger1");
-            foreach (GameObject obj in objectsInScene)
-            {
+        //if (isPlayer2 && p1rc == null)
+        //{
+        //    foreach (GameObject obj in objectsInScene)
+        //    {
 
-                if (obj.layer == layerToFind1)
-                {
-                    //Debug.Log("Found GameObject on layer: " + obj.name);
-                    Transform parentTransform = obj.transform;
+        //        if (obj.layer == layerToFind1)
+        //        {
+        //            Transform parentTransform = obj.transform;
 
-                    foreach (Transform child in parentTransform)
-                    {
-                        if (child.CompareTag(tagToFind))
-                        {
-                            p1rc = child.gameObject.GetComponent<RespawnControl>();
-                            //Debug.Log("Found GameObject on Tag: " + child.gameObject.name);
-                        }
-                    }
-                }
+        //            foreach (Transform child in parentTransform)
+        //            {
+        //                if (child.CompareTag(tagToFind))
+        //                {
+        //                    p1rc = child.gameObject.GetComponent<RespawnControl>();
+                            
+        //                }
+        //            }
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
 
 
@@ -2943,6 +2957,12 @@ public class TestCube : MonoBehaviour
     }
 
     #region Read Button
+    public bool ReadPushReleaseButton()
+    {
+        if (pushRelease.triggered) return true;
+        else return false;
+
+    }
     public bool ReadActionButton()
     {
         if (triggerButton.ReadValue<float>() == 1) return true;
@@ -3075,7 +3095,12 @@ public class TestCube : MonoBehaviour
             //we are now on a geiser
             if (shouldPlayGeiser) playerSounds.windCatch.Post(this.gameObject);
             shouldPlayGeiser = false;
-            rb.AddForce(Vector3.up * geiserForce);
+            Vector3 direction = other.transform.position - transform.position;
+            float distance = direction.magnitude;
+
+            Debug.Log(distance + "Distance");
+            Debug.Log(transform.up * geiserForce / (distance) + "force");
+            //rb.AddForce(transform.up * geiserForce / (distance * 100));
         }
 
         if (other.CompareTag("Puzzle1") && isPlayer1)
@@ -3325,35 +3350,81 @@ public class TestCube : MonoBehaviour
     {
         if (ReadPushButton())
         {
-            if(pushHoldDuration < 1)
+            print("ReadPushButton" + ReadPushButton());
+        }
+        if (ReadPushButton())
+        {
+            holdPush = true;
+            isCameraLocked = true;
+
+            if(pushHoldDuration < 3)
             {
                 pushHoldDuration += Time.deltaTime;
+              
+                if (pushHoldDuration < 1)
+                {
+                    pushHoldDuration = 1;
+                }
 
             }
             else
             {
-                pushHoldDuration = 1;
+                pushHoldDuration = 3;
+            }
+
+            if (isPlayer1)
+            {
+                p1Particle.SetActive(true);
+            }
+
+            if (isPlayer2)
+            {
+                p2Particle.SetActive(true);
             }
 
         }
         else
         {
-            pushHoldDuration = 0;
+            StartCoroutine(RestoreHoldPushForce());
+
+            if (!isPulling)
+            {
+                isCameraLocked = false;
+            }
+            if (isPlayer1)
+            {
+                p1Particle.SetActive(false);
+            }
+
+            if (isPlayer2)
+            {
+                p2Particle.SetActive(false);
+            }
+
         }
 
-        print("PushHoldDuration" + pushHoldDuration);
+        //print("PushHoldDuration" + pushHoldDuration);
+    }
+
+    IEnumerator RestoreHoldPushForce()
+    {
+        yield return new WaitForSeconds(0.3f);
+        pushHoldDuration = 0;
+        holdPush = false;
     }
     private void Push()
     {
-        if (ReadPushButton())
+        //if (ReadPushButton())
+        if(ReadPushReleaseButton())
         {
+
             if(pushTimer >= pushCd)
             {
                 if(isPlayer1 && withinPushingRange)
                 {
                     p1pushed = true;
                     pushStartTimer = false;
-                 
+                   
 
                     if (ScoreCount.instance != null)
                     {
@@ -3368,8 +3439,8 @@ public class TestCube : MonoBehaviour
                 {
                     p2pushed = true;
                     pushStartTimer = false;
+              
 
-                    
 
                     if (ScoreCount.instance != null)
                     {
@@ -3380,7 +3451,12 @@ public class TestCube : MonoBehaviour
                     Invoke(nameof(ResetPush), pushDuration);
                 }
             }
+
+            pushHoldDuration = 0;
+            holdPush = false;
+            StopCoroutine(RestoreHoldPushForce());
         }
+
     }
 
     private void initBoxing()
@@ -3394,6 +3470,8 @@ public class TestCube : MonoBehaviour
         }
         
     }
+
+
 
     private void ResetPush()
     {

@@ -3,11 +3,17 @@ tags:
 ---
 <<NPCShow>>
 <<SwitchCamNPC>>
+<<Act Werther SpriteWerther_Angry 0.45 0.03 white>>
+
+<<Hide SpriteWerther_Angry>>
+<<Act Werther SpriteWerther_Angry 0.45 0.03 white>>
 Werther: Finally, some help! I've been standing here for ages! #line:0c73216 
+<<Act Werther SpriteWerther_Angry>> 
 
-//YouDemonz: ...
-
+<<Hide SpriteWerther_Angry>>
+<<Act Werther SpriteWerther_Angry 0.45 0.03 white>>
 Werther: Hush now! I need this <color=red>delivered!</color> #line:0c387b5 
+<<Act Werther SpriteWerther_Angry>> 
 
 //Show the onesie, then make it disappear
 <<Draw Background 1 center>>
@@ -18,9 +24,20 @@ Werther: Hush now! I need this <color=red>delivered!</color> #line:0c387b5
 <<Hide DemonBabyOnesie>>
 <<Hide Background>>
 
+<<Hide SpriteWerther_Angry>>
+<<Act Werther SpriteWerther_Proud 0.45 0.03 white>>
 Werther: I made this for my 23rd-generation newborn grandchild... #line:0aa219b 
+<<Act Werther SpriteWerther_Angry>> 
+
+<<Hide SpriteWerther_Angry>>
+<<Act Werther SpriteWerther_Proud 0.45 0.03 white>>
 Werther: From the <color=red>hairs</color> on my back. #line:034cc64 
+<<Act Werther SpriteWerther_Angry>> 
+
+<<Hide SpriteWerther_Angry>>
+<<Act Werther SpriteWerther_Angry 0.45 0.03 white>>
 Werther: Well, chop-chop! I'll be waiting here. #line:0d5efde 
+<<Act Werther SpriteWerther_Angry>> 
 
 //change this command to go to the MVP level
 <<SwitchCamMain>>
@@ -32,5 +49,10 @@ Werther: Well, chop-chop! I'll be waiting here. #line:0d5efde
 title: NoDeliveryWerther
 tags:
 ---
+<<Act Werther SpriteWerther_Angry 0.45 0.03 white>>
+
+<<Hide SpriteWerther_Angry>>
+<<Act Werther SpriteWerther_Pain 0.45 0.03 white>>
 Werther: Scram! I gotta fart! Your nose will thank me. #line:036c937 
+<<Act Werther SpriteWerther_Angry>> 
 ===

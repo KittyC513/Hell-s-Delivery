@@ -183,8 +183,14 @@ public class Level1CamControl : MonoBehaviour
     {
         GameManager.instance.p1.isFreeze = true;
         GameManager.instance.p2.isFreeze = true;
-        dialogueCanvasP1.SetActive(false);
-        dialogueCanvasP2.SetActive(false);
+        if (dialogueCanvasP1 != null)
+        {
+            dialogueCanvasP1.SetActive(false);
+        }
+        if (dialogueCanvasP2 != null)
+        {
+            dialogueCanvasP2.SetActive(false);
+        }
         yield return new WaitForSeconds(3f);
         indicator.SetActive(true);
         indicatorCanvas.SetActive(true);
@@ -193,10 +199,16 @@ public class Level1CamControl : MonoBehaviour
         miniCam.gameObject.SetActive(false);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
-        dialogueCanvasP1.SetActive(true);
-        dialogueCanvasP2.SetActive(true);
-        GameManager.instance.p1.transform.position = new Vector3(393, 18, -271);
-        GameManager.instance.p2.transform.position = new Vector3(393, 18, -271);
+        if (dialogueCanvasP1 != null)
+        {
+            dialogueCanvasP1.SetActive(true);
+        }
+        if (dialogueCanvasP2 != null)
+        {
+            dialogueCanvasP2.SetActive(true);
+        }
+        GameManager.instance.p1.transform.position = new Vector3(-173, 61, -297);
+        GameManager.instance.p2.transform.position = new Vector3(-173, 61, -297);
     }
 
 }
