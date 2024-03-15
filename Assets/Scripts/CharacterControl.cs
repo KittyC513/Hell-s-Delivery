@@ -112,6 +112,7 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private bool buttonHold = false;
     [SerializeField] private bool freezeState = false;
     [SerializeField] private ParticleSystem dustGen;
+    [SerializeField] private ParticleSystem sweatGen;
     private bool reachedMaxSpeed = false;
     private float runTime = 1;
     private float runTemp = 0;
@@ -146,8 +147,8 @@ public class CharacterControl : MonoBehaviour
         currentSpeed = 0;
         faceDir = Vector3.zero;
         soundBank = this.GetComponent<PlayerSoundbank>();
-      
-     
+
+        sweatGen.Pause();
     }
 
     public void OnLevelStart()
@@ -208,6 +209,23 @@ public class CharacterControl : MonoBehaviour
         isSlow = bigPackage;
         buttonHold = holdPushButton;
         freezeState = isFreeze;
+
+        if (bigPackage)
+        {
+            if (!sweatGen.isPlaying)
+            {
+                sweatGen.Play();
+            }
+            
+        }
+        else
+        {
+            if (sweatGen.isPlaying)
+            {
+                sweatGen.Stop(true);
+            }
+           
+        }
     }
 
     public void FixedUpdateFunctions()
