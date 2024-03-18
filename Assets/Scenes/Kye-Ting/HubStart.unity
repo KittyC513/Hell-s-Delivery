@@ -193,6 +193,10 @@ PrefabInstance:
       value: SprayPaintCan (2)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ded39057dfda814f935e0ae03b88f8c, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4ded39057dfda814f935e0ae03b88f8c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -9168,6 +9172,10 @@ PrefabInstance:
       value: BigBoxDisplay
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 00bdb21b6c908a1498ec221fc0f5d7ab, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 00bdb21b6c908a1498ec221fc0f5d7ab, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -13045,6 +13053,10 @@ PrefabInstance:
       value: ATM
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3f39adf4c76b5c741b46b6b3bc918d2b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3f39adf4c76b5c741b46b6b3bc918d2b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -13200,7 +13212,7 @@ GameObject:
   - component: {fileID: 875026941}
   m_Layer: 0
   m_Name: DeliveryArea
-  m_TagString: Untagged
+  m_TagString: DeliveryArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13214,7 +13226,7 @@ Transform:
   m_GameObject: {fileID: 875026939}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.271, y: 0, z: 0.045}
+  m_LocalPosition: {x: -0.271, y: 0, z: -0.443}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16429,6 +16441,10 @@ PrefabInstance:
       value: SprayPaintCan (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ded39057dfda814f935e0ae03b88f8c, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4ded39057dfda814f935e0ae03b88f8c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -16698,6 +16714,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5b588f0755fe9294d9922e1e989ddd4c, type: 3}
       propertyPath: m_Name
       value: MailBin
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5b588f0755fe9294d9922e1e989ddd4c, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5b588f0755fe9294d9922e1e989ddd4c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17296,6 +17316,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ec5c5a2d3bec0424e95bde219524d3bc, type: 3}
       propertyPath: m_Name
       value: SlantedDisplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ec5c5a2d3bec0424e95bde219524d3bc, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ec5c5a2d3bec0424e95bde219524d3bc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -18449,7 +18473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cfe0f80a7aa01da44b27c7920de76432, type: 3}
       propertyPath: m_Layer
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cfe0f80a7aa01da44b27c7920de76432, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -18845,6 +18869,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: eb3625996ff90cd4bb4abb0ca39c712d, type: 3}
       propertyPath: m_Name
       value: GarbageBin
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: eb3625996ff90cd4bb4abb0ca39c712d, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: eb3625996ff90cd4bb4abb0ca39c712d, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -26102,15 +26130,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fc2c95c16c2b7d44f940de413988c9ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.00000011920929
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fc2c95c16c2b7d44f940de413988c9ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.000000014901161
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fc2c95c16c2b7d44f940de413988c9ae, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.00000016018748
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fc2c95c16c2b7d44f940de413988c9ae, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26516,6 +26544,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ec5c5a2d3bec0424e95bde219524d3bc, type: 3}
       propertyPath: m_Name
       value: SlantedDisplay (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ec5c5a2d3bec0424e95bde219524d3bc, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ec5c5a2d3bec0424e95bde219524d3bc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -29955,6 +29987,10 @@ PrefabInstance:
       value: PostcardRack
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 92a009e81043568419ada7f686e409f1, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 92a009e81043568419ada7f686e409f1, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -32377,6 +32413,10 @@ PrefabInstance:
       value: BigBoxDisplay (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 00bdb21b6c908a1498ec221fc0f5d7ab, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 00bdb21b6c908a1498ec221fc0f5d7ab, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -32938,11 +32978,11 @@ PrefabInstance:
       objectReference: {fileID: 2055176153}
     - target: {fileID: 2916115340981260639, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 2916115340981260639, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 3952383491238729364, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -32962,7 +33002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5276816636105185173, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8496534832254342108, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_IsActive
@@ -32970,11 +33010,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8735343089067886010, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 8735343089067886010, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
