@@ -289,8 +289,6 @@ public class ObjectGrabbable : MonoBehaviour
                 P1TakePackage = false;
                 P2TakePackage = true;
                 GameManager.instance.p1.objectGrabbable = null;
-
-
             }
         }
     }
@@ -352,8 +350,6 @@ public class ObjectGrabbable : MonoBehaviour
             indicator.SetActive(false);
         }
     }
-
-
 
     /*
     player2 = GameObject.FindGameObjectWithTag("Player2");
