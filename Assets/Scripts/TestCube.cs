@@ -2483,7 +2483,7 @@ public class TestCube : MonoBehaviour
         StartCoroutine(StopBeingPushedP2());
         //noisy2 = gameManager.noisy2;
 
-        if (rC.Player2isCarrying)
+        if (rC.Player2isCarrying && boxingMinigame.instance.isboxing)
         {
             p1Steal = true;
             gameManager.p2.objectGrabbable = null;
@@ -2563,7 +2563,7 @@ public class TestCube : MonoBehaviour
         StartCoroutine(StopBeingPushedP1());
         //noisy2 = gameManager.noisy2;
 
-        if (rC.Player1isCarrying)
+        if (rC.Player1isCarrying && !boxingMinigame.instance.isboxing)
         {
             p2Steal = true;
             gameManager.p1.objectGrabbable = null;

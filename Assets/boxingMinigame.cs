@@ -42,6 +42,7 @@ public class boxingMinigame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         boxingCanvas.SetActive(false);
         spawnpointp1 = waypointp1.transform.position;
         spawnpointp2 = waypointp2.transform.position;
@@ -112,13 +113,7 @@ public class boxingMinigame : MonoBehaviour
                 healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
 
             }
-            else
-            {
-                packagePiece1.SetActive(true);
-                packagePiece2.SetActive(true);
-                packagePiece3.SetActive(true);
-                packagePiece4.SetActive(true);
-            }
+
             
 
 
@@ -205,6 +200,11 @@ public class boxingMinigame : MonoBehaviour
         cm.endminigameCam();
         p1pushedcount = 0;
         p2pushedcount = 0;
+
+        packagePiece1.SetActive(true);
+        packagePiece2.SetActive(true);
+        packagePiece3.SetActive(true);
+        packagePiece4.SetActive(true);
 
     }
 }

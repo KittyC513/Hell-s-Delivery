@@ -678,7 +678,7 @@ public class RespawnControl : MonoBehaviour
             PlayRandomDeathDialogue1();
         }
 
-        if (Player1isCarrying && isPlayer1)
+        if (Player1isCarrying && isPlayer1 && !boxingMinigame.instance.isboxing)
         {
 
             objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
@@ -709,7 +709,7 @@ public class RespawnControl : MonoBehaviour
             SceneControl.instance.dRP2.Stop();
             PlayRandomDeathDialogue2();
         }
-        if (Player2isCarrying && isPlayer2)
+        if (Player2isCarrying && isPlayer2 && !boxingMinigame.instance.isboxing)
         {
             objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
             objectGrabbable.P2TakePackage = false;

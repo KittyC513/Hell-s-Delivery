@@ -169,7 +169,7 @@ public class CharacterControl : MonoBehaviour
     {
         isPlayer1 = player1;
         camera = cam;
-        
+
         StateMachineUpdate();
         GetStickInputs(camera, input);
         ApplyGravity();
@@ -180,7 +180,7 @@ public class CharacterControl : MonoBehaviour
             if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
         }
 
-        
+
         //if we're on a summoning circle freeze movement
         if (!isOnCircle && !isFreeze)
         {
@@ -190,7 +190,7 @@ public class CharacterControl : MonoBehaviour
             {
                 JumpCalculations(jump);
             }
-            else
+            else if (isSlow && !boxingMinigame.instance.isboxing)
             {
                 isJumping = false;
             }
@@ -210,7 +210,7 @@ public class CharacterControl : MonoBehaviour
         buttonHold = holdPushButton;
         freezeState = isFreeze;
 
-        if (bigPackage)
+        if (bigPackage && !boxingMinigame.instance.isboxing)
         {
             if (!sweatGen.isPlaying)
             {
@@ -218,7 +218,7 @@ public class CharacterControl : MonoBehaviour
             }
             
         }
-        else
+        else if(!bigPackage || boxingMinigame.instance.isboxing)
         {
             if (sweatGen.isPlaying)
             {
