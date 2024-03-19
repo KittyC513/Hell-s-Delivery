@@ -265,6 +265,8 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float pushHoldDuration;
     [SerializeField]
+    private float pushHoldTime;
+    [SerializeField]
     public bool holdPush;
     [SerializeField]
     private GameObject p1Particle;
@@ -2463,7 +2465,8 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * pushHoldDuration;
+        float forceMagnitude = pushForce * pushHoldTime;
+        
         if(forceMagnitude < pushForce)
         {
             forceMagnitude = pushForce;
@@ -2542,7 +2545,7 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * pushHoldDuration;
+        float forceMagnitude = pushForce * pushHoldTime;
         
         if(forceMagnitude < pushForce)
         {
@@ -2603,6 +2606,7 @@ public class TestCube : MonoBehaviour
         yield return new WaitForSeconds(1f);
         p1Anim.SetBool("beingPush", false);
         p1Anim.SetFloat("speed", 0f);
+        pushHoldTime = 0;
     }
 
     IEnumerator StopBeingPushedP2()
@@ -2610,6 +2614,7 @@ public class TestCube : MonoBehaviour
         yield return new WaitForSeconds(1f);
         p2Anim.SetBool("beingPush", false);
         p2Anim.SetFloat("speed", 0f);
+        pushHoldTime = 0;
     }
 
     
@@ -3382,6 +3387,7 @@ public class TestCube : MonoBehaviour
                 p2Particle.SetActive(true);
             }
 
+            pushHoldTime = pushHoldDuration;
         }
         else
         {

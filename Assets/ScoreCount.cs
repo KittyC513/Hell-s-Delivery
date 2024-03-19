@@ -224,8 +224,11 @@ public class ScoreCount : MonoBehaviour
        
 
         p1MailCount.text = lvlData.p1MailCount.ToString();
-
         p2MailCount.text = lvlData.p2MailCount.ToString();
+
+
+
+
 
         lvlData.p1FinalScore = p1CalculatedScore;
         lvlData.p2FinalScore = p2CalculatedScore;
