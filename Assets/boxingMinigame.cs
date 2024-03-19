@@ -27,6 +27,15 @@ public class boxingMinigame : MonoBehaviour
     string sceneString;
     bool endswitch = false;
 
+    [Header("Boxing")]
+    [SerializeField]
+    private GameObject packagePiece1;
+    [SerializeField]
+    private GameObject packagePiece2;
+    [SerializeField]
+    private GameObject packagePiece3;
+    [SerializeField]
+    private GameObject packagePiece4;
 
 
 
@@ -48,7 +57,12 @@ public class boxingMinigame : MonoBehaviour
     {
         if (isboxing)
         {
-            if(sceneString == "Level1")
+            packagePiece1.SetActive(false);
+            packagePiece2.SetActive(false);
+            packagePiece3.SetActive(false);
+            packagePiece4.SetActive(false);
+
+            if (sceneString == "Level1")
             {
                 if (p1pushedcount >= maxDamage)
                 {
@@ -97,6 +111,13 @@ public class boxingMinigame : MonoBehaviour
                 healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
                 healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
 
+            }
+            else
+            {
+                packagePiece1.SetActive(true);
+                packagePiece2.SetActive(true);
+                packagePiece3.SetActive(true);
+                packagePiece4.SetActive(true);
             }
             
 
