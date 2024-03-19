@@ -117,6 +117,8 @@ public class ObjectGrabbable : MonoBehaviour
     [Header("Cooldown Timer")]
     private float timer;
     private bool backToLocation;
+    [SerializeField]
+    private Animator anim;
 
 
     [SerializeField] private AK.Wwise.Event packageImpact;
@@ -717,6 +719,11 @@ public class ObjectGrabbable : MonoBehaviour
                 if (timer < 30)
                 {
                     timer += Time.deltaTime;
+
+                    if(timer >= 20 && timer < 30)
+                    {
+                        anim.SetBool("DisppearWarning", true);
+                    }
                 }
                 else
                 {
@@ -725,7 +732,9 @@ public class ObjectGrabbable : MonoBehaviour
                         this.transform.position = respawnPoint;
                         backToLocation = true;
                         timer = 0;
+                        anim.SetBool("DisppearWarning", false);
                     }
+
                 }
             }
             else if(P1TakePackage || P2TakePackage)
