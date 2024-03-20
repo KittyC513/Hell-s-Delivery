@@ -141,7 +141,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""id"": ""22aaf8b0-e4e2-402d-998d-1b5e4540a246"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -182,11 +182,11 @@ public partial class @Test: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""ReleasePush"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""44cc6db3-4385-49d4-9e28-206e1e25f03f"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(pressPoint=0.1,behavior=1)"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -855,7 +855,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""fbfa1ad7-df7e-406d-97ef-a1aa22bf94ed"",
                     ""path"": ""<XInputController>/buttonNorth"",
-                    ""interactions"": ""Press(pressPoint=0.1,behavior=1)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ReleasePush"",
@@ -866,7 +866,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""212933a3-3d7f-4311-a99f-86855171190c"",
                     ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": ""Press(pressPoint=0.1,behavior=1)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ReleasePush"",
@@ -877,7 +877,7 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""9b2a5eff-e4a7-49fa-add2-57c16f28d026"",
                     ""path"": ""<DualShockGamepad>/buttonNorth"",
-                    ""interactions"": ""Press(pressPoint=0.1,behavior=1)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ReleasePush"",

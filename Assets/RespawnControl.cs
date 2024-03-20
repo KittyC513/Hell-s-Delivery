@@ -157,10 +157,13 @@ public class RespawnControl : MonoBehaviour
     private Transform camOriPosition;
     [SerializeField]
     private GameObject oriCam;
+    [SerializeField]
+    private bool addScore1;
+    [SerializeField]
+    private bool addScore2;
 
 
-
-    [Header("Bard")]
+    [Header("Bark")]
     [SerializeField]
     public int previousIndex;
     [SerializeField]
@@ -508,6 +511,9 @@ public class RespawnControl : MonoBehaviour
             ResetInitialRespawnPoint();
             resetRespawnP = true;
         }
+
+        Debug.Log("p1dead" + p1dead);
+        Debug.Log("p2dead" + p2dead);
     }
 
     private void FixedUpdate()
@@ -538,6 +544,8 @@ public class RespawnControl : MonoBehaviour
 
     }
 
+
+
     public void Respawn(Vector3 respawnPos)
     {
         if (curSceneName == scene5)
@@ -550,12 +558,12 @@ public class RespawnControl : MonoBehaviour
         else if (curSceneName == scene4 || curSceneName == scene9)
         {
             player.transform.position = respawnPos;
-            if (isPlayer1)
+            if (isPlayer1 && P1RespawnRotation != null)
             {
                 player.transform.rotation = P1RespawnRotation.rotation;
             }
 
-            if (isPlayer2)
+            if (isPlayer2 && P2RespawnRotation != null)
             {
 
                 player.transform.rotation = P2RespawnRotation.rotation;
@@ -587,8 +595,13 @@ public class RespawnControl : MonoBehaviour
     //    }
 
     //}
+
+    public bool p1dead;
+    public bool p2dead;
+
     IEnumerator P1RespawnTimer()
     {
+        p1dead = true;
         p1DeadScreen.SetActive(true);
         p1Anim.SetBool("isDead", true);
         GameManager.instance.p1.isFreeze = true;
@@ -607,6 +620,8 @@ public class RespawnControl : MonoBehaviour
         yield return new WaitForSeconds(2);
         GameManager.instance.p1.isFreeze = false;
         p1Anim.SetBool("isRespawn", false);
+        p1dead = false;
+        addScore2 = false;
 
     }
 
@@ -622,7 +637,7 @@ public class RespawnControl : MonoBehaviour
     {
         p2DeadScreen.SetActive(true);
         p2Anim.SetBool("isDead", true);
-
+        p2dead = true;
         GameManager.instance.p2.isFreeze = true;
         //p2Model.SetActive(false);
         //p2DeadScreen.SetActive(true);
@@ -639,6 +654,8 @@ public class RespawnControl : MonoBehaviour
         yield return new WaitForSeconds(2);
         GameManager.instance.p2.isFreeze = false;
         p2Anim.SetBool("isRespawn", false);
+        p2dead = false;
+        addScore1 = false;
 
     }
 
@@ -647,9 +664,10 @@ public class RespawnControl : MonoBehaviour
     {
 
         StartCoroutine(P1RespawnTimer());
-        if (curSceneName != scene5)
+        if (curSceneName != scene5 && !addScore2)
         {
             ScoreCount.instance.AddDeathsToP1(5);
+            addScore2 = true;
             //StartCoroutine(ActivateP1UIForDuration(3f));
         }
 
@@ -660,7 +678,7 @@ public class RespawnControl : MonoBehaviour
             PlayRandomDeathDialogue1();
         }
 
-        if (Player1isCarrying && isPlayer1)
+        if (Player1isCarrying && isPlayer1 && !boxingMinigame.instance.isboxing)
         {
 
             objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
@@ -676,10 +694,12 @@ public class RespawnControl : MonoBehaviour
 
     void P2Respawn()
     {
+
         StartCoroutine(P2RespawnTimer());
-        if (curSceneName != scene5)
+        if (curSceneName != scene5 && !addScore1)
         {
             ScoreCount.instance.AddDeathsToP2(5);
+            addScore1 = true;
             //StartCoroutine(ActivateP2UIForDuration(3f));
         }
 
@@ -689,7 +709,7 @@ public class RespawnControl : MonoBehaviour
             SceneControl.instance.dRP2.Stop();
             PlayRandomDeathDialogue2();
         }
-        if (Player2isCarrying && isPlayer2)
+        if (Player2isCarrying && isPlayer2 && !boxingMinigame.instance.isboxing)
         {
             objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
             objectGrabbable.P2TakePackage = false;
@@ -760,7 +780,11 @@ public class RespawnControl : MonoBehaviour
 
             }
 
-            objectGrabbable.respawnPoint = respawnPoint;
+            if (objectGrabbable != null)
+            {
+                objectGrabbable.respawnPoint = respawnPoint;
+            }
+
             //Debug.Log("RespawnPoint =" + respawnPoint);
         }
 
@@ -1088,7 +1112,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
                 //StartCoroutine(ActivateP2UIForDuration(3f));
-                P2RespawnRotation = other.transform.Find("Rotation").transform;
+                P1RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P1RespawnRotation = P2RespawnRotation;
             }

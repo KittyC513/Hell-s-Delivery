@@ -70,6 +70,8 @@ public class ObjectGrabbable : MonoBehaviour
     private TestCube player2TC;
     [SerializeField]
     private float time;
+    private float lastPickTime = 0;
+    private bool reachedPos = false;
 
     [Header("Indicator")]
     [SerializeField]
@@ -115,6 +117,8 @@ public class ObjectGrabbable : MonoBehaviour
     [Header("Cooldown Timer")]
     private float timer;
     private bool backToLocation;
+    [SerializeField]
+    private Animator anim;
 
 
     [SerializeField] private AK.Wwise.Event packageImpact;
@@ -186,8 +190,8 @@ public class ObjectGrabbable : MonoBehaviour
             TriggerbC.enabled = false;
         }
 
-
-
+       
+        lastPickTime = Time.time;
         InventoryManager.Instance.Add(item);
 
     }
@@ -244,28 +248,49 @@ public class ObjectGrabbable : MonoBehaviour
 
     private void Move()
     {
+        float lerpSpeed = 0;
+
         if (objectGrabpo != null)
         {
-            float lerpspeed = 30;
+            if (isHeavy && !reachedPos)
+            {
+                lerpSpeed = 8;
+            }
+            else if (isHeavy && reachedPos)
+            {
+                lerpSpeed = 22;
+            }
+            else
+            {
+                lerpSpeed = 30;
+            }
+
+            float percent = (lastPickTime - Time.time) * lerpSpeed;
+
             //smooth moving
-            Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabpo.position, Time.deltaTime * lerpspeed);
+            Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabpo.position, Time.deltaTime * lerpSpeed);
             rb.MovePosition(newPosition);
+           
+            if (Mathf.Abs(transform.position.y - objectGrabpo.position.y) < 0.2f)
+            {
+                reachedPos = true;
+            }
             
-            
+        
 
             if (objectGrabpo.position == p1ItemC.transform.position)
             {
                 P1TakePackage = true;
                 P2TakePackage = false;
                 GameManager.instance.p2.objectGrabbable = null;
-              
+
+
             }
             else if (objectGrabpo.position == p2ItemC.transform.position)
             {
                 P1TakePackage = false;
                 P2TakePackage = true;
                 GameManager.instance.p1.objectGrabbable = null;
-
             }
         }
     }
@@ -327,8 +352,6 @@ public class ObjectGrabbable : MonoBehaviour
             indicator.SetActive(false);
         }
     }
-
-
 
     /*
     player2 = GameObject.FindGameObjectWithTag("Player2");
@@ -452,6 +475,7 @@ public class ObjectGrabbable : MonoBehaviour
         InventoryManager.Instance.Remove(item);
         time = 0;
 
+        reachedPos = false;
     }
 
     public void P2Drop()
@@ -505,6 +529,8 @@ public class ObjectGrabbable : MonoBehaviour
 
         InventoryManager.Instance.Remove(item);
         time = 0;
+
+        reachedPos = false;
     }
 
     void FindGameObject()
@@ -693,6 +719,11 @@ public class ObjectGrabbable : MonoBehaviour
                 if (timer < 30)
                 {
                     timer += Time.deltaTime;
+
+                    if(timer >= 20 && timer < 30)
+                    {
+                        anim.SetBool("DisppearWarning", true);
+                    }
                 }
                 else
                 {
@@ -701,7 +732,9 @@ public class ObjectGrabbable : MonoBehaviour
                         this.transform.position = respawnPoint;
                         backToLocation = true;
                         timer = 0;
+                        anim.SetBool("DisppearWarning", false);
                     }
+
                 }
             }
             else if(P1TakePackage || P2TakePackage)
@@ -713,4 +746,5 @@ public class ObjectGrabbable : MonoBehaviour
     }
 
     #endregion
+
 }
