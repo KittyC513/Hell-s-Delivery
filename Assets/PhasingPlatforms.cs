@@ -18,17 +18,28 @@ public class PhasingPlatforms : MonoBehaviour
 
     public Material onActive;
     Material Default;
+    private float cutoffHeight = -10f; // Initial value of _Cutoff_height
+    public float duration = 1f; // Duration over which to increase _Cutoff_height
+    private float timer = 0f; // Timer to track the progress
 
     private float time;
 
     [SerializeField] private AK.Wwise.Event phaseIn;
     [SerializeField] private AK.Wwise.Event phaseOut;
 
+    bool animSwitch;
+    bool animSwitch2;
+    bool animSwitch3;
+    bool animSwitch4;
+
+    public bool startDeActive;
+
     private bool shouldPlaySound = false;
 
     private void Awake()
     {
 
+        
 
     }
     private void Start()
@@ -47,20 +58,75 @@ public class PhasingPlatforms : MonoBehaviour
 
         }
 
-        //platformParent.transform.position = startPosition.transform.position;
-    }
+        foreach (Renderer renderer in renderers)
+        {
+            renderer.material = onActive;
+        }
+
+        
+
+            //platformParent.transform.position = startPosition.transform.position;
+        }
 
     private void Update()
     {
         MovePlatforms();
+        if (startDeActive && animSwitch4)
+        {
+            // Increment the timer
+            timer += Time.deltaTime;
+
+            // Calculate the progress (0 to 1)
+            float progress = Mathf.Clamp01(timer / duration);
+
+            // Calculate the new value of _Cutoff_height
+            float newCutoffHeight = Mathf.Lerp(2f, -2f, progress);
+
+            // Update the material property
+            onActive.SetFloat("_Cutoff_height", newCutoffHeight);
+
+            // Reset the timer when duration is reached
+            if (timer >= duration)
+            {
+                timer = 0f;
+                animSwitch4 = false;
+            }
+        }
     }
 
     private void MovePlatforms()
     {
-
+        
         if (active)
         {
+            if (animSwitch)
+            {
+                timer = 0;
+                animSwitch2 = true;
+                animSwitch = false;
+            }
+            if (animSwitch2)
+            {
+                // Increment the timer
+                timer += Time.deltaTime;
 
+                // Calculate the progress (0 to 1)
+                float progress = Mathf.Clamp01(timer / duration);
+
+                // Calculate the new value of _Cutoff_height
+                float newCutoffHeight = Mathf.Lerp(-2f, 2f, progress);
+
+                // Update the material property
+                onActive.SetFloat("_Cutoff_height", newCutoffHeight);
+
+                // Reset the timer when duration is reached
+                if (timer >= duration)
+                {
+                    timer = 0f;
+                    animSwitch2 = false;
+                }
+            }
+                
             //move the entire parent object giving the level designer more freedom at loss of the visual upgrade of moving each piece individually
             //could implement later
             //platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
@@ -74,9 +140,12 @@ public class PhasingPlatforms : MonoBehaviour
                 
 
             }
+
+
             foreach (Renderer renderer in renderers)
             {
-                renderer.material = Solid;
+                
+                
             }
 
             if (shouldPlaySound)
@@ -88,6 +157,36 @@ public class PhasingPlatforms : MonoBehaviour
         }
         else
         {
+
+            if (!animSwitch)
+            {
+                timer = 0;
+                animSwitch = true;
+                animSwitch3 = true;
+            }
+
+            if (animSwitch3)
+            {
+                // Increment the timer
+                timer += Time.deltaTime;
+
+                // Calculate the progress (0 to 1)
+                float progress = Mathf.Clamp01(timer / duration);
+
+                // Calculate the new value of _Cutoff_height
+                float newCutoffHeight = Mathf.Lerp(2f, -2f, progress);
+
+                // Update the material property
+                onActive.SetFloat("_Cutoff_height", newCutoffHeight);
+
+                // Reset the timer when duration is reached
+                if (timer >= duration)
+                {
+                    timer = 0f;
+                    animSwitch3 = false;
+                }
+            }
+
             //move platforms back to starting
 
             //platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, startPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
@@ -103,7 +202,7 @@ public class PhasingPlatforms : MonoBehaviour
             }
             foreach (Renderer renderer in renderers)
             {
-                renderer.material = Phased;
+                
             }
 
             if (!shouldPlaySound)
