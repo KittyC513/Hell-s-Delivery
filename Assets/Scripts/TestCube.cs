@@ -2663,7 +2663,7 @@ public class TestCube : MonoBehaviour
         }
         else
         {
-            pushCDSlider.value = maxCDTimer;
+            pushCDSlider.value = 1;
         }
         yield return new WaitForSeconds(1f);
         p1Anim.SetBool("beingPush", false);
@@ -3445,7 +3445,7 @@ public class TestCube : MonoBehaviour
                 pushHoldDuration += Time.deltaTime;
                 pushSlider.value = pushHoldDuration;
 
-                print("fillImage" + pushHoldDuration);
+                //print("fillImage" + pushHoldDuration);
               
 
             }
@@ -3517,6 +3517,8 @@ public class TestCube : MonoBehaviour
                         ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, false);
                     }
 
+                    pushCDtimer = 0;
+
                     Invoke(nameof(ResetPush), pushDuration);
                 }
 
@@ -3533,6 +3535,7 @@ public class TestCube : MonoBehaviour
                         ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, true);
                     }
 
+                    pushCDtimer = 0;
                     Invoke(nameof(ResetPush), pushDuration);
                 }
             }

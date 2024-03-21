@@ -27,7 +27,7 @@ public class FollowP1Cam : MonoBehaviour
 
             // Make the object's rotation match the camera's Y rotation
             // You can modify this line if you want rotation on different axes
-            transform.rotation = Quaternion.Euler(0f, eulerCameraRotation.y, 0f);
+            transform.rotation = Quaternion.Euler(0f, eulerCameraRotation.y - 153.072f, 0f);
 
             // Optionally, rotate the object continuously over time
             // Uncomment the line below if you want the object to rotate continuously

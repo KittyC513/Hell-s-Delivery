@@ -512,8 +512,8 @@ public class RespawnControl : MonoBehaviour
             resetRespawnP = true;
         }
 
-        Debug.Log("p1dead" + p1dead);
-        Debug.Log("p2dead" + p2dead);
+        //Debug.Log("p1dead" + p1dead);
+        //Debug.Log("p2dead" + p2dead);
     }
 
     private void FixedUpdate()

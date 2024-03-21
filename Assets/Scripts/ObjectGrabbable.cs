@@ -119,7 +119,7 @@ public class ObjectGrabbable : MonoBehaviour
     private bool backToLocation;
     [SerializeField]
     private Animator anim;
-    private bool isShowed;
+    private bool getRespawned;
 
 
     [SerializeField] private AK.Wwise.Event packageImpact;
@@ -732,12 +732,11 @@ public class ObjectGrabbable : MonoBehaviour
                 {
 
                     if (!backToLocation)
-                    {
-                        anim.SetBool("DisppearWarning", false);
-                        TargetIndicator.instance.anim.SetBool("DisppearWarning", false);
-                        PlayerIndicator.instance.anim.SetBool("DisppearWarning", false);                    
+                    {                
                         this.transform.position = respawnPoint;
-                        StartCoroutine(ShowRespawnWarning());                          
+                        backToLocation = true;
+                        getRespawned = true;
+                    
                     }
 
                 }
@@ -746,21 +745,37 @@ public class ObjectGrabbable : MonoBehaviour
             {
                 backToLocation = false;
                 timer = 0;
+
             }
+        }
+
+        if (getRespawned)
+        {
+            StartCoroutine(ShowRespawnWarning());
+            
         }
     }
 
     IEnumerator ShowRespawnWarning()
     {
-        print("ShowRespawnWarning");
+        anim.SetBool("DisppearWarning", false);
+        TargetIndicator.instance.anim.SetBool("DisppearWarning", false);
+        PlayerIndicator.instance.anim.SetBool("DisppearWarning", false);
+        ScoreCount.instance.notificationText.SetActive(true);
+       
         anim.SetBool("RespawnWarning", true);
         TargetIndicator.instance.anim.SetBool("RespawnWarning", true);
         PlayerIndicator.instance.anim.SetBool("RespawnWarning", true);
+        
         yield return new WaitForSeconds(3f);
+        
         anim.SetBool("RespawnWarning", false);
         TargetIndicator.instance.anim.SetBool("RespawnWarning", false);
         PlayerIndicator.instance.anim.SetBool("RespawnWarning", false);
-        backToLocation = true;
+
+        ScoreCount.instance.notificationText.SetActive(false);
+        getRespawned = false;
+        print("ShowRespawnWarning");
     }
 
     #endregion
