@@ -734,26 +734,58 @@ public class GameManager : MonoBehaviour
     {
         if(p1 != null && p2 != null)
         {
-            if (p1.p1pushed)
+            if(curSceneName == "Level1"|| curSceneName == "MVPLevel")
             {
-                noisy2.SetActive(true);
-                StartCoroutine(StopNoisyP2());
-                
-            } else
-            {
-                p2Ani.SetBool("beingPush", false);
-            }
+                if (!boxingMinigame.instance.isboxing)
+                {
+                    if (p1.p1pushed)
+                    {
+                        noisy2.SetActive(true);
+                        StartCoroutine(StopNoisyP2());
 
-            if (p2.p2pushed)
-            {
-                noisy1.SetActive(true);
-                StartCoroutine(StopNoisyP1());
+                    }
+                    else
+                    {
+                        p2Ani.SetBool("beingPush", false);
+                    }
+
+                    if (p2.p2pushed)
+                    {
+                        noisy1.SetActive(true);
+                        StartCoroutine(StopNoisyP1());
+                    }
+                    else
+                    {
+                        p1Ani.SetBool("beingPush", false);
+
+                    }
+                }
             }
             else
             {
-                p1Ani.SetBool("beingPush", false);
- 
+                if (p1.p1pushed)
+                {
+                    noisy2.SetActive(true);
+                    StartCoroutine(StopNoisyP2());
+
+                }
+                else
+                {
+                    p2Ani.SetBool("beingPush", false);
+                }
+
+                if (p2.p2pushed)
+                {
+                    noisy1.SetActive(true);
+                    StartCoroutine(StopNoisyP1());
+                }
+                else
+                {
+                    p1Ani.SetBool("beingPush", false);
+
+                }
             }
+            
         }
 
     }

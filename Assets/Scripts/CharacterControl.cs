@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -182,24 +183,59 @@ public class CharacterControl : MonoBehaviour
 
 
         //if we're on a summoning circle freeze movement
-        if (!isOnCircle && !isFreeze)
-        {
-            MovementCalculations(camera);
 
-            if (!isSlow)
+        if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+        {
+            if (!boxingMinigame.instance.isboxing)
             {
+                if (!isOnCircle && !isFreeze)
+                {
+                    MovementCalculations(camera);
+
+                    if (!isSlow)
+                    {
+                        JumpCalculations(jump);
+                    }
+                    else
+                    {
+                        isJumping = false;
+                    }
+
+                }
+                else
+                {
+                    directionSpeed = Vector3.zero;
+                }
+
+            }
+            else
+            {
+                MovementCalculations(camera);
                 JumpCalculations(jump);
             }
-            else if (isSlow && !boxingMinigame.instance.isboxing)
-            {
-                isJumping = false;
-            }
-
         }
         else
         {
-            directionSpeed = Vector3.zero;
+            if (!isOnCircle && !isFreeze)
+            {
+                MovementCalculations(camera);
+
+                if (!isSlow)
+                {
+                    JumpCalculations(jump);
+                }
+                else
+                {
+                    isJumping = false;
+                }
+
+            }
+            else
+            {
+                directionSpeed = Vector3.zero;
+            }
         }
+        
        
         //Debug.Log(directionSpeed);
         CheckParachute(jump, canParachute);
@@ -210,22 +246,45 @@ public class CharacterControl : MonoBehaviour
         buttonHold = holdPushButton;
         freezeState = isFreeze;
 
-        if (bigPackage && !boxingMinigame.instance.isboxing)
+        if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
         {
-            if (!sweatGen.isPlaying)
+            if (bigPackage && !boxingMinigame.instance.isboxing)
             {
-                sweatGen.Play();
+                if (!sweatGen.isPlaying)
+                {
+                    sweatGen.Play();
+                }
+
             }
-            
+            else if (!bigPackage || boxingMinigame.instance.isboxing)
+            {
+                if (sweatGen.isPlaying)
+                {
+                    sweatGen.Stop(true);
+                }
+
+            }
         }
-        else if(!bigPackage || boxingMinigame.instance.isboxing)
+        else
         {
-            if (sweatGen.isPlaying)
+            if (bigPackage)
             {
-                sweatGen.Stop(true);
+                if (!sweatGen.isPlaying)
+                {
+                    sweatGen.Play();
+                }
+
             }
-           
+            else
+            {
+                if (sweatGen.isPlaying)
+                {
+                    sweatGen.Stop(true);
+                }
+
+            }
         }
+        
     }
 
     public void FixedUpdateFunctions()
@@ -504,32 +563,92 @@ public class CharacterControl : MonoBehaviour
         //if we are grounded use our grounded speed curve otherwise use the airspeed curve
         if (isGrounded)
         {
-            //if the player is inputting anything at all we should multiply the speed by their stick input to get a variable push rate
-            if (!isSlow && !buttonHold)
+            if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
             {
-                if (rawInput.magnitude > 0)
+                if (!boxingMinigame.instance.isboxing)
                 {
-                    directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                    //if the player is inputting anything at all we should multiply the speed by their stick input to get a variable push rate
+                    if (!isSlow && !buttonHold)
+                    {
+                        if (rawInput.magnitude > 0)
+                        {
+                            directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                        }
+                        else
+                        {
+                            //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                            directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                        }
+                    }
+                    else if (isSlow || buttonHold)
+                    {
+                        if (rawInput.magnitude > 0)
+                        {
+                            directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
+                        }
+                        else
+                        {
+                            //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                            directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * slowDownMultiplier);
+                        }
+                    }
                 }
                 else
                 {
-                    //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
-                    directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                    if (!buttonHold)
+                    {
+                        if (rawInput.magnitude > 0)
+                        {
+                            directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                        }
+                        else
+                        {
+                            //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                            directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                        }
+                    }
+                    else
+                    {
+                        if (rawInput.magnitude > 0)
+                        {
+                            directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
+                        }
+                        else
+                        {
+                            //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                            directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * slowDownMultiplier);
+                        }
+                    }
                 }
             }
-            else if(isSlow || buttonHold)
+            else
             {
-                if (rawInput.magnitude > 0)
+                if (!isSlow && !buttonHold)
                 {
-                    directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
+                    if (rawInput.magnitude > 0)
+                    {
+                        directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                    }
+                    else
+                    {
+                        //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                        directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                    }
                 }
-                else
+                else if (isSlow || buttonHold)
                 {
-                    //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
-                    directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * slowDownMultiplier);
+                    if (rawInput.magnitude > 0)
+                    {
+                        directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
+                    }
+                    else
+                    {
+                        //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                        directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * slowDownMultiplier);
+                    }
                 }
             }
-           
+
             
         }
         else if (pState == playerStates.fall || pState == playerStates.jump)

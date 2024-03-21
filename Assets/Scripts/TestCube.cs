@@ -272,6 +272,10 @@ public class TestCube : MonoBehaviour
     private GameObject p1Particle;
     [SerializeField]
     private GameObject p2Particle;
+    [SerializeField]
+    public bool pushIsIntervinedP1;
+    [SerializeField]
+    public bool pushIsIntervinedP2;
 
 
     [Header("Interact")]
@@ -388,6 +392,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool isDropped;
 
+
     [Header("Camera Control")]
     [SerializeField]
     private bool switchPuzzleCam, switchPuzzleCamP2, switchPuzzle2CamL, switchPuzzle2CamR, switchPuzzle2CamLP2, switchPuzzle2CamRP2;
@@ -503,12 +508,17 @@ public class TestCube : MonoBehaviour
 
     private bool lightsOn;
 
+    [Header("Minigame")]
     [SerializeField]
-    Camera boxcam;
+    private Camera boxcam;
     [SerializeField]
-    GameObject boxcamHolder;
-    boxingMinigame bM;
-    GameObject minigame;
+    private GameObject boxcamHolder;
+    private boxingMinigame bM;
+    private GameObject minigame;
+    [SerializeField]
+    public GameObject brokenHeartUI;
+    [SerializeField]
+    private bool damageApplied;
 
 
 
@@ -702,6 +712,8 @@ public class TestCube : MonoBehaviour
 
                 }
             }
+
+
             Push();
             NewPush();
             DoPush();
@@ -2429,13 +2441,13 @@ public class TestCube : MonoBehaviour
 
     private void DoPush()
     {
-        if(isPlayer1 && p1pushed)
+        if(isPlayer1 && p1pushed && !pushIsIntervinedP1)
         {
             P1Push();
 
         }
 
-        if (isPlayer2 && p2pushed)
+        if (isPlayer2 && p2pushed && !pushIsIntervinedP2)
         {
             P2Push();
         }
@@ -2445,14 +2457,6 @@ public class TestCube : MonoBehaviour
     {
         otherRB = gameManager.p2.charController.rb;
         p2Anim = GameManager.instance.p2Ani;
-
-        if (curSceneName == "Level1")
-        {
-            if (bM.isboxing)
-            {
-                bM.p1pushedcount++;
-            }
-        }
 
         otherRB.useGravity = false;
 
@@ -2471,6 +2475,10 @@ public class TestCube : MonoBehaviour
         {
             forceMagnitude = pushForce;
         }
+        else if (forceMagnitude > 200)
+        {
+            gameManager.p2.brokenHeartUI.SetActive(true);
+        }
         print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
@@ -2483,7 +2491,7 @@ public class TestCube : MonoBehaviour
         StartCoroutine(StopBeingPushedP2());
         //noisy2 = gameManager.noisy2;
 
-        if (rC.Player2isCarrying && boxingMinigame.instance.isboxing)
+        if (rC.Player2isCarrying && !bM.isboxing)
         {
             p1Steal = true;
             gameManager.p2.objectGrabbable = null;
@@ -2509,6 +2517,15 @@ public class TestCube : MonoBehaviour
 
             yield return null;
         }
+        if (curSceneName == "Level1")
+        {
+            if (bM.isboxing && !damageApplied)
+            {
+                bM.p1pushedcount += forceMagnitude * 0.1f;
+                damageApplied = true;
+                pushIsIntervinedP2 = true;
+            }
+        }
 
     }
 
@@ -2524,15 +2541,6 @@ public class TestCube : MonoBehaviour
     {
         otherRB = gameManager.p1.charController.rb;
         p1Anim = GameManager.instance.p1Ani;
-
-        if(curSceneName == "Level1")
-        {
-            if (bM.isboxing)
-            {
-                bM.p2pushedcount++;
-            }
-        }
-
 
         otherRB.useGravity = false;
 
@@ -2551,6 +2559,10 @@ public class TestCube : MonoBehaviour
         {
             forceMagnitude = pushForce;
         }
+        else if (forceMagnitude > 200)
+        {
+            gameManager.p1.brokenHeartUI.SetActive(true);
+        }
         print("ForceMagnitude" + forceMagnitude);
 
         float elapsedTime = 0f;
@@ -2563,7 +2575,7 @@ public class TestCube : MonoBehaviour
         StartCoroutine(StopBeingPushedP1());
         //noisy2 = gameManager.noisy2;
 
-        if (rC.Player1isCarrying && !boxingMinigame.instance.isboxing)
+        if (rC.Player1isCarrying && !bM.isboxing)
         {
             p2Steal = true;
             gameManager.p1.objectGrabbable = null;
@@ -2589,7 +2601,16 @@ public class TestCube : MonoBehaviour
 
             yield return null;
         }
-        
+        if (curSceneName == "Level1")
+        {
+            if (bM.isboxing && !damageApplied)
+            {
+                bM.p2pushedcount += forceMagnitude * 0.1f;
+                damageApplied = true;
+                pushIsIntervinedP1 = true;
+            }
+        }
+
     }
 
     void P2Push()
@@ -2607,6 +2628,9 @@ public class TestCube : MonoBehaviour
         p1Anim.SetBool("beingPush", false);
         p1Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
+        damageApplied = false;
+        pushIsIntervinedP1 = false;
+        gameManager.p1.brokenHeartUI.SetActive(false);
     }
 
     IEnumerator StopBeingPushedP2()
@@ -2615,6 +2639,9 @@ public class TestCube : MonoBehaviour
         p2Anim.SetBool("beingPush", false);
         p2Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
+        damageApplied = false;
+        pushIsIntervinedP2 = false;
+        gameManager.p2.brokenHeartUI.SetActive(false);
     }
 
     
