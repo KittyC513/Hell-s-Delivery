@@ -14,6 +14,7 @@ using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 using Yarn;
 using static UnityEngine.UI.Image;
+using Image = UnityEngine.UI.Image;
 
 public class TestCube : MonoBehaviour
 {
@@ -520,6 +521,17 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool damageApplied;
 
+    [Header("Push UI")]
+    [SerializeField]
+    private float maxTimer;
+    [SerializeField]
+    private Slider pushSlider;
+    [SerializeField]
+    private float maxCDTimer;
+    [SerializeField]
+    private Slider pushCDSlider;
+    [SerializeField]
+    private float pushCDtimer;
 
 
 
@@ -603,7 +615,8 @@ public class TestCube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        maxTimer = 3;
+        maxCDTimer = 1;
         isCameraLocked = false;
         gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
@@ -2445,6 +2458,7 @@ public class TestCube : MonoBehaviour
         {
             P1Push();
 
+
         }
 
         if (isPlayer2 && p2pushed && !pushIsIntervinedP2)
@@ -2477,7 +2491,15 @@ public class TestCube : MonoBehaviour
         }
         else if (forceMagnitude > 200)
         {
-            gameManager.p2.brokenHeartUI.SetActive(true);
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (bM.isboxing)
+                {
+                    gameManager.p2.brokenHeartUI.SetActive(true);
+                }
+
+            }
+
         }
         print("ForceMagnitude" + forceMagnitude);
 
@@ -2561,7 +2583,15 @@ public class TestCube : MonoBehaviour
         }
         else if (forceMagnitude > 200)
         {
-            gameManager.p1.brokenHeartUI.SetActive(true);
+            if(gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (bM.isboxing)
+                {
+                    gameManager.p1.brokenHeartUI.SetActive(true);
+                }
+
+            }
+
         }
         print("ForceMagnitude" + forceMagnitude);
 
@@ -2624,6 +2654,17 @@ public class TestCube : MonoBehaviour
 
     IEnumerator StopBeingPushedP1()
     {
+        pushCDSlider.gameObject.SetActive(true);
+        pushCDtimer += Time.deltaTime;
+
+        if (pushCDtimer < 1)
+        {
+            pushCDSlider.value = pushCDtimer;
+        }
+        else
+        {
+            pushCDSlider.value = maxCDTimer;
+        }
         yield return new WaitForSeconds(1f);
         p1Anim.SetBool("beingPush", false);
         p1Anim.SetFloat("speed", 0f);
@@ -2631,10 +2672,22 @@ public class TestCube : MonoBehaviour
         damageApplied = false;
         pushIsIntervinedP1 = false;
         gameManager.p1.brokenHeartUI.SetActive(false);
+        gameManager.p2.pushCDSlider.gameObject.SetActive(false);
     }
 
     IEnumerator StopBeingPushedP2()
     {
+        pushCDSlider.gameObject.SetActive(true);
+        pushCDtimer += Time.deltaTime;
+
+        if (pushCDtimer < 1)
+        {
+            pushCDSlider.value = pushCDtimer;
+        }
+        else
+        {
+            pushCDSlider.value = maxCDTimer;
+        }
         yield return new WaitForSeconds(1f);
         p2Anim.SetBool("beingPush", false);
         p2Anim.SetFloat("speed", 0f);
@@ -2642,6 +2695,7 @@ public class TestCube : MonoBehaviour
         damageApplied = false;
         pushIsIntervinedP2 = false;
         gameManager.p2.brokenHeartUI.SetActive(false);
+        gameManager.p1.pushCDSlider.gameObject.SetActive(false);
     }
 
     
@@ -3382,26 +3436,23 @@ public class TestCube : MonoBehaviour
     {
         if (ReadPushButton())
         {
-            print("ReadPushButton" + ReadPushButton());
-        }
-        if (ReadPushButton())
-        {
             holdPush = true;
             isCameraLocked = true;
+            pushSlider.gameObject.SetActive(true);
 
-            if(pushHoldDuration < 3)
+            if (pushHoldDuration < 3)
             {
                 pushHoldDuration += Time.deltaTime;
+                pushSlider.value = pushHoldDuration;
+
+                print("fillImage" + pushHoldDuration);
               
-                if (pushHoldDuration < 1)
-                {
-                    pushHoldDuration = 1;
-                }
 
             }
             else
             {
                 pushHoldDuration = 3;
+                pushSlider.value = maxTimer;
             }
 
             if (isPlayer1)
@@ -3433,6 +3484,7 @@ public class TestCube : MonoBehaviour
             {
                 p2Particle.SetActive(false);
             }
+            pushSlider.gameObject.SetActive(false);
 
         }
 
@@ -3508,6 +3560,7 @@ public class TestCube : MonoBehaviour
 
     private void ResetPush()
     {
+
         if (isPlayer1)
         {
             p1pushed = false;
