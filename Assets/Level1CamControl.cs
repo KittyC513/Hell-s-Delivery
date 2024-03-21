@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Level1CamControl : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class Level1CamControl : MonoBehaviour
     public bool cutsceneIsCompleted;
     [SerializeField]
     public bool endCutScene;
+    string sceneString;
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -42,11 +45,11 @@ public class Level1CamControl : MonoBehaviour
     }
     void Start()
     {
-        instance = this;
 
-        atStart = true;
-     
+        Scene scene = SceneManager.GetActiveScene();
 
+
+        sceneString = scene.name;
 
 
     }
@@ -207,8 +210,19 @@ public class Level1CamControl : MonoBehaviour
         {
             dialogueCanvasP2.SetActive(true);
         }
-        GameManager.instance.p1.transform.position = new Vector3(-173, 61, -297);
-        GameManager.instance.p2.transform.position = new Vector3(-173, 61, -297);
+        if (sceneString == "Level1")
+        {
+
+            GameManager.instance.p1.transform.position = new Vector3(393.5f, 18, -271);
+            GameManager.instance.p2.transform.position = new Vector3(393.5f, 18, -271);
+
+
+        } else if (sceneString == "MVPLevel")
+        {
+            GameManager.instance.p1.transform.position = new Vector3(-173, 61, -297);
+            GameManager.instance.p2.transform.position = new Vector3(-173, 61, -297);
+        }
+        
     }
 
 }

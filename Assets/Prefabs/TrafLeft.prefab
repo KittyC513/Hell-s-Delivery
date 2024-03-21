@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1016099446384184059}
   - component: {fileID: 5061248576497314852}
   m_Layer: 3
-  m_Name: Traffic
+  m_Name: TrafLeft
   m_TagString: MovingPlat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -371,6 +371,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.1
   duration: 20
+  forward: 0
+  back: 0
+  left: 1
+  right: 0
 --- !u!65 &5061248576497314852
 BoxCollider:
   m_ObjectHideFlags: 0
