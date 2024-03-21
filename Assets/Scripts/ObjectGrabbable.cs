@@ -717,7 +717,7 @@ public class ObjectGrabbable : MonoBehaviour
         {
             if (P1TakePackage == false && P2TakePackage == false)
             {
-                if (timer < 30)
+                if (timer < 30 && !boxingMinigame.instance.isboxing)
                 {
                     timer += Time.deltaTime;
 
