@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TargetIndicator : MonoBehaviour
 {
+    public static TargetIndicator instance;
+
     [SerializeField]
     private Image IndicatorImage;
     [SerializeField]
@@ -37,6 +39,9 @@ public class TargetIndicator : MonoBehaviour
 
     private RectTransform rectTransform;
 
+    [SerializeField]
+    public Animator anim;
+
 
     private void Awake()
     {
@@ -45,6 +50,7 @@ public class TargetIndicator : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
         p1Cam = GameManager.instance.cam1.GetComponent<Camera>();
         p2Cam = GameManager.instance.cam2.GetComponent<Camera>();
         //p2IndicatorImageOffScreen.gameObject.SetActive(false);

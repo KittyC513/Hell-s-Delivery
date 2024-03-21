@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerIndicator : MonoBehaviour
 {
+    public static PlayerIndicator instance;
+
     [SerializeField]
     private Image IndicatorImage;
     [SerializeField]
@@ -38,6 +40,9 @@ public class PlayerIndicator : MonoBehaviour
 
     private RectTransform rectTransform;
 
+    [SerializeField]
+    public Animator anim;
+
 
     private void Awake()
     {
@@ -46,8 +51,11 @@ public class PlayerIndicator : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
+
         p1Cam = GameManager.instance.cam1.GetComponent<Camera>();
         p2Cam = GameManager.instance.cam2.GetComponent<Camera>();
+
     }
 
     public void InitializeIndicator(GameObject package, GameObject player1, GameObject player2, Camera cam, Camera cam2, Canvas canvas, Canvas canvas2)

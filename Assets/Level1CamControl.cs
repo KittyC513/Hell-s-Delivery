@@ -46,6 +46,8 @@ public class Level1CamControl : MonoBehaviour
     void Start()
     {
 
+        instance = this;
+
         Scene scene = SceneManager.GetActiveScene();
 
 

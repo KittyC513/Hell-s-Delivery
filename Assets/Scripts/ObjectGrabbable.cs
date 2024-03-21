@@ -119,6 +119,7 @@ public class ObjectGrabbable : MonoBehaviour
     private bool backToLocation;
     [SerializeField]
     private Animator anim;
+    private bool isShowed;
 
 
     [SerializeField] private AK.Wwise.Event packageImpact;
@@ -723,16 +724,20 @@ public class ObjectGrabbable : MonoBehaviour
                     if(timer >= 20 && timer < 30)
                     {
                         anim.SetBool("DisppearWarning", true);
+                        TargetIndicator.instance.anim.SetBool("DisppearWarning", true);
+                        PlayerIndicator.instance.anim.SetBool("DisppearWarning", true);
                     }
                 }
                 else
                 {
+
                     if (!backToLocation)
                     {
-                        this.transform.position = respawnPoint;
-                        backToLocation = true;
-                        timer = 0;
                         anim.SetBool("DisppearWarning", false);
+                        TargetIndicator.instance.anim.SetBool("DisppearWarning", false);
+                        PlayerIndicator.instance.anim.SetBool("DisppearWarning", false);                    
+                        this.transform.position = respawnPoint;
+                        StartCoroutine(ShowRespawnWarning());                          
                     }
 
                 }
@@ -743,6 +748,19 @@ public class ObjectGrabbable : MonoBehaviour
                 timer = 0;
             }
         }
+    }
+
+    IEnumerator ShowRespawnWarning()
+    {
+        print("ShowRespawnWarning");
+        anim.SetBool("RespawnWarning", true);
+        TargetIndicator.instance.anim.SetBool("RespawnWarning", true);
+        PlayerIndicator.instance.anim.SetBool("RespawnWarning", true);
+        yield return new WaitForSeconds(3f);
+        anim.SetBool("RespawnWarning", false);
+        TargetIndicator.instance.anim.SetBool("RespawnWarning", false);
+        PlayerIndicator.instance.anim.SetBool("RespawnWarning", false);
+        backToLocation = true;
     }
 
     #endregion

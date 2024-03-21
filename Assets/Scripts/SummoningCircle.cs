@@ -94,7 +94,10 @@ public class SummoningCircle : MonoBehaviour
             else
             {
                 summoningActive = false;
-                activePlayer.OnSummoningExit();
+                if(activePlayer != null)
+                {
+                    activePlayer.OnSummoningExit();
+                }
                 summoningStop.Post(this.gameObject);
                 isPlayingSound = false;
                 onExit.Invoke();
