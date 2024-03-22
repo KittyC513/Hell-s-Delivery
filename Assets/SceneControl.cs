@@ -80,13 +80,13 @@ public class SceneControl : MonoBehaviour
     public GameObject radialUI2;
 
 
-    [Header("Weather Event")]
+    [Header("werther Event")]
     [SerializeField]
-    private GameObject Weather;
+    private GameObject werther;
     [SerializeField]
     public bool secondCustomer;
     [SerializeField]
-    public bool WeatherdialogueEnds;
+    public bool wertherdialogueEnds;
     [SerializeField]
     public GameObject normalPackage;
     [SerializeField]
@@ -100,7 +100,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private NPCTrigger NPCTrigger;
     [SerializeField]
-    public bool weatherIsGone;
+    public bool wertherIsGone;
 
 
     [Header("Lalah Event")]
@@ -148,6 +148,12 @@ public class SceneControl : MonoBehaviour
     public bool packageDialogueEnd, packageDialogueStart;
     [SerializeField]
     public GameObject packageTutorial;
+    [SerializeField]
+    private GameObject tutorialSkipUI;
+    [SerializeField]
+    private bool skipTutorial;
+    [SerializeField]
+    private bool tutorialUIisShowed;
 
     [Header("Bark")]
     [SerializeField]
@@ -170,8 +176,6 @@ public class SceneControl : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
-
 
     }
     private void Start()
@@ -222,13 +226,13 @@ public class SceneControl : MonoBehaviour
             if (GameManager.instance.timesEnterHub == 2)
             {
                 SkipLalahEndDialogue();
-                SkipWeatherDialogue();
+                SkipwertherDialogue();
 
             }
 
             if (GameManager.instance.timesEnterHub == 3)
             {
-                SkipWeatherEndDialogue();
+                SkipwertherEndDialogue();
             }
 
 
@@ -249,12 +253,15 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.curSceneName == "Tutorial")
         {
             SkipTutorialLevelOverview();
+            //SkipChoice();
         }
 
         if (GameManager.instance.curSceneName == "MVPLevel")
         {
             SkipMVPLevelOverviewCutscene();
         }
+
+
     }
 
     #region Skip Function
@@ -379,11 +386,11 @@ public class SceneControl : MonoBehaviour
         }
     }
 
-    void SkipWeatherDialogue()
+    void SkipwertherDialogue()
     {
         if (GameManager.instance.p1.Dialogue1 || GameManager.instance.p2.Dialogue1)
         {
-            if (!WeatherdialogueEnds)
+            if (!wertherdialogueEnds)
             {
                 radialUI.SetActive(true);
             }
@@ -392,22 +399,22 @@ public class SceneControl : MonoBehaviour
                 dR.Stop();
                 SwitchCameraToMain();
                 radialUI.SetActive(false);
-                WeatherdialogueEnds = true;
+                wertherdialogueEnds = true;
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
             }
-            if (WeatherdialogueEnds)
+            if (wertherdialogueEnds)
             {
                 radialUI.SetActive(false);
             }
         }
     }
 
-    void SkipWeatherEndDialogue()
+    void SkipwertherEndDialogue()
     {
         if (GameManager.instance.p1.Dialogue1_2 || GameManager.instance.p2.Dialogue1_2)
         {
-            if (!WeatherdialogueEnds)
+            if (!wertherdialogueEnds)
             {
                 radialUI.SetActive(true);
             }
@@ -416,10 +423,10 @@ public class SceneControl : MonoBehaviour
                 dR.Stop();
                 SwitchCameraToMain();
                 radialUI.SetActive(false);
-                WeatherdialogueEnds = true;
-                WeatherLeave();
+                wertherdialogueEnds = true;
+                wertherLeave();
             }
-            if (WeatherdialogueEnds)
+            if (wertherdialogueEnds)
             {
                 radialUI.SetActive(false);
             }
@@ -559,6 +566,7 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
             Lalah.SetActive(true);
+
             firstCustomer = true;
             
         }
@@ -583,28 +591,28 @@ public class SceneControl : MonoBehaviour
 
         }
 
-        //Weather
+        //werther
         if (GameManager.instance.timesEnterHub == 2 && lalahIsGone && !secondCustomer)
         {
-            StartCoroutine(ShowWeather());
-            print("Weather showing up");
+            StartCoroutine(Showwerther());
+            print("werther showing up");
         }
 
         //if(GameManager.instance.timesEnterHub == 3)
         //{
-        //    Weather.SetActive(true);
+        //    werther.SetActive(true);
         //} 
         //else
         if (GameManager.instance.timesEnterHub != 2 && GameManager.instance.timesEnterHub != 3)
         {
-            Weather.SetActive(false);
+            werther.SetActive(false);
             secondCustomer = false;
         }
 
-        IEnumerator ShowWeather()
+        IEnumerator Showwerther()
         {
             yield return new WaitForSeconds(2f);
-            Weather.SetActive(true);
+            werther.SetActive(true);
             secondCustomer = true;
         }
 
@@ -612,22 +620,28 @@ public class SceneControl : MonoBehaviour
         {
             showPackage1 = true;
             NPCTrigger.npcArrived = true;
-            if (!weatherIsGone)
+            if (!wertherIsGone)
             {
 
             }
             else
             {
-                Weather.SetActive(false);
+                werther.SetActive(false);
             }
         }
 
-        if (GameManager.instance.showWertherInstruction && !WeatherdialogueEnds)
+        if (dialogueFin)
+        {
+            StartCoroutine(SwitchCamToTutorialLevel());
+            //dialogueFin = false;
+        }
+
+        if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds)
         {
             WertherUI.SetActive(true);
             //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
         }
-        else if (!GameManager.instance.showWertherInstruction || WeatherdialogueEnds)
+        else if (!GameManager.instance.showWertherInstruction || wertherdialogueEnds)
         {
             WertherUI.SetActive(false);
             //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
@@ -666,18 +680,13 @@ public class SceneControl : MonoBehaviour
             phoneInstruction.SetActive(false);
         }
 
-        if (dialogueFin)
-        {
-            StartCoroutine(SwitchCamToTutorialLevel());
-            //dialogueFin = false;
-        }
 
-        if (WeatherdialogueEnds && !showPackage1)
+        if (wertherdialogueEnds && !showPackage1)
         {
             normalPackage.SetActive(true);
             showPackage1 = true;
         }
-        else if (!WeatherdialogueEnds)
+        else if (!wertherdialogueEnds)
         {
             normalPackage.SetActive(false);
         }
@@ -761,6 +770,48 @@ public class SceneControl : MonoBehaviour
     public void PackageDilaogueStarts()
     {
         packageDialogueStart= true;
+
+    }
+
+    public void ShowTutorialSkipUI()
+    {
+        tutorialSkipUI.SetActive(true);
+        tutorialUIisShowed = true;
+    }
+
+    public void SkipChoice()
+    {
+        if (tutorialUIisShowed)
+        {
+            if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+            {
+                skipTutorial = true;
+                GameManager.instance.timesEnterHub += 1;
+                GameManager.instance.changeSceneTimes += 1;
+            }
+
+            if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+            {
+                skipTutorial = false;
+
+                if (dialogueFin && !skipTutorial)
+                {
+                    StartCoroutine(SwitchCamToTutorialLevel());
+                    //dialogueFin = false;
+                }
+            }
+
+        }
+
+
+
+    }
+
+    IEnumerator NPCShowUp()
+    {
+        yield return new WaitForSeconds(0.3f);
+        tutorialSkipUI.SetActive(false);
+        tutorialUIisShowed = false;
 
     }
 
@@ -860,10 +911,10 @@ public class SceneControl : MonoBehaviour
 
     #region MVP Level
 
-    public void WeatherLeave()
+    public void wertherLeave()
     {
         NPCTrigger.dialogueEnd = true;
-        weatherIsGone = true;
+        wertherIsGone = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
         TurnOnCanvas();

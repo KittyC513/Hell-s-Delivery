@@ -2513,10 +2513,17 @@ public class TestCube : MonoBehaviour
         StartCoroutine(StopBeingPushedP2());
         //noisy2 = gameManager.noisy2;
 
-        if (rC.Player2isCarrying && !bM.isboxing)
+        if (rC.Player2isCarrying)
         {
-            p1Steal = true;
-            gameManager.p2.objectGrabbable = null;
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (!bM.isboxing)
+                {
+                    p1Steal = true;
+                    gameManager.p2.objectGrabbable = null;
+                }
+
+            }
         }
 
         while (elapsedTime < duration)
@@ -2539,7 +2546,7 @@ public class TestCube : MonoBehaviour
 
             yield return null;
         }
-        if (curSceneName == "Level1")
+        if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
         {
             if (bM.isboxing && !damageApplied)
             {
@@ -2605,10 +2612,18 @@ public class TestCube : MonoBehaviour
         StartCoroutine(StopBeingPushedP1());
         //noisy2 = gameManager.noisy2;
 
-        if (rC.Player1isCarrying && !bM.isboxing)
+        if (rC.Player1isCarrying)
         {
-            p2Steal = true;
-            gameManager.p1.objectGrabbable = null;
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (!bM.isboxing)
+                {
+                    p2Steal = true;
+                    gameManager.p1.objectGrabbable = null;
+                }
+
+            }
+
         }
 
         while (elapsedTime < duration)
@@ -2631,7 +2646,7 @@ public class TestCube : MonoBehaviour
 
             yield return null;
         }
-        if (curSceneName == "Level1")
+        if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
         {
             if (bM.isboxing && !damageApplied)
             {
@@ -2694,8 +2709,10 @@ public class TestCube : MonoBehaviour
         pushHoldTime = 0;
         damageApplied = false;
         pushIsIntervinedP2 = false;
-        gameManager.p2.brokenHeartUI.SetActive(false);
         gameManager.p1.pushCDSlider.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(2f);
+        gameManager.p2.brokenHeartUI.SetActive(false);
     }
 
     
@@ -2716,7 +2733,7 @@ public class TestCube : MonoBehaviour
             
             if (rC.Player1Die && rC.Player2isCarrying)
             {
-                Debug.Log("Player1die" + rC.Player1Die);
+                //Debug.Log("Player1die" + rC.Player1Die);
                 objectGrabbable = null;
                 //rC.Player1Die = false;
 
@@ -2734,7 +2751,7 @@ public class TestCube : MonoBehaviour
             
             if (rC.Player2Die && rC.Player1isCarrying)
             {
-                Debug.Log("Player2die" + rC.Player2Die);
+                //Debug.Log("Player2die" + rC.Player2Die);
                 objectGrabbable = null;
                 //rC.Player2Die = false;
             }
@@ -3133,7 +3150,7 @@ public class TestCube : MonoBehaviour
 
         if (other.CompareTag("WeatherNPC"))
         {
-            if (!SceneControl.instance.weatherIsGone)
+            if (!SceneControl.instance.wertherIsGone)
             {
                 withinNPCsRange = true;
             }

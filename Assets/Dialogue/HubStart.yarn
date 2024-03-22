@@ -1,4 +1,4 @@
-﻿title: HubStart
+title: HubStart
 tags:
 position: -186,56
 ---
@@ -8,38 +8,34 @@ position: -186,56
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Default 0.45 0.03 white>>
-Devil: Hello, my little delivery demons. This is your boss calling~ #line:hello
+Devil: Hello, my little delivery demons.
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
-Devil: I do hope you're not wasting precious company time... #line:iDoHope 
+Devil: I do hope you're not wasting precious company time...
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Disappointed 0.45 0.03 white>>
-Devil: Perhaps you've forgotten how to do your jobs. #line:perhaps 
+Devil: Perhaps you've forgotten how to do your jobs.
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
-Devil: Though, I can't fire you yet! That would be too nice. #line:though 
+Devil: Though, I can't fire you yet! That's too nice.
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Cheery 0.45 0.03 white>>
-Devil: Besides, company policy states I have to show you this training video instead. #line:besides 
-<<Act Devil DevilPopUp_Default>>
-
-<<Hide DevilPopUp_Default>>
-<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
-Devil: Be sure to watch carefully, I look absolutely stunning in there. #line:beSure 
+Devil: Don't worry, my little demons. I have a little something for you to watch.
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 
 <<HideGradient>>
-<<DialogueEnd>>
-<<wait  3>>
+<<TutorialSkipOption>>
+
+<<wait  2>>
 <<TutorialLevel>>
 ===

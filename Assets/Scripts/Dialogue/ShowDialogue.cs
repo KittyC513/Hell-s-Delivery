@@ -96,6 +96,16 @@ public class ShowDialogue :DialogueViewBase
         
     }
 
+    #region Tutorial
+    [YarnCommand("TutorialSkipOption")]
+    public static void TutorialSkipChoice()
+    {
+        //SceneControl.instance.ShowTutorialSkipUI();
+        SceneControl.instance.dialogueFin = true;
+    }
+
+    #endregion
+
     [YarnCommand("PlayerShow")]
     public static void PlayerShow()
     {
@@ -165,12 +175,6 @@ public class ShowDialogue :DialogueViewBase
 
     }
 
-    [YarnCommand("DialogueEnd")]
-    public static void DialogueEnd()
-    {
-        SceneControl.instance.dialogueFin = true;
-    }
-
 
     [YarnCommand("HideGradient")]
     public static void HideGradient()
@@ -182,7 +186,7 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("WeatherDialogueEnd")]
     public static void WeatherDialogueEnds()
     {
-        SceneControl.instance.WeatherdialogueEnds = true;
+        SceneControl.instance.wertherdialogueEnds = true;
     }
 
     [YarnCommand("LalahDialogueEnd")]
@@ -200,7 +204,7 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("WeatherIsLeaving")]
     public static void WeatherLeaving()
     {
-        SceneControl.instance.WeatherLeave();
+        SceneControl.instance.wertherLeave();
     }
 
     [YarnCommand("PackageDialogueEndDetect")]
