@@ -760,6 +760,30 @@ public class GameManager : MonoBehaviour
 
                     }
                 }
+                else
+                {
+                    if (p1.p1pushed && p1.forceMagnitude1 < 200)
+                    {
+                        noisy2.SetActive(true);
+                        StartCoroutine(StopNoisyP2());
+
+                    }
+                    else if(!p1.p1pushed)
+                    {
+                        p2Ani.SetBool("beingPush", false);
+                    }
+
+                    if (p2.p2pushed && p1.forceMagnitude2 < 200)
+                    {
+                        noisy1.SetActive(true);
+                        StartCoroutine(StopNoisyP1());
+                    }
+                    else if(!p2.p2pushed)
+                    {
+                        p1Ani.SetBool("beingPush", false);
+
+                    }
+                }
             }
             else
             {

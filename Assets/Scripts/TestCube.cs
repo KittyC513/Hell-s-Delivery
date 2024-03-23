@@ -520,6 +520,10 @@ public class TestCube : MonoBehaviour
     public GameObject brokenHeartUI;
     [SerializeField]
     private bool damageApplied;
+    [SerializeField]
+    public float forceMagnitude1;
+    [SerializeField]
+    public float forceMagnitude2;
 
     [Header("Push UI")]
     [SerializeField]
@@ -2483,13 +2487,13 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * pushHoldTime;
+        forceMagnitude1 = pushForce * pushHoldTime;
         
-        if(forceMagnitude < pushForce)
+        if(forceMagnitude1 < pushForce)
         {
-            forceMagnitude = pushForce;
+            forceMagnitude1 = pushForce;
         }
-        else if (forceMagnitude > 200)
+        else if (forceMagnitude1 > 200)
         {
             if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
             {
@@ -2501,7 +2505,7 @@ public class TestCube : MonoBehaviour
             }
 
         }
-        print("ForceMagnitude" + forceMagnitude);
+        print("ForceMagnitude1" + forceMagnitude1);
 
         float elapsedTime = 0f;
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
@@ -2530,7 +2534,7 @@ public class TestCube : MonoBehaviour
         {
             // Apply force based on linear interpolation
             float normalizedTime = elapsedTime / duration;
-            float easedMagnitude = Mathf.Lerp(forceMagnitude, 0f, normalizedTime * normalizedTime);
+            float easedMagnitude = Mathf.Lerp(forceMagnitude1, 0f, normalizedTime * normalizedTime);
             otherRB.AddForce(forceDir * easedMagnitude, ForceMode.Force);
 
             elapsedTime += Time.deltaTime;
@@ -2546,15 +2550,8 @@ public class TestCube : MonoBehaviour
 
             yield return null;
         }
-        if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
-        {
-            if (bM.isboxing && !damageApplied)
-            {
-                bM.p1pushedcount += forceMagnitude * 0.1f;
-                damageApplied = true;
-                pushIsIntervinedP2 = true;
-            }
-        }
+
+
 
     }
 
@@ -2563,6 +2560,21 @@ public class TestCube : MonoBehaviour
     void P1Push()
     {
         StartCoroutine(P1PushCoroutine());
+
+        if (gameManager.curSceneName == "Level1")
+        {
+            if (bM.isboxing)
+            {
+                if (!damageApplied)
+                {
+                    bM.p1pushedcount += forceMagnitude1 * 0.1f;
+                    print("Damage1");
+                    damageApplied = true;
+                    pushIsIntervinedP2 = true;
+                }
+
+            }
+        }
         //p1pushed = true;
     }
 
@@ -2582,13 +2594,13 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * pushHoldTime;
+        forceMagnitude2 = pushForce * pushHoldTime;
         
-        if(forceMagnitude < pushForce)
+        if(forceMagnitude2 < pushForce)
         {
-            forceMagnitude = pushForce;
+            forceMagnitude2 = pushForce;
         }
-        else if (forceMagnitude > 200)
+        else if (forceMagnitude2 > 200)
         {
             if(gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
             {
@@ -2600,7 +2612,7 @@ public class TestCube : MonoBehaviour
             }
 
         }
-        print("ForceMagnitude" + forceMagnitude);
+        print("ForceMagnitude2" + forceMagnitude2);
 
         float elapsedTime = 0f;
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
@@ -2630,7 +2642,7 @@ public class TestCube : MonoBehaviour
         {
             // Apply force based on linear interpolation
             float normalizedTime = elapsedTime / duration;
-            float easedMagnitude = Mathf.Lerp(forceMagnitude, 0f, normalizedTime * normalizedTime);
+            float easedMagnitude = Mathf.Lerp(forceMagnitude2, 0f, normalizedTime * normalizedTime);
             otherRB.AddForce(forceDir * easedMagnitude, ForceMode.Force);
 
             elapsedTime += Time.deltaTime;
@@ -2646,25 +2658,26 @@ public class TestCube : MonoBehaviour
 
             yield return null;
         }
-        if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
-        {
-            if (bM.isboxing && !damageApplied)
-            {
-                bM.p2pushedcount += forceMagnitude * 0.1f;
-                damageApplied = true;
-                pushIsIntervinedP1 = true;
-            }
-        }
+
 
     }
 
     void P2Push()
     {
         StartCoroutine(P2PushCoroutine());
-        
-        //p2pushed = true;
 
-        
+        //p2pushed = true;
+        if (gameManager.curSceneName == "Level1")
+        {
+            if (bM.isboxing && !damageApplied)
+            {
+                bM.p2pushedcount += forceMagnitude2 * 0.1f;
+                print("Damage2");
+                damageApplied = true;
+                pushIsIntervinedP1 = true;
+            }
+        }
+
     }
 
     IEnumerator StopBeingPushedP1()
@@ -3463,8 +3476,7 @@ public class TestCube : MonoBehaviour
                 pushSlider.value = pushHoldDuration;
 
                 //print("fillImage" + pushHoldDuration);
-              
-
+  
             }
             else
             {
