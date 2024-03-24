@@ -52,6 +52,7 @@ public class Level1CamControl : MonoBehaviour
 
 
         atStart = true;
+
         sceneString = scene.name;
 
 
