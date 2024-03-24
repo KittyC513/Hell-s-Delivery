@@ -120,6 +120,8 @@ public class SceneControl : MonoBehaviour
     private LalahTrigger lalahTrigger;
     [SerializeField]
     public bool lalahIsGone;
+    [SerializeField]
+    private GameObject devilSprite;
 
     [Header("Level 1")]
     [SerializeField]
@@ -154,6 +156,8 @@ public class SceneControl : MonoBehaviour
     private bool skipTutorial;
     [SerializeField]
     private bool tutorialUIisShowed;
+    [SerializeField]
+    private bool skipTutorial1;
 
     [Header("Bark")]
     [SerializeField]
@@ -307,11 +311,16 @@ public class SceneControl : MonoBehaviour
                     dR.Stop();
                     radialUI.SetActive(false);
                     dialogueFin = true;
+                    skipTutorial1 = true;
+
                 }
 
-                if (dialogueFin)
+                if (dialogueFin && skipTutorial1)
                 {
                     radialUI.SetActive(false);
+                    GameManager.instance.changeSceneTimes += 2;
+                    GameManager.instance.timesEnterHub += 1;
+                    skipTutorial1 = false;
                 }
             }
 
@@ -346,6 +355,8 @@ public class SceneControl : MonoBehaviour
             if (!LalahdialogueEnds)
             {
                 radialUI.SetActive(true);
+                //devilSprite.SetActive(false);
+
             }
             if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
             {
@@ -630,11 +641,12 @@ public class SceneControl : MonoBehaviour
             }
         }
 
-        if (dialogueFin)
-        {
-            StartCoroutine(SwitchCamToTutorialLevel());
-            //dialogueFin = false;
-        }
+        //Skip Tutorial
+        //if (dialogueFin)
+        //{
+        //    StartCoroutine(SwitchCamToTutorialLevel());
+        //    //dialogueFin = false;
+        //}
 
         if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds)
         {

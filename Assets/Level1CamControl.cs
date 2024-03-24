@@ -51,6 +51,7 @@ public class Level1CamControl : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
 
 
+        atStart = true;
         sceneString = scene.name;
 
 
