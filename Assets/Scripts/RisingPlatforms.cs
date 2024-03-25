@@ -40,7 +40,7 @@ public class RisingPlatforms : MonoBehaviour
     [SerializeField] public bool animated = false;
     [SerializeField] private float fallDelay = 0.65f;
     [SerializeField] private float fallMultiplier = 0.85f;
-    [SerializeField] private float moveOffset = 0.6f;
+    private float moveOffset = 0.5f;
   
     private void Awake()
     {
@@ -60,7 +60,7 @@ public class RisingPlatforms : MonoBehaviour
 
                 PlatformChild plat = new PlatformChild();
                 plat.child = child.gameObject;
-                plat.offset = Random.Range(-moveOffset * riseDuration, moveOffset * riseDuration);
+                plat.offset = Random.Range(0, moveOffset);
                 plat.preShakePos = plat.child.transform.position;
                 platformChildren.Add(plat);
                
@@ -115,7 +115,7 @@ public class RisingPlatforms : MonoBehaviour
                     Vector3 childPos = new Vector3(platform.child.transform.position.x, startPosition.transform.position.y, platform.child.transform.position.z);
                     Vector3 endPos = new Vector3(platform.child.transform.position.x, endPosition.transform.position.y, platform.child.transform.position.z);
 
-                    platform.child.transform.position = Vector3.Lerp(childPos, endPos, time / (riseDuration + platform.offset));
+                    platform.child.transform.position = Vector3.Lerp(childPos, endPos, time / ((riseDuration / 6) + platform.offset));
                 }
             }
 
@@ -145,7 +145,7 @@ public class RisingPlatforms : MonoBehaviour
                         Vector3 childPos = new Vector3(platform.preShakePos.x, startPosition.transform.position.y, platform.preShakePos.z);
                         Vector3 endPos = new Vector3(platform.preShakePos.x, endPosition.transform.position.y, platform.preShakePos.z);
 
-                        platform.child.transform.position = Vector3.Lerp(endPos, childPos, animationTime / ((riseDuration + platform.offset) * fallMultiplier));
+                        platform.child.transform.position = Vector3.Lerp(endPos, childPos, animationTime / ((riseDuration / 6) + platform.offset) * fallMultiplier);
                     }
                 }
                 else
@@ -202,7 +202,7 @@ public class RisingPlatforms : MonoBehaviour
         foreach (PlatformChild platform in platformChildren)
         {
            
-            platform.offset = Random.Range(-moveOffset * riseDuration, moveOffset * riseDuration);
+            platform.offset = Random.Range(0, moveOffset);
         }
         //Debug.Log("Deactivate");
     }
