@@ -7,6 +7,7 @@ using UnityEngine;
 public class RisingPlatforms : MonoBehaviour
 {
     private List <GameObject> platforms = new List <GameObject>();
+    private List<PlatformChild> platformChildren = new List<PlatformChild>();
 
     [SerializeField]
     private GameObject platformParent;
@@ -27,12 +28,20 @@ public class RisingPlatforms : MonoBehaviour
     public bool toggle;
 
     private float time;
+    private float animationTime;
 
     public bool isRunning;
 
     [SerializeField] private AK.Wwise.Event platformsMove;
     private bool shouldSound = false;
 
+
+    [Header ("Animation Variables")]
+    [SerializeField] public bool animated = false;
+    [SerializeField] private float fallDelay = 0.65f;
+    [SerializeField] private float fallMultiplier = 0.85f;
+    [SerializeField] private float moveOffset = 0.6f;
+  
     private void Awake()
     {
 
@@ -41,9 +50,22 @@ public class RisingPlatforms : MonoBehaviour
     {
         //put all the platforms (child objects to the parent) into an array
         //currently unused but could be used in the future to move each platform on its own for a better visual effect
+
+        
         foreach (Transform child in platformParent.transform)
         {
-            platforms.Add(child.gameObject);
+            if (animated)
+            {
+                platforms.Add(child.gameObject);
+
+                PlatformChild plat = new PlatformChild();
+                plat.child = child.gameObject;
+                plat.offset = Random.Range(-moveOffset * riseDuration, moveOffset * riseDuration);
+                plat.preShakePos = plat.child.transform.position;
+                platformChildren.Add(plat);
+               
+            }
+         
 
             Renderer renderer = child.gameObject.GetComponent<Renderer>();
             renderers.Add(renderer);
@@ -80,14 +102,24 @@ public class RisingPlatforms : MonoBehaviour
 
             //move the entire parent object giving the level designer more freedom at loss of the visual upgrade of moving each piece individually
             //could implement later
-            platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+           
 
-            /*foreach (GameObject child in platforms)
+            if (!animated)
+            { 
+                platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+            }
+            else
             {
-                child.transform.position = Vector3.Lerp(transform.position, endPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
-            }*/
+                foreach (PlatformChild platform in platformChildren)
+                {
+                    Vector3 childPos = new Vector3(platform.child.transform.position.x, startPosition.transform.position.y, platform.child.transform.position.z);
+                    Vector3 endPos = new Vector3(platform.child.transform.position.x, endPosition.transform.position.y, platform.child.transform.position.z);
 
-           if (shouldSound)
+                    platform.child.transform.position = Vector3.Lerp(childPos, endPos, time / (riseDuration + platform.offset));
+                }
+            }
+
+            if (shouldSound)
             {
                 shouldSound = false;
                 platformsMove.Post(this.gameObject);
@@ -98,8 +130,36 @@ public class RisingPlatforms : MonoBehaviour
         else
         {
             //move platforms back to starting
+            if (!animated)
+            {
+                platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, startPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+            }
+            else
+            {
+                
+                if (Mathf.Abs(Time.deltaTime - time) > fallDelay)
+                {
+                    //fall
+                    foreach (PlatformChild platform in platformChildren)
+                    {
+                        Vector3 childPos = new Vector3(platform.preShakePos.x, startPosition.transform.position.y, platform.preShakePos.z);
+                        Vector3 endPos = new Vector3(platform.preShakePos.x, endPosition.transform.position.y, platform.preShakePos.z);
 
-            platformParent.transform.position = Vector3.Lerp(platformParent.transform.position, startPosition.transform.position, time / (riseDuration + Random.Range(0, 2)));
+                        platform.child.transform.position = Vector3.Lerp(endPos, childPos, animationTime / ((riseDuration + platform.offset) * fallMultiplier));
+                    }
+                }
+                else
+                {
+                    //stall and shake platforms
+                    animationTime = Time.deltaTime;
+                    foreach (PlatformChild platform in platformChildren)
+                    {
+                        Vector3 randomizedPos = platform.preShakePos + Random.insideUnitSphere * 0.35f;
+                        platform.child.transform.position = new Vector3 (randomizedPos.x, platform.preShakePos.y, randomizedPos.z);
+                    }
+                }
+            }
+            
 
             if (!shouldSound)
             {
@@ -112,6 +172,7 @@ public class RisingPlatforms : MonoBehaviour
 
         //used for our lerp functions
         time += Time.deltaTime;
+        animationTime += Time.deltaTime;
     }
 
 
@@ -138,7 +199,11 @@ public class RisingPlatforms : MonoBehaviour
         }
         active = false;
 
-        
+        foreach (PlatformChild platform in platformChildren)
+        {
+           
+            platform.offset = Random.Range(-moveOffset * riseDuration, moveOffset * riseDuration);
+        }
         //Debug.Log("Deactivate");
     }
 
@@ -202,4 +267,11 @@ public class RisingPlatforms : MonoBehaviour
         }
     }
 
+}
+
+class PlatformChild
+{
+    public GameObject child;
+    public float offset;
+    public Vector3 preShakePos;
 }
