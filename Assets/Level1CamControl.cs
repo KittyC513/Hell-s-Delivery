@@ -30,7 +30,7 @@ public class Level1CamControl : MonoBehaviour
     [SerializeField]
     private Camera mainCam;
     [SerializeField]
-    private Camera miniCam;
+    public Camera miniCam;
     [SerializeField]
     public bool cutsceneIsCompleted;
     [SerializeField]
