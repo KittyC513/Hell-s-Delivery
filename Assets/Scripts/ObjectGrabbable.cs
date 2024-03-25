@@ -193,7 +193,7 @@ public class ObjectGrabbable : MonoBehaviour
 
        
         lastPickTime = Time.time;
-        InventoryManager.Instance.Add(item);
+        //InventoryManager.Instance.Add(item);
 
     }
 
@@ -472,11 +472,14 @@ public class ObjectGrabbable : MonoBehaviour
 
         P1TakePackage = false;
         P2TakePackage = false;
+
         //ScoreCount.instance.time = 0;
-        InventoryManager.Instance.Remove(item);
+        //InventoryManager.Instance.Remove(item);
         time = 0;
 
         reachedPos = false;
+        GameManager.instance.p1.objectGrabbable = null;
+        GameManager.instance.p2.objectGrabbable = null;
     }
 
     public void P2Drop()
@@ -528,10 +531,12 @@ public class ObjectGrabbable : MonoBehaviour
         P1TakePackage = false;
         P2TakePackage = false;
 
-        InventoryManager.Instance.Remove(item);
+        //InventoryManager.Instance.Remove(item);
         time = 0;
 
         reachedPos = false;
+        GameManager.instance.p1.objectGrabbable = null;
+        GameManager.instance.p2.objectGrabbable = null;
     }
 
     void FindGameObject()

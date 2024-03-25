@@ -14827,6 +14827,7 @@ MonoBehaviour:
   packageTutorial: {fileID: 0}
   tutorialSkipUI: {fileID: 392862900}
   skipTutorial: 0
+  notSkipTutorial: 0
   tutorialUIisShowed: 0
   skipTutorial1: 0
   isSkipped: 0
@@ -17504,7 +17505,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5885116519340393210, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1005355608}
   m_SourcePrefab: {fileID: 100100000, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
 --- !u!1 &1005355605 stripped
 GameObject:
@@ -17521,6 +17525,27 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 2042826728485002630, guid: 27f83a6bf6271dd4ebf0a83138c8b33d, type: 3}
   m_PrefabInstance: {fileID: 1005355604}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1005355608
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005355606}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000002, y: 1, z: 1.0000002}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1015493067
 GameObject:
   m_ObjectHideFlags: 0

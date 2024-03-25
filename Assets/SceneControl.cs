@@ -320,10 +320,10 @@ public class SceneControl : MonoBehaviour
             
             if (GameManager.instance.timesEnterHub < 1)
             {
-                if (isntSkipped)
-                {
-                    StartCoroutine(SwitchCamToTutorialLevel());
-                }
+                //if (isntSkipped)
+                //{
+                //    StartCoroutine(SwitchCamToTutorialLevel());
+                //}
 
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
                 {
@@ -336,42 +336,43 @@ public class SceneControl : MonoBehaviour
 
                 }
 
-                if (isSkipped || isntSkipped)
-                {
-                    tutorialSkipUI.SetActive(false);
-                }
 
                 if (dialogueFin && skipTutorial1 && !isSkipped && !isntSkipped)
                 {
                     radialUI.SetActive(false);
                     ShowTutorialSkipUI();
 
-                    if(GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
-                    {
-                        if (!isSkipped)
-                        {
-                            print("Yes");
-                            GameManager.instance.changeSceneTimes += 2;
-                            GameManager.instance.timesEnterHub += 1;
-                            isSkipped = true;                           
-                        }
+                    //if(GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+                    //{
+                    //    if (!isSkipped)
+                    //    {
+                    //        print("Yes");
+                    //        GameManager.instance.changeSceneTimes += 2;
+                    //        GameManager.instance.timesEnterHub += 1;
+                    //        isSkipped = true;                           
+                    //    }
 
 
-                    } 
+                    //} 
 
-                    if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
-                    {
-                        if (!isntSkipped)
-                        {                            
-                            isntSkipped = true;
-                        }
+                    //if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+                    //{
+                    //    if (!isntSkipped)
+                    //    {                            
+                    //        isntSkipped = true;
+                    //    }
 
-                    }
+                    //}
 
                 }
             }
 
         }
+
+        //if (isSkipped || isntSkipped)
+        //{
+        //    tutorialSkipUI.SetActive(false);
+        //}
 
 
     }
@@ -618,6 +619,8 @@ public class SceneControl : MonoBehaviour
 
         if(GameManager.instance.timesEnterHub >= 1)
         {
+            tutorialUIisShowed = false;
+
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
 
@@ -956,9 +959,14 @@ public class SceneControl : MonoBehaviour
         {
             if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
             {
-                skipTutorial = true;
-                GameManager.instance.timesEnterHub += 1;
-                GameManager.instance.changeSceneTimes += 1;
+                if (!skipTutorial)
+                {
+                    GameManager.instance.timesEnterHub += 1;
+                    GameManager.instance.changeSceneTimes += 1;
+                    skipTutorial = true;
+                }
+
+
             }
 
             if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
@@ -969,6 +977,11 @@ public class SceneControl : MonoBehaviour
             if (notSkipTutorial)
             {
                 StartCoroutine(SwitchCamToTutorialLevel());
+            }
+
+            if (skipTutorial)
+            {
+                tutorialSkipUI.SetActive(false);
             }
 
 
