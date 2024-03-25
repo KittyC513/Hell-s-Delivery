@@ -164,17 +164,21 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private bool skipTutorial;
     [SerializeField]
+    private bool notSkipTutorial;
+    [SerializeField]
     private bool tutorialUIisShowed;
     [SerializeField]
     private bool skipTutorial1;
+    [SerializeField]
+    private bool isSkipped;
+    [SerializeField]
+    private bool isntSkipped;
 
     [Header("Bark")]
     [SerializeField]
     public int multiple;
     [SerializeField]
     public int oriValue;
-
-    [Header("Bark")]
     [SerializeField]
     public GameObject endCanvas;
     [SerializeField]
@@ -203,7 +207,7 @@ public class SceneControl : MonoBehaviour
 
         //LVNPC.SetActive(false);
 
-        if (GameManager.instance.curSceneName == GameManager.instance.scene1)
+        if (GameManager.instance.curSceneName == "HubStart")
         {
             phonePiece.SetActive(false);
             phoneRingText.SetActive(false);
@@ -228,6 +232,7 @@ public class SceneControl : MonoBehaviour
             HubStart();
             SkipComic();
             SkipDevilDialogue();
+            SkipChoice();
 
             if (GameManager.instance.timesEnterHub == 1)
             {
@@ -266,7 +271,7 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.curSceneName == "Tutorial")
         {
             SkipTutorialLevelOverview();
-            //SkipChoice();
+
         }
 
         if (GameManager.instance.curSceneName == "MVPLevel")
@@ -315,21 +320,54 @@ public class SceneControl : MonoBehaviour
             
             if (GameManager.instance.timesEnterHub < 1)
             {
+                if (isntSkipped)
+                {
+                    StartCoroutine(SwitchCamToTutorialLevel());
+                }
+
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
                 {
                     dR.Stop();
                     radialUI.SetActive(false);
                     dialogueFin = true;
+                    GameManager.instance.p1.isFreeze = true;
+                    GameManager.instance.p2.isFreeze = true;
                     skipTutorial1 = true;
 
                 }
 
-                if (dialogueFin && skipTutorial1)
+                if (isSkipped || isntSkipped)
+                {
+                    tutorialSkipUI.SetActive(false);
+                }
+
+                if (dialogueFin && skipTutorial1 && !isSkipped && !isntSkipped)
                 {
                     radialUI.SetActive(false);
-                    GameManager.instance.changeSceneTimes += 2;
-                    GameManager.instance.timesEnterHub += 1;
-                    skipTutorial1 = false;
+                    ShowTutorialSkipUI();
+
+                    if(GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+                    {
+                        if (!isSkipped)
+                        {
+                            print("Yes");
+                            GameManager.instance.changeSceneTimes += 2;
+                            GameManager.instance.timesEnterHub += 1;
+                            isSkipped = true;                           
+                        }
+
+
+                    } 
+
+                    if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+                    {
+                        if (!isntSkipped)
+                        {                            
+                            isntSkipped = true;
+                        }
+
+                    }
+
                 }
             }
 
@@ -502,7 +540,7 @@ public class SceneControl : MonoBehaviour
     IEnumerator SwitchCamToTutorialLevel()
     {
         SwitchCameraToTV();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         ShowDialogue.TutorialLevel();
         dialogueFin = false;
     }
@@ -537,7 +575,7 @@ public class SceneControl : MonoBehaviour
 
     public void MoveCamera(Transform newPos)
     {
-        float lerpSpeed = 5f;
+        float lerpSpeed = 3f;
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
         mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
         //print("Camera");
@@ -904,8 +942,12 @@ public class SceneControl : MonoBehaviour
 
     public void ShowTutorialSkipUI()
     {
-        tutorialSkipUI.SetActive(true);
-        tutorialUIisShowed = true;
+        if(!isSkipped && !isntSkipped)
+        {
+            tutorialSkipUI.SetActive(true);
+            tutorialUIisShowed = true;
+        }
+
     }
 
     public void SkipChoice()
@@ -921,14 +963,14 @@ public class SceneControl : MonoBehaviour
 
             if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
             {
-                skipTutorial = false;
-
-                if (dialogueFin && !skipTutorial)
-                {
-                    StartCoroutine(SwitchCamToTutorialLevel());
-                    //dialogueFin = false;
-                }
+                notSkipTutorial = true;
             }
+
+            if (notSkipTutorial)
+            {
+                StartCoroutine(SwitchCamToTutorialLevel());
+            }
+
 
         }
 

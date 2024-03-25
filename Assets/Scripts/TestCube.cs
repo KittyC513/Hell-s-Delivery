@@ -2129,7 +2129,7 @@ public class TestCube : MonoBehaviour
     {
         if (NPCInteracting)
         {
-            if (!Dialogue1 && gameManager.timesEnterHub == 2)
+            if (!Dialogue1 && gameManager.timesEnterHub >= 1 && !Dialogue1_2)
             {
                 print("interactiNPC1");
                 //SceneControl.LV.SetActive(false);
@@ -2156,7 +2156,7 @@ public class TestCube : MonoBehaviour
                     Dialogue1 = true;
                 }           
             }
-            if (!Dialogue1_2 && gameManager.timesEnterHub == 3)
+            if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1)
             {
                 print("interactiNPC1");
                 //SceneControl.LV.SetActive(false);
@@ -2187,7 +2187,7 @@ public class TestCube : MonoBehaviour
 
         if (NPC2Interacting)
         {
-            if (!Dialogue3 && gameManager.timesEnterHub == 1)
+            if (!Dialogue3 && gameManager.timesEnterHub >= 1 && !Dialogue3_2)
             {               
                 //SceneControl.LV.SetActive(false);
                 SceneControl.instance.dR.StopAllCoroutines();
@@ -2219,7 +2219,7 @@ public class TestCube : MonoBehaviour
 
             }
 
-            if(!Dialogue3_2 && gameManager.timesEnterHub == 2)
+            if(!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3)
             {
                 print("interactiNPC23_2");
                 SceneControl.instance.dR.StopAllCoroutines();

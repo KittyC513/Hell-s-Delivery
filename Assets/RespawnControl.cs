@@ -400,27 +400,19 @@ public class RespawnControl : MonoBehaviour
 
             if (curSceneName == scene1)
             {
-                if (gameManager.timesEnterHub == 1)
+                if (gameManager.timesEnterHub >= 1)
                 {
-                    if (objectGrabbable == null)
+                    if(SceneControl.instance.showHeavyPackage || SceneControl.instance.showPackage1)
                     {
-                        package = GameObject.FindGameObjectWithTag("Package");
+                        if (objectGrabbable == null)
+                        {
+                            package = GameObject.FindGameObjectWithTag("Package");
 
-                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                        }
                     }
-                }
-                else if (gameManager.timesEnterHub == 2)
-                {
-                    objectGrabbable = null;
-                    package = null;
 
-                    if (SceneControl.instance.showPackage1)
-                    {
-                        package = GameObject.FindGameObjectWithTag("Package");
-                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                    }
                 }
-
             }
 
 

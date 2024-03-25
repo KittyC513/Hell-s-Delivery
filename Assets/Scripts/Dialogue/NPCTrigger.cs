@@ -60,7 +60,7 @@ public class NPCTrigger : MonoBehaviour
     #region Weather
     private void Arrive()
     {
-        if (SceneControl.instance.secondCustomer && !npcArrived)
+        if (SceneControl.instance.secondCustomer && !npcArrived && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
         {
             StartCoroutine(Walking());
         }
@@ -68,7 +68,7 @@ public class NPCTrigger : MonoBehaviour
         {
             smoke.SetActive(false);
         }
-        else if (dialogueEnd)
+        else if (dialogueEnd && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
         {
             smoke.SetActive(true);
         }
