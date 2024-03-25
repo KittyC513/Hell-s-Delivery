@@ -551,8 +551,6 @@ public class SceneControl : MonoBehaviour
         GameManager.instance.UnfreezePlayer();
         phonePiece.SetActive(true);
         phoneRingText.SetActive(true);
-
-
     }
 
     void HubStart()
@@ -571,75 +569,87 @@ public class SceneControl : MonoBehaviour
             phonePiece.SetActive(false);
         }
 
-        //Lalah
-        if (GameManager.instance.timesEnterHub == 1)
+        if(GameManager.instance.timesEnterHub == 1)
         {
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
+            
             Lalah.SetActive(true);
+            werther.SetActive(true);
 
             firstCustomer = true;
-            
-        }
-        else if (GameManager.instance.timesEnterHub != 1 && GameManager.instance.timesEnterHub != 2)
-        {
-            Lalah.SetActive(false);
-            firstCustomer = false;
-        }
-
-        if (GameManager.instance.timesEnterHub == 2 && lalahTrigger.isLeaving == false)
-        {
-            showPackage = true;
-            lalahTrigger.npcArrived = true;
-            if (!lalahIsGone)
-            {
-
-            }
-            else
-            {
-                Lalah.SetActive(false);
-            }
-
-        }
-
-        //werther
-        if (GameManager.instance.timesEnterHub == 2 && lalahIsGone && !secondCustomer)
-        {
-            StartCoroutine(Showwerther());
-            print("werther showing up");
-        }
-
-        //if(GameManager.instance.timesEnterHub == 3)
-        //{
-        //    werther.SetActive(true);
-        //} 
-        //else
-        if (GameManager.instance.timesEnterHub != 2 && GameManager.instance.timesEnterHub != 3)
-        {
-            werther.SetActive(false);
-            secondCustomer = false;
-        }
-
-        IEnumerator Showwerther()
-        {
-            yield return new WaitForSeconds(2f);
-            werther.SetActive(true);
             secondCustomer = true;
         }
 
-        if (GameManager.instance.timesEnterHub == 3 && NPCTrigger.isLeaving == false)
-        {
-            showPackage1 = true;
-            NPCTrigger.npcArrived = true;
-            if (!wertherIsGone)
-            {
+        //Lalah
+        //if (GameManager.instance.timesEnterHub == 1)
+        //{
+        //    GameManager.instance.p1.isFreeze = false;
+        //    GameManager.instance.p2.isFreeze = false;
+        //    Lalah.SetActive(true);
 
-            }
-            else
-            {
-                werther.SetActive(false);
-            }
-        }
+        //    firstCustomer = true;
+
+        //}
+        //else if (GameManager.instance.timesEnterHub != 1 && GameManager.instance.timesEnterHub != 2)
+        //{
+        //    Lalah.SetActive(false);
+        //    firstCustomer = false;
+        //}
+
+        //if (GameManager.instance.timesEnterHub == 2 && lalahTrigger.isLeaving == false)
+        //{
+        //    showPackage = true;
+        //    lalahTrigger.npcArrived = true;
+        //    if (!lalahIsGone)
+        //    {
+
+        //    }
+        //    else
+        //    {
+        //        Lalah.SetActive(false);
+        //    }
+
+        //}
+
+        ////werther
+        //if (GameManager.instance.timesEnterHub == 2 && lalahIsGone && !secondCustomer)
+        //{
+        //    StartCoroutine(Showwerther());
+        //    print("werther showing up");
+        //}
+
+        ////if(GameManager.instance.timesEnterHub == 3)
+        ////{
+        ////    werther.SetActive(true);
+        ////} 
+        ////else
+        //if (GameManager.instance.timesEnterHub != 2 && GameManager.instance.timesEnterHub != 3)
+        //{
+        //    werther.SetActive(false);
+        //    secondCustomer = false;
+        //}
+
+        //IEnumerator Showwerther()
+        //{
+        //    yield return new WaitForSeconds(2f);
+        //    werther.SetActive(true);
+        //    secondCustomer = true;
+        //}
+
+        //if (GameManager.instance.timesEnterHub == 3 && NPCTrigger.isLeaving == false)
+        //{
+        //    showPackage1 = true;
+        //    NPCTrigger.npcArrived = true;
+        //    if (!wertherIsGone)
+        //    {
+
+        //    }
+        //    else
+        //    {
+        //        werther.SetActive(false);
+        //    }
+        //}
 
         //Skip Tutorial
         //if (dialogueFin)
@@ -669,14 +679,14 @@ public class SceneControl : MonoBehaviour
             LalahUI.SetActive(false);
         }
 
-        if (GameManager.instance.showMichaelInstruction)
-        {
-            MichaelUI.SetActive(true);
-        }
-        else
-        {
-            MichaelUI.SetActive(false);
-        }
+        //if (GameManager.instance.showMichaelInstruction)
+        //{
+        //    MichaelUI.SetActive(true);
+        //}
+        //else
+        //{
+        //    MichaelUI.SetActive(false);
+        //}
 
         if (GameManager.instance.ShowPhoneInstruction)
         {
