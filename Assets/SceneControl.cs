@@ -102,6 +102,10 @@ public class SceneControl : MonoBehaviour
     private NPCTrigger NPCTrigger;
     [SerializeField]
     public bool wertherIsGone;
+    [SerializeField]
+    private GameObject WertherTalkUI;
+    [SerializeField]
+    private BoxCollider wertherCollider;
 
 
 
@@ -124,6 +128,8 @@ public class SceneControl : MonoBehaviour
     public bool lalahIsGone;
     [SerializeField]
     private GameObject LalahTalkUI;
+    [SerializeField]
+    private BoxCollider lalahCollider;
 
 
     [Header("Level 1")]
@@ -572,7 +578,7 @@ public class SceneControl : MonoBehaviour
             phonePiece.SetActive(false);
         }
 
-        if(GameManager.instance.timesEnterHub > 1)
+        if(GameManager.instance.timesEnterHub >= 1)
         {
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
@@ -588,9 +594,25 @@ public class SceneControl : MonoBehaviour
                 firstCustomer = false;
             }
 
-            secondCustomer = true;
-            werther.SetActive(true);
-                      
+            if (!wertherIsGone)
+            {
+                secondCustomer = true;
+                werther.SetActive(true);
+            }
+            else
+            {
+                secondCustomer = false;
+                werther.SetActive(false);
+            }
+
+        }
+        else
+        {
+            Lalah.SetActive(false);
+            firstCustomer = false;
+            secondCustomer = false;
+            werther.SetActive(false);
+
         }
 
         //Lalah
@@ -670,36 +692,86 @@ public class SceneControl : MonoBehaviour
         //    //dialogueFin = false;
         //}
 
-        if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds)
+        if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds && !GameManager.instance.WertherRequestWasCompleted && !showHeavyPackage)
         {
-            WertherUI.SetActive(true);
+            if(GameManager.instance.LalahRequestWasCompleted && lalahIsGone)
+            {
+                WertherUI.SetActive(true);
+                wertherCollider.enabled = true;
+            } 
+            else if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+            {
+                WertherUI.SetActive(true);
+                wertherCollider.enabled = true;
+            }
+
+
             //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
         }
-        else if (!GameManager.instance.showWertherInstruction || wertherdialogueEnds)
+        else if (!GameManager.instance.showWertherInstruction || wertherdialogueEnds || GameManager.instance.WertherRequestWasCompleted || showHeavyPackage)
         {
             WertherUI.SetActive(false);
+            wertherCollider.enabled = false;
             //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
         }
 
-        if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds && !GameManager.instance.LalahRequestWasCompleted)
+        if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds && !GameManager.instance.LalahRequestWasCompleted && !showPackage1)
         {
-            print("LalahUITurnOn");
-            LalahUI.SetActive(true);
+            if(GameManager.instance.WertherRequestWasCompleted && wertherIsGone)
+            {
+                LalahUI.SetActive(true);
+                lalahCollider.enabled = true;
+            } 
+            else if (!GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+            {
+                LalahUI.SetActive(true);
+                lalahCollider.enabled = true;
+            }
 
         }
-        else if (LalahdialogueEnds || !GameManager.instance.showLalahInstruction || GameManager.instance.LalahRequestWasCompleted)
+        else if (LalahdialogueEnds || !GameManager.instance.showLalahInstruction || GameManager.instance.LalahRequestWasCompleted || showPackage1)
         {
-            print("LalahUITurnOff");
             LalahUI.SetActive(false);
+            lalahCollider.enabled = false;
         }
+
 
         if(GameManager.instance.showLalahInstruction && GameManager.instance.LalahRequestWasCompleted)
         {
             LalahTalkUI.SetActive(true);
+            if (!lalahTrigger.isLeaving)
+            {
+                WertherUI.SetActive(false);
+                wertherCollider.enabled = false;
+            } 
+            else
+            {
+                WertherUI.SetActive(true);
+                wertherCollider.enabled = true;
+            }
         }
         else if(!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted)
         {
             LalahTalkUI.SetActive(false);
+        }
+
+        if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted)
+        {
+            WertherTalkUI.SetActive(true);
+            if (!NPCTrigger.isLeaving)
+            {
+                LalahUI.SetActive(false);
+                lalahCollider.enabled = false;
+            }
+            else
+            {
+                LalahUI.SetActive(true);
+                lalahCollider.enabled = true;
+            }
+        }
+        else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted)
+        {
+            WertherTalkUI.SetActive(false);
         }
 
         //if (GameManager.instance.showMichaelInstruction)
@@ -726,22 +798,24 @@ public class SceneControl : MonoBehaviour
         }
 
 
-        if (wertherdialogueEnds && !showPackage1)
+        if (wertherdialogueEnds && !showPackage1 && !GameManager.instance.WertherRequestWasCompleted)
         {
             normalPackage.SetActive(true);
             showPackage1 = true;
+            
         }
         else if (!wertherdialogueEnds)
         {
             normalPackage.SetActive(false);
         }
 
-        if (!GameManager.instance.LalahRequestWasCompleted && !showPackage )
+
+        if (!GameManager.instance.LalahRequestWasCompleted && !showHeavyPackage && LalahdialogueEnds )
         {
             heavyPackage.SetActive(true);
             showHeavyPackage = true;
         }
-        else if (GameManager.instance.LalahRequestWasCompleted)
+        else if (!LalahdialogueEnds)
         {
             heavyPackage.SetActive(false);
         }

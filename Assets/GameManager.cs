@@ -200,10 +200,11 @@ public class GameManager : MonoBehaviour
     public GameObject lighting3;
 
     [Header("HubStart")]
-    [SerializeField]
-    public int oriTimesBacktoHub;
+
     [SerializeField]
     public bool LalahRequestWasCompleted;
+    [SerializeField]
+    public bool WertherRequestWasCompleted;
 
     public LevelData lastLevelData;
 

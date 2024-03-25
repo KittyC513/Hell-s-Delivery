@@ -62,7 +62,7 @@ public class LalahTrigger : MonoBehaviour
     #region Lalah
     private void Arrive()
     {
-        if (GameManager.instance.timesEnterHub == 2 && !npcArrived)
+        if (SceneControl.instance.firstCustomer && !npcArrived)
         {
             StartCoroutine(Walking());
         }
