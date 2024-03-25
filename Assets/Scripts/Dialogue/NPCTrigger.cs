@@ -23,17 +23,6 @@ public class NPCTrigger : MonoBehaviour
 
     // Start is called before the first frame update
 
-    private void Awake()
-    {
-        if (GameManager.instance.timesEnterHub == 3)
-        {
-            this.gameObject.SetActive(true);
-        }
-        else
-        {
-            this.gameObject.SetActive(false);
-        }
-    }
     void Start()
     {
 
