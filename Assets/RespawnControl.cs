@@ -396,6 +396,8 @@ public class RespawnControl : MonoBehaviour
 
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
+                GameManager.instance.p1.objectGrabbable = null;
+                GameManager.instance.p2.objectGrabbable = null;
             }
 
             if (curSceneName == scene1)
