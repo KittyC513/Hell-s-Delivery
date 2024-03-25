@@ -199,6 +199,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public GameObject lighting3;
 
+    [Header("HubStart")]
+    [SerializeField]
+    public int oriTimesBacktoHub;
+    [SerializeField]
+    public bool LalahRequestWasCompleted;
+
     public LevelData lastLevelData;
 
 

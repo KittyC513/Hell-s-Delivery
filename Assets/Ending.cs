@@ -18,9 +18,10 @@ public class Ending : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && GameManager.instance.curSceneName == "Level1")
         {
             GameManager.instance.changeSceneTimes += 1;
+            GameManager.instance.LalahRequestWasCompleted = true;
             badgeManager.RunFinalCheck();
             Loader.Load(Loader.Scene.ScoreCards);
 
@@ -29,7 +30,7 @@ public class Ending : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Package")
+        if (other.gameObject.tag == "Package" && GameManager.instance.curSceneName == "Level1")
         {
             if (canvas != null)
             {
@@ -38,6 +39,7 @@ public class Ending : MonoBehaviour
             
             badgeManager.RunFinalCheck();
             GameManager.instance.changeSceneTimes += 1;
+            GameManager.instance.LalahRequestWasCompleted = true;
             Loader.Load(Loader.Scene.ScoreCards);
         }
     }

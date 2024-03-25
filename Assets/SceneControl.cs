@@ -51,6 +51,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, LalahUI, MichaelUI, nameTagNPC2, nameTagNPC3;
 
+
     [Header("Title Page")]
     [SerializeField]
     private GameObject hightlightedDoor;
@@ -103,6 +104,7 @@ public class SceneControl : MonoBehaviour
     public bool wertherIsGone;
 
 
+
     [Header("Lalah Event")]
     [SerializeField]
     private GameObject Lalah;
@@ -121,7 +123,8 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool lalahIsGone;
     [SerializeField]
-    private GameObject devilSprite;
+    private GameObject LalahTalkUI;
+
 
     [Header("Level 1")]
     [SerializeField]
@@ -569,16 +572,25 @@ public class SceneControl : MonoBehaviour
             phonePiece.SetActive(false);
         }
 
-        if(GameManager.instance.timesEnterHub == 1)
+        if(GameManager.instance.timesEnterHub > 1)
         {
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
-            
-            Lalah.SetActive(true);
-            werther.SetActive(true);
 
-            firstCustomer = true;
+            if (!lalahIsGone)
+            {
+                Lalah.SetActive(true);
+                firstCustomer = true;
+            }
+            else
+            {
+                Lalah.SetActive(false);
+                firstCustomer = false;
+            }
+
             secondCustomer = true;
+            werther.SetActive(true);
+                      
         }
 
         //Lalah
@@ -669,14 +681,25 @@ public class SceneControl : MonoBehaviour
             //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
         }
 
-        if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds)
+        if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds && !GameManager.instance.LalahRequestWasCompleted)
         {
+            print("LalahUITurnOn");
             LalahUI.SetActive(true);
 
         }
-        else if (LalahdialogueEnds || !GameManager.instance.showLalahInstruction)
+        else if (LalahdialogueEnds || !GameManager.instance.showLalahInstruction || GameManager.instance.LalahRequestWasCompleted)
         {
+            print("LalahUITurnOff");
             LalahUI.SetActive(false);
+        }
+
+        if(GameManager.instance.showLalahInstruction && GameManager.instance.LalahRequestWasCompleted)
+        {
+            LalahTalkUI.SetActive(true);
+        }
+        else if(!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted)
+        {
+            LalahTalkUI.SetActive(false);
         }
 
         //if (GameManager.instance.showMichaelInstruction)
@@ -713,15 +736,25 @@ public class SceneControl : MonoBehaviour
             normalPackage.SetActive(false);
         }
 
-        if (LalahdialogueEnds && !showPackage)
+        if (!GameManager.instance.LalahRequestWasCompleted && !showPackage )
         {
             heavyPackage.SetActive(true);
             showHeavyPackage = true;
         }
-        else if (!LalahdialogueEnds)
+        else if (GameManager.instance.LalahRequestWasCompleted)
         {
             heavyPackage.SetActive(false);
         }
+
+        //if (LalahdialogueEnds)
+        //{
+        //    GameManager.instance.oriTimesBacktoHub = GameManager.instance.timesEnterHub;
+        //} 
+        //else if (GameManager.instance.oriTimesBacktoHub == GameManager.instance.timesEnterHub + 1 && !lalahTrigger.isLeaving)
+        //{
+        //    LalahLeave();
+        //}
+
         TextControl();
     }
 
