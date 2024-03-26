@@ -83,6 +83,7 @@ public class CharacterControl : MonoBehaviour
     private Vector3 lastStandingVector;
 
     private bool isParachuting = false;
+    [SerializeField] private Animator parachuteAnim;
     [SerializeField] private bool isJumping = false;
     [SerializeField] private float minJumpTime = 0.5f;
     [SerializeField] private bool reachedMinJump = false;
@@ -1009,6 +1010,7 @@ public class CharacterControl : MonoBehaviour
                 }
                 //parachute
                 isParachuting = true;
+                parachuteAnim.SetBool("isUsed", true);
             }
             else
             {
@@ -1016,13 +1018,30 @@ public class CharacterControl : MonoBehaviour
                 {
                     soundBank.parachuteClose.Post(this.gameObject);
                 }
-                isParachuting = false;
+                StartCoroutine(CloseParachute());                            
             }
         }
         else
         {
-            isParachuting = false;
+            //isParachuting = false;
+            StartCoroutine(DedaultParachute());
         }
+    }
+
+    IEnumerator CloseParachute()
+    {
+        yield return new WaitForSeconds(0.2f);
+        parachuteAnim.SetBool("isUsed", false);
+        parachuteAnim.SetTrigger("Close");
+        isParachuting = false;
+    }
+
+    IEnumerator DedaultParachute()
+    {
+        yield return new WaitForSeconds(0.2f);
+        parachuteAnim.SetBool("isUsed", false);
+        //parachuteAnim.SetTrigger("Close");
+        isParachuting = false;
     }
 
     private void RotateTowards(Vector3 direction)
