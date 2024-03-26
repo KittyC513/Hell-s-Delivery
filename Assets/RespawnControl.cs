@@ -396,31 +396,25 @@ public class RespawnControl : MonoBehaviour
 
                     objectGrabbable = package.GetComponent<ObjectGrabbable>();
                 }
+                GameManager.instance.p1.objectGrabbable = null;
+                GameManager.instance.p2.objectGrabbable = null;
             }
 
             if (curSceneName == scene1)
             {
-                if (gameManager.timesEnterHub == 1)
+                if (gameManager.timesEnterHub >= 1)
                 {
-                    if (objectGrabbable == null)
+                    if(SceneControl.instance.showHeavyPackage || SceneControl.instance.showPackage1)
                     {
-                        package = GameObject.FindGameObjectWithTag("Package");
+                        if (objectGrabbable == null)
+                        {
+                            package = GameObject.FindGameObjectWithTag("Package");
 
-                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                            objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                        }
                     }
-                }
-                else if (gameManager.timesEnterHub == 2)
-                {
-                    objectGrabbable = null;
-                    package = null;
 
-                    if (SceneControl.instance.showPackage1)
-                    {
-                        package = GameObject.FindGameObjectWithTag("Package");
-                        objectGrabbable = package.GetComponent<ObjectGrabbable>();
-                    }
                 }
-
             }
 
 
@@ -512,8 +506,8 @@ public class RespawnControl : MonoBehaviour
             resetRespawnP = true;
         }
 
-        Debug.Log("p1dead" + p1dead);
-        Debug.Log("p2dead" + p2dead);
+        //Debug.Log("p1dead" + p1dead);
+        //Debug.Log("p2dead" + p2dead);
     }
 
     private void FixedUpdate()
@@ -678,18 +672,30 @@ public class RespawnControl : MonoBehaviour
             PlayRandomDeathDialogue1();
         }
 
-        if (Player1isCarrying && isPlayer1 && !boxingMinigame.instance.isboxing)
+        if (Player1isCarrying && isPlayer1)
         {
+            if(gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (!boxingMinigame.instance.isboxing)
+                {
+                    objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
+                    objectGrabbable.P2TakePackage = true;
+                    objectGrabbable.P1TakePackage = false;
+                    gameManager.p2.objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                }
 
-            objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
-            objectGrabbable.P2TakePackage = true;
-            objectGrabbable.P1TakePackage = false;
-            gameManager.p2.objectGrabbable = package.GetComponent<ObjectGrabbable>();
+            }
+            else if(gameManager.curSceneName != "Level1" && gameManager.curSceneName != "MVPLevel")
+            {
+                objectGrabbable.Grab(objectGrabbable.p2ItemC.transform);
+                objectGrabbable.P2TakePackage = true;
+                objectGrabbable.P1TakePackage = false;
+                gameManager.p2.objectGrabbable = package.GetComponent<ObjectGrabbable>();
+            }
 
-            //Debug.Log("Player1Die");
         }
 
-
+        Player1Die = false;
     }
 
     void P2Respawn()
@@ -709,17 +715,43 @@ public class RespawnControl : MonoBehaviour
             SceneControl.instance.dRP2.Stop();
             PlayRandomDeathDialogue2();
         }
-        if (Player2isCarrying && isPlayer2 && !boxingMinigame.instance.isboxing)
+        if (Player2isCarrying && isPlayer2)
         {
-            objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
-            objectGrabbable.P2TakePackage = false;
-            objectGrabbable.P1TakePackage = true;
-            //Debug.Log("Player2Die");
-            gameManager.p1.objectGrabbable = package.GetComponent<ObjectGrabbable>();
+            if(gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (!boxingMinigame.instance.isboxing)
+                {
+                    objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
+                    objectGrabbable.P2TakePackage = false;
+                    objectGrabbable.P1TakePackage = true;
+                    gameManager.p1.objectGrabbable = package.GetComponent<ObjectGrabbable>();
+                }
+            }
+            else if (gameManager.curSceneName != "Level1" && gameManager.curSceneName != "MVPLevel")
+            {
+                objectGrabbable.Grab(objectGrabbable.p1ItemC.transform);
+                objectGrabbable.P2TakePackage = false;
+                objectGrabbable.P1TakePackage = true;
+                gameManager.p1.objectGrabbable = package.GetComponent<ObjectGrabbable>();
+            }
+
         }
 
 
         Player2Die = false;
+    }
+
+
+    IEnumerator StartPackageDialogue() 
+    {
+        SceneControl.instance.dRP1.Stop();
+        SceneControl.instance.dRP2.Stop();
+        SceneControl.instance.drAll.Stop();
+        yield return new WaitForSeconds(1f);
+
+        LevelDialogue.ShowDevilPlayerAll();
+        SceneControl.instance.drAll.StartDialogue("Packages");
+
     }
 
 
@@ -860,13 +892,7 @@ public class RespawnControl : MonoBehaviour
 
                     if (!SceneControl.instance.packageDialogueStart || SceneControl.instance.packageDialogueEnd)
                     {
-                        LevelDialogue.ShowDevilPlayerAll();
-                        SceneControl.instance.dRP1.Stop();
-                        SceneControl.instance.dRP2.Stop();
-                        SceneControl.instance.drAll.Stop();
-                        SceneControl.instance.drAll.StartDialogue("Packages");
-                        //StartCoroutine(StartPackageDialogue());
-
+                        StartCoroutine(StartPackageDialogue());
                     }
 
                 }
@@ -1160,125 +1186,240 @@ public class RespawnControl : MonoBehaviour
 
         //    }            
         //}
-        if (other.tag == "DeliveryArea")
+
+        if(other.tag == "DeliveryArea")
         {
-            //Level 1
-            if (gameManager.timesEnterHub == 1)
+            if (SceneControl.instance.showHeavyPackage)
             {
-                if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
+                if (isPlayer1 && Player1isCarrying)
                 {
-                    if (isPlayer1 && Player1isCarrying)
+                    if (!SceneControl.instance.ConfirmTextisActivated)
                     {
-                        if (!SceneControl.instance.ConfirmTextisActivated)
+                        SceneControl.instance.ShowConfirmDeliveryText();
+                    }
+                    SceneControl.instance.CloseDeliveryText();
+                    SceneControl.instance.p1AtDoor = true;
+                    if (gameManager.p1.ReadActionButton())
+                    {
+                        if (SceneControl.instance.firstCustomer)
                         {
-                            SceneControl.instance.ShowConfirmDeliveryText();
-                        }
-                        SceneControl.instance.CloseDeliveryText();
-                        SceneControl.instance.p1AtDoor = true;
-                        if (gameManager.p1.ReadActionButton())
-                        {
-                            if (SceneControl.instance.firstCustomer)
-                            {
-                                GameManager.instance.changeSceneTimes += 1;
-                                Loader.Load(Loader.Scene.Level1);
-                            }
-
+                            GameManager.instance.changeSceneTimes += 1;
+                            Loader.Load(Loader.Scene.Level1);
                         }
 
-                    }
-                    else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
-                    {
-                        SceneControl.instance.ShowDeliveryText();
-                        SceneControl.instance.CloseConfirmDeliveryText();
-                        SceneControl.instance.p1AtDoor = true;
-                    }
-
-                    if (isPlayer2 && Player2isCarrying)
-                    {
-                        if (!SceneControl.instance.ConfirmTextisActivated)
-                        {
-                            SceneControl.instance.ShowConfirmDeliveryText();
-                        }
-                        SceneControl.instance.CloseDeliveryText();
-                        SceneControl.instance.p2AtDoor = true;
-                        if (gameManager.p2.ReadActionButton())
-                        {
-                            if (SceneControl.instance.firstCustomer)
-                            {
-                                GameManager.instance.changeSceneTimes += 1;
-                                Loader.Load(Loader.Scene.Level1);
-                            }
-                        }
-                    }
-                    else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
-                    {
-                        SceneControl.instance.ShowDeliveryText();
-                        SceneControl.instance.CloseConfirmDeliveryText();
-                        SceneControl.instance.p2AtDoor = true;
                     }
 
                 }
-            }    //MVP Level
-            else if (gameManager.timesEnterHub == 2)
-            {
-                if (SceneControl.instance.showPackage1)
+                else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
                 {
-                    if (isPlayer1 && Player1isCarrying)
+                    SceneControl.instance.ShowDeliveryText();
+                    SceneControl.instance.CloseConfirmDeliveryText();
+                    SceneControl.instance.p1AtDoor = true;
+                }
+
+                if (isPlayer2 && Player2isCarrying)
+                {
+                    if (!SceneControl.instance.ConfirmTextisActivated)
                     {
-                        if (!SceneControl.instance.ConfirmTextisActivated)
-                        {
-                            SceneControl.instance.ShowConfirmDeliveryText();
-                        }
-                        SceneControl.instance.CloseDeliveryText();
-                        SceneControl.instance.p1AtDoor = true;
-
-                        if (gameManager.p1.ReadActionButton())
-                        {
-                            if (SceneControl.instance.secondCustomer)
-                            {
-                                GameManager.instance.changeSceneTimes += 1;
-                                Loader.Load(Loader.Scene.MVPLevel);
-                            }
-
-                        }
-
+                        SceneControl.instance.ShowConfirmDeliveryText();
                     }
-                    else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
+                    SceneControl.instance.CloseDeliveryText();
+                    SceneControl.instance.p2AtDoor = true;
+                    if (gameManager.p2.ReadActionButton())
                     {
-                        SceneControl.instance.ShowDeliveryText();
-                        SceneControl.instance.CloseConfirmDeliveryText();
-                        SceneControl.instance.p1AtDoor = true;
-                    }
-
-                    if (isPlayer2 && Player2isCarrying)
-                    {
-                        if (!SceneControl.instance.ConfirmTextisActivated)
+                        if (SceneControl.instance.firstCustomer)
                         {
-                            SceneControl.instance.ShowConfirmDeliveryText();
-                        }
-                        SceneControl.instance.CloseDeliveryText();
-                        SceneControl.instance.p2AtDoor = true;
-
-                        if (gameManager.p2.ReadActionButton())
-                        {
-                            if (SceneControl.instance.secondCustomer)
-                            {
-                                GameManager.instance.changeSceneTimes += 1;
-                                Loader.Load(Loader.Scene.MVPLevel);
-                            }
+                            GameManager.instance.changeSceneTimes += 1;
+                            Loader.Load(Loader.Scene.Level1);
                         }
                     }
-                    else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
-                    {
-                        SceneControl.instance.ShowDeliveryText();
-                        SceneControl.instance.CloseConfirmDeliveryText();
-                        SceneControl.instance.p2AtDoor = true;
-                    }
-
+                }
+                else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
+                {
+                    SceneControl.instance.ShowDeliveryText();
+                    SceneControl.instance.CloseConfirmDeliveryText();
+                    SceneControl.instance.p2AtDoor = true;
                 }
 
             }
+            else if (SceneControl.instance.showPackage1)
+            {
+                if (isPlayer1 && Player1isCarrying)
+                {
+                    if (!SceneControl.instance.ConfirmTextisActivated)
+                    {
+                        SceneControl.instance.ShowConfirmDeliveryText();
+                    }
+                    SceneControl.instance.CloseDeliveryText();
+                    SceneControl.instance.p1AtDoor = true;
+
+                    if (gameManager.p1.ReadActionButton())
+                    {
+                        if (SceneControl.instance.secondCustomer)
+                        {
+                            GameManager.instance.changeSceneTimes += 1;
+                            Loader.Load(Loader.Scene.MVPLevel);
+                        }
+
+                    }
+
+                }
+                else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
+                {
+                    SceneControl.instance.ShowDeliveryText();
+                    SceneControl.instance.CloseConfirmDeliveryText();
+                    SceneControl.instance.p1AtDoor = true;
+                }
+
+                if (isPlayer2 && Player2isCarrying)
+                {
+                    if (!SceneControl.instance.ConfirmTextisActivated)
+                    {
+                        SceneControl.instance.ShowConfirmDeliveryText();
+                    }
+                    SceneControl.instance.CloseDeliveryText();
+                    SceneControl.instance.p2AtDoor = true;
+
+                    if (gameManager.p2.ReadActionButton())
+                    {
+                        if (SceneControl.instance.secondCustomer)
+                        {
+                            GameManager.instance.changeSceneTimes += 1;
+                            Loader.Load(Loader.Scene.MVPLevel);
+                        }
+                    }
+                }
+                else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
+                {
+                    SceneControl.instance.ShowDeliveryText();
+                    SceneControl.instance.CloseConfirmDeliveryText();
+                    SceneControl.instance.p2AtDoor = true;
+                }
+
+            }
+
         }
+    
+            
+        //if (other.tag == "DeliveryArea")
+        //{
+        //    //Level 1
+        //    if (gameManager.timesEnterHub == 1)
+        //    {
+        //        if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
+        //        {
+        //            if (isPlayer1 && Player1isCarrying)
+        //            {
+        //                if (!SceneControl.instance.ConfirmTextisActivated)
+        //                {
+        //                    SceneControl.instance.ShowConfirmDeliveryText();
+        //                }
+        //                SceneControl.instance.CloseDeliveryText();
+        //                SceneControl.instance.p1AtDoor = true;
+        //                if (gameManager.p1.ReadActionButton())
+        //                {
+        //                    if (SceneControl.instance.firstCustomer)
+        //                    {
+        //                        GameManager.instance.changeSceneTimes += 1;
+        //                        Loader.Load(Loader.Scene.Level1);
+        //                    }
+
+        //                }
+
+        //            }
+        //            else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
+        //            {
+        //                SceneControl.instance.ShowDeliveryText();
+        //                SceneControl.instance.CloseConfirmDeliveryText();
+        //                SceneControl.instance.p1AtDoor = true;
+        //            }
+
+        //            if (isPlayer2 && Player2isCarrying)
+        //            {
+        //                if (!SceneControl.instance.ConfirmTextisActivated)
+        //                {
+        //                    SceneControl.instance.ShowConfirmDeliveryText();
+        //                }
+        //                SceneControl.instance.CloseDeliveryText();
+        //                SceneControl.instance.p2AtDoor = true;
+        //                if (gameManager.p2.ReadActionButton())
+        //                {
+        //                    if (SceneControl.instance.firstCustomer)
+        //                    {
+        //                        GameManager.instance.changeSceneTimes += 1;
+        //                        Loader.Load(Loader.Scene.Level1);
+        //                    }
+        //                }
+        //            }
+        //            else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
+        //            {
+        //                SceneControl.instance.ShowDeliveryText();
+        //                SceneControl.instance.CloseConfirmDeliveryText();
+        //                SceneControl.instance.p2AtDoor = true;
+        //            }
+
+        //        }
+        //    }    //MVP Level
+        //    else if (gameManager.timesEnterHub == 2)
+        //    {
+        //        if (SceneControl.instance.showPackage1)
+        //        {
+        //            if (isPlayer1 && Player1isCarrying)
+        //            {
+        //                if (!SceneControl.instance.ConfirmTextisActivated)
+        //                {
+        //                    SceneControl.instance.ShowConfirmDeliveryText();
+        //                }
+        //                SceneControl.instance.CloseDeliveryText();
+        //                SceneControl.instance.p1AtDoor = true;
+
+        //                if (gameManager.p1.ReadActionButton())
+        //                {
+        //                    if (SceneControl.instance.secondCustomer)
+        //                    {
+        //                        GameManager.instance.changeSceneTimes += 1;
+        //                        Loader.Load(Loader.Scene.MVPLevel);
+        //                    }
+
+        //                }
+
+        //            }
+        //            else if (isPlayer1 && !Player1isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p2AtDoor)
+        //            {
+        //                SceneControl.instance.ShowDeliveryText();
+        //                SceneControl.instance.CloseConfirmDeliveryText();
+        //                SceneControl.instance.p1AtDoor = true;
+        //            }
+
+        //            if (isPlayer2 && Player2isCarrying)
+        //            {
+        //                if (!SceneControl.instance.ConfirmTextisActivated)
+        //                {
+        //                    SceneControl.instance.ShowConfirmDeliveryText();
+        //                }
+        //                SceneControl.instance.CloseDeliveryText();
+        //                SceneControl.instance.p2AtDoor = true;
+
+        //                if (gameManager.p2.ReadActionButton())
+        //                {
+        //                    if (SceneControl.instance.secondCustomer)
+        //                    {
+        //                        GameManager.instance.changeSceneTimes += 1;
+        //                        Loader.Load(Loader.Scene.MVPLevel);
+        //                    }
+        //                }
+        //            }
+        //            else if (isPlayer2 && !Player2isCarrying && !SceneControl.instance.deliveryTextisActivated && !SceneControl.instance.p1AtDoor)
+        //            {
+        //                SceneControl.instance.ShowDeliveryText();
+        //                SceneControl.instance.CloseConfirmDeliveryText();
+        //                SceneControl.instance.p2AtDoor = true;
+        //            }
+
+        //        }
+
+        //    }
+        //}
 
 
 
@@ -1454,43 +1595,72 @@ public class RespawnControl : MonoBehaviour
         }
         if (other.tag == "DeliveryArea")
         {
-            if (gameManager.timesEnterHub == 1)
+            if (SceneControl.instance.showHeavyPackage)
             {
-                if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
+                if (isPlayer1)
                 {
-                    if (isPlayer1)
-                    {
-                        SceneControl.instance.p1AtDoor = false;
-                        //print("not in deliveryArea1");
-                    }
-
-                    if (isPlayer2)
-                    {
-                        SceneControl.instance.p2AtDoor = false;
-                        //print("not in deliveryArea2");
-                    }
-
-                }
-            }
-            else if (gameManager.timesEnterHub == 2)
-            {
-                if (SceneControl.instance.showPackage1)
-                {
-                    if (isPlayer1)
-                    {
-                        SceneControl.instance.p1AtDoor = false;
-                        //print("not in deliveryArea1");
-                    }
-
-                    if (isPlayer2)
-                    {
-                        SceneControl.instance.p2AtDoor = false;
-                        //print("not in deliveryArea2");
-                    }
-
+                    SceneControl.instance.p1AtDoor = false;
+                    //print("not in deliveryArea1");
                 }
 
+                if (isPlayer2)
+                {
+                    SceneControl.instance.p2AtDoor = false;
+                    //print("not in deliveryArea2");
+                }
             }
+
+            if (SceneControl.instance.showPackage1)
+            {
+                if (isPlayer1)
+                {
+                    SceneControl.instance.p1AtDoor = false;
+                    //print("not in deliveryArea1");
+                }
+
+                if (isPlayer2)
+                {
+                    SceneControl.instance.p2AtDoor = false;
+                    //print("not in deliveryArea2");
+                }
+            }
+            //if (gameManager.timesEnterHub == 1)
+            //{
+            //    if (SceneControl.instance.showPackage || SceneControl.instance.showHeavyPackage)
+            //    {
+            //        if (isPlayer1)
+            //        {
+            //            SceneControl.instance.p1AtDoor = false;
+            //            print("not in deliveryArea1");
+            //        }
+
+            //        if (isPlayer2)
+            //        {
+            //            SceneControl.instance.p2AtDoor = false;
+            //            print("not in deliveryArea2");
+            //        }
+
+            //    }
+            //}
+            //else if (gameManager.timesEnterHub == 2)
+            //{
+            //    if (SceneControl.instance.showPackage1)
+            //    {
+            //        if (isPlayer1)
+            //        {
+            //            SceneControl.instance.p1AtDoor = false;
+            //            print("not in deliveryArea1");
+            //        }
+
+            //        if (isPlayer2)
+            //        {
+            //            SceneControl.instance.p2AtDoor = false;
+            //            print("not in deliveryArea2");
+            //        }
+
+            //    }
+
+            //}
 
         }
 
@@ -1776,17 +1946,6 @@ public class RespawnControl : MonoBehaviour
     {
         Destroy(gameObject);
         return null;
-    }
-
-
-    IEnumerator StartPackageDialogue()
-    {
-        LevelDialogue.ShowDevilPlayerAll();
-        SceneControl.instance.drAll.Stop();
-        SceneControl.instance.dRP1.enabled = false;
-        SceneControl.instance.dRP2.enabled = false;
-        yield return new WaitForSeconds(2f);
-        SceneControl.instance.drAll.StartDialogue("Packages");
     }
 
     boxingMinigame bM;

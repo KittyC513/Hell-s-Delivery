@@ -119,6 +119,7 @@ public class ObjectGrabbable : MonoBehaviour
     private bool backToLocation;
     [SerializeField]
     private Animator anim;
+    private bool getRespawned;
 
 
     [SerializeField] private AK.Wwise.Event packageImpact;
@@ -126,6 +127,7 @@ public class ObjectGrabbable : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        
         if(this.transform.localScale.x > 1)
         {
             isHeavy = true;
@@ -192,7 +194,7 @@ public class ObjectGrabbable : MonoBehaviour
 
        
         lastPickTime = Time.time;
-        InventoryManager.Instance.Add(item);
+        //InventoryManager.Instance.Add(item);
 
     }
 
@@ -210,6 +212,7 @@ public class ObjectGrabbable : MonoBehaviour
         ShowDeliveryArea();
         PackageCooldown();
         //CheckGrounded();
+        DetectPackage();
     }
 
     private void FixedUpdate()
@@ -243,6 +246,21 @@ public class ObjectGrabbable : MonoBehaviour
         else
         {
             PackageP2.SetActive(false);
+        }
+    }
+
+    void DetectPackage()
+    {
+        if (P1TakePackage)
+        {
+            GameManager.instance.p1.objectGrabbable = this;
+            GameManager.instance.p2.objectGrabbable = null;
+        }
+
+        if (P2TakePackage)
+        {
+            GameManager.instance.p2.objectGrabbable = this;
+            GameManager.instance.p1.objectGrabbable = null;
         }
     }
 
@@ -378,13 +396,15 @@ public class ObjectGrabbable : MonoBehaviour
             rb.AddTorque(new Vector3(random, random, random));
 
             P1TakePackage = false;
-            P2TakePackage = false;
+            P2TakePackage = true;
 
             if (isHeavy)
             {
                 TriggerbC.enabled = false;
             }
             time = 0;
+            //GameManager.instance.p2.objectGrabbable = this;
+            //GameManager.instance.p1.objectGrabbable = null;
         }
     }
 
@@ -407,7 +427,7 @@ public class ObjectGrabbable : MonoBehaviour
             float random = Random.Range(-1, 1);
             rb.AddTorque(new Vector3(random, random, random));
 
-            P1TakePackage = false;
+            P1TakePackage = true;
             P2TakePackage = false;
             ScoreCount.instance.time = 0;
 
@@ -417,6 +437,9 @@ public class ObjectGrabbable : MonoBehaviour
                 TriggerbC.enabled = false;
             }
             time = 0;
+
+            //GameManager.instance.p2.objectGrabbable = null;
+            //GameManager.instance.p1.objectGrabbable = this;
         }
     }
 
@@ -471,11 +494,14 @@ public class ObjectGrabbable : MonoBehaviour
 
         P1TakePackage = false;
         P2TakePackage = false;
+
         //ScoreCount.instance.time = 0;
-        InventoryManager.Instance.Remove(item);
+        //InventoryManager.Instance.Remove(item);
         time = 0;
 
         reachedPos = false;
+        GameManager.instance.p1.objectGrabbable = null;
+        GameManager.instance.p2.objectGrabbable = null;
     }
 
     public void P2Drop()
@@ -527,10 +553,12 @@ public class ObjectGrabbable : MonoBehaviour
         P1TakePackage = false;
         P2TakePackage = false;
 
-        InventoryManager.Instance.Remove(item);
+        //InventoryManager.Instance.Remove(item);
         time = 0;
 
         reachedPos = false;
+        GameManager.instance.p1.objectGrabbable = null;
+        GameManager.instance.p2.objectGrabbable = null;
     }
 
     void FindGameObject()
@@ -716,23 +744,26 @@ public class ObjectGrabbable : MonoBehaviour
         {
             if (P1TakePackage == false && P2TakePackage == false)
             {
-                if (timer < 30)
+                if (timer < 30 && !boxingMinigame.instance.isboxing)
                 {
                     timer += Time.deltaTime;
 
                     if(timer >= 20 && timer < 30)
                     {
                         anim.SetBool("DisppearWarning", true);
+                        TargetIndicator.instance.anim.SetBool("DisppearWarning", true);
+                        PlayerIndicator.instance.anim.SetBool("DisppearWarning", true);
                     }
                 }
                 else
                 {
+
                     if (!backToLocation)
-                    {
+                    {                
                         this.transform.position = respawnPoint;
                         backToLocation = true;
-                        timer = 0;
-                        anim.SetBool("DisppearWarning", false);
+                        getRespawned = true;
+                    
                     }
 
                 }
@@ -741,8 +772,37 @@ public class ObjectGrabbable : MonoBehaviour
             {
                 backToLocation = false;
                 timer = 0;
+
             }
         }
+
+        if (getRespawned)
+        {
+            StartCoroutine(ShowRespawnWarning());
+            
+        }
+    }
+
+    IEnumerator ShowRespawnWarning()
+    {
+        anim.SetBool("DisppearWarning", false);
+        TargetIndicator.instance.anim.SetBool("DisppearWarning", false);
+        PlayerIndicator.instance.anim.SetBool("DisppearWarning", false);
+        ScoreCount.instance.notificationText.SetActive(true);
+       
+        anim.SetBool("RespawnWarning", true);
+        TargetIndicator.instance.anim.SetBool("RespawnWarning", true);
+        PlayerIndicator.instance.anim.SetBool("RespawnWarning", true);
+        
+        yield return new WaitForSeconds(3f);
+        
+        anim.SetBool("RespawnWarning", false);
+        TargetIndicator.instance.anim.SetBool("RespawnWarning", false);
+        PlayerIndicator.instance.anim.SetBool("RespawnWarning", false);
+
+        ScoreCount.instance.notificationText.SetActive(false);
+        getRespawned = false;
+        print("ShowRespawnWarning");
     }
 
     #endregion

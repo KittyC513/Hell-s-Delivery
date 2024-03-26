@@ -43,7 +43,7 @@ Lalah: Do they mean <color=red>Texas</color>? No, I don't have any of those eith
 <<Hide SpriteLalah_Neutral>>
 <<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
 Lalah: Oh well, bye-bye! #line:07c2c2b 
-<<Act Lalah SpriteLalah_Neutral>> 
+<<Hide Lalah SpriteLalah_Neutral>> 
 
 <<SwitchCamMain>>
 <<LalahIsLeaving>>
@@ -80,9 +80,11 @@ Devil: Remember little ones, <color=red>only one of you</color> gets that promot
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
 Devil: Run along now, haven't you got jobs to do? #line:0c9a0a5 
+<<Hide DevilPopUp_Smug>>
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
+
 
 <<HideGradient>>
 ===

@@ -14,6 +14,7 @@ using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 using Yarn;
 using static UnityEngine.UI.Image;
+using Image = UnityEngine.UI.Image;
 
 public class TestCube : MonoBehaviour
 {
@@ -218,6 +219,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private RespawnControl p2rc, p1rc;
 
+    [Header("Glide")]
     [SerializeField]
     private float parachuteSpeed = -5f;
     [SerializeField]
@@ -226,6 +228,8 @@ public class TestCube : MonoBehaviour
     private int numOfButtonPressed;
     [SerializeField]
     private GameObject parachuteObj;
+
+
 
     [Header("Push")]
     [SerializeField]
@@ -272,6 +276,10 @@ public class TestCube : MonoBehaviour
     private GameObject p1Particle;
     [SerializeField]
     private GameObject p2Particle;
+    [SerializeField]
+    public bool pushIsIntervinedP1;
+    [SerializeField]
+    public bool pushIsIntervinedP2;
 
 
     [Header("Interact")]
@@ -388,6 +396,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool isDropped;
 
+
     [Header("Camera Control")]
     [SerializeField]
     private bool switchPuzzleCam, switchPuzzleCamP2, switchPuzzle2CamL, switchPuzzle2CamR, switchPuzzle2CamLP2, switchPuzzle2CamRP2;
@@ -503,13 +512,33 @@ public class TestCube : MonoBehaviour
 
     private bool lightsOn;
 
+    [Header("Minigame")]
     [SerializeField]
-    Camera boxcam;
+    private Camera boxcam;
     [SerializeField]
-    GameObject boxcamHolder;
-    boxingMinigame bM;
-    GameObject minigame;
+    private GameObject boxcamHolder;
+    private boxingMinigame bM;
+    private GameObject minigame;
+    [SerializeField]
+    public GameObject brokenHeartUI;
+    [SerializeField]
+    private bool damageApplied;
+    [SerializeField]
+    public float forceMagnitude1;
+    [SerializeField]
+    public float forceMagnitude2;
 
+    [Header("Push UI")]
+    [SerializeField]
+    private float maxTimer;
+    [SerializeField]
+    private Slider pushSlider;
+    [SerializeField]
+    private float maxCDTimer;
+    [SerializeField]
+    private Slider pushCDSlider;
+    [SerializeField]
+    private float pushCDtimer;
 
 
 
@@ -593,7 +622,8 @@ public class TestCube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        maxTimer = 3;
+        maxCDTimer = 1;
         isCameraLocked = false;
         gameManager = Object.FindAnyObjectByType<GameManager>();
         //lineView = FindAnyObjectByType<LineView>();
@@ -702,6 +732,8 @@ public class TestCube : MonoBehaviour
 
                 }
             }
+
+
             Push();
             NewPush();
             DoPush();
@@ -1636,6 +1668,7 @@ public class TestCube : MonoBehaviour
 
 
                             playerSounds.packagePick.Post(this.gameObject);
+                            
                             if(GameManager.instance.p2.objectGrabbable != null)
                             {
                                 GameManager.instance.p2.objectGrabbable = null;
@@ -1657,6 +1690,7 @@ public class TestCube : MonoBehaviour
                             //    objectGrabbable.Grab(itemContainer);
                             //}
                             playerSounds.packagePick.Post(this.gameObject);
+                            
                             if (GameManager.instance.p1.objectGrabbable != null)
                             {
                                 GameManager.instance.p1.objectGrabbable = null;
@@ -1674,13 +1708,13 @@ public class TestCube : MonoBehaviour
                 if(Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 //if(Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 {
-                    print("Package");
+                    //print("Package");
                     if (isPlayer1 && rC.Player2isCarrying)
                     {
-                        print("FoundPackage");
+                        //print("FoundPackage");
                         if (targetObject == null)
                         {
-                            print("TakePackage");
+                            //print("TakePackage");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             //if (tooHeavy)
@@ -1699,10 +1733,10 @@ public class TestCube : MonoBehaviour
 
                     if (isPlayer2 && rC.Player1isCarrying)
                     {
-                        print("FoundPackage");
+                        //print("FoundPackage");
                         if (targetObject == null)
                         {
-                            print("TakePackage");
+                            //print("TakePackage");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             //if (tooHeavy)
@@ -1723,42 +1757,121 @@ public class TestCube : MonoBehaviour
     }
     private void DetectPackageWeight()
     {
-        if (objectGrabbable != null)
+        if (isPlayer1)
         {
-            if (isPlayer1)
+            if (objectGrabbable != null) 
             {
-                if (rC.Player1isCarrying)
+                if (objectGrabbable.isHeavy && rC.Player1isCarrying)
                 {
-                    if (objectGrabbable.isHeavy)
-                    {
-                        tooHeavy = true;
-                    }
-                    else
-                    {
-                        tooHeavy = false;
-                    }
+                    tooHeavy = true;
+                }
+                else if(!objectGrabbable.isHeavy || !rC.Player1isCarrying)
+                {
+                    tooHeavy = false;
                 }
             }
+            else 
+            {
+                tooHeavy = false;
+            }
+        }
 
-            if (isPlayer2)
+        if (isPlayer2)
+        {
+            if (objectGrabbable != null)
             {
-                if (rC.Player2isCarrying)
+                if (objectGrabbable.isHeavy && rC.Player2isCarrying)
                 {
-                    if (objectGrabbable.isHeavy)
-                    {
-                        tooHeavy = true;
-                    }
-                    else
-                    {
-                        tooHeavy = false;
-                    }
+                    tooHeavy = true;
+                }
+                else if(!objectGrabbable.isHeavy || !rC.Player2isCarrying)
+                {
+                    tooHeavy = false;
                 }
             }
+            else
+            {
+                tooHeavy = false;
+            }
         }
-        else
-        {
-            tooHeavy = false;
-        }
+
+        //if (objectGrabbable != null)
+        //{
+        //    print("Hello");
+        //    if (isPlayer1 && objectGrabbable.isHeavy)
+        //    {
+        //        if (rC.Player1isCarrying)
+        //        {
+        //            print("HeavyPackage11");
+        //            tooHeavy = true;
+        //        }
+        //        else
+        //        {
+        //            tooHeavy = false;
+        //        }
+        //    }
+
+        //    if (isPlayer2 && objectGrabbable.isHeavy)
+        //    {
+        //        if (rC.Player2isCarrying)
+        //        {
+        //            print("HeavyPackage22");
+        //            tooHeavy = true;
+        //        }
+        //        else
+        //        {
+        //            tooHeavy = false;
+
+        //        }
+        //    }
+        //}
+        //else if(!rC.Player1isCarrying && !rC.Player2isCarrying)
+        //{
+        //    print("HeavyPackage333");
+        //    tooHeavy = false;
+        //}
+        //else if(objectGrabbable == null)
+        //{
+        //    tooHeavy = false;
+        //}
+
+
+        //if (objectGrabbable != null)
+        //{
+        //    if (isPlayer1)
+        //    {
+        //        if (rC.Player1isCarrying)
+        //        {
+        //            if (objectGrabbable.isHeavy)
+        //            {
+        //                tooHeavy = true;
+        //            }
+        //            else
+        //            {
+        //                tooHeavy = false;
+        //            }
+        //        }
+        //    }
+
+        //    if (isPlayer2)
+        //    {
+        //        if (rC.Player2isCarrying)
+        //        {
+        //            if (objectGrabbable.isHeavy)
+        //            {
+        //                tooHeavy = true;
+        //            }
+        //            else
+        //            {
+        //                tooHeavy = false;
+        //            }
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    tooHeavy = false;
+        //}
 
 
 
@@ -1780,7 +1893,9 @@ public class TestCube : MonoBehaviour
                     {
                         if (targetObject == null)
                         {
+                            print("TakePackage1");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
+
                             objectGrabbable.Grab(itemContainer);
                             //if (tooHeavy)
                             //{
@@ -1799,6 +1914,7 @@ public class TestCube : MonoBehaviour
                     {
                         if (targetObject == null)
                         {
+                            print("TakePackage2");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             //if (tooHeavy)
@@ -2087,6 +2203,7 @@ public class TestCube : MonoBehaviour
         {
             if (ReadActionButton() && !isAnswered)
             {
+                //SceneControl.instance.nameTag.SetActive(true);
                 SceneControl.instance.dR.StartDialogue("HubStart");
                 isFreeze = true;
                 SceneControl.instance.EnableUI();
@@ -2100,7 +2217,7 @@ public class TestCube : MonoBehaviour
     {
         if (NPCInteracting)
         {
-            if (!Dialogue1 && gameManager.timesEnterHub == 2)
+            if (!Dialogue1 && gameManager.timesEnterHub >= 1 && !Dialogue1_2)
             {
                 print("interactiNPC1");
                 //SceneControl.LV.SetActive(false);
@@ -2127,7 +2244,7 @@ public class TestCube : MonoBehaviour
                     Dialogue1 = true;
                 }           
             }
-            if (!Dialogue1_2 && gameManager.timesEnterHub == 3)
+            if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1)
             {
                 print("interactiNPC1");
                 //SceneControl.LV.SetActive(false);
@@ -2158,7 +2275,7 @@ public class TestCube : MonoBehaviour
 
         if (NPC2Interacting)
         {
-            if (!Dialogue3 && gameManager.timesEnterHub == 1)
+            if (!Dialogue3 && gameManager.timesEnterHub >= 1 && !Dialogue3_2)
             {               
                 //SceneControl.LV.SetActive(false);
                 SceneControl.instance.dR.StopAllCoroutines();
@@ -2190,7 +2307,7 @@ public class TestCube : MonoBehaviour
 
             }
 
-            if(!Dialogue3_2 && gameManager.timesEnterHub == 2)
+            if(!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3)
             {
                 print("interactiNPC23_2");
                 SceneControl.instance.dR.StopAllCoroutines();
@@ -2429,13 +2546,14 @@ public class TestCube : MonoBehaviour
 
     private void DoPush()
     {
-        if(isPlayer1 && p1pushed)
+        if(isPlayer1 && p1pushed && !pushIsIntervinedP1)
         {
             P1Push();
 
+
         }
 
-        if (isPlayer2 && p2pushed)
+        if (isPlayer2 && p2pushed && !pushIsIntervinedP2)
         {
             P2Push();
         }
@@ -2445,14 +2563,6 @@ public class TestCube : MonoBehaviour
     {
         otherRB = gameManager.p2.charController.rb;
         p2Anim = GameManager.instance.p2Ani;
-
-        if (curSceneName == "Level1")
-        {
-            if (bM.isboxing)
-            {
-                bM.p1pushedcount++;
-            }
-        }
 
         otherRB.useGravity = false;
 
@@ -2465,13 +2575,25 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * pushHoldTime;
+        forceMagnitude1 = pushForce * pushHoldTime;
         
-        if(forceMagnitude < pushForce)
+        if(forceMagnitude1 < pushForce)
         {
-            forceMagnitude = pushForce;
+            forceMagnitude1 = pushForce;
         }
-        print("ForceMagnitude" + forceMagnitude);
+        else if (forceMagnitude1 > 200)
+        {
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (bM.isboxing)
+                {
+                    gameManager.p2.brokenHeartUI.SetActive(true);
+                }
+
+            }
+
+        }
+        print("ForceMagnitude1" + forceMagnitude1);
 
         float elapsedTime = 0f;
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
@@ -2483,17 +2605,24 @@ public class TestCube : MonoBehaviour
         StartCoroutine(StopBeingPushedP2());
         //noisy2 = gameManager.noisy2;
 
-        if (rC.Player2isCarrying && boxingMinigame.instance.isboxing)
+        if (rC.Player2isCarrying)
         {
-            p1Steal = true;
-            gameManager.p2.objectGrabbable = null;
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (!bM.isboxing)
+                {
+                    p1Steal = true;
+                    gameManager.p2.objectGrabbable = null;
+                }
+
+            }
         }
 
         while (elapsedTime < duration)
         {
             // Apply force based on linear interpolation
             float normalizedTime = elapsedTime / duration;
-            float easedMagnitude = Mathf.Lerp(forceMagnitude, 0f, normalizedTime * normalizedTime);
+            float easedMagnitude = Mathf.Lerp(forceMagnitude1, 0f, normalizedTime * normalizedTime);
             otherRB.AddForce(forceDir * easedMagnitude, ForceMode.Force);
 
             elapsedTime += Time.deltaTime;
@@ -2510,6 +2639,8 @@ public class TestCube : MonoBehaviour
             yield return null;
         }
 
+
+
     }
 
 
@@ -2517,6 +2648,21 @@ public class TestCube : MonoBehaviour
     void P1Push()
     {
         StartCoroutine(P1PushCoroutine());
+
+        if (gameManager.curSceneName == "Level1")
+        {
+            if (bM.isboxing)
+            {
+                if (!damageApplied)
+                {
+                    bM.p1pushedcount += forceMagnitude1 * 0.1f;
+                    print("Damage1");
+                    damageApplied = true;
+                    pushIsIntervinedP2 = true;
+                }
+
+            }
+        }
         //p1pushed = true;
     }
 
@@ -2524,15 +2670,6 @@ public class TestCube : MonoBehaviour
     {
         otherRB = gameManager.p1.charController.rb;
         p1Anim = GameManager.instance.p1Ani;
-
-        if(curSceneName == "Level1")
-        {
-            if (bM.isboxing)
-            {
-                bM.p2pushedcount++;
-            }
-        }
-
 
         otherRB.useGravity = false;
 
@@ -2545,13 +2682,25 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
-        float forceMagnitude = pushForce * pushHoldTime;
+        forceMagnitude2 = pushForce * pushHoldTime;
         
-        if(forceMagnitude < pushForce)
+        if(forceMagnitude2 < pushForce)
         {
-            forceMagnitude = pushForce;
+            forceMagnitude2 = pushForce;
         }
-        print("ForceMagnitude" + forceMagnitude);
+        else if (forceMagnitude2 > 200)
+        {
+            if(gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (bM.isboxing)
+                {
+                    gameManager.p1.brokenHeartUI.SetActive(true);
+                }
+
+            }
+
+        }
+        print("ForceMagnitude2" + forceMagnitude2);
 
         float elapsedTime = 0f;
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
@@ -2563,17 +2712,25 @@ public class TestCube : MonoBehaviour
         StartCoroutine(StopBeingPushedP1());
         //noisy2 = gameManager.noisy2;
 
-        if (rC.Player1isCarrying && !boxingMinigame.instance.isboxing)
+        if (rC.Player1isCarrying)
         {
-            p2Steal = true;
-            gameManager.p1.objectGrabbable = null;
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            {
+                if (!bM.isboxing)
+                {
+                    p2Steal = true;
+                    gameManager.p1.objectGrabbable = null;
+                }
+
+            }
+
         }
 
         while (elapsedTime < duration)
         {
             // Apply force based on linear interpolation
             float normalizedTime = elapsedTime / duration;
-            float easedMagnitude = Mathf.Lerp(forceMagnitude, 0f, normalizedTime * normalizedTime);
+            float easedMagnitude = Mathf.Lerp(forceMagnitude2, 0f, normalizedTime * normalizedTime);
             otherRB.AddForce(forceDir * easedMagnitude, ForceMode.Force);
 
             elapsedTime += Time.deltaTime;
@@ -2589,32 +2746,74 @@ public class TestCube : MonoBehaviour
 
             yield return null;
         }
-        
+
+
     }
 
     void P2Push()
     {
         StartCoroutine(P2PushCoroutine());
-        
-        //p2pushed = true;
 
-        
+        //p2pushed = true;
+        if (gameManager.curSceneName == "Level1")
+        {
+            if (bM.isboxing && !damageApplied)
+            {
+                bM.p2pushedcount += forceMagnitude2 * 0.1f;
+                print("Damage2");
+                damageApplied = true;
+                pushIsIntervinedP1 = true;
+            }
+        }
+
     }
 
     IEnumerator StopBeingPushedP1()
     {
+        pushCDSlider.gameObject.SetActive(true);
+        pushCDtimer += Time.deltaTime;
+
+        if (pushCDtimer < 1)
+        {
+            pushCDSlider.value = pushCDtimer;
+        }
+        else
+        {
+            pushCDSlider.value = 1;
+        }
         yield return new WaitForSeconds(1f);
         p1Anim.SetBool("beingPush", false);
         p1Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
+        damageApplied = false;
+        pushIsIntervinedP1 = false;
+        gameManager.p1.brokenHeartUI.SetActive(false);
+        gameManager.p2.pushCDSlider.gameObject.SetActive(false);
     }
 
     IEnumerator StopBeingPushedP2()
     {
+        pushCDSlider.gameObject.SetActive(true);
+        pushCDtimer += Time.deltaTime;
+
+        if (pushCDtimer < 1)
+        {
+            pushCDSlider.value = pushCDtimer;
+        }
+        else
+        {
+            pushCDSlider.value = maxCDTimer;
+        }
         yield return new WaitForSeconds(1f);
         p2Anim.SetBool("beingPush", false);
         p2Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
+        damageApplied = false;
+        pushIsIntervinedP2 = false;
+        gameManager.p1.pushCDSlider.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(2f);
+        gameManager.p2.brokenHeartUI.SetActive(false);
     }
 
     
@@ -2635,7 +2834,7 @@ public class TestCube : MonoBehaviour
             
             if (rC.Player1Die && rC.Player2isCarrying)
             {
-                Debug.Log("Player1die" + rC.Player1Die);
+                //Debug.Log("Player1die" + rC.Player1Die);
                 objectGrabbable = null;
                 //rC.Player1Die = false;
 
@@ -2653,7 +2852,7 @@ public class TestCube : MonoBehaviour
             
             if (rC.Player2Die && rC.Player1isCarrying)
             {
-                Debug.Log("Player2die" + rC.Player2Die);
+                //Debug.Log("Player2die" + rC.Player2Die);
                 objectGrabbable = null;
                 //rC.Player2Die = false;
             }
@@ -2735,6 +2934,7 @@ public class TestCube : MonoBehaviour
 
 
     }
+
 
     void Jump()
     {
@@ -3052,7 +3252,7 @@ public class TestCube : MonoBehaviour
 
         if (other.CompareTag("WeatherNPC"))
         {
-            if (!SceneControl.instance.weatherIsGone)
+            if (!SceneControl.instance.wertherIsGone)
             {
                 withinNPCsRange = true;
             }
@@ -3355,26 +3555,22 @@ public class TestCube : MonoBehaviour
     {
         if (ReadPushButton())
         {
-            print("ReadPushButton" + ReadPushButton());
-        }
-        if (ReadPushButton())
-        {
             holdPush = true;
             isCameraLocked = true;
+            pushSlider.gameObject.SetActive(true);
 
-            if(pushHoldDuration < 3)
+            if (pushHoldDuration < 3)
             {
                 pushHoldDuration += Time.deltaTime;
-              
-                if (pushHoldDuration < 1)
-                {
-                    pushHoldDuration = 1;
-                }
+                pushSlider.value = pushHoldDuration;
 
+                //print("fillImage" + pushHoldDuration);
+  
             }
             else
             {
                 pushHoldDuration = 3;
+                pushSlider.value = maxTimer;
             }
 
             if (isPlayer1)
@@ -3406,6 +3602,7 @@ public class TestCube : MonoBehaviour
             {
                 p2Particle.SetActive(false);
             }
+            pushSlider.gameObject.SetActive(false);
 
         }
 
@@ -3438,6 +3635,8 @@ public class TestCube : MonoBehaviour
                         ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, false);
                     }
 
+                    pushCDtimer = 0;
+
                     Invoke(nameof(ResetPush), pushDuration);
                 }
 
@@ -3454,6 +3653,7 @@ public class TestCube : MonoBehaviour
                         ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, true);
                     }
 
+                    pushCDtimer = 0;
                     Invoke(nameof(ResetPush), pushDuration);
                 }
             }
@@ -3481,6 +3681,7 @@ public class TestCube : MonoBehaviour
 
     private void ResetPush()
     {
+
         if (isPlayer1)
         {
             p1pushed = false;

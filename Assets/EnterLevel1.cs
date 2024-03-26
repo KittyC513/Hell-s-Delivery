@@ -28,19 +28,22 @@ public class EnterLevel1 : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.R))
         {
+            GameManager.instance.changeSceneTimes = 4;
             EnterLevel();
-            GameManager.instance.changeSceneTimes = 3;
+
         }
         if (Input.GetKey(KeyCode.T))
         {
-            EnterTutorial();
             GameManager.instance.changeSceneTimes = 2;
+            EnterTutorial();
+
         }
 
         if (Input.GetKey(KeyCode.Y))
         {
-            EnterMVPLevel();
             GameManager.instance.changeSceneTimes = 6;
+            EnterMVPLevel();
+
         }
     }
 
@@ -49,7 +52,7 @@ public class EnterLevel1 : MonoBehaviour
         GameManager.instance.sceneChanged = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
-        GameManager.instance.changeSceneTimes = 3;
+        GameManager.instance.changeSceneTimes = 4;
         Loader.Load(Loader.Scene.Level1);
     }
 

@@ -36,7 +36,8 @@ public class boxingMinigame : MonoBehaviour
     private GameObject packagePiece3;
     [SerializeField]
     private GameObject packagePiece4;
-
+    [SerializeField]
+    private bool packageIsShowed;
 
 
     // Start is called before the first frame update
@@ -58,13 +59,15 @@ public class boxingMinigame : MonoBehaviour
     {
         if (isboxing)
         {
-            packagePiece1.SetActive(false);
-            packagePiece2.SetActive(false);
-            packagePiece3.SetActive(false);
-            packagePiece4.SetActive(false);
+            packageIsShowed = false;
 
             if (sceneString == "Level1")
             {
+                packagePiece1.SetActive(false);
+                packagePiece2.SetActive(false);
+                packagePiece3.SetActive(false);
+                packagePiece4.SetActive(false);
+
                 if (p1pushedcount >= maxDamage)
                 {
                     // Find all game objects with the tag "Findscript"
@@ -121,6 +124,9 @@ public class boxingMinigame : MonoBehaviour
 
             if (sceneString == "MVPLevel" && endswitch == true)
             {
+                packagePiece1.SetActive(false);
+                packagePiece2.SetActive(false);
+
                 Debug.Log("successful");
                 // Find all game objects with the tag "Findscript"
                 GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
@@ -200,11 +206,38 @@ public class boxingMinigame : MonoBehaviour
         cm.endminigameCam();
         p1pushedcount = 0;
         p2pushedcount = 0;
+        if (!packageIsShowed)
+        {
+            StartCoroutine(ShowPackage());
+        }
 
-        packagePiece1.SetActive(true);
-        packagePiece2.SetActive(true);
-        packagePiece3.SetActive(true);
-        packagePiece4.SetActive(true);
 
     }
+
+    IEnumerator ShowPackage()
+    {
+        yield return new WaitForSeconds(2f);
+        if(packagePiece1 != null)
+        {
+            packagePiece1.SetActive(true);
+        }
+
+        if (packagePiece2 != null)
+        {
+            packagePiece2.SetActive(true);
+        }
+
+        if (packagePiece3 != null)
+        {
+            packagePiece3.SetActive(true);
+        }
+
+        if (packagePiece4 != null)
+        {
+            packagePiece4.SetActive(true);
+        }
+
+        packageIsShowed = true;
+    }
+
 }

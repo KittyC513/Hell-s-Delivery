@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public class ShowDialogue :DialogueViewBase
 {
     private static GameObject LVPlayers, LVNPC;
+    private static GameObject DevilSprite, DevilAnnoyed, DevilCheery, DevilDisappointed, DevilInnocent, DevilOh, DevilSmug;
     public static GameObject Gradient;
 
     [SerializeField] DialogueRunner runner;
@@ -88,13 +89,24 @@ public class ShowDialogue :DialogueViewBase
     {
         LVPlayers = GameObject.Find("Line View Players");
         Gradient = GameObject.Find("DialogueBox");
+
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    { 
+
     }
+
+    #region Tutorial
+    [YarnCommand("TutorialSkipOption")]
+    public static void TutorialSkipChoice()
+    {
+        SceneControl.instance.ShowTutorialSkipUI();
+        SceneControl.instance.dialogueFin = true;
+    }
+
+    #endregion
 
     [YarnCommand("PlayerShow")]
     public static void PlayerShow()
@@ -109,8 +121,30 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("NPCShow")]
     public static void NPCShow()
     {
-        LVPlayers = GameObject.Find("Line View Players");
+        if(DevilSprite == null)
+        {
+            DevilSprite = GameObject.Find("DevilPopUp_Default");
+            DevilAnnoyed = GameObject.Find("DevilPopUp_Annoyed");
+            DevilCheery = GameObject.Find("DevilPopUp_Cheery");
+            DevilDisappointed = GameObject.Find("DevilPopUp_Disappointed");
+            DevilInnocent = GameObject.Find("DevilPopUp_Innocent");
+            DevilOh = GameObject.Find("DevilPopUp_Oh");
+            DevilSmug = GameObject.Find("DevilPopUp_Smug");
+        }
+        else 
+        {
+            DevilSprite.SetActive(false);
+            DevilAnnoyed.SetActive(false);
+            DevilCheery.SetActive(false);
+            DevilDisappointed.SetActive(false);
+            DevilInnocent.SetActive(false);
+            DevilOh.SetActive(false);
+            DevilSmug.SetActive(false);
+        }
+
+            LVPlayers = GameObject.Find("Line View Players");
         LVPlayers.SetActive(true);
+        DevilSprite.SetActive(false);
     }
 
     [YarnCommand("TutorialLevel")]
@@ -165,12 +199,6 @@ public class ShowDialogue :DialogueViewBase
 
     }
 
-    [YarnCommand("DialogueEnd")]
-    public static void DialogueEnd()
-    {
-        SceneControl.instance.dialogueFin = true;
-    }
-
 
     [YarnCommand("HideGradient")]
     public static void HideGradient()
@@ -182,7 +210,7 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("WeatherDialogueEnd")]
     public static void WeatherDialogueEnds()
     {
-        SceneControl.instance.WeatherdialogueEnds = true;
+        SceneControl.instance.wertherdialogueEnds = true;
     }
 
     [YarnCommand("LalahDialogueEnd")]
@@ -200,7 +228,7 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("WeatherIsLeaving")]
     public static void WeatherLeaving()
     {
-        SceneControl.instance.WeatherLeave();
+        SceneControl.instance.wertherLeave();
     }
 
     [YarnCommand("PackageDialogueEndDetect")]

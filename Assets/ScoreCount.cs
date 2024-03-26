@@ -78,6 +78,7 @@ public class ScoreCount : MonoBehaviour
     [SerializeField] public Image p2MailImage;
     [SerializeField] public TextMeshProUGUI p1MailCount;
     [SerializeField] public TextMeshProUGUI p2MailCount;
+    [SerializeField] public GameObject notificationText;
 
     private int p1LocalMail;
     private int p2LocalMail;

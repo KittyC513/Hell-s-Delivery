@@ -199,6 +199,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public GameObject lighting3;
 
+    [Header("HubStart")]
+
+    [SerializeField]
+    public bool LalahRequestWasCompleted;
+    [SerializeField]
+    public bool WertherRequestWasCompleted;
+
     public LevelData lastLevelData;
 
 
@@ -734,26 +741,82 @@ public class GameManager : MonoBehaviour
     {
         if(p1 != null && p2 != null)
         {
-            if (p1.p1pushed)
+            if(curSceneName == "Level1"|| curSceneName == "MVPLevel")
             {
-                noisy2.SetActive(true);
-                StartCoroutine(StopNoisyP2());
-                
-            } else
-            {
-                p2Ani.SetBool("beingPush", false);
-            }
+                if (!boxingMinigame.instance.isboxing)
+                {
+                    if (p1.p1pushed)
+                    {
+                        noisy2.SetActive(true);
+                        StartCoroutine(StopNoisyP2());
 
-            if (p2.p2pushed)
-            {
-                noisy1.SetActive(true);
-                StartCoroutine(StopNoisyP1());
+                    }
+                    else
+                    {
+                        p2Ani.SetBool("beingPush", false);
+                    }
+
+                    if (p2.p2pushed)
+                    {
+                        noisy1.SetActive(true);
+                        StartCoroutine(StopNoisyP1());
+                    }
+                    else
+                    {
+                        p1Ani.SetBool("beingPush", false);
+
+                    }
+                }
+                else
+                {
+                    if (p1.p1pushed && p1.forceMagnitude1 < 200)
+                    {
+                        noisy2.SetActive(true);
+                        StartCoroutine(StopNoisyP2());
+
+                    }
+                    else if(!p1.p1pushed)
+                    {
+                        p2Ani.SetBool("beingPush", false);
+                    }
+
+                    if (p2.p2pushed && p1.forceMagnitude2 < 200)
+                    {
+                        noisy1.SetActive(true);
+                        StartCoroutine(StopNoisyP1());
+                    }
+                    else if(!p2.p2pushed)
+                    {
+                        p1Ani.SetBool("beingPush", false);
+
+                    }
+                }
             }
             else
             {
-                p1Ani.SetBool("beingPush", false);
- 
+                if (p1.p1pushed)
+                {
+                    noisy2.SetActive(true);
+                    StartCoroutine(StopNoisyP2());
+
+                }
+                else
+                {
+                    p2Ani.SetBool("beingPush", false);
+                }
+
+                if (p2.p2pushed)
+                {
+                    noisy1.SetActive(true);
+                    StartCoroutine(StopNoisyP1());
+                }
+                else
+                {
+                    p1Ani.SetBool("beingPush", false);
+
+                }
             }
+            
         }
 
     }

@@ -88,7 +88,10 @@ public class Scorecards : MonoBehaviour
     [SerializeField] private TextMeshProUGUI badge2Desc;
     [SerializeField] private TextMeshProUGUI badge3Title;
     [SerializeField] private TextMeshProUGUI badge3Desc;
-    
+    GameObject badge1;
+    GameObject badge2;
+    GameObject badge3;
+
 
     private bool hasStartedLeader = false;
 
@@ -227,9 +230,7 @@ public class Scorecards : MonoBehaviour
 
     private IEnumerator BadgeCycle()
     {
-        GameObject badge1;
-        GameObject badge2;
-        GameObject badge3;
+
         //transition camera to the back of the characters on the pedastols
         canContinue = false;
         pedastols.SetActive(true);
@@ -244,31 +245,56 @@ public class Scorecards : MonoBehaviour
         yield return new WaitForSeconds(0.45f);
         StartCoroutine(StartBadgeAudio());
         //badge 1
-        badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
-        badge1.GetComponent<Image>().sprite = lvlData.p1Badges[0].image;
-        badge1Title.text = lvlData.p1Badges[0].badgeName;
-        badge1Desc.text = lvlData.p1Badges[0].description;
-        AddBadgeToScore(lvlData.p1Badges[0], true);
+        if(badge1 == null)
+        {
+            badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
+        }
+        else
+        {
+            badge1.GetComponent<Image>().sprite = lvlData.p1Badges[0].image;
+            badge1Title.text = lvlData.p1Badges[0].badgeName;
+            badge1Desc.text = lvlData.p1Badges[0].description;
+            AddBadgeToScore(lvlData.p1Badges[0], true);
+
+        }
+
         yield return new WaitForSeconds(0.33f);
         text1.SetActive(true);
         yield return new WaitForSeconds(0.33f);
 
         //badge 2
-        badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
-        badge2.GetComponent<Image>().sprite = lvlData.p1Badges[1].image;
-        badge2Title.text = lvlData.p1Badges[1].badgeName;
-        badge2Desc.text = lvlData.p1Badges[1].description;
-        AddBadgeToScore(lvlData.p1Badges[1], true);
+
+        if(badge2 == null)
+        {
+            badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
+        }
+        else
+        {
+            badge2.GetComponent<Image>().sprite = lvlData.p1Badges[1].image;
+            badge2Title.text = lvlData.p1Badges[1].badgeName;
+            badge2Desc.text = lvlData.p1Badges[1].description;
+            AddBadgeToScore(lvlData.p1Badges[1], true);
+        }
+      
         yield return new WaitForSeconds(0.33f);
         text2.SetActive(true);
         yield return new WaitForSeconds(0.33f);
 
         //badge 3
-        badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
-        badge3.GetComponent<Image>().sprite = lvlData.p1Badges[2].image;
-        badge3Title.text = lvlData.p1Badges[2].badgeName;
-        badge3Desc.text = lvlData.p1Badges[2].description;
-        AddBadgeToScore(lvlData.p1Badges[2], true);
+
+        if(badge3 == null)
+        {
+            badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
+        }
+        else
+        {
+            badge3.GetComponent<Image>().sprite = lvlData.p1Badges[2].image;
+            badge3Title.text = lvlData.p1Badges[2].badgeName;
+            badge3Desc.text = lvlData.p1Badges[2].description;
+            AddBadgeToScore(lvlData.p1Badges[2], true);
+        }
+
+
         yield return new WaitForSeconds(0.33f);
         text3.SetActive(true);
 
@@ -285,31 +311,53 @@ public class Scorecards : MonoBehaviour
         badgePillarCam.gameObject.GetComponent<Animator>().SetBool("p2Badge", true);
         yield return new WaitForSeconds(0.25f);
         StartCoroutine(StartBadgeAudio());
+        
         //badge 1
-        badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
-        badge1.GetComponent<Image>().sprite = lvlData.p2Badges[0].image;
-        badge1Title.text = lvlData.p2Badges[0].badgeName;
-        badge1Desc.text = lvlData.p2Badges[0].description;
-        AddBadgeToScore(lvlData.p2Badges[0], false);
+        if(badge1 == null)
+        {
+            badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
+        }
+        else
+        {
+            badge1.GetComponent<Image>().sprite = lvlData.p2Badges[0].image;
+            badge1Title.text = lvlData.p2Badges[0].badgeName;
+            badge1Desc.text = lvlData.p2Badges[0].description;
+            AddBadgeToScore(lvlData.p2Badges[0], false);
+        }
         yield return new WaitForSeconds(0.33f);
         text1.SetActive(true);
 
         yield return new WaitForSeconds(0.33f);
         //badge 2
-        badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
-        badge2.GetComponent<Image>().sprite = lvlData.p2Badges[1].image;
-        badge2Title.text = lvlData.p2Badges[1].badgeName;
-        badge2Desc.text = lvlData.p2Badges[1].description;
-        AddBadgeToScore(lvlData.p2Badges[1], false);
+        if(badge2 == null)
+        {
+            badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
+        }
+        else
+        {
+            badge2.GetComponent<Image>().sprite = lvlData.p2Badges[1].image;
+            badge2Title.text = lvlData.p2Badges[1].badgeName;
+            badge2Desc.text = lvlData.p2Badges[1].description;
+            AddBadgeToScore(lvlData.p2Badges[1], false);
+        }
+
         yield return new WaitForSeconds(0.33f);
         text2.SetActive(true);
         yield return new WaitForSeconds(0.33f);
         //badge 3
-        badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
-        badge3.GetComponent<Image>().sprite = lvlData.p2Badges[2].image;
-        badge3Title.text = lvlData.p2Badges[2].badgeName;
-        badge3Desc.text = lvlData.p2Badges[2].description;
-        AddBadgeToScore(lvlData.p2Badges[2], false);
+        if(badge3 == null)
+        {
+            badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
+        }
+        else
+        {
+            badge3.GetComponent<Image>().sprite = lvlData.p2Badges[2].image;
+            badge3Title.text = lvlData.p2Badges[2].badgeName;
+            badge3Desc.text = lvlData.p2Badges[2].description;
+            AddBadgeToScore(lvlData.p2Badges[2], false);
+        }
+
+
         yield return new WaitForSeconds(0.33f);
         text3.SetActive(true);
 

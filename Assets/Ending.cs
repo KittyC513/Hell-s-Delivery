@@ -18,9 +18,19 @@ public class Ending : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && GameManager.instance.curSceneName == "Level1")
         {
             GameManager.instance.changeSceneTimes += 1;
+            GameManager.instance.LalahRequestWasCompleted = true;
+            badgeManager.RunFinalCheck();
+            Loader.Load(Loader.Scene.ScoreCards);
+
+        }
+
+        if (Input.GetKey(KeyCode.E) && GameManager.instance.curSceneName == "MVPLevel")
+        {
+            GameManager.instance.changeSceneTimes += 1;
+            GameManager.instance.WertherRequestWasCompleted = true;
             badgeManager.RunFinalCheck();
             Loader.Load(Loader.Scene.ScoreCards);
 
@@ -29,17 +39,41 @@ public class Ending : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Package")
+        if (other.gameObject.tag == "Package" && !GameManager.instance.LalahRequestWasCompleted)
         {
-            if (canvas != null)
+            if(GameManager.instance.curSceneName == "Level1")
             {
-                canvas.gameObject.SetActive(true);
+                if (canvas != null)
+                {
+                    //canvas.gameObject.SetActive(true);
+                }
+
+                GameManager.instance.changeSceneTimes += 1;
+
+                badgeManager.RunFinalCheck();
+                GameManager.instance.LalahRequestWasCompleted = true;
+                Loader.Load(Loader.Scene.ScoreCards);
+                
             }
-            
-            badgeManager.RunFinalCheck();
-            GameManager.instance.changeSceneTimes += 1;
-            Loader.Load(Loader.Scene.ScoreCards);
+
+            if (GameManager.instance.curSceneName == "MVPLevel" && !GameManager.instance.WertherRequestWasCompleted)
+            {
+                if (canvas != null)
+                {
+                    canvas.gameObject.SetActive(true);
+                }
+
+                GameManager.instance.changeSceneTimes += 1;
+
+                badgeManager.RunFinalCheck();
+                GameManager.instance.WertherRequestWasCompleted = true;
+                Loader.Load(Loader.Scene.ScoreCards);
+
+            }
+
+
         }
+
     }
 
     private void OnTriggerExit(Collider other)

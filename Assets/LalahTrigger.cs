@@ -62,7 +62,7 @@ public class LalahTrigger : MonoBehaviour
     #region Lalah
     private void Arrive()
     {
-        if (SceneControl.instance.firstCustomer && !npcArrived)
+        if (SceneControl.instance.firstCustomer && !npcArrived && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
         {
             StartCoroutine(Walking());
         }
@@ -71,7 +71,7 @@ public class LalahTrigger : MonoBehaviour
         {
             smoke.SetActive(false);
         }
-        else if(dialogueEnd)
+        else if(dialogueEnd && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
         {
             smoke.SetActive(true);
         }
