@@ -228,8 +228,7 @@ public class TestCube : MonoBehaviour
     private int numOfButtonPressed;
     [SerializeField]
     private GameObject parachuteObj;
-    [SerializeField]
-    private Animator parachuteAnim;
+
 
 
     [Header("Push")]
@@ -2120,6 +2119,7 @@ public class TestCube : MonoBehaviour
         {
             if (ReadActionButton() && !isAnswered)
             {
+                SceneControl.instance.nameTag.SetActive(true);
                 SceneControl.instance.dR.StartDialogue("HubStart");
                 isFreeze = true;
                 SceneControl.instance.EnableUI();

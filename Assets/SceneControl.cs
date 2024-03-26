@@ -945,6 +945,7 @@ public class SceneControl : MonoBehaviour
 
     public void ShowTutorialSkipUI()
     {
+        nameTag.SetActive(false);
         radialUI.SetActive(false);
         phoneRingText.SetActive(false);
 

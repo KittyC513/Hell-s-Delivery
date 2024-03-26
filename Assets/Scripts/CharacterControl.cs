@@ -1018,7 +1018,7 @@ public class CharacterControl : MonoBehaviour
                 {
                     soundBank.parachuteClose.Post(this.gameObject);
                 }
-                StartCoroutine(CloseParachute());                            
+                StartCoroutine(DedaultParachute());                            
             }
         }
         else
