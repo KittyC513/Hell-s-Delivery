@@ -1757,47 +1757,84 @@ public class TestCube : MonoBehaviour
     }
     private void DetectPackageWeight()
     {
-
-        if (objectGrabbable != null)
+        if (isPlayer1)
         {
-            print("Hello");
-            if (isPlayer1 && objectGrabbable.isHeavy)
+            if (objectGrabbable != null) 
             {
-                if (rC.Player1isCarrying)
+                if (objectGrabbable.isHeavy && rC.Player1isCarrying)
                 {
-                    print("HeavyPackage11");
                     tooHeavy = true;
                 }
-                else
+                else if(!objectGrabbable.isHeavy || !rC.Player1isCarrying)
                 {
                     tooHeavy = false;
                 }
             }
-
-            if (isPlayer2 && objectGrabbable.isHeavy)
+            else 
             {
-                if (rC.Player2isCarrying)
-                {
-                    print("HeavyPackage22");
-                    tooHeavy = true;
-                }
-                else
-                {
-                    tooHeavy = false;
-                    
-                }
+                tooHeavy = false;
             }
         }
-        else if(!rC.Player1isCarrying && !rC.Player2isCarrying)
+
+        if (isPlayer2)
         {
-            print("HeavyPackage333");
-            tooHeavy = false;
+            if (objectGrabbable != null)
+            {
+                if (objectGrabbable.isHeavy && rC.Player2isCarrying)
+                {
+                    tooHeavy = true;
+                }
+                else if(!objectGrabbable.isHeavy || !rC.Player2isCarrying)
+                {
+                    tooHeavy = false;
+                }
+            }
+            else
+            {
+                tooHeavy = false;
+            }
         }
-        else if(objectGrabbable == null)
-        {
-            tooHeavy = false;
-        }
-        
+
+        //if (objectGrabbable != null)
+        //{
+        //    print("Hello");
+        //    if (isPlayer1 && objectGrabbable.isHeavy)
+        //    {
+        //        if (rC.Player1isCarrying)
+        //        {
+        //            print("HeavyPackage11");
+        //            tooHeavy = true;
+        //        }
+        //        else
+        //        {
+        //            tooHeavy = false;
+        //        }
+        //    }
+
+        //    if (isPlayer2 && objectGrabbable.isHeavy)
+        //    {
+        //        if (rC.Player2isCarrying)
+        //        {
+        //            print("HeavyPackage22");
+        //            tooHeavy = true;
+        //        }
+        //        else
+        //        {
+        //            tooHeavy = false;
+
+        //        }
+        //    }
+        //}
+        //else if(!rC.Player1isCarrying && !rC.Player2isCarrying)
+        //{
+        //    print("HeavyPackage333");
+        //    tooHeavy = false;
+        //}
+        //else if(objectGrabbable == null)
+        //{
+        //    tooHeavy = false;
+        //}
+
 
         //if (objectGrabbable != null)
         //{
