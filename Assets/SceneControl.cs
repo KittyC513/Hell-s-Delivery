@@ -317,7 +317,8 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
         {
-            
+            phoneRingText.SetActive(false);
+
             if (GameManager.instance.timesEnterHub < 1)
             {
                 //if (isntSkipped)
@@ -330,10 +331,9 @@ public class SceneControl : MonoBehaviour
                     dR.Stop();
                     radialUI.SetActive(false);
                     dialogueFin = true;
+                    skipTutorial1 = true;
                     GameManager.instance.p1.isFreeze = true;
                     GameManager.instance.p2.isFreeze = true;
-                    skipTutorial1 = true;
-
                 }
 
 
@@ -540,6 +540,7 @@ public class SceneControl : MonoBehaviour
 
     IEnumerator SwitchCamToTutorialLevel()
     {
+        tutorialSkipUI.SetActive(false);
         SwitchCameraToTV();
         yield return new WaitForSeconds(3f);
         ShowDialogue.TutorialLevel();
@@ -621,8 +622,7 @@ public class SceneControl : MonoBehaviour
         {
             tutorialUIisShowed = false;
 
-            GameManager.instance.p1.isFreeze = false;
-            GameManager.instance.p2.isFreeze = false;
+
 
             if (!lalahIsGone)
             {
@@ -945,10 +945,14 @@ public class SceneControl : MonoBehaviour
 
     public void ShowTutorialSkipUI()
     {
-        if(!isSkipped && !isntSkipped)
+        radialUI.SetActive(false);
+        phoneRingText.SetActive(false);
+
+        if (!isSkipped && !isntSkipped)
         {
             tutorialSkipUI.SetActive(true);
             tutorialUIisShowed = true;
+
         }
 
     }
@@ -957,6 +961,9 @@ public class SceneControl : MonoBehaviour
     {
         if (tutorialUIisShowed)
         {
+            GameManager.instance.p1.isFreeze = true;
+            GameManager.instance.p2.isFreeze = true;
+
             if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
             {
                 if (!skipTutorial)
@@ -964,6 +971,7 @@ public class SceneControl : MonoBehaviour
                     GameManager.instance.timesEnterHub += 1;
                     GameManager.instance.changeSceneTimes += 1;
                     skipTutorial = true;
+
                 }
 
 
@@ -982,6 +990,8 @@ public class SceneControl : MonoBehaviour
             if (skipTutorial)
             {
                 tutorialSkipUI.SetActive(false);
+                GameManager.instance.p1.isFreeze = false;
+                GameManager.instance.p2.isFreeze = false;
             }
 
 
@@ -989,15 +999,9 @@ public class SceneControl : MonoBehaviour
 
 
 
-    }
-
-    IEnumerator NPCShowUp()
-    {
-        yield return new WaitForSeconds(0.3f);
-        tutorialSkipUI.SetActive(false);
-        tutorialUIisShowed = false;
 
     }
+
 
     #endregion
 

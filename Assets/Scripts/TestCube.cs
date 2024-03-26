@@ -219,6 +219,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private RespawnControl p2rc, p1rc;
 
+    [Header("Glide")]
     [SerializeField]
     private float parachuteSpeed = -5f;
     [SerializeField]
@@ -227,6 +228,9 @@ public class TestCube : MonoBehaviour
     private int numOfButtonPressed;
     [SerializeField]
     private GameObject parachuteObj;
+    [SerializeField]
+    private Animator parachuteAnim;
+
 
     [Header("Push")]
     [SerializeField]
