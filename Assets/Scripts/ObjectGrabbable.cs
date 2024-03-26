@@ -127,6 +127,7 @@ public class ObjectGrabbable : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        
         if(this.transform.localScale.x > 1)
         {
             isHeavy = true;
@@ -211,6 +212,7 @@ public class ObjectGrabbable : MonoBehaviour
         ShowDeliveryArea();
         PackageCooldown();
         //CheckGrounded();
+        DetectPackage();
     }
 
     private void FixedUpdate()
@@ -244,6 +246,21 @@ public class ObjectGrabbable : MonoBehaviour
         else
         {
             PackageP2.SetActive(false);
+        }
+    }
+
+    void DetectPackage()
+    {
+        if (P1TakePackage)
+        {
+            GameManager.instance.p1.objectGrabbable = this;
+            GameManager.instance.p2.objectGrabbable = null;
+        }
+
+        if (P2TakePackage)
+        {
+            GameManager.instance.p2.objectGrabbable = this;
+            GameManager.instance.p1.objectGrabbable = null;
         }
     }
 
@@ -379,13 +396,15 @@ public class ObjectGrabbable : MonoBehaviour
             rb.AddTorque(new Vector3(random, random, random));
 
             P1TakePackage = false;
-            P2TakePackage = false;
+            P2TakePackage = true;
 
             if (isHeavy)
             {
                 TriggerbC.enabled = false;
             }
             time = 0;
+            //GameManager.instance.p2.objectGrabbable = this;
+            //GameManager.instance.p1.objectGrabbable = null;
         }
     }
 
@@ -408,7 +427,7 @@ public class ObjectGrabbable : MonoBehaviour
             float random = Random.Range(-1, 1);
             rb.AddTorque(new Vector3(random, random, random));
 
-            P1TakePackage = false;
+            P1TakePackage = true;
             P2TakePackage = false;
             ScoreCount.instance.time = 0;
 
@@ -418,6 +437,9 @@ public class ObjectGrabbable : MonoBehaviour
                 TriggerbC.enabled = false;
             }
             time = 0;
+
+            //GameManager.instance.p2.objectGrabbable = null;
+            //GameManager.instance.p1.objectGrabbable = this;
         }
     }
 

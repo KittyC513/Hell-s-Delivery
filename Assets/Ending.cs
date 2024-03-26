@@ -30,18 +30,37 @@ public class Ending : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Package" && GameManager.instance.curSceneName == "Level1")
+        if (other.gameObject.tag == "Package")
         {
-            if (canvas != null)
+            if(GameManager.instance.curSceneName == "Level1")
             {
-                canvas.gameObject.SetActive(true);
+                if (canvas != null)
+                {
+                    //canvas.gameObject.SetActive(true);
+                }
+
+                //GameManager.instance.changeSceneTimes += 1;
+                //GameManager.instance.LalahRequestWasCompleted = true;
+                //badgeManager.RunFinalCheck();
+                //Loader.Load(Loader.Scene.ScoreCards);
             }
-            
-            badgeManager.RunFinalCheck();
-            GameManager.instance.changeSceneTimes += 1;
-            GameManager.instance.LalahRequestWasCompleted = true;
-            Loader.Load(Loader.Scene.ScoreCards);
+
+            if (GameManager.instance.curSceneName == "MVPLevel")
+            {
+                if (canvas != null)
+                {
+                    canvas.gameObject.SetActive(true);
+                }
+
+                //GameManager.instance.changeSceneTimes += 1;
+                //GameManager.instance.WertherRequestWasCompleted = true;
+                //badgeManager.RunFinalCheck();
+                //Loader.Load(Loader.Scene.ScoreCards);
+            }
+
+
         }
+
     }
 
     private void OnTriggerExit(Collider other)

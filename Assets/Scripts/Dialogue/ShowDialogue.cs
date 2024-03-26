@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public class ShowDialogue :DialogueViewBase
 {
     private static GameObject LVPlayers, LVNPC;
+    private static GameObject DevilSprite, DevilAnnoyed, DevilCheery, DevilDisappointed, DevilInnocent, DevilOh, DevilSmug;
     public static GameObject Gradient;
 
     [SerializeField] DialogueRunner runner;
@@ -88,12 +89,13 @@ public class ShowDialogue :DialogueViewBase
     {
         LVPlayers = GameObject.Find("Line View Players");
         Gradient = GameObject.Find("DialogueBox");
+
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    { 
+
     }
 
     #region Tutorial
@@ -119,8 +121,30 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("NPCShow")]
     public static void NPCShow()
     {
-        LVPlayers = GameObject.Find("Line View Players");
+        if(DevilSprite == null)
+        {
+            DevilSprite = GameObject.Find("DevilPopUp_Default");
+            DevilAnnoyed = GameObject.Find("DevilPopUp_Annoyed");
+            DevilCheery = GameObject.Find("DevilPopUp_Cheery");
+            DevilDisappointed = GameObject.Find("DevilPopUp_Disappointed");
+            DevilInnocent = GameObject.Find("DevilPopUp_Innocent");
+            DevilOh = GameObject.Find("DevilPopUp_Oh");
+            DevilSmug = GameObject.Find("DevilPopUp_Smug");
+        }
+        else 
+        {
+            DevilSprite.SetActive(false);
+            DevilAnnoyed.SetActive(false);
+            DevilCheery.SetActive(false);
+            DevilDisappointed.SetActive(false);
+            DevilInnocent.SetActive(false);
+            DevilOh.SetActive(false);
+            DevilSmug.SetActive(false);
+        }
+
+            LVPlayers = GameObject.Find("Line View Players");
         LVPlayers.SetActive(true);
+        DevilSprite.SetActive(false);
     }
 
     [YarnCommand("TutorialLevel")]

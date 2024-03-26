@@ -1668,6 +1668,7 @@ public class TestCube : MonoBehaviour
 
 
                             playerSounds.packagePick.Post(this.gameObject);
+                            
                             if(GameManager.instance.p2.objectGrabbable != null)
                             {
                                 GameManager.instance.p2.objectGrabbable = null;
@@ -1689,6 +1690,7 @@ public class TestCube : MonoBehaviour
                             //    objectGrabbable.Grab(itemContainer);
                             //}
                             playerSounds.packagePick.Post(this.gameObject);
+                            
                             if (GameManager.instance.p1.objectGrabbable != null)
                             {
                                 GameManager.instance.p1.objectGrabbable = null;
@@ -1706,13 +1708,13 @@ public class TestCube : MonoBehaviour
                 if(Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 //if(Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 {
-                    print("Package");
+                    //print("Package");
                     if (isPlayer1 && rC.Player2isCarrying)
                     {
-                        print("FoundPackage");
+                        //print("FoundPackage");
                         if (targetObject == null)
                         {
-                            print("TakePackage");
+                            //print("TakePackage");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             //if (tooHeavy)
@@ -1731,10 +1733,10 @@ public class TestCube : MonoBehaviour
 
                     if (isPlayer2 && rC.Player1isCarrying)
                     {
-                        print("FoundPackage");
+                        //print("FoundPackage");
                         if (targetObject == null)
                         {
-                            print("TakePackage");
+                            //print("TakePackage");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             //if (tooHeavy)
@@ -1755,42 +1757,84 @@ public class TestCube : MonoBehaviour
     }
     private void DetectPackageWeight()
     {
+
         if (objectGrabbable != null)
         {
-            if (isPlayer1)
+            print("Hello");
+            if (isPlayer1 && objectGrabbable.isHeavy)
             {
                 if (rC.Player1isCarrying)
                 {
-                    if (objectGrabbable.isHeavy)
-                    {
-                        tooHeavy = true;
-                    }
-                    else
-                    {
-                        tooHeavy = false;
-                    }
+                    print("HeavyPackage11");
+                    tooHeavy = true;
+                }
+                else
+                {
+                    tooHeavy = false;
                 }
             }
 
-            if (isPlayer2)
+            if (isPlayer2 && objectGrabbable.isHeavy)
             {
                 if (rC.Player2isCarrying)
                 {
-                    if (objectGrabbable.isHeavy)
-                    {
-                        tooHeavy = true;
-                    }
-                    else
-                    {
-                        tooHeavy = false;
-                    }
+                    print("HeavyPackage22");
+                    tooHeavy = true;
+                }
+                else
+                {
+                    tooHeavy = false;
+                    
                 }
             }
         }
-        else
+        else if(!rC.Player1isCarrying && !rC.Player2isCarrying)
+        {
+            print("HeavyPackage333");
+            tooHeavy = false;
+        }
+        else if(objectGrabbable == null)
         {
             tooHeavy = false;
         }
+        
+
+        //if (objectGrabbable != null)
+        //{
+        //    if (isPlayer1)
+        //    {
+        //        if (rC.Player1isCarrying)
+        //        {
+        //            if (objectGrabbable.isHeavy)
+        //            {
+        //                tooHeavy = true;
+        //            }
+        //            else
+        //            {
+        //                tooHeavy = false;
+        //            }
+        //        }
+        //    }
+
+        //    if (isPlayer2)
+        //    {
+        //        if (rC.Player2isCarrying)
+        //        {
+        //            if (objectGrabbable.isHeavy)
+        //            {
+        //                tooHeavy = true;
+        //            }
+        //            else
+        //            {
+        //                tooHeavy = false;
+        //            }
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    tooHeavy = false;
+        //}
 
 
 
@@ -1812,7 +1856,9 @@ public class TestCube : MonoBehaviour
                     {
                         if (targetObject == null)
                         {
+                            print("TakePackage1");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
+
                             objectGrabbable.Grab(itemContainer);
                             //if (tooHeavy)
                             //{
@@ -1831,6 +1877,7 @@ public class TestCube : MonoBehaviour
                     {
                         if (targetObject == null)
                         {
+                            print("TakePackage2");
                             objectGrabbable = package.GetComponent<ObjectGrabbable>();
                             objectGrabbable.Grab(itemContainer);
                             //if (tooHeavy)
@@ -2119,7 +2166,7 @@ public class TestCube : MonoBehaviour
         {
             if (ReadActionButton() && !isAnswered)
             {
-                SceneControl.instance.nameTag.SetActive(true);
+                //SceneControl.instance.nameTag.SetActive(true);
                 SceneControl.instance.dR.StartDialogue("HubStart");
                 isFreeze = true;
                 SceneControl.instance.EnableUI();
@@ -2850,6 +2897,7 @@ public class TestCube : MonoBehaviour
 
 
     }
+
 
     void Jump()
     {

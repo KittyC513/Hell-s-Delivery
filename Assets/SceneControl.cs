@@ -237,9 +237,13 @@ public class SceneControl : MonoBehaviour
             if (GameManager.instance.timesEnterHub == 1)
             {
                 SkipLalahDialogue();
-
+                
             }
 
+            if(GameManager.instance.timesEnterHub >= 1)
+            {
+                nameTag.SetActive(false);
+            }
 
             if (GameManager.instance.timesEnterHub == 2)
             {
