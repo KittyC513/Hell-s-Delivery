@@ -112,7 +112,7 @@ public class RisingPlatforms : MonoBehaviour
             {
                 foreach (PlatformChild platform in platformChildren)
                 {
-                    Vector3 childPos = new Vector3(platform.child.transform.position.x, startPosition.transform.position.y, platform.child.transform.position.z);
+                    Vector3 childPos = new Vector3(platform.child.transform.position.x, platform.preRisePos.y, platform.child.transform.position.z);
                     Vector3 endPos = new Vector3(platform.child.transform.position.x, endPosition.transform.position.y, platform.child.transform.position.z);
 
                     platform.child.transform.position = Vector3.Lerp(childPos, endPos, time / ((riseDuration / 6) + platform.offset));
@@ -143,7 +143,7 @@ public class RisingPlatforms : MonoBehaviour
                     foreach (PlatformChild platform in platformChildren)
                     {
                         Vector3 childPos = new Vector3(platform.preShakePos.x, startPosition.transform.position.y, platform.preShakePos.z);
-                        Vector3 endPos = new Vector3(platform.preShakePos.x, endPosition.transform.position.y, platform.preShakePos.z);
+                        Vector3 endPos = new Vector3(platform.preShakePos.x, platform.preShakePos.y, platform.preShakePos.z);
 
                         platform.child.transform.position = Vector3.Lerp(endPos, childPos, animationTime / ((riseDuration / 6) + platform.offset) * fallMultiplier);
                     }
@@ -168,6 +168,8 @@ public class RisingPlatforms : MonoBehaviour
             }
 
 
+      
+
         }
 
         //used for our lerp functions
@@ -183,9 +185,14 @@ public class RisingPlatforms : MonoBehaviour
         if (!active)
         {
             time = Time.deltaTime;
-            
+
+            foreach (PlatformChild platform in platformChildren)
+            {
+                platform.preRisePos = platform.child.transform.position;
+            }
         }
         active = true;
+
         
     }
 
@@ -196,15 +203,17 @@ public class RisingPlatforms : MonoBehaviour
         {
             time = Time.deltaTime;
             toggle = false;
+
+
+            foreach (PlatformChild platform in platformChildren)
+            {
+                platform.preShakePos = platform.child.transform.position;
+                platform.offset = Random.Range(0, moveOffset);
+            }
         }
         active = false;
 
-        foreach (PlatformChild platform in platformChildren)
-        {
-           
-            platform.offset = Random.Range(0, moveOffset);
-        }
-        //Debug.Log("Deactivate");
+        
     }
 
     public void OutlineDeActivate()
@@ -274,4 +283,5 @@ class PlatformChild
     public GameObject child;
     public float offset;
     public Vector3 preShakePos;
+    public Vector3 preRisePos;
 }
