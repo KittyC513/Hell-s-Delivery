@@ -455,28 +455,37 @@ public class CharacterControl : MonoBehaviour
     private Vector3 GetRelativeInputDirection(Camera camera, Vector2 inputValue)
     {
         //get camera forward and right
-        Vector3 camForward = camera.transform.forward;
-        Vector3 camRight = camera.transform.right;
 
-        camForward.y = 0;
-        camRight.y = 0;
+        if(camera != null)
+        {
+            Vector3 camForward = camera.transform.forward;
+            Vector3 camRight = camera.transform.right;
 
-        camForward = camForward.normalized;
-        camRight = camRight.normalized;
+            camForward.y = 0;
+            camRight.y = 0;
 
-        //get our stick input
-        Vector3 stickInput = inputValue;
-        stickInput = stickInput.normalized;
-        //multiply our stick value by our cam right and forward to get a camera relative input
-        Vector3 horizontal = stickInput.x * camRight;
-        Vector3 vertical = stickInput.y * camForward;
+            camForward = camForward.normalized;
+            camRight = camRight.normalized;
 
-        //Debug.Log(horizontal.ToString() + " " + vertical.ToString());
+            //get our stick input
+            Vector3 stickInput = inputValue;
+            stickInput = stickInput.normalized;
+            //multiply our stick value by our cam right and forward to get a camera relative input
+            Vector3 horizontal = stickInput.x * camRight;
+            Vector3 vertical = stickInput.y * camForward;
 
-        Vector3 input = horizontal + vertical;
-        input = input.normalized;
+            //Debug.Log(horizontal.ToString() + " " + vertical.ToString());
+
+            Vector3 input = horizontal + vertical;
+            input = input.normalized;
+
+            return input.normalized;
+        }
+        else
+        {
+            return new Vector3(0, 0, 0);
+        }
         
-        return input.normalized;
     }
 
     public void GetStickInputs(Camera cam, Vector2 input)
@@ -485,90 +494,150 @@ public class CharacterControl : MonoBehaviour
         rawInput = input;
         stickValue = rawInput.normalized;
        
-
-        Vector3 relativeStick = GetRelativeInputDirection(cam, stickValue);
-
-        if (stickValue.magnitude > 0.5f)
+        if(cam != null)
         {
-            //when the player makes a quick turn we should stop/cut their momentum to give them more control over a quick turn around
-            if (relativeStick.x != 0 || relativeStick.y != 0)
+            Vector3 relativeStick = GetRelativeInputDirection(cam, stickValue);
+
+            if (stickValue.magnitude > 0.5f)
             {
-                if (isGrounded)
+                //when the player makes a quick turn we should stop/cut their momentum to give them more control over a quick turn around
+                if (relativeStick.x != 0 || relativeStick.y != 0)
                 {
-                    //get the player's facing direction and check if our new input is far enough away from our facing direction
-                    if (lookDir.x - relativeStick.x > minQuickTurn || lookDir.x - relativeStick.x < -minQuickTurn)
+                    if (isGrounded)
                     {
-                        if (currentSpeed >= peakSpeed / 2)
+                        //get the player's facing direction and check if our new input is far enough away from our facing direction
+                        if (lookDir.x - relativeStick.x > minQuickTurn || lookDir.x - relativeStick.x < -minQuickTurn)
                         {
-                            GenerateDust();
+                            if (currentSpeed >= peakSpeed / 2)
+                            {
+                                GenerateDust();
+                            }
+                            if (!quickTurn) quickTurn = true;
+                            //Debug.Log(quickTurn);
+
+
                         }
-                        if (!quickTurn) quickTurn = true;
-                        //Debug.Log(quickTurn);
 
-                    
+                        if (lookDir.z - relativeStick.z > minQuickTurn || lookDir.z - relativeStick.z < -minQuickTurn)
+                        {
+
+                            if (currentSpeed >= peakSpeed / 2)
+                            {
+                                GenerateDust();
+                            }
+                            if (!quickTurn) quickTurn = true;
+                            //Debug.Log(quickTurn);
+
+                        }
+
                     }
-
-                    if (lookDir.z - relativeStick.z > minQuickTurn || lookDir.z - relativeStick.z < -minQuickTurn)
+                    else
                     {
-
-                        if (currentSpeed >= peakSpeed / 2)
+                        //get the player's facing direction and check if our new input is far enough away from our facing direction
+                        if (lookDir.x - relativeStick.x > airQuickTurn || lookDir.x - relativeStick.x < -airQuickTurn)
                         {
-                            GenerateDust();
+                            if (!quickTurn) quickTurn = true;
+                            //Debug.Log(quickTurn);
                         }
-                        if (!quickTurn) quickTurn = true;
-                        //Debug.Log(quickTurn);
+
+                        if (lookDir.z - relativeStick.z > airQuickTurn || lookDir.z - relativeStick.z < -airQuickTurn)
+                        {
+                            if (!quickTurn) quickTurn = true;
+                            //Debug.Log(quickTurn);
+                        }
 
                     }
-
                 }
-                else
-                {
-                    //get the player's facing direction and check if our new input is far enough away from our facing direction
-                    if (lookDir.x - relativeStick.x > airQuickTurn || lookDir.x - relativeStick.x < -airQuickTurn)
-                    {
-                        if (!quickTurn) quickTurn = true;
-                        //Debug.Log(quickTurn);
-                    }
 
-                    if (lookDir.z - relativeStick.z > airQuickTurn || lookDir.z - relativeStick.z < -airQuickTurn)
-                    {
-                        if (!quickTurn) quickTurn = true;
-                        //Debug.Log(quickTurn);
-                    }
+
+                //if we have a new input
+                if (relativeStick.x != lastInput.x || relativeStick.y != lastInput.y)
+                {
+
+                    //we want to update our input value to the new stick direction
+                    inputValue = stickValue;
 
                 }
             }
-    
-
-            //if we have a new input
-            if (relativeStick.x != lastInput.x || relativeStick.y != lastInput.y)
+            else
             {
-                
-                //we want to update our input value to the new stick direction
-                inputValue = stickValue;
-              
+                inputValue = Vector2.zero;
             }
-        }
-        else
-        {
-            inputValue = Vector2.zero;
+
+            lookDir = GetRelativeInputDirection(cam, inputValue);
         }
 
-        lookDir = GetRelativeInputDirection(cam, inputValue);
     }
     private void MovementCalculations(Camera cam)
     {
         //we get our camera relative inputs from this function to be used later
-        Vector3 inputDir = GetRelativeInputDirection(cam, inputValue);
-        
-        //if we are grounded use our grounded speed curve otherwise use the airspeed curve
-        if (isGrounded)
+        if(cam != null)
         {
-            if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+            Vector3 inputDir = GetRelativeInputDirection(cam, inputValue);
+
+            //if we are grounded use our grounded speed curve otherwise use the airspeed curve
+            if (isGrounded)
             {
-                if (!boxingMinigame.instance.isboxing)
+                if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
                 {
-                    //if the player is inputting anything at all we should multiply the speed by their stick input to get a variable push rate
+                    if (!boxingMinigame.instance.isboxing)
+                    {
+                        //if the player is inputting anything at all we should multiply the speed by their stick input to get a variable push rate
+                        if (!isSlow && !buttonHold)
+                        {
+                            if (rawInput.magnitude > 0)
+                            {
+                                directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                            }
+                            else
+                            {
+                                //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                                directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                            }
+                        }
+                        else if (isSlow || buttonHold)
+                        {
+                            if (rawInput.magnitude > 0)
+                            {
+                                directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
+                            }
+                            else
+                            {
+                                //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                                directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * slowDownMultiplier);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!buttonHold)
+                        {
+                            if (rawInput.magnitude > 0)
+                            {
+                                directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                            }
+                            else
+                            {
+                                //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                                directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
+                            }
+                        }
+                        else
+                        {
+                            if (rawInput.magnitude > 0)
+                            {
+                                directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
+                            }
+                            else
+                            {
+                                //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
+                                directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * slowDownMultiplier);
+                            }
+                        }
+                    }
+                }
+                else
+                {
                     if (!isSlow && !buttonHold)
                     {
                         if (rawInput.magnitude > 0)
@@ -594,258 +663,205 @@ public class CharacterControl : MonoBehaviour
                         }
                     }
                 }
+
+
+            }
+            else if (pState == playerStates.fall || pState == playerStates.jump)
+            {
+
+                //the air speed is unaffected by the stick magnitude
+                directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
+
+            }
+            else if (pState == playerStates.parachute)
+            {
+                directionSpeed = new Vector3(faceDir.x * parachutingSpeed, rb.velocity.y, faceDir.z * parachutingSpeed);
+            }
+
+            //if there is some input
+            if (inputValue.x != 0 || inputValue.y != 0)
+            {
+                //and our magnitude isn't an accidental stick flick
+                //and the player is quick turning
+                if (rawInput.magnitude > 0.05 && !quickTurn)
+                {
+                    //set our facing direction
+                    faceDir = GetRelativeInputDirection(cam, inputValue);
+                }
+
+            }
+
+            //if we are inputting on the control stick we want to apply our velocity curve and start speeding the character up
+            if (!quickTurn)
+            {
+                if (inputDir.x != 0 || inputDir.y != 0)
+                {
+                    //this facing direction means even if we are not inputting anything we are still facing somewhere
+                    //this is used to keep applying speed for a short time after we input to get a deceleration
+                    PlayWalkSound();
+                    decelerationTime = 0;
+                    velocityTime += Time.deltaTime;
+
+                    //if we are on the ground we want to use our grounded velocity curve, otherwise we use the aerial one
+                    //multiply our peak speed by our place on the velocity curve
+                    //if we are at the peak our velocity will be our peak speed times 1, so our peak speed
+                    if (rawInput.magnitude > 0.5f)
+                    {
+                        if (running)
+                        {
+                            currentSpeed = (runSpeed * velocityCurve.Evaluate(velocityTime));
+                            airSpeed = (runSpeed * airVelocityCurve.Evaluate(velocityTime));
+                        }
+                        else
+                        {
+                            currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
+                            airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+                        }
+
+                    }
+                    else
+                    {
+                        currentSpeed = (walkSpeed * velocityCurve.Evaluate(velocityTime));
+                        airSpeed = (walkSpeed * airVelocityCurve.Evaluate(velocityTime));
+                    }
+
+                    //if we aren't grounded we evaluate the air movement curve
+                    if (currentSpeed >= peakSpeed)
+                    {
+                        if (!reachedMaxSpeed)
+                        {
+                            reachedMaxSpeed = true;
+
+                        }
+
+                    }
+                    else
+                    {
+                        reachedMaxSpeed = false;
+                    }
+
+
+
+
+                    if (runTemp >= runTime)
+                    {
+                        if (!running)
+                        {
+                            GenerateDust();
+                            running = true;
+                        }
+                    }
+                    else if (rawInput.magnitude > 0.5f && isGrounded)
+                    {
+                        runTemp += 1 * Time.deltaTime;
+                    }
+
+
+
+                    if (pState == playerStates.parachute)
+                    {
+                        parachuteTime += Time.deltaTime;
+                        //add to our last speed by evaluating the curve
+                        if (parachutingSpeed < maxGlideSpeed)
+                        {
+                            parachutingSpeed += (glideAccelerationSpeed * glideAcceleration.Evaluate(parachuteTime));
+                        }
+                    }
+                    else
+                    {
+                        lastAirSpeed = airSpeed;
+                        parachutingSpeed = lastAirSpeed;
+                        parachuteTime = 0;
+
+
+                    }
+
+                    //what was the player's speed the last time they were inputting
+                    lastSpeedValue = currentSpeed; //* rawInput.magnitude;
+
+                }
                 else
-                {
-                    if (!buttonHold)
-                    {
-                        if (rawInput.magnitude > 0)
-                        {
-                            directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
-                        }
-                        else
-                        {
-                            //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
-                            directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
-                        }
-                    }
-                    else
-                    {
-                        if (rawInput.magnitude > 0)
-                        {
-                            directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
-                        }
-                        else
-                        {
-                            //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
-                            directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * slowDownMultiplier);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (!isSlow && !buttonHold)
-                {
-                    if (rawInput.magnitude > 0)
-                    {
-                        directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
-                    }
-                    else
-                    {
-                        //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
-                        directionSpeed = new Vector3((faceDir.x * currentSpeed), rb.velocity.y, (faceDir.z * currentSpeed));
-                    }
-                }
-                else if (isSlow || buttonHold)
-                {
-                    if (rawInput.magnitude > 0)
-                    {
-                        directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * rawInput.magnitude * slowDownMultiplier);
-                    }
-                    else
-                    {
-                        //otherwise if they let go of the stick we want then to slide just a tiny bit to slow down
-                        directionSpeed = new Vector3((faceDir.x * currentSpeed) * slowDownMultiplier, rb.velocity.y, (faceDir.z * currentSpeed) * slowDownMultiplier);
-                    }
-                }
-            }
-
-            
-        }
-        else if (pState == playerStates.fall || pState == playerStates.jump)
-        {
-                
-            //the air speed is unaffected by the stick magnitude
-            directionSpeed = new Vector3(faceDir.x * airSpeed, rb.velocity.y, faceDir.z * airSpeed);
-
-        }
-        else if (pState == playerStates.parachute)
-        {
-            directionSpeed = new Vector3(faceDir.x * parachutingSpeed, rb.velocity.y, faceDir.z * parachutingSpeed);
-        }
-
-        //if there is some input
-        if (inputValue.x != 0 || inputValue.y != 0)
-        {
-            //and our magnitude isn't an accidental stick flick
-            //and the player is quick turning
-            if (rawInput.magnitude > 0.05 && !quickTurn)
-            {
-                //set our facing direction
-                faceDir = GetRelativeInputDirection(cam, inputValue);
-            }
-            
-        }
-
-        //if we are inputting on the control stick we want to apply our velocity curve and start speeding the character up
-        if (!quickTurn)
-        {
-            if (inputDir.x != 0 || inputDir.y != 0)
-            {
-                //this facing direction means even if we are not inputting anything we are still facing somewhere
-                //this is used to keep applying speed for a short time after we input to get a deceleration
-                PlayWalkSound();
-                decelerationTime = 0;
-                velocityTime += Time.deltaTime;
-
-                //if we are on the ground we want to use our grounded velocity curve, otherwise we use the aerial one
-                //multiply our peak speed by our place on the velocity curve
-                //if we are at the peak our velocity will be our peak speed times 1, so our peak speed
-                if (rawInput.magnitude > 0.5f)
                 {
                     if (running)
                     {
-                        currentSpeed = (runSpeed * velocityCurve.Evaluate(velocityTime));
-                        airSpeed = (runSpeed * airVelocityCurve.Evaluate(velocityTime));
+                        GenerateDust();
+                    }
+
+                    running = false;
+                    runTemp = 0;
+
+                    velocityTime = 0;
+                    decelerationTime += Time.deltaTime;
+
+
+                    if (currentSpeed > 0 || airSpeed > 0 || parachutingSpeed > 0)
+                    {
+                        //apply a curve in the same way we applied the velocity but for when we want to slow down
+                        currentSpeed = (lastSpeedValue * decelerationCurve.Evaluate(decelerationTime));
+                        //apply a curve in the same way we applied the velocity but for when we want to slow down
+                        airSpeed = (lastSpeedValue * airDecelerationCurve.Evaluate(decelerationTime));
+
+                        parachutingSpeed = (lastSpeedValue * parachuteDecelerationCurve.Evaluate(decelerationTime));
                     }
                     else
                     {
-                        currentSpeed = (peakSpeed * velocityCurve.Evaluate(velocityTime));
-                        airSpeed = (peakSpeed * airVelocityCurve.Evaluate(velocityTime));
+                        lastSpeedValue = 0;
                     }
-                   
-                }
-                else
-                {
-                    currentSpeed = (walkSpeed * velocityCurve.Evaluate(velocityTime));
-                    airSpeed = (walkSpeed * airVelocityCurve.Evaluate(velocityTime));
-                }
 
-                //if we aren't grounded we evaluate the air movement curve
-                if(currentSpeed >= peakSpeed)
-                {
-                    if (!reachedMaxSpeed)
+                    //since we are multiplying we might get some weird values, just incase if we are at a decimal point below 1 just set to zero
+                    if (currentSpeed < 1)
                     {
-                        reachedMaxSpeed = true;
-                        
-                    }
-                   
-                }
-                else
-                {
-                    reachedMaxSpeed = false;
-                }
-
-
-               
-
-                if (runTemp >= runTime)
-                {
-                    if (!running)
-                    {
-                        GenerateDust();
-                        running = true;
+                        currentSpeed = 0;
                     }
                 }
-                else if (rawInput.magnitude > 0.5f && isGrounded)
-                {
-                    runTemp += 1 * Time.deltaTime;
-                }
-
-
-
-                if (pState == playerStates.parachute)
-                {
-                    parachuteTime += Time.deltaTime;
-                    //add to our last speed by evaluating the curve
-                    if (parachutingSpeed < maxGlideSpeed)
-                    {
-                        parachutingSpeed += (glideAccelerationSpeed * glideAcceleration.Evaluate(parachuteTime));
-                    }
-                }
-                else
-                {
-                    lastAirSpeed = airSpeed;
-                    parachutingSpeed = lastAirSpeed;
-                    parachuteTime = 0;
-
-                    
-                }
-
-                //what was the player's speed the last time they were inputting
-                lastSpeedValue = currentSpeed; //* rawInput.magnitude;
-
             }
             else
             {
-                if (running)
-                {
-                    GenerateDust();
-                }
-
                 running = false;
                 runTemp = 0;
+                quickTurnTime += Time.deltaTime;
 
-                velocityTime = 0;
-                decelerationTime += Time.deltaTime;
-
-
-                if (currentSpeed > 0 || airSpeed > 0 || parachutingSpeed > 0)
+                if (isGrounded)
                 {
-                    //apply a curve in the same way we applied the velocity but for when we want to slow down
-                    currentSpeed = (lastSpeedValue * decelerationCurve.Evaluate(decelerationTime));
-                    //apply a curve in the same way we applied the velocity but for when we want to slow down
-                    airSpeed = (lastSpeedValue * airDecelerationCurve.Evaluate(decelerationTime));
+                    if (currentSpeed > peakSpeed / 5)
+                    {
+                        //apply a curve in the same way we applied the velocity but for when we want to slow down
+                        currentSpeed = (lastSpeedValue * decelerationCurve.Evaluate(quickTurnTime));
 
-                    parachutingSpeed = (lastSpeedValue * parachuteDecelerationCurve.Evaluate(decelerationTime));
-                }
-                else
-                {
-                    lastSpeedValue = 0;
-                }
-
-                //since we are multiplying we might get some weird values, just incase if we are at a decimal point below 1 just set to zero
-                if (currentSpeed < 1)
-                {
-                    currentSpeed = 0;
-                }
-            }
-        }
-        else
-        {
-            running = false;
-            runTemp = 0;
-            quickTurnTime += Time.deltaTime;
-
-            if (isGrounded)
-            {
-                if (currentSpeed > peakSpeed / 5)
-                {
-                    //apply a curve in the same way we applied the velocity but for when we want to slow down
-                    currentSpeed = (lastSpeedValue * decelerationCurve.Evaluate(quickTurnTime));
+                    }
+                    else
+                    {
+                        quickTurn = false;
+                        velocityTime = 0;
+                        quickTurnTime = 0;
+                    }
 
                 }
-                else
+                else if (!isGrounded)
+                {
+                    if (airSpeed > peakSpeed / 5)
+                    {
+                        //apply a curve in the same way we applied the velocity but for when we want to slow down
+                        airSpeed = (lastSpeedValue * airQuickTurnCurve.Evaluate(quickTurnTime));
+                        parachutingSpeed = (lastSpeedValue * airQuickTurnCurve.Evaluate(decelerationTime));
+                    }
+                    else
+                    {
+                        quickTurn = false;
+                        velocityTime = 0;
+                        quickTurnTime = 0;
+                    }
+
+
+                }
+
+                if (stickValue.magnitude == 0)
                 {
                     quickTurn = false;
                     velocityTime = 0;
                     quickTurnTime = 0;
                 }
 
-            }
-            else if (!isGrounded)
-            {
-                if (airSpeed > peakSpeed / 5)
-                {
-                    //apply a curve in the same way we applied the velocity but for when we want to slow down
-                    airSpeed = (lastSpeedValue * airQuickTurnCurve.Evaluate(quickTurnTime));
-                    parachutingSpeed = (lastSpeedValue * airQuickTurnCurve.Evaluate(decelerationTime));
-                }
-                else
-                {
-                    quickTurn = false;
-                    velocityTime = 0;
-                    quickTurnTime = 0;
-                }
-
-
-            }
-
-            if (stickValue.magnitude == 0)
-            {
-                quickTurn = false;
-                velocityTime = 0;
-                quickTurnTime = 0;
             }
 
         }

@@ -540,6 +540,8 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float pushCDtimer;
 
+    public float pushShaderTimer;
+
 
 
     //[SerializeField]
@@ -738,6 +740,7 @@ public class TestCube : MonoBehaviour
             NewPush();
             DoPush();
 
+            //pushShaderSetup();
                 
 
          }
@@ -849,6 +852,10 @@ public class TestCube : MonoBehaviour
         }
 
         Pull();
+        //PushShader();
+
+
+        pushShaderTimer = pushCDtimer;
     }
 
 
@@ -2215,9 +2222,37 @@ public class TestCube : MonoBehaviour
 
     void Talk()
     {
+        if (SceneControl.instance.startLevel1 && !Dialogue3_2)
+        {
+            //SceneControl.LV.SetActive(false);
+            SceneControl.instance.dR.StopAllCoroutines();
+            SceneControl.instance.phoneUI.SetActive(false);
+            SceneControl.instance.dialogueBox.SetActive(true);
+            SceneControl.instance.nameTag1.SetActive(false);
+            SceneControl.instance.nameTag.SetActive(false);
+            SceneControl.instance.nameTagNPC2.SetActive(true);
+            SceneControl.instance.nameTagNPC3.SetActive(false);
+            SceneControl.instance.dR.StartDialogue("LalahQuest");
+
+            gameManager.p1.isFreeze = true;
+            gameManager.p2.isFreeze = true;
+
+            NPC2Interacting = false;
+
+            if (isPlayer1)
+            {
+                gameManager.p2.Dialogue3 = true;
+                Dialogue3 = true;
+            }
+            if (isPlayer2)
+            {
+                gameManager.p1.Dialogue3 = true;
+                Dialogue3 = true;
+            }
+        }
         if (NPCInteracting)
         {
-            if (!Dialogue1 && gameManager.timesEnterHub >= 1 && !Dialogue1_2)
+            if (!Dialogue1 && gameManager.timesEnterHub >= 1 && !Dialogue1_2 && SceneControl.instance.level2Overview)
             {
                 print("interactiNPC1");
                 //SceneControl.LV.SetActive(false);
@@ -2255,6 +2290,7 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.nameTag.SetActive(false);
                 SceneControl.instance.nameTagNPC2.SetActive(false);
                 SceneControl.instance.nameTagNPC3.SetActive(false);
+                SceneControl.instance.SwitchCameraToNpc2();
                 gameManager.p1.isFreeze = true;
                 gameManager.p2.isFreeze = true;
                 SceneControl.instance.dR.StartDialogue("HubEnd");
@@ -2277,34 +2313,10 @@ public class TestCube : MonoBehaviour
         {
             if (!Dialogue3 && gameManager.timesEnterHub >= 1 && !Dialogue3_2)
             {               
-                //SceneControl.LV.SetActive(false);
-                SceneControl.instance.dR.StopAllCoroutines();
-                SceneControl.instance.phoneUI.SetActive(false);
-                SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(false);
-                SceneControl.instance.nameTag.SetActive(false);
-                SceneControl.instance.nameTagNPC2.SetActive(true);
-                SceneControl.instance.nameTagNPC3.SetActive(false);
-                SceneControl.instance.dR.StartDialogue("LalahQuest");
-
-                gameManager.p1.isFreeze = true;
-                gameManager.p2.isFreeze = true;
-
-                NPC2Interacting = false;
-
-                if (isPlayer1)
+                if (!SceneControl.instance.startLevel1)
                 {
-                    gameManager.p2.Dialogue3 = true;
-                    Dialogue3 = true;
+                    SceneControl.instance.level1Overview = true;
                 }
-                if (isPlayer2)
-                {
-                    gameManager.p1.Dialogue3 = true;
-                    Dialogue3 = true;
-                }
-
-                //StartCoroutine(MovingCameraNPC2());
-
             }
 
             if(!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3)
@@ -3697,6 +3709,103 @@ public class TestCube : MonoBehaviour
         }
 
     }
+
+
+    /*
+    float shaderOpacity;
+    //public TestCube tc;
+    private List<GameObject> platforms = new List<GameObject>();
+    private List<Renderer> renderers = new List<Renderer>();
+    public Material powerUp;
+
+
+    bool true1 = true;
+    private void PushShader()
+    {
+        
+
+            // Calculate the progress (0 to 1)
+            float progress = Mathf.Clamp01(pushHoldTime / 3);
+
+            Debug.Log(progress);
+
+            // Calculate the new value of _Cutoff_height
+            float newCutoffHeight = Mathf.Lerp(0f, 1f, progress);
+
+            Debug.Log(newCutoffHeight);
+
+            // Update the material property
+            powerUp.SetFloat("_opacity", newCutoffHeight);
+
+            foreach (Renderer renderer in renderers)
+            {
+
+            renderer.material = powerUp;
+
+
+                if (true1 == true)
+                {
+                // Get the existing materials
+                if (renderer.material != null)
+                {
+
+
+
+                    Material[] materials = renderer.materials;
+
+
+                    /*
+                    // Add the additional material to the array
+                    if (materials.Length <= 1)
+                    {
+                        Material[] newMaterials = new Material[materials.Length + 1];
+                        for (int i = 0; i < materials.Length; i++)
+                        {
+                            newMaterials[i] = materials[i];
+                        }
+                        newMaterials[materials.Length] = powerUp;
+
+                        // Update the materials on the Renderer
+                        renderer.materials = newMaterials;
+                    }
+                    
+                }
+
+
+                }
+
+
+
+            
+
+
+
+        }
+
+
+
+
+    }
+
+    private void pushShaderSetup()
+    {
+        foreach (Transform child in transform)
+        {
+            platforms.Add(child.gameObject);
+
+
+            if (child.gameObject.GetComponent<Renderer>() != null)
+            {
+                Renderer renderer = child.gameObject.GetComponent<Renderer>();
+                renderers.Add(renderer);
+            }
+            
+
+        }
+
+    }
+    */
+
 
     #region Dash
     //private void Dash()
