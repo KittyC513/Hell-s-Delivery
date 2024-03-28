@@ -70,7 +70,9 @@ public class ScoreCount : MonoBehaviour
     public GameObject p1scoreEffect;
     [SerializeField]
     public GameObject p2scoreEffect;
-
+    private float p1PackageTemp = 0;
+    private float p2PackageTemp = 0;
+   
     [Space, Header("UI Elements")]
     [SerializeField] public RectTransform p1MailSlot;
     [SerializeField] public RectTransform p2MailSlot;
@@ -104,6 +106,10 @@ public class ScoreCount : MonoBehaviour
     [SerializeField] public TextMeshProUGUI p2PackageCount;
     [SerializeField] private int p1Multiply = 1;
     [SerializeField] private int p2Multiply = 1;
+
+    [SerializeField] private BigScoreManager p1BigScore;
+    [SerializeField] private BigScoreManager p2BigScore;
+    private bool useBigScore = false;
 
     [Space, Header("Scene Names")]
     [SerializeField] private string level1 = "Level1";
@@ -180,6 +186,15 @@ public class ScoreCount : MonoBehaviour
 
 
         ResetValues();
+
+        if (p1BigScore != null) useBigScore = true;
+
+        if (useBigScore)
+        {
+            p1BigScore.Initialize(lvlData, true);
+            p2BigScore.Initialize(lvlData, false);
+        }
+       
     }
 
     void Start()
@@ -377,6 +392,11 @@ public class ScoreCount : MonoBehaviour
             p1DeathCount.text = p1DeathValue.ToString();
         }
 
+        if (useBigScore)
+        {
+            p2BigScore.AddDeathScore(50, p1BigScore.comboMultiplier * 3);
+        }
+
         //p1Score += p1Deaths;
 
         //deathCountP1.text = "Player1 Score: " + scoreValueP1.ToString();
@@ -391,14 +411,31 @@ public class ScoreCount : MonoBehaviour
         //StartCoroutine(RotateToPosition(knobValue, 0.3f));
         p1Score += value;
         p1AddScore = true;
-      
+
+   
     }
 
     public void AddTimeToP1Package(float time)
     {
         p1PackageTime = time;
+
         
-        if(p1PackageTime >= 60 * p1Multiply)
+
+      
+        if (useBigScore)
+        {
+            p1PackageTemp += Time.deltaTime;
+
+            if (p1PackageTemp >= 0.25f)
+            {
+                p1BigScore.AddScore(5);
+                p1BigScore.AddCombo(0.6f);
+                p1PackageTemp = 0;
+            }
+         
+        }
+
+        if (p1PackageTime >= 60 * p1Multiply)
         {
             p1PackageValue += 1;
 
@@ -406,6 +443,7 @@ public class ScoreCount : MonoBehaviour
             {
                 p1PackageCount.text = p1PackageValue.ToString();
             }
+
             p1Multiply += 1;
         }
     }
@@ -413,6 +451,19 @@ public class ScoreCount : MonoBehaviour
     public void AddTimeToP2Package(float time)
     {
         p2PackageTime = time;
+
+        if (useBigScore)
+        {
+            p2PackageTemp += Time.deltaTime;
+
+            if (p2PackageTemp >= 0.25f)
+            {
+                p2BigScore.AddScore(5);
+                p2BigScore.AddCombo(0.6f);
+                p2PackageTemp = 0;
+            }
+
+        }
 
         if (p2PackageTime >= 60 * p2Multiply)
         {
@@ -473,6 +524,10 @@ public class ScoreCount : MonoBehaviour
             p2DeathCount.text = p2DeathValue.ToString();
         }
 
+        if (useBigScore)
+        {
+            p1BigScore.AddDeathScore(50, p2BigScore.comboMultiplier * 3);
+        }
         //p2Score += p2Deaths;
         //deathCountP2.text = "Player2 Score: " + scoreValueP2.ToString();
     }
@@ -743,9 +798,12 @@ public class ScoreCount : MonoBehaviour
 
     private IEnumerator P1AddScale()
     {
-        p1LocalMail = lvlData.p1MailCount;
 
+        p1LocalMail = lvlData.p1MailCount;
+      
         yield return new WaitForSeconds(0.22f);
+
+        if (useBigScore) AddP1MailPoints();
 
         p1TargetScaleMultiplier += 0.2f;
     }
@@ -756,6 +814,7 @@ public class ScoreCount : MonoBehaviour
 
         yield return new WaitForSeconds(0.22f);
 
+        if (useBigScore) AddP2MailPoints();
         p2TargetScaleMultiplier += 0.2f;
     }
 
@@ -816,5 +875,17 @@ public class ScoreCount : MonoBehaviour
             }
         }
       
+    }
+
+    private void AddP1MailPoints()
+    {
+        p1BigScore.AddScore(15);
+        p1BigScore.AddCombo(1);
+    }
+
+    private void AddP2MailPoints()
+    {
+        p2BigScore.AddScore(15);
+        p2BigScore.AddCombo(1);
     }
 }

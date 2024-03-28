@@ -124,7 +124,7 @@ public class LostMail : MonoBehaviour
         if (collected)
         {
             if (p1) GetPositionToUI(p1MailSlot);
-            else GetPositionToUI(p1MailSlot);
+            else GetPositionToUI(p2MailSlot);
             LookAtCamera(collector.cam);
         }
 
