@@ -144,7 +144,12 @@ public class ShowDialogue :DialogueViewBase
 
             LVPlayers = GameObject.Find("Line View Players");
         LVPlayers.SetActive(true);
-        DevilSprite.SetActive(false);
+
+        if(DevilSprite != null)
+        {
+            DevilSprite.SetActive(false);
+        }
+
     }
 
     [YarnCommand("TutorialLevel")]

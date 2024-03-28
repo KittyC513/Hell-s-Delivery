@@ -651,7 +651,7 @@ public class TestCube : MonoBehaviour
     {
 
         DetectDirectionBetweenPlayerAndObject();
-        DetectPackageWeight();
+        //DetectPackageWeight();
         CastBlobShadow();
         CheckGrounded();
         //SpeedControl();
@@ -2241,13 +2241,13 @@ public class TestCube : MonoBehaviour
 
             if (isPlayer1)
             {
-                gameManager.p2.Dialogue3 = true;
-                Dialogue3 = true;
+                gameManager.p2.Dialogue3_2 = true;
+                Dialogue3_2 = true;
             }
             if (isPlayer2)
             {
-                gameManager.p1.Dialogue3 = true;
-                Dialogue3 = true;
+                gameManager.p1.Dialogue3_2 = true;
+                Dialogue3_2 = true;
             }
         }
         if (NPCInteracting)
