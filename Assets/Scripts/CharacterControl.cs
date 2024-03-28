@@ -171,6 +171,7 @@ public class CharacterControl : MonoBehaviour
     public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle, bool isFreeze, bool player1, bool player2, bool holdPushButton)
     {
         isPlayer1 = player1;
+        isPlayer2 = player2;
         camera = cam;
 
         StateMachineUpdate();
@@ -919,10 +920,10 @@ public class CharacterControl : MonoBehaviour
                 GameManager.instance.p1.p1Anim.SetBool("Jump", true);
             }
 
-            if (!isPlayer1)
-            {
-                GameManager.instance.p2.p1Anim.SetBool("Jump", true);
-            }
+            //if (isPlayer2)
+            //{
+            //    GameManager.instance.p2.p1Anim.SetBool("Jump", true);
+            //}
         }
         else
         {
@@ -931,10 +932,10 @@ public class CharacterControl : MonoBehaviour
                 GameManager.instance.p1.p1Anim.SetBool("Jump", false);
             }
 
-            if (!isPlayer1)
-            {
-                GameManager.instance.p2.p1Anim.SetBool("Jump", false);
-            }
+            //if (isPlayer2)
+            //{
+            //    GameManager.instance.p2.p1Anim.SetBool("Jump", false);
+            //}
         }
 
 
