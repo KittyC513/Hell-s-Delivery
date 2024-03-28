@@ -79,7 +79,10 @@ public class SceneControl : MonoBehaviour
     public GameObject radialUI;
     [SerializeField]
     public GameObject radialUI2;
-
+    [SerializeField]
+    public bool accept;
+    [SerializeField]
+    public bool reject;
 
 
     [Header("werther Event")]
@@ -245,28 +248,18 @@ public class SceneControl : MonoBehaviour
             SkipDevilDialogue();
             SkipChoice();
 
-            if (GameManager.instance.timesEnterHub == 1)
-            {
-                SkipLalahDialogue();
-                
-            }
 
             if(GameManager.instance.timesEnterHub >= 1)
             {
                 nameTag.SetActive(false);
-            }
-
-            if (GameManager.instance.timesEnterHub == 2)
-            {
+                SkipLalahDialogue();
+                ShowLevel1Overview();
+                SkipwertherDialogue();
                 SkipLalahEndDialogue();
                 SkipwertherDialogue();
-
-            }
-
-            if (GameManager.instance.timesEnterHub == 3)
-            {
                 SkipwertherEndDialogue();
             }
+
 
 
         }
@@ -567,19 +560,23 @@ public class SceneControl : MonoBehaviour
     {
         mainCamera.SetActive(false);
         WertherCam.SetActive(true);
+
     }
 
     public void SwitchCameraToNpc2()
     {
         mainCamera.SetActive(false);
         Npc2Cam.SetActive(true);
-
+        overviewCamLalah.gameObject.SetActive(false);
+        LalahOverviewUI.SetActive(false);
+        LalahOverviewDescriptionUI.SetActive(false);
     }
 
     public void SwitchCameraToLalahCam()
     {
         mainCamera.SetActive(false);
         overviewCamLalah.gameObject.SetActive(true);
+        Npc2Cam.SetActive(false);
 
     }
 
@@ -597,6 +594,7 @@ public class SceneControl : MonoBehaviour
         WertherCam.SetActive(false);
         Npc2Cam.SetActive(false);
         Npc3Cam.SetActive(false);
+        overviewCamLalah.gameObject.SetActive(false);
     }
 
     public void MoveCamera(Transform newPos)
@@ -695,82 +693,6 @@ public class SceneControl : MonoBehaviour
 
         }
 
-        //Lalah
-        //if (GameManager.instance.timesEnterHub == 1)
-        //{
-        //    GameManager.instance.p1.isFreeze = false;
-        //    GameManager.instance.p2.isFreeze = false;
-        //    Lalah.SetActive(true);
-
-        //    firstCustomer = true;
-
-        //}
-        //else if (GameManager.instance.timesEnterHub != 1 && GameManager.instance.timesEnterHub != 2)
-        //{
-        //    Lalah.SetActive(false);
-        //    firstCustomer = false;
-        //}
-
-        //if (GameManager.instance.timesEnterHub == 2 && lalahTrigger.isLeaving == false)
-        //{
-        //    showPackage = true;
-        //    lalahTrigger.npcArrived = true;
-        //    if (!lalahIsGone)
-        //    {
-
-        //    }
-        //    else
-        //    {
-        //        Lalah.SetActive(false);
-        //    }
-
-        //}
-
-        ////werther
-        //if (GameManager.instance.timesEnterHub == 2 && lalahIsGone && !secondCustomer)
-        //{
-        //    StartCoroutine(Showwerther());
-        //    print("werther showing up");
-        //}
-
-        ////if(GameManager.instance.timesEnterHub == 3)
-        ////{
-        ////    werther.SetActive(true);
-        ////} 
-        ////else
-        //if (GameManager.instance.timesEnterHub != 2 && GameManager.instance.timesEnterHub != 3)
-        //{
-        //    werther.SetActive(false);
-        //    secondCustomer = false;
-        //}
-
-        //IEnumerator Showwerther()
-        //{
-        //    yield return new WaitForSeconds(2f);
-        //    werther.SetActive(true);
-        //    secondCustomer = true;
-        //}
-
-        //if (GameManager.instance.timesEnterHub == 3 && NPCTrigger.isLeaving == false)
-        //{
-        //    showPackage1 = true;
-        //    NPCTrigger.npcArrived = true;
-        //    if (!wertherIsGone)
-        //    {
-
-        //    }
-        //    else
-        //    {
-        //        werther.SetActive(false);
-        //    }
-        //}
-
-        //Skip Tutorial
-        //if (dialogueFin)
-        //{
-        //    StartCoroutine(SwitchCamToTutorialLevel());
-        //    //dialogueFin = false;
-        //}
 
         if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds && !GameManager.instance.WertherRequestWasCompleted && !showHeavyPackage)
         {
@@ -971,12 +893,12 @@ public class SceneControl : MonoBehaviour
     #region Lalah Event
     public void ShowLevel1Overview()
     {
-        if (!level1Overview)
+        if (level1Overview)
         {
             //StartCoroutine(CameraSwitchLalah());
-         
+
             werther.SetActive(false);
-            SwitchCameraToNpc2();
+            SwitchCameraToLalahCam();
             //MoveCameraLalah(overviewCamLalah);
             //yield return new WaitForSeconds(1f);
             LalahOverviewUI.SetActive(true);
@@ -985,15 +907,37 @@ public class SceneControl : MonoBehaviour
             LalahUI.SetActive(false);
             lalahCollider.enabled = false;
 
-
             GameManager.instance.p1.isFreeze = true;
-            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p1.isFreeze = true;
+
+            if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+            {
+                if (!accept)
+                {
+                    accept = true;
+                    startLevel1 = true;
+                }
+
+
+            }
+
+            if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+            {
+                if (!reject)
+                {
+                    GameManager.instance.p1.isFreeze = false;
+                    GameManager.instance.p2.isFreeze = false;
+                }
+            }
+
         }
 
     }
 
     IEnumerator CameraSwitchLalah()
     {
+        GameManager.instance.p1.isFreeze = true;
+        GameManager.instance.p1.isFreeze = true;
         werther.SetActive(false);
         SwitchCameraToNpc2();
         yield return new WaitForSeconds(0.5f);
@@ -1001,10 +945,11 @@ public class SceneControl : MonoBehaviour
         //yield return new WaitForSeconds(1f);
         LalahOverviewUI.SetActive(true);
         LalahOverviewDescriptionUI.SetActive(true);
-        level1Overview = true;
+        //level1Overview = true;
     }
 
     #endregion
+
     #region TitlePage
 
     private void ShowHightlightedDoor()

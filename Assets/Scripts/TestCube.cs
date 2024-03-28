@@ -2222,6 +2222,34 @@ public class TestCube : MonoBehaviour
 
     void Talk()
     {
+        if (SceneControl.instance.startLevel1 && !Dialogue3_2)
+        {
+            //SceneControl.LV.SetActive(false);
+            SceneControl.instance.dR.StopAllCoroutines();
+            SceneControl.instance.phoneUI.SetActive(false);
+            SceneControl.instance.dialogueBox.SetActive(true);
+            SceneControl.instance.nameTag1.SetActive(false);
+            SceneControl.instance.nameTag.SetActive(false);
+            SceneControl.instance.nameTagNPC2.SetActive(true);
+            SceneControl.instance.nameTagNPC3.SetActive(false);
+            SceneControl.instance.dR.StartDialogue("LalahQuest");
+
+            gameManager.p1.isFreeze = true;
+            gameManager.p2.isFreeze = true;
+
+            NPC2Interacting = false;
+
+            if (isPlayer1)
+            {
+                gameManager.p2.Dialogue3 = true;
+                Dialogue3 = true;
+            }
+            if (isPlayer2)
+            {
+                gameManager.p1.Dialogue3 = true;
+                Dialogue3 = true;
+            }
+        }
         if (NPCInteracting)
         {
             if (!Dialogue1 && gameManager.timesEnterHub >= 1 && !Dialogue1_2 && SceneControl.instance.level2Overview)
@@ -2262,6 +2290,7 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.nameTag.SetActive(false);
                 SceneControl.instance.nameTagNPC2.SetActive(false);
                 SceneControl.instance.nameTagNPC3.SetActive(false);
+                SceneControl.instance.SwitchCameraToNpc2();
                 gameManager.p1.isFreeze = true;
                 gameManager.p2.isFreeze = true;
                 SceneControl.instance.dR.StartDialogue("HubEnd");
@@ -2284,42 +2313,10 @@ public class TestCube : MonoBehaviour
         {
             if (!Dialogue3 && gameManager.timesEnterHub >= 1 && !Dialogue3_2)
             {               
-                if (SceneControl.instance.startLevel1)
+                if (!SceneControl.instance.startLevel1)
                 {
-                    //SceneControl.LV.SetActive(false);
-                    SceneControl.instance.dR.StopAllCoroutines();
-                    SceneControl.instance.phoneUI.SetActive(false);
-                    SceneControl.instance.dialogueBox.SetActive(true);
-                    SceneControl.instance.nameTag1.SetActive(false);
-                    SceneControl.instance.nameTag.SetActive(false);
-                    SceneControl.instance.nameTagNPC2.SetActive(true);
-                    SceneControl.instance.nameTagNPC3.SetActive(false);
-                    SceneControl.instance.dR.StartDialogue("LalahQuest");
-
-                    gameManager.p1.isFreeze = true;
-                    gameManager.p2.isFreeze = true;
-
-                    NPC2Interacting = false;
-
-                    if (isPlayer1)
-                    {
-                        gameManager.p2.Dialogue3 = true;
-                        Dialogue3 = true;
-                    }
-                    if (isPlayer2)
-                    {
-                        gameManager.p1.Dialogue3 = true;
-                        Dialogue3 = true;
-                    }
-
-                    //StartCoroutine(MovingCameraNPC2());
+                    SceneControl.instance.level1Overview = true;
                 }
-                else
-                {
-                    SceneControl.instance.ShowLevel1Overview();
-                }
-
-
             }
 
             if(!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3)
