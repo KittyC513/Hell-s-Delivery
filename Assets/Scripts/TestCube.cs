@@ -2222,7 +2222,7 @@ public class TestCube : MonoBehaviour
 
     void Talk()
     {
-        if (SceneControl.instance.startLevel1 && !Dialogue3_2)
+        if (SceneControl.instance.startLevel1 && !Dialogue3)
         {
             //SceneControl.LV.SetActive(false);
             SceneControl.instance.dR.StopAllCoroutines();
@@ -2241,13 +2241,13 @@ public class TestCube : MonoBehaviour
 
             if (isPlayer1)
             {
-                gameManager.p2.Dialogue3_2 = true;
-                Dialogue3_2 = true;
+                gameManager.p2.Dialogue3 = true;
+                Dialogue3 = true;
             }
             if (isPlayer2)
             {
-                gameManager.p1.Dialogue3_2 = true;
-                Dialogue3_2 = true;
+                gameManager.p1.Dialogue3 = true;
+                Dialogue3 = true;
             }
         }
         if (NPCInteracting)
@@ -2313,7 +2313,7 @@ public class TestCube : MonoBehaviour
         {
             if (!Dialogue3 && gameManager.timesEnterHub >= 1 && !Dialogue3_2)
             {               
-                if (!SceneControl.instance.startLevel1)
+                if (!SceneControl.instance.startLevel1 && SceneControl.instance.UITurnOff)
                 {
                     SceneControl.instance.level1Overview = true;
                 }

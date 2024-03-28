@@ -133,16 +133,41 @@ public class ShowDialogue :DialogueViewBase
         }
         else 
         {
-            DevilSprite.SetActive(false);
-            DevilAnnoyed.SetActive(false);
-            DevilCheery.SetActive(false);
-            DevilDisappointed.SetActive(false);
-            DevilInnocent.SetActive(false);
-            DevilOh.SetActive(false);
-            DevilSmug.SetActive(false);
+            if(DevilSprite != null)
+            {
+                DevilSprite.SetActive(false);
+            }
+
+            if (DevilAnnoyed != null)
+            {
+                DevilAnnoyed.SetActive(false);
+            }
+
+            if (DevilCheery != null)
+            {
+                DevilCheery.SetActive(false);
+            }
+            if (DevilDisappointed != null)
+            {
+                DevilDisappointed.SetActive(false);
+            }
+            if (DevilInnocent != null)
+            {
+                DevilInnocent.SetActive(false);
+            }
+            if (DevilOh != null)
+            {
+                DevilOh.SetActive(false);
+            }
+            if (DevilSmug != null)
+            {
+                DevilSmug.SetActive(false);
+            }
+
+
         }
 
-            LVPlayers = GameObject.Find("Line View Players");
+        LVPlayers = GameObject.Find("Line View Players");
         LVPlayers.SetActive(true);
 
         if(DevilSprite != null)
