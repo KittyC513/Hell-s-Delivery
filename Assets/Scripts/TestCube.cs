@@ -651,7 +651,7 @@ public class TestCube : MonoBehaviour
     {
 
         DetectDirectionBetweenPlayerAndObject();
-        DetectPackageWeight();
+        //DetectPackageWeight();
         CastBlobShadow();
         CheckGrounded();
         //SpeedControl();
@@ -683,7 +683,7 @@ public class TestCube : MonoBehaviour
                 {
                     if(charController.rb != null)
                     {
-                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, holdPush);
+                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
                     }
 
                     //print("use new movementCal");
@@ -691,7 +691,7 @@ public class TestCube : MonoBehaviour
                 {
                     if (charController.rb != null)
                         {
-                            charController.RunMovement(boxcam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, holdPush);
+                            charController.RunMovement(boxcam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
                         }
                     
                 }
@@ -699,7 +699,7 @@ public class TestCube : MonoBehaviour
                 {
                     if (charController.rb != null)
                     {
-                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, holdPush);
+                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1,isPlayer2, holdPush);
                     }
 
                 }
@@ -2222,7 +2222,7 @@ public class TestCube : MonoBehaviour
 
     void Talk()
     {
-        if (SceneControl.instance.startLevel1 && !Dialogue3_2)
+        if (SceneControl.instance.startLevel1 && !Dialogue3)
         {
             //SceneControl.LV.SetActive(false);
             SceneControl.instance.dR.StopAllCoroutines();
@@ -2313,7 +2313,7 @@ public class TestCube : MonoBehaviour
         {
             if (!Dialogue3 && gameManager.timesEnterHub >= 1 && !Dialogue3_2)
             {               
-                if (!SceneControl.instance.startLevel1)
+                if (!SceneControl.instance.startLevel1 && SceneControl.instance.UITurnOff)
                 {
                     SceneControl.instance.level1Overview = true;
                 }
@@ -2793,14 +2793,23 @@ public class TestCube : MonoBehaviour
         {
             pushCDSlider.value = 1;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
+        gameManager.p2.p2Anim.SetBool("isPushing", false);
+
         p1Anim.SetBool("beingPush", false);
+        p1Anim.SetBool("isFalling", true);
         p1Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
         damageApplied = false;
         pushIsIntervinedP1 = false;
-        gameManager.p1.brokenHeartUI.SetActive(false);
         gameManager.p2.pushCDSlider.gameObject.SetActive(false);
+
+
+        yield return new WaitForSeconds(2f);
+        p1Anim.SetBool("isFalling", false);
+        brokenHeartUI.SetActive(false);
+
+
     }
 
     IEnumerator StopBeingPushedP2()
@@ -2816,16 +2825,19 @@ public class TestCube : MonoBehaviour
         {
             pushCDSlider.value = maxCDTimer;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
+        gameManager.p1.p1Anim.SetBool("isPushing", false);
         p2Anim.SetBool("beingPush", false);
+        p2Anim.SetBool("isFalling", true);
         p2Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
         damageApplied = false;
         pushIsIntervinedP2 = false;
         gameManager.p1.pushCDSlider.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(2f);
-        gameManager.p2.brokenHeartUI.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+        p2Anim.SetBool("isFalling", false);
+        brokenHeartUI.SetActive(false);
     }
 
     
@@ -3567,6 +3579,7 @@ public class TestCube : MonoBehaviour
     {
         if (ReadPushButton())
         {
+
             holdPush = true;
             isCameraLocked = true;
             pushSlider.gameObject.SetActive(true);
@@ -3588,17 +3601,29 @@ public class TestCube : MonoBehaviour
             if (isPlayer1)
             {
                 p1Particle.SetActive(true);
+                p1Anim.SetBool("isHolding", true);
             }
 
             if (isPlayer2)
             {
                 p2Particle.SetActive(true);
+                p2Anim.SetBool("isHolding", true);
             }
 
             pushHoldTime = pushHoldDuration;
         }
         else
         {
+            if (isPlayer1)
+            {
+                p1Anim.SetBool("isHolding", false);
+            }
+
+            if (isPlayer2)
+            {
+                p2Anim.SetBool("isHolding", false);
+            }
+
             StartCoroutine(RestoreHoldPushForce());
 
             if (!isPulling)
@@ -3639,7 +3664,7 @@ public class TestCube : MonoBehaviour
                 {
                     p1pushed = true;
                     pushStartTimer = false;
-                   
+                    p1Anim.SetBool("isPushing", true);
 
                     if (ScoreCount.instance != null)
                     {
@@ -3656,7 +3681,7 @@ public class TestCube : MonoBehaviour
                 {
                     p2pushed = true;
                     pushStartTimer = false;
-              
+                    p2Anim.SetBool("isPushing", true);
 
 
                     if (ScoreCount.instance != null)

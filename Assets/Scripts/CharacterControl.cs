@@ -20,6 +20,7 @@ public class CharacterControl : MonoBehaviour
     private bool isDead = false;
     [SerializeField] private GameObject shadowRenderer;
     private bool isPlayer1;
+    private bool isPlayer2;
     private PlayerSoundbank soundBank;
     private string groundMaterial = "nothing";
     private bool shouldStep;
@@ -167,9 +168,10 @@ public class CharacterControl : MonoBehaviour
         //Debug.Log(rb.velocity.x.ToString() + " " + rb.velocity.z.ToString());
     }
 
-    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle, bool isFreeze, bool player1, bool holdPushButton)
+    public void RunMovement(Camera cam, bool canParachute, Vector2 input, InputAction jump, GameObject parachuteObj, bool bigPackage, bool isOnCircle, bool isFreeze, bool player1, bool player2, bool holdPushButton)
     {
         isPlayer1 = player1;
+        isPlayer2 = player2;
         camera = cam;
 
         StateMachineUpdate();
@@ -874,7 +876,8 @@ public class CharacterControl : MonoBehaviour
         //if the jump button is pressed
         if (readJumpValue && shouldJump && !isJumping && canJump)
         {
-            
+
+
             canJump = false;
             if (!isJumping && shouldJump)
             {
@@ -898,6 +901,7 @@ public class CharacterControl : MonoBehaviour
         }
         else if (jump.ReadValue<float>() == 0 && !isGrounded && isJumping && reachedMinJump)
         {
+
             //if we let go of jump while not in the air, while jumping and if we have reached the minimum jump requirements
             isJumping = false;
 
@@ -908,6 +912,33 @@ public class CharacterControl : MonoBehaviour
             jTime += 0.2f;
            
         }
+
+        if (isJumping)
+        {
+            if (isPlayer1)
+            {
+                GameManager.instance.p1.p1Anim.SetBool("Jump", true);
+            }
+
+            //if (isPlayer2)
+            //{
+            //    GameManager.instance.p2.p1Anim.SetBool("Jump", true);
+            //}
+        }
+        else
+        {
+            if (isPlayer1)
+            {
+                GameManager.instance.p1.p1Anim.SetBool("Jump", false);
+            }
+
+            //if (isPlayer2)
+            //{
+            //    GameManager.instance.p2.p1Anim.SetBool("Jump", false);
+            //}
+        }
+
+
 
         //if (canJump)
         //{

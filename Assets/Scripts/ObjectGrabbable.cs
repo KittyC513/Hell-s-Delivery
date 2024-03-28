@@ -255,13 +255,38 @@ public class ObjectGrabbable : MonoBehaviour
         {
             GameManager.instance.p1.objectGrabbable = this;
             GameManager.instance.p2.objectGrabbable = null;
+            if (isHeavy)
+            {
+                GameManager.instance.p1.tooHeavy = true;
+            }
+            else
+            {
+                GameManager.instance.p1.tooHeavy = false;
+            }
+        }
+        else
+        {
+            GameManager.instance.p1.tooHeavy = false;
         }
 
         if (P2TakePackage)
         {
             GameManager.instance.p2.objectGrabbable = this;
             GameManager.instance.p1.objectGrabbable = null;
+            if (isHeavy)
+            {
+                GameManager.instance.p2.tooHeavy = true;
+            }
+            else
+            {
+                GameManager.instance.p2.tooHeavy = false;
+            }
         }
+        else
+        {
+            GameManager.instance.p2.tooHeavy = false;
+        }
+
     }
 
     private void Move()

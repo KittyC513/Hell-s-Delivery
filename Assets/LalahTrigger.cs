@@ -80,11 +80,14 @@ public class LalahTrigger : MonoBehaviour
 
     IEnumerator Walking()
     {
-        anim.SetBool("Arrived", true);
-        yield return new WaitForSeconds(1.2f);
-        smoke.SetActive(false);
-        anim.SetBool("Arrived", false);
-        npcArrived = true;
+        if (!SceneControl.instance.level1Overview || GameManager.instance.timesEnterHub <= 1 || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
+        {
+            anim.SetBool("Arrived", true);
+            yield return new WaitForSeconds(1.2f);
+            smoke.SetActive(false);
+            anim.SetBool("Arrived", false);
+            npcArrived = true;
+        }
     }
 
     public void LalaLeave()

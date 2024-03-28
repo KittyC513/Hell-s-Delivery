@@ -83,7 +83,8 @@ public class SceneControl : MonoBehaviour
     public bool accept;
     [SerializeField]
     public bool reject;
-
+    [SerializeField]
+    private float delayTimer;
 
     [Header("werther Event")]
     [SerializeField]
@@ -145,6 +146,8 @@ public class SceneControl : MonoBehaviour
     public bool level1Overview;
     [SerializeField]
     public bool startLevel1;
+    [SerializeField]
+    public bool UITurnOff;
 
     [Header("Level 1")]
     [SerializeField]
@@ -211,6 +214,8 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
+        UITurnOff = true;
+
         if (GameManager.instance.curSceneName != "TitleScene" && GameManager.instance.player1 != null && GameManager.instance.player2 != null)
         {
             GameManager.instance.Reposition(P1StartPoint, P2StartPoint, P1Rotation, P2Rotation);
@@ -567,9 +572,16 @@ public class SceneControl : MonoBehaviour
     {
         mainCamera.SetActive(false);
         Npc2Cam.SetActive(true);
-        overviewCamLalah.gameObject.SetActive(false);
-        LalahOverviewUI.SetActive(false);
-        LalahOverviewDescriptionUI.SetActive(false);
+        if(overviewCamLalah.gameObject != null)
+        {
+            overviewCamLalah.gameObject.SetActive(false);
+        }
+        //LalahOverviewUI.SetActive(false);
+        if (LalahOverviewDescriptionUI != null)
+        {
+            LalahOverviewDescriptionUI.SetActive(false);
+        }
+
     }
 
     public void SwitchCameraToLalahCam()
@@ -577,6 +589,7 @@ public class SceneControl : MonoBehaviour
         mainCamera.SetActive(false);
         overviewCamLalah.gameObject.SetActive(true);
         Npc2Cam.SetActive(false);
+        LalahOverviewDescriptionUI.SetActive(true);
 
     }
 
@@ -595,6 +608,17 @@ public class SceneControl : MonoBehaviour
         Npc2Cam.SetActive(false);
         Npc3Cam.SetActive(false);
         overviewCamLalah.gameObject.SetActive(false);
+
+        if (overviewCamLalah.gameObject != null)
+        {
+            overviewCamLalah.gameObject.SetActive(false);
+        }
+
+        if(LalahOverviewDescriptionUI != null)
+        {
+            LalahOverviewDescriptionUI.SetActive(false);
+        }
+
     }
 
     public void MoveCamera(Transform newPos)
@@ -656,7 +680,7 @@ public class SceneControl : MonoBehaviour
 
             if (!lalahIsGone)
             {
-                if(!level1Overview && !level2Overview)
+                if(!level2Overview)
                 {
                     Lalah.SetActive(true);
                 }
@@ -670,11 +694,11 @@ public class SceneControl : MonoBehaviour
 
             if (!wertherIsGone)
             {
-                if (!level1Overview && !level2Overview)
+                if (!level1Overview)
                 {
                     werther.SetActive(true);
                 }
-                secondCustomer = true;
+                //secondCustomer = true;
 
             }
             else
@@ -893,46 +917,103 @@ public class SceneControl : MonoBehaviour
     #region Lalah Event
     public void ShowLevel1Overview()
     {
+
+        if (accept && !LalahdialogueEnds)
+        {
+            werther.SetActive(true);
+            SwitchCameraToNpc2();
+            //LalahOverviewUI.SetActive(false);
+            
+        }
+
+        if (reject && !UITurnOff)
+        {
+            StartCoroutine(TurnOffUI());
+        }
+
+
         if (level1Overview)
         {
+            if (!LalahdialogueEnds && !wertherdialogueEnds)
+            {
+                if (!accept && !reject)
+                {
+                    werther.SetActive(false);
+                    SwitchCameraToLalahCam();
+                    //MoveCameraLalah(overviewCamLalah);
+                    //yield return new WaitForSeconds(1f);
+                    //LalahOverviewUI.SetActive(true);
+                    
+
+                    LalahUI.SetActive(false);
+                    lalahCollider.enabled = false;
+
+                    GameManager.instance.p1.isFreeze = true;
+                    GameManager.instance.p1.isFreeze = true;
+                    UITurnOff = false;
+
+
+                }
+
+                if(delayTimer <= 0.5f)
+                {
+                    delayTimer += Time.deltaTime;
+                }
+
+
+                if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+                {
+                    if (!accept && delayTimer > 0.5f && !reject)
+                    {
+                        accept = true;
+                        startLevel1 = true;
+                        
+                    }
+
+
+                }
+
+                if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+                {
+                    if (!reject && delayTimer > 0.5f && !accept)
+                    {
+                        print("Reject"); 
+                        reject = true;
+                    }
+                }
+            }
             //StartCoroutine(CameraSwitchLalah());
 
-            werther.SetActive(false);
-            SwitchCameraToLalahCam();
-            //MoveCameraLalah(overviewCamLalah);
-            //yield return new WaitForSeconds(1f);
-            LalahOverviewUI.SetActive(true);
-            LalahOverviewDescriptionUI.SetActive(true);
 
-            LalahUI.SetActive(false);
-            lalahCollider.enabled = false;
-
-            GameManager.instance.p1.isFreeze = true;
-            GameManager.instance.p1.isFreeze = true;
-
-            if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
-            {
-                if (!accept)
-                {
-                    accept = true;
-                    startLevel1 = true;
-                }
-
-
-            }
-
-            if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
-            {
-                if (!reject)
-                {
-                    GameManager.instance.p1.isFreeze = false;
-                    GameManager.instance.p2.isFreeze = false;
-                }
-            }
-
+        }
+        else
+        {
+            delayTimer = 0;
+            accept = false;
+            reject = false;
+        
         }
 
     }
+
+    IEnumerator TurnOffUI()
+    { 
+        werther.SetActive(true);
+
+        //LalahOverviewUI.SetActive(false);
+
+        
+        yield return new WaitForSeconds(0.5f);
+        SwitchCameraToMain();
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false; 
+        level1Overview = false;
+        UITurnOff = true;
+
+    }
+
+
+
 
     IEnumerator CameraSwitchLalah()
     {
@@ -943,7 +1024,7 @@ public class SceneControl : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         //MoveCameraLalah(overviewCamLalah);
         //yield return new WaitForSeconds(1f);
-        LalahOverviewUI.SetActive(true);
+        //LalahOverviewUI.SetActive(true);
         LalahOverviewDescriptionUI.SetActive(true);
         //level1Overview = true;
     }
