@@ -81,6 +81,7 @@ public class SceneControl : MonoBehaviour
     public GameObject radialUI2;
 
 
+
     [Header("werther Event")]
     [SerializeField]
     private GameObject werther;
@@ -106,7 +107,10 @@ public class SceneControl : MonoBehaviour
     private GameObject WertherTalkUI;
     [SerializeField]
     private BoxCollider wertherCollider;
-
+    [SerializeField]
+    public bool level2Overview;
+    [SerializeField]
+    public Transform Werther;
 
 
     [Header("Lalah Event")]
@@ -127,10 +131,17 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool lalahIsGone;
     [SerializeField]
-    private GameObject LalahTalkUI;
+    private GameObject LalahOverviewUI;
+    [SerializeField]
+    private GameObject LalahOverviewDescriptionUI;
     [SerializeField]
     private BoxCollider lalahCollider;
-
+    [SerializeField]
+    public Transform overviewCamLalah;
+    [SerializeField]
+    public bool level1Overview;
+    [SerializeField]
+    public bool startLevel1;
 
     [Header("Level 1")]
     [SerializeField]
@@ -282,6 +293,7 @@ public class SceneControl : MonoBehaviour
         {
             SkipMVPLevelOverviewCutscene();
         }
+
 
 
     }
@@ -564,6 +576,14 @@ public class SceneControl : MonoBehaviour
 
     }
 
+    public void SwitchCameraToLalahCam()
+    {
+        mainCamera.SetActive(false);
+        overviewCamLalah.gameObject.SetActive(true);
+
+    }
+
+
     public void SwitchCameraToNpc3()
     {
         mainCamera.SetActive(false);
@@ -584,6 +604,14 @@ public class SceneControl : MonoBehaviour
         float lerpSpeed = 3f;
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
         mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
+        //print("Camera");
+    }
+
+    public void MoveCameraLalah(Transform newPos)
+    {
+        float lerpSpeed = 3f;
+        Npc2Cam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
+        Npc2Cam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
         //print("Camera");
     }
 
@@ -630,7 +658,10 @@ public class SceneControl : MonoBehaviour
 
             if (!lalahIsGone)
             {
-                Lalah.SetActive(true);
+                if(!level1Overview && !level2Overview)
+                {
+                    Lalah.SetActive(true);
+                }
                 firstCustomer = true;
             }
             else
@@ -641,8 +672,12 @@ public class SceneControl : MonoBehaviour
 
             if (!wertherIsGone)
             {
+                if (!level1Overview && !level2Overview)
+                {
+                    werther.SetActive(true);
+                }
                 secondCustomer = true;
-                werther.SetActive(true);
+
             }
             else
             {
@@ -741,13 +776,20 @@ public class SceneControl : MonoBehaviour
         {
             if(GameManager.instance.LalahRequestWasCompleted && lalahIsGone)
             {
-                WertherUI.SetActive(true);
-                wertherCollider.enabled = true;
+                if(!level1Overview && !level2Overview)
+                {
+                    WertherUI.SetActive(true);
+                    wertherCollider.enabled = true;
+                }
             } 
             else if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
             {
-                WertherUI.SetActive(true);
-                wertherCollider.enabled = true;
+                if (!level1Overview && !level2Overview)
+                {
+                    WertherUI.SetActive(true);
+                    wertherCollider.enabled = true;
+                }
+
             }
 
 
@@ -764,13 +806,20 @@ public class SceneControl : MonoBehaviour
         {
             if(GameManager.instance.WertherRequestWasCompleted && wertherIsGone)
             {
-                LalahUI.SetActive(true);
-                lalahCollider.enabled = true;
+                if (!level1Overview && !level2Overview)
+                {
+                    LalahUI.SetActive(true);
+                    lalahCollider.enabled = true;
+                }
+
             } 
             else if (!GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
             {
-                LalahUI.SetActive(true);
-                lalahCollider.enabled = true;
+                if (!level1Overview && !level2Overview)
+                {
+                    LalahUI.SetActive(true);
+                    lalahCollider.enabled = true;
+                }
             }
 
         }
@@ -783,7 +832,7 @@ public class SceneControl : MonoBehaviour
 
         if(GameManager.instance.showLalahInstruction && GameManager.instance.LalahRequestWasCompleted)
         {
-            LalahTalkUI.SetActive(true);
+            //LalahTalkUI.SetActive(true);
             if (!lalahTrigger.isLeaving)
             {
                 WertherUI.SetActive(false);
@@ -797,12 +846,12 @@ public class SceneControl : MonoBehaviour
         }
         else if(!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted)
         {
-            LalahTalkUI.SetActive(false);
+            //LalahTalkUI.SetActive(false);
         }
 
         if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted)
         {
-            WertherTalkUI.SetActive(true);
+            //WertherTalkUI.SetActive(true);
             if (!NPCTrigger.isLeaving)
             {
                 LalahUI.SetActive(false);
@@ -816,7 +865,7 @@ public class SceneControl : MonoBehaviour
         }
         else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted)
         {
-            WertherTalkUI.SetActive(false);
+            //WertherTalkUI.SetActive(false);
         }
 
         //if (GameManager.instance.showMichaelInstruction)
@@ -919,6 +968,43 @@ public class SceneControl : MonoBehaviour
 
     #endregion
 
+    #region Lalah Event
+    public void ShowLevel1Overview()
+    {
+        if (!level1Overview)
+        {
+            //StartCoroutine(CameraSwitchLalah());
+         
+            werther.SetActive(false);
+            SwitchCameraToNpc2();
+            //MoveCameraLalah(overviewCamLalah);
+            //yield return new WaitForSeconds(1f);
+            LalahOverviewUI.SetActive(true);
+            LalahOverviewDescriptionUI.SetActive(true);
+
+            LalahUI.SetActive(false);
+            lalahCollider.enabled = false;
+
+
+            GameManager.instance.p1.isFreeze = true;
+            GameManager.instance.p1.isFreeze = false;
+        }
+
+    }
+
+    IEnumerator CameraSwitchLalah()
+    {
+        werther.SetActive(false);
+        SwitchCameraToNpc2();
+        yield return new WaitForSeconds(0.5f);
+        //MoveCameraLalah(overviewCamLalah);
+        //yield return new WaitForSeconds(1f);
+        LalahOverviewUI.SetActive(true);
+        LalahOverviewDescriptionUI.SetActive(true);
+        level1Overview = true;
+    }
+
+    #endregion
     #region TitlePage
 
     private void ShowHightlightedDoor()
