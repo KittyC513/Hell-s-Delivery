@@ -49,7 +49,10 @@ public class boxingMinigame : MonoBehaviour
         spawnpointp2 = waypointp2.transform.position;
         spawnpointExit = waypointExit.transform.position;
         Scene scene = SceneManager.GetActiveScene();
-        //crowd.SetActive(false);
+        if (crowd != null)
+        {
+            crowd.SetActive(false);
+        }
 
 
         sceneString = scene.name;
@@ -180,6 +183,10 @@ public class boxingMinigame : MonoBehaviour
         anim.SetTrigger("boxingStart");
         isboxing = true;
         cm.minigameCam();
+        if (crowd != null)
+        {
+            crowd.SetActive(true);
+        }
         //crowd.SetActive(true);
 
         // Find all game objects with the tag "Findscript"
@@ -216,8 +223,10 @@ public class boxingMinigame : MonoBehaviour
             StartCoroutine(ShowPackage());
         }
 
-        //crowd.SetActive(false);
-
+        if (crowd != null)
+        {
+            crowd.SetActive(false);
+        }
     }
 
     IEnumerator ShowPackage()

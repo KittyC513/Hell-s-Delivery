@@ -1047,7 +1047,7 @@ public class CharacterControl : MonoBehaviour
 
     private void CheckParachute(InputAction button, bool canParachute)
     {
-        if (!shouldJump && !isGrounded && canParachute && !isJumping && !isSlow)
+        if (!shouldJump && !isGrounded && canParachute && !isJumping && !isSlow && !boxingMinigame.instance.isboxing)
         {
             if (button.ReadValue<float>() == 1)
             {

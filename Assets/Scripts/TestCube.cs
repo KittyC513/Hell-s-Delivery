@@ -770,7 +770,11 @@ public class TestCube : MonoBehaviour
 
         if (curSceneName == scene5 || curSceneName == "New CC" || curSceneName == scene10)
         {
-            canParachute = true;
+            if (!bM.isboxing)
+            {
+                canParachute = true;
+            }
+            
         }
         else
         {
@@ -3089,6 +3093,8 @@ public class TestCube : MonoBehaviour
     {
         if (curSceneName == scene5 || curSceneName == "New CC" || curSceneName == scene10)
         {
+            if (!bM.isboxing) { 
+            }
             canParachute = true;
             if (isInAir || isJumping)
             {
