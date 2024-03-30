@@ -35,6 +35,10 @@ public class FollowP1Cam : MonoBehaviour
                     // Uncomment the line below if you want the object to rotate continuously
                     // transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
                 }
+                else
+                {
+                    p1Cam = GameManager.instance.cam1.GetComponent<Camera>();
+                }
 
             }
             else
