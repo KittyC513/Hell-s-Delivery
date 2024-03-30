@@ -920,10 +920,10 @@ public class CharacterControl : MonoBehaviour
                 GameManager.instance.p1.p1Anim.SetBool("Jump", true);
             }
 
-            //if (isPlayer2)
-            //{
-            //    GameManager.instance.p2.p1Anim.SetBool("Jump", true);
-            //}
+            if (isPlayer2)
+            {
+                GameManager.instance.p2.p2Anim.SetBool("jump", true);
+            }
         }
         else
         {
@@ -932,10 +932,10 @@ public class CharacterControl : MonoBehaviour
                 GameManager.instance.p1.p1Anim.SetBool("Jump", false);
             }
 
-            //if (isPlayer2)
-            //{
-            //    GameManager.instance.p2.p1Anim.SetBool("Jump", false);
-            //}
+            if (isPlayer2)
+            {
+                GameManager.instance.p2.p2Anim.SetBool("jump", false);
+            }
         }
 
 

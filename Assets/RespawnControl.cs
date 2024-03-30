@@ -597,7 +597,7 @@ public class RespawnControl : MonoBehaviour
     {
         p1dead = true;
         p1DeadScreen.SetActive(true);
-        p1Anim.SetBool("isDead", true);
+        p1Anim.SetBool("isDead", true); 
         GameManager.instance.p1.isFreeze = true;
         //p1Model.SetActive(false);
         //p1DeadScreen.SetActive(true);
@@ -777,7 +777,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1)
             {
                 Player1Die = true;
-                print("Player1Die" + Player1Die);
+                //print("Player1Die" + Player1Die);
             }
             else
             {
@@ -787,7 +787,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
                 Player2Die = true;
-                print("Player2Die" + Player1Die);
+                //print("Player2Die" + Player1Die);
 
             }
             else
