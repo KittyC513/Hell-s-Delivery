@@ -239,6 +239,8 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private float pushForce;
     [SerializeField]
+    private float oriPushForce;
+    [SerializeField]
     private LayerMask pushMask;
     [SerializeField]
     GameManager gameManager;
@@ -624,7 +626,7 @@ public class TestCube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxTimer = 3;
+        maxTimer = 1;
         maxCDTimer = 1;
         isCameraLocked = false;
         gameManager = Object.FindAnyObjectByType<GameManager>();
@@ -2593,9 +2595,9 @@ public class TestCube : MonoBehaviour
         // Calculate the force to be applied
         forceMagnitude1 = pushForce * pushHoldTime;
         
-        if(forceMagnitude1 < pushForce)
+        if(forceMagnitude1 <= 0)
         {
-            forceMagnitude1 = pushForce;
+            forceMagnitude1 = oriPushForce;
         }
         else if (forceMagnitude1 > 200)
         {
@@ -2700,11 +2702,11 @@ public class TestCube : MonoBehaviour
         // Calculate the force to be applied
         forceMagnitude2 = pushForce * pushHoldTime;
         
-        if(forceMagnitude2 < pushForce)
+        if(forceMagnitude2 <= 0)
         {
-            forceMagnitude2 = pushForce;
+            forceMagnitude2 = oriPushForce;
         }
-        else if (forceMagnitude2 > 200)
+        else if (forceMagnitude2 >= 200)
         {
             if(gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
             {
@@ -3590,7 +3592,7 @@ public class TestCube : MonoBehaviour
             isCameraLocked = true;
             pushSlider.gameObject.SetActive(true);
 
-            if (pushHoldDuration < 3)
+            if (pushHoldDuration < 1)
             {
                 pushHoldDuration += Time.deltaTime;
                 pushSlider.value = pushHoldDuration;
@@ -3600,7 +3602,7 @@ public class TestCube : MonoBehaviour
             }
             else
             {
-                pushHoldDuration = 3;
+                pushHoldDuration = 1;
                 pushSlider.value = maxTimer;
             }
 
