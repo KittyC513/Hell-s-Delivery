@@ -84,7 +84,13 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool reject;
     [SerializeField]
+    public bool accept1;
+    [SerializeField]
+    public bool reject1;
+    [SerializeField]
     private float delayTimer;
+    [SerializeField]
+    private float delayTimer1;
 
     [Header("werther Event")]
     [SerializeField]
@@ -225,6 +231,7 @@ public class SceneControl : MonoBehaviour
     private void Start()
     {
         UITurnOff = true;
+        UI2turnOff = true;
 
         if (GameManager.instance.curSceneName != "TitleScene" && GameManager.instance.player1 != null && GameManager.instance.player2 != null)
         {
@@ -269,6 +276,7 @@ public class SceneControl : MonoBehaviour
                 nameTag.SetActive(false);
                 SkipLalahDialogue();
                 ShowLevel1Overview();
+                ShowLevel2Overview();
                 SkipwertherDialogue();
                 SkipLalahEndDialogue();
                 SkipwertherDialogue();
@@ -728,7 +736,7 @@ public class SceneControl : MonoBehaviour
                 {
                     werther.SetActive(true);
                 }
-                //secondCustomer = true;
+                secondCustomer = true;
 
             }
             else
@@ -982,7 +990,7 @@ public class SceneControl : MonoBehaviour
 
                 }
 
-                if(delayTimer <= 0.5f)
+                if(delayTimer <= 0.2f)
                 {
                     delayTimer += Time.deltaTime;
                 }
@@ -1059,7 +1067,7 @@ public class SceneControl : MonoBehaviour
     public void ShowLevel2Overview()
     {
 
-        if (accept && !wertherdialogueEnds)
+        if (accept1 && !wertherdialogueEnds)
         {
             Lalah.SetActive(true);
             SwitchCameraToNpc();
@@ -1067,7 +1075,7 @@ public class SceneControl : MonoBehaviour
 
         }
 
-        if (reject && !UITurnOff)
+        if (reject1 && !UITurnOff)
         {
             StartCoroutine(TurnOffUIWerther());
         }
@@ -1077,7 +1085,7 @@ public class SceneControl : MonoBehaviour
         {
             if (!LalahdialogueEnds && !wertherdialogueEnds)
             {
-                if (!accept && !reject)
+                if (!accept1 && !reject1)
                 {
                     werther.SetActive(false);
                     SwitchCameraToWertherCam();
@@ -1093,17 +1101,17 @@ public class SceneControl : MonoBehaviour
 
                 }
 
-                if (delayTimer <= 0.5f)
+                if (delayTimer1 <= 0.2f)
                 {
-                    delayTimer += Time.deltaTime;
+                    delayTimer1 += Time.deltaTime;
                 }
 
 
                 if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
                 {
-                    if (!accept && delayTimer > 0.5f && !reject)
+                    if (!accept1 && delayTimer1 > 0.5f && !reject1)
                     {
-                        accept = true;
+                        accept1 = true;
                         startLevel2 = true;
 
                     }
@@ -1113,10 +1121,10 @@ public class SceneControl : MonoBehaviour
 
                 if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
                 {
-                    if (!reject && delayTimer > 0.5f && !accept)
+                    if (!reject1 && delayTimer1 > 0.5f && !accept1)
                     {
                         print("Reject");
-                        reject = true;
+                        reject1 = true;
                     }
                 }
             }
@@ -1126,9 +1134,9 @@ public class SceneControl : MonoBehaviour
         }
         else
         {
-            delayTimer = 0;
-            accept = false;
-            reject = false;
+            delayTimer1 = 0;
+            accept1 = false;
+            reject1 = false;
         }
 
     }

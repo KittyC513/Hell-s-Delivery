@@ -80,7 +80,7 @@ public class LalahTrigger : MonoBehaviour
 
     IEnumerator Walking()
     {
-        if (!SceneControl.instance.level1Overview || GameManager.instance.timesEnterHub <= 1 || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
+        if (GameManager.instance.timesEnterHub == 1)
         {
             anim.SetBool("Arrived", true);
             yield return new WaitForSeconds(1.2f);
