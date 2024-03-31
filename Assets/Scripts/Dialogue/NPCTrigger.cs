@@ -32,7 +32,7 @@ public class NPCTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Arrive();
+        Arrive();
         WeatherLeave();
         //ArriveLalah();
         //if (Input.GetKeyDown(KeyCode.E) && hasTalkedBefore == false)

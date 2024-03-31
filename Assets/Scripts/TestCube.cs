@@ -2228,6 +2228,33 @@ public class TestCube : MonoBehaviour
 
     void Talk()
     {
+        if(SceneControl.instance.startLevel2 && !Dialogue1)
+        {
+            print("interactiNPC1");
+            //SceneControl.LV.SetActive(false);
+            SceneControl.instance.dR.StopAllCoroutines();
+            SceneControl.instance.phoneUI.SetActive(false);
+            SceneControl.instance.dialogueBox.SetActive(true);
+            SceneControl.instance.nameTag1.SetActive(true);
+            SceneControl.instance.nameTag.SetActive(false);
+            SceneControl.instance.nameTagNPC2.SetActive(false);
+            SceneControl.instance.nameTagNPC3.SetActive(false);
+            gameManager.p1.isFreeze = true;
+            gameManager.p2.isFreeze = true;
+            SceneControl.instance.dR.StartDialogue("BoomerQuest");
+
+            NPCInteracting = false;
+            if (isPlayer1)
+            {
+                gameManager.p2.Dialogue1 = true;
+                Dialogue1 = true;
+            }
+            if (isPlayer2)
+            {
+                gameManager.p1.Dialogue1 = true;
+                Dialogue1 = true;
+            }
+        }
         if (SceneControl.instance.startLevel1 && !Dialogue3)
         {
             //SceneControl.LV.SetActive(false);
@@ -2258,32 +2285,14 @@ public class TestCube : MonoBehaviour
         }
         if (NPCInteracting)
         {
-            if (!Dialogue1 && gameManager.timesEnterHub >= 1 && !Dialogue1_2 && SceneControl.instance.level2Overview)
+            if (!Dialogue1 && gameManager.timesEnterHub >= 1 && !Dialogue1_2)
             {
-                print("interactiNPC1");
-                //SceneControl.LV.SetActive(false);
-                SceneControl.instance.dR.StopAllCoroutines();
-                SceneControl.instance.phoneUI.SetActive(false);
-                SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
-                SceneControl.instance.nameTag.SetActive(false);
-                SceneControl.instance.nameTagNPC2.SetActive(false);
-                SceneControl.instance.nameTagNPC3.SetActive(false);
-                gameManager.p1.isFreeze = true;
-                gameManager.p2.isFreeze = true;
-                SceneControl.instance.dR.StartDialogue("BoomerQuest");
-
-                NPCInteracting = false;
-                if (isPlayer1)
+                if (!SceneControl.instance.startLevel2 && SceneControl.instance.UI2turnOff)
                 {
-                    gameManager.p2.Dialogue1 = true;
-                    Dialogue1 = true;
-                }
-                if (isPlayer2)
-                {
-                    gameManager.p1.Dialogue1 = true;
-                    Dialogue1 = true;
-                }           
+                    SceneControl.instance.level2Overview = true;
+                    gameManager.p1.isFreeze = true;
+                    gameManager.p2.isFreeze = true;
+                }               
             }
             if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1)
             {
@@ -2322,6 +2331,8 @@ public class TestCube : MonoBehaviour
                 if (!SceneControl.instance.startLevel1 && SceneControl.instance.UITurnOff)
                 {
                     SceneControl.instance.level1Overview = true;
+                    gameManager.p1.isFreeze = true;
+                    gameManager.p2.isFreeze = true;
                 }
             }
 
