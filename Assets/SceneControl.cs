@@ -645,7 +645,8 @@ public class SceneControl : MonoBehaviour
         WertherCam.SetActive(false);
         Npc2Cam.SetActive(false);
         Npc3Cam.SetActive(false);
-        overviewCamLalah.gameObject.SetActive(false);
+
+        print("Switch to Main Cam");
 
         if (overviewCamLalah.gameObject != null)
         {
@@ -655,6 +656,16 @@ public class SceneControl : MonoBehaviour
         if(LalahOverviewDescriptionUI != null)
         {
             LalahOverviewDescriptionUI.SetActive(false);
+        }
+
+        if(overviewCamWerther.gameObject != null)
+        {
+            overviewCamWerther.gameObject.SetActive(false);
+        }
+
+        if(WertherOverviewDescriptionUI != null)
+        {
+            WertherOverviewDescriptionUI.SetActive(false);
         }
 
     }
@@ -713,8 +724,6 @@ public class SceneControl : MonoBehaviour
         if(GameManager.instance.timesEnterHub >= 1)
         {
             tutorialUIisShowed = false;
-
-
 
             if (!lalahIsGone)
             {
@@ -998,7 +1007,7 @@ public class SceneControl : MonoBehaviour
 
                 if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
                 {
-                    if (!accept && delayTimer > 0.5f && !reject)
+                    if (!accept && delayTimer > 0.2f && !reject)
                     {
                         accept = true;
                         startLevel1 = true;
@@ -1010,7 +1019,7 @@ public class SceneControl : MonoBehaviour
 
                 if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
                 {
-                    if (!reject && delayTimer > 0.5f && !accept)
+                    if (!reject && delayTimer > 0.2f && !accept)
                     {
                         print("Reject"); 
                         reject = true;
@@ -1038,7 +1047,7 @@ public class SceneControl : MonoBehaviour
         //LalahOverviewUI.SetActive(false);
 
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         SwitchCameraToMain();
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false; 
@@ -1075,7 +1084,7 @@ public class SceneControl : MonoBehaviour
 
         }
 
-        if (reject1 && !UITurnOff)
+        if (reject1 && !UI2turnOff)
         {
             StartCoroutine(TurnOffUIWerther());
         }
@@ -1087,7 +1096,7 @@ public class SceneControl : MonoBehaviour
             {
                 if (!accept1 && !reject1)
                 {
-                    werther.SetActive(false);
+                    Lalah.SetActive(false);
                     SwitchCameraToWertherCam();
                     //MoveCameraLalah(overviewCamLalah);
                     //yield return new WaitForSeconds(1f);
@@ -1109,7 +1118,7 @@ public class SceneControl : MonoBehaviour
 
                 if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
                 {
-                    if (!accept1 && delayTimer1 > 0.5f && !reject1)
+                    if (!accept1 && delayTimer1 > 0.2f && !reject1)
                     {
                         accept1 = true;
                         startLevel2 = true;
@@ -1121,7 +1130,7 @@ public class SceneControl : MonoBehaviour
 
                 if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
                 {
-                    if (!reject1 && delayTimer1 > 0.5f && !accept1)
+                    if (!reject1 && delayTimer1 > 0.2f && !accept1)
                     {
                         print("Reject");
                         reject1 = true;
@@ -1144,10 +1153,8 @@ public class SceneControl : MonoBehaviour
     IEnumerator TurnOffUIWerther()
     {
         Lalah.SetActive(true);
-
         //LalahOverviewUI.SetActive(false);
-
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         SwitchCameraToMain();
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
