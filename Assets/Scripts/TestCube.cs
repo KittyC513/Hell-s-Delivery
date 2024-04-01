@@ -207,7 +207,7 @@ public class TestCube : MonoBehaviour
     public bool withinPackageRange;
 
     [SerializeField]
-    private RespawnControl rC;
+    public RespawnControl rC;
     [SerializeField]
     private float raycastDistance = 5.0f;
     [SerializeField]
@@ -525,8 +525,6 @@ public class TestCube : MonoBehaviour
     private GameObject boxcamHolder;
     private boxingMinigame bM;
     private GameObject minigame;
-    [SerializeField]
-    public GameObject brokenHeartUI;
     [SerializeField]
     private bool damageApplied;
     [SerializeField]
@@ -2612,25 +2610,19 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
+
         forceMagnitude1 = pushForce * pushHoldTime;
-        
-        if(forceMagnitude1 <= 0)
+
+        if (forceMagnitude1 <= oriPushForce)
         {
             forceMagnitude1 = oriPushForce;
         }
-        else if (forceMagnitude1 > 200)
+        else
         {
-            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
-            {
-                if (bM.isboxing)
-                {
-                    gameManager.p2.brokenHeartUI.SetActive(true);
-                }
-
-            }
-
+            forceMagnitude1 = pushForce * pushHoldTime;
         }
-        print("ForceMagnitude1" + forceMagnitude1);
+
+
 
         float elapsedTime = 0f;
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
@@ -2690,9 +2682,18 @@ public class TestCube : MonoBehaviour
         {
             if (bM.isboxing)
             {
-                if (!damageApplied)
+                if (!damageApplied && !pushIsIntervinedP2)
                 {
-                    bM.p1pushedcount += forceMagnitude1 * 0.1f;
+                    if (forceMagnitude1 <= oriPushForce)
+                    {
+                        forceMagnitude1 = oriPushForce;
+                    }
+                    else
+                    {
+                        forceMagnitude1 = pushForce * pushHoldTime;
+                    }
+                    bM.p1pushedcount += forceMagnitude1;
+
                     print("Damage1");
                     damageApplied = true;
                     pushIsIntervinedP2 = true;
@@ -2719,24 +2720,18 @@ public class TestCube : MonoBehaviour
         forceDir.Normalize();
 
         // Calculate the force to be applied
+
         forceMagnitude2 = pushForce * pushHoldTime;
-        
-        if(forceMagnitude2 <= 0)
+
+        if (forceMagnitude2 <= oriPushForce)
         {
             forceMagnitude2 = oriPushForce;
-        }
-        else if (forceMagnitude2 >= 200)
+        } 
+        else
         {
-            if(gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
-            {
-                if (bM.isboxing)
-                {
-                    gameManager.p1.brokenHeartUI.SetActive(true);
-                }
-
-            }
-
+            forceMagnitude2 = pushForce * pushHoldTime;
         }
+        
         print("ForceMagnitude2" + forceMagnitude2);
 
         float elapsedTime = 0f;
@@ -2794,13 +2789,27 @@ public class TestCube : MonoBehaviour
         //p2pushed = true;
         if (gameManager.curSceneName == "Level1")
         {
-            if (bM.isboxing && !damageApplied)
+            if (bM.isboxing)
             {
-                bM.p2pushedcount += forceMagnitude2 * 0.1f;
-                print("Damage2");
-                damageApplied = true;
-                pushIsIntervinedP1 = true;
+                if(!damageApplied && !pushIsIntervinedP1)
+                {
+                    if (forceMagnitude2 <= oriPushForce)
+                    {
+                        forceMagnitude2 = oriPushForce;
+                    }
+                    else
+                    {
+                        forceMagnitude2 = pushForce * pushHoldTime;
+                    }
+
+                    bM.p2pushedcount += forceMagnitude2;
+
+                    damageApplied = true;
+                    pushIsIntervinedP1 = true;
+                }
+
             }
+
         }
 
     }
@@ -2832,8 +2841,6 @@ public class TestCube : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         p1Anim.SetBool("isFalling", false);
-        brokenHeartUI.SetActive(false);
-
 
     }
 
@@ -2862,7 +2869,6 @@ public class TestCube : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
         p2Anim.SetBool("isFalling", false);
-        brokenHeartUI.SetActive(false);
     }
 
     

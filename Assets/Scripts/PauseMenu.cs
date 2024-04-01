@@ -20,7 +20,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private List<PauseMenuOption> menuOptions;
     private PauseMenuOption selectedOption;
-
+    
+    [SerializeField]
     private Test inputActions;
     private InputAction pauseGame, pauseJoystick, selectOption;
 
@@ -76,7 +77,7 @@ public class PauseMenu : MonoBehaviour
 
         if (pauseGame.IsPressed() && canToggle)
         {
-            
+            print("Pause");
             if (isPaused)
             {
                 Resume();
@@ -91,6 +92,7 @@ public class PauseMenu : MonoBehaviour
 
         if (!pauseGame.IsPressed())
         {
+            print("!Pause");
             canToggle = true;
         }
 
@@ -153,6 +155,8 @@ public class PauseMenu : MonoBehaviour
         quitMenu.SetActive(false);
         pauseMenu.SetActive(true);
         isPaused = true;
+        GameManager.instance.p1.isFreeze = true;
+        GameManager.instance.p2.isFreeze = true;
         Time.timeScale = 0;
 
         menuOptions.Clear();
@@ -166,6 +170,8 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         isPaused = false;
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
         Time.timeScale = 1;
     }
 
@@ -179,5 +185,15 @@ public class PauseMenu : MonoBehaviour
         {
             menuOptions.Add(obj.GetComponent<PauseMenuOption>());
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void RestartGame()
+    {
+        Loader.Load(Loader.Scene.TitleScene);
     }
 }

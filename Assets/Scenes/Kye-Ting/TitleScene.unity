@@ -11442,6 +11442,12 @@ MonoBehaviour:
   p2AtDoor: 0
   radialUI: {fileID: 0}
   radialUI2: {fileID: 0}
+  accept: 0
+  reject: 0
+  accept1: 0
+  reject1: 0
+  delayTimer: 0
+  delayTimer1: 0
   werther: {fileID: 0}
   secondCustomer: 0
   wertherdialogueEnds: 0
@@ -11454,6 +11460,13 @@ MonoBehaviour:
   wertherIsGone: 0
   WertherTalkUI: {fileID: 0}
   wertherCollider: {fileID: 0}
+  level2Overview: 0
+  Werther: {fileID: 0}
+  UI2turnOff: 0
+  overviewCamWerther: {fileID: 0}
+  WertherOverviewUI: {fileID: 0}
+  WertherOverviewDescriptionUI: {fileID: 0}
+  startLevel2: 0
   Lalah: {fileID: 0}
   firstCustomer: 0
   LalahdialogueEnds: 0
@@ -11462,8 +11475,13 @@ MonoBehaviour:
   comicShowed: 0
   lalahTrigger: {fileID: 0}
   lalahIsGone: 0
-  LalahTalkUI: {fileID: 0}
+  LalahOverviewUI: {fileID: 0}
+  LalahOverviewDescriptionUI: {fileID: 0}
   lalahCollider: {fileID: 0}
+  overviewCamLalah: {fileID: 0}
+  level1Overview: 0
+  startLevel1: 0
+  UITurnOff: 0
   packageInstruction: {fileID: 0}
   packageInstruction2: {fileID: 0}
   firstButtonIsTriggered: 0
@@ -11634,7 +11652,9 @@ MonoBehaviour:
   lighting2: {fileID: 265968677}
   lighting3: {fileID: 1079302995}
   LalahRequestWasCompleted: 0
+  acceptLalahOrder: 0
   WertherRequestWasCompleted: 0
+  accepWertherOrder: 0
   lastLevelData: {fileID: 0}
   playerScore: {fileID: 0}
 --- !u!4 &977069486
@@ -20319,7 +20339,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681232522}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c768764ed507a404aa96739bd2c0d15a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

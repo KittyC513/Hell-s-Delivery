@@ -217,7 +217,7 @@ public class ObjectGrabbable : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(GameManager.instance.curSceneName == "Level1")
+        if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
         {
             AddScore();
         }

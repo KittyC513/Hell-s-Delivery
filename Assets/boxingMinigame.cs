@@ -74,51 +74,53 @@ public class boxingMinigame : MonoBehaviour
 
                 if (p1pushedcount >= maxDamage)
                 {
-                    // Find all game objects with the tag "Findscript"
-                    GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
+                    //// Find all game objects with the tag "Findscript"
+                    //GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
 
-                    // Loop through each object found
-                    foreach (GameObject obj in objectsWithTag)
-                    {
-                        // Check if the object has a component of type RespawnControl
-                        RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
+                    //// Loop through each object found
+                    //foreach (GameObject obj in objectsWithTag)
+                    //{
+                    //    // Check if the object has a component of type RespawnControl
+                    //    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
 
-                        // If the RespawnControl component is found, do something with it
-                        if (respawnControl != null)
-                        {
-                            // You can access methods and properties of the RespawnControl script here
-                            // For example:
-                            respawnControl.endminigamep1();
-                        }
-                    }
+                    //    // If the RespawnControl component is found, do something with it
+                    //    if (respawnControl != null)
+                    //    {
+                    //        // You can access methods and properties of the RespawnControl script here
+                    //        // For example:
+                    //        respawnControl.endminigamep1();
+                    //    }
+                    //}
+                    GameManager.instance.p2.rC.endminigamep1();
                     endMinigame();
                 }
                 if (p2pushedcount >= maxDamage)
                 {
 
                     // Find all game objects with the tag "Findscript"
-                    GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
+                    //GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
 
-                    // Loop through each object found
-                    foreach (GameObject obj in objectsWithTag)
-                    {
-                        // Check if the object has a component of type RespawnControl
-                        RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
+                    //// Loop through each object found
+                    //foreach (GameObject obj in objectsWithTag)
+                    //{
+                    //    // Check if the object has a component of type RespawnControl
+                    //    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
 
-                        // If the RespawnControl component is found, do something with it
-                        if (respawnControl != null)
-                        {
-                            // You can access methods and properties of the RespawnControl script here
-                            // For example:
-                            respawnControl.endminigamep2();
-                        }
-                    }
+                    //    // If the RespawnControl component is found, do something with it
+                    //    if (respawnControl != null)
+                    //    {
+                    //        // You can access methods and properties of the RespawnControl script here
+                    //        // For example:
+                    //        respawnControl.endminigamep2();
+                    //    }
+                    //}
+                    GameManager.instance.p1.rC.endminigamep2();
                     endMinigame();      
                 }
 
                 healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
                 healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
-                print("HP");
+                //print("HP");
 
             }
 
