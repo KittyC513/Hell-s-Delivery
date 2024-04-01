@@ -44,20 +44,16 @@ public class LoadingProgressBar : MonoBehaviour
         {
             anim.SetBool("LoadingTV", true);
         }
-        else if (GameManager.instance.changeSceneTimes == 3)
+        else if (GameManager.instance.changeSceneTimes >= 3 || GameManager.instance.changeSceneTimes == 5 || GameManager.instance.changeSceneTimes == 7)
         {
             //out of TV
             anim.SetBool("LoadingJuice", true);
         }
-        else if (GameManager.instance.changeSceneTimes == 4)
+        else if (GameManager.instance.acceptLalahOrder && !GameManager.instance.LalahRequestWasCompleted)
         {
             anim.SetBool("LoadingLalah", true);
         }
-        else if (GameManager.instance.changeSceneTimes == 5)
-        {
-            
-        }
-        else if (GameManager.instance.changeSceneTimes == 6)
+        else if (GameManager.instance.accepWertherOrder && !GameManager.instance.WertherRequestWasCompleted)
         {
             anim.SetBool("LoadingMVP", true);
         }

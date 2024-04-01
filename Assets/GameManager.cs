@@ -204,7 +204,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool LalahRequestWasCompleted;
     [SerializeField]
+    public bool acceptLalahOrder;
+    [SerializeField]
     public bool WertherRequestWasCompleted;
+    [SerializeField]
+    public bool accepWertherOrder;
 
     public LevelData lastLevelData;
 

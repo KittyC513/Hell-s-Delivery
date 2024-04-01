@@ -238,10 +238,10 @@ public class TutorialCamControl : MonoBehaviour
             startBlockingWall.SetActive(true);
             packageBlockingWall.SetActive(true);
             pushBlockingWall.SetActive(true);
-            summoningCircleBlockingWall.SetActive(true);
-            dualSummoningBlockingWall.SetActive(true);
-            playerSpecificBlockingWall.SetActive(true);
-            pressurePlateBlockingWall.SetActive(true);
+            //summoningCircleBlockingWall.SetActive(true);
+            //dualSummoningBlockingWall.SetActive(true);
+            //playerSpecificBlockingWall.SetActive(true);
+            //pressurePlateBlockingWall.SetActive(true);
             checkPointBlockingWall.SetActive(true);
 
             StartCoroutine(MoveToNextCamera());
@@ -883,10 +883,15 @@ public class TutorialCamControl : MonoBehaviour
 
     }
 
+    public void DestroyWall2()
+    {
+        Destroy(packageBlockingWall.gameObject);
+    }
+
     public void DestroyWall3()
     {
         pushTimes += 1;
-        if (pushTimes >= 2)
+        if(pushTimes >= 2)
         {
             Destroy(pushBlockingWall.gameObject);
         }

@@ -285,6 +285,24 @@ public class ShowDialogue :DialogueViewBase
         TutorialCamControl.instance.DestroyWall1();
     }
 
+    [YarnCommand("DestroyBlockingWall2")]
+    public static void DestroyWalls2()
+    {
+        TutorialCamControl.instance.DestroyWall2();
+    }
+
+    [YarnCommand("DestroyBlockingWall3")]
+    public static void DestroyWalls3()
+    {
+        TutorialCamControl.instance.DestroyWall3();
+    }
+
+    [YarnCommand("DestroyBlockingWall5")]
+    public static void DestroyWalls5()
+    {
+        TutorialCamControl.instance.DestroyWall5();
+    }
+
     [YarnCommand("DestroyBlockingWall9")]
     public static void DestroyWalls8()
     {

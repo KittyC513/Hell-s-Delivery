@@ -1011,7 +1011,7 @@ public class SceneControl : MonoBehaviour
                     {
                         accept = true;
                         startLevel1 = true;
-                        
+                        GameManager.instance.acceptLalahOrder = true;
                     }
 
 
@@ -1122,7 +1122,7 @@ public class SceneControl : MonoBehaviour
                     {
                         accept1 = true;
                         startLevel2 = true;
-
+                        GameManager.instance.accepWertherOrder = true;
                     }
 
 
