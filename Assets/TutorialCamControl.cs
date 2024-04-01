@@ -910,11 +910,8 @@ public class TutorialCamControl : MonoBehaviour
 
     public void DestroyWall5()
     {
-        checkpointTimes += 1;
-        if (checkpointTimes >= 2)
-        {
-            Destroy(checkPointBlockingWall.gameObject);
-        }
+
+        Destroy(checkPointBlockingWall.gameObject);
 
     }
 
