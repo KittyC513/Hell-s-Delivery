@@ -555,7 +555,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1 && P1RespawnRotation != null)
             {
                 player.transform.rotation = P1RespawnRotation.rotation;
-                P2RespawnRotation.rotation = P1RespawnRotation.rotation;
+                //P2RespawnRotation.rotation = P1RespawnRotation.rotation;
                 print("11");
             }
 
@@ -563,7 +563,7 @@ public class RespawnControl : MonoBehaviour
             {
 
                 player.transform.rotation = P2RespawnRotation.rotation;
-                P1RespawnRotation.rotation = P2RespawnRotation.rotation;
+                //P1RespawnRotation.rotation = P2RespawnRotation.rotation;
                 print("22");
             }
 
