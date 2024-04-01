@@ -646,7 +646,7 @@ public class SceneControl : MonoBehaviour
         Npc2Cam.SetActive(false);
         Npc3Cam.SetActive(false);
 
-        print("Switch to Main Cam");
+        print("Switch to Main Cam"); 
 
         if (overviewCamLalah.gameObject != null)
         {
@@ -1174,7 +1174,6 @@ public class SceneControl : MonoBehaviour
             hightlightedDoor.SetActive(true);
             //print("Door");
         }
-
     }
 
 

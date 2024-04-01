@@ -279,7 +279,17 @@ public class ShowDialogue :DialogueViewBase
         SceneControl.instance.TurnOnCanvas();
     }
 
+    [YarnCommand("DestroyBlockingWall1")]
+    public static void DestroyWalls()
+    {
+        TutorialCamControl.instance.DestroyWall1();
+    }
 
+    [YarnCommand("DestroyBlockingWall9")]
+    public static void DestroyWalls8()
+    {
+        TutorialCamControl.instance.DestroyWall9();
+    }
 
 
 

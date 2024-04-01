@@ -27,6 +27,8 @@ public class TutorialCamControl : MonoBehaviour
     private GameObject indicator;
     [SerializeField]
     private GameObject indicatorCanvas;
+    [SerializeField]
+    private GameObject startBlockingWall;
 
     [Header("Package")]
     [SerializeField]
@@ -41,6 +43,8 @@ public class TutorialCamControl : MonoBehaviour
     private bool isActivated;
     [SerializeField]
     public bool endTutorial1;
+    [SerializeField]
+    private GameObject packageBlockingWall;
 
     [Header("Push")]
     [SerializeField]
@@ -54,6 +58,8 @@ public class TutorialCamControl : MonoBehaviour
     private bool isActivated2;
     [SerializeField]
     public bool endTutorial2;
+    [SerializeField]
+    private GameObject pushBlockingWall;
 
     [Header("PressurePlate")]
     [SerializeField]
@@ -67,6 +73,8 @@ public class TutorialCamControl : MonoBehaviour
     private bool isActivated3;
     [SerializeField]
     public bool endTutorial3;
+    [SerializeField]
+    private GameObject pressurePlateBlockingWall;
 
     [Header("GoldSummoning")]
     [SerializeField]
@@ -85,6 +93,7 @@ public class TutorialCamControl : MonoBehaviour
     [SerializeField]
     private bool wallIsGone;
 
+
     [Header("Checkpoint")]
     [SerializeField]
     public bool inCheckpointArea;
@@ -97,6 +106,8 @@ public class TutorialCamControl : MonoBehaviour
     private bool isActivated5;
     [SerializeField]
     public bool endTutorial5;
+    [SerializeField]
+    private GameObject checkPointBlockingWall;
 
     [Header("SummoningCircle")]
     [SerializeField]
@@ -110,6 +121,8 @@ public class TutorialCamControl : MonoBehaviour
     private bool isActivated6;
     [SerializeField]
     public bool endTutorial6;
+    [SerializeField]
+    private GameObject summoningCircleBlockingWall;
 
     [Header("Sabatage")]
     [SerializeField]
@@ -123,6 +136,8 @@ public class TutorialCamControl : MonoBehaviour
     private bool isActivated7;
     [SerializeField]
     public bool endTutorial7;
+    [SerializeField]
+    private GameObject sabatageingWall;
 
     [Header("DualSummoning")]
     [SerializeField]
@@ -136,6 +151,8 @@ public class TutorialCamControl : MonoBehaviour
     private bool isActivated8;
     [SerializeField]
     public bool endTutorial8;
+    [SerializeField]
+    private GameObject dualSummoningBlockingWall;
 
     [Header("PlayerSpecific")]
     [SerializeField]
@@ -149,8 +166,28 @@ public class TutorialCamControl : MonoBehaviour
     private bool isActivated9;
     [SerializeField]
     public bool endTutorial9;
+    [SerializeField]
+    private GameObject playerSpecificBlockingWall;
 
-
+    [Header("Times of triggered the dialogue")]
+    [SerializeField]
+    private int startTimes;
+    [SerializeField]
+    private int packageTimes;
+    [SerializeField]
+    private int pushTimes;
+    [SerializeField]
+    private int pressurePlateTimes;
+    [SerializeField]
+    private int checkpointTimes;
+    [SerializeField]
+    private int summoningcircleTimes;
+    [SerializeField]
+    private int sabotageTimes;
+    [SerializeField]
+    private int dualSummoningTimes;
+    [SerializeField]
+    private int playerSpecificTimes;
 
 
     // Start is called before the first frame update
@@ -197,6 +234,15 @@ public class TutorialCamControl : MonoBehaviour
             cam7.gameObject.SetActive(false);
             cam8.gameObject.SetActive(false);
             cam9.gameObject.SetActive(false);
+
+            startBlockingWall.SetActive(true);
+            packageBlockingWall.SetActive(true);
+            pushBlockingWall.SetActive(true);
+            summoningCircleBlockingWall.SetActive(true);
+            dualSummoningBlockingWall.SetActive(true);
+            playerSpecificBlockingWall.SetActive(true);
+            pressurePlateBlockingWall.SetActive(true);
+            checkPointBlockingWall.SetActive(true);
 
             StartCoroutine(MoveToNextCamera());
             atStart = false;
@@ -823,6 +869,88 @@ public class TutorialCamControl : MonoBehaviour
         GameManager.instance.p2.isFreeze = false;
 
     }
+    #endregion
+
+    #region Destroy
+
+    public void DestroyWall1()
+    {
+        startTimes += 1;
+        if(startTimes >= 2)
+        {
+            Destroy(startBlockingWall.gameObject);
+        }
+
+    }
+
+    public void DestroyWall3()
+    {
+        pushTimes += 1;
+        if (pushTimes >= 2)
+        {
+            Destroy(pushBlockingWall.gameObject);
+        }
+
+    }
+
+    public void DestroyWall4()
+    {
+        pressurePlateTimes += 1;
+        if (pressurePlateTimes >= 2)
+        {
+            Destroy(pressurePlateBlockingWall.gameObject);
+        }
+
+    }
+
+    public void DestroyWall5()
+    {
+        checkpointTimes += 1;
+        if (checkpointTimes >= 2)
+        {
+            Destroy(checkPointBlockingWall.gameObject);
+        }
+
+    }
+
+    public void DestroyWall6()
+    {
+        summoningcircleTimes += 1;
+        if (summoningcircleTimes >= 2)
+        {
+            Destroy(summoningCircleBlockingWall.gameObject);
+        }
+
+    }
+
+    public void DestroyWall7()
+    {
+        sabotageTimes += 1;
+        if (sabotageTimes >= 2)
+        {
+            Destroy(sabatageingWall.gameObject);
+        }
+
+    }
+
+    public void DestroyWall8()
+    {
+        dualSummoningTimes += 1;
+        if (dualSummoningTimes >= 2)
+        {
+            Destroy(dualSummoningBlockingWall.gameObject);
+        }
+    }
+
+    public void DestroyWall9()
+    {
+        playerSpecificTimes += 1;
+        if (playerSpecificTimes >= 2)
+        {
+            Destroy(pressurePlateBlockingWall.gameObject);
+        }
+    }
+
     #endregion
 }
 
