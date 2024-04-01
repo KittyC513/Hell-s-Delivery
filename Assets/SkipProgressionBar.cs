@@ -79,7 +79,7 @@ public class SkipProgressionBar : MonoBehaviour
                 radialUI.fillAmount = timer;
             }
         }
-        else if (GameManager.instance.curSceneName == "Level1")
+        else if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
         {
             if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
             {

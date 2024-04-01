@@ -477,7 +477,7 @@ public class RespawnControl : MonoBehaviour
 
     private void Update()
     {
-        if (curSceneName == "Level1")
+        if (curSceneName == "Level1" || curSceneName == "MVPLevel")
         {
             SabotageBark();
             SavingBark();
@@ -555,12 +555,16 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1 && P1RespawnRotation != null)
             {
                 player.transform.rotation = P1RespawnRotation.rotation;
+                P2RespawnRotation.rotation = P1RespawnRotation.rotation;
+                print("11");
             }
 
             if (isPlayer2 && P2RespawnRotation != null)
             {
 
                 player.transform.rotation = P2RespawnRotation.rotation;
+                P1RespawnRotation.rotation = P2RespawnRotation.rotation;
+                print("22");
             }
 
         }
@@ -1138,7 +1142,6 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer2)
             {
                 //StartCoroutine(ActivateP2UIForDuration(3f));
-                P1RespawnRotation = other.transform.Find("Rotation").transform;
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
                 P1RespawnRotation = P2RespawnRotation;
             }

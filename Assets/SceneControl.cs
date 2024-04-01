@@ -1042,13 +1042,11 @@ public class SceneControl : MonoBehaviour
 
     IEnumerator TurnOffUI()
     { 
-        werther.SetActive(true);
 
         //LalahOverviewUI.SetActive(false);
-
-        
         yield return new WaitForSeconds(0.2f);
         SwitchCameraToMain();
+        werther.SetActive(true);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false; 
         level1Overview = false;

@@ -228,7 +228,10 @@ public class TestCube : MonoBehaviour
     private int numOfButtonPressed;
     [SerializeField]
     private GameObject parachuteObj;
-
+    [SerializeField]
+    public bool inParachuteArea;
+    [SerializeField]
+    private GameObject parachuteInstruction;
 
 
     [Header("Push")]
@@ -282,7 +285,8 @@ public class TestCube : MonoBehaviour
     public bool pushIsIntervinedP1;
     [SerializeField]
     public bool pushIsIntervinedP2;
-
+    [SerializeField]
+    private GameObject pushInstruction;
 
     [Header("Interact")]
     [SerializeField]
@@ -741,13 +745,14 @@ public class TestCube : MonoBehaviour
             Push();
             NewPush();
             DoPush();
+            ShowParachuteInstruction();
 
             //pushShaderSetup();
-                
+
 
          }
 
-        //DetectPushRange();
+        DetectPushRange();
 
         if (curSceneName == scene3 || curSceneName == scene6)
         {
@@ -2566,10 +2571,13 @@ public class TestCube : MonoBehaviour
             {
                 p2pushed = false;
             }
+            pushInstruction.SetActive(false);
         }
 
-
-      
+        if (withinPushingRange)
+        {
+            pushInstruction.SetActive(true);
+        }
         
     }
 
@@ -2926,54 +2934,6 @@ public class TestCube : MonoBehaviour
 
         }
 
-
-
-        //if (isPlayer1 && p2rc == null)
-        //{
-        //    foreach (GameObject obj in objectsInScene)
-        //    {
-        //        if (obj.layer == layerToFind2)
-        //        {
-        //            Transform parentTransform = obj.transform;
-
-        //            foreach (Transform child in parentTransform)
-        //            {
-        //                if (child.CompareTag(tagToFind))
-        //                {
-        //                    p2rc = child.gameObject.GetComponent<RespawnControl>();
-        //                }
-        //            }
-        //        }
-
-        //    }
-
-        //}
-
-        //if (isPlayer2 && p1rc == null)
-        //{
-        //    foreach (GameObject obj in objectsInScene)
-        //    {
-
-        //        if (obj.layer == layerToFind1)
-        //        {
-        //            Transform parentTransform = obj.transform;
-
-        //            foreach (Transform child in parentTransform)
-        //            {
-        //                if (child.CompareTag(tagToFind))
-        //                {
-        //                    p1rc = child.gameObject.GetComponent<RespawnControl>();
-                            
-        //                }
-        //            }
-        //        }
-
-        //    }
-
-        //}
-
-
-
     }
 
 
@@ -3147,6 +3107,24 @@ public class TestCube : MonoBehaviour
         //currentStyle = CameraStyle.Basic;
     }
 
+    void ShowParachuteInstruction()
+    {
+        if(curSceneName == "MVPLevel")
+        {
+            if (inParachuteArea)
+            {
+                parachuteInstruction.SetActive(true);
+            } 
+            else
+            {
+                parachuteInstruction.SetActive(false);
+            }
+        }
+        else
+        {
+            parachuteInstruction.SetActive(false);
+        }
+    }
 
     private void CheckGrounded()
     {
@@ -3346,8 +3324,6 @@ public class TestCube : MonoBehaviour
             Vector3 direction = other.transform.position - transform.position;
             float distance = direction.magnitude;
 
-            Debug.Log(distance + "Distance");
-            Debug.Log(transform.up * geiserForce / (distance) + "force");
             //rb.AddForce(transform.up * geiserForce / (distance * 100));
         }
 
