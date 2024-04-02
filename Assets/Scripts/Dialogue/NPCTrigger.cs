@@ -64,7 +64,7 @@ public class NPCTrigger : MonoBehaviour
         {
             StartCoroutine(Walking());
         }
-        if (npcArrived && !dialogueEnd)
+        if (npcArrived && !dialogueEnd || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
         {
             smoke.SetActive(false);
         }
@@ -91,6 +91,7 @@ public class NPCTrigger : MonoBehaviour
         if (dialogueEnd && !isLeaving)
         {
             StartCoroutine(Leaving());
+            GameManager.instance.WertherLeft = true;
         }
 
     }

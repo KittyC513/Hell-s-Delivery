@@ -91,6 +91,8 @@ public class SceneControl : MonoBehaviour
     private float delayTimer;
     [SerializeField]
     private float delayTimer1;
+    [SerializeField]
+    private bool secondTimeStarts;
 
     [Header("werther Event")]
     [SerializeField]
@@ -114,7 +116,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool wertherIsGone;
     [SerializeField]
-    private GameObject WertherTalkUI;
+    public GameObject WertherTalkUI;
     [SerializeField]
     private BoxCollider wertherCollider;
     [SerializeField]
@@ -164,6 +166,8 @@ public class SceneControl : MonoBehaviour
     public bool startLevel1;
     [SerializeField]
     public bool UITurnOff;
+    [SerializeField]
+    public GameObject LalahTalkUi;
 
 
     [Header("Level 1")]
@@ -209,6 +213,7 @@ public class SceneControl : MonoBehaviour
     private bool isntSkipped;
     [SerializeField]
     public bool canRespawn;
+
 
     [Header("Bark")]
     [SerializeField]
@@ -265,7 +270,6 @@ public class SceneControl : MonoBehaviour
 
     private void Update()
     {
-
         if (GameManager.instance.curSceneName == GameManager.instance.scene1)
         {
             HubStart();
@@ -285,10 +289,27 @@ public class SceneControl : MonoBehaviour
                 SkipwertherDialogue();
                 SkipwertherEndDialogue();
             }
-
-
-
         }
+
+        if (GameManager.instance.LalahLeft)
+        {
+            Lalah.SetActive(false);
+        }
+
+        if (GameManager.instance.WertherLeft)
+        {
+            werther.SetActive(false);
+        }
+
+        if(GameManager.instance.timesEnterHub == 2 && !secondTimeStarts)
+        {
+            radialUI.SetActive(false);
+            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
+            secondTimeStarts = true;
+        }
+
+
 
         if (GameManager.instance.curSceneName == GameManager.instance.scene3)
         {
@@ -730,7 +751,7 @@ public class SceneControl : MonoBehaviour
 
             if (!lalahIsGone)
             {
-                if(!level2Overview)
+                if(!level2Overview && !GameManager.instance.LalahLeft)
                 {
                     Lalah.SetActive(true);
                 }
@@ -744,7 +765,7 @@ public class SceneControl : MonoBehaviour
 
             if (!wertherIsGone)
             {
-                if (!level1Overview)
+                if (!level1Overview && !GameManager.instance.WertherLeft)
                 {
                     werther.SetActive(true);
                 }
@@ -828,40 +849,44 @@ public class SceneControl : MonoBehaviour
 
         if(GameManager.instance.showLalahInstruction && GameManager.instance.LalahRequestWasCompleted)
         {
-            //LalahTalkUI.SetActive(true);
+            LalahTalkUi.SetActive(true);
+            
             if (!lalahTrigger.isLeaving)
-            {
+            {          
                 WertherUI.SetActive(false);
                 wertherCollider.enabled = false;
             } 
             else
             {
+                //LalahTalkUi.SetActive(false);
                 WertherUI.SetActive(true);
                 wertherCollider.enabled = true;
             }
         }
         else if(!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted)
         {
-            //LalahTalkUI.SetActive(false);
+            LalahTalkUi.SetActive(false);
         }
 
         if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted)
         {
-            //WertherTalkUI.SetActive(true);
+            WertherTalkUI.SetActive(true);
             if (!NPCTrigger.isLeaving)
             {
+                //WertherTalkUI.SetActive(true);
                 LalahUI.SetActive(false);
                 lalahCollider.enabled = false;
             }
             else
             {
+                //WertherTalkUI.SetActive(false);
                 LalahUI.SetActive(true);
                 lalahCollider.enabled = true;
             }
         }
         else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted)
         {
-            //WertherTalkUI.SetActive(false);
+            WertherTalkUI.SetActive(false);
         }
 
         //if (GameManager.instance.showMichaelInstruction)
@@ -967,6 +992,11 @@ public class SceneControl : MonoBehaviour
     #region Lalah Event
     public void ShowLevel1Overview()
     {
+        if (accept)
+        {
+            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
+        }
 
         if (accept && !LalahdialogueEnds)
         {
@@ -1044,12 +1074,16 @@ public class SceneControl : MonoBehaviour
     }
 
     IEnumerator TurnOffUI()
-    { 
+    {
 
         //LalahOverviewUI.SetActive(false);
         yield return new WaitForSeconds(0.2f);
+        if (!GameManager.instance.WertherLeft)
+        {
+            werther.SetActive(true);
+        }
         SwitchCameraToMain();
-        werther.SetActive(true);
+
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false; 
         level1Overview = false;
@@ -1076,6 +1110,11 @@ public class SceneControl : MonoBehaviour
     #region Werther Event
     public void ShowLevel2Overview()
     {
+        if (accept1)
+        {
+            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
+        }
 
         if (accept1 && !wertherdialogueEnds)
         {
@@ -1153,7 +1192,10 @@ public class SceneControl : MonoBehaviour
 
     IEnumerator TurnOffUIWerther()
     {
-        Lalah.SetActive(true);
+        if (!GameManager.instance.LalahLeft)
+        {
+            Lalah.SetActive(true);
+        }
         //LalahOverviewUI.SetActive(false);
         yield return new WaitForSeconds(0.2f);
         SwitchCameraToMain();
@@ -1364,9 +1406,10 @@ public class SceneControl : MonoBehaviour
     {
         NPCTrigger.dialogueEnd = true;
         wertherIsGone = true;
+        SwitchCameraToMain();
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
-        TurnOnCanvas();
+        //TurnOnCanvas();
     }
     #endregion
 

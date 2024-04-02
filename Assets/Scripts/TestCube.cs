@@ -2252,7 +2252,7 @@ public class TestCube : MonoBehaviour
     {
         if(SceneControl.instance.startLevel2 && !Dialogue1)
         {
-            print("interactiNPC1");
+            //print("interactiNPC1");
             //SceneControl.LV.SetActive(false);
             SceneControl.instance.dR.StopAllCoroutines();
             SceneControl.instance.phoneUI.SetActive(false);
@@ -2311,12 +2311,22 @@ public class TestCube : MonoBehaviour
             {
                 if (!SceneControl.instance.startLevel2 && SceneControl.instance.UI2turnOff)
                 {
-                    SceneControl.instance.level2Overview = true;
-                    gameManager.p1.isFreeze = true;
-                    gameManager.p2.isFreeze = true;
+                    if(gameManager.LalahRequestWasCompleted && gameManager.LalahLeft)
+                    {
+                        SceneControl.instance.level2Overview = true;
+                        gameManager.p1.isFreeze = true;
+                        gameManager.p2.isFreeze = true;
+                    
+                    }else if (!gameManager.LalahRequestWasCompleted)
+                    {
+                        SceneControl.instance.level2Overview = true;
+                        gameManager.p1.isFreeze = true;
+                        gameManager.p2.isFreeze = true;
+                    }
+
                 }               
             }
-            if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1)
+            if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1 && !SceneControl.instance.wertherdialogueEnds)
             {
                 print("interactiNPC1");
                 //SceneControl.LV.SetActive(false);
@@ -2327,10 +2337,12 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.nameTag.SetActive(false);
                 SceneControl.instance.nameTagNPC2.SetActive(false);
                 SceneControl.instance.nameTagNPC3.SetActive(false);
-                SceneControl.instance.SwitchCameraToNpc2();
+                SceneControl.instance.SwitchCameraToNpc();
                 gameManager.p1.isFreeze = true;
                 gameManager.p2.isFreeze = true;
+                //SceneControl.instance.WertherTalkUI.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("HubEnd");
+
 
                 NPCInteracting = false;
                 if (isPlayer1)
@@ -2352,13 +2364,24 @@ public class TestCube : MonoBehaviour
             {               
                 if (!SceneControl.instance.startLevel1 && SceneControl.instance.UITurnOff)
                 {
-                    SceneControl.instance.level1Overview = true;
-                    gameManager.p1.isFreeze = true;
-                    gameManager.p2.isFreeze = true;
+                    if(gameManager.WertherRequestWasCompleted && gameManager.WertherLeft)
+                    {
+                        SceneControl.instance.level1Overview = true;
+                        gameManager.p1.isFreeze = true;
+                        gameManager.p2.isFreeze = true;
+                    }
+                    else if (!gameManager.WertherRequestWasCompleted)
+                    {
+                        SceneControl.instance.level1Overview = true;
+                        gameManager.p1.isFreeze = true;
+                        gameManager.p2.isFreeze = true;
+                    }
+
+
                 }
             }
 
-            if(!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3)
+            if(!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3 && !SceneControl.instance.LalahdialogueEnds)
             {
                 print("interactiNPC23_2");
                 SceneControl.instance.dR.StopAllCoroutines();
@@ -2368,6 +2391,7 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.nameTag.SetActive(false);
                 SceneControl.instance.nameTagNPC2.SetActive(true);
                 SceneControl.instance.nameTagNPC3.SetActive(false);
+                //SceneControl.instance.LalahTalkUi.SetActive(false);
                 SceneControl.instance.dR.StartDialogue("LalahEnd");
                 withinNPC2Range = false;
                 gameManager.showLalahInstruction = false;

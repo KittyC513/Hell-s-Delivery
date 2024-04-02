@@ -209,6 +209,10 @@ public class GameManager : MonoBehaviour
     public bool WertherRequestWasCompleted;
     [SerializeField]
     public bool accepWertherOrder;
+    [SerializeField]
+    public bool WertherLeft;
+    [SerializeField]
+    public bool LalahLeft;
 
     public LevelData lastLevelData;
 
@@ -930,6 +934,10 @@ public class GameManager : MonoBehaviour
             WertherRequestWasCompleted = false;
             LalahRequestWasCompleted = false; 
             enterOffice = false;
+            acceptLalahOrder = false;
+            accepWertherOrder = false;
+            LalahLeft = false;
+            WertherLeft = false;
 
         }
     }
