@@ -11,7 +11,7 @@ public class FollowP2Cam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        p2Cam = GameManager.instance.cam2.GetComponent<Camera>();
     }
 
     // Update is called once per frame

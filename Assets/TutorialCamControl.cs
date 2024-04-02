@@ -92,6 +92,8 @@ public class TutorialCamControl : MonoBehaviour
     private GameObject invisibleWall;
     [SerializeField]
     private bool wallIsGone;
+    [SerializeField]
+    private GameObject goldSummoningBlockingWall;
 
 
     [Header("Checkpoint")]
@@ -178,6 +180,8 @@ public class TutorialCamControl : MonoBehaviour
     private int pushTimes;
     [SerializeField]
     private int pressurePlateTimes;
+    [SerializeField]
+    private int goldSummoningTimes;
     [SerializeField]
     private int checkpointTimes;
     [SerializeField]
@@ -904,6 +908,16 @@ public class TutorialCamControl : MonoBehaviour
         if (pressurePlateTimes >= 2)
         {
             Destroy(pressurePlateBlockingWall.gameObject);
+        }
+
+    }
+
+    public void DestroyWall10()
+    {
+        goldSummoningTimes += 1;
+        if(goldSummoningTimes >= 2)
+        {
+            Destroy(goldSummoningBlockingWall.gameObject);
         }
 
     }

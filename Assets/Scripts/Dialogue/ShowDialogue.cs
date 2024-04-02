@@ -309,6 +309,12 @@ public class ShowDialogue :DialogueViewBase
         TutorialCamControl.instance.DestroyWall9();
     }
 
+    [YarnCommand("DestroyBlockingWall10")]
+    public static void DestroyWalls10()
+    {
+        TutorialCamControl.instance.DestroyWall10();
+    }
+
 
 
     /*[YarnCommand("ShowDevilOnPlayerDeath")]

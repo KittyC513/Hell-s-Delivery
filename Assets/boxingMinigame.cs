@@ -91,6 +91,7 @@ public class boxingMinigame : MonoBehaviour
                     //        respawnControl.endminigamep1();
                     //    }
                     //}
+
                     GameManager.instance.p2.rC.endminigamep1();
                     endMinigame();
                 }
@@ -114,12 +115,22 @@ public class boxingMinigame : MonoBehaviour
                     //        respawnControl.endminigamep2();
                     //    }
                     //}
+
                     GameManager.instance.p1.rC.endminigamep2();
                     endMinigame();      
                 }
 
-                healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
-                healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
+                //if (GameManager.instance.p1.damageApplied)
+                //{
+                //    healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
+                //}
+
+                //if (GameManager.instance.p2.damageApplied)
+                //{
+                //    healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
+                //}
+
+
                 //print("HP");
 
             }
