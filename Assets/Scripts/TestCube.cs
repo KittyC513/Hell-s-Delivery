@@ -546,7 +546,13 @@ public class TestCube : MonoBehaviour
 
     public float pushShaderTimer;
 
-
+    [Header("Level1")]
+    [SerializeField]
+    public GameObject JumpOverIntruction;
+    [SerializeField]
+    public GameObject cantJump1;
+    [SerializeField]
+    public GameObject cantJump2;
 
     //[SerializeField]
     //float dropValue;
@@ -653,7 +659,8 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        P1Damage();
+        P2Damage();
         DetectDirectionBetweenPlayerAndObject();
         //DetectPackageWeight();
         CastBlobShadow();
@@ -2151,6 +2158,10 @@ public class TestCube : MonoBehaviour
             }
 
         }
+        else
+        {
+            NPCInteracting = false;
+        }
 
         if (withinNPC2Range)
         {
@@ -2175,6 +2186,10 @@ public class TestCube : MonoBehaviour
             }
 
         }
+        else
+        {
+            NPC2Interacting = false;
+        }
 
         if (withinNPC3Range)
         {
@@ -2198,6 +2213,10 @@ public class TestCube : MonoBehaviour
                 NPC3Interacting = false;
             }
 
+        }
+        else
+        {
+            NPC3Interacting = false;
         }
 
         if (withinEntranceRange && curSceneName == "TitleScene")
@@ -2584,14 +2603,14 @@ public class TestCube : MonoBehaviour
         if(isPlayer1 && p1pushed && !pushIsIntervinedP1)
         {
             P1Push();
-            pushIsIntervinedP1 = true;
 
+            //pushIsIntervinedP1 = true;
         }
 
         if (isPlayer2 && p2pushed && !pushIsIntervinedP2)
         {
             P2Push();
-            pushIsIntervinedP2 = true;
+            //pushIsIntervinedP2 = true;
         }
 
     }
@@ -2637,7 +2656,7 @@ public class TestCube : MonoBehaviour
 
         if (rC.Player2isCarrying)
         {
-            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel" || gameManager.curSceneName == "Tutorial")
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
             {
                 if (!bM.isboxing)
                 {
@@ -2646,6 +2665,12 @@ public class TestCube : MonoBehaviour
                 }
 
             }
+            else if(gameManager.curSceneName != "Level1" && gameManager.curSceneName != "MVPLevel")
+            {
+                p1Steal = true;
+                gameManager.p2.objectGrabbable = null;
+            }
+
         }
 
         while (elapsedTime < duration)
@@ -2679,9 +2704,13 @@ public class TestCube : MonoBehaviour
     {
         StartCoroutine(P1PushCoroutine());
 
-        if (gameManager.curSceneName == "Level1")
+    }
+
+    void P1Damage()
+    {
+        if (gameManager.curSceneName == "Level1" && bM != null)
         {
-            if (bM.isboxing)
+            if (bM.isboxing && isPlayer1 && p1pushed)
             {
                 if (!damageApplied)
                 {
@@ -2700,12 +2729,10 @@ public class TestCube : MonoBehaviour
                     print("Damage1" + bM.p1pushedcount);
                     damageApplied = true;
 
-
                 }
 
             }
         }
-        //p1pushed = true;
     }
 
     IEnumerator P2PushCoroutine()
@@ -2750,7 +2777,7 @@ public class TestCube : MonoBehaviour
 
         if (rC.Player1isCarrying)
         {
-            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel" || gameManager.curSceneName == "Tutorial")
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
             {
                 if (!bM.isboxing)
                 {
@@ -2758,7 +2785,14 @@ public class TestCube : MonoBehaviour
                     gameManager.p1.objectGrabbable = null;
                 }
 
+            } 
+            else if (gameManager.curSceneName != "Level1" && gameManager.curSceneName != "MVPLevel")
+            {
+                p2Steal = true;
+                gameManager.p1.objectGrabbable = null;
             }
+
+            
 
         }
 
@@ -2789,13 +2823,17 @@ public class TestCube : MonoBehaviour
     void P2Push()
     {
         StartCoroutine(P2PushCoroutine());
+        
+    }
 
-        //p2pushed = true;
-        if (gameManager.curSceneName == "Level1")
+    void P2Damage()
+    {
+        
+        if (gameManager.curSceneName == "Level1" && bM != null)
         {
-            if (bM.isboxing)
+            if (bM.isboxing && isPlayer2 && p2pushed)
             {
-                if(!damageApplied)
+                if (!damageApplied)
                 {
                     if (forceMagnitude2 <= oriPushForce)
                     {
@@ -2817,7 +2855,6 @@ public class TestCube : MonoBehaviour
             }
 
         }
-
     }
 
     IEnumerator StopBeingPushedP1()
@@ -2840,10 +2877,10 @@ public class TestCube : MonoBehaviour
         p1Anim.SetBool("isFalling", true);
         p1Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
-        damageApplied = false;
+        //damageApplied = false;
         
         gameManager.p2.pushCDSlider.gameObject.SetActive(false);
-
+        pushIsIntervinedP1 = false;
 
         yield return new WaitForSeconds(1.5f);
         p1Anim.SetBool("isFalling", false);
@@ -2869,9 +2906,9 @@ public class TestCube : MonoBehaviour
         p2Anim.SetBool("isFalling", true);
         p2Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
-        damageApplied = false;
+        //damageApplied = false;
         gameManager.p1.pushCDSlider.gameObject.SetActive(false);
-
+        pushIsIntervinedP2 = false;
         yield return new WaitForSeconds(1.5f);
         p2Anim.SetBool("isFalling", false);
     }
@@ -3739,7 +3776,8 @@ public class TestCube : MonoBehaviour
             p1pushed = false;
             pushTimer = 0;
             pushStartTimer = true;
-            pushIsIntervinedP1 = false;
+            //pushIsIntervinedP1 = false;
+            damageApplied = false; 
         }
 
         if (isPlayer2)
@@ -3747,7 +3785,8 @@ public class TestCube : MonoBehaviour
             p2pushed = false;
             pushTimer = 0;
             pushStartTimer = true;
-            pushIsIntervinedP2 = false;
+            //pushIsIntervinedP2 = false;
+            damageApplied = false;
         }
 
     }

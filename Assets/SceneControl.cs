@@ -165,6 +165,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public bool UITurnOff;
 
+
     [Header("Level 1")]
     [SerializeField]
     private GameObject packageInstruction;
@@ -206,6 +207,8 @@ public class SceneControl : MonoBehaviour
     private bool isSkipped;
     [SerializeField]
     private bool isntSkipped;
+    [SerializeField]
+    public bool canRespawn;
 
     [Header("Bark")]
     [SerializeField]
@@ -1301,6 +1304,7 @@ public class SceneControl : MonoBehaviour
             {
                 ShowPackageInstruction2();
             }
+
         }
         else
         {
@@ -1317,6 +1321,7 @@ public class SceneControl : MonoBehaviour
     public void TriggerFirstButton()
     {
         firstButtonIsTriggered = true;
+
     }
     public void TriggerFirstButton2()
     {
@@ -1336,6 +1341,14 @@ public class SceneControl : MonoBehaviour
         firstButtonIsTriggered3 = false;
     }
 
+    public void TurnOnJumpOverUI()
+    {
+        GameManager.instance.p1.JumpOverIntruction.SetActive(true);
+    }
+    public void TurnOffJumpOverUI()
+    {
+        GameManager.instance.p1.JumpOverIntruction.SetActive(false);
+    }
     public void LalahLeave()
     {
         lalahTrigger.dialogueEnd = true;

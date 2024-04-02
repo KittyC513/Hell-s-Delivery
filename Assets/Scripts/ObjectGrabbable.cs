@@ -795,9 +795,9 @@ public class ObjectGrabbable : MonoBehaviour
     #region Package Cooldown Timer
     void PackageCooldown()
     {
-        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel" || GameManager.instance.curSceneName == "Tutorial")
+        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
         {
-            if (P1TakePackage == false && P2TakePackage == false)
+            if (P1TakePackage == false && P2TakePackage == false && Level1CamControl.instance.cutsceneIsCompleted)
             {
                 if (timer < 30 && !boxingMinigame.instance.isboxing)
                 {
@@ -810,9 +810,8 @@ public class ObjectGrabbable : MonoBehaviour
                         PlayerIndicator.instance.anim.SetBool("DisppearWarning", true);
                     }
                 }
-                else
+                else if(timer >= 30 && !boxingMinigame.instance.isboxing)
                 {
-
                     if (!backToLocation)
                     {                
                         this.transform.position = respawnPoint;
@@ -822,8 +821,45 @@ public class ObjectGrabbable : MonoBehaviour
                     }
 
                 }
+            
             }
             else if(P1TakePackage || P2TakePackage)
+            {
+                backToLocation = false;
+                timer = 0;
+
+            }
+        }
+
+        if(GameManager.instance.curSceneName == "Tutorial")
+        {
+            if (P1TakePackage == false && P2TakePackage == false && SceneControl.instance.canRespawn)
+            {
+                if (timer < 30)
+                {
+                    timer += Time.deltaTime;
+
+                    if (timer >= 20 && timer < 30)
+                    {
+                        anim.SetBool("DisppearWarning", true);
+                        TargetIndicator.instance.anim.SetBool("DisppearWarning", true);
+                        PlayerIndicator.instance.anim.SetBool("DisppearWarning", true);
+                    }
+                }
+                else if (timer >= 30)
+                {
+                    if (!backToLocation)
+                    {
+                        this.transform.position = respawnPoint;
+                        backToLocation = true;
+                        getRespawned = true;
+
+                    }
+
+                }
+
+            }
+            else if (P1TakePackage || P2TakePackage)
             {
                 backToLocation = false;
                 timer = 0;

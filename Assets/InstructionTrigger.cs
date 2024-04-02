@@ -26,12 +26,12 @@ public class InstructionTrigger : MonoBehaviour
             if(!SceneControl.instance.firstButtonIsTriggered )
             {
                 canvasUI.SetActive(true);
-  
+                SceneControl.instance.TurnOnJumpOverUI();
             }
             else 
             {
                 canvasUI.SetActive(false);
-       
+                SceneControl.instance.TurnOffJumpOverUI();
             }
 
             SceneControl.instance.inDropArea = true;
@@ -44,6 +44,7 @@ public class InstructionTrigger : MonoBehaviour
         {
             canvasUI.SetActive(false);
             SceneControl.instance.firstButtonIsTriggered = false;
+            SceneControl.instance.TurnOffJumpOverUI();
         }
     }
 }

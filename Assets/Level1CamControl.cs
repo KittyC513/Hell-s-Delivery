@@ -32,6 +32,8 @@ public class Level1CamControl : MonoBehaviour
     [SerializeField]
     public Camera miniCam;
     [SerializeField]
+    public Transform cutSceneMiniCam;
+    [SerializeField]
     public bool cutsceneIsCompleted;
     [SerializeField]
     public bool endCutScene;
@@ -180,11 +182,29 @@ public class Level1CamControl : MonoBehaviour
         GameManager.instance.p2.isFreeze = true;
         GameManager.instance.cam1.SetActive(false);
         GameManager.instance.cam2.SetActive(false);
-        miniCam.gameObject.SetActive(true);
+        if(GameManager.instance.curSceneName == "MVPLevel")
+        {
+            miniCam.gameObject.SetActive(true);
+            //MoveCamera(cutSceneMiniCam);
+        }
+        else
+        {
+            miniCam.gameObject.SetActive(true);
+        }
         yield return new WaitForSeconds(3f);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
     }
+
+    public void MoveCamera(Transform newPos)
+    {
+        float lerpSpeed = 1f;
+        miniCam.transform.position = Vector3.Lerp(miniCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
+        miniCam.transform.rotation = Quaternion.Lerp(miniCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
+        
+    }
+
+
 
     IEnumerator endminigameCutscene()
     {
