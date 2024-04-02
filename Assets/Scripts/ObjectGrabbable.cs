@@ -257,7 +257,22 @@ public class ObjectGrabbable : MonoBehaviour
             GameManager.instance.p2.objectGrabbable = null;
             if (isHeavy)
             {
-                GameManager.instance.p1.tooHeavy = true;
+                if(GameManager.instance.curSceneName == "Level1")
+                {
+                    if (boxingMinigame.instance.isboxing)
+                    {
+                        GameManager.instance.p1.tooHeavy = false;
+                    }
+                    else
+                    {
+                        GameManager.instance.p1.tooHeavy = true;
+                    }
+                }
+                else
+                {
+                    GameManager.instance.p1.tooHeavy = true;
+                }
+                
             }
             else
             {
@@ -275,7 +290,22 @@ public class ObjectGrabbable : MonoBehaviour
             GameManager.instance.p1.objectGrabbable = null;
             if (isHeavy)
             {
-                GameManager.instance.p2.tooHeavy = true;
+                if(GameManager.instance.curSceneName == "Level1")
+                {
+                    if (boxingMinigame.instance.isboxing)
+                    {
+                        GameManager.instance.p2.tooHeavy = false;
+                    }
+                    else
+                    {
+                        GameManager.instance.p2.tooHeavy = true;
+                    }
+                }
+                else
+                {
+                    GameManager.instance.p2.tooHeavy = true;
+                }
+
             }
             else
             {
@@ -765,7 +795,7 @@ public class ObjectGrabbable : MonoBehaviour
     #region Package Cooldown Timer
     void PackageCooldown()
     {
-        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel" || GameManager.instance.curSceneName == "Tutorial")
         {
             if (P1TakePackage == false && P2TakePackage == false)
             {

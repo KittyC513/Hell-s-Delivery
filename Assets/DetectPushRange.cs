@@ -35,14 +35,12 @@ public class DetectPushRange : MonoBehaviour
     {
         if (isPlayer1 && other.CompareTag("Player"))
         {
-            print("InRange");
             testCube.withinPushingRange = true;
         }
 
         if (isPlayer2 && other.CompareTag("Player"))
         {
             testCube.withinPushingRange = true;
-            print("InRange");
         }
     }
 

@@ -236,9 +236,9 @@ public class TestCube : MonoBehaviour
 
     [Header("Push")]
     [SerializeField]
-    private float pushCd;
+    public float pushCd;
     [SerializeField]
-    private float pushTimer;
+    public float pushTimer;
     [SerializeField]
     private float pushForce;
     [SerializeField]
@@ -526,7 +526,7 @@ public class TestCube : MonoBehaviour
     private boxingMinigame bM;
     private GameObject minigame;
     [SerializeField]
-    private bool damageApplied;
+    public bool damageApplied;
     [SerializeField]
     public float forceMagnitude1;
     [SerializeField]
@@ -2584,13 +2584,14 @@ public class TestCube : MonoBehaviour
         if(isPlayer1 && p1pushed && !pushIsIntervinedP1)
         {
             P1Push();
-
+            pushIsIntervinedP1 = true;
 
         }
 
         if (isPlayer2 && p2pushed && !pushIsIntervinedP2)
         {
             P2Push();
+            pushIsIntervinedP2 = true;
         }
 
     }
@@ -2636,7 +2637,7 @@ public class TestCube : MonoBehaviour
 
         if (rC.Player2isCarrying)
         {
-            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel" || gameManager.curSceneName == "Tutorial")
             {
                 if (!bM.isboxing)
                 {
@@ -2682,7 +2683,7 @@ public class TestCube : MonoBehaviour
         {
             if (bM.isboxing)
             {
-                if (!damageApplied && !pushIsIntervinedP2)
+                if (!damageApplied)
                 {
                     if (forceMagnitude1 <= oriPushForce)
                     {
@@ -2692,11 +2693,16 @@ public class TestCube : MonoBehaviour
                     {
                         forceMagnitude1 = pushForce * pushHoldTime;
                     }
-                    bM.p1pushedcount += forceMagnitude1;
 
-                    print("Damage1");
-                    damageApplied = true;
+
+                    bM.p1pushedcount += forceMagnitude1;
+                    bM.healthP1.fillAmount = (bM.maxDamage - bM.p1pushedcount) / bM.maxDamage;
                     pushIsIntervinedP2 = true;
+                    print("Damage1" + bM.p1pushedcount);
+
+                    damageApplied = true;
+
+
                 }
 
             }
@@ -2746,7 +2752,7 @@ public class TestCube : MonoBehaviour
 
         if (rC.Player1isCarrying)
         {
-            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel")
+            if (gameManager.curSceneName == "Level1" || gameManager.curSceneName == "MVPLevel" || gameManager.curSceneName == "Tutorial")
             {
                 if (!bM.isboxing)
                 {
@@ -2791,7 +2797,7 @@ public class TestCube : MonoBehaviour
         {
             if (bM.isboxing)
             {
-                if(!damageApplied && !pushIsIntervinedP1)
+                if(!damageApplied)
                 {
                     if (forceMagnitude2 <= oriPushForce)
                     {
@@ -2802,10 +2808,12 @@ public class TestCube : MonoBehaviour
                         forceMagnitude2 = pushForce * pushHoldTime;
                     }
 
+
                     bM.p2pushedcount += forceMagnitude2;
+                    bM.healthP2.fillAmount = (bM.maxDamage - bM.p2pushedcount) / bM.maxDamage;
+                    print("Damage2" + bM.p2pushedcount);
 
                     damageApplied = true;
-                    pushIsIntervinedP1 = true;
                 }
 
             }

@@ -11,7 +11,7 @@ public class FollowP1Cam : MonoBehaviour
 
     private void Start()
     {
-
+        p1Cam = GameManager.instance.cam1.GetComponent<Camera>();
     }
     void Update()
     {
