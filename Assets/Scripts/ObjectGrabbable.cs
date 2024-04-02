@@ -851,6 +851,8 @@ public class ObjectGrabbable : MonoBehaviour
                     if (!backToLocation)
                     {
                         this.transform.position = respawnPoint;
+                        P1TakePackage = false;
+                        P2TakePackage = false;
                         backToLocation = true;
                         getRespawned = true;
 

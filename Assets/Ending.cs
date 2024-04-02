@@ -22,7 +22,12 @@ public class Ending : MonoBehaviour
         {
             GameManager.instance.changeSceneTimes += 1;
             GameManager.instance.LalahRequestWasCompleted = true;
-            badgeManager.RunFinalCheck();
+
+            if(badgeManager != null)
+            {
+                badgeManager.RunFinalCheck();
+            }
+
             Loader.Load(Loader.Scene.ScoreCards);
 
         }
@@ -31,7 +36,12 @@ public class Ending : MonoBehaviour
         {
             GameManager.instance.changeSceneTimes += 1;
             GameManager.instance.WertherRequestWasCompleted = true;
-            badgeManager.RunFinalCheck();
+            
+            if(badgeManager != null)
+            {
+                badgeManager.RunFinalCheck();
+            }
+
             Loader.Load(Loader.Scene.ScoreCards);
 
         }
@@ -50,7 +60,11 @@ public class Ending : MonoBehaviour
 
                 GameManager.instance.changeSceneTimes += 1;
 
-                badgeManager.RunFinalCheck();
+                if(badgeManager != null)
+                {
+                    badgeManager.RunFinalCheck();
+                }
+
                 GameManager.instance.LalahRequestWasCompleted = true;
                 Loader.Load(Loader.Scene.ScoreCards);
                 
@@ -65,7 +79,11 @@ public class Ending : MonoBehaviour
 
                 GameManager.instance.changeSceneTimes += 1;
 
-                badgeManager.RunFinalCheck();
+                if(badgeManager != null)
+                {
+                    badgeManager.RunFinalCheck();
+                }
+
                 GameManager.instance.WertherRequestWasCompleted = true;
                 Loader.Load(Loader.Scene.ScoreCards);
 

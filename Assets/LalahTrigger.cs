@@ -67,7 +67,7 @@ public class LalahTrigger : MonoBehaviour
             StartCoroutine(Walking());
         }
 
-        if (npcArrived && !dialogueEnd)
+        if (npcArrived && !dialogueEnd || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
         {
             smoke.SetActive(false);
         }
@@ -95,6 +95,7 @@ public class LalahTrigger : MonoBehaviour
         if (dialogueEnd && !isLeaving)
         {           
             StartCoroutine(Leaving());
+            GameManager.instance.LalahLeft = true;
         }
     }
 
