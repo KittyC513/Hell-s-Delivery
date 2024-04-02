@@ -546,7 +546,13 @@ public class TestCube : MonoBehaviour
 
     public float pushShaderTimer;
 
-
+    [Header("Level1")]
+    [SerializeField]
+    public GameObject JumpOverIntruction;
+    [SerializeField]
+    public GameObject cantJump1;
+    [SerializeField]
+    public GameObject cantJump2;
 
     //[SerializeField]
     //float dropValue;

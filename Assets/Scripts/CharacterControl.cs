@@ -184,10 +184,36 @@ public class CharacterControl : MonoBehaviour
             if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
         }
 
+        if(isSlow && jump.ReadValue<float>() == 1)
+        {
+            if (isPlayer1)
+            {
+                StartCoroutine(TurnOnUI1());
+            }
+
+            if (isPlayer2)
+            {
+                StartCoroutine(TurnOnUI2());
+            }
+        }
+
+        IEnumerator TurnOnUI1()
+        {
+            GameManager.instance.p1.cantJump1.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            GameManager.instance.p1.cantJump1.SetActive(false);
+        }
+
+        IEnumerator TurnOnUI2()
+        {
+            GameManager.instance.p2.cantJump2.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            GameManager.instance.p2.cantJump2.SetActive(false);
+        }
 
         //if we're on a summoning circle freeze movement
 
-        if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
         {
             if (!boxingMinigame.instance.isboxing)
             {
@@ -876,7 +902,6 @@ public class CharacterControl : MonoBehaviour
         //if the jump button is pressed
         if (readJumpValue && shouldJump && !isJumping && canJump)
         {
-
 
             canJump = false;
             if (!isJumping && shouldJump)

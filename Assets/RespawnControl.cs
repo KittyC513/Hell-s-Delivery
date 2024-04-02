@@ -546,7 +546,7 @@ public class RespawnControl : MonoBehaviour
         {
             player.transform.position = respawnPos;
             P1RespawnRotation = SceneControl.instance.P1Rotation;
-            P2RespawnRotation = P1RespawnRotation;
+            GameManager.instance.p2.rC.P2RespawnRotation = P1RespawnRotation;
             player.transform.rotation = P1RespawnRotation.rotation;
         }
         else if (curSceneName == scene4 || curSceneName == scene9)
@@ -555,7 +555,7 @@ public class RespawnControl : MonoBehaviour
             if (isPlayer1 && P1RespawnRotation != null)
             {
                 player.transform.rotation = P1RespawnRotation.rotation;
-                //P2RespawnRotation.rotation = P1RespawnRotation.rotation;
+                GameManager.instance.p2.rC.P2RespawnRotation.rotation = P1RespawnRotation.rotation;
                 print("11");
             }
 
@@ -563,7 +563,7 @@ public class RespawnControl : MonoBehaviour
             {
 
                 player.transform.rotation = P2RespawnRotation.rotation;
-                //P1RespawnRotation.rotation = P2RespawnRotation.rotation;
+                GameManager.instance.p1.rC.P1RespawnRotation.rotation = P2RespawnRotation.rotation;
                 print("22");
             }
 
@@ -1124,8 +1124,8 @@ public class RespawnControl : MonoBehaviour
         if (other.gameObject.tag == ("fCheckpoint"))
         {
 
-            respawnPoint = other.transform.position;
-
+            GameManager.instance.p1.rC.respawnPoint = other.transform.position;
+            GameManager.instance.p2.rC.respawnPoint = other.transform.position;
 
             if (objectGrabbable != null)
             {
@@ -1136,14 +1136,14 @@ public class RespawnControl : MonoBehaviour
             {
                 //StartCoroutine(ActivateP1UIForDuration(3f));
                 P1RespawnRotation = other.transform.Find("Rotation").transform;
-                P2RespawnRotation = P1RespawnRotation;
+                GameManager.instance.p2.rC.P2RespawnRotation = P1RespawnRotation;
             }
 
             if (isPlayer2)
             {
                 //StartCoroutine(ActivateP2UIForDuration(3f));
                 P2RespawnRotation = other.transform.Find("Rotation").transform;
-                P1RespawnRotation = P2RespawnRotation;
+                GameManager.instance.p1.rC.P1RespawnRotation = P2RespawnRotation;
             }
 
 
@@ -1157,18 +1157,18 @@ public class RespawnControl : MonoBehaviour
 
             //Debug.Log("RespawnPoint =" + respawnPoint);
 
-            foreach (GameObject obj in Partner)
-            {
-                //Debug.Log("loopworking");
-                RespawnControl partnerScript = obj.GetComponent<RespawnControl>();
+            //foreach (GameObject obj in Partner)
+            //{
+            //    //Debug.Log("loopworking");
+            //    RespawnControl partnerScript = obj.GetComponent<RespawnControl>();
 
-                if (partnerScript != null)
-                {
-                    partnerScript.respawnPoint = respawnPoint;
-                    //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
-                }
-                //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
-            }
+            //    if (partnerScript != null)
+            //    {
+            //        partnerScript.respawnPoint = respawnPoint;
+            //        //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+            //    }
+            //    //Debug.Log("Partner Respawn Point" + partnerScript.respawnPoint);
+            //}
 
         }
 

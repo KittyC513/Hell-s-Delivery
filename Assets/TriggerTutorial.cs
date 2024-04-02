@@ -28,6 +28,7 @@ public class TriggerTutorial : MonoBehaviour
             if(this.gameObject.tag == "Package_Tutorial")
             {
                 TutorialCamControl.instance.inPackageArea = true;
+                SceneControl.instance.canRespawn = true;
             }
 
             if(this.gameObject.tag == "Push_Tutorial")
