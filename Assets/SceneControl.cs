@@ -301,7 +301,7 @@ public class SceneControl : MonoBehaviour
             werther.SetActive(false);
         }
 
-        if(GameManager.instance.timesEnterHub == 2 && !secondTimeStarts)
+        if(GameManager.instance.timesEnterHub >= 2 && !secondTimeStarts)
         {
             radialUI.SetActive(false);
             GameManager.instance.p1.isFreeze = false;
