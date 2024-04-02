@@ -2151,6 +2151,10 @@ public class TestCube : MonoBehaviour
             }
 
         }
+        else
+        {
+            NPCInteracting = false;
+        }
 
         if (withinNPC2Range)
         {
@@ -2175,6 +2179,10 @@ public class TestCube : MonoBehaviour
             }
 
         }
+        else
+        {
+            NPC2Interacting = false;
+        }
 
         if (withinNPC3Range)
         {
@@ -2198,6 +2206,10 @@ public class TestCube : MonoBehaviour
                 NPC3Interacting = false;
             }
 
+        }
+        else
+        {
+            NPC3Interacting = false;
         }
 
         if (withinEntranceRange && curSceneName == "TitleScene")
