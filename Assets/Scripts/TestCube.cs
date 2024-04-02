@@ -2697,9 +2697,7 @@ public class TestCube : MonoBehaviour
 
                     bM.p1pushedcount += forceMagnitude1;
                     bM.healthP1.fillAmount = (bM.maxDamage - bM.p1pushedcount) / bM.maxDamage;
-                    pushIsIntervinedP2 = true;
                     print("Damage1" + bM.p1pushedcount);
-
                     damageApplied = true;
 
 
@@ -2843,11 +2841,11 @@ public class TestCube : MonoBehaviour
         p1Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
         damageApplied = false;
-        pushIsIntervinedP1 = false;
+        
         gameManager.p2.pushCDSlider.gameObject.SetActive(false);
 
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         p1Anim.SetBool("isFalling", false);
 
     }
@@ -2872,7 +2870,6 @@ public class TestCube : MonoBehaviour
         p2Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
         damageApplied = false;
-        pushIsIntervinedP2 = false;
         gameManager.p1.pushCDSlider.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(1.5f);
@@ -3666,41 +3663,50 @@ public class TestCube : MonoBehaviour
         //if (ReadPushButton())
         if(ReadPushReleaseButton())
         {
-
             if(pushTimer >= pushCd)
             {
-                if(isPlayer1 && withinPushingRange)
+                if(isPlayer1)
                 {
-                    p1pushed = true;
-                    pushStartTimer = false;
-                    p1Anim.SetBool("isPushing", true);
 
-                    if (ScoreCount.instance != null)
+                    if (withinPushingRange)
                     {
-                        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, true);
-                        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, false);
+                        p1pushed = true;
+                        pushStartTimer = false;
+                        p1Anim.SetBool("isPushing", true);
+
+                        if (ScoreCount.instance != null)
+                        {
+                            ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, true);
+                            ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, false);
+                        }
+
+                        pushCDtimer = 0;
+
+                        Invoke(nameof(ResetPush), pushDuration);
                     }
 
-                    pushCDtimer = 0;
-
-                    Invoke(nameof(ResetPush), pushDuration);
                 }
 
-                if (isPlayer2 && withinPushingRange)
+                if (isPlayer2)
                 {
-                    p2pushed = true;
-                    pushStartTimer = false;
-                    p2Anim.SetBool("isPushing", true);
-
-
-                    if (ScoreCount.instance != null)
+                    pushIsIntervinedP2 = false;
+                    if (withinPushingRange)
                     {
-                        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, false);
-                        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, true);
-                    }
+                        p2pushed = true;
+                        pushStartTimer = false;
+                        p2Anim.SetBool("isPushing", true);
 
-                    pushCDtimer = 0;
-                    Invoke(nameof(ResetPush), pushDuration);
+
+                        if (ScoreCount.instance != null)
+                        {
+                            ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, false);
+                            ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushed, 1, true);
+                        }
+
+                        pushCDtimer = 0;
+                        Invoke(nameof(ResetPush), pushDuration);
+                    }
+                    
                 }
             }
 
@@ -3733,6 +3739,7 @@ public class TestCube : MonoBehaviour
             p1pushed = false;
             pushTimer = 0;
             pushStartTimer = true;
+            pushIsIntervinedP1 = false;
         }
 
         if (isPlayer2)
@@ -3740,6 +3747,7 @@ public class TestCube : MonoBehaviour
             p2pushed = false;
             pushTimer = 0;
             pushStartTimer = true;
+            pushIsIntervinedP2 = false;
         }
 
     }
