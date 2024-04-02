@@ -810,9 +810,8 @@ public class ObjectGrabbable : MonoBehaviour
                         PlayerIndicator.instance.anim.SetBool("DisppearWarning", true);
                     }
                 }
-                else
+                else if(timer >= 30 && !boxingMinigame.instance.isboxing)
                 {
-
                     if (!backToLocation)
                     {                
                         this.transform.position = respawnPoint;
@@ -822,6 +821,7 @@ public class ObjectGrabbable : MonoBehaviour
                     }
 
                 }
+            
             }
             else if(P1TakePackage || P2TakePackage)
             {

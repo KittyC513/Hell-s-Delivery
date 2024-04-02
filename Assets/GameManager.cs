@@ -251,7 +251,7 @@ public class GameManager : MonoBehaviour
         DetectPhone();
         //FindPackage();
         ResetPlayer();
-
+        ResetGame();
     }
 
     private void FixedUpdate()
@@ -909,6 +909,30 @@ public class GameManager : MonoBehaviour
     }
 
 
+
+    void ResetGame()
+    {
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            SceneManager.LoadScene("TitleScene");
+            instructionText.SetActive(false);
+            instance = this;
+            lighting1.SetActive(false);
+            lighting2.SetActive(false);
+            lighting3.SetActive(false);
+            sign.SetActive(false);
+            sceneChanged = false;
+            currentScene = SceneManager.GetActiveScene();
+            curSceneName = currentScene.name;
+            changeSceneTimes = 0;
+            firstTimeEnterHub = false;
+            timesEnterHub = 0;
+            WertherRequestWasCompleted = false;
+            LalahRequestWasCompleted = false; 
+            enterOffice = false;
+
+        }
+    }
 
 }
 
