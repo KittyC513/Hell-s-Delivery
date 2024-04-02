@@ -3243,7 +3243,7 @@ public class TestCube : MonoBehaviour
         isOnCircle = true;
         activeCircle = circle;
 
-        ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numButtons, 1, isPlayer1);
+       // ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numButtons, 1, isPlayer1);
     }
 
     public void OnSummoningExit()
