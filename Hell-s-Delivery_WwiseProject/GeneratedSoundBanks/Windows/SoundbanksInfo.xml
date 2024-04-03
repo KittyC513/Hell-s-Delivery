@@ -93,7 +93,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{771B9E2A-D753-B402-9415-F2A063761E09}">
+		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{6D74F699-48A1-E341-84FE-50D5B3EEA2A8}">
 			<ShortName>PlayerSFX</ShortName>
 			<Path>PlayerSFX.bnk</Path>
 			<Media>
@@ -121,6 +121,10 @@
 					<ShortName>WoodStep_1.wav</ShortName>
 					<CachePath>SFX/WoodStep_1_10C4C929.wem</CachePath>
 				</File>
+				<File Id="194001065" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Yapping.wav</ShortName>
+					<CachePath>SFX/Yapping_D79FB2B7.wem</CachePath>
+				</File>
 				<File Id="222451205" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>PlatformsPhaseIn.wav</ShortName>
 					<CachePath>SFX/PlatformsPhaseIn_10C4C929.wem</CachePath>
@@ -141,6 +145,10 @@
 					<ShortName>Step 3 - Light.wav</ShortName>
 					<CachePath>SFX/Step 3 - Light_10C4C929.wem</CachePath>
 				</File>
+				<File Id="423408521" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Sniff.wav</ShortName>
+					<CachePath>SFX/Sniff_10C4C929.wem</CachePath>
+				</File>
 				<File Id="428943920" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>BadgeSequence.wav</ShortName>
 					<CachePath>SFX/BadgeSequence_10C4C929.wem</CachePath>
@@ -156,6 +164,10 @@
 				<File Id="496788715" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>MetalLand_2.wav</ShortName>
 					<CachePath>SFX/MetalLand_2_10C4C929.wem</CachePath>
+				</File>
+				<File Id="507327128" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>CartoonFIght.wav</ShortName>
+					<CachePath>SFX/CartoonFIght_10C4C929.wem</CachePath>
 				</File>
 				<File Id="556158382" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>PackageImpact.wav</ShortName>
@@ -197,6 +209,10 @@
 					<ShortName>Landing.wav</ShortName>
 					<CachePath>SFX/Landing_10C4C929.wem</CachePath>
 				</File>
+				<File Id="794182195" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Whoosh.wav</ShortName>
+					<CachePath>SFX/Whoosh_10C4C929.wem</CachePath>
+				</File>
 				<File Id="809356602" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>MailCollectAlt2.wav</ShortName>
 					<CachePath>SFX/MailCollectAlt2_10C4C929.wem</CachePath>
@@ -213,6 +229,10 @@
 					<ShortName>MailCollect.wav</ShortName>
 					<CachePath>SFX/MailCollect_10C4C929.wem</CachePath>
 				</File>
+				<File Id="906178935" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SqueakyBite.wav</ShortName>
+					<CachePath>SFX/SqueakyBite_10C4C929.wem</CachePath>
+				</File>
 				<File Id="948208631" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>HighUpAmbience.wav</ShortName>
 					<CachePath>SFX/HighUpAmbience_10C4C929.wem</CachePath>
@@ -225,15 +245,32 @@
 					<ShortName>Step 2 - Light.wav</ShortName>
 					<CachePath>SFX/Step 2 - Light_10C4C929.wem</CachePath>
 				</File>
+				<File Id="995731348" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Stretch.wav</ShortName>
+					<CachePath>SFX/Stretch_10C4C929.wem</CachePath>
+				</File>
+				<File Id="1047220916" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PhoneRIng.wav</ShortName>
+					<CachePath>SFX/PhoneRIng_10C4C929.wem</CachePath>
+				</File>
 				<File Id="1049211099" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodLanding_2.wav</ShortName>
 					<CachePath>SFX/WoodLanding_2_10C4C929.wem</CachePath>
+				</File>
+				<File Id="1072808704" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Hat Realization Reverb.wav</ShortName>
+					<CachePath>SFX/Hat Realization Reverb_10C4C929.wem</CachePath>
 				</File>
 			</Media>
 			<Events>
 				<Event Id="3272596896" Name="Play_BadgeSequence" DurationType="OneShot" DurationMin="3.6666667" DurationMax="3.6666667">
 					<MediaRefs>
 						<MediaRef Id="428943920"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="4008188558" Name="Play_CartoonFIght" DurationType="OneShot" DurationMin="6" DurationMax="6">
+					<MediaRefs>
+						<MediaRef Id="507327128"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1359342141" Name="Play_Checkpoint_Get" MaxAttenuation="20" DurationType="Infinite">
@@ -249,6 +286,11 @@
 				<Event Id="452465945" Name="Play_Fan_All" MaxAttenuation="40" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="431873265"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2182026627" Name="Play_Hat_Realization_Reverb" DurationType="OneShot" DurationMin="2.5" DurationMax="2.5">
+					<MediaRefs>
+						<MediaRef Id="1072808704"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1431564541" Name="Play_HighUpAmbience" DurationType="OneShot" DurationMin="45.818188" DurationMax="45.818188">
@@ -309,6 +351,11 @@
 						<MediaRef Id="648574403"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="3447864244" Name="Play_PhoneRIng" DurationType="OneShot" DurationMin="5" DurationMax="5">
+					<MediaRefs>
+						<MediaRef Id="1047220916"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="2752324885" Name="Play_PlatformsMove" MaxAttenuation="90" DurationType="OneShot" DurationMin="3.5" DurationMax="3.5">
 					<MediaRefs>
 						<MediaRef Id="25988797"/>
@@ -338,9 +385,29 @@
 						<MediaRef Id="657201783"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="913401646" Name="Play_Sniff" DurationType="OneShot" DurationMin="0.7544218" DurationMax="0.7544218">
+					<MediaRefs>
+						<MediaRef Id="423408521"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3018288467" Name="Play_SqueakyBite" DurationType="OneShot" DurationMin="2" DurationMax="2">
+					<MediaRefs>
+						<MediaRef Id="906178935"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1150790929" Name="Play_Stretch" DurationType="OneShot" DurationMin="2" DurationMax="2">
+					<MediaRefs>
+						<MediaRef Id="995731348"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="2914340836" Name="Play_Summoning_Circle_All" MaxAttenuation="25" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="271139115"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="148817996" Name="Play_Whoosh" DurationType="OneShot" DurationMin="0.6755329" DurationMax="0.6755329">
+					<MediaRefs>
+						<MediaRef Id="794182195"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="3366204753" Name="Play_WindCatch" DurationType="Infinite">
@@ -356,6 +423,11 @@
 						<MediaRef Id="351540226"/>
 						<MediaRef Id="675843431"/>
 						<MediaRef Id="987426019"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3171885004" Name="Play_Yapping" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="194001065"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="4272057794" Name="Player_Steps" DurationType="OneShot" DurationMin="0.15054809" DurationMax="0.1575175">
@@ -387,8 +459,13 @@
 						<MediaRef Id="731966279"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="1587897726" Name="Stop_Yapping" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<MediaRefs>
+						<MediaRef Id="194001065"/>
+					</MediaRefs>
+				</Event>
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{B63F804D-43A3-DEDB-AC4F-BF4720895454}</FileHash>
+	<FileHash>{A40EBC93-28AA-E4F0-41E0-379D3635DDA5}</FileHash>
 </SoundBanksInfo>

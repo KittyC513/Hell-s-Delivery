@@ -15,11 +15,13 @@ namespace AK
     {
         static const AkUniqueID PLAY_APARTMENT_COMPLEX_V1 = 359343595U;
         static const AkUniqueID PLAY_BADGESEQUENCE = 3272596896U;
+        static const AkUniqueID PLAY_CARTOONFIGHT = 4008188558U;
         static const AkUniqueID PLAY_CHECKPOINT_GET = 1359342141U;
         static const AkUniqueID PLAY_CITYLEVELFINAL = 4177256649U;
         static const AkUniqueID PLAY_CROWNSEQUENCE = 2686563660U;
         static const AkUniqueID PLAY_DEVIL_THEME = 2640074606U;
         static const AkUniqueID PLAY_FAN_ALL = 452465945U;
+        static const AkUniqueID PLAY_HAT_REALIZATION_REVERB = 2182026627U;
         static const AkUniqueID PLAY_HIGHUPAMBIENCE = 1431564541U;
         static const AkUniqueID PLAY_HUB_MUSIC = 4050862303U;
         static const AkUniqueID PLAY_LANDINGS = 1019246482U;
@@ -30,22 +32,29 @@ namespace AK
         static const AkUniqueID PLAY_PACKAGEPICK = 3361946317U;
         static const AkUniqueID PLAY_PACKAGETHROW = 1549093586U;
         static const AkUniqueID PLAY_PARACHUTE = 419517223U;
+        static const AkUniqueID PLAY_PHONERING = 3447864244U;
         static const AkUniqueID PLAY_PLATFORMSMOVE = 2752324885U;
         static const AkUniqueID PLAY_PLATFORMSPHASEIN = 2281964030U;
         static const AkUniqueID PLAY_PLATFORMSPHASEOUT = 123604001U;
         static const AkUniqueID PLAY_RANDWOODLAND = 415850775U;
         static const AkUniqueID PLAY_SCORECARD_SEQUENCE = 342527874U;
         static const AkUniqueID PLAY_SCORESCENEMUSIC = 613185981U;
+        static const AkUniqueID PLAY_SNIFF = 913401646U;
+        static const AkUniqueID PLAY_SQUEAKYBITE = 3018288467U;
+        static const AkUniqueID PLAY_STRETCH = 1150790929U;
         static const AkUniqueID PLAY_SUMMONING_CIRCLE_ALL = 2914340836U;
         static const AkUniqueID PLAY_TUTORIALMUSIC = 2086825057U;
+        static const AkUniqueID PLAY_WHOOSH = 148817996U;
         static const AkUniqueID PLAY_WINDCATCH = 3366204753U;
         static const AkUniqueID PLAY_WOODSTEPS = 1787223838U;
+        static const AkUniqueID PLAY_YAPPING = 3171885004U;
         static const AkUniqueID PLAYER_STEPS = 4272057794U;
         static const AkUniqueID STOP_ALL = 452547817U;
         static const AkUniqueID STOP_FAN_ALL = 3708642647U;
         static const AkUniqueID STOP_PARACHUTE = 2017739505U;
         static const AkUniqueID STOP_SUMMONING_CIRCLE_ALL = 222428266U;
         static const AkUniqueID STOP_WINDCATCH = 1676944771U;
+        static const AkUniqueID STOP_YAPPING = 1587897726U;
     } // namespace EVENTS
 
     namespace BANKS

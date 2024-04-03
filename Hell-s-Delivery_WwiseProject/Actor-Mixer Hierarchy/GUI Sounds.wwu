@@ -90,6 +90,239 @@
 						<ActiveSource Name="ScoreCard Sequence" ID="{5863FA4E-6909-4088-9335-4E1E24CA86DE}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="Yapping" ID="{0074F3E0-D3A6-495A-8F3A-28E478AF1315}" ShortID="426593017">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-8</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Yapping" ID="{4E527328-8EDD-47CD-8453-11C6864E6B53}">
+							<Language>SFX</Language>
+							<AudioFile>Yapping.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="194001065"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Yapping" ID="{4E527328-8EDD-47CD-8453-11C6864E6B53}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Hat Realization Reverb" ID="{68F333BA-FEBA-4A21-8C2C-EFB329646A0F}" ShortID="885184717">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-9</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Hat Realization Reverb" ID="{51DCCA19-B7CF-4FDF-8CE6-28A6320CF2B9}">
+							<Language>SFX</Language>
+							<AudioFile>Hat Realization Reverb.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1072808704"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Hat Realization Reverb" ID="{51DCCA19-B7CF-4FDF-8CE6-28A6320CF2B9}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="CartoonFIght" ID="{7A71CDFC-62E0-4CD1-B5EB-BEF3C85AE734}" ShortID="757567739">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-15</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="CartoonFIght" ID="{8F1782BB-656F-4A9C-89A0-0EF234C1A100}">
+							<Language>SFX</Language>
+							<AudioFile>CartoonFIght.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="507327128"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="CartoonFIght" ID="{8F1782BB-656F-4A9C-89A0-0EF234C1A100}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="SqueakyBite" ID="{C2CA1BAC-4595-48F6-8172-F5C819508A49}" ShortID="1049977752">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-11</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="SqueakyBite" ID="{4403CF49-CA59-4EFD-B0C0-4B1D777437AB}">
+							<Language>SFX</Language>
+							<AudioFile>SqueakyBite.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="906178935"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="SqueakyBite" ID="{4403CF49-CA59-4EFD-B0C0-4B1D777437AB}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Sniff" ID="{AEE258D4-246B-4569-B604-48EBB8448785}" ShortID="404638890">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Sniff" ID="{956D768B-F27C-4F53-90B4-53AE22D97BB9}">
+							<Language>SFX</Language>
+							<AudioFile>Sniff.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="423408521"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Sniff" ID="{956D768B-F27C-4F53-90B4-53AE22D97BB9}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Whoosh" ID="{9D00CC50-B04A-4052-8DDA-F524901AFB97}" ShortID="750378744">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>12</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Whoosh" ID="{4C85E689-BC03-4665-AB51-65EB01ED5139}">
+							<Language>SFX</Language>
+							<AudioFile>Whoosh.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="794182195"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Whoosh" ID="{4C85E689-BC03-4665-AB51-65EB01ED5139}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Stretch" ID="{183AB3CC-B152-4EC0-A9F2-F334153C68BA}" ShortID="489967760">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>4</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Stretch" ID="{3CA5FA85-AF76-457C-AA0C-4919ADC68924}">
+							<Language>SFX</Language>
+							<AudioFile>Stretch.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="995731348"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Stretch" ID="{3CA5FA85-AF76-457C-AA0C-4919ADC68924}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="PhoneRIng" ID="{1E66CD29-24F4-4965-A3E2-B03F4D1C136D}" ShortID="632845121">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-7.5</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="PhoneRIng" ID="{CA44E5F4-6BA9-4380-A42D-0CC58A2C1AB6}">
+							<Language>SFX</Language>
+							<AudioFile>PhoneRIng.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1047220916"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="PhoneRIng" ID="{CA44E5F4-6BA9-4380-A42D-0CC58A2C1AB6}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>
