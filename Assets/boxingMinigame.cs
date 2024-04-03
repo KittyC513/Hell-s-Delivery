@@ -231,6 +231,7 @@ public class boxingMinigame : MonoBehaviour
         cm.endminigameCam();
         p1pushedcount = 0;
         p2pushedcount = 0;
+
         if (!packageIsShowed)
         {
             StartCoroutine(ShowPackage());
