@@ -167,6 +167,7 @@
 				</Sound>
 				<Sound Name="CityLevelFinal" ID="{BDD998C5-3A77-4306-9364-B39897211FE8}" ShortID="751955859">
 					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
 								<Value>-20</Value>
@@ -183,6 +184,10 @@
 					</ReferenceList>
 					<ChildrenList>
 						<AudioFileSource Name="CityLevelFinal" ID="{3F6D30B0-45BB-4C8C-B635-968717961513}">
+							<PropertyList>
+								<Property Name="LoopBegin" Type="Real64" Value="48"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+							</PropertyList>
 							<Language>SFX</Language>
 							<AudioFile>CityLevelFinal.wav</AudioFile>
 							<MediaIDList>
