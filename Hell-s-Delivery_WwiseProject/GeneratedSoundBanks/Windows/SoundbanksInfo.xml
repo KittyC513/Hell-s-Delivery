@@ -23,9 +23,79 @@
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 			</Busses>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{89FC1274-B7BF-4D4E-C7F3-714B1FDA2E91}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{29E61DAB-04D1-BD99-F6D2-8EFA28AEA73E}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
+			<Media>
+				<File Id="71935411" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Apartment Complex v1.wav</ShortName>
+					<CachePath>SFX/Apartment Complex v1_9D5A64B3.wem</CachePath>
+				</File>
+				<File Id="95162724" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>TutorialMusic.wav</ShortName>
+					<CachePath>SFX/TutorialMusic_F33C1FD4.wem</CachePath>
+				</File>
+				<File Id="446591649" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Devil Theme.wav</ShortName>
+					<CachePath>SFX/Devil Theme_84AFE0B4.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="359343595" Name="Play_Apartment_Complex_v1" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="71935411"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2640074606" Name="Play_Devil_Theme" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="446591649"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2086825057" Name="Play_TutorialMusic" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="95162724"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{57005207-2786-FBC6-5A9B-6EFB9DFF5AC0}">
+			<ShortName>Music</ShortName>
+			<Path>Music.bnk</Path>
+			<Media>
+				<File Id="382886941" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>ScoreSceneMusic.wav</ShortName>
+					<CachePath>SFX/ScoreSceneMusic_1633EC5B.wem</CachePath>
+				</File>
+				<File Id="472714137" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>CityLevelFinal.wav</ShortName>
+					<CachePath>SFX/CityLevelFinal_10C4C929.wem</CachePath>
+				</File>
+				<File Id="972916110" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Hub Music.wav</ShortName>
+					<CachePath>SFX/Hub Music_B41E0A40.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="4177256649" Name="Play_CityLevelFinal" DurationType="OneShot" DurationMin="256" DurationMax="256">
+					<MediaRefs>
+						<MediaRef Id="472714137"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="4050862303" Name="Play_Hub_Music" MaxAttenuation="30" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="972916110"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="613185981" Name="Play_ScoreSceneMusic" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="382886941"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{771B9E2A-D753-B402-9415-F2A063761E09}">
+			<ShortName>PlayerSFX</ShortName>
+			<Path>PlayerSFX.bnk</Path>
 			<Media>
 				<File Id="25988797" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>PlatformsMove.wav</ShortName>
@@ -42,14 +112,6 @@
 				<File Id="50289279" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>MailCollectAlt3.wav</ShortName>
 					<CachePath>SFX/MailCollectAlt3_10C4C929.wem</CachePath>
-				</File>
-				<File Id="71935411" Language="SFX" Streaming="false" Location="Memory">
-					<ShortName>Apartment Complex v1.wav</ShortName>
-					<CachePath>SFX/Apartment Complex v1_9D5A64B3.wem</CachePath>
-				</File>
-				<File Id="95162724" Language="SFX" Streaming="false" Location="Memory">
-					<ShortName>TutorialMusic.wav</ShortName>
-					<CachePath>SFX/TutorialMusic_F33C1FD4.wem</CachePath>
 				</File>
 				<File Id="143031910" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>CrownSequence.wav</ShortName>
@@ -79,10 +141,6 @@
 					<ShortName>Step 3 - Light.wav</ShortName>
 					<CachePath>SFX/Step 3 - Light_10C4C929.wem</CachePath>
 				</File>
-				<File Id="382886941" Language="SFX" Streaming="false" Location="Memory">
-					<ShortName>ScoreSceneMusic.wav</ShortName>
-					<CachePath>SFX/ScoreSceneMusic_1633EC5B.wem</CachePath>
-				</File>
 				<File Id="428943920" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>BadgeSequence.wav</ShortName>
 					<CachePath>SFX/BadgeSequence_10C4C929.wem</CachePath>
@@ -90,10 +148,6 @@
 				<File Id="431873265" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Fan_All.wav</ShortName>
 					<CachePath>SFX/Fan_All_85BFF465.wem</CachePath>
-				</File>
-				<File Id="446591649" Language="SFX" Streaming="false" Location="Memory">
-					<ShortName>Devil Theme.wav</ShortName>
-					<CachePath>SFX/Devil Theme_84AFE0B4.wem</CachePath>
 				</File>
 				<File Id="473084078" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodLanding_1.wav</ShortName>
@@ -167,10 +221,6 @@
 					<ShortName>MetalStep_1.wav</ShortName>
 					<CachePath>SFX/MetalStep_1_0244B083.wem</CachePath>
 				</File>
-				<File Id="972916110" Language="SFX" Streaming="false" Location="Memory">
-					<ShortName>Hub Music.wav</ShortName>
-					<CachePath>SFX/Hub Music_B41E0A40.wem</CachePath>
-				</File>
 				<File Id="987426019" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Step 2 - Light.wav</ShortName>
 					<CachePath>SFX/Step 2 - Light_10C4C929.wem</CachePath>
@@ -181,11 +231,6 @@
 				</File>
 			</Media>
 			<Events>
-				<Event Id="359343595" Name="Play_Apartment_Complex_v1" DurationType="Infinite">
-					<MediaRefs>
-						<MediaRef Id="71935411"/>
-					</MediaRefs>
-				</Event>
 				<Event Id="3272596896" Name="Play_BadgeSequence" DurationType="OneShot" DurationMin="3.6666667" DurationMax="3.6666667">
 					<MediaRefs>
 						<MediaRef Id="428943920"/>
@@ -201,11 +246,6 @@
 						<MediaRef Id="143031910"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="2640074606" Name="Play_Devil_Theme" DurationType="Infinite">
-					<MediaRefs>
-						<MediaRef Id="446591649"/>
-					</MediaRefs>
-				</Event>
 				<Event Id="452465945" Name="Play_Fan_All" MaxAttenuation="40" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="431873265"/>
@@ -214,11 +254,6 @@
 				<Event Id="1431564541" Name="Play_HighUpAmbience" DurationType="OneShot" DurationMin="45.818188" DurationMax="45.818188">
 					<MediaRefs>
 						<MediaRef Id="948208631"/>
-					</MediaRefs>
-				</Event>
-				<Event Id="4050862303" Name="Play_Hub_Music" MaxAttenuation="30" DurationType="Infinite">
-					<MediaRefs>
-						<MediaRef Id="972916110"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1019246482" Name="Play_Landings" DurationType="OneShot" DurationMin="0.2558957" DurationMax="0.2786168">
@@ -303,19 +338,9 @@
 						<MediaRef Id="657201783"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="613185981" Name="Play_ScoreSceneMusic" DurationType="Infinite">
-					<MediaRefs>
-						<MediaRef Id="382886941"/>
-					</MediaRefs>
-				</Event>
 				<Event Id="2914340836" Name="Play_Summoning_Circle_All" MaxAttenuation="25" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="271139115"/>
-					</MediaRefs>
-				</Event>
-				<Event Id="2086825057" Name="Play_TutorialMusic" DurationType="Infinite">
-					<MediaRefs>
-						<MediaRef Id="95162724"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="3366204753" Name="Play_WindCatch" DurationType="Infinite">
@@ -342,12 +367,28 @@
 					</MediaRefs>
 				</Event>
 				<Event Id="452547817" Name="Stop_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
-				<Event Id="3708642647" Name="Stop_Fan_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
-				<Event Id="2017739505" Name="Stop_Parachute" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
-				<Event Id="222428266" Name="Stop_Summoning_Circle_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
-				<Event Id="1676944771" Name="Stop_WindCatch" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+				<Event Id="3708642647" Name="Stop_Fan_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<MediaRefs>
+						<MediaRef Id="431873265"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2017739505" Name="Stop_Parachute" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<MediaRefs>
+						<MediaRef Id="648574403"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="222428266" Name="Stop_Summoning_Circle_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<MediaRefs>
+						<MediaRef Id="271139115"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1676944771" Name="Stop_WindCatch" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<MediaRefs>
+						<MediaRef Id="731966279"/>
+					</MediaRefs>
+				</Event>
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{64E11EC4-1C06-30F6-5A6D-ACE15E74463A}</FileHash>
+	<FileHash>{10BA90A4-5F93-719B-4C95-6D3B8989FC06}</FileHash>
 </SoundBanksInfo>

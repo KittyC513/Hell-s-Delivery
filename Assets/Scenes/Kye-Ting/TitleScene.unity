@@ -5512,6 +5512,8 @@ GameObject:
   - component: {fileID: 502827780}
   - component: {fileID: 502827779}
   - component: {fileID: 502827781}
+  - component: {fileID: 502827782}
+  - component: {fileID: 502827783}
   m_Layer: 0
   m_Name: WwiseGlobal
   m_TagString: Untagged
@@ -5560,6 +5562,54 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &502827781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502827778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7978db92cbccf04a8c4bd867714c691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: ae8d9d44
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 4ea9d67958dc24042baadb4a8fcde7ec, type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
+--- !u!114 &502827782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502827778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7978db92cbccf04a8c4bd867714c691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: ae8d9d44
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: d86e6981dc5e92049b644f7c9e5b64e9, type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
+--- !u!114 &502827783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11598,6 +11648,7 @@ MonoBehaviour:
   reject1: 0
   delayTimer: 0
   delayTimer1: 0
+  secondTimeStarts: 0
   werther: {fileID: 0}
   secondCustomer: 0
   wertherdialogueEnds: 0
@@ -11632,6 +11683,7 @@ MonoBehaviour:
   level1Overview: 0
   startLevel1: 0
   UITurnOff: 0
+  LalahTalkUi: {fileID: 0}
   packageInstruction: {fileID: 0}
   packageInstruction2: {fileID: 0}
   firstButtonIsTriggered: 0
@@ -11658,6 +11710,7 @@ MonoBehaviour:
   skipTutorial1: 0
   isSkipped: 0
   isntSkipped: 0
+  canRespawn: 0
   multiple: 0
   oriValue: 0
   endCanvas: {fileID: 0}
@@ -11805,6 +11858,8 @@ MonoBehaviour:
   acceptLalahOrder: 0
   WertherRequestWasCompleted: 0
   accepWertherOrder: 0
+  WertherLeft: 0
+  LalahLeft: 0
   lastLevelData: {fileID: 0}
   playerScore: {fileID: 0}
 --- !u!4 &977069486

@@ -16,6 +16,7 @@ namespace AK
         static const AkUniqueID PLAY_APARTMENT_COMPLEX_V1 = 359343595U;
         static const AkUniqueID PLAY_BADGESEQUENCE = 3272596896U;
         static const AkUniqueID PLAY_CHECKPOINT_GET = 1359342141U;
+        static const AkUniqueID PLAY_CITYLEVELFINAL = 4177256649U;
         static const AkUniqueID PLAY_CROWNSEQUENCE = 2686563660U;
         static const AkUniqueID PLAY_DEVIL_THEME = 2640074606U;
         static const AkUniqueID PLAY_FAN_ALL = 452465945U;
@@ -51,6 +52,8 @@ namespace AK
     {
         static const AkUniqueID INIT = 1355168291U;
         static const AkUniqueID MAIN = 3161908922U;
+        static const AkUniqueID MUSIC = 3991942870U;
+        static const AkUniqueID PLAYERSFX = 4283257371U;
     } // namespace BANKS
 
     namespace BUSSES

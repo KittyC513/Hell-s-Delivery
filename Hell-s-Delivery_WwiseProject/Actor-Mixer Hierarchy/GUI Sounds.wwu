@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{9E4E1A73-D011-400E-BE16-51C3A5D158F8}" SchemaVersion="110">
+	<AudioObjects>
+		<WorkUnit Name="GUI Sounds" ID="{9E4E1A73-D011-400E-BE16-51C3A5D158F8}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="CrownSequence" ID="{67BC69BA-9A84-42A7-9563-26B0DF113C12}" ShortID="219626401">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-8</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="CrownSequence" ID="{9C352D14-B77A-4812-98FB-3C3E2F0B19EC}">
+							<Language>SFX</Language>
+							<AudioFile>CrownSequence.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="143031910"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="CrownSequence" ID="{9C352D14-B77A-4812-98FB-3C3E2F0B19EC}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="BadgeSequence" ID="{DB667E92-6FC1-4B7B-B59F-C1EC4DB7E207}" ShortID="919882558">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="BadgeSequence" ID="{9CB5841C-2026-4C11-9F5F-75FA39519134}">
+							<Language>SFX</Language>
+							<AudioFile>BadgeSequence.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="428943920"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="BadgeSequence" ID="{9CB5841C-2026-4C11-9F5F-75FA39519134}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="ScoreCard Sequence" ID="{DE6FC337-AA61-4DF4-B374-AF199F000B7D}" ShortID="857047676">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-16</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="ScoreCard Sequence" ID="{5863FA4E-6909-4088-9335-4E1E24CA86DE}">
+							<Language>SFX</Language>
+							<AudioFile>ScoreCard Sequence.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="657201783"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="ScoreCard Sequence" ID="{5863FA4E-6909-4088-9335-4E1E24CA86DE}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>
