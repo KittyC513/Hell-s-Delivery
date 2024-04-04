@@ -472,6 +472,7 @@ public class SceneControl : MonoBehaviour
                     radialUI.SetActive(false);
                     //LalahdialogueEnds = true;
                     LalahLeave();
+                    
                 }
             }
 
@@ -1380,6 +1381,7 @@ public class SceneControl : MonoBehaviour
         lalahIsGone = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        LalahConversationStart = false;
     }
     #endregion
 
@@ -1392,6 +1394,7 @@ public class SceneControl : MonoBehaviour
         SwitchCameraToMain();
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        WertherConversationStart = false;
         //TurnOnCanvas();
     }
     #endregion
