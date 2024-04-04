@@ -824,20 +824,21 @@ public class RespawnControl : MonoBehaviour
             //Debug.Log("RespawnPoint =" + respawnPoint);
         }
 
-        if (other.tag == "EndingPoint")
-        {
-            if (isPlayer1 && Player1isCarrying)
-            {
-                gameManager.changeSceneTimes += 1;
-                Loader.Load(Loader.Scene.ScoreCards);
-            }
-            if (isPlayer2 && Player2isCarrying)
-            {
-                gameManager.changeSceneTimes += 1;
-                Loader.Load(Loader.Scene.ScoreCards);
-            }
+        //if (other.tag == "EndingPoint")
+        //{
+        //    if (isPlayer1 && Player1isCarrying)
+        //    {
 
-        }
+        //        gameManager.changeSceneTimes += 1;
+        //        Loader.Load(Loader.Scene.ScoreCards);
+        //    }
+        //    if (isPlayer2 && Player2isCarrying)
+        //    {
+        //        gameManager.changeSceneTimes += 1;
+        //        Loader.Load(Loader.Scene.ScoreCards);
+        //    }
+
+        //}
 
         if (other.gameObject.tag == ("Start_Tutorial") && TutorialCamControl.instance.cutsceneIsCompleted)
         {
