@@ -291,12 +291,12 @@ public class SceneControl : MonoBehaviour
             }
         }
 
-        if (GameManager.instance.LalahLeft)
+        if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.LalahLeft)
         {
             Lalah.SetActive(false);
         }
 
-        if (GameManager.instance.WertherLeft)
+        if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.WertherLeft)
         {
             werther.SetActive(false);
         }
@@ -331,6 +331,7 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.curSceneName == "MVPLevel")
         {
             SkipMVPLevelOverviewCutscene();
+            print("SkipMVPLevel");
         }
 
 

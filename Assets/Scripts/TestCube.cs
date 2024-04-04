@@ -579,6 +579,11 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private int selectNum = 1;
 
+
+    [SerializeField]
+    private bool summoningAnimIsTriggered;
+    [SerializeField]
+    private bool summoningAnimIsTriggered2;
     //[SerializeField]
     //float dropValue;
     //[SerializeField]
@@ -3341,7 +3346,17 @@ public class TestCube : MonoBehaviour
         //move player towards
         isOnCircle = true;
         activeCircle = circle;
+        if (isPlayer1 && !summoningAnimIsTriggered)
+        {
+            playerAnimator.SetBool("TriggerSummoningButton", true);
+            summoningAnimIsTriggered = true;
+        }
 
+        if (isPlayer2 && !summoningAnimIsTriggered2)
+        {
+            playerAnimator2.SetBool("TriggerSummoningButton", true);
+            summoningAnimIsTriggered2 = true;
+        }
        // ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numButtons, 1, isPlayer1);
     }
 
@@ -3351,6 +3366,17 @@ public class TestCube : MonoBehaviour
         //player is no longer in the summoning animation
         isOnCircle = false;
         activeCircle = null;
+        if (isPlayer1)
+        {
+            playerAnimator.SetBool("TriggerSummoningButton", false);
+            summoningAnimIsTriggered = false;
+        }
+
+        if (isPlayer2)
+        {
+            playerAnimator2.SetBool("TriggerSummoningButton", false);
+            summoningAnimIsTriggered2 = false;
+        }
     }
 
     private void CastBlobShadow()
@@ -3999,7 +4025,7 @@ public class TestCube : MonoBehaviour
 
         if (isPaused && canMove)
         {
-            joystickValue = pauseJoystick.ReadValue<Vector2>();
+            //joystickValue = pauseJoystick.ReadValue<Vector2>();
             if (joystickValue.y > 0 && selectNum > 0)
             {
                 selectNum -= 1;
