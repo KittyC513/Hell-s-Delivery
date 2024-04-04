@@ -93,7 +93,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{6D74F699-48A1-E341-84FE-50D5B3EEA2A8}">
+		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{4B4A1ECC-7277-8F40-EAD5-78A53329FC91}">
 			<ShortName>PlayerSFX</ShortName>
 			<Path>PlayerSFX.bnk</Path>
 			<Media>
@@ -439,6 +439,18 @@
 					</MediaRefs>
 				</Event>
 				<Event Id="452547817" Name="Stop_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+				<Event Id="4150189060" Name="Stop_ComicSFX" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<MediaRefs>
+						<MediaRef Id="194001065"/>
+						<MediaRef Id="423408521"/>
+						<MediaRef Id="507327128"/>
+						<MediaRef Id="794182195"/>
+						<MediaRef Id="906178935"/>
+						<MediaRef Id="995731348"/>
+						<MediaRef Id="1047220916"/>
+						<MediaRef Id="1072808704"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="3708642647" Name="Stop_Fan_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
 					<MediaRefs>
 						<MediaRef Id="431873265"/>
@@ -467,5 +479,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{F4D39D06-C4CB-3B8D-B606-7EBA2E90A422}</FileHash>
+	<FileHash>{48A905C9-FB0D-2690-7CB2-1774555E47C2}</FileHash>
 </SoundBanksInfo>

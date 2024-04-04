@@ -50,6 +50,7 @@ namespace AK
         static const AkUniqueID PLAY_YAPPING = 3171885004U;
         static const AkUniqueID PLAYER_STEPS = 4272057794U;
         static const AkUniqueID STOP_ALL = 452547817U;
+        static const AkUniqueID STOP_COMICSFX = 4150189060U;
         static const AkUniqueID STOP_FAN_ALL = 3708642647U;
         static const AkUniqueID STOP_PARACHUTE = 2017739505U;
         static const AkUniqueID STOP_SUMMONING_CIRCLE_ALL = 222428266U;

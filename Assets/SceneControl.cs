@@ -93,6 +93,8 @@ public class SceneControl : MonoBehaviour
     private float delayTimer1;
     [SerializeField]
     private bool secondTimeStarts;
+    [SerializeField]
+    private AK.Wwise.Event stopComicSFX;
 
     [Header("werther Event")]
     [SerializeField]
@@ -362,8 +364,10 @@ public class SceneControl : MonoBehaviour
 
         if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
         {
+            
             if (GameManager.instance.timesEnterHub < 1 && comicShowed)
             {
+                stopComicSFX.Post(this.gameObject);
                 StopCoroutine(StartComicIntro());
                 Comic1.SetActive(false);
                 GameManager.instance.UnfreezePlayer();
@@ -374,6 +378,7 @@ public class SceneControl : MonoBehaviour
                 
             }
 
+            
         }
 
     }
