@@ -103,7 +103,7 @@ public class CharacterControl : MonoBehaviour
 
     private bool shouldJump = false;
     [Space, Header("Misc Movement Variables")]
-    [SerializeField] private float maxGlideSpeed = 950;
+    [SerializeField] private float maxGlideSpeed = 1000;
     [SerializeField] private float glideAccelerationSpeed = 200;
     [SerializeField] private AnimationCurve glideAcceleration;
     private float lastAirSpeed;
