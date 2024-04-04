@@ -253,6 +253,7 @@ public class ShowDialogue :DialogueViewBase
     public static void LalahLeaving()
     {
         SceneControl.instance.LalahLeave();
+ 
     }
 
     [YarnCommand("WeatherIsLeaving")]
