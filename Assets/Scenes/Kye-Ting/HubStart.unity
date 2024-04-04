@@ -24462,9 +24462,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9ad8d1b34470b1b46ac53440710ea2ce, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1776138751}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9ad8d1b34470b1b46ac53440710ea2ce, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1776138752}
   m_SourcePrefab: {fileID: 100100000, guid: 9ad8d1b34470b1b46ac53440710ea2ce, type: 3}
 --- !u!4 &872719061 stripped
 Transform:
@@ -26693,8 +26690,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.075507164, y: 0.22357665, z: 0.27983418}
-  m_Center: {x: -0.113869786, y: 0.37211838, z: -0.14767106}
+  m_Size: {x: 0.075507164, y: 0.22357665, z: 0.27106363}
+  m_Center: {x: -0.11386979, y: 0.37211838, z: -0.11872828}
 --- !u!1001 &972835587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52063,27 +52060,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!65 &1776138752
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776138750}
-  m_Material: {fileID: 13400000, guid: dd5e1392b4eabd145b2f1862e0632584, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.04930513, y: 0.2244072, z: 0.27782804}
-  m_Center: {x: -0.11327207, y: 0.37691435, z: 0.15234862}
 --- !u!43 &1776880948
 Mesh:
   m_ObjectHideFlags: 0
@@ -59736,11 +59712,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2916115340981260639, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 256
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2916115340981260639, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 256
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3952383491238729364, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -59764,7 +59740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5276816636105185173, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6250737522518883697, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_AnchorMax.y

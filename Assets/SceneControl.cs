@@ -846,7 +846,7 @@ public class SceneControl : MonoBehaviour
                 wertherCollider.enabled = true;
             }
         }
-        else if(!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted)
+        else if(!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted || LalahConversationStart)
         {
             LalahTalkUi.SetActive(false);
         }
@@ -867,7 +867,7 @@ public class SceneControl : MonoBehaviour
                 lalahCollider.enabled = true;
             }
         }
-        else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted)
+        else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted || WertherConversationStart)
         {
             WertherTalkUI.SetActive(false);
         }
