@@ -133,6 +133,8 @@ public class SceneControl : MonoBehaviour
     private GameObject WertherOverviewDescriptionUI;
     [SerializeField]
     public bool startLevel2;
+    [SerializeField]
+    public bool WertherConversationStart;
 
 
     [Header("Lalah Event")]
@@ -429,7 +431,7 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.Dialogue3 || GameManager.instance.p2.Dialogue3)
         {
-            if (!LalahdialogueEnds )
+            if (!LalahdialogueEnds && LalahConversationStart)
             {
                 radialUI.SetActive(true);
                 //devilSprite.SetActive(false);
@@ -444,7 +446,7 @@ public class SceneControl : MonoBehaviour
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
             }
-            if (LalahdialogueEnds)
+            if (LalahdialogueEnds || !LalahConversationStart)
             {
                 radialUI.SetActive(false);
             }
@@ -467,7 +469,7 @@ public class SceneControl : MonoBehaviour
                 LalahdialogueEnds = true;
                 LalahLeave();
             }
-            if (LalahdialogueEnds)
+            if (LalahdialogueEnds || !LalahConversationStart)
             {
                 radialUI.SetActive(false);
             }
@@ -478,7 +480,7 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.Dialogue1 || GameManager.instance.p2.Dialogue1)
         {
-            if (!wertherdialogueEnds)
+            if (!wertherdialogueEnds && WertherConversationStart)
             {
                 radialUI.SetActive(true);
             }
@@ -491,7 +493,7 @@ public class SceneControl : MonoBehaviour
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
             }
-            if (wertherdialogueEnds)
+            if (wertherdialogueEnds || !WertherConversationStart)
             {
                 radialUI.SetActive(false);
             }
@@ -502,7 +504,7 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.Dialogue1_2 || GameManager.instance.p2.Dialogue1_2)
         {
-            if (!wertherdialogueEnds)
+            if (!wertherdialogueEnds && WertherConversationStart)
             {
                 radialUI.SetActive(true);
             }
@@ -514,7 +516,7 @@ public class SceneControl : MonoBehaviour
                 wertherdialogueEnds = true;
                 wertherLeave();
             }
-            if (wertherdialogueEnds)
+            if (wertherdialogueEnds || !WertherConversationStart)
             {
                 radialUI.SetActive(false);
             }

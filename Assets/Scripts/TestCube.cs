@@ -2296,6 +2296,7 @@ public class TestCube : MonoBehaviour
     {
         if(SceneControl.instance.startLevel2 && !Dialogue1)
         {
+            SceneControl.instance.WertherConversationStart = true;
             //print("interactiNPC1");
             //SceneControl.LV.SetActive(false);
             SceneControl.instance.dR.StopAllCoroutines();
@@ -2324,6 +2325,7 @@ public class TestCube : MonoBehaviour
         if (SceneControl.instance.startLevel1 && !Dialogue3)
         {
             //SceneControl.LV.SetActive(false);
+            SceneControl.instance.LalahConversationStart = true;
             SceneControl.instance.dR.StopAllCoroutines();
             SceneControl.instance.phoneUI.SetActive(false);
             SceneControl.instance.dialogueBox.SetActive(true);
@@ -2373,6 +2375,7 @@ public class TestCube : MonoBehaviour
             }
             if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1 && !SceneControl.instance.wertherdialogueEnds)
             {
+                SceneControl.instance.WertherConversationStart = true;
                 print("interactiNPC1");
                 //SceneControl.LV.SetActive(false);
                 SceneControl.instance.dR.StopAllCoroutines();
@@ -4045,6 +4048,36 @@ public class TestCube : MonoBehaviour
                 canMove = false;
             }
 
+            for (int i = 0; i < menuOptions.Count; i++)
+            {
+                if (selectNum == i)
+                {
+                    menuOptions[i].selected = true;
+                    selectedOption = menuOptions[i];
+                }
+                else
+                {
+                    menuOptions[i].selected = false;
+                }
+            }
+
+            if (selectOption.IsPressed() && canPress)
+            {
+                selectedOption.OnSelect();
+                canPress = false;
+                if (selectNum == 0)
+                {
+                    Resume();
+                }
+            }
+
+            if (!selectOption.IsPressed())
+            {
+                canPress = true;
+            }
+
+            selectNum = Mathf.Clamp(selectNum, 0, menuOptions.Count - 1);
+
         }
 
         if (joystickValue.y == 0)
@@ -4054,35 +4087,7 @@ public class TestCube : MonoBehaviour
 
 
 
-        for (int i = 0; i < menuOptions.Count; i++)
-        {
-            if (selectNum == i)
-            {
-                menuOptions[i].selected = true;
-                selectedOption = menuOptions[i];
-            }
-            else
-            {
-                menuOptions[i].selected = false;
-            }
-        }
 
-        if (selectOption.IsPressed() && canPress)
-        {
-            selectedOption.OnSelect();
-            canPress = false;
-            if (selectNum == 0)
-            {
-                Resume();
-            }
-        }
-
-        if (!selectOption.IsPressed())
-        {
-            canPress = true;
-        }
-
-        selectNum = Mathf.Clamp(selectNum, 0, menuOptions.Count - 1);
     }
 
     public void Pause()

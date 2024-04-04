@@ -628,7 +628,7 @@ public class GameManager : MonoBehaviour
             if (p1.withinNPC2Range || p2.withinNPC2Range)
             {
                 showLalahInstruction = true;
-                print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
+                //print("showLalahInstruction" + GameManager.instance.showLalahInstruction);
             }
             else if (!p1.withinNPC2Range && !p2.withinNPC2Range)
             {
