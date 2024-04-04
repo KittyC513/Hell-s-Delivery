@@ -326,7 +326,6 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.curSceneName == "Tutorial")
         {
             SkipTutorialLevelOverview();
-
         }
 
         if (GameManager.instance.curSceneName == "MVPLevel")
@@ -398,39 +397,10 @@ public class SceneControl : MonoBehaviour
                     radialUI.SetActive(false);
                     ShowTutorialSkipUI();
 
-                    //if(GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
-                    //{
-                    //    if (!isSkipped)
-                    //    {
-                    //        print("Yes");
-                    //        GameManager.instance.changeSceneTimes += 2;
-                    //        GameManager.instance.timesEnterHub += 1;
-                    //        isSkipped = true;                           
-                    //    }
-
-
-                    //} 
-
-                    //if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
-                    //{
-                    //    if (!isntSkipped)
-                    //    {                            
-                    //        isntSkipped = true;
-                    //    }
-
-                    //}
-
                 }
             }
 
         }
-
-        //if (isSkipped || isntSkipped)
-        //{
-        //    tutorialSkipUI.SetActive(false);
-        //}
-
-
     }
 
     void SkipTutorialLevelOverview()
@@ -557,7 +527,6 @@ public class SceneControl : MonoBehaviour
             if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
             {
                 StartCoroutine(Level1CamControl.instance.StopMoveCam1());
-                //TutorialCamControl.instance.endTutorial = true;
                 radialUI.SetActive(false);       
             }
         }
@@ -576,7 +545,6 @@ public class SceneControl : MonoBehaviour
             if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
             {
                 StartCoroutine(Level1CamControl.instance.StopMoveCam1());
-                //TutorialCamControl.instance.endTutorial = true;
                 radialUI.SetActive(false);
             }
         }
@@ -612,7 +580,6 @@ public class SceneControl : MonoBehaviour
         {
             overviewCamWerther.gameObject.SetActive(false);
         }
-        //LalahOverviewUI.SetActive(false);
         if (WertherOverviewDescriptionUI != null)
         {
             WertherOverviewDescriptionUI.SetActive(false);
@@ -629,7 +596,6 @@ public class SceneControl : MonoBehaviour
         {
             overviewCamLalah.gameObject.SetActive(false);
         }
-        //LalahOverviewUI.SetActive(false);
         if (LalahOverviewDescriptionUI != null)
         {
             LalahOverviewDescriptionUI.SetActive(false);

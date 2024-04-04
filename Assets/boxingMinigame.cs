@@ -74,64 +74,16 @@ public class boxingMinigame : MonoBehaviour
 
                 if (p1pushedcount >= maxDamage)
                 {
-                    //// Find all game objects with the tag "Findscript"
-                    //GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
-
-                    //// Loop through each object found
-                    //foreach (GameObject obj in objectsWithTag)
-                    //{
-                    //    // Check if the object has a component of type RespawnControl
-                    //    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
-
-                    //    // If the RespawnControl component is found, do something with it
-                    //    if (respawnControl != null)
-                    //    {
-                    //        // You can access methods and properties of the RespawnControl script here
-                    //        // For example:
-                    //        respawnControl.endminigamep1();
-                    //    }
-                    //}
 
                     GameManager.instance.p2.rC.endminigamep1();
                     endMinigame();
                 }
                 if (p2pushedcount >= maxDamage)
                 {
-
-                    // Find all game objects with the tag "Findscript"
-                    //GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
-
-                    //// Loop through each object found
-                    //foreach (GameObject obj in objectsWithTag)
-                    //{
-                    //    // Check if the object has a component of type RespawnControl
-                    //    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
-
-                    //    // If the RespawnControl component is found, do something with it
-                    //    if (respawnControl != null)
-                    //    {
-                    //        // You can access methods and properties of the RespawnControl script here
-                    //        // For example:
-                    //        respawnControl.endminigamep2();
-                    //    }
-                    //}
-
                     GameManager.instance.p1.rC.endminigamep2();
                     endMinigame();      
                 }
 
-                //if (GameManager.instance.p1.damageApplied)
-                //{
-                //    healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
-                //}
-
-                //if (GameManager.instance.p2.damageApplied)
-                //{
-                //    healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
-                //}
-
-
-                //print("HP");
 
             }
 
@@ -154,8 +106,6 @@ public class boxingMinigame : MonoBehaviour
                 {
                     // Check if the object has a component of type RespawnControl
                     RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
-                    Debug.Log(respawnControl.p1dead);
-                    Debug.Log(respawnControl.p2dead);
                     // If the RespawnControl component is found, do something with it
                     if (respawnControl != null)
                     {
@@ -167,7 +117,6 @@ public class boxingMinigame : MonoBehaviour
                             respawnControl.p2dead = false;
                             respawnControl.endminigamep1();
                             endMinigame();
-                            Debug.Log("endminigame p1 die");
                             endswitch = false;
                             
                         }
@@ -177,7 +126,7 @@ public class boxingMinigame : MonoBehaviour
                             respawnControl.p2dead = false;
                             respawnControl.endminigamep2();
                             endMinigame();
-                            Debug.Log("endminigame p2 die");
+
                             endswitch = false;
                             
                         }

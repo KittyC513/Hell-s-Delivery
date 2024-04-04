@@ -42,8 +42,9 @@ public class PauseMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        pauseGame = inputActions.PauseControls.PauseUnpause;
-        pauseGame.Enable();
+        
+        //pauseGame = inputActions.PauseControls.PauseUnpause;
+        //pauseGame.Enable();
         pauseJoystick = inputActions.PauseControls.MenuJoystick;
         pauseJoystick.Enable();
         selectOption = inputActions.PauseControls.SelectOption;
