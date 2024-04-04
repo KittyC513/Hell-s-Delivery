@@ -53,7 +53,7 @@ public class CheckpointControl : MonoBehaviour
             ps.Stop();
             deActivate = false;
             shouldPlaySound = true;
-            checkPointEnd.Post(this.gameObject);
+            //checkPointEnd.Post(this.gameObject);
 
             isActivated = false;
         }
@@ -67,14 +67,16 @@ public class CheckpointControl : MonoBehaviour
                 cubeAnim.SetTrigger("GemActivate");
                 animSwitch = false;
             }
-            if (shouldPlaySound) checkPointGetSound.Post(this.gameObject);
-            shouldPlaySound = false;
+          
+            
             activate = false;
 
             if (!isActivated && firstTime)
             {
                 //StartCoroutine(ShowUI());
                 firstTime = false;
+                if (shouldPlaySound) checkPointGetSound.Post(this.gameObject);
+                shouldPlaySound = false;
             }
             
         }
