@@ -1022,7 +1022,7 @@ public class SceneControl : MonoBehaviour
         {
             werther.SetActive(true);
             SwitchCameraToNpc2();
-            //LalahOverviewUI.SetActive(false);
+            LalahOverviewUI.SetActive(false);
             
         }
 
@@ -1042,7 +1042,7 @@ public class SceneControl : MonoBehaviour
                     SwitchCameraToLalahCam();
                     //MoveCameraLalah(overviewCamLalah);
                     //yield return new WaitForSeconds(1f);
-                    //LalahOverviewUI.SetActive(true);
+                    LalahOverviewUI.SetActive(true);
                     
 
                     LalahUI.SetActive(false);
@@ -1096,7 +1096,7 @@ public class SceneControl : MonoBehaviour
     IEnumerator TurnOffUI()
     {
 
-        //LalahOverviewUI.SetActive(false);
+        LalahOverviewUI.SetActive(false);
         yield return new WaitForSeconds(0.2f);
         if (!GameManager.instance.WertherLeft)
         {
@@ -1140,7 +1140,7 @@ public class SceneControl : MonoBehaviour
         {
             Lalah.SetActive(true);
             SwitchCameraToNpc();
-            //LalahOverviewUI.SetActive(false);
+            WertherOverviewUI.SetActive(false);
 
         }
 
@@ -1160,7 +1160,7 @@ public class SceneControl : MonoBehaviour
                     SwitchCameraToWertherCam();
                     //MoveCameraLalah(overviewCamLalah);
                     //yield return new WaitForSeconds(1f);
-                    //LalahOverviewUI.SetActive(true);
+                    WertherOverviewUI.SetActive(true);
 
 
                     WertherUI.SetActive(false);
@@ -1216,7 +1216,7 @@ public class SceneControl : MonoBehaviour
         {
             Lalah.SetActive(true);
         }
-        //LalahOverviewUI.SetActive(false);
+        WertherOverviewUI.SetActive(false);
         yield return new WaitForSeconds(0.2f);
         SwitchCameraToMain();
         GameManager.instance.p1.isFreeze = false;
