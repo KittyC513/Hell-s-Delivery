@@ -171,6 +171,10 @@ public class boxingMinigame : MonoBehaviour
                 endswitch = true;
             }
         }
+        p1pushedcount = 0;
+        p2pushedcount = 0;
+        healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
+        healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
     }
 
     public void endMinigame()

@@ -2799,7 +2799,7 @@ public class TestCube : MonoBehaviour
 
                     bM.p1pushedcount += forceMagnitude1;
                     bM.healthP1.fillAmount = (bM.maxDamage - bM.p1pushedcount) / bM.maxDamage;
-                    print("Damage1" + bM.p1pushedcount);
+                    //print("Damage1" + bM.p1pushedcount);
                     damageApplied = true;
 
                 }
