@@ -439,12 +439,16 @@ public class SceneControl : MonoBehaviour
             }
             if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
             {
-                dR.Stop();
-                SwitchCameraToMain();
-                radialUI.SetActive(false);
-                LalahdialogueEnds = true;
-                GameManager.instance.p1.isFreeze = false;
-                GameManager.instance.p2.isFreeze = false;
+                if(!GameManager.instance.p1.Dialogue3_2 && !GameManager.instance.p2.Dialogue3_2)
+                {
+                    dR.Stop();
+                    SwitchCameraToMain();
+                    radialUI.SetActive(false);
+                    LalahdialogueEnds = true;
+                    GameManager.instance.p1.isFreeze = false;
+                    GameManager.instance.p2.isFreeze = false;
+                }
+
             }
             if (LalahdialogueEnds || !LalahConversationStart)
             {
@@ -466,7 +470,7 @@ public class SceneControl : MonoBehaviour
                 dR.Stop();
                 SwitchCameraToMain();
                 radialUI.SetActive(false);
-                LalahdialogueEnds = true;
+                //LalahdialogueEnds = true;
                 LalahLeave();
             }
             if (LalahdialogueEnds || !LalahConversationStart)
@@ -486,12 +490,16 @@ public class SceneControl : MonoBehaviour
             }
             if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
             {
-                dR.Stop();
-                SwitchCameraToMain();
-                radialUI.SetActive(false);
-                wertherdialogueEnds = true;
-                GameManager.instance.p1.isFreeze = false;
-                GameManager.instance.p2.isFreeze = false;
+                if(!GameManager.instance.p1.Dialogue1_2 && !GameManager.instance.p2.Dialogue1_2)
+                {
+                    dR.Stop();
+                    SwitchCameraToMain();
+                    radialUI.SetActive(false);
+                    wertherdialogueEnds = true;
+                    GameManager.instance.p1.isFreeze = false;
+                    GameManager.instance.p2.isFreeze = false;
+                }
+
             }
             if (wertherdialogueEnds || !WertherConversationStart)
             {
