@@ -648,6 +648,7 @@ public class TestCube : MonoBehaviour
 
     private void OnDisable()
     {
+
         pauseGame.Disable();
         pauseJoystick.Disable();
         selectOption.Disable();
@@ -782,6 +783,11 @@ public class TestCube : MonoBehaviour
                     }
 
                 }
+            }
+
+            if(curSceneName != "LeveL1")
+            {
+                JumpOverIntruction.SetActive(false);
             }
 
 
@@ -2325,6 +2331,7 @@ public class TestCube : MonoBehaviour
             SceneControl.instance.nameTag.SetActive(false);
             SceneControl.instance.nameTagNPC2.SetActive(true);
             SceneControl.instance.nameTagNPC3.SetActive(false);
+
             SceneControl.instance.dR.StartDialogue("LalahQuest");
 
             gameManager.p1.isFreeze = true;
@@ -2421,6 +2428,7 @@ public class TestCube : MonoBehaviour
 
             if(!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3 && !SceneControl.instance.LalahdialogueEnds)
             {
+                SceneControl.instance.LalahConversationStart = true;
                 print("interactiNPC23_2");
                 SceneControl.instance.dR.StopAllCoroutines();
                 SceneControl.instance.phoneUI.SetActive(false);

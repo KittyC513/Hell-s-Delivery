@@ -168,6 +168,8 @@ public class SceneControl : MonoBehaviour
     public bool UITurnOff;
     [SerializeField]
     public GameObject LalahTalkUi;
+    [SerializeField]
+    public bool LalahConversationStart;
 
 
     [Header("Level 1")]
@@ -427,7 +429,7 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.Dialogue3 || GameManager.instance.p2.Dialogue3)
         {
-            if (!LalahdialogueEnds)
+            if (!LalahdialogueEnds )
             {
                 radialUI.SetActive(true);
                 //devilSprite.SetActive(false);
@@ -453,7 +455,7 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.Dialogue3_2 || GameManager.instance.p2.Dialogue3_2)
         {
-            if (!LalahdialogueEnds)
+            if (!LalahdialogueEnds && LalahConversationStart)
             {
                 radialUI.SetActive(true);
             }
