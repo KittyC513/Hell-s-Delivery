@@ -107,8 +107,9 @@ public class LalahTrigger : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
         //smoke.SetActive(false);
         //anim.SetBool("Arrived", false);
-        this.gameObject.SetActive(false);
         isLeaving = true;
+        this.gameObject.SetActive(false);
+
     }
     #endregion
 }

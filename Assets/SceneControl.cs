@@ -331,6 +331,7 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.curSceneName == "MVPLevel")
         {
             SkipMVPLevelOverviewCutscene();
+            print("SkipMVPLevel");
         }
 
 

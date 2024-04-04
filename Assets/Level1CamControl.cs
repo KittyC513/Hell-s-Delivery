@@ -130,6 +130,7 @@ public class Level1CamControl : MonoBehaviour
 
     public IEnumerator StopMoveCam1()
     {
+        StopCoroutine(MoveToNextCamera());
         yield return new WaitForSeconds(0.2f);
         GameManager.instance.cam1.SetActive(true);
         GameManager.instance.cam2.SetActive(true);
