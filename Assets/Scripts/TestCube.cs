@@ -554,6 +554,31 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public GameObject cantJump2;
 
+
+    [Header("PauseSelection")]
+    private bool isPaused = false;
+    [SerializeField]
+    private GameObject pauseMenu;
+    [SerializeField]
+    private GameObject menuOptionsParent;
+    [SerializeField]
+    private GameObject quitOptionsParent;
+    [SerializeField]
+    private GameObject quitMenu;
+    [SerializeField]
+    private List<PauseMenuOption> menuOptions;
+    private PauseMenuOption selectedOption;
+
+    [SerializeField]
+    private InputAction pauseGame, pauseJoystick, selectOption;
+    private Vector2 joystickValue;
+    private bool canToggle = false;
+    private bool canMove = true;
+    private bool canPress = true;
+    private bool quitActive = false;
+
+    [SerializeField] private int selectNum = 1;
+
     //[SerializeField]
     //float dropValue;
     //[SerializeField]
@@ -563,6 +588,7 @@ public class TestCube : MonoBehaviour
         isFreeze = false;
         inputAsset = this.GetComponent<PlayerInput>().actions;
         player = inputAsset.FindActionMap("Cube");
+        pause = inputAsset.FindActionMap("PauseControls");
         dialogue = inputAsset.FindActionMap("Dialogue");
 
         rb = this.GetComponent<Rigidbody>();
@@ -583,9 +609,12 @@ public class TestCube : MonoBehaviour
 
     private void OnEnable()
     {
+        pauseGame = pause.FindAction("Pause/Unpause");
+        pauseGame.Enable();
+        pauseJoystick = pause.FindAction("MenuJoystick");
+        selectOption = pause.FindAction("SelectOption");
 
         player.FindAction("Pick").started += DoDrop;
-
         move = player.FindAction("Move");
         pull = player.FindAction("Pull");
         dash = player.FindAction("Dash");
@@ -614,6 +643,9 @@ public class TestCube : MonoBehaviour
 
     private void OnDisable()
     {
+        pauseGame.Disable();
+        pauseJoystick.Disable();
+        selectOption.Disable();
 
         player.FindAction("Pick").started -= DoDrop;
 
@@ -673,6 +705,7 @@ public class TestCube : MonoBehaviour
         ItemDetector();
         CameraSwitch();
         AnimationAndSound();
+        PauseMenu();
         if (curSceneName == "Level1" || curSceneName == "MVPLevel")
         {
             initBoxing();
@@ -3938,6 +3971,114 @@ public class TestCube : MonoBehaviour
 
     #endregion
 
+    #region Pause
+
+    private void PauseMenu()
+    {
+
+        if (pauseGame.IsPressed() && canToggle)
+        {
+            print("Pause");
+            if (isPaused)
+            {
+                Resume();
+                canToggle = false;
+            }
+            else
+            {
+                Pause();
+                canToggle = false;
+            }
+        }
+
+        if (!pauseGame.IsPressed())
+        {
+            print("!Pause");
+            canToggle = true;
+        }
+
+        if (isPaused && canMove)
+        {
+            joystickValue = pauseJoystick.ReadValue<Vector2>();
+            if (joystickValue.y > 0 && selectNum > 0)
+            {
+                selectNum -= 1;
+                canMove = false;
+            }
+            else if (joystickValue.y < 0 && selectNum < menuOptions.Count - 1)
+            {
+                selectNum += 1;
+                canMove = false;
+            }
+
+        }
+
+        if (joystickValue.y == 0)
+        {
+            canMove = true;
+        }
+
+
+
+        for (int i = 0; i < menuOptions.Count; i++)
+        {
+            if (selectNum == i)
+            {
+                menuOptions[i].selected = true;
+                selectedOption = menuOptions[i];
+            }
+            else
+            {
+                menuOptions[i].selected = false;
+            }
+        }
+
+        if (selectOption.IsPressed() && canPress)
+        {
+            selectedOption.OnSelect();
+            canPress = false;
+            if (selectNum == 0)
+            {
+                Resume();
+            }
+        }
+
+        if (!selectOption.IsPressed())
+        {
+            canPress = true;
+        }
+
+        selectNum = Mathf.Clamp(selectNum, 0, menuOptions.Count - 1);
+    }
+
+    public void Pause()
+    {
+        //quitMenu.SetActive(false);
+        pauseMenu.SetActive(true);
+        isPaused = true;
+        GameManager.instance.p1.isFreeze = true;
+        GameManager.instance.p2.isFreeze = true;
+        Time.timeScale = 0;
+
+        menuOptions.Clear();
+        foreach (var obj in menuOptionsParent.GetComponentsInChildren<PauseMenuOption>())
+        {
+            menuOptions.Add(obj.GetComponent<PauseMenuOption>());
+        }
+    }
+
+    public void Resume()
+    {
+        pauseMenu.SetActive(false);
+        isPaused = false;
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+        Time.timeScale = 1;
+    }
+
+
+
+    #endregion
 }
 
 
