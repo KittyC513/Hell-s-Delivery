@@ -511,7 +511,7 @@ public class TutorialCamControl : MonoBehaviour
 
     private void InvisibleWall()
     {
-        if (inGoldSummningArea && !wallIsGone)
+        if (inGoldSummningArea && !wallIsGone && goldSummoningTimes >= 2)
         {
             StartCoroutine(SetInvisibleWall());
         }
@@ -519,7 +519,7 @@ public class TutorialCamControl : MonoBehaviour
 
     IEnumerator SetInvisibleWall()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
         invisibleWall.SetActive(false);
         wallIsGone = true;
     }
