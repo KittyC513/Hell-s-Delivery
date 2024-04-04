@@ -257,8 +257,12 @@ public class SceneControl : MonoBehaviour
 
         if (GameManager.instance.curSceneName == "HubStart")
         {
-            phonePiece.SetActive(false);
-            phoneRingText.SetActive(false);
+            if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+            {
+                phonePiece.SetActive(false);
+                phoneRingText.SetActive(false);
+            }
+
             deliveryText.SetActive(false);
         }
         if (GameManager.instance.p1 != null && GameManager.instance.p2 != null)
@@ -367,6 +371,7 @@ public class SceneControl : MonoBehaviour
                 phonePiece.SetActive(true);
                 phoneRingText.SetActive(true);
                 comicShowed = false;
+                
             }
 
         }
@@ -377,7 +382,11 @@ public class SceneControl : MonoBehaviour
     {
         if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
         {
-            phoneRingText.SetActive(false);
+            if (!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+            {
+                phoneRingText.SetActive(false);
+            }
+
 
             if (GameManager.instance.timesEnterHub < 1)
             {
@@ -472,6 +481,7 @@ public class SceneControl : MonoBehaviour
                     radialUI.SetActive(false);
                     //LalahdialogueEnds = true;
                     LalahLeave();
+                    
                 }
             }
 
@@ -846,7 +856,7 @@ public class SceneControl : MonoBehaviour
                 wertherCollider.enabled = true;
             }
         }
-        else if(!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted)
+        else if(!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted || LalahConversationStart)
         {
             LalahTalkUi.SetActive(false);
         }
@@ -867,7 +877,7 @@ public class SceneControl : MonoBehaviour
                 lalahCollider.enabled = true;
             }
         }
-        else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted)
+        else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted || WertherConversationStart)
         {
             WertherTalkUI.SetActive(false);
         }
@@ -886,8 +896,12 @@ public class SceneControl : MonoBehaviour
             phoneInstruction.SetActive(true);
             if (GameManager.instance.answeredPhone)
             {
-                phoneRingText.SetActive(false);
-                phonePiece.SetActive(false);
+                if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+                {
+                    phoneRingText.SetActive(false);
+                    phonePiece.SetActive(false);
+                }
+
             }
         }
         else
@@ -928,6 +942,24 @@ public class SceneControl : MonoBehaviour
         //}
 
         TextControl();
+
+        void CompleteLevel1()
+        {
+            if (GameManager.instance.LalahRequestWasCompleted)
+            {
+                phonePiece.SetActive(true);
+                phoneRingText.SetActive(true);
+            }
+        }
+
+        void CompleteLevel2()
+        {
+            if (GameManager.instance.WertherRequestWasCompleted)
+            {
+                phonePiece.SetActive(true);
+                phoneRingText.SetActive(true);
+            }
+        }
     }
 
     // delivery area text 
@@ -1380,6 +1412,7 @@ public class SceneControl : MonoBehaviour
         lalahIsGone = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        LalahConversationStart = false;
     }
     #endregion
 
@@ -1392,6 +1425,7 @@ public class SceneControl : MonoBehaviour
         SwitchCameraToMain();
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        WertherConversationStart = false;
         //TurnOnCanvas();
     }
     #endregion
