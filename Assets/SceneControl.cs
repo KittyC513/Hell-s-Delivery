@@ -435,21 +435,22 @@ public class SceneControl : MonoBehaviour
             {
                 radialUI.SetActive(true);
                 //devilSprite.SetActive(false);
-
-            }
-            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
-            {
-                if(!GameManager.instance.p1.Dialogue3_2 && !GameManager.instance.p2.Dialogue3_2)
+                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
                 {
-                    dR.Stop();
-                    SwitchCameraToMain();
-                    radialUI.SetActive(false);
-                    LalahdialogueEnds = true;
-                    GameManager.instance.p1.isFreeze = false;
-                    GameManager.instance.p2.isFreeze = false;
+                    if (!GameManager.instance.p1.Dialogue3_2 && !GameManager.instance.p2.Dialogue3_2)
+                    {
+                        dR.Stop();
+                        SwitchCameraToMain();
+                        radialUI.SetActive(false);
+                        LalahdialogueEnds = true;
+                        GameManager.instance.p1.isFreeze = false;
+                        GameManager.instance.p2.isFreeze = false;
+                    }
+
                 }
 
             }
+
             if (LalahdialogueEnds || !LalahConversationStart)
             {
                 radialUI.SetActive(false);
@@ -464,15 +465,16 @@ public class SceneControl : MonoBehaviour
             if (!LalahdialogueEnds && LalahConversationStart)
             {
                 radialUI.SetActive(true);
+                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                {
+                    dR.Stop();
+                    SwitchCameraToMain();
+                    radialUI.SetActive(false);
+                    //LalahdialogueEnds = true;
+                    LalahLeave();
+                }
             }
-            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
-            {
-                dR.Stop();
-                SwitchCameraToMain();
-                radialUI.SetActive(false);
-                //LalahdialogueEnds = true;
-                LalahLeave();
-            }
+
             if (LalahdialogueEnds || !LalahConversationStart)
             {
                 radialUI.SetActive(false);
@@ -487,20 +489,21 @@ public class SceneControl : MonoBehaviour
             if (!wertherdialogueEnds && WertherConversationStart)
             {
                 radialUI.SetActive(true);
-            }
-            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
-            {
-                if(!GameManager.instance.p1.Dialogue1_2 && !GameManager.instance.p2.Dialogue1_2)
+                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
                 {
-                    dR.Stop();
-                    SwitchCameraToMain();
-                    radialUI.SetActive(false);
-                    wertherdialogueEnds = true;
-                    GameManager.instance.p1.isFreeze = false;
-                    GameManager.instance.p2.isFreeze = false;
-                }
+                    if (!GameManager.instance.p1.Dialogue1_2 && !GameManager.instance.p2.Dialogue1_2)
+                    {
+                        dR.Stop();
+                        SwitchCameraToMain();
+                        radialUI.SetActive(false);
+                        wertherdialogueEnds = true;
+                        GameManager.instance.p1.isFreeze = false;
+                        GameManager.instance.p2.isFreeze = false;
+                    }
 
+                }
             }
+
             if (wertherdialogueEnds || !WertherConversationStart)
             {
                 radialUI.SetActive(false);
@@ -515,15 +518,16 @@ public class SceneControl : MonoBehaviour
             if (!wertherdialogueEnds && WertherConversationStart)
             {
                 radialUI.SetActive(true);
+                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                {
+                    dR.Stop();
+                    SwitchCameraToMain();
+                    radialUI.SetActive(false);
+                    wertherdialogueEnds = true;
+                    wertherLeave();
+                }
             }
-            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
-            {
-                dR.Stop();
-                SwitchCameraToMain();
-                radialUI.SetActive(false);
-                wertherdialogueEnds = true;
-                wertherLeave();
-            }
+
             if (wertherdialogueEnds || !WertherConversationStart)
             {
                 radialUI.SetActive(false);
@@ -826,7 +830,7 @@ public class SceneControl : MonoBehaviour
         }
 
 
-        if(GameManager.instance.showLalahInstruction && GameManager.instance.LalahRequestWasCompleted)
+        if(GameManager.instance.showLalahInstruction && GameManager.instance.LalahRequestWasCompleted && !LalahConversationStart)
         {
             LalahTalkUi.SetActive(true);
             
@@ -847,7 +851,7 @@ public class SceneControl : MonoBehaviour
             LalahTalkUi.SetActive(false);
         }
 
-        if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted)
+        if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted && !WertherConversationStart)
         {
             WertherTalkUI.SetActive(true);
             if (!NPCTrigger.isLeaving)
