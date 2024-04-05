@@ -276,6 +276,11 @@ public class SceneControl : MonoBehaviour
         multiple = 1;
         oriValue = multiple;
 
+        if(GameManager.instance.timesEnterHub >= 2)
+        {
+            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
+        }
     }
 
     private void Update()

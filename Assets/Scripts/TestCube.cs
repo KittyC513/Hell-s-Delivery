@@ -588,6 +588,17 @@ public class TestCube : MonoBehaviour
     //float dropValue;
     //[SerializeField]
     //float dropForce;
+
+    [Header("Toy")]
+    [SerializeField]
+    public bool withinToyRange;
+    [SerializeField]
+    public Transform leftHand1, leftHand2;
+    [SerializeField]
+    public Transform rightHand1, rightHand2;
+    [SerializeField]
+    public bool leftHandisFull, rightHandisFull, handIsFull;
+
     private void Awake()
     {
         isFreeze = false;
@@ -711,7 +722,7 @@ public class TestCube : MonoBehaviour
         ItemDetector();
         CameraSwitch();
         AnimationAndSound();
-        PauseMenu();
+        //PauseMenu();
         if (curSceneName == "Level1" || curSceneName == "MVPLevel")
         {
             initBoxing();
