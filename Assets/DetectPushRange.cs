@@ -11,17 +11,21 @@ public class DetectPushRange : MonoBehaviour
     [SerializeField]
     private bool isPlayer2;
     [SerializeField]
-    private GameObject toy;
+    private GameObject toy, box;
     [SerializeField]
-    private bool toyIsPicked;
+    private bool toyIsPicked, boxIsPicked;
     [SerializeField]
-    private bool dropToy;
+    private bool dropToy, dropBox;
     [SerializeField]
-    private BoxCollider toyCollider;
+    private BoxCollider toyCollider, boxCollider;
     [SerializeField]
-    private Rigidbody rb;
+    private Rigidbody rb, rbBox;
     [SerializeField]
-    private float timer;
+    private float timer, timerBox;
+    [SerializeField]
+    private bool withinBoxRange;
+    [SerializeField]
+    private bool takeBox;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +47,7 @@ public class DetectPushRange : MonoBehaviour
         }
 
         TakeToy();
+        //TakeBox();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -87,6 +92,24 @@ public class DetectPushRange : MonoBehaviour
                 toy = null;
             }
         }
+
+        //if (isPlayer1 && other.CompareTag("Box"))
+        //{
+        //    withinBoxRange = false;
+        //    if (!testCube.itemIsFull)
+        //    {
+        //        box = null;
+        //    }
+        //}
+
+        //if (isPlayer2 && other.CompareTag("Box"))
+        //{
+        //    withinBoxRange = false;
+        //    if (!testCube.itemIsFull)
+        //    {
+        //        box = null;
+        //    }
+        //}
     }
 
     private void OnTriggerStay(Collider other)
@@ -114,6 +137,28 @@ public class DetectPushRange : MonoBehaviour
                 rb = toy.GetComponent<Rigidbody>();
             }
         }
+
+        //if (isPlayer1 && other.CompareTag("Box") && testCube.objectGrabbable == null)
+        //{
+        //    withinBoxRange = true;
+        //    if (box == null && !dropBox)
+        //    {
+        //        box = other.gameObject;
+        //        boxCollider = box.GetComponent<BoxCollider>();
+        //        rbBox = box.GetComponent<Rigidbody>();
+        //    }
+        //}
+
+        //if (isPlayer2 && other.CompareTag("Box") && testCube.objectGrabbable == null)
+        //{
+        //    withinBoxRange = true;
+        //    if (box == null && !dropBox)
+        //    {
+        //        box = other.gameObject;
+        //        boxCollider = box.GetComponent<BoxCollider>();
+        //        rbBox = box.GetComponent<Rigidbody>();
+        //    }
+        //}
     }
 
     private void TakeToy()
@@ -206,14 +251,98 @@ public class DetectPushRange : MonoBehaviour
             dropToy = false;
             timer = 0;
         }
+    }
 
-        //if (testCube.leftHandisFull && testCube.rightHandisFull)
-        //{
-        //    testCube.handIsFull = true;
-        //}
-        //else if (!testCube.leftHandisFull || !testCube.rightHandisFull)
-        //{
-        //    testCube.handIsFull = false;
-        //}
+
+    private void TakeBox()
+    {
+        if (withinBoxRange && testCube.ReadActionButton() && !dropBox)
+        {
+            boxIsPicked = true;
+
+        }
+
+        if (boxIsPicked)
+        {
+            if (timerBox < 1)
+            {
+                timerBox += Time.deltaTime;
+            }
+            else
+            {
+                timerBox = 1;
+            }
+            if (isPlayer1)
+            {
+
+                //toy.transform.position = testCube.leftHand1.position;
+                testCube.itemIsFull = true;
+                //if(testCube.leftHandisFull && !testCube.rightHandisFull)
+                //{
+                //    toy.transform.position = testCube.rightHand1.position;
+                //    testCube.rightHandisFull = true;
+                //}
+
+            }
+
+            if (isPlayer2)
+            {
+
+                //toy.transform.position = testCube.leftHand2.position;
+                testCube.itemIsFull = true;
+                //if (testCube.leftHandisFull && !testCube.rightHandisFull)
+                //{
+                //    toy.transform.position = testCube.rightHand2.position;
+                //    testCube.rightHandisFull = true;
+                //}
+            }
+
+        }
+
+        if (testCube.itemIsFull && isPlayer1 && !dropBox)
+        {
+            box.transform.position = testCube.itemContainer.position;
+            boxCollider.enabled = false;
+            rbBox.isKinematic = true;
+
+            if (testCube.ReadActionButton() && timerBox >= 0.3f)
+            {
+                dropBox = true;
+            }
+        }
+
+
+        if (testCube.itemIsFull && isPlayer2 && !dropBox)
+        {
+            box.transform.position = testCube.itemContainer.position;
+            boxCollider.enabled = false;
+            rbBox.isKinematic = true;
+
+
+            if (testCube.ReadActionButton() && timerBox >= 0.3f)
+            {
+                dropBox = true;
+            }
+        }
+
+        if (dropBox)
+        {
+
+            StartCoroutine(DropBox());
+        }
+
+        IEnumerator DropBox()
+        {
+            boxIsPicked = false;
+            testCube.itemIsFull = false;
+            boxCollider.enabled = true;
+            boxCollider.isTrigger = false;
+            rbBox.isKinematic = false;
+
+            yield return new WaitForSeconds(0.3f);
+            box = null;
+            dropBox = false;
+            timerBox = 0;
+        }
     }
 }

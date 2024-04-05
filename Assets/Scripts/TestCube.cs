@@ -117,7 +117,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private Transform playerPos;
     [SerializeField]
-    private Transform itemContainer;
+    public Transform itemContainer;
     [SerializeField]
     private Transform itemContainer1;
     [SerializeField]
@@ -597,7 +597,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public Transform rightHand1, rightHand2;
     [SerializeField]
-    public bool leftHandisFull, rightHandisFull, handIsFull;
+    public bool leftHandisFull, rightHandisFull, handIsFull, itemIsFull;
 
     private void Awake()
     {
