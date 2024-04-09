@@ -95,6 +95,8 @@ public class SceneControl : MonoBehaviour
     private bool secondTimeStarts;
     [SerializeField]
     private AK.Wwise.Event stopComicSFX;
+    [SerializeField]
+    private GameObject minigameUI;
 
     [Header("werther Event")]
     [SerializeField]
@@ -952,6 +954,15 @@ public class SceneControl : MonoBehaviour
         //}
 
         TextControl();
+
+        if(GameManager.instance.p1.turnOnTV || GameManager.instance.p2.turnOnTV)
+        {
+            minigameUI.SetActive(true);
+        }
+        else if (!GameManager.instance.p1.turnOnTV && !GameManager.instance.p2.turnOnTV)
+        {
+            minigameUI.SetActive(false);
+        }
 
         void CompleteLevel1()
         {

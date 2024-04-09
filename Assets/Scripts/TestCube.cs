@@ -913,7 +913,7 @@ public class TestCube : MonoBehaviour
         if (curSceneName == scene1 || curSceneName == scene3)
         {
             Interacte();
-            //OnTV();
+            OnTV();
             Talk();
         }
         if (curSceneName == scene6)
@@ -2501,12 +2501,12 @@ public class TestCube : MonoBehaviour
     {
         if (turnOnTV)
         {
-            gameManager.sceneChanged = true;
+            //gameManager.sceneChanged = true;
             StartCoroutine(MovingCameraTV());
             if (onTv)
             {
-                GameManager.instance.changeSceneTimes += 1;
-                Loader.Load(Loader.Scene.MVPLevel);
+                //GameManager.instance.changeSceneTimes += 1;
+                //Loader.Load(Loader.Scene.MVPLevel);
                 onTv = false;
                 turnOnTV = false;
             }
