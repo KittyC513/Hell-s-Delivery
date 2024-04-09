@@ -3368,18 +3368,34 @@ public class TestCube : MonoBehaviour
         //move player towards
         isOnCircle = true;
         activeCircle = circle;
-        if (isPlayer1 && !summoningAnimIsTriggered)
+        if (isPlayer1 && !summoningAnimIsTriggered && ReadActionButton())
         {
-            playerAnimator.SetBool("TriggerSummoningButton", true);
+            //playerAnimator.SetBool("TriggerSummoningButton", true);
             summoningAnimIsTriggered = true;
+        } else if (!ReadActionButton())
+        {
+            playerAnimator.SetBool("TriggerSummoningButton", false);
+            summoningAnimIsTriggered = false;
         }
 
-        if (isPlayer2 && !summoningAnimIsTriggered2)
+        if (isPlayer2 && !summoningAnimIsTriggered2 && ReadActionButton())
         {
             playerAnimator2.SetBool("TriggerSummoningButton", true);
             summoningAnimIsTriggered2 = true;
         }
-       // ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numButtons, 1, isPlayer1);
+        else if (!ReadActionButton())
+        {
+            playerAnimator.SetBool("TriggerSummoningButton", false);
+            summoningAnimIsTriggered2 = false;
+        }
+
+        // ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numButtons, 1, isPlayer1);
+    }
+
+    IEnumerator TriggerSummoningCircleAnim()
+    {
+        yield return new WaitForSeconds(0.1f);
+        playerAnimator.SetBool("TriggerSummoningButton", true);
     }
 
     public void OnSummoningExit()
