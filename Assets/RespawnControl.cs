@@ -842,23 +842,35 @@ public class RespawnControl : MonoBehaviour
 
         if (other.gameObject.tag == ("Start_Tutorial") && TutorialCamControl.instance.cutsceneIsCompleted)
         {
-
-            if (isPlayer1 && !p1Pass)
+            if (!p1Pass && !p2Pass)
             {
-                p1Pass = true;
-                LevelDialogue.ShowDevilPlayer1();
-                SceneControl.instance.dRP1.Stop();
-                SceneControl.instance.dRP1.StartDialogue("LookAround");
+                if (isPlayer1 || isPlayer2)
+                {
+                    SceneControl.instance.dRP1.Stop();
+                    SceneControl.instance.dRP2.Stop();
+                    LevelDialogue.ShowDevilPlayerAll();
+                    SceneControl.instance.drAll.StartDialogue("LookAround");
+                    p1Pass1 = true;
+                    p2Pass1 = true;
 
+                }
             }
+            //if (isPlayer1 && !p1Pass)
+            //{
+            //    p1Pass = true;
+            //    LevelDialogue.ShowDevilPlayer1();
+            //    SceneControl.instance.dRP2.Stop();
+            //    SceneControl.instance.dRP1.StartDialogue("LookAround");
 
-            if (isPlayer2 && !p2Pass)
-            {
-                p2Pass = true;
-                LevelDialogue.ShowDevilPlayer2();
-                SceneControl.instance.dRP2.Stop();
-                SceneControl.instance.dRP2.StartDialogue("LookAround2");
-            }
+            //}
+
+            //if (isPlayer2 && !p2Pass)
+            //{
+            //    p2Pass = true;
+            //    LevelDialogue.ShowDevilPlayer2();
+            //    SceneControl.instance.dRP1.Stop();
+            //    SceneControl.instance.dRP2.StartDialogue("LookAround2");
+            //}
 
             //if (p1Pass && p2Pass)
             //{
@@ -943,7 +955,8 @@ public class RespawnControl : MonoBehaviour
                 push_T2.SetActive(true);
                 LevelDialogue.ShowDevilPlayer2();
                 SceneControl.instance.dRP2.Stop();
-                SceneControl.instance.dRP2.StartDialogue("Push");
+                //SceneControl.instance.dRP1.
+                SceneControl.instance.dRP2.StartDialogue("Push2");
             }
 
             //if  (p1Pass2 && p2Pass2)
