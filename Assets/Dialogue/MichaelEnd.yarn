@@ -4,11 +4,11 @@ tags:
 <<NPCShow>>
 <<SwitchCamNPC3>>
 
-Michael: OH MY DEVIL! I'm in deep holy water! #line:0334551 
-Michael: I think I might've, accidentally <color=red>switched packages</color>..? #line:023a51d 
-Michael: Look! I know it's a problem for me to sin, but the Devil makes it so easy! I mean, would you look at her? #line:0637ce9 
-Michael: GAH! How could this happen?? Now the Devil will never know my true feelings! #line:07a5388 
-Michael: W-wait... NO! T-that means-! OH NO! Have mercy on me! #line:03bbbad 
+Michael: OH MY DEVIL! I'm in deep holy water! #line:michael_quest_10 
+Michael: I think I might've, accidentally <color=red>switched packages</color>..? #line:michael_quest_11 
+Michael: Look! I know it's a problem for me to sin, but the Devil makes it so easy! I mean, would you look at her? #line:michael_quest_12 
+Michael: GAH! How could this happen?? Now the Devil will never know my true feelings! #line:michael_quest_13 
+Michael: W-wait... NO! T-that means-! OH NO! Have mercy on me! #line:michael_quest_14 
 ===
 
 title: DevilMichaelEnd
@@ -19,35 +19,77 @@ tage:
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
-Devil: My, that delivery was quite a shock. #line:0ffcaa5 
+Devil: My, that delivery was quite a shock. #line:devil_michael_3
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Cheery 0.45 0.03 white>>
-Devil: I've seen my fair share of admirers, but never have I ever seen one go as far as laying down rules on my behalf. #line:03ee2a1 
+Devil: I've seen my fair share of admirers, but never have I ever seen one go as far as laying down rules on my behalf. #line:devil_michael_1
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
-Devil: Ugh, it's exhausting being this popular~ #line:01a42c2 
+Devil: Ugh, it's exhausting being this popular~ #line:devil_michael_2
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Default 0.45 0.03 white>>
-Devil: Anyways, looks like that was your last client. Seems it's time for the moment you've been waiting for. #line:0b116c8 
+Devil: Anyways, looks like that was your last client. Seems it's time for the moment you've been waiting for. #line:devil_end_1
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
-Devil: I'm such a genius to offer a promotion. No wonder I'm so successful~ #line:05d75c8 
+Devil: I'm such a genius to offer a promotion. No wonder I'm so successful~ #line:devil_end_3
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
-Devil: Ahem, my little delivery demons, based on your performance reviews, I give the <color=red>promotion</color> to... #line:021333d 
+Devil: Ahem, my little delivery demons, based on your performance reviews, I give the <color=red>promotion</color> to... #line:devil_end_4
 <<Act Devil DevilPopUp_Default>>
 
-<<Hide DevilPopUp_Default>>
+<<HideAll>>
 
 <<HideGradient>>
+===
+
+title: Finale
+tags:
+---
+<<PlayerShow>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
+Devil: Huhuhu... congratulations! #line:devil_end_5
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Cheery 0.45 0.03 white>>
+Devil: You've now been promoted as Assisstant to Me! #line:devil_end_6
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Cheery 0.45 0.03 white>>
+Devil: And your benefits are being able to be by my side 24/7. #line:devil_end_7
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
+Devil: You'll love this job so much, you're never going to want time off! Which works out because we don't offer time off. #line:devil_end_8
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Oh 0.45 0.03 white>>
+Devil: Oh, sorry you didn't get the promotion. As an incentive, you get twice the amount of work! #line:devil_end_9
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Bored 0.45 0.03 white>>
+Devil: Now, little ones, we've wasted too much company time discussing these trivial matters. Off to work now~ #line:devil_end_10
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Cheery 0.45 0.03 white>>
+Devil: Happy Hell's Delivery! Huhuhu... #line:devil_end_11
+<<Act Devil DevilPopUp_Default>>
 ===
