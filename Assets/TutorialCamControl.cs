@@ -511,7 +511,7 @@ public class TutorialCamControl : MonoBehaviour
 
     private void InvisibleWall()
     {
-        if (inGoldSummningArea && !wallIsGone && goldSummoningTimes >= 2)
+        if (inGoldSummningArea && !wallIsGone)
         {
             StartCoroutine(SetInvisibleWall());
         }
@@ -879,12 +879,7 @@ public class TutorialCamControl : MonoBehaviour
 
     public void DestroyWall1()
     {
-        startTimes += 1;
-        if(startTimes >= 2)
-        {
-            Destroy(startBlockingWall.gameObject);
-        }
-
+        Destroy(startBlockingWall.gameObject);
     }
 
     public void DestroyWall2()
@@ -894,32 +889,17 @@ public class TutorialCamControl : MonoBehaviour
 
     public void DestroyWall3()
     {
-        pushTimes += 1;
-        if(pushTimes >= 2)
-        {
-            Destroy(pushBlockingWall.gameObject);
-        }
-
+        Destroy(pushBlockingWall.gameObject);       
     }
 
     public void DestroyWall4()
     {
-        pressurePlateTimes += 1;
-        if (pressurePlateTimes >= 2)
-        {
-            Destroy(pressurePlateBlockingWall.gameObject);
-        }
-
+        Destroy(pressurePlateBlockingWall.gameObject);
     }
 
     public void DestroyWall10()
     {
-        goldSummoningTimes += 1;
-        if(goldSummoningTimes >= 2)
-        {
-            Destroy(goldSummoningBlockingWall.gameObject);
-        }
-
+        Destroy(goldSummoningBlockingWall.gameObject);       
     }
 
     public void DestroyWall5()
@@ -931,40 +911,24 @@ public class TutorialCamControl : MonoBehaviour
 
     public void DestroyWall6()
     {
-        summoningcircleTimes += 1;
-        if (summoningcircleTimes >= 2)
-        {
-            Destroy(summoningCircleBlockingWall.gameObject);
-        }
-
+        Destroy(summoningCircleBlockingWall.gameObject);
     }
 
     public void DestroyWall7()
     {
-        sabotageTimes += 1;
-        if (sabotageTimes >= 2)
-        {
-            Destroy(sabatageingWall.gameObject);
-        }
-
+        Destroy(sabatageingWall.gameObject);
     }
 
     public void DestroyWall8()
     {
-        dualSummoningTimes += 1;
-        if (dualSummoningTimes >= 2)
-        {
-            Destroy(dualSummoningBlockingWall.gameObject);
-        }
+        Destroy(dualSummoningBlockingWall.gameObject);
     }
 
     public void DestroyWall9()
     {
-        playerSpecificTimes += 1;
-        if (playerSpecificTimes >= 2)
-        {
-            Destroy(pressurePlateBlockingWall.gameObject);
-        }
+
+        Destroy(pressurePlateBlockingWall.gameObject);
+
     }
 
     #endregion

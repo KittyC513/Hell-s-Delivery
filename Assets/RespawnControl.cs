@@ -746,17 +746,17 @@ public class RespawnControl : MonoBehaviour
     }
 
 
-    IEnumerator StartPackageDialogue() 
-    {
-        SceneControl.instance.dRP1.Stop();
-        SceneControl.instance.dRP2.Stop();
-        SceneControl.instance.drAll.Stop();
-        yield return new WaitForSeconds(1f);
+    //IEnumerator StartPackageDialogue() 
+    //{
+    //    SceneControl.instance.dRP1.Stop();
+    //    SceneControl.instance.dRP2.Stop();
+    //    SceneControl.instance.drAll.Stop();
+    //    yield return new WaitForSeconds(1f);
 
-        LevelDialogue.ShowDevilPlayerAll();
-        SceneControl.instance.drAll.StartDialogue("Packages");
+    //    LevelDialogue.ShowDevilPlayerAll();
+    //    SceneControl.instance.drAll.StartDialogue("Packages");
 
-    }
+    //}
 
 
     private void OnTriggerEnter(Collider other)
@@ -842,18 +842,17 @@ public class RespawnControl : MonoBehaviour
 
         if (other.gameObject.tag == ("Start_Tutorial") && TutorialCamControl.instance.cutsceneIsCompleted)
         {
-            if (!p1Pass && !p2Pass)
+            if (!p1Pass)
             {
-                if (isPlayer1 || isPlayer2)
-                {
-                    SceneControl.instance.dRP1.Stop();
-                    SceneControl.instance.dRP2.Stop();
-                    LevelDialogue.ShowDevilPlayerAll();
-                    SceneControl.instance.drAll.StartDialogue("LookAround");
-                    p1Pass1 = true;
-                    p2Pass1 = true;
 
-                }
+                SceneControl.instance.dRP1.Stop();
+                SceneControl.instance.dRP2.Stop();
+                LevelDialogue.ShowDevilPlayerAll();
+                SceneControl.instance.drAll.StartDialogue("LookAround");
+                GameManager.instance.p1.rC.p1Pass = true;
+                GameManager.instance.p2.rC.p1Pass = true;
+
+
             }
             //if (isPlayer1 && !p1Pass)
             //{
@@ -886,7 +885,6 @@ public class RespawnControl : MonoBehaviour
 
             }
 
-
             if (isPlayer2 && !SceneControl.instance.packageDialogueStart)
             {
                 Jump_T2.SetActive(true);
@@ -895,50 +893,40 @@ public class RespawnControl : MonoBehaviour
 
         if (other.gameObject.tag == ("Package_Tutorial"))
         {
-            if (!p1Pass1 && !p2Pass1)
+            if (isPlayer1)
             {
-                if (isPlayer1 || isPlayer2)
-                {
-                    p1Pass1 = true;
-                    p2Pass1 = true;
-                    if (SceneControl.instance.packageDialogueEnd)
-                    {
-                        throwPackag_T1.SetActive(true);
-                        throwPackag_T2.SetActive(true);
-                    }
-
-                    if (!SceneControl.instance.packageDialogueStart || SceneControl.instance.packageDialogueEnd)
-                    {
-                        StartCoroutine(StartPackageDialogue());
-                    }
-
-                }
+                throwPackag_T1.SetActive(true);
+            }
+            if (isPlayer2)
+            {
+                throwPackag_T2.SetActive(true);
             }
 
-
-            if (p1Pass1 || p2Pass1)
+            if (!p1Pass1)
             {
-                Destroy(other.gameObject);
-                SceneControl.instance.dRP1.enabled = true;
-                SceneControl.instance.dRP2.enabled = true;
+                LevelDialogue.ShowDevilPlayerAll();
+                SceneControl.instance.drAll.StartDialogue("Packages");
+                GameManager.instance.p1.rC.p1Pass1 = true;
+                GameManager.instance.p2.rC.p1Pass1 = true;
             }
 
-
-            //if (p1Pass1 && p2Pass2)
-            //{
-            //    Destroy(other.gameObject);            
-            //}
         }
 
         if (other.gameObject.tag == ("Push_Tutorial"))
         {
-            if (isPlayer1 && !p1Pass2)
+
+            if (!p1Pass2)
             {
-                p1Pass2 = true;
-                LevelDialogue.ShowDevilPlayer1();
-                SceneControl.instance.dRP1.Stop();
-                SceneControl.instance.dRP1.StartDialogue("Push");
+                if (isPlayer1 || isPlayer2)
+                {
+                    LevelDialogue.ShowDevilPlayerAll();
+                    SceneControl.instance.drAll.StartDialogue("Push");
+                    GameManager.instance.p1.rC.p1Pass2 = true;
+                    GameManager.instance.p2.rC.p1Pass2 = true;
+
+                }
             }
+
             if (isPlayer1)
             {
                 push_T1.SetActive(true);
@@ -948,73 +936,41 @@ public class RespawnControl : MonoBehaviour
                 push_T2.SetActive(true);
             }
 
-
-            if (isPlayer2 && !p2Pass2)
-            {
-                p2Pass2 = true;
-                push_T2.SetActive(true);
-                LevelDialogue.ShowDevilPlayer2();
-                SceneControl.instance.dRP2.Stop();
-                //SceneControl.instance.dRP1.
-                SceneControl.instance.dRP2.StartDialogue("Push2");
-            }
-
-            //if  (p1Pass2 && p2Pass2)
-            //{
-            //    Destroy(other.gameObject);
-            //}
         }
 
         if (other.gameObject.tag == ("Pressure_Tutorial"))
         {
-            if (!p2Pass3 && !p1Pass3)
+            if (!p1Pass3)
             {
                 if (isPlayer1 || isPlayer2)
                 {
                     p1Pass3 = true;
-                    p2Pass3 = true;
                     LevelDialogue.ShowDevilPlayerAll();
-                    SceneControl.instance.dRP1.Stop();
-                    SceneControl.instance.dRP2.Stop();
-                    SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("PressurePlate");
+                    GameManager.instance.p1.rC.p1Pass3 = true;
+                    GameManager.instance.p2.rC.p1Pass3 = true;
                 }
-
             }
-
-            if (p1Pass3 || p2Pass3)
-            {
-                Destroy(other.gameObject);
-            }
-
         }
 
         if (other.gameObject.tag == ("Gold_Tutorial"))
         {
-            if (isPlayer1 && !p1Pass9)
+            if (!p1Pass9)
             {
-                p1Pass9 = true;
-                //PressurePlate_T1.SetActive(true);
-                LevelDialogue.ShowDevilPlayer1();
-                SceneControl.instance.dRP1.Stop();
-                SceneControl.instance.dRP1.StartDialogue("P1GoldSummoningSquare");
-
-            }
-
-            if (isPlayer2 && !p2Pass9)
-            {
-                p2Pass9 = true;
-                //PressurePlate_T2.SetActive(true);
-                LevelDialogue.ShowDevilPlayer2();
-                SceneControl.instance.dRP2.Stop();
-                SceneControl.instance.dRP2.StartDialogue("P2GoldSummoningSquare");
-
+                if(isPlayer1 || isPlayer2)
+                {
+                    p1Pass9 = true;
+                    LevelDialogue.ShowDevilPlayerAll();
+                    SceneControl.instance.drAll.StartDialogue("P1GoldSummoningSquare");
+                    GameManager.instance.p1.rC.p1Pass9 = true;
+                    GameManager.instance.p2.rC.p1Pass9 = true;
+                }
             }
         }
 
         if (other.gameObject.tag == ("Checkpoint_Tutorial"))
         {
-            if (!p2Pass4 && !p1Pass4)
+            if (!p1Pass4)
             {
                 if (isPlayer1 || isPlayer2)
                 {
@@ -1026,113 +982,82 @@ public class RespawnControl : MonoBehaviour
                     {
                         StartCoroutine(ActivateP2UIForDuration(3f));
                     }
-                    p1Pass4 = true;
-                    p2Pass4 = true;
                     LevelDialogue.ShowDevilPlayerAll();
-                    SceneControl.instance.dRP1.Stop();
-                    SceneControl.instance.dRP2.Stop();
                     SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("Checkpoints");
+                    GameManager.instance.p1.rC.p1Pass4 = true;
+                    GameManager.instance.p2.rC.p1Pass4 = true;
                 }
 
-            }
-
-            if (p2Pass4 || p1Pass4)
-            {
-                Destroy(other.gameObject);
             }
         }
 
         if (other.gameObject.tag == ("SummoningCircle_Tutorial"))
         {
-            if (!p2Pass5 && !p1Pass5)
+            if (!p1Pass5)
             {
                 if (isPlayer1 || isPlayer2)
                 {
-                    p1Pass5 = true;
-                    p2Pass5 = true;
                     LevelDialogue.ShowDevilPlayerAll();
-                    SceneControl.instance.dRP1.Stop();
-                    SceneControl.instance.dRP2.Stop();
                     SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("SummoningCircles");
+                    GameManager.instance.p1.rC.p1Pass5 = true;
+                    GameManager.instance.p2.rC.p1Pass5 = true;
                 }
 
             }
 
-
-            if (p2Pass5 || p1Pass5)
-            {
-                Destroy(other.gameObject);
-            }
         }
 
         if (other.gameObject.tag == ("Dual_Tutorial"))
         {
-            if (!p2Pass6 && !p1Pass6)
+            if (!p1Pass6)
             {
                 if (isPlayer1 || isPlayer2)
                 {
-                    p1Pass6 = true;
-                    p2Pass6 = true;
                     LevelDialogue.ShowDevilPlayerAll();
-                    SceneControl.instance.dRP1.Stop();
-                    SceneControl.instance.dRP2.Stop();
                     SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("DualSummoningCircles");
+                    GameManager.instance.p1.rC.p1Pass6 = true;
+                    GameManager.instance.p2.rC.p1Pass6 = true;
                 }
 
-            }
-
-            if (p2Pass6 || p1Pass6)
-            {
-                Destroy(other.gameObject);
             }
         }
 
         if (other.gameObject.tag == ("Specific_Tutorial"))
         {
-            if (isPlayer1 && !p1Pass7)
+            if (!p1Pass7)
             {
-                p1Pass7 = true;
-                LevelDialogue.ShowDevilPlayer1();
-                SceneControl.instance.dRP1.Stop();
-                SceneControl.instance.dRP1.StartDialogue("P1PlayerSpecific");
+                if(isPlayer1 || isPlayer2)
+                {
+                    LevelDialogue.ShowDevilPlayerAll();
+                    SceneControl.instance.drAll.Stop();
+                    SceneControl.instance.drAll.StartDialogue("P1PlayerSpecific");
+                    GameManager.instance.p1.rC.p1Pass7 = true;
+                    GameManager.instance.p2.rC.p1Pass7 = true;
+                }
 
             }
 
-            if (isPlayer2 && !p2Pass7)
-            {
-                p2Pass7 = true;
-                LevelDialogue.ShowDevilPlayer2();
-                SceneControl.instance.dRP2.Stop();
-                SceneControl.instance.dRP2.StartDialogue("P2PlayerSpecific");
-            }
 
         }
 
         if (other.gameObject.tag == ("Sabotage_Tutorial"))
         {
 
-            if (!p2Pass8 && !p1Pass8)
+            if (!p1Pass8)
             {
                 if (isPlayer1 || isPlayer2)
                 {
-                    p1Pass8 = true;
-                    p2Pass8 = true;
                     LevelDialogue.ShowDevilPlayerAll();
-                    SceneControl.instance.dRP1.Stop();
-                    SceneControl.instance.dRP2.Stop();
                     SceneControl.instance.drAll.Stop();
                     SceneControl.instance.drAll.StartDialogue("Sabotage");
+                    GameManager.instance.p1.rC.p1Pass8 = true;
+                    GameManager.instance.p2.rC.p1Pass8 = true;
                 }
-
             }
 
-            if (p2Pass8 || p1Pass8)
-            {
-                Destroy(other.gameObject);
-            }
         }
         //Debug.Log("newcheckpoint");
         if (other.gameObject.tag == ("fCheckpoint"))
