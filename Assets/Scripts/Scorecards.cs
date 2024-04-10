@@ -249,14 +249,13 @@ public class Scorecards : MonoBehaviour
         {
             badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
         }
-        else
-        {
+        
             badge1.GetComponent<Image>().sprite = lvlData.p1Badges[0].image;
             badge1Title.text = lvlData.p1Badges[0].badgeName;
             badge1Desc.text = lvlData.p1Badges[0].description;
             AddBadgeToScore(lvlData.p1Badges[0], true);
 
-        }
+        
 
         yield return new WaitForSeconds(0.33f);
         text1.SetActive(true);
@@ -268,13 +267,12 @@ public class Scorecards : MonoBehaviour
         {
             badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
         }
-        else
-        {
+        
             badge2.GetComponent<Image>().sprite = lvlData.p1Badges[1].image;
             badge2Title.text = lvlData.p1Badges[1].badgeName;
             badge2Desc.text = lvlData.p1Badges[1].description;
             AddBadgeToScore(lvlData.p1Badges[1], true);
-        }
+        
       
         yield return new WaitForSeconds(0.33f);
         text2.SetActive(true);
@@ -286,13 +284,12 @@ public class Scorecards : MonoBehaviour
         {
             badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
         }
-        else
-        {
+       
             badge3.GetComponent<Image>().sprite = lvlData.p1Badges[2].image;
             badge3Title.text = lvlData.p1Badges[2].badgeName;
             badge3Desc.text = lvlData.p1Badges[2].description;
             AddBadgeToScore(lvlData.p1Badges[2], true);
-        }
+        
 
 
         yield return new WaitForSeconds(0.33f);
@@ -317,13 +314,12 @@ public class Scorecards : MonoBehaviour
         {
             badge1 = Instantiate(blankBadge, badge1Location.position, Quaternion.identity, badgeUI.transform);
         }
-        else
-        {
+        
             badge1.GetComponent<Image>().sprite = lvlData.p2Badges[0].image;
             badge1Title.text = lvlData.p2Badges[0].badgeName;
             badge1Desc.text = lvlData.p2Badges[0].description;
             AddBadgeToScore(lvlData.p2Badges[0], false);
-        }
+        
         yield return new WaitForSeconds(0.33f);
         text1.SetActive(true);
 
@@ -333,13 +329,12 @@ public class Scorecards : MonoBehaviour
         {
             badge2 = Instantiate(blankBadge, badge2Location.position, Quaternion.identity, badgeUI.transform);
         }
-        else
-        {
+       
             badge2.GetComponent<Image>().sprite = lvlData.p2Badges[1].image;
             badge2Title.text = lvlData.p2Badges[1].badgeName;
             badge2Desc.text = lvlData.p2Badges[1].description;
             AddBadgeToScore(lvlData.p2Badges[1], false);
-        }
+        
 
         yield return new WaitForSeconds(0.33f);
         text2.SetActive(true);
@@ -349,13 +344,12 @@ public class Scorecards : MonoBehaviour
         {
             badge3 = Instantiate(blankBadge, badge3Location.position, Quaternion.identity, badgeUI.transform);
         }
-        else
-        {
+       
             badge3.GetComponent<Image>().sprite = lvlData.p2Badges[2].image;
             badge3Title.text = lvlData.p2Badges[2].badgeName;
             badge3Desc.text = lvlData.p2Badges[2].description;
             AddBadgeToScore(lvlData.p2Badges[2], false);
-        }
+        
 
 
         yield return new WaitForSeconds(0.33f);

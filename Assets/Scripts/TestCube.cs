@@ -3393,7 +3393,11 @@ public class TestCube : MonoBehaviour
             summoningAnimIsTriggered2 = false;
         }
 
-        // ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numButtons, 1, isPlayer1);
+        if (ScoreCount.instance != null)
+        {
+            ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numButtons, 1, isPlayer1);
+        }
+        
     }
 
     IEnumerator TriggerSummoningCircleAnim()
