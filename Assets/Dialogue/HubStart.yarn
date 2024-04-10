@@ -8,27 +8,32 @@ position: -186,56
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Default 0.45 0.03 white>>
-Devil: Hello, my little delivery demons.
+Devil: Hello, my little delivery demons. This is your boss calling~ #line:devil_intro_part1_2 
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
-Devil: I do hope you're not wasting precious company time...
+Devil: I do hope you're not wasting precious company time... #line:devil_intro_part1_3
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Disappointed 0.45 0.03 white>>
-Devil: Perhaps you've forgotten how to do your jobs.
+Devil: Perhaps you've forgotten how to do your jobs. #line:devil_intro_part1_4
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
-Devil: Though, I can't fire you yet! That's too nice.
+Devil: Though, I can't fire you yet! That would be too nice. #line:devil_intro_part1_5
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
+Devil: Besides, company policy states I have to show you this training video instead. #line:devil_intro_part1_6
 <<Act Devil DevilPopUp_Default>>
 
 <<Hide DevilPopUp_Default>>
 <<Act Devil DevilPopUp_Cheery 0.45 0.03 white>>
-Devil: Don't worry, my little demons. I have a little something for you to watch.
+Devil: Be sure to watch carefully, I look absolutely stunning in there. #line:devil_intro_part1_1
 <<Act Devil DevilPopUp_Default>>
 
 //<<Hide DevilPopUp_Default>>
@@ -39,4 +44,68 @@ Devil: Don't worry, my little demons. I have a little something for you to watch
 
 // <<wait  2>>
 // <<TutorialLevel>>
+===
+
+title: ObjectiveCall
+tags:
+---
+
+<<PlayerShow>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+Devil: Now that you've learned the basics of demon delivering, I don't want to see any more dilly-dallying~ #line:devil_intro_part2_9
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
+Devil: Though, work morale seems rather low, maybe a <color=red>promotion</color> would spice things up! #line:devil_intro_part2_8
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Cheery 0.45 0.03 white>>
+Devil: It even comes with benefits! #line:devil_intro_part2_7
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Smug 0.45 0.03 white>>
+Devil: Ooh! That means <color=red>employee reviews.</color> #line:devil_intro_part2_6
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+Devil: Here's what I'll be evaluating. #line:devil_intro_part2_5
+<<Act Devil DevilPopUp_Default>>
+
+//show report cards png
+<color=red>EMPLOYEE REPORT CARDS</color>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+Devil: All is fair in this competition. I'll give the promotion to whoever <color=red>performs best</color> in their evaluations. #line:devil_intro_part2_4
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+Devil: Oh, and if you find any lost letters on the way, the demon who <color=red>collects more</color> might even get a bonus. #line:devil_intro_part2_3
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+Devil: Remember, my little delivery demons... #line:devil_intro_part2_2
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+Devil: Deliver fast, deliver well, and try not to die. Huhuhu... #line:devil_intro_part2_1
+<<Act Devil DevilPopUp_Default>>
+
+<<Hide DevilPopUp_Default>>
+<<Act Devil DevilPopUp_Default 0.45 0.03 white>>
+Devil: You have clients waiting. Don't let me down, little ones. #line:devil_intro_part2_10
+<<Act Devil DevilPopUp_Default>>
+
+<<HideAll>>
+<<HideGradient>>
 ===
