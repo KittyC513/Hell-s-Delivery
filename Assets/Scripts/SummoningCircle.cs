@@ -58,12 +58,15 @@ public class SummoningCircle : MonoBehaviour
 
         matChange = GetComponent<Renderer>();
 
+        
 
         players = new TestCube[2];
     }
 
     private void Update()
     {
+        instruction.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        instruction2.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         DetectPlayer();
         //detect the player
         //if the player is detected read its run input, if the run input is active we want to set the player to a hold button state
