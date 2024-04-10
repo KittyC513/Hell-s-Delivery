@@ -33,7 +33,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] private InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger,pushRelease;
+    [SerializeField] public InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger,pushRelease;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -745,6 +745,10 @@ public class TestCube : MonoBehaviour
                     if(charController.rb != null)
                     {
                         charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
+                        if (turnOnTV)
+                        {
+
+                        }
                     }
 
                     //print("use new movementCal");
@@ -2503,13 +2507,13 @@ public class TestCube : MonoBehaviour
         {
             //gameManager.sceneChanged = true;
             StartCoroutine(MovingCameraTV());
-            if (onTv)
-            {
-                //GameManager.instance.changeSceneTimes += 1;
-                //Loader.Load(Loader.Scene.MVPLevel);
-                onTv = false;
-                turnOnTV = false;
-            }
+            //if (onTv)
+            //{
+            //    //GameManager.instance.changeSceneTimes += 1;
+            //    //Loader.Load(Loader.Scene.MVPLevel);
+            //    onTv = false;
+            //    turnOnTV = false;
+            //}
 
         }
     }
@@ -3481,6 +3485,13 @@ public class TestCube : MonoBehaviour
             withinPackageRange = true;
 
         }
+
+        if (other.CompareTag("TV"))
+        {
+            withinTVRange = true;
+        }
+
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -3632,6 +3643,11 @@ public class TestCube : MonoBehaviour
         {
             withinPackageRange = false;
 
+        }
+
+        if (other.CompareTag("TV"))
+        {
+            withinTVRange = false;
         }
     }
 

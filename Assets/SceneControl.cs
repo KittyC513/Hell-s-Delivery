@@ -49,7 +49,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject Lv1, lv2;
     [SerializeField]
-    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, LalahUI, MichaelUI, nameTagNPC2, nameTagNPC3;
+    public GameObject phoneUI, dialogueBox, nameTag, nameTag1, WertherUI, LalahUI, MichaelUI, nameTagNPC2, nameTagNPC3, TVinstruction;
 
 
     [Header("Title Page")]
@@ -958,10 +958,20 @@ public class SceneControl : MonoBehaviour
         if(GameManager.instance.p1.turnOnTV || GameManager.instance.p2.turnOnTV)
         {
             minigameUI.SetActive(true);
+            SelectMinigame.instance.firstEnter = true;
         }
         else if (!GameManager.instance.p1.turnOnTV && !GameManager.instance.p2.turnOnTV)
         {
             minigameUI.SetActive(false);
+        }
+
+        if (GameManager.instance.showTVInstruction)
+        {
+            TVinstruction.SetActive(true);
+        }
+        else
+        {
+            TVinstruction.SetActive(false);
         }
 
         void CompleteLevel1()
