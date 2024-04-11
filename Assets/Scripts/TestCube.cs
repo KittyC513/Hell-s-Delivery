@@ -3818,11 +3818,13 @@ public class TestCube : MonoBehaviour
                 pushSlider.value = pushHoldDuration;
                 if (isPlayer1)
                 {
-                    powerUp1.SetFloat("_opacity", pushSlider.value);
+                    powerUp1.SetFloat("_opacity", pushSlider.value + 0.5f);
+                    //powerUp1.SetColor("_Glow", new Color(0, 5, 191, 25));
                 }
                 if (isPlayer2)
                 {
-                    powerUp2.SetFloat("_opacity", pushSlider.value);
+                    powerUp2.SetFloat("_opacity", pushSlider.value + 0.5f);
+                    //powerUp1.SetColor("_Glow", new Color(0, 91, 191, 25));
                 }
                 
                 //print("fillImage" + pushHoldDuration);
@@ -3832,6 +3834,18 @@ public class TestCube : MonoBehaviour
             {
                 pushHoldDuration = 1;
                 pushSlider.value = maxTimer;
+
+                if (isPlayer1)
+                {
+                    powerUp1.SetFloat("_opacity", 3);
+                    //powerUp1.SetColor("_Glow", new Color(46, 0, 61));
+                }
+                if (isPlayer2)
+                {
+                    powerUp2.SetFloat("_opacity", 3);
+                    //powerUp1.SetColor("_Glow", new Color(46, 0, 61));
+                }
+
             }
 
             if (isPlayer1)
