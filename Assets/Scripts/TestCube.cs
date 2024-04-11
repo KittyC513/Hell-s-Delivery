@@ -726,7 +726,11 @@ public class TestCube : MonoBehaviour
         if (curSceneName == "Level1" || curSceneName == "MVPLevel")
         {
             initBoxing();
+        } else if(curSceneName == "HubStart")
+        {
+            initBoxing();
         }
+
 
         playerPos = this.transform;
 
@@ -744,7 +748,22 @@ public class TestCube : MonoBehaviour
                 {
                     if(charController.rb != null)
                     {
-                        charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
+                        if(bM != null)
+                        {
+                            if (bM.isboxing)
+                            {
+                                charController.RunMovement(bM.boxingCamObject, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
+                            }
+                            else
+                            {
+                                charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
+
+                            }
+                        }
+                        else
+                        {
+                            charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
+                        }
 
                     }
 
@@ -2505,7 +2524,7 @@ public class TestCube : MonoBehaviour
             //gameManager.sceneChanged = true;
             StartCoroutine(MovingCameraTV());
 
-            if (onTv)
+            if (onTv && !bM.isboxing)
             {
                 if (jump.ReadValue<float>() == 1)
                 {
@@ -2515,6 +2534,10 @@ public class TestCube : MonoBehaviour
                 {
                     onTv = false;
                     turnOnTV = false;
+                }
+                if(SelectMinigame.instance.chooseOne && ReadPushButton())
+                {
+                    bM.StartGameHub();
                 }
             }
 
@@ -3910,12 +3933,15 @@ public class TestCube : MonoBehaviour
     {
         minigame = GameObject.FindGameObjectWithTag("boxing");
         bM = minigame.GetComponent<boxingMinigame>();
-        boxcamHolder = GameObject.FindGameObjectWithTag("boxcam");
-        if (boxcamHolder != null)
+
+        if(curSceneName == "Level1" || curSceneName == "MVPLevel")
         {
-            boxcam = boxcamHolder.GetComponent<Camera>();
+            boxcamHolder = GameObject.FindGameObjectWithTag("boxcam");
+            if (boxcamHolder != null)
+            {
+                boxcam = boxcamHolder.GetComponent<Camera>();
+            }
         }
-        
     }
 
 

@@ -1908,6 +1908,21 @@ public class RespawnControl : MonoBehaviour
 
     }
 
+    public void startminigameHub()
+    {
+        minigame = GameObject.FindGameObjectWithTag("boxing");
+        bM = minigame.GetComponent<boxingMinigame>();
+        if (isPlayer1)
+        {
+            player.transform.position = bM.spawnpointp1;
+        }
+        if (isPlayer2)
+        {
+            player.transform.position = bM.spawnpointp2;
+        }
+
+    }
+
     public void endminigamep1()
     {
         //endminigametimerp1();

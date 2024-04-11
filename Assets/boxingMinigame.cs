@@ -13,6 +13,8 @@ public class boxingMinigame : MonoBehaviour
     public GameObject waypointExit;
     public Vector3 spawnpointp1;
     public Vector3 spawnpointp2;
+    public Vector3 spawnpoint1;
+    public Vector3 spawnpoint2;
     public Vector3 spawnpointExit;
     public GameObject[] players;
     public Level1CamControl cm;
@@ -39,15 +41,50 @@ public class boxingMinigame : MonoBehaviour
     [SerializeField]
     private bool packageIsShowed;
 
+    [Header("HubStart")]
+    [SerializeField]
+    private GameObject package1;
+    [SerializeField]
+    private GameObject package2;
+    [SerializeField]
+    public GameObject boxingCam;
+    [SerializeField]
+    public Camera boxingCamObject;
+    [SerializeField]
+    private GameObject mainCam;
+
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
+        if(boxingCam != null)
+        {
+            if(boxingCamObject == null)
+            {
+                boxingCamObject = boxingCam.GetComponent<Camera>();
+                boxingCam.SetActive(false);
+            }
+
+        }
+
+        if(spawnpointp1 != null)
+        {
+            spawnpointp1 = waypointp1.transform.position;
+        }
         boxingCanvas.SetActive(false);
-        spawnpointp1 = waypointp1.transform.position;
-        spawnpointp2 = waypointp2.transform.position;
-        spawnpointExit = waypointExit.transform.position;
+
+        if (spawnpointp2 != null)
+        {
+            spawnpointp2 = waypointp2.transform.position;
+        }
+
+        if (spawnpointExit != null)
+        {
+            spawnpointExit = waypointExit.transform.position;
+        }
+
+
         Scene scene = SceneManager.GetActiveScene();
         if (crowd != null)
         {
@@ -83,11 +120,28 @@ public class boxingMinigame : MonoBehaviour
                     GameManager.instance.p1.rC.endminigamep2();
                     endMinigame();      
                 }
-
-
             }
 
-            
+            if (sceneString == "HubStart")
+            {
+                package1.SetActive(false);
+                package2.SetActive(false);
+
+                if (p1pushedcount >= maxDamage)
+                {
+                    GameManager.instance.p2.rC.endminigamep1();
+                    EndGameInHub();
+                }
+                if (p2pushedcount >= maxDamage)
+                {
+                    GameManager.instance.p1.rC.endminigamep2();
+                    EndGameInHub();
+                }
+            }
+
+
+
+
 
 
 
@@ -196,6 +250,64 @@ public class boxingMinigame : MonoBehaviour
         }
     }
 
+    public void StartGameHub()
+    {
+        boxingCanvas.SetActive(true);
+        anim.SetTrigger("boxingStart");
+        isboxing = true;
+        boxingCam.SetActive(true);
+        mainCam.SetActive(false);
+
+        GameManager.instance.p1.rC.p1dead = false;
+        GameManager.instance.p1.rC.p2dead = false;
+        GameManager.instance.p2.rC.p1dead = false;
+        GameManager.instance.p2.rC.p2dead = false;
+        GameManager.instance.p1.rC.startminigameHub();
+        GameManager.instance.p2.rC.startminigameHub();
+        endswitch = true;
+
+        // Find all game objects with the tag "Findscript"
+        //GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
+
+        //// Loop through each object found
+        //foreach (GameObject obj in objectsWithTag)
+        //{
+        //    // Check if the object has a component of type RespawnControl
+        //    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
+
+        //    // If the RespawnControl component is found, do something with it
+        //    if (respawnControl != null)
+        //    {
+        //        // You can access methods and properties of the RespawnControl script here
+        //        // For example:
+        //        respawnControl.p1dead = false;
+        //        respawnControl.p2dead = false;
+        //        respawnControl.startminigameHub();
+        //        endswitch = true;
+        //    }
+        //}
+        p1pushedcount = 0;
+        p2pushedcount = 0;
+        healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
+        healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
+
+    }
+
+    public void EndGameInHub()
+    {
+        boxingCanvas.SetActive(false);
+        isboxing = false;
+        boxingCam.SetActive(false);
+        mainCam.SetActive(true);
+        p1pushedcount = 0;
+        p2pushedcount = 0;
+
+        if (!packageIsShowed)
+        {
+            StartCoroutine(ShowPackage());
+        }
+    }
+
     IEnumerator ShowPackage()
     {
         yield return new WaitForSeconds(2f);
@@ -217,6 +329,16 @@ public class boxingMinigame : MonoBehaviour
         if (packagePiece4 != null)
         {
             packagePiece4.SetActive(true);
+        }
+
+        if(package1 != null)
+        {
+            package1.SetActive(true);
+        }
+
+        if (package2 != null)
+        {
+            package2.SetActive(true);
         }
 
         packageIsShowed = true;

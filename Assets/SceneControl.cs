@@ -957,11 +957,29 @@ public class SceneControl : MonoBehaviour
 
         if(GameManager.instance.p1.turnOnTV || GameManager.instance.p2.turnOnTV)
         {
-            minigameUI.SetActive(true);
+            if (boxingMinigame.instance.isboxing)
+            {
+                minigameUI.SetActive(false);
+                GameManager.instance.p1.isFreeze = false;
+                GameManager.instance.p2.isFreeze = false;
+                boxingMinigame.instance.boxingCanvas.SetActive(true);
+            }
+            else
+            {
+                minigameUI.SetActive(true);
+                GameManager.instance.p1.isFreeze = true;
+                GameManager.instance.p2.isFreeze = true;
+                boxingMinigame.instance.boxingCanvas.SetActive(false);
+            }
+
         }
         else if (!GameManager.instance.p1.turnOnTV && !GameManager.instance.p2.turnOnTV)
         {
             minigameUI.SetActive(false);
+            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
+            boxingMinigame.instance.boxingCanvas.SetActive(false);
+
         }
 
         if (GameManager.instance.showTVInstruction)
