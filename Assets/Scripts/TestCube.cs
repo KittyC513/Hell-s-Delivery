@@ -2830,7 +2830,7 @@ public class TestCube : MonoBehaviour
 
     void P1Damage()
     {
-        if (gameManager.curSceneName == "Level1" && bM != null)
+        if ((gameManager.curSceneName == "Level1" || gameManager.curSceneName == "HubStart") && bM != null)
         {
             if (bM.isboxing && isPlayer1 && p1pushed)
             {
@@ -2951,7 +2951,7 @@ public class TestCube : MonoBehaviour
     void P2Damage()
     {
         
-        if (gameManager.curSceneName == "Level1" && bM != null)
+        if ((gameManager.curSceneName == "Level1" || gameManager.curSceneName == "HubStart") && bM != null)
         {
             if (bM.isboxing && isPlayer2 && p2pushed)
             {

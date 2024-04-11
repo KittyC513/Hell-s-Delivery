@@ -664,8 +664,12 @@ public class RespawnControl : MonoBehaviour
         StartCoroutine(P1RespawnTimer());
         if (curSceneName != scene5 && !addScore2)
         {
-            ScoreCount.instance.AddDeathsToP1(5);
-            addScore2 = true;
+            if(curSceneName != "HubStart")
+            {
+                ScoreCount.instance.AddDeathsToP1(5);
+                addScore2 = true;
+            }
+
             //StartCoroutine(ActivateP1UIForDuration(3f));
         }
 
@@ -708,8 +712,12 @@ public class RespawnControl : MonoBehaviour
         StartCoroutine(P2RespawnTimer());
         if (curSceneName != scene5 && !addScore1)
         {
-            ScoreCount.instance.AddDeathsToP2(5);
-            addScore1 = true;
+            if(curSceneName != "HubStart")
+            {
+                ScoreCount.instance.AddDeathsToP2(5);
+                addScore1 = true;
+            }
+
             //StartCoroutine(ActivateP2UIForDuration(3f));
         }
 
