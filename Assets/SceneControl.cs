@@ -958,7 +958,6 @@ public class SceneControl : MonoBehaviour
         if(GameManager.instance.p1.turnOnTV || GameManager.instance.p2.turnOnTV)
         {
             minigameUI.SetActive(true);
-            SelectMinigame.instance.firstEnter = true;
         }
         else if (!GameManager.instance.p1.turnOnTV && !GameManager.instance.p2.turnOnTV)
         {

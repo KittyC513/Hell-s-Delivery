@@ -25,12 +25,13 @@ public class SelectMinigame : MonoBehaviour
     void Start()
     {
         instance = this;
+        firstEnter = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        SelectItem();
+        //SelectItem();
     }
 
     public void SelectItem()

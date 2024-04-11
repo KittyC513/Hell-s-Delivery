@@ -745,10 +745,7 @@ public class TestCube : MonoBehaviour
                     if(charController.rb != null)
                     {
                         charController.RunMovement(mainCam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
-                        if (turnOnTV)
-                        {
 
-                        }
                     }
 
                     //print("use new movementCal");
@@ -2189,6 +2186,11 @@ public class TestCube : MonoBehaviour
             if (ReadActionButton())
             {
                 turnOnTV = true;
+                if (move.ReadValue<Vector2>().x == 1 || move.ReadValue<Vector2>().x == -1)
+                {
+                    SelectMinigame.instance.SelectItem();
+                    print("move" + move.ReadValue<Vector2>().x);
+                }
                 //SceneControl.instance.LoadScene("MVPLevel");
                 //change scene and enter tutorial level, set gameManger.sceneChanged to true               
             }
