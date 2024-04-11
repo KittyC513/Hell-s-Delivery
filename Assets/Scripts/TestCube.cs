@@ -2186,11 +2186,6 @@ public class TestCube : MonoBehaviour
             if (ReadActionButton())
             {
                 turnOnTV = true;
-                if (move.ReadValue<Vector2>().x == 1 || move.ReadValue<Vector2>().x == -1)
-                {
-                    SelectMinigame.instance.SelectItem();
-                    print("move" + move.ReadValue<Vector2>().x);
-                }
                 //SceneControl.instance.LoadScene("MVPLevel");
                 //change scene and enter tutorial level, set gameManger.sceneChanged to true               
             }
@@ -2509,6 +2504,20 @@ public class TestCube : MonoBehaviour
         {
             //gameManager.sceneChanged = true;
             StartCoroutine(MovingCameraTV());
+
+            if (onTv)
+            {
+                if (jump.ReadValue<float>() == 1)
+                {
+                    SelectMinigame.instance.SelectItem();
+                }
+                if (ReadActionButton())
+                {
+                    onTv = false;
+                    turnOnTV = false;
+                }
+            }
+
             //if (onTv)
             //{
             //    //GameManager.instance.changeSceneTimes += 1;

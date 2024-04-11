@@ -10,7 +10,7 @@ public class SelectMinigame : MonoBehaviour
     [SerializeField]
     public int selectedItem;
     [SerializeField]
-    public int previousItem;
+    public int pressingTimes;
     [SerializeField]
     public GameObject[] shopItem;
     [SerializeField]
@@ -19,6 +19,7 @@ public class SelectMinigame : MonoBehaviour
     public bool chooseOne;
     [SerializeField]
     public bool chooseTwo;
+    private float timer;
 
 
     // Start is called before the first frame update
@@ -26,6 +27,7 @@ public class SelectMinigame : MonoBehaviour
     {
         instance = this;
         firstEnter = true;
+        pressingTimes = 1;
     }
 
     // Update is called once per frame
@@ -38,36 +40,45 @@ public class SelectMinigame : MonoBehaviour
     {
         if (oriShop)
         {
-            previousItem = 0;
-            selectedItem += 1;
-
-            if(selectedItem == 1)
+            if(timer >= 0.17)
             {
-                chooseOne = true;
-            }
+                selectedItem += 1;
 
-            if(selectedItem == 2)
+                if (selectedItem == pressingTimes * 2)
+                {
+                    chooseTwo = true;
+                    chooseOne = false;
+                    timer = 0;
+                }
+                else
+                {
+                    chooseOne = true;
+                    chooseTwo = false;
+                    timer = 0;
+                }
+
+                if (chooseOne)
+                {
+                    shopItem[0].SetActive(true);
+                    shopItem[1].SetActive(false);
+                }
+
+                if (chooseTwo)
+                {
+                    shopItem[0].SetActive(false);
+                    shopItem[1].SetActive(true);
+                }
+
+                if (selectedItem >= pressingTimes * 2)
+                {
+                    pressingTimes += 1;
+                }
+            }
+            else
             {
-                chooseTwo = true;
-                chooseOne = false;
-
+                timer += Time.deltaTime;
             }
-
-
-            if (chooseOne)
-            {
-                shopItem[0].SetActive(true);
-                shopItem[1].SetActive(false);
-            }
-
-
-            if (chooseTwo)
-            {
-                shopItem[0].SetActive(false);
-                shopItem[1].SetActive(true);
-            }
-
-
+            
 
         }
 
