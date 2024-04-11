@@ -200,7 +200,6 @@ public class GameManager : MonoBehaviour
     public GameObject lighting3;
 
     [Header("HubStart")]
-
     [SerializeField]
     public bool LalahRequestWasCompleted;
     [SerializeField]
@@ -213,6 +212,12 @@ public class GameManager : MonoBehaviour
     public bool WertherLeft;
     [SerializeField]
     public bool LalahLeft;
+
+    [Header("Bark")]
+    [SerializeField]
+    public bool barkTriggered;
+
+
 
     public LevelData lastLevelData;
 

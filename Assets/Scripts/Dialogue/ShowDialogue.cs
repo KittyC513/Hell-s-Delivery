@@ -316,6 +316,18 @@ public class ShowDialogue :DialogueViewBase
         TutorialCamControl.instance.DestroyWall10();
     }
 
+    [YarnCommand("StartBark")]
+    public static void BarkStart()
+    {
+        GameManager.instance.barkTriggered = true;
+    }
+
+    [YarnCommand("EndBark")]
+    public static void BarkEnd()
+    {
+        GameManager.instance.barkTriggered = false;
+    }
+
 
 
     /*[YarnCommand("ShowDevilOnPlayerDeath")]

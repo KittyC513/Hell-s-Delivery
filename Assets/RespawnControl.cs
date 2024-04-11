@@ -277,36 +277,33 @@ public class RespawnControl : MonoBehaviour
 
     void SabotageBark()
     {
-        if (curSceneName == "Level1")
-        {
-            if (SceneControl.instance.p1isKilling && SceneControl.instance.p2isInZone1)
-            {
-                PlayRandomSabotageDialogue1();
-            }
 
-            if (SceneControl.instance.p2isKilling && SceneControl.instance.p1isInZone1)
-            {
-                PlayRandomSabotageDialogue2();
-            }
+        if (SceneControl.instance.p1isKilling && SceneControl.instance.p2isInZone1)
+        {
+            PlayRandomSabotageDialogue1();
         }
+
+        if (SceneControl.instance.p2isKilling && SceneControl.instance.p1isInZone1)
+        {
+            PlayRandomSabotageDialogue2();
+        }
+        
 
     }
 
     void SavingBark()
     {
-        if (curSceneName == "Level1")
-        {
-            if (SceneControl.instance.p1IsSaving && SceneControl.instance.p2isInZone1)
-            {
-                PlayRandomCooperationDialogue1();
-            }
 
-            if (SceneControl.instance.p2IsSaving && SceneControl.instance.p1isInZone1)
-            {
-                PlayRandomCooperationDialogue2();
-            }
+        if (SceneControl.instance.p1IsSaving && SceneControl.instance.p2isInZone1)
+        {
+            PlayRandomCooperationDialogue1();
         }
 
+        if (SceneControl.instance.p2IsSaving && SceneControl.instance.p1isInZone1)
+        {
+            PlayRandomCooperationDialogue2();
+        }
+     
     }
 
 
@@ -479,9 +476,13 @@ public class RespawnControl : MonoBehaviour
     {
         if (curSceneName == "Level1" || curSceneName == "MVPLevel")
         {
-            SabotageBark();
-            SavingBark();
-            PackageBark();
+            if (!GameManager.instance.barkTriggered)
+            {
+                SabotageBark();
+                SavingBark();
+                PackageBark();
+            }
+
         }
 
         Partner = GameObject.FindGameObjectsWithTag("FindScript");
@@ -556,7 +557,6 @@ public class RespawnControl : MonoBehaviour
             {
                 player.transform.rotation = P1RespawnRotation.rotation;
                 GameManager.instance.p2.rC.P2RespawnRotation.rotation = P1RespawnRotation.rotation;
-                print("11");
             }
 
             if (isPlayer2 && P2RespawnRotation != null)
@@ -564,7 +564,6 @@ public class RespawnControl : MonoBehaviour
 
                 player.transform.rotation = P2RespawnRotation.rotation;
                 GameManager.instance.p1.rC.P1RespawnRotation.rotation = P2RespawnRotation.rotation;
-                print("22");
             }
 
         }
@@ -676,8 +675,13 @@ public class RespawnControl : MonoBehaviour
         if (curSceneName == scene9)
         {
             //LevelDialogue.ShowDevilPlayer2();
-            SceneControl.instance.dRP1.Stop();
-            PlayRandomDeathDialogue1();
+
+            if (!gameManager.barkTriggered)
+            {
+                SceneControl.instance.dRP1.Stop();
+                PlayRandomDeathDialogue1();
+            }
+
         }
 
         if (Player1isCarrying && isPlayer1)
@@ -724,8 +728,12 @@ public class RespawnControl : MonoBehaviour
         if (curSceneName == scene9)
         {
             //LevelDialogue.ShowDevilPlayer1();
-            SceneControl.instance.dRP2.Stop();
-            PlayRandomDeathDialogue2();
+            if (!gameManager.barkTriggered)
+            {
+                SceneControl.instance.dRP2.Stop();
+                PlayRandomDeathDialogue2();
+            }
+
         }
         if (Player2isCarrying && isPlayer2)
         {
