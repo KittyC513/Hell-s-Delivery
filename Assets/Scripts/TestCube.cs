@@ -731,6 +731,13 @@ public class TestCube : MonoBehaviour
             initBoxing();
         }
 
+        if (ReadPushButton())
+        {
+            OutlineActivate();
+        } else if (ReadPushReleaseButton())
+        {
+            OutlineDeActivate();
+        }
 
         playerPos = this.transform;
 
@@ -2981,6 +2988,7 @@ public class TestCube : MonoBehaviour
 
     IEnumerator StopBeingPushedP1()
     {
+        OutlineActivate();
         pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
 
@@ -3000,7 +3008,7 @@ public class TestCube : MonoBehaviour
         p1Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
         //damageApplied = false;
-        
+        OutlineDeActivate();
         gameManager.p2.pushCDSlider.gameObject.SetActive(false);
         pushIsIntervinedP1 = false;
 
@@ -3011,6 +3019,7 @@ public class TestCube : MonoBehaviour
 
     IEnumerator StopBeingPushedP2()
     {
+        OutlineActivate();
         pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
 
@@ -3029,6 +3038,7 @@ public class TestCube : MonoBehaviour
         p2Anim.SetFloat("speed", 0f);
         pushHoldTime = 0;
         //damageApplied = false;
+        OutlineDeActivate();
         gameManager.p1.pushCDSlider.gameObject.SetActive(false);
         pushIsIntervinedP2 = false;
         yield return new WaitForSeconds(1.5f);
@@ -3806,9 +3816,17 @@ public class TestCube : MonoBehaviour
             {
                 pushHoldDuration += Time.deltaTime;
                 pushSlider.value = pushHoldDuration;
-
+                if (isPlayer1)
+                {
+                    powerUp1.SetFloat("_opacity", pushSlider.value);
+                }
+                if (isPlayer2)
+                {
+                    powerUp2.SetFloat("_opacity", pushSlider.value);
+                }
+                
                 //print("fillImage" + pushHoldDuration);
-  
+
             }
             else
             {
@@ -3969,6 +3987,80 @@ public class TestCube : MonoBehaviour
 
     }
 
+    public TestCube tc;
+    private List<GameObject> platforms = new List<GameObject>();
+    private List<Renderer> renderers = new List<Renderer>();
+    public Material powerUp1;
+    public Material powerUp2;
+    bool toggle;
+
+    void OutlineActivate()
+    {
+        // Get all Renderer components in the GameObject
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        if (toggle == false)
+        {
+            foreach (Renderer renderer in renderers)
+            {
+
+                    // Get the existing materials
+                    Material[] materials = renderer.materials;
+
+                    // Add the additional material to the array
+                    if (materials.Length <= 1)
+                    {
+                        Material[] newMaterials = new Material[materials.Length + 1];
+                        for (int i = 0; i < materials.Length; i++)
+                        {
+                            newMaterials[i] = materials[i];
+                        }
+                        if (isPlayer1)
+                    {
+                        newMaterials[materials.Length] = powerUp1;
+                    } else if (isPlayer2)
+                    {
+                        newMaterials[materials.Length] = powerUp2;
+                    }
+                        
+
+                        // Update the materials on the Renderer
+                        renderer.materials = newMaterials;
+                    }
+
+
+                
+
+            }
+            toggle = true;
+        }
+    }
+
+    void OutlineDeActivate()
+    {
+        // Get all Renderer components in the GameObject
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer renderer in renderers)
+        {
+            // Get the existing materials
+            Material[] materials = renderer.materials;
+
+            // Remove the last material if there are more than one materials
+            if (materials.Length > 1)
+            {
+                Material[] newMaterials = new Material[materials.Length - 1];
+                for (int i = 0; i < newMaterials.Length; i++)
+                {
+                    newMaterials[i] = materials[i];
+                }
+
+                // Update the materials on the Renderer
+                renderer.materials = newMaterials;
+            }
+        }
+
+        toggle = false;
+    }
 
     /*
     float shaderOpacity;
