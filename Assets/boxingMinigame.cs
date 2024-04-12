@@ -146,60 +146,60 @@ public class boxingMinigame : MonoBehaviour
                 packagePiece2.SetActive(false);
 
 
-                if (GameManager.instance.p1.rC.p1dead)
-                {
-                    GameManager.instance.p1.rC.p1dead = false;
-                    GameManager.instance.p2.rC.p2dead = false;
-                    GameManager.instance.p1.rC.endminigamep1();
-                    GameManager.instance.p2.rC.endminigamep2();
-                    endswitch = false;
-                }
-
-                if (GameManager.instance.p2.rC.p1dead)
-                {
-                    GameManager.instance.p1.rC.p1dead = false;
-                    GameManager.instance.p2.rC.p2dead = false;
-                    GameManager.instance.p1.rC.endminigamep1();
-                    GameManager.instance.p2.rC.endminigamep2();
-                    endswitch = false;
-                }
-
-
-                //Debug.Log("successful");
-                //// Find all game objects with the tag "Findscript"
-                //GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
-
-                //// Loop through each object found
-                //foreach (GameObject obj in objectsWithTag)
+                //if (GameManager.instance.p1.rC.p1dead)
                 //{
-                //    // Check if the object has a component of type RespawnControl
-                //    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
-                //    // If the RespawnControl component is found, do something with it
-                //    if (respawnControl != null)
-                //    {
-                //        // You can access methods and properties of the RespawnControl script here
-                //        // For example:
-                //        if (respawnControl.p1dead)
-                //        {
-                //            respawnControl.p1dead = false;
-                //            respawnControl.p2dead = false;
-                //            respawnControl.endminigamep1();
-                //            endMinigame();
-                //            endswitch = false;
-                            
-                //        }
-                //        if (respawnControl.p2dead)
-                //        {
-                //            respawnControl.p1dead = false;
-                //            respawnControl.p2dead = false;
-                //            respawnControl.endminigamep2();
-                //            endMinigame();
-
-                //            endswitch = false;
-                            
-                //        }
-                //    }
+                //    GameManager.instance.p1.rC.p1dead = false;
+                //    GameManager.instance.p1.rC.p2dead = false;
+                //    GameManager.instance.p1.rC.endminigamep1();
+                //    //GameManager.instance.p2.rC.endminigamep2();
+                //    endswitch = false;
                 //}
+
+                //if (GameManager.instance.p2.rC.p1dead)
+                //{
+                //    GameManager.instance.p2.rC.p1dead = false;
+                //    GameManager.instance.p2.rC.p2dead = false;
+                //    //GameManager.instance.p1.rC.endminigamep1();
+                //    GameManager.instance.p2.rC.endminigamep2();
+                //    endswitch = false;
+                //}
+
+
+                Debug.Log("successful");
+                // Find all game objects with the tag "Findscript"
+                GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
+
+                // Loop through each object found
+                foreach (GameObject obj in objectsWithTag)
+                {
+                    // Check if the object has a component of type RespawnControl
+                    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
+                    // If the RespawnControl component is found, do something with it
+                    if (respawnControl != null)
+                    {
+                        // You can access methods and properties of the RespawnControl script here
+                        // For example:
+                        if (respawnControl.p1dead)
+                        {
+                            respawnControl.p1dead = false;
+                            respawnControl.p2dead = false;
+                            respawnControl.endminigamep1();
+                            endMinigame();
+                            endswitch = false;
+
+                        }
+                        if (respawnControl.p2dead)
+                        {
+                            respawnControl.p1dead = false;
+                            respawnControl.p2dead = false;
+                            respawnControl.endminigamep2();
+                            endMinigame();
+
+                            endswitch = false;
+
+                        }
+                    }
+                }
 
             }
         }
@@ -216,10 +216,14 @@ public class boxingMinigame : MonoBehaviour
         if(GameManager.instance.curSceneName == "Level1")
         {
             cm.minigameCam();
+            p1pushedcount = 0;
+            p2pushedcount = 0;
+            healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
+            healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
         } 
         else if(GameManager.instance.curSceneName == "MVPLevel")
         {
-
+            cm.minigameCam();
         }
 
         if (crowd != null)
@@ -253,10 +257,7 @@ public class boxingMinigame : MonoBehaviour
         //        endswitch = true;
         //    }
         //}
-        p1pushedcount = 0;
-        p2pushedcount = 0;
-        healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
-        healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
+
     }
 
     public void endMinigame()

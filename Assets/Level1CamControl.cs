@@ -39,6 +39,15 @@ public class Level1CamControl : MonoBehaviour
     public bool endCutScene;
     string sceneString;
 
+    [Header("MVP Level")]
+    [SerializeField]
+    private Transform cam;
+    [SerializeField]
+    private Transform oriCam;
+    [SerializeField]
+    private bool gameStart;
+    [SerializeField]
+    private bool gameEnd;
 
     // Start is called before the first frame update
     private void Awake()
@@ -73,6 +82,15 @@ public class Level1CamControl : MonoBehaviour
             
         //}
         AtStartCam();
+        if (gameStart)
+        {
+            StartCoroutine(minigameCutscene());
+        } 
+
+        if (gameEnd)
+        {
+            StartCoroutine(endminigameCutscene());
+        }
         ///AtStartCam();
     }
 
@@ -167,14 +185,14 @@ public class Level1CamControl : MonoBehaviour
     {
         indicator.SetActive(false);
         indicatorCanvas.SetActive(false);
-        
-        StartCoroutine(minigameCutscene());
+        gameStart = true;
+
+
     }
 
     public void endminigameCam()
     {
-        
-        StartCoroutine(endminigameCutscene());
+        gameEnd = true;
     }
 
     IEnumerator minigameCutscene()
@@ -186,7 +204,7 @@ public class Level1CamControl : MonoBehaviour
         if(GameManager.instance.curSceneName == "MVPLevel")
         {
             miniCam.gameObject.SetActive(true);
-            //MoveCamera(cutSceneMiniCam);
+            StartCoroutine(movingCam());
         }
         else
         {
@@ -195,6 +213,21 @@ public class Level1CamControl : MonoBehaviour
         yield return new WaitForSeconds(3f);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        gameStart = false;
+    }
+
+    IEnumerator movingCam()
+    {
+        print("MovingCam");
+        yield return new WaitForSeconds(1f);
+        MoveCamera(cam);
+    }
+
+
+    IEnumerator movingCamBack()
+    {
+        yield return new WaitForSeconds(1f);
+        MoveCamera(oriCam);
     }
 
     public void MoveCamera(Transform newPos)
@@ -209,6 +242,7 @@ public class Level1CamControl : MonoBehaviour
 
     IEnumerator endminigameCutscene()
     {
+        StartCoroutine(movingCamBack());
         GameManager.instance.p1.isFreeze = true;
         GameManager.instance.p2.isFreeze = true;
         if (dialogueCanvasP1 != null)
@@ -247,7 +281,7 @@ public class Level1CamControl : MonoBehaviour
             GameManager.instance.p1.transform.position = new Vector3(-173, 61, -297);
             GameManager.instance.p2.transform.position = new Vector3(-173, 61, -297);
         }
-        
+        gameEnd = false;
     }
 
 }
