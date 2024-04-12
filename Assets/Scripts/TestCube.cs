@@ -2207,7 +2207,7 @@ public class TestCube : MonoBehaviour
 
     void Interacte()
     {
-        if (withinTVRange)
+        if (withinTVRange && !onTv)
         {
             if (ReadActionButton())
             {
@@ -2534,6 +2534,7 @@ public class TestCube : MonoBehaviour
 
             if (onTv && !bM.isboxing)
             {
+
                 if (jump.ReadValue<float>() == 1)
                 {
                     SelectMinigame.instance.SelectItem();
@@ -2617,7 +2618,7 @@ public class TestCube : MonoBehaviour
     {
         print("CAM BACK");
         SceneControl.instance.MoveCamera(SceneControl.instance.camPos);
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(2f);
         onTv = false;
     }
 

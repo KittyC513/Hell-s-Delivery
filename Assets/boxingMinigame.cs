@@ -297,15 +297,22 @@ public class boxingMinigame : MonoBehaviour
     {
         boxingCanvas.SetActive(false);
         isboxing = false;
-        boxingCam.SetActive(false);
-        mainCam.SetActive(true);
+        StartCoroutine(SwitchCam());
         p1pushedcount = 0;
         p2pushedcount = 0;
-
+        GameManager.instance.p1.transform.position = SceneControl.instance.originalPos1.position;
+        GameManager.instance.p2.transform.position = SceneControl.instance.originalPos2.position;
         if (!packageIsShowed)
         {
             StartCoroutine(ShowPackage());
         }
+    }
+
+    IEnumerator SwitchCam()
+    {
+        yield return new WaitForSeconds(2f);
+        boxingCam.SetActive(false);
+        mainCam.SetActive(true);
     }
 
     IEnumerator ShowPackage()

@@ -609,7 +609,14 @@ public class RespawnControl : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         p1Anim.SetBool("isDead", false);
         p1Anim.SetBool("isRespawn", true);
-        Respawn(respawnPoint);
+        if (curSceneName == "HubStart")
+        {
+            Respawn(bM.spawnpointp1);
+        }
+        else
+        {
+            Respawn(respawnPoint);
+        }
         //p1Model.SetActive(true);
         //p1DeadScreen.SetActive(false);
         P1Indicator.SetActive(true);
@@ -643,7 +650,14 @@ public class RespawnControl : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         p2Anim.SetBool("isDead", false);
         p2Anim.SetBool("isRespawn", true);
-        Respawn(respawnPoint);
+        if(curSceneName == "HubStart")
+        {
+            Respawn(bM.spawnpointp2);
+        }
+        else
+        {
+            Respawn(respawnPoint);
+        }
         //p2Model.SetActive(true);
         //p2DeadScreen.SetActive(false);
         P2Indicator.SetActive(true);

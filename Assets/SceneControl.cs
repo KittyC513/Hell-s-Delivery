@@ -99,6 +99,14 @@ public class SceneControl : MonoBehaviour
     private AK.Wwise.Event stopComicSFX;
     [SerializeField]
     private GameObject minigameUI;
+    [SerializeField]
+    public Transform respawnPoint;
+
+    [Header("Minigame")]
+    [SerializeField]
+    public Transform originalPos1;
+    [SerializeField]
+    public Transform originalPos2;
 
     [Header("werther Event")]
     [SerializeField]
