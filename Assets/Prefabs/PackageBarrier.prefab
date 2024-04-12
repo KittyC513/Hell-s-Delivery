@@ -396,6 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bc: {fileID: 0}
   Og: {fileID: 0}
+  blocking: 0
   passable: {fileID: -876546973899608171, guid: bdc88e09fc93db043bef788daa00f298, type: 3}
   solid: {fileID: -876546973899608171, guid: 13f25c0ce231b784c85091de2d382b62, type: 3}
   instruction: {fileID: 0}
@@ -954,7 +955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6287624065068581621
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1125,10 +1126,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Require Package to Access the Gate
+  m_text: NO PACKAGE, NO ENTRY
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c2d35dfac61b5e14c920a995444f3d10, type: 2}
-  m_sharedMaterial: {fileID: -5919843945677236401, guid: c2d35dfac61b5e14c920a995444f3d10, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 886677cf4f7efea43a2c346d25b52543, type: 2}
+  m_sharedMaterial: {fileID: 6834009747790348, guid: 886677cf4f7efea43a2c346d25b52543, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
