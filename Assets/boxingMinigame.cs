@@ -163,16 +163,41 @@ public class boxingMinigame : MonoBehaviour
                 package1.SetActive(false);
                 package2.SetActive(false);
 
-                if (p1pushedcount >= maxDamage)
+                if (SelectMinigame.instance.chooseOne)
                 {
-                    GameManager.instance.p2.rC.endminigamep1();
-                    EndGameInHub();
+                    if (p1pushedcount >= maxDamage)
+                    {
+                        GameManager.instance.p2.rC.endminigamep1();
+                        EndGameInHub();
+                    }
+                    if (p2pushedcount >= maxDamage)
+                    {
+                        GameManager.instance.p1.rC.endminigamep2();
+                        EndGameInHub();
+                    }
                 }
-                if (p2pushedcount >= maxDamage)
+
+                if (SelectMinigame.instance.chooseTwo && endswitch == true)
                 {
-                    GameManager.instance.p1.rC.endminigamep2();
-                    EndGameInHub();
+                    if (GameManager.instance.p1.rC.p1dead)
+                    {
+                        GameManager.instance.p1.rC.p1dead = false;
+                        GameManager.instance.p1.rC.p2dead = false;
+                        GameManager.instance.p1.rC.endminigamep2();
+                        EndGameInHub();
+                        endswitch = false;
+                    }
+
+                    if (GameManager.instance.p2.rC.p2dead)
+                    {
+                        GameManager.instance.p2.rC.p1dead = false;
+                        GameManager.instance.p2.rC.p2dead = false;
+                        GameManager.instance.p2.rC.endminigamep1();
+                        EndGameInHub();
+                        endswitch = false;
+                    }
                 }
+
             }
         
 

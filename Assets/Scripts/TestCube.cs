@@ -402,7 +402,6 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private bool isDropped;
 
-
     [Header("Camera Control")]
     [SerializeField]
     private bool switchPuzzleCam, switchPuzzleCamP2, switchPuzzle2CamL, switchPuzzle2CamR, switchPuzzle2CamLP2, switchPuzzle2CamRP2;
@@ -599,6 +598,12 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool leftHandisFull, rightHandisFull, handIsFull, itemIsFull;
 
+    [Header("Facial Expression")]
+    [SerializeField]
+    private Animator facialAnim1;
+    [SerializeField]
+    private Animator facialAnim2;
+
     private void Awake()
     {
         isFreeze = false;
@@ -759,7 +764,16 @@ public class TestCube : MonoBehaviour
                         {
                             if (bM.isboxing)
                             {
-                                charController.RunMovement(bM.boxingCamObject, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
+                                if (SelectMinigame.instance.chooseOne)
+                                {
+                                    charController.RunMovement(bM.boxingCamObject, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
+                                }
+
+                                if (SelectMinigame.instance.chooseTwo)
+                                {
+                                    charController.RunMovement(bM.boxingCamObject1, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
+                                }
+
                             }
                             else
                             {
@@ -2792,9 +2806,10 @@ public class TestCube : MonoBehaviour
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
 
         p2Anim.SetBool("beingPush", true);
+        gameManager.p2.facialAnim2.SetBool("isShocked", true);
 
-      
-     
+
+
         StartCoroutine(StopBeingPushedP2());
         //noisy2 = gameManager.noisy2;
 
@@ -2907,15 +2922,15 @@ public class TestCube : MonoBehaviour
             forceMagnitude2 = pushForce * pushHoldTime;
         }
         
-        print("ForceMagnitude2" + forceMagnitude2);
+        //print("ForceMagnitude2" + forceMagnitude2);
 
         float elapsedTime = 0f;
         float duration = 0.3f; // Adjust this based on how long you want the force to be applied
 
         p1Anim.SetBool("beingPush", true);
+        gameManager.p1.facialAnim1.SetBool("isShocked", true);
 
-       
-        
+
         StartCoroutine(StopBeingPushedP1());
         //noisy2 = gameManager.noisy2;
 
@@ -3029,7 +3044,7 @@ public class TestCube : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
         p1Anim.SetBool("isFalling", false);
-
+        gameManager.p1.facialAnim1.SetBool("isShocked", false);
     }
 
     IEnumerator StopBeingPushedP2()
@@ -3058,6 +3073,7 @@ public class TestCube : MonoBehaviour
         pushIsIntervinedP2 = false;
         yield return new WaitForSeconds(1.5f);
         p2Anim.SetBool("isFalling", false);
+        gameManager.p2.facialAnim2.SetBool("isShocked", true);
     }
 
     
