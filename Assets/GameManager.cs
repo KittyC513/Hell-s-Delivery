@@ -312,7 +312,11 @@ public class GameManager : MonoBehaviour
             {
                 if (!enterOffice)
                 {
-                    Maincanvas.gameObject.SetActive(false);
+                    if (Maincanvas != null)
+                    {
+                        Maincanvas.gameObject.SetActive(false);
+                    }
+
                     MoveCamera(cameraPosition, 1f);
                     //animTitle.SetBool("isEnded", true);
                     StartCoroutine(TurnOnLight());
@@ -943,6 +947,8 @@ public class GameManager : MonoBehaviour
             accepWertherOrder = false;
             LalahLeft = false;
             WertherLeft = false;
+            p1.isFreeze = false;
+            p2.isFreeze = false;
 
         }
     }
