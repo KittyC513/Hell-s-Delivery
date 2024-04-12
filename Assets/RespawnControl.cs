@@ -1980,11 +1980,29 @@ public class RespawnControl : MonoBehaviour
         bM = minigame.GetComponent<boxingMinigame>();
         if (isPlayer1)
         {
-            player.transform.position = bM.spawnpointp1;
+            if (SelectMinigame.instance.chooseOne)
+            {
+                player.transform.position = bM.spawnpointp1;
+            }
+
+            if (SelectMinigame.instance.chooseTwo)
+            {
+                player.transform.position = bM.spawnpointp3;
+            }
+
         }
         if (isPlayer2)
         {
-            player.transform.position = bM.spawnpointp2;
+            if (SelectMinigame.instance.chooseOne)
+            {
+                player.transform.position = bM.spawnpointp2;
+            }
+
+            if (SelectMinigame.instance.chooseTwo)
+            {
+                player.transform.position = bM.spawnpointp4;
+            }
+
         }
 
     }

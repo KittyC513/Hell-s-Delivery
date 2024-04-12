@@ -10,11 +10,15 @@ public class boxingMinigame : MonoBehaviour
 
     public GameObject waypointp1;
     public GameObject waypointp2;
+    public GameObject waypointp3;
+    public GameObject waypointp4;
     public GameObject waypointExit;
     public Vector3 spawnpointp1;
     public Vector3 spawnpointp2;
     public Vector3 spawnpoint1;
     public Vector3 spawnpoint2;
+    public Vector3 spawnpointp3;
+    public Vector3 spawnpointp4;
     public Vector3 spawnpointExit;
     public GameObject[] players;
     public Level1CamControl cm;
@@ -25,6 +29,7 @@ public class boxingMinigame : MonoBehaviour
     public Image healthP1;
     public Image healthP2;
     public GameObject boxingCanvas;
+    public GameObject boxingCanvas1;
     public Animator anim;
     string sceneString;
     bool endswitch = false;
@@ -52,6 +57,11 @@ public class boxingMinigame : MonoBehaviour
     public Camera boxingCamObject;
     [SerializeField]
     private GameObject mainCam;
+    [SerializeField]
+    public GameObject boxingCam1;
+    [SerializeField]
+    public Camera boxingCamObject1;
+
 
 
     // Start is called before the first frame update
@@ -68,15 +78,41 @@ public class boxingMinigame : MonoBehaviour
 
         }
 
+        if(boxingCam1 != null)
+        {
+            boxingCamObject1 = boxingCam1.GetComponent<Camera>();
+            boxingCam1.SetActive(false);
+        }
+
         if(spawnpointp1 != null)
         {
             spawnpointp1 = waypointp1.transform.position;
         }
-        boxingCanvas.SetActive(false);
+
+        if(spawnpointp3 != null)
+        {
+            spawnpointp3 = waypointp3.transform.position;
+        }
+
+        if(boxingCanvas!= null)
+        {
+            boxingCanvas.SetActive(false);
+        }
+
+        if (boxingCanvas1 != null)
+        {
+            boxingCanvas1.SetActive(false);
+        }
+
 
         if (spawnpointp2 != null)
         {
             spawnpointp2 = waypointp2.transform.position;
+        }
+
+        if (spawnpointp4 != null)
+        {
+            spawnpointp4 = waypointp4.transform.position;
         }
 
         if (spawnpointExit != null)
@@ -281,17 +317,26 @@ public class boxingMinigame : MonoBehaviour
 
     public void StartGameHub()
     {
-        boxingCanvas.SetActive(true);
-        anim.SetTrigger("boxingStart");
+
         isboxing = true;
 
         if (SelectMinigame.instance.chooseOne)
         {
+            boxingCanvas.SetActive(true);
+            anim.SetTrigger("boxingStart");
             boxingCam.SetActive(true);
             mainCam.SetActive(false);
-        } else if (SelectMinigame.instance.chooseTwo)
+            p1pushedcount = 0;
+            p2pushedcount = 0;
+            healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
+            healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
+        } 
+        else if (SelectMinigame.instance.chooseTwo)
         {
-
+            boxingCanvas1.SetActive(true);
+            anim.SetTrigger("boxingStart");
+            boxingCam1.SetActive(true);
+            mainCam.SetActive(false);
         }
 
         GameManager.instance.p1.rC.p1dead = false;
@@ -322,16 +367,14 @@ public class boxingMinigame : MonoBehaviour
         //        endswitch = true;
         //    }
         //}
-        p1pushedcount = 0;
-        p2pushedcount = 0;
-        healthP1.fillAmount = (maxDamage - p1pushedcount) / maxDamage;
-        healthP2.fillAmount = (maxDamage - p2pushedcount) / maxDamage;
+
 
     }
 
     public void EndGameInHub()
     {
         boxingCanvas.SetActive(false);
+        boxingCanvas1.SetActive(false);
         isboxing = false;
         StartCoroutine(SwitchCam());
         p1pushedcount = 0;
@@ -348,6 +391,7 @@ public class boxingMinigame : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         boxingCam.SetActive(false);
+        boxingCam1.SetActive(false);
         mainCam.SetActive(true);
     }
 

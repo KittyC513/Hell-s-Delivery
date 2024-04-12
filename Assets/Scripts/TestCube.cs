@@ -2551,6 +2551,11 @@ public class TestCube : MonoBehaviour
                 {
                     bM.StartGameHub();
                 }
+
+                if (SelectMinigame.instance.chooseTwo && ReadPushButton())
+                {
+                    bM.StartGameHub();
+                }
             }
 
         }
