@@ -710,6 +710,8 @@ public class TestCube : MonoBehaviour
 
     }
 
+    bool chargeToggle = true;
+
     // Update is called once per frame
     void Update()
     {
@@ -739,10 +741,23 @@ public class TestCube : MonoBehaviour
         if (ReadPushButton())
         {
             OutlineActivate();
+            if (chargeToggle == true)
+            {
+                chargeParticle.Play();
+            }
+            chargeToggle = false;
+            
         } else if (ReadPushReleaseButton())
         {
+            pushParticle.Play();
+            if(chargeToggle == false)
+            {
+                chargeParticle.Stop();
+            }
+            chargeToggle = true;
             OutlineDeActivate();
         }
+
 
         playerPos = this.transform;
 
@@ -3933,6 +3948,10 @@ public class TestCube : MonoBehaviour
         pushHoldDuration = 0;
         holdPush = false;
     }
+
+    public ParticleSystem pushParticle;
+    public ParticleSystem chargeParticle;
+
     private void Push()
     {
         //if (ReadPushButton())
@@ -3948,6 +3967,7 @@ public class TestCube : MonoBehaviour
                         p1pushed = true;
                         pushStartTimer = false;
                         p1Anim.SetBool("isPushing", true);
+                        
 
                         if (ScoreCount.instance != null)
                         {
@@ -3970,7 +3990,7 @@ public class TestCube : MonoBehaviour
                         p2pushed = true;
                         pushStartTimer = false;
                         p2Anim.SetBool("isPushing", true);
-
+                        
 
                         if (ScoreCount.instance != null)
                         {
@@ -4041,13 +4061,15 @@ public class TestCube : MonoBehaviour
 
     void OutlineActivate()
     {
+
         // Get all Renderer components in the GameObject
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         if (toggle == false)
         {
             foreach (Renderer renderer in renderers)
             {
-
+                if (renderer.gameObject.tag != "pushParticle")
+                    {
                     // Get the existing materials
                     Material[] materials = renderer.materials;
 
@@ -4060,18 +4082,18 @@ public class TestCube : MonoBehaviour
                             newMaterials[i] = materials[i];
                         }
                         if (isPlayer1)
-                    {
-                        newMaterials[materials.Length] = powerUp1;
-                    } else if (isPlayer2)
-                    {
-                        newMaterials[materials.Length] = powerUp2;
-                    }
-                        
+                        {
+                            newMaterials[materials.Length] = powerUp1;
+                        } else if (isPlayer2)
+                        {
+                            newMaterials[materials.Length] = powerUp2;
+                        }
+
 
                         // Update the materials on the Renderer
                         renderer.materials = newMaterials;
                     }
-
+                }
 
                 
 
@@ -4082,13 +4104,15 @@ public class TestCube : MonoBehaviour
 
     void OutlineDeActivate()
     {
+        
         // Get all Renderer components in the GameObject
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
         foreach (Renderer renderer in renderers)
         {
-            // Get the existing materials
-            Material[] materials = renderer.materials;
+            if (renderer.gameObject.tag != "pushParticle") {
+                // Get the existing materials
+                Material[] materials = renderer.materials;
 
             // Remove the last material if there are more than one materials
             if (materials.Length > 1)
@@ -4103,6 +4127,8 @@ public class TestCube : MonoBehaviour
                 renderer.materials = newMaterials;
             }
         }
+        }
+
 
         toggle = false;
     }
