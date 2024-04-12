@@ -36,6 +36,8 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject mainCamera;
     [SerializeField]
+    public Transform camPos;
+    [SerializeField]
     public GameObject WertherCam;
     [SerializeField]
     public GameObject Npc2Cam;
@@ -246,6 +248,7 @@ public class SceneControl : MonoBehaviour
     }
     private void Start()
     {
+
         UITurnOff = true;
         UI2turnOff = true;
 

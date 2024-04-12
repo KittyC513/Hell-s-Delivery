@@ -2211,7 +2211,8 @@ public class TestCube : MonoBehaviour
         {
             if (ReadActionButton())
             {
-                turnOnTV = true;
+                gameManager.p1.turnOnTV = true;
+                gameManager.p2.turnOnTV = true;
                 //SceneControl.instance.LoadScene("MVPLevel");
                 //change scene and enter tutorial level, set gameManger.sceneChanged to true               
             }
@@ -2539,8 +2540,11 @@ public class TestCube : MonoBehaviour
                 }
                 if (ReadActionButton())
                 {
-                    onTv = false;
-                    turnOnTV = false;
+
+                    gameManager.p1.turnOnTV = false;
+                    gameManager.p2.turnOnTV = false;
+                    bM.EndGameInHub();
+                    
                 }
                 if(SelectMinigame.instance.chooseOne && ReadPushButton())
                 {
@@ -2548,14 +2552,10 @@ public class TestCube : MonoBehaviour
                 }
             }
 
-            //if (onTv)
-            //{
-            //    //GameManager.instance.changeSceneTimes += 1;
-            //    //Loader.Load(Loader.Scene.MVPLevel);
-            //    onTv = false;
-            //    turnOnTV = false;
-            //}
-
+        }
+        else
+        {
+            StartCoroutine(MovingCameraTVBack());
         }
     }
 
@@ -2607,11 +2607,20 @@ public class TestCube : MonoBehaviour
 
     IEnumerator MovingCameraTV()
     {
+        print("CAM Forward");
         SceneControl.instance.MoveCamera(SceneControl.instance.closeShootTV);
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(1f);
         onTv = true;
-
     }
+
+    IEnumerator MovingCameraTVBack()
+    {
+        print("CAM BACK");
+        SceneControl.instance.MoveCamera(SceneControl.instance.camPos);
+        yield return new WaitForSecondsRealtime(1f);
+        onTv = false;
+    }
+
 
     //DrawGizons from Player to Entrance
     private void OnDrawGizmos()
