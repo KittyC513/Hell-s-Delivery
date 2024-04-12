@@ -149,6 +149,8 @@ public class SceneControl : MonoBehaviour
     public bool startLevel2;
     [SerializeField]
     public bool WertherConversationStart;
+    [SerializeField]
+    private Animator WertherAnim;
 
 
     [Header("Lalah Event")]
@@ -186,6 +188,8 @@ public class SceneControl : MonoBehaviour
     public GameObject LalahTalkUi;
     [SerializeField]
     public bool LalahConversationStart;
+    [SerializeField]
+    private Animator LalahAnim;
 
 
     [Header("Level 1")]
@@ -486,6 +490,7 @@ public class SceneControl : MonoBehaviour
             if (LalahdialogueEnds || !LalahConversationStart)
             {
                 radialUI.SetActive(false);
+                Default1();
             }
         }
     }
@@ -511,6 +516,7 @@ public class SceneControl : MonoBehaviour
             if (LalahdialogueEnds || !LalahConversationStart)
             {
                 radialUI.SetActive(false);
+                Default1();
             }
         }
     }
@@ -540,6 +546,7 @@ public class SceneControl : MonoBehaviour
             if (wertherdialogueEnds || !WertherConversationStart)
             {
                 radialUI.SetActive(false);
+                Default();
             }
         }
     }
@@ -564,6 +571,7 @@ public class SceneControl : MonoBehaviour
             if (wertherdialogueEnds || !WertherConversationStart)
             {
                 radialUI.SetActive(false);
+                Default();
             }
         }
     }
@@ -1560,6 +1568,67 @@ public class SceneControl : MonoBehaviour
 
     #endregion
 
+
+    #region Werther Facial Animation
+    public void Nautral()
+    {
+        WertherAnim.SetBool("isNeutral", true); ;
+        WertherAnim.SetBool("isConstupated", false);
+        WertherAnim.SetBool("isHappy", false);
+    }
+
+    public void Happy()
+    {
+        WertherAnim.SetBool("isNeutral", false); ;
+        WertherAnim.SetBool("isConstupated", false);
+        WertherAnim.SetBool("isHappy", true);
+    }
+
+    public void Constupated()
+    {
+        WertherAnim.SetBool("isNeutral", false); ;
+        WertherAnim.SetBool("isConstupated", true);
+        WertherAnim.SetBool("isHappy", false);
+    }
+
+    public void Default()
+    {
+        WertherAnim.SetBool("isNeutral", false); ;
+        WertherAnim.SetBool("isConstupated", false);
+        WertherAnim.SetBool("isHappy", false);
+    }
+
+    #endregion
+
+    #region Lalah Facial Animation
+    public void Nautral1()
+    {
+        LalahAnim.SetBool("isNeutral", true); ;
+        LalahAnim.SetBool("isUpset", false);
+        LalahAnim.SetBool("isShocked", false);
+    }
+
+    public void Upset()
+    {
+        LalahAnim.SetBool("isNeutral", false); ;
+        LalahAnim.SetBool("isShocked", false);
+        LalahAnim.SetBool("isUpset", true);
+    }
+
+    public void Shocke()
+    {
+        LalahAnim.SetBool("isNeutral", false); ;
+        LalahAnim.SetBool("isShocked", true);
+        LalahAnim.SetBool("isHappy", false);
+    }
+
+    public void Default1()
+    {
+        LalahAnim.SetBool("isNeutral", false); ;
+        LalahAnim.SetBool("isUpset", false);
+        LalahAnim.SetBool("isShocked", false);
+    }
+    #endregion
 
     #region Quit
     public void TurnOnCanvas()

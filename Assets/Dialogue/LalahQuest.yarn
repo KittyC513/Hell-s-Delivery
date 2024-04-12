@@ -6,9 +6,9 @@ tags:
 <<NPCShow>>
 <<SwitchCamNPC2>>
 <<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
-
 <<Hide SpriteLalah_Neutral>>
 <<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
+<<LalahNautral>>
 Lalah: Woah, this place is like, real! It's got, like, boxes and everything. |*o*| #line:lalah_quest_1
 <<Act Lalah SpriteLalah_Neutral>> 
 
@@ -19,6 +19,7 @@ Lalah: Anyway... I've been getting emails from "Hell's Revenue Service" saying I
 
 <<Hide SpriteLalah_Neutral>>
 <<Act Lalah SpriteLalah_Confused 0.45 0.03 white>>
+<<LalahShocked>>>
 Lalah: And like, I've been sending emails back, but I don't think they're getting them? |0-0| #line:lalah_quest_3 
 <<Act Lalah SpriteLalah_Neutral>>
 
@@ -29,6 +30,7 @@ Lalah: You put the mail in this slot thingy, right? They're, like, getting stuck
 
 <<Hide SpriteLalah_Neutral>>
 <<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
+<<LalahNautral>>
 Lalah: Can you <color=red>send this</color> to the Hell's... uh... whatever Service, please? t|0v0 t| #line:lalah_quest_5 
 <<Act Lalah SpriteLalah_Neutral>>
 
@@ -49,7 +51,7 @@ Lalah: Oh! I have a stamp for you to use! Don't worry, I've pre-licked it. |0u0|
 <<Act Lalah SpriteLalah_Neutral 0.45 0.03 white>>
 Lalah: Oh, you don't need it? Okay, bye-bye! |*◡*<3| #line:lalah_quest_7 
 <<Act Lalah SpriteLalah_Neutral>>
-
+<<LalahDefault>>
 <<HideAll>>
 
 <<SwitchCamMain>>

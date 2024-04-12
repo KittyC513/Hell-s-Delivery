@@ -328,6 +328,55 @@ public class ShowDialogue :DialogueViewBase
         GameManager.instance.barkTriggered = false;
     }
 
+    [YarnCommand("WertherNautral")]
+    public static void WertherActNautral()
+    {
+        SceneControl.instance.Nautral();
+    }
+
+    [YarnCommand("WertherHappy")]
+    public static void WertherActHappy()
+    {
+        SceneControl.instance.Happy();
+    }
+
+    [YarnCommand("WertherConstupated")]
+    public static void WertherActConstupated()
+    {
+        SceneControl.instance.Constupated();
+    }
+
+    [YarnCommand("WertherDefault")]
+    public static void WertherActDefault()
+    {
+        SceneControl.instance.Default();
+    }
+
+    [YarnCommand("LalahNautral")]
+    public static void LalahActNautral()
+    {
+        SceneControl.instance.Nautral1();
+    }
+
+    [YarnCommand("LalahUpset")]
+    public static void LalahActHappy()
+    {
+        SceneControl.instance.Upset();
+    }
+
+    [YarnCommand("LalahShocked")]
+    public static void LalahActShocked()
+    {
+        SceneControl.instance.Shocke();
+    }
+
+    [YarnCommand("LalahDefault")]
+    public static void LalahActDefault()
+    {
+        SceneControl.instance.Default1();
+    }
+
+
 
 
     /*[YarnCommand("ShowDevilOnPlayerDeath")]
