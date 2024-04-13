@@ -113,9 +113,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypointp1: {fileID: 8612336048602356604}
   waypointp2: {fileID: 3305139182637559727}
+  waypointp3: {fileID: 0}
+  waypointp4: {fileID: 0}
   waypointExit: {fileID: 1451742440779013746}
   spawnpointp1: {x: 0, y: 0, z: 0}
   spawnpointp2: {x: 0, y: 0, z: 0}
+  spawnpoint1: {x: 0, y: 0, z: 0}
+  spawnpoint2: {x: 0, y: 0, z: 0}
+  spawnpointp3: {x: 0, y: 0, z: 0}
+  spawnpointp4: {x: 0, y: 0, z: 0}
   spawnpointExit: {x: 0, y: 0, z: 0}
   players: []
   cm: {fileID: 0}
@@ -126,12 +132,20 @@ MonoBehaviour:
   healthP1: {fileID: 1401196458976134803}
   healthP2: {fileID: 113871112765008736}
   boxingCanvas: {fileID: 8342413338575624187}
+  boxingCanvas1: {fileID: 0}
   anim: {fileID: 2428200218366039421}
   packagePiece1: {fileID: 0}
   packagePiece2: {fileID: 0}
   packagePiece3: {fileID: 0}
   packagePiece4: {fileID: 0}
   packageIsShowed: 0
+  package1: {fileID: 0}
+  package2: {fileID: 0}
+  boxingCam: {fileID: 0}
+  boxingCamObject: {fileID: 0}
+  mainCam: {fileID: 0}
+  boxingCam1: {fileID: 0}
+  boxingCamObject1: {fileID: 0}
   crowd: {fileID: 0}
 --- !u!1 &8612336048602356604
 GameObject:
@@ -234,9 +248,60 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4197216178138441459}
     m_Modifications:
+    - target: {fileID: 791707815259210637, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_Color.a
+      value: 0.64705884
+      objectReference: {fileID: 0}
+    - target: {fileID: 791707815259210637, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791707815259210637, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 791707815259210637, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514524672267099850, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_text
+      value: '<u><i>Push</i></u>
+
+        Tips: Hold down the button to deal additional
+        damage'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514524672267099850, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_fontSize
+      value: 33.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514524672267099850, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4c781acfbb61ff24b82e8000f4ee0075, type: 2}
+    - target: {fileID: 3514524672267099850, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 33.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514524672267099850, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -5625772428066954600, guid: 4c781acfbb61ff24b82e8000f4ee0075, type: 2}
+    - target: {fileID: 3514524672267099850, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6827274745294321065, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
       propertyPath: m_Name
       value: boxingCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292738153710111759, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -56
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292738153710111759, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 18.6
       objectReference: {fileID: 0}
     - target: {fileID: 8991505629143087406, guid: a387fb96ecf312844b8c995d89ad8579, type: 3}
       propertyPath: m_Pivot.x
