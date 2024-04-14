@@ -25,6 +25,7 @@ public class CharacterControl : MonoBehaviour
     private string groundMaterial = "nothing";
     private bool shouldStep;
     private float lastStepTime;
+    private float footstepTime;
     [SerializeField] private float footStepRate = 1;
     [SerializeField] public PlayerCollector playerCollector;
 
@@ -1258,14 +1259,17 @@ public class CharacterControl : MonoBehaviour
         if (shouldStep && isGrounded)
         {
             PlayGroundSound(groundMaterial);
-            lastStepTime = Time.deltaTime;
             shouldStep = false;
+            
         }
         else if (currentSpeed > 0)
         {
-            if (Time.deltaTime - lastStepTime > (footStepRate / (currentSpeed * 100)))
+            footstepTime += Time.deltaTime;
+
+            if (footstepTime >= footStepRate / (currentSpeed / 100))
             {
                 shouldStep = true;
+                footstepTime = 0;
             }
         }
     }
