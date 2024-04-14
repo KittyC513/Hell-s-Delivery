@@ -11,10 +11,14 @@ public class FollowP1Cam : MonoBehaviour
 
     private void Start()
     {
-        p1Cam = GameManager.instance.cam1.GetComponent<Camera>();
+
     }
     void Update()
     {
+        if(p1Cam == null)
+        {
+            p1Cam = GameManager.instance.cam1.GetComponent<Camera>();
+        }
         if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
         {
             if (!boxingMinigame.instance.isboxing)
