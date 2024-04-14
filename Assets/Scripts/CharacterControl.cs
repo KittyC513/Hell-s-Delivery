@@ -67,6 +67,10 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float slowRotationSpeed = 300f;
     [SerializeField] private float requiredQTVelocity = 8;
     private float lastSpeedValue;
+    [Space, Header("Slope Stuff")]
+    [SerializeField] private float angle;
+    [SerializeField] private float maxAngle = 80;
+    [SerializeField] private bool onSlope = false;
 
     [Space, Header("Jumping Variables")]
     [SerializeField] private float airQuickTurn = 0.2f;
@@ -178,6 +182,7 @@ public class CharacterControl : MonoBehaviour
         StateMachineUpdate();
         GetStickInputs(camera, input);
         ApplyGravity();
+        CheckSlope();
         //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
 
         if (!freezeState)
@@ -314,6 +319,7 @@ public class CharacterControl : MonoBehaviour
 
             }
         }
+
         
     }
 
@@ -326,7 +332,9 @@ public class CharacterControl : MonoBehaviour
             if (GameManager.instance.p1.p2pushed)
             {
 
+
             }
+           
             rb.velocity = new Vector3(directionSpeed.x * Time.fixedDeltaTime, ySpeed * Time.fixedDeltaTime, directionSpeed.z * Time.fixedDeltaTime);
             
         }
@@ -1159,6 +1167,7 @@ public class CharacterControl : MonoBehaviour
             if (!isJumping && !YDistanceGreaterThan(0.5f, groundCheck.transform.position, hit.point))
             {
                 transform.position = new Vector3(transform.position.x, (hit.point.y + 1.05f), transform.position.z);
+
                 snappedToGround = true;
             }
 
@@ -1307,6 +1316,39 @@ public class CharacterControl : MonoBehaviour
 
 
         }
+    }
+
+
+    private void CheckSlope()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, groundCheckDist + 1.5f, groundLayer))
+        {
+            angle = Vector3.Angle(Vector3.up, hit.normal);
+            Quaternion slopeRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+
+
+            if (angle != 0 && angle < maxAngle)
+            {
+                onSlope = true;
+            }
+            else
+            {
+                onSlope = false;
+            }
+
+
+            if (onSlope && currentSpeed > 0)
+            {
+                ySpeed = angle * -20;
+            }
+        }
+        else
+        {
+            onSlope = false;
+        }
+
     }
 
         #endregion
