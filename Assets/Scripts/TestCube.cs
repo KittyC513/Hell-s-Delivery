@@ -891,7 +891,7 @@ public class TestCube : MonoBehaviour
             playerObject.GetComponent<PlayerObject>().enabled = false;
         }
 
-        if (curSceneName == scene5 || curSceneName == "New CC" || curSceneName == scene10)
+        if (curSceneName == scene5 || curSceneName == "New CCa" || curSceneName == scene10)
         {
             if (!bM.isboxing)
             {

@@ -127,6 +127,11 @@
 				<Sound Name="Fan_All" ID="{3A71BBFB-FEBB-41BE-BD34-6988C1E2A027}" ShortID="18110144">
 					<PropertyList>
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-2</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Attenuation">
@@ -259,7 +264,7 @@
 					<PropertyList>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-14</Value>
+								<Value>-17</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -317,7 +322,7 @@
 					<PropertyList>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-5</Value>
+								<Value>-3</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -347,7 +352,7 @@
 						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-2</Value>
+								<Value>-4</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -356,7 +361,7 @@
 							<Custom>
 								<Attenuation Name="Attenuation (Custom)" ID="{66F0A15A-45F2-49E1-A091-D08503F3241B}" ShortID="611045801">
 									<PropertyList>
-										<Property Name="RadiusMax" Type="Real64" Value="90"/>
+										<Property Name="RadiusMax" Type="Real64" Value="75"/>
 									</PropertyList>
 									<CurveUsageInfoList>
 										<VolumeDryUsage>
@@ -372,12 +377,12 @@
 															<Flags>5</Flags>
 														</Point>
 														<Point>
-															<XPos>75.89789</XPos>
-															<YPos>0</YPos>
+															<XPos>60.18006</XPos>
+															<YPos>-0</YPos>
 															<Flags>0</Flags>
 														</Point>
 														<Point>
-															<XPos>90</XPos>
+															<XPos>75</XPos>
 															<YPos>-200</YPos>
 															<Flags>37</Flags>
 														</Point>
@@ -468,7 +473,7 @@
 						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-4</Value>
+								<Value>-6</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -477,7 +482,7 @@
 							<Custom>
 								<Attenuation Name="Attenuation (Custom)" ID="{FF1E912F-6D2A-4A91-9E1E-EE7CC91EB39B}" ShortID="334811356">
 									<PropertyList>
-										<Property Name="RadiusMax" Type="Real64" Value="90"/>
+										<Property Name="RadiusMax" Type="Real64" Value="75"/>
 									</PropertyList>
 									<CurveUsageInfoList>
 										<VolumeDryUsage>
@@ -493,12 +498,12 @@
 															<Flags>5</Flags>
 														</Point>
 														<Point>
-															<XPos>75.97709</XPos>
+															<XPos>60.07561</XPos>
 															<YPos>0</YPos>
 															<Flags>0</Flags>
 														</Point>
 														<Point>
-															<XPos>90</XPos>
+															<XPos>75</XPos>
 															<YPos>-200</YPos>
 															<Flags>37</Flags>
 														</Point>

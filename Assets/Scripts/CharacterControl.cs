@@ -1258,12 +1258,12 @@ public class CharacterControl : MonoBehaviour
         if (shouldStep && isGrounded)
         {
             PlayGroundSound(groundMaterial);
-            lastStepTime = Time.time;
+            lastStepTime = Time.deltaTime;
             shouldStep = false;
         }
         else if (currentSpeed > 0)
         {
-            if (Time.time - lastStepTime > (footStepRate / (currentSpeed / 100)) * Time.deltaTime)
+            if (Time.deltaTime - lastStepTime > (footStepRate / (currentSpeed * 100)))
             {
                 shouldStep = true;
             }
