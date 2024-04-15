@@ -257,7 +257,7 @@ public class ObjectGrabbable : MonoBehaviour
             GameManager.instance.p2.objectGrabbable = null;
             if (isHeavy)
             {
-                if(GameManager.instance.curSceneName == "Level1")
+                if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "HubStart")
                 {
                     if (boxingMinigame.instance.isboxing)
                     {
@@ -290,7 +290,7 @@ public class ObjectGrabbable : MonoBehaviour
             GameManager.instance.p1.objectGrabbable = null;
             if (isHeavy)
             {
-                if(GameManager.instance.curSceneName == "Level1")
+                if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "HubStart")
                 {
                     if (boxingMinigame.instance.isboxing)
                     {
