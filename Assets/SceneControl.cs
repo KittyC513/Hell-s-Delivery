@@ -997,14 +997,14 @@ public class SceneControl : MonoBehaviour
                 minigameUI.SetActive(false);
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
-                boxingMinigame.instance.boxingCanvas.SetActive(true);
+                //boxingMinigame.instance.boxingCanvas.SetActive(true);
                 minigameUIIsOn = false;
             }
             else
             {
                 GameManager.instance.p1.isFreeze = true;
                 GameManager.instance.p2.isFreeze = true;
-                boxingMinigame.instance.boxingCanvas.SetActive(false);
+                //boxingMinigame.instance.boxingCanvas.SetActive(false);
                 if (!minigameUIIsOn)
                 {
                     StartCoroutine(ShowMiniGameUI());
@@ -1019,6 +1019,7 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
             boxingMinigame.instance.boxingCanvas.SetActive(false);
+            boxingMinigame.instance.boxingCanvas1.SetActive(false);
             minigameUIIsOn = false;
 
         }

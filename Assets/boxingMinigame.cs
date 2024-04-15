@@ -411,7 +411,7 @@ public class boxingMinigame : MonoBehaviour
         GameManager.instance.p1.isFreeze = true;
         GameManager.instance.p2.isFreeze = true;
 
-        if (GameManager.instance.curSceneName == "MVPLevel")
+        if (SelectMinigame.instance.chooseTwo)
         {
             boxingCam1.gameObject.SetActive(true);
             StartCoroutine(movingCam());
