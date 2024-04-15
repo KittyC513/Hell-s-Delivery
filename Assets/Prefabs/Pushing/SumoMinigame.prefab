@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424372603946680782}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2834002, y: 0.64782935, z: -0.28340125, w: 0.6478312}
-  m_LocalPosition: {x: 29.79, y: -7.96, z: 0.79}
+  m_LocalRotation: {x: 0.24071763, y: 0.66487116, z: -0.24071884, w: 0.6648729}
+  m_LocalPosition: {x: 18.45, y: -0.01, z: 0.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 156217563188695747}
-  m_LocalEulerAnglesHint: {x: 47.255, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 39.806, y: 90, z: 0}
 --- !u!20 &3706318822499939015
 Camera:
   m_ObjectHideFlags: 0
@@ -100,7 +100,8 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 2249612404474322228}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -5277,7 +5278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5250020376020292131
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5352,7 +5353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5561080349738044406
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10885,7 +10886,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6329726909223676967}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.92387944, z: -0, w: 0.3826838}
+  m_LocalRotation: {x: 0, y: 0.92387956, z: 0, w: 0.38268343}
   m_LocalPosition: {x: -204.05254, y: 84.09706, z: -320.7872}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10913,8 +10914,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypointp1: {fileID: 5461336429387089614}
   waypointp2: {fileID: 4529861458478698268}
-  waypointp3: {fileID: 0}
-  waypointp4: {fileID: 0}
+  waypointp3: {fileID: 5461336429387089614}
+  waypointp4: {fileID: 4529861458478698268}
   waypointExit: {fileID: 3653769465331781981}
   spawnpointp1: {x: 0, y: 0, z: 0}
   spawnpointp2: {x: 0, y: 0, z: 0}
@@ -10979,7 +10980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6999646011174206064
 RectTransform:
   m_ObjectHideFlags: 0
