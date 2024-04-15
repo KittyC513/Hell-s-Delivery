@@ -70,6 +70,8 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject ConfirmText;
     [SerializeField]
+    public Animator ConfirmTextAnim;
+    [SerializeField]
     public bool ConfirmTextisActivated;
     [SerializeField]
     public bool deliveryTextisActivated;
@@ -125,6 +127,8 @@ public class SceneControl : MonoBehaviour
     public GameObject phonePiece;
     [SerializeField]
     public GameObject deliveryText;
+    [SerializeField]
+    public Animator deliveryAreaAnim;
     [SerializeField]
     private NPCTrigger NPCTrigger;
     [SerializeField]
@@ -1038,6 +1042,14 @@ public class SceneControl : MonoBehaviour
 
     public void CloseDeliveryText()
     {
+        StartCoroutine(CloseDeliveryAnim());
+    }
+
+    IEnumerator CloseDeliveryAnim()
+    {
+        deliveryAreaAnim.SetBool("NoPackageOut", true);
+        yield return new WaitForSeconds(0.45f);
+        deliveryAreaAnim.SetBool("NoPackageOut", false);
         deliveryText.SetActive(false);
         deliveryTextisActivated = false;
     }
@@ -1050,6 +1062,14 @@ public class SceneControl : MonoBehaviour
 
     public void CloseConfirmDeliveryText()
     {
+        StartCoroutine(CloseConfirmAnim());
+    }
+
+    IEnumerator CloseConfirmAnim()
+    {
+        ConfirmTextAnim.SetBool("PackageOut", true);
+        yield return new WaitForSeconds(0.3f);
+        ConfirmTextAnim.SetBool("PackageOut", false);
         ConfirmText.SetActive(false);
         ConfirmTextisActivated = false;
     }

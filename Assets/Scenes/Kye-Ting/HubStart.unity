@@ -24556,13 +24556,29 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 817
       objectReference: {fileID: 0}
+    - target: {fileID: 2097009228954179250, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030868407238217705, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
+      propertyPath: m_fontColor.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3030868407238217705, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 16777215
       objectReference: {fileID: 0}
     - target: {fileID: 5960397678359417843, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6436672760202718543, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025979721013288973, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7245229124352428659, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
       propertyPath: m_Pivot.x
@@ -24644,13 +24660,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7745009989786985999, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7962549647471112614, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8155550908448421079, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
+      propertyPath: m_fontColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155550908448421079, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294967295
+      value: 16777215
       objectReference: {fileID: 0}
     - target: {fileID: 9096665052288723149, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
       propertyPath: m_Enabled
@@ -24666,9 +24690,15 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9182132905637863123, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1419408734}
     - targetCorrespondingSourceObject: {fileID: 9135049725585793429, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
       insertIndex: -1
       addedObject: {fileID: 673225103}
+    - targetCorrespondingSourceObject: {fileID: 7962549647471112614, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 673225101}
   m_SourcePrefab: {fileID: 100100000, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
 --- !u!224 &673225099 stripped
 RectTransform:
@@ -24680,11 +24710,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7962549647471112614, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
   m_PrefabInstance: {fileID: 673225098}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &673225101 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8291717094590481450, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
-  m_PrefabInstance: {fileID: 673225098}
+--- !u!95 &673225101
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673225100}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9e94c15370cce674ebbc13421be861a3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &673225102 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9135049725585793429, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
@@ -29824,6 +29871,7 @@ MonoBehaviour:
   phoneRingText: {fileID: 696522494}
   dialogueFin: 0
   ConfirmText: {fileID: 673225100}
+  ConfirmTextAnim: {fileID: 673225101}
   ConfirmTextisActivated: 0
   deliveryTextisActivated: 0
   p1AtDoor: 0
@@ -29852,7 +29900,8 @@ MonoBehaviour:
   showPackage: 0
   showPackage1: 0
   phonePiece: {fileID: 1610108721}
-  deliveryText: {fileID: 673225101}
+  deliveryText: {fileID: 1419408733}
+  deliveryAreaAnim: {fileID: 1419408734}
   NPCTrigger: {fileID: 581664683}
   wertherIsGone: 0
   WertherTalkUI: {fileID: 557431385}
@@ -48551,6 +48600,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1419408733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9182132905637863123, guid: 441f2d9b4602ee44497eddb58b6f3458, type: 3}
+  m_PrefabInstance: {fileID: 673225098}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1419408734
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419408733}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 24deaa637c5c0464dbf0756919af4c2f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1420960286
 PrefabInstance:
   m_ObjectHideFlags: 0
