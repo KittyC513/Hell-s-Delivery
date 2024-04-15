@@ -64,6 +64,8 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private GameObject phoneInstruction;
     [SerializeField]
+    private Animator phoneAnimator;
+    [SerializeField]
     private GameObject phoneRingText;
     [SerializeField]
     public bool dialogueFin;
@@ -100,7 +102,9 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private AK.Wwise.Event stopComicSFX;
     [SerializeField]
-    private GameObject minigameUI;
+    public GameObject minigameUI;
+    [SerializeField]
+    public bool minigameUIIsOn;
     [SerializeField]
     public Transform respawnPoint;
 
@@ -941,6 +945,14 @@ public class SceneControl : MonoBehaviour
         }
         else
         {
+            StartCoroutine(ClosePhoneUI());
+        }
+
+        IEnumerator ClosePhoneUI()
+        {
+            phoneAnimator.SetBool("PhoneOut", true);
+            yield return new WaitForSeconds(0.3f);
+            phoneAnimator.SetBool("PhoneOut", false);
             phoneInstruction.SetActive(false);
         }
 
@@ -986,13 +998,18 @@ public class SceneControl : MonoBehaviour
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
                 boxingMinigame.instance.boxingCanvas.SetActive(true);
+                minigameUIIsOn = false;
             }
             else
             {
-                minigameUI.SetActive(true);
                 GameManager.instance.p1.isFreeze = true;
                 GameManager.instance.p2.isFreeze = true;
                 boxingMinigame.instance.boxingCanvas.SetActive(false);
+                if (!minigameUIIsOn)
+                {
+                    StartCoroutine(ShowMiniGameUI());
+                }
+
             }
 
         }
@@ -1002,7 +1019,15 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
             boxingMinigame.instance.boxingCanvas.SetActive(false);
+            minigameUIIsOn = false;
 
+        }
+
+        IEnumerator ShowMiniGameUI()
+        {
+            yield return new WaitForSecondsRealtime(3f);
+            minigameUI.SetActive(true);
+            minigameUIIsOn = true;
         }
 
         if (GameManager.instance.showTVInstruction)

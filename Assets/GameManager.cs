@@ -175,6 +175,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool ShowPhoneInstruction;
 
+
     [Header("Package")]
     [SerializeField]
     private GameObject package;
@@ -676,6 +677,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
     public void ShowDirection()
     {
         if (curSceneName == scene3)

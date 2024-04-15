@@ -31,6 +31,7 @@ public class boxingMinigame : MonoBehaviour
     public GameObject boxingCanvas;
     public GameObject boxingCanvas1;
     public Animator anim;
+    public Animator anim1;
     string sceneString;
     bool endswitch = false;
 
@@ -348,7 +349,7 @@ public class boxingMinigame : MonoBehaviour
         if (SelectMinigame.instance.chooseOne)
         {
             boxingCanvas.SetActive(true);
-            anim.SetTrigger("boxingStart");
+            anim1.SetTrigger("boxingStart");
             boxingCam.SetActive(true);
             mainCam.SetActive(false);
             p1pushedcount = 0;

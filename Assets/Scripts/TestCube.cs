@@ -2646,7 +2646,7 @@ public class TestCube : MonoBehaviour
     {
         print("CAM Forward");
         SceneControl.instance.MoveCamera(SceneControl.instance.closeShootTV);
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.7f);
         onTv = true;
     }
 
@@ -2654,8 +2654,9 @@ public class TestCube : MonoBehaviour
     {
         print("CAM BACK");
         SceneControl.instance.MoveCamera(SceneControl.instance.camPos);
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(3f);
         onTv = false;
+
     }
 
 
