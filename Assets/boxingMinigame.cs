@@ -31,6 +31,7 @@ public class boxingMinigame : MonoBehaviour
     public GameObject boxingCanvas;
     public GameObject boxingCanvas1;
     public Animator anim;
+    public Animator anim1;
     string sceneString;
     bool endswitch = false;
 
@@ -44,7 +45,7 @@ public class boxingMinigame : MonoBehaviour
     [SerializeField]
     private GameObject packagePiece4;
     [SerializeField]
-    private bool packageIsShowed;
+    public bool packageIsShowed;
 
     [Header("HubStart")]
     [SerializeField]
@@ -61,6 +62,9 @@ public class boxingMinigame : MonoBehaviour
     public GameObject boxingCam1;
     [SerializeField]
     public Camera boxingCamObject1;
+    [SerializeField]
+    public Transform boxingSwitchCam;
+    private bool minigameStart;
 
 
 
@@ -181,6 +185,7 @@ public class boxingMinigame : MonoBehaviour
                 {
                     if (GameManager.instance.p1.rC.p1dead)
                     {
+                        GameManager.instance.p2.isFreeze = true;
                         GameManager.instance.p1.rC.p1dead = false;
                         GameManager.instance.p1.rC.p2dead = false;
                         GameManager.instance.p1.rC.endminigamep2();
@@ -190,6 +195,7 @@ public class boxingMinigame : MonoBehaviour
 
                     if (GameManager.instance.p2.rC.p2dead)
                     {
+                        GameManager.instance.p1.isFreeze = true;
                         GameManager.instance.p2.rC.p1dead = false;
                         GameManager.instance.p2.rC.p2dead = false;
                         GameManager.instance.p2.rC.endminigamep1();
@@ -344,11 +350,16 @@ public class boxingMinigame : MonoBehaviour
     {
 
         isboxing = true;
+        if (!minigameStart)
+        {
+            StartCoroutine(minigameCutscene());
+        }
 
         if (SelectMinigame.instance.chooseOne)
         {
+            boxingCanvas1.SetActive(false);
             boxingCanvas.SetActive(true);
-            anim.SetTrigger("boxingStart");
+            anim1.SetTrigger("boxingStart");
             boxingCam.SetActive(true);
             mainCam.SetActive(false);
             p1pushedcount = 0;
@@ -358,6 +369,7 @@ public class boxingMinigame : MonoBehaviour
         } 
         else if (SelectMinigame.instance.chooseTwo)
         {
+            boxingCanvas.SetActive(false);
             boxingCanvas1.SetActive(true);
             anim.SetTrigger("boxingStart");
             boxingCam1.SetActive(true);
@@ -396,25 +408,61 @@ public class boxingMinigame : MonoBehaviour
 
     }
 
+    IEnumerator minigameCutscene()
+    {
+        GameManager.instance.p1.isFreeze = true;
+        GameManager.instance.p2.isFreeze = true;
+
+        if (SelectMinigame.instance.chooseTwo)
+        {
+            boxingCam1.gameObject.SetActive(true);
+            StartCoroutine(movingCam());
+        }
+        else
+        {
+            boxingCam.gameObject.SetActive(true);
+        }
+        yield return new WaitForSeconds(3f);
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+        minigameStart = true;
+    }
+
+    IEnumerator movingCam()
+    {
+        print("MovingCam");
+        yield return new WaitForSeconds(1f);
+        MoveCamera(boxingSwitchCam);
+    }
+
+    public void MoveCamera(Transform newPos)
+    {
+        float lerpSpeed = 1f;
+        boxingCam1.transform.position = Vector3.Lerp(boxingCam1.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
+        boxingCam1.transform.rotation = Quaternion.Lerp(boxingCam1.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
+
+    }
+
     public void EndGameInHub()
     {
         boxingCanvas.SetActive(false);
         boxingCanvas1.SetActive(false);
-        isboxing = false;
         StartCoroutine(SwitchCam());
         p1pushedcount = 0;
         p2pushedcount = 0;
-        GameManager.instance.p1.transform.position = SceneControl.instance.originalPos1.position;
-        GameManager.instance.p2.transform.position = SceneControl.instance.originalPos2.position;
         if (!packageIsShowed)
         {
             StartCoroutine(ShowPackage());
         }
+        minigameStart = false;
+        SelectMinigame.instance.chooseOne = false;
+        SelectMinigame.instance.chooseTwo = false;
+
     }
 
     IEnumerator SwitchCam()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         boxingCam.SetActive(false);
         boxingCam1.SetActive(false);
         mainCam.SetActive(true);
@@ -423,7 +471,9 @@ public class boxingMinigame : MonoBehaviour
     IEnumerator ShowPackage()
     {
         yield return new WaitForSeconds(2f);
-        if(packagePiece1 != null)
+
+
+        if (packagePiece1 != null)
         {
             packagePiece1.SetActive(true);
         }
@@ -454,6 +504,21 @@ public class boxingMinigame : MonoBehaviour
         }
 
         packageIsShowed = true;
+
+        if(GameManager.instance.curSceneName == "HubStart")
+        {
+            isboxing = false;
+            if (GameManager.instance.p1.isFreeze == true)
+            {
+                GameManager.instance.p1.isFreeze = false;
+            }
+
+            if (GameManager.instance.p2.isFreeze == true)
+            {
+                GameManager.instance.p2.isFreeze = false;
+            }
+        }
+
     }
 
 }

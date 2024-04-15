@@ -40,7 +40,7 @@ public class SelectMinigame : MonoBehaviour
     {
         if (oriShop)
         {
-            if(timer >= 0.17)
+            if(timer >= 0.1)
             {
                 selectedItem += 1;
 
@@ -67,6 +67,7 @@ public class SelectMinigame : MonoBehaviour
                 {
                     shopItem[0].SetActive(false);
                     shopItem[1].SetActive(true);
+
                 }
 
                 if (selectedItem >= pressingTimes * 2)

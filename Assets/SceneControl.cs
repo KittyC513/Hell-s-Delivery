@@ -64,11 +64,15 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private GameObject phoneInstruction;
     [SerializeField]
+    private Animator phoneAnimator;
+    [SerializeField]
     private GameObject phoneRingText;
     [SerializeField]
     public bool dialogueFin;
     [SerializeField]
     public GameObject ConfirmText;
+    [SerializeField]
+    public Animator ConfirmTextAnim;
     [SerializeField]
     public bool ConfirmTextisActivated;
     [SerializeField]
@@ -98,7 +102,9 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private AK.Wwise.Event stopComicSFX;
     [SerializeField]
-    private GameObject minigameUI;
+    public GameObject minigameUI;
+    [SerializeField]
+    public bool minigameUIIsOn;
     [SerializeField]
     public Transform respawnPoint;
 
@@ -125,6 +131,8 @@ public class SceneControl : MonoBehaviour
     public GameObject phonePiece;
     [SerializeField]
     public GameObject deliveryText;
+    [SerializeField]
+    public Animator deliveryAreaAnim;
     [SerializeField]
     private NPCTrigger NPCTrigger;
     [SerializeField]
@@ -283,6 +291,8 @@ public class SceneControl : MonoBehaviour
             }
 
             deliveryText.SetActive(false);
+            CompleteLevel1();
+            CompleteLevel2();
         }
         if (GameManager.instance.p1 != null && GameManager.instance.p2 != null)
         {
@@ -937,6 +947,14 @@ public class SceneControl : MonoBehaviour
         }
         else
         {
+            StartCoroutine(ClosePhoneUI());
+        }
+
+        IEnumerator ClosePhoneUI()
+        {
+            phoneAnimator.SetBool("PhoneOut", true);
+            yield return new WaitForSeconds(0.3f);
+            phoneAnimator.SetBool("PhoneOut", false);
             phoneInstruction.SetActive(false);
         }
 
@@ -979,16 +997,31 @@ public class SceneControl : MonoBehaviour
             if (boxingMinigame.instance.isboxing)
             {
                 minigameUI.SetActive(false);
-                GameManager.instance.p1.isFreeze = false;
-                GameManager.instance.p2.isFreeze = false;
-                boxingMinigame.instance.boxingCanvas.SetActive(true);
+                minigameUIIsOn = false;
             }
             else
             {
-                minigameUI.SetActive(true);
-                GameManager.instance.p1.isFreeze = true;
-                GameManager.instance.p2.isFreeze = true;
-                boxingMinigame.instance.boxingCanvas.SetActive(false);
+
+                if (!minigameUIIsOn)
+                {
+                    StartCoroutine(ShowMiniGameUI());
+                }
+                //if (GameManager.instance.p1.onTv || GameManager.instance.p2.onTv)
+                //{
+                //    if (!minigameUIIsOn)
+                //    {
+                //        StartCoroutine(ShowMiniGameUI());
+                //    }
+                //}
+                //else if (SelectMinigame.instance.chooseOne || SelectMinigame.instance.chooseTwo)
+                //{
+                //    if (!minigameUIIsOn)
+                //    {
+                //        StartCoroutine(ShowMiniGameUI());
+                //    }
+
+                //}
+
             }
 
         }
@@ -998,8 +1031,14 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
             boxingMinigame.instance.boxingCanvas.SetActive(false);
+            boxingMinigame.instance.boxingCanvas1.SetActive(false);
+            SelectMinigame.instance.chooseOne = false;
+            SelectMinigame.instance.chooseTwo = false;
+            minigameUIIsOn = false;
 
         }
+
+
 
         if (GameManager.instance.showTVInstruction)
         {
@@ -1010,23 +1049,31 @@ public class SceneControl : MonoBehaviour
             TVinstruction.SetActive(false);
         }
 
-        void CompleteLevel1()
-        {
-            if (GameManager.instance.LalahRequestWasCompleted)
-            {
-                phonePiece.SetActive(true);
-                phoneRingText.SetActive(true);
-            }
-        }
+    }
 
-        void CompleteLevel2()
+    void CompleteLevel1()
+    {
+        if (GameManager.instance.LalahRequestWasCompleted)
         {
-            if (GameManager.instance.WertherRequestWasCompleted)
-            {
-                phonePiece.SetActive(true);
-                phoneRingText.SetActive(true);
-            }
+            phonePiece.SetActive(true);
+            phoneRingText.SetActive(true);
         }
+    }
+
+    void CompleteLevel2()
+    {
+        if (GameManager.instance.WertherRequestWasCompleted)
+        {
+            phonePiece.SetActive(true);
+            phoneRingText.SetActive(true);
+        }
+    }
+
+    public IEnumerator ShowMiniGameUI()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        minigameUI.SetActive(true);
+        minigameUIIsOn = true;
     }
 
     // delivery area text 
@@ -1038,6 +1085,14 @@ public class SceneControl : MonoBehaviour
 
     public void CloseDeliveryText()
     {
+        StartCoroutine(CloseDeliveryAnim());
+    }
+
+    IEnumerator CloseDeliveryAnim()
+    {
+        deliveryAreaAnim.SetBool("NoPackageOut", true);
+        yield return new WaitForSeconds(0.45f);
+        deliveryAreaAnim.SetBool("NoPackageOut", false);
         deliveryText.SetActive(false);
         deliveryTextisActivated = false;
     }
@@ -1050,6 +1105,14 @@ public class SceneControl : MonoBehaviour
 
     public void CloseConfirmDeliveryText()
     {
+        StartCoroutine(CloseConfirmAnim());
+    }
+
+    IEnumerator CloseConfirmAnim()
+    {
+        ConfirmTextAnim.SetBool("PackageOut", true);
+        yield return new WaitForSeconds(0.3f);
+        ConfirmTextAnim.SetBool("PackageOut", false);
         ConfirmText.SetActive(false);
         ConfirmTextisActivated = false;
     }

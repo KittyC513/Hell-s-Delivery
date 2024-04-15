@@ -128,7 +128,7 @@ public class ObjectGrabbable : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         
-        if(this.transform.localScale.x > 1)
+        if(this.transform.localScale.x > 1 && !GameManager.instance.LalahRequestWasCompleted)
         {
             isHeavy = true;
         } 
@@ -251,61 +251,68 @@ public class ObjectGrabbable : MonoBehaviour
 
     void DetectPackage()
     {
-        if (P1TakePackage)
+        if (!GameManager.instance.LalahRequestWasCompleted)
         {
-            GameManager.instance.p1.objectGrabbable = this;
-            GameManager.instance.p2.objectGrabbable = null;
-            if (isHeavy)
+            if (P1TakePackage)
             {
-                if(GameManager.instance.curSceneName == "Level1")
+                GameManager.instance.p1.objectGrabbable = this;
+                GameManager.instance.p2.objectGrabbable = null;
+                if (isHeavy)
                 {
-                    if (boxingMinigame.instance.isboxing)
+                    if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "HubStart")
                     {
-                        GameManager.instance.p1.tooHeavy = false;
+                        if (boxingMinigame.instance.isboxing)
+                        {
+                            GameManager.instance.p1.tooHeavy = false;
+                        }
+                        else
+                        {
+                            GameManager.instance.p1.tooHeavy = true;
+                        }
                     }
                     else
                     {
                         GameManager.instance.p1.tooHeavy = true;
                     }
+
                 }
                 else
                 {
-                    GameManager.instance.p1.tooHeavy = true;
+                    GameManager.instance.p1.tooHeavy = false;
                 }
-                
             }
             else
             {
                 GameManager.instance.p1.tooHeavy = false;
             }
-        }
-        else
-        {
-            GameManager.instance.p1.tooHeavy = false;
-        }
 
-        if (P2TakePackage)
-        {
-            GameManager.instance.p2.objectGrabbable = this;
-            GameManager.instance.p1.objectGrabbable = null;
-            if (isHeavy)
+            if (P2TakePackage)
             {
-                if(GameManager.instance.curSceneName == "Level1")
+                GameManager.instance.p2.objectGrabbable = this;
+                GameManager.instance.p1.objectGrabbable = null;
+                if (isHeavy)
                 {
-                    if (boxingMinigame.instance.isboxing)
+                    if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "HubStart")
                     {
-                        GameManager.instance.p2.tooHeavy = false;
+                        if (boxingMinigame.instance.isboxing)
+                        {
+                            GameManager.instance.p2.tooHeavy = false;
+                        }
+                        else
+                        {
+                            GameManager.instance.p2.tooHeavy = true;
+                        }
                     }
                     else
                     {
                         GameManager.instance.p2.tooHeavy = true;
                     }
+
                 }
                 else
                 {
-                    GameManager.instance.p2.tooHeavy = true;
+                    GameManager.instance.p2.tooHeavy = false;
                 }
-
             }
             else
             {
@@ -315,7 +322,9 @@ public class ObjectGrabbable : MonoBehaviour
         else
         {
             GameManager.instance.p2.tooHeavy = false;
+            GameManager.instance.p1.tooHeavy = false;
         }
+        
 
     }
 

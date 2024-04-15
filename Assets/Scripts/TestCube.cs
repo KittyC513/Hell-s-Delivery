@@ -287,6 +287,8 @@ public class TestCube : MonoBehaviour
     public bool pushIsIntervinedP2;
     [SerializeField]
     private GameObject pushInstruction;
+    [SerializeField]
+    private GameObject pushInstruction2;
 
     [Header("Interact")]
     [SerializeField]
@@ -2570,11 +2572,13 @@ public class TestCube : MonoBehaviour
                 }
                 if (ReadActionButton())
                 {
-
+                    SelectMinigame.instance.firstEnter = false;
                     gameManager.p1.turnOnTV = false;
                     gameManager.p2.turnOnTV = false;
                     bM.EndGameInHub();
-                    
+                    GameManager.instance.p1.transform.position = SceneControl.instance.originalPos1.position;
+                    GameManager.instance.p2.transform.position = SceneControl.instance.originalPos2.position;
+
                 }
                 if(SelectMinigame.instance.chooseOne && ReadPushButton())
                 {
@@ -2644,7 +2648,7 @@ public class TestCube : MonoBehaviour
     {
         print("CAM Forward");
         SceneControl.instance.MoveCamera(SceneControl.instance.closeShootTV);
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.7f);
         onTv = true;
     }
 
@@ -2654,6 +2658,7 @@ public class TestCube : MonoBehaviour
         SceneControl.instance.MoveCamera(SceneControl.instance.camPos);
         yield return new WaitForSecondsRealtime(2f);
         onTv = false;
+
     }
 
 
@@ -2755,18 +2760,29 @@ public class TestCube : MonoBehaviour
             if (isPlayer1)
             {
                 p1pushed = false;
+                pushInstruction.SetActive(false);
             }
 
             if (isPlayer2)
             {
                 p2pushed = false;
+                pushInstruction2.SetActive(false);
             }
-            pushInstruction.SetActive(false);
+
         }
 
         if (withinPushingRange)
         {
-            pushInstruction.SetActive(true);
+            if (isPlayer1)
+            {
+                pushInstruction.SetActive(true);
+            }
+
+            if (isPlayer2)
+            {
+                pushInstruction2.SetActive(true);
+            }
+
         }
         
     }
@@ -3088,7 +3104,7 @@ public class TestCube : MonoBehaviour
         pushIsIntervinedP2 = false;
         yield return new WaitForSeconds(1.5f);
         p2Anim.SetBool("isFalling", false);
-        gameManager.p2.facialAnim2.SetBool("isShocked", true);
+        gameManager.p2.facialAnim2.SetBool("isShocked", false);
     }
 
     
@@ -3856,21 +3872,21 @@ public class TestCube : MonoBehaviour
 
             holdPush = true;
             isCameraLocked = true;
-            pushSlider.gameObject.SetActive(true);
+            //pushSlider.gameObject.SetActive(true);
 
             if (pushHoldDuration < 1)
             {
                 pushHoldDuration += Time.deltaTime;
-                pushSlider.value = pushHoldDuration;
+                //pushSlider.value = pushHoldDuration;
                 if (isPlayer1)
                 {
-                    powerUp1.SetFloat("_opacity", pushSlider.value + 0.5f);
-                    //powerUp1.SetColor("_Glow", new Color(0, 5, 191, 25));
+                    powerUp1.SetFloat("_opacity", pushHoldDuration + 0.5f);
+                    powerUp1.SetColor("_Glow", new Color(0, 5, 191, 25));
                 }
                 if (isPlayer2)
                 {
-                    powerUp2.SetFloat("_opacity", pushSlider.value + 0.5f);
-                    //powerUp1.SetColor("_Glow", new Color(0, 91, 191, 25));
+                    powerUp2.SetFloat("_opacity", pushHoldDuration + 0.5f);
+                    powerUp1.SetColor("_Glow", new Color(0, 91, 191, 25));
                 }
                 
                 //print("fillImage" + pushHoldDuration);
@@ -3879,17 +3895,17 @@ public class TestCube : MonoBehaviour
             else
             {
                 pushHoldDuration = 1;
-                pushSlider.value = maxTimer;
+                //pushSlider.value = maxTimer;
 
                 if (isPlayer1)
                 {
                     powerUp1.SetFloat("_opacity", 3);
-                    //powerUp1.SetColor("_Glow", new Color(46, 0, 61));
+                    powerUp1.SetColor("_Glow", new Color(46, 0, 61));
                 }
                 if (isPlayer2)
                 {
                     powerUp2.SetFloat("_opacity", 3);
-                    //powerUp1.SetColor("_Glow", new Color(46, 0, 61));
+                    powerUp1.SetColor("_Glow", new Color(46, 0, 61));
                 }
 
             }
@@ -3935,7 +3951,7 @@ public class TestCube : MonoBehaviour
             {
                 p2Particle.SetActive(false);
             }
-            pushSlider.gameObject.SetActive(false);
+            //pushSlider.gameObject.SetActive(false);
 
         }
 

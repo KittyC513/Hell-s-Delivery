@@ -83,6 +83,8 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private AnimationCurve airDecelerationCurve;
     [SerializeField] private AnimationCurve parachuteDecelerationCurve;
     [SerializeField] public float ySpeed = 0;
+    private bool UITurnOn;
+    private bool UITurnOn1;
     private float fTime = 0;
     public float jTime = 0;
     private float airSpeed = 0;
@@ -190,14 +192,15 @@ public class CharacterControl : MonoBehaviour
             if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
         }
 
-        if(isSlow && jump.ReadValue<float>() == 1)
+        if(isSlow && jump.ReadValue<float>() == 1 && !boxingMinigame.instance.isboxing)
         {
-            if (isPlayer1)
+            if (isPlayer1 && !UITurnOn)
             {
                 StartCoroutine(TurnOnUI1());
+
             }
 
-            if (isPlayer2)
+            if (isPlayer2 && !UITurnOn1)
             {
                 StartCoroutine(TurnOnUI2());
             }
@@ -205,21 +208,26 @@ public class CharacterControl : MonoBehaviour
 
         IEnumerator TurnOnUI1()
         {
+            UITurnOn = true;
             GameManager.instance.p1.cantJump1.SetActive(true);
             yield return new WaitForSeconds(2f);
             GameManager.instance.p1.cantJump1.SetActive(false);
+            UITurnOn = false;
         }
 
         IEnumerator TurnOnUI2()
         {
+            UITurnOn1 = true;
             GameManager.instance.p2.cantJump2.SetActive(true);
             yield return new WaitForSeconds(2f);
             GameManager.instance.p2.cantJump2.SetActive(false);
+            UITurnOn1 = false;
+
         }
 
         //if we're on a summoning circle freeze movement
 
-        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel" || GameManager.instance.curSceneName == "HubStart")
         {
             if (!boxingMinigame.instance.isboxing)
             {
@@ -281,7 +289,7 @@ public class CharacterControl : MonoBehaviour
         buttonHold = holdPushButton;
         freezeState = isFreeze;
 
-        if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+        if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel" || GameManager.instance.curSceneName == "HubStart")
         {
             if (bigPackage && !boxingMinigame.instance.isboxing)
             {
@@ -615,7 +623,7 @@ public class CharacterControl : MonoBehaviour
             //if we are grounded use our grounded speed curve otherwise use the airspeed curve
             if (isGrounded)
             {
-                if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+                if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel" || GameManager.instance.curSceneName == "HubStart")
                 {
                     if (!boxingMinigame.instance.isboxing)
                     {
