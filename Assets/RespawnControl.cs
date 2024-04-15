@@ -624,7 +624,7 @@ public class RespawnControl : MonoBehaviour
 
         if (curSceneName == "HubStart")
         {
-            Respawn(bM.spawnpointp1);
+            Respawn(bM.waypointExit.transform.position);
         }
         else
         {
@@ -683,7 +683,7 @@ public class RespawnControl : MonoBehaviour
 
         if(curSceneName == "HubStart")
         {
-            Respawn(bM.spawnpointp2);
+            Respawn(bM.waypointExit.transform.position);
         }
         else
         {

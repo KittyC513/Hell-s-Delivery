@@ -185,6 +185,7 @@ public class boxingMinigame : MonoBehaviour
                 {
                     if (GameManager.instance.p1.rC.p1dead)
                     {
+                        GameManager.instance.p2.isFreeze = true;
                         GameManager.instance.p1.rC.p1dead = false;
                         GameManager.instance.p1.rC.p2dead = false;
                         GameManager.instance.p1.rC.endminigamep2();
@@ -194,6 +195,7 @@ public class boxingMinigame : MonoBehaviour
 
                     if (GameManager.instance.p2.rC.p2dead)
                     {
+                        GameManager.instance.p1.isFreeze = true;
                         GameManager.instance.p2.rC.p1dead = false;
                         GameManager.instance.p2.rC.p2dead = false;
                         GameManager.instance.p2.rC.endminigamep1();
@@ -453,11 +455,14 @@ public class boxingMinigame : MonoBehaviour
             StartCoroutine(ShowPackage());
         }
         minigameStart = false;
+        SelectMinigame.instance.chooseOne = false;
+        SelectMinigame.instance.chooseTwo = false;
+
     }
 
     IEnumerator SwitchCam()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         boxingCam.SetActive(false);
         boxingCam1.SetActive(false);
         mainCam.SetActive(true);
@@ -466,11 +471,7 @@ public class boxingMinigame : MonoBehaviour
     IEnumerator ShowPackage()
     {
         yield return new WaitForSeconds(2f);
-        if(GameManager.instance.curSceneName == "HubStart")
-        {
-            GameManager.instance.p1.transform.position = SceneControl.instance.originalPos1.position;
-            GameManager.instance.p2.transform.position = SceneControl.instance.originalPos2.position;
-        }
+
 
         if (packagePiece1 != null)
         {
@@ -507,6 +508,15 @@ public class boxingMinigame : MonoBehaviour
         if(GameManager.instance.curSceneName == "HubStart")
         {
             isboxing = false;
+            if (GameManager.instance.p1.isFreeze == true)
+            {
+                GameManager.instance.p1.isFreeze = false;
+            }
+
+            if (GameManager.instance.p2.isFreeze == true)
+            {
+                GameManager.instance.p2.isFreeze = false;
+            }
         }
 
     }

@@ -2572,11 +2572,13 @@ public class TestCube : MonoBehaviour
                 }
                 if (ReadActionButton())
                 {
-
+                    SelectMinigame.instance.firstEnter = false;
                     gameManager.p1.turnOnTV = false;
                     gameManager.p2.turnOnTV = false;
                     bM.EndGameInHub();
-                    
+                    GameManager.instance.p1.transform.position = SceneControl.instance.originalPos1.position;
+                    GameManager.instance.p2.transform.position = SceneControl.instance.originalPos2.position;
+
                 }
                 if(SelectMinigame.instance.chooseOne && ReadPushButton())
                 {
@@ -2654,7 +2656,7 @@ public class TestCube : MonoBehaviour
     {
         print("CAM BACK");
         SceneControl.instance.MoveCamera(SceneControl.instance.camPos);
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(2f);
         onTv = false;
 
     }

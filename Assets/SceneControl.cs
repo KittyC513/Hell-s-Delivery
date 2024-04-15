@@ -291,6 +291,8 @@ public class SceneControl : MonoBehaviour
             }
 
             deliveryText.SetActive(false);
+            CompleteLevel1();
+            CompleteLevel2();
         }
         if (GameManager.instance.p1 != null && GameManager.instance.p2 != null)
         {
@@ -995,20 +997,30 @@ public class SceneControl : MonoBehaviour
             if (boxingMinigame.instance.isboxing)
             {
                 minigameUI.SetActive(false);
-                GameManager.instance.p1.isFreeze = false;
-                GameManager.instance.p2.isFreeze = false;
-                //boxingMinigame.instance.boxingCanvas.SetActive(true);
                 minigameUIIsOn = false;
             }
             else
             {
-                GameManager.instance.p1.isFreeze = true;
-                GameManager.instance.p2.isFreeze = true;
-                //boxingMinigame.instance.boxingCanvas.SetActive(false);
+
                 if (!minigameUIIsOn)
                 {
                     StartCoroutine(ShowMiniGameUI());
                 }
+                //if (GameManager.instance.p1.onTv || GameManager.instance.p2.onTv)
+                //{
+                //    if (!minigameUIIsOn)
+                //    {
+                //        StartCoroutine(ShowMiniGameUI());
+                //    }
+                //}
+                //else if (SelectMinigame.instance.chooseOne || SelectMinigame.instance.chooseTwo)
+                //{
+                //    if (!minigameUIIsOn)
+                //    {
+                //        StartCoroutine(ShowMiniGameUI());
+                //    }
+
+                //}
 
             }
 
@@ -1020,16 +1032,13 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.p2.isFreeze = false;
             boxingMinigame.instance.boxingCanvas.SetActive(false);
             boxingMinigame.instance.boxingCanvas1.SetActive(false);
+            SelectMinigame.instance.chooseOne = false;
+            SelectMinigame.instance.chooseTwo = false;
             minigameUIIsOn = false;
 
         }
 
-        IEnumerator ShowMiniGameUI()
-        {
-            yield return new WaitForSecondsRealtime(3f);
-            minigameUI.SetActive(true);
-            minigameUIIsOn = true;
-        }
+
 
         if (GameManager.instance.showTVInstruction)
         {
@@ -1040,23 +1049,31 @@ public class SceneControl : MonoBehaviour
             TVinstruction.SetActive(false);
         }
 
-        void CompleteLevel1()
-        {
-            if (GameManager.instance.LalahRequestWasCompleted)
-            {
-                phonePiece.SetActive(true);
-                phoneRingText.SetActive(true);
-            }
-        }
+    }
 
-        void CompleteLevel2()
+    void CompleteLevel1()
+    {
+        if (GameManager.instance.LalahRequestWasCompleted)
         {
-            if (GameManager.instance.WertherRequestWasCompleted)
-            {
-                phonePiece.SetActive(true);
-                phoneRingText.SetActive(true);
-            }
+            phonePiece.SetActive(true);
+            phoneRingText.SetActive(true);
         }
+    }
+
+    void CompleteLevel2()
+    {
+        if (GameManager.instance.WertherRequestWasCompleted)
+        {
+            phonePiece.SetActive(true);
+            phoneRingText.SetActive(true);
+        }
+    }
+
+    public IEnumerator ShowMiniGameUI()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        minigameUI.SetActive(true);
+        minigameUIIsOn = true;
     }
 
     // delivery area text 
