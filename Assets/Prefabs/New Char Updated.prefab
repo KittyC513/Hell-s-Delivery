@@ -749,6 +749,7 @@ MonoBehaviour:
   addScore2: 0
   previousIndex: 0
   isTriggered: 0
+  soundBank: {fileID: 1551979315115367220}
   p1dead: 0
   p2dead: 0
 --- !u!114 &1936537124406388785
@@ -18609,6 +18610,7 @@ MonoBehaviour:
   switchPuzzle2CamRP2: 0
   footstepRate: 115
   groundMaterial: nothing
+  playerSounds: {fileID: 0}
   geiserForce: 100
   wasFoundLV: 0
   bounceForce: 100
@@ -18837,6 +18839,38 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 529c312562c470a4d993bc400ebab09f, type: 2}
+  shminkJump:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 6ecd57d654420114ba9b2382cf2e15dc, type: 2}
+  shminkPushed:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 855fe165180c6064cbb6196290fca93e, type: 2}
+  shminkThrow:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: cbeb8f0fd6f838e4086cab93b63dcfda, type: 2}
+  shminkDeath:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 6ef3bfaa02bede4438502c5953c95860, type: 2}
+  shmonkJump:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: a833c1d8662e5b24b86c86c7b5d9fd5e, type: 2}
+  shmonkPushed:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 508af8571fd563e4c85979c2bd8c7ca8, type: 2}
+  shmonkThrow:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: a22a756b29ca0504aa2a33359e737719, type: 2}
+  shmonkDeath:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 6ebaec48b73f66644a0f3e52b0e4e581, type: 2}
 --- !u!114 &4668977514111044480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20882,7 +20916,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 161.41728
+    Value: 161.41731
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -23607,7 +23641,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3744829075321147806}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.023959758, y: 0.56392187, z: -0.2888089, w: 0.77330935}
+  m_LocalRotation: {x: -0.04184468, y: 0.00000011920929, z: -0.000000078231096, w: 0.9991241}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -25573,7 +25607,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4838951723700839669}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.007972496, y: 0.5753597, z: -0.2652918, w: 0.77363944}
+  m_LocalRotation: {x: -0.08303955, y: 0.00000011920929, z: -0.00000008195639, w: 0.99654627}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32711,7 +32745,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5982764182210883805}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.056297705, y: 0.55134284, z: -0.31215316, w: 0.7716295}
+  m_LocalRotation: {x: 0.000000059604645, y: 0.00000011920929, z: -0.00000008568168, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -33099,8 +33133,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6258548748242453789}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.04678708, y: 0.9445351, z: -0.28598228, w: 0.15452719}
-  m_LocalPosition: {x: -3.8240805, y: 7.9999995, z: 11.374374}
+  m_LocalRotation: {x: 0.04678703, y: 0.94453514, z: -0.28598228, w: 0.15452704}
+  m_LocalPosition: {x: -3.8240752, y: 7.9999995, z: 11.374377}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33270,8 +33304,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6262496114816067434}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16456813, y: 0.645129, z: -0.14505671, w: 0.7319047}
-  m_LocalPosition: {x: -4.4640803, y: 11.73, z: 11.374374}
+  m_LocalRotation: {x: 0.04678706, y: 0.9445351, z: -0.28598216, w: 0.15452717}
+  m_LocalPosition: {x: -4.464075, y: 11.73, z: 11.374377}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -33344,7 +33378,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 161.41728
+    Value: 161.41731
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -38746,7 +38780,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 161.41728
+    Value: 161.41731
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -39568,7 +39602,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 161.41728
+    Value: 161.41731
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1

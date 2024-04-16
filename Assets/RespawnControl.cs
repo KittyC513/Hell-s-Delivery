@@ -269,10 +269,12 @@ public class RespawnControl : MonoBehaviour
         "Hogging",
     };
 
+    public PlayerSoundbank soundBank;
+
     private void Start()
     {
 
-
+        
     }
 
     void SabotageBark()
@@ -517,12 +519,14 @@ public class RespawnControl : MonoBehaviour
         {
             P1Respawn();
             Player1Die = false;
+            soundBank.shmonkDeath.Post(player.gameObject);
         }
 
         if (Player2Die)
         {
             P2Respawn();
             Player2Die = false;
+            soundBank.shminkDeath.Post(player.gameObject);
         }
     }
     void PlayerDetector()

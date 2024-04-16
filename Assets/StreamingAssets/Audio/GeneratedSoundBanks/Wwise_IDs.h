@@ -39,6 +39,14 @@ namespace AK
         static const AkUniqueID PLAY_RANDWOODLAND = 415850775U;
         static const AkUniqueID PLAY_SCORECARD_SEQUENCE = 342527874U;
         static const AkUniqueID PLAY_SCORESCENEMUSIC = 613185981U;
+        static const AkUniqueID PLAY_SHMINKDEATH = 3547701186U;
+        static const AkUniqueID PLAY_SHMINKJUMP = 2298361104U;
+        static const AkUniqueID PLAY_SHMINKPUSHEDR = 3885831539U;
+        static const AkUniqueID PLAY_SHMINKTHROW = 1350790884U;
+        static const AkUniqueID PLAY_SHMONKDEATH = 1576822420U;
+        static const AkUniqueID PLAY_SHMONKJUMP = 2195620242U;
+        static const AkUniqueID PLAY_SHMONKTHROW = 1729994058U;
+        static const AkUniqueID PLAY_SMONKPUSHED = 4031885603U;
         static const AkUniqueID PLAY_SNIFF = 913401646U;
         static const AkUniqueID PLAY_SQUEAKYBITE = 3018288467U;
         static const AkUniqueID PLAY_STRETCH = 1150790929U;
