@@ -395,8 +395,7 @@ public class SceneControl : MonoBehaviour
         }
 
         if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
-        {
-            
+        {           
             if (GameManager.instance.timesEnterHub < 1 && comicShowed)
             {
                 stopComicSFX.Post(this.gameObject);
@@ -407,12 +406,8 @@ public class SceneControl : MonoBehaviour
                 phonePiece.SetActive(true);
                 phoneRingText.SetActive(true);
                 comicShowed = false;
-                
-            }
-
-            
+            }           
         }
-
     }
 
     void SkipDevilDialogue()

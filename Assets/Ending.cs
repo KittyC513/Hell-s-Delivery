@@ -108,7 +108,8 @@ public class Ending : MonoBehaviour
             //{
             //    badgeManager.RunFinalCheck();
             //}
-
+            GameManager.instance.changeSceneTimes += 1;
+            GameManager.instance.WertherRequestWasCompleted = true;
             StartCoroutine(ComicStart());
 
         }
@@ -122,8 +123,7 @@ public class Ending : MonoBehaviour
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
 
-        GameManager.instance.changeSceneTimes += 1;
-        GameManager.instance.WertherRequestWasCompleted = true;
+
         Loader.Load(Loader.Scene.ScoreCards);
     }
 
@@ -142,21 +142,9 @@ public class Ending : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
         if (other.gameObject.tag == "Package")
         {
             //canvas.gameObject.SetActive(false);
         }
     }
-
-
-
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.gameObject.tag == "Player")
-    //    {
-    //        Loader.Load(Loader.Scene.ScoreCards);
-    //    }
-    //}
 }
