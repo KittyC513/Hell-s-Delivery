@@ -934,8 +934,11 @@ public class CharacterControl : MonoBehaviour
             isJumping = true;
             jTime = 0;
 
+            if (isPlayer1) soundBank.shmonkJump.Post(this.gameObject);
+            else soundBank.shminkJump.Post(this.gameObject);
+
             //we jumped
-            if(scoreCount != null)
+            if (scoreCount != null)
             {
                 scoreCount.AddBadgeValue(BadgeManager.BadgeValues.numJumps, 1, isPlayer1);
             }
@@ -1349,7 +1352,15 @@ public class CharacterControl : MonoBehaviour
 
             if (onSlope && currentSpeed > 0)
             {
-                ySpeed = angle * -20;
+                if (isSlow)
+                {
+                    ySpeed = angle * (-20 * slowDownMultiplier);
+                }
+                else
+                {
+                    ySpeed = angle * -20;
+                }
+                
             }
         }
         else

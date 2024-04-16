@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSoundbank : MonoBehaviour
 {
+    [Header ("General")]
     [SerializeField] public AK.Wwise.Event steps;
     [SerializeField] public AK.Wwise.Event land;
     [SerializeField] public AK.Wwise.Event jump;
@@ -18,5 +19,16 @@ public class PlayerSoundbank : MonoBehaviour
     [SerializeField] public AK.Wwise.Event packageToss;
     [SerializeField] public AK.Wwise.Event windCatch;
     [SerializeField] public AK.Wwise.Event windExit;
-    
+
+    [Space, Header("Shmink")]
+    [SerializeField] public AK.Wwise.Event shminkJump;
+    [SerializeField] public AK.Wwise.Event shminkPushed;
+    [SerializeField] public AK.Wwise.Event shminkThrow;
+    [SerializeField] public AK.Wwise.Event shminkDeath;
+
+    [Space, Header ("Shmonk")]
+    [SerializeField] public AK.Wwise.Event shmonkJump;
+    [SerializeField] public AK.Wwise.Event shmonkPushed;
+    [SerializeField] public AK.Wwise.Event shmonkThrow;
+    [SerializeField] public AK.Wwise.Event shmonkDeath;
 }

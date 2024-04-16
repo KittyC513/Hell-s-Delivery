@@ -423,7 +423,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private string groundMaterial = "nothing";
 
-    private PlayerSoundbank playerSounds;
+    [HideInInspector] public PlayerSoundbank playerSounds;
     private AK.Wwise.Event footstepEvent;
     private AK.Wwise.Event landEvent;
     private AK.Wwise.Event jumpEvent;
@@ -2079,6 +2079,7 @@ public class TestCube : MonoBehaviour
                         print("DoDrop1");
                         isDropped = true;
                         playerSounds.packageToss.Post(this.gameObject);
+                        playerSounds.shmonkThrow.Post(this.gameObject);
                     }
                     else
                     {
@@ -2098,6 +2099,7 @@ public class TestCube : MonoBehaviour
                         print("DoDrop2");
                         isDropped = true;
                         playerSounds.packageToss.Post(this.gameObject);
+                        playerSounds.shminkThrow.Post(this.gameObject);
                     }
                     else
                     {
@@ -2893,7 +2895,7 @@ public class TestCube : MonoBehaviour
     void P1Push()
     {
         StartCoroutine(P1PushCoroutine());
-
+        
     }
 
     void P1Damage()
@@ -2960,7 +2962,7 @@ public class TestCube : MonoBehaviour
 
         p1Anim.SetBool("beingPush", true);
         gameManager.p1.facialAnim1.SetBool("isShocked", true);
-
+        
 
         StartCoroutine(StopBeingPushedP1());
         //noisy2 = gameManager.noisy2;
@@ -3013,7 +3015,7 @@ public class TestCube : MonoBehaviour
     void P2Push()
     {
         StartCoroutine(P2PushCoroutine());
-        
+       
     }
 
     void P2Damage()
@@ -3052,7 +3054,7 @@ public class TestCube : MonoBehaviour
         OutlineActivate();
         pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
-
+        
         if (pushCDtimer < 1)
         {
             pushCDSlider.value = pushCDtimer;
@@ -3083,7 +3085,7 @@ public class TestCube : MonoBehaviour
         OutlineActivate();
         pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
-
+        
         if (pushCDtimer < 1)
         {
             pushCDSlider.value = pushCDtimer;
@@ -3983,7 +3985,7 @@ public class TestCube : MonoBehaviour
                         p1pushed = true;
                         pushStartTimer = false;
                         p1Anim.SetBool("isPushing", true);
-                        
+                        playerSounds.shminkPushed.Post(this.gameObject);
 
                         if (ScoreCount.instance != null)
                         {
@@ -4006,7 +4008,7 @@ public class TestCube : MonoBehaviour
                         p2pushed = true;
                         pushStartTimer = false;
                         p2Anim.SetBool("isPushing", true);
-                        
+                        playerSounds.shmonkPushed.Post(this.gameObject);
 
                         if (ScoreCount.instance != null)
                         {
