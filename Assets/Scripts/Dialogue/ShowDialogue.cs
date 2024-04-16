@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class ShowDialogue :DialogueViewBase
 {
     private static GameObject LVPlayers, LVNPC;
-    private static GameObject DevilSprite, DevilAnnoyed, DevilCheery, DevilDisappointed, DevilInnocent, DevilOh, DevilSmug;
+    private static GameObject DevilSprite, DevilAnnoyed, DevilCheery, DevilDisappointed, DevilInnocent, DevilOh, DevilSmug,LalahSprite, LalahConfused, LalahSad, WertherAngry, WertherPround, WertherPain ;
     public static GameObject Gradient;
 
     [SerializeField] DialogueRunner runner;
@@ -121,59 +121,126 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("NPCShow")]
     public static void NPCShow()
     {
-        if(DevilSprite == null)
+        if (WertherPain == null)
         {
-            DevilSprite = GameObject.Find("DevilPopUp_Default");
-            DevilAnnoyed = GameObject.Find("DevilPopUp_Annoyed");
-            DevilCheery = GameObject.Find("DevilPopUp_Cheery");
-            DevilDisappointed = GameObject.Find("DevilPopUp_Disappointed");
-            DevilInnocent = GameObject.Find("DevilPopUp_Innocent");
-            DevilOh = GameObject.Find("DevilPopUp_Oh");
-            DevilSmug = GameObject.Find("DevilPopUp_Smug");
+            WertherPain = GameObject.Find("SpriteWerther_Pain");
         }
-        else 
+        else
         {
-            if(DevilSprite != null)
-            {
-                DevilSprite.SetActive(false);
-            }
-
-            if (DevilAnnoyed != null)
-            {
-                DevilAnnoyed.SetActive(false);
-            }
-
-            if (DevilCheery != null)
-            {
-                DevilCheery.SetActive(false);
-            }
-            if (DevilDisappointed != null)
-            {
-                DevilDisappointed.SetActive(false);
-            }
-            if (DevilInnocent != null)
-            {
-                DevilInnocent.SetActive(false);
-            }
-            if (DevilOh != null)
-            {
-                DevilOh.SetActive(false);
-            }
-            if (DevilSmug != null)
-            {
-                DevilSmug.SetActive(false);
-            }
-
-
+            WertherPain.SetActive(false);
         }
 
-        LVPlayers = GameObject.Find("Line View Players");
-        LVPlayers.SetActive(true);
+        if (WertherAngry == null)
+        {
+            WertherAngry = GameObject.Find("SpriteWerther_Angry");
+        }
+        else
+        {
+            WertherAngry.SetActive(false);
+        }
 
-        if(DevilSprite != null)
+        if (WertherPround == null)
+        {
+            WertherPround = GameObject.Find("SpriteWerther_Proud");
+        }
+        else
+        {
+            WertherPround.SetActive(false);
+        }
+
+        if (LalahSprite == null)
+        {
+            LalahSprite = GameObject.Find("SpriteLalah_Neutral");
+        }
+        else
+        {
+            LalahSprite.SetActive(false);
+        }
+
+        if(LalahConfused == null)
+        {
+            LalahConfused = GameObject.Find("SpriteLalah_Confused");
+        }
+        else
+        {
+            LalahConfused.SetActive(false);
+        }
+
+        if (LalahSad == null)
+        {
+            LalahSad = GameObject.Find("SpriteLalah_Sad");
+        }
+        else
+        {
+            LalahSad.SetActive(false);
+        }
+
+        if (DevilSprite == null)
+        {
+            DevilSprite = GameObject.Find("DevilPopUp_Default");                       
+        }
+        else
         {
             DevilSprite.SetActive(false);
         }
+        
+        if(DevilAnnoyed == null)
+        {
+            DevilAnnoyed = GameObject.Find("DevilPopUp_Annoyed");
+        }
+        else
+        {
+            DevilAnnoyed.SetActive(false);
+        }
+
+        if(DevilCheery == null)
+        {
+            DevilCheery = GameObject.Find("DevilPopUp_Cheery");
+        }
+        else
+        {
+            DevilCheery.SetActive(false);
+        }
+
+        if(DevilDisappointed == null)
+        {
+            DevilDisappointed = GameObject.Find("DevilPopUp_Disappointed");
+        }
+        else
+        {
+            DevilDisappointed.SetActive(false);
+        }
+
+        if(DevilInnocent == null)
+        {
+            DevilInnocent = GameObject.Find("DevilPopUp_Innocent");
+        }
+        else
+        {
+            DevilInnocent.SetActive(false);
+        }
+
+        if(DevilOh == null)
+        {
+            DevilOh = GameObject.Find("DevilPopUp_Oh");
+        }
+        else
+        {
+            DevilOh.SetActive(false);
+        }
+
+        if(DevilSmug == null)
+        {
+            DevilSmug = GameObject.Find("DevilPopUp_Smug");
+        }
+        else
+        {
+            DevilSmug.SetActive(false);
+        }
+   
+
+        LVPlayers = GameObject.Find("Line View Players");
+        LVPlayers.SetActive(true);
 
     }
 
