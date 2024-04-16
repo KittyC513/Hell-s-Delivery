@@ -3883,12 +3883,12 @@ public class TestCube : MonoBehaviour
                 if (isPlayer1)
                 {
                     powerUp1.SetFloat("_opacity", pushHoldDuration + 0.5f);
-                    powerUp1.SetColor("_Glow", new Color(0, 5, 191, 25));
+                    //powerUp1.SetColor("_Glow", new Color(0, 5, 191, 25));
                 }
                 if (isPlayer2)
                 {
                     powerUp2.SetFloat("_opacity", pushHoldDuration + 0.5f);
-                    powerUp1.SetColor("_Glow", new Color(0, 91, 191, 25));
+                    //powerUp1.SetColor("_Glow", new Color(0, 91, 191, 25));
                 }
                 
                 //print("fillImage" + pushHoldDuration);
@@ -3902,12 +3902,12 @@ public class TestCube : MonoBehaviour
                 if (isPlayer1)
                 {
                     powerUp1.SetFloat("_opacity", 3);
-                    powerUp1.SetColor("_Glow", new Color(46, 0, 61));
+                    //powerUp1.SetColor("_Glow", new Color(46, 0, 61));
                 }
                 if (isPlayer2)
                 {
                     powerUp2.SetFloat("_opacity", 3);
-                    powerUp1.SetColor("_Glow", new Color(46, 0, 61));
+                   // powerUp1.SetColor("_Glow", new Color(46, 0, 61));
                 }
 
             }
