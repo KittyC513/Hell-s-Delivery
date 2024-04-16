@@ -111,8 +111,8 @@ public class Ending : MonoBehaviour
             GameManager.instance.changeSceneTimes += 1;
             GameManager.instance.WertherRequestWasCompleted = true;
             StartCoroutine(ComicStart());
-
         }
+        SkipComic();
     }
 
     IEnumerator ComicStart()
@@ -122,8 +122,6 @@ public class Ending : MonoBehaviour
         yield return new WaitForSeconds(26);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
-
-
         Loader.Load(Loader.Scene.ScoreCards);
     }
 
@@ -131,11 +129,10 @@ public class Ending : MonoBehaviour
     {
         if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
         {
+            print("StopComic");
             StopCoroutine(ComicStart());
             comicCanvas.SetActive(false);
             GameManager.instance.UnfreezePlayer();
-            GameManager.instance.changeSceneTimes += 1;
-            GameManager.instance.WertherRequestWasCompleted = true;
             Loader.Load(Loader.Scene.ScoreCards);
         }
     }
