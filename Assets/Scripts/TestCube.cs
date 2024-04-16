@@ -761,6 +761,7 @@ public class TestCube : MonoBehaviour
         }
 
 
+
         playerPos = this.transform;
 
         if (!useNewMovement)
@@ -2890,12 +2891,11 @@ public class TestCube : MonoBehaviour
 
     }
 
-
+    public GameObject curseParticles;
 
     void P1Push()
     {
         StartCoroutine(P1PushCoroutine());
-        
     }
 
     void P1Damage()
@@ -2963,6 +2963,11 @@ public class TestCube : MonoBehaviour
         p1Anim.SetBool("beingPush", true);
         gameManager.p1.facialAnim1.SetBool("isShocked", true);
         
+        if (isPlayer1)
+        {
+            curseParticles.SetActive(true);
+        }
+
 
         StartCoroutine(StopBeingPushedP1());
         //noisy2 = gameManager.noisy2;
@@ -3015,7 +3020,7 @@ public class TestCube : MonoBehaviour
     void P2Push()
     {
         StartCoroutine(P2PushCoroutine());
-       
+        
     }
 
     void P2Damage()
@@ -3049,6 +3054,9 @@ public class TestCube : MonoBehaviour
         }
     }
 
+
+
+
     IEnumerator StopBeingPushedP1()
     {
         OutlineActivate();
@@ -3072,12 +3080,17 @@ public class TestCube : MonoBehaviour
         pushHoldTime = 0;
         //damageApplied = false;
         OutlineDeActivate();
+        //
         gameManager.p2.pushCDSlider.gameObject.SetActive(false);
         pushIsIntervinedP1 = false;
-
         yield return new WaitForSeconds(1.5f);
         p1Anim.SetBool("isFalling", false);
         gameManager.p1.facialAnim1.SetBool("isShocked", false);
+        if (isPlayer1)
+        {
+            curseParticles.SetActive(false);
+        }
+        
     }
 
     IEnumerator StopBeingPushedP2()
@@ -3102,11 +3115,17 @@ public class TestCube : MonoBehaviour
         pushHoldTime = 0;
         //damageApplied = false;
         OutlineDeActivate();
+        //
         gameManager.p1.pushCDSlider.gameObject.SetActive(false);
         pushIsIntervinedP2 = false;
         yield return new WaitForSeconds(1.5f);
         p2Anim.SetBool("isFalling", false);
         gameManager.p2.facialAnim2.SetBool("isShocked", false);
+        if (isPlayer2)
+        {
+            curseParticles.SetActive(false);
+        }
+        
     }
 
     
