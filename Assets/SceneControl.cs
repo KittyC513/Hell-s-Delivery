@@ -1028,8 +1028,7 @@ public class SceneControl : MonoBehaviour
         else if (!GameManager.instance.p1.turnOnTV && !GameManager.instance.p2.turnOnTV)
         {
             minigameUI.SetActive(false);
-            GameManager.instance.p1.isFreeze = false;
-            GameManager.instance.p2.isFreeze = false;
+
             boxingMinigame.instance.boxingCanvas.SetActive(false);
             boxingMinigame.instance.boxingCanvas1.SetActive(false);
             SelectMinigame.instance.chooseOne = false;

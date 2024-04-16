@@ -121,6 +121,7 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("NPCShow")]
     public static void NPCShow()
     {
+
         if (WertherPain == null)
         {
             WertherPain = GameObject.Find("SpriteWerther_Pain");
