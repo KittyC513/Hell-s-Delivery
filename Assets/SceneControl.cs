@@ -62,6 +62,8 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private GameObject Comic1;
     [SerializeField]
+    private Animator ComicAnim;
+    [SerializeField]
     private GameObject phoneInstruction;
     [SerializeField]
     private Animator phoneAnimator;
@@ -751,6 +753,7 @@ public class SceneControl : MonoBehaviour
     IEnumerator StartComicIntro()
     {
         Comic1.SetActive(true);
+        ComicAnim.SetTrigger("Intro");
         yield return new WaitForSeconds(24);
         Comic1.SetActive(false);
         GameManager.instance.UnfreezePlayer();
