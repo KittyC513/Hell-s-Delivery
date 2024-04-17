@@ -230,43 +230,60 @@ public class boxingMinigame : MonoBehaviour
                 //    GameManager.instance.p2.rC.endminigamep2();
                 //    endswitch = false;
                 //}
-
-
-                Debug.Log("successful");
                 // Find all game objects with the tag "Findscript"
-                GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
+
+                if (GameManager.instance.p1.rC.p1dead)
+                {
+                    GameManager.instance.p1.rC.p1dead = false;
+                    GameManager.instance.p2.rC.p2dead = false;
+                    GameManager.instance.p1.rC.endminigamep1();
+                    endMinigame();
+                    endswitch = false;
+                }
+
+                if (GameManager.instance.p2.rC.p2dead)
+                {
+                    GameManager.instance.p1.rC.p1dead = false;
+                    GameManager.instance.p2.rC.p2dead = false;
+                    GameManager.instance.p2.rC.endminigamep2();
+                    endMinigame();
+                    endswitch = false;
+                }
+
+
+                //GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("FindScript");
 
                 // Loop through each object found
-                foreach (GameObject obj in objectsWithTag)
-                {
-                    // Check if the object has a component of type RespawnControl
-                    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
-                    // If the RespawnControl component is found, do something with it
-                    if (respawnControl != null)
-                    {
-                        // You can access methods and properties of the RespawnControl script here
-                        // For example:
-                        if (respawnControl.p1dead)
-                        {
-                            respawnControl.p1dead = false;
-                            respawnControl.p2dead = false;
-                            respawnControl.endminigamep1();
-                            endMinigame();
-                            endswitch = false;
+                //foreach (GameObject obj in objectsWithTag)
+                //{
+                //    // Check if the object has a component of type RespawnControl
+                //    RespawnControl respawnControl = obj.GetComponent<RespawnControl>();
+                //    // If the RespawnControl component is found, do something with it
+                //    if (respawnControl != null)
+                //    {
+                //        // You can access methods and properties of the RespawnControl script here
+                //        // For example:
+                //        if (respawnControl.p1dead)
+                //        {
+                //            respawnControl.p1dead = false;
+                //            respawnControl.p2dead = false;
+                //            respawnControl.endminigamep1();
+                //            endMinigame();
+                //            endswitch = false;
 
-                        }
-                        if (respawnControl.p2dead)
-                        {
-                            respawnControl.p1dead = false;
-                            respawnControl.p2dead = false;
-                            respawnControl.endminigamep2();
-                            endMinigame();
+                //        }
+                //        if (respawnControl.p2dead)
+                //        {
+                //            respawnControl.p1dead = false;
+                //            respawnControl.p2dead = false;
+                //            respawnControl.endminigamep2();
+                //            endMinigame();
 
-                            endswitch = false;
+                //            endswitch = false;
 
-                        }
-                    }
-                }
+                //        }
+                //    }
+                //}
 
             }
         }

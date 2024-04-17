@@ -2011,7 +2011,7 @@ public class RespawnControl : MonoBehaviour
 
     }
 
-    public void endminigamep1()
+    public void endminigamep2()
     {
         //endminigametimerp1();
         P2Respawn();
@@ -2021,7 +2021,7 @@ public class RespawnControl : MonoBehaviour
       //  }
 
     }
-    public void endminigamep2()
+    public void endminigamep1()
     {
        // endminigametimerp2();
         P1Respawn();
