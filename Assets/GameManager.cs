@@ -762,8 +762,7 @@ public class GameManager : MonoBehaviour
         {
             if(curSceneName == "Level1"|| curSceneName == "MVPLevel")
             {
-                if (!boxingMinigame.instance.isboxing)
-                {
+
                     if (p1.p1pushed)
                     {
                         noisy2.SetActive(true);
@@ -785,9 +784,9 @@ public class GameManager : MonoBehaviour
                         p1Ani.SetBool("beingPush", false);
 
                     }
-                }
-                else
-                {
+                
+
+                    /*
                     if (p1.p1pushed && p1.forceMagnitude1 < 200)
                     {
                         noisy2.SetActive(true);
@@ -808,8 +807,7 @@ public class GameManager : MonoBehaviour
                     {
                         p1Ani.SetBool("beingPush", false);
 
-                    }
-                }
+                    }*/
             }
             else
             {
