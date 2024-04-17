@@ -357,6 +357,13 @@ public class boxingMinigame : MonoBehaviour
             StartCoroutine(ShowPackage());
         }
 
+        StartCoroutine(removeCrowd());
+        
+    }
+
+    IEnumerator removeCrowd()
+    {
+        yield return new WaitForSeconds(3f);
         if (crowd != null)
         {
             crowd.SetActive(false);
@@ -439,7 +446,7 @@ public class boxingMinigame : MonoBehaviour
         {
             boxingCam.gameObject.SetActive(true);
         }
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
         minigameStart = true;
