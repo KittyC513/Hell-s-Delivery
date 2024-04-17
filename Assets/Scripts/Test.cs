@@ -188,6 +188,42 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(pressPoint=0.1,behavior=1)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EmoteUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""2cb5dc1c-9cfe-4a74-a2d8-a1762822deb5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EmoteRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""ccccb858-2571-4215-af77-a0bda5263dbb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EmoteDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea66992e-0b38-4d2f-b584-85e07f5a72cd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EmoteLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""acb55b29-8555-429b-b76e-b5484544d004"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -883,6 +919,94 @@ public partial class @Test: IInputActionCollection2, IDisposable
                     ""action"": ""ReleasePush"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5887669b-31e8-410c-8380-90f2d620c0b9"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EmoteUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74294e06-29c8-405a-aee1-90b1850b0894"",
+                    ""path"": ""<XInputController>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EmoteUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2fe29e3-a568-42c6-ac25-849cc64128c6"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EmoteRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d3d8558-e02a-49ea-a811-ec4e88ac9f98"",
+                    ""path"": ""<XInputController>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EmoteRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ccbcd3f4-c044-46ed-9148-97b092969c79"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EmoteDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8b34343-e141-4e68-80bd-e553b2fa1544"",
+                    ""path"": ""<XInputController>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EmoteDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e01e692d-d1a1-43d8-bc4a-6d2886514856"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EmoteLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bc9e515-90a5-4412-971c-76e252523eea"",
+                    ""path"": ""<XInputController>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EmoteLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1092,6 +1216,10 @@ public partial class @Test: IInputActionCollection2, IDisposable
         m_Cube_Skip = m_Cube.FindAction("Skip", throwIfNotFound: true);
         m_Cube_SkipTrigger = m_Cube.FindAction("SkipTrigger", throwIfNotFound: true);
         m_Cube_ReleasePush = m_Cube.FindAction("ReleasePush", throwIfNotFound: true);
+        m_Cube_EmoteUp = m_Cube.FindAction("EmoteUp", throwIfNotFound: true);
+        m_Cube_EmoteRight = m_Cube.FindAction("EmoteRight", throwIfNotFound: true);
+        m_Cube_EmoteDown = m_Cube.FindAction("EmoteDown", throwIfNotFound: true);
+        m_Cube_EmoteLeft = m_Cube.FindAction("EmoteLeft", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_StartDialogue = m_Dialogue.FindAction("StartDialogue", throwIfNotFound: true);
@@ -1180,6 +1308,10 @@ public partial class @Test: IInputActionCollection2, IDisposable
     private readonly InputAction m_Cube_Skip;
     private readonly InputAction m_Cube_SkipTrigger;
     private readonly InputAction m_Cube_ReleasePush;
+    private readonly InputAction m_Cube_EmoteUp;
+    private readonly InputAction m_Cube_EmoteRight;
+    private readonly InputAction m_Cube_EmoteDown;
+    private readonly InputAction m_Cube_EmoteLeft;
     public struct CubeActions
     {
         private @Test m_Wrapper;
@@ -1202,6 +1334,10 @@ public partial class @Test: IInputActionCollection2, IDisposable
         public InputAction @Skip => m_Wrapper.m_Cube_Skip;
         public InputAction @SkipTrigger => m_Wrapper.m_Cube_SkipTrigger;
         public InputAction @ReleasePush => m_Wrapper.m_Cube_ReleasePush;
+        public InputAction @EmoteUp => m_Wrapper.m_Cube_EmoteUp;
+        public InputAction @EmoteRight => m_Wrapper.m_Cube_EmoteRight;
+        public InputAction @EmoteDown => m_Wrapper.m_Cube_EmoteDown;
+        public InputAction @EmoteLeft => m_Wrapper.m_Cube_EmoteLeft;
         public InputActionMap Get() { return m_Wrapper.m_Cube; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1265,6 +1401,18 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @ReleasePush.started += instance.OnReleasePush;
             @ReleasePush.performed += instance.OnReleasePush;
             @ReleasePush.canceled += instance.OnReleasePush;
+            @EmoteUp.started += instance.OnEmoteUp;
+            @EmoteUp.performed += instance.OnEmoteUp;
+            @EmoteUp.canceled += instance.OnEmoteUp;
+            @EmoteRight.started += instance.OnEmoteRight;
+            @EmoteRight.performed += instance.OnEmoteRight;
+            @EmoteRight.canceled += instance.OnEmoteRight;
+            @EmoteDown.started += instance.OnEmoteDown;
+            @EmoteDown.performed += instance.OnEmoteDown;
+            @EmoteDown.canceled += instance.OnEmoteDown;
+            @EmoteLeft.started += instance.OnEmoteLeft;
+            @EmoteLeft.performed += instance.OnEmoteLeft;
+            @EmoteLeft.canceled += instance.OnEmoteLeft;
         }
 
         private void UnregisterCallbacks(ICubeActions instance)
@@ -1323,6 +1471,18 @@ public partial class @Test: IInputActionCollection2, IDisposable
             @ReleasePush.started -= instance.OnReleasePush;
             @ReleasePush.performed -= instance.OnReleasePush;
             @ReleasePush.canceled -= instance.OnReleasePush;
+            @EmoteUp.started -= instance.OnEmoteUp;
+            @EmoteUp.performed -= instance.OnEmoteUp;
+            @EmoteUp.canceled -= instance.OnEmoteUp;
+            @EmoteRight.started -= instance.OnEmoteRight;
+            @EmoteRight.performed -= instance.OnEmoteRight;
+            @EmoteRight.canceled -= instance.OnEmoteRight;
+            @EmoteDown.started -= instance.OnEmoteDown;
+            @EmoteDown.performed -= instance.OnEmoteDown;
+            @EmoteDown.canceled -= instance.OnEmoteDown;
+            @EmoteLeft.started -= instance.OnEmoteLeft;
+            @EmoteLeft.performed -= instance.OnEmoteLeft;
+            @EmoteLeft.canceled -= instance.OnEmoteLeft;
         }
 
         public void RemoveCallbacks(ICubeActions instance)
@@ -1503,6 +1663,10 @@ public partial class @Test: IInputActionCollection2, IDisposable
         void OnSkip(InputAction.CallbackContext context);
         void OnSkipTrigger(InputAction.CallbackContext context);
         void OnReleasePush(InputAction.CallbackContext context);
+        void OnEmoteUp(InputAction.CallbackContext context);
+        void OnEmoteRight(InputAction.CallbackContext context);
+        void OnEmoteDown(InputAction.CallbackContext context);
+        void OnEmoteLeft(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {

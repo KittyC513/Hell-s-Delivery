@@ -33,7 +33,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] public InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger,pushRelease;
+    [SerializeField] public InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger,pushRelease, EmoteUp, EmoteRight, EmoteDown, EmoteLeft;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -652,6 +652,11 @@ public class TestCube : MonoBehaviour
         jump = player.FindAction("Jump");
         triggerButton = player.FindAction("Trigger");
 
+        EmoteUp = player.FindAction("EmoteUp");
+        EmoteRight = player.FindAction("EmoteRight");
+        EmoteDown = player.FindAction("EmoteDown");
+        EmoteLeft = player.FindAction("EmoteLeft");
+
 
         player.FindAction("Parachute").started += DoParachute;
         player.FindAction("Parachute").canceled += DoFall;
@@ -760,7 +765,7 @@ public class TestCube : MonoBehaviour
             OutlineDeActivate();
         }
 
-
+        EmoteDetection();
 
         playerPos = this.transform;
 
@@ -3482,6 +3487,28 @@ public class TestCube : MonoBehaviour
         else return false;
     }
 
+    public bool ReadEmoteUpButton()
+    {
+        if (EmoteUp.ReadValue<float>() == 1) return true;
+        else return false;
+    }
+    public bool ReadEmoteRightButton()
+    {
+        if (EmoteRight.ReadValue<float>() == 1) return true;
+        else return false;
+    }
+    public bool ReadEmoteDownButton()
+    {
+        if (EmoteDown.ReadValue<float>() == 1) return true;
+        else return false;
+    }
+    public bool ReadEmoteLeftButton()
+    {
+        if (EmoteLeft.ReadValue<float>() == 1) return true;
+        else return false;
+    }
+
+
     //public bool DetectDashButton()
     //{
     //    if (dash.ReadValue<float>() ==1) return true;
@@ -4398,6 +4425,128 @@ public class TestCube : MonoBehaviour
         GameManager.instance.p2.isFreeze = false;
         Time.timeScale = 1;
     }
+
+    bool animSwitch = true;
+    bool animSwitch2 = true;
+    bool animSwitch3 = true;
+
+    void EmoteDetection()
+    {
+
+
+        if (ReadEmoteUpButton() && isGrounded)
+        {
+            if (isPlayer1 && animSwitch2 == true)
+            {
+                //StartCoroutine(EmoteWait());
+                p1Anim.SetBool("Emote1", true);
+                animSwitch2 = false;
+                isFreeze = true;
+            }
+            if (isPlayer2 && animSwitch2 == true)
+            {
+                //StartCoroutine(EmoteWait());
+                p2Anim.SetBool("Emote1", true);
+                animSwitch2 = false;
+                isFreeze = true;
+            }
+
+        }
+        else
+        {
+            if (isPlayer1 && animSwitch2 == false)
+            {
+                p1Anim.SetBool("Emote1", false);
+                animSwitch2 = true;
+                isFreeze = false;
+            }
+            if (isPlayer2 && animSwitch2 == false)
+            {
+                p2Anim.SetBool("Emote1", false);
+                animSwitch2 = true;
+                isFreeze = false;
+            }
+
+        }
+
+
+        if (ReadEmoteRightButton())
+        {
+            if (isPlayer1 && isGrounded && animSwitch == true)
+            {
+                StartCoroutine(EmoteWait());
+                p1Anim.SetTrigger("Emote2");
+                animSwitch = false;
+            }
+            if (isPlayer2 && isGrounded && animSwitch == true)
+            {
+                StartCoroutine(EmoteWait());
+                p2Anim.SetTrigger("Emote2");
+                animSwitch = false;
+            }
+        }
+
+
+        if (ReadEmoteDownButton())
+        {
+            if (isPlayer1 && isGrounded && animSwitch == true)
+            {
+                StartCoroutine(EmoteWait());
+                p1Anim.SetTrigger("Emote3");
+                animSwitch = false;
+            }
+            if (isPlayer2 && isGrounded && animSwitch == true)
+            {
+                StartCoroutine(EmoteWait());
+                p2Anim.SetTrigger("Emote3");
+                animSwitch = false;
+            }
+        }
+
+
+        if (ReadEmoteLeftButton() && isGrounded)
+        {
+            if (isPlayer1 && animSwitch3 == true)
+            {
+                //StartCoroutine(EmoteWait());
+                p1Anim.SetBool("Emote4", true);
+                animSwitch3 = false;
+                isFreeze = true;
+            }
+            if (isPlayer2 && animSwitch3 == true)
+            {
+                //StartCoroutine(EmoteWait());
+                p2Anim.SetBool("Emote4", true);
+                animSwitch3 = false;
+                isFreeze = true;
+            }
+
+        } 
+        else
+        {
+            if (isPlayer1 && animSwitch3 == false)
+            {
+                p1Anim.SetBool("Emote4", false);
+                animSwitch3 = true;
+                isFreeze = false;
+            }
+            if (isPlayer2 && animSwitch3 == false)
+            {
+                p2Anim.SetBool("Emote4", false);
+                animSwitch3 = true;
+                isFreeze = false;
+            }
+        }
+    }
+
+    IEnumerator EmoteWait()
+    {
+        isFreeze = true;
+        yield return new WaitForSeconds(1f);
+        isFreeze = false;
+        animSwitch = true;
+    }
+
 
 
 
