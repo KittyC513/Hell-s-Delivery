@@ -843,7 +843,7 @@ public class GameManager : MonoBehaviour
     IEnumerator StopNoisyP2()
     {
 
-        yield return new WaitForSeconds(waitingTime);
+        yield return new WaitForSeconds(waitingTime + 1);
         noisy2.SetActive(false);
         //p1.p1pushed = false;
 
@@ -853,7 +853,7 @@ public class GameManager : MonoBehaviour
     IEnumerator StopNoisyP1()
     {
 
-        yield return new WaitForSeconds(waitingTime);
+        yield return new WaitForSeconds(waitingTime + 1);
         noisy1.SetActive(false);
         //p2.p2pushed = false;
 

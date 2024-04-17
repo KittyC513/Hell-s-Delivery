@@ -46,7 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curSceneName: 
+  scene1: HubStart
+  scene2: PrototypeLevel
+  scene3: TitleScene
   scene4: MVPLevel
+  scene5: HubEnd
+  scene6: ScoreCards
+  scene7: Level1
+  scene8: Tutorial
   mainCam: {fileID: 0}
   cameraPosition: {fileID: 0}
   closeShoot: {fileID: 0}
@@ -61,6 +68,7 @@ MonoBehaviour:
   player2: {fileID: 0}
   startPoint1: {fileID: 0}
   startPoint2: {fileID: 0}
+  answeredPhone: 0
   character1: {fileID: 0}
   character2: {fileID: 0}
   readyToStart: 0
@@ -93,8 +101,8 @@ MonoBehaviour:
   showTVInstruction: 0
   isBegin: 0
   showWertherInstruction: 0
-  showNPC2Instruction: 0
-  showNPC3Instruction: 0
+  showLalahInstruction: 0
+  showMichaelInstruction: 0
   noisy1: {fileID: 0}
   noisy2: {fileID: 0}
   isNoisy1: 0
@@ -116,9 +124,25 @@ MonoBehaviour:
   camFound1: 0
   camFound2: 0
   firstTimeEnterHub: 0
+  timesEnterHub: 0
   ShowPhoneInstruction: 0
   package: {fileID: 0}
   oG: {fileID: 0}
+  changeSceneTimes: 0
+  Maincanvas: {fileID: 0}
+  sign: {fileID: 0}
+  van: {fileID: 0}
+  lighting1: {fileID: 0}
+  lighting2: {fileID: 0}
+  lighting3: {fileID: 0}
+  LalahRequestWasCompleted: 0
+  acceptLalahOrder: 0
+  WertherRequestWasCompleted: 0
+  accepWertherOrder: 0
+  WertherLeft: 0
+  LalahLeft: 0
+  barkTriggered: 0
+  lastLevelData: {fileID: 0}
   playerScore: {fileID: 0}
 --- !u!114 &613019155281207780
 MonoBehaviour:
