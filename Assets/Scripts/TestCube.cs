@@ -2672,6 +2672,7 @@ public class TestCube : MonoBehaviour
     IEnumerator MovingCameraTV()
     {
         print("CAM Forward");
+        isFreeze = true;
         SceneControl.instance.MoveCamera(SceneControl.instance.closeShootTV);
         yield return new WaitForSecondsRealtime(0.7f);
         onTv = true;

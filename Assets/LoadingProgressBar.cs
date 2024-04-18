@@ -44,7 +44,7 @@ public class LoadingProgressBar : MonoBehaviour
         {
             anim.SetBool("LoadingTV", true);
         }
-        else if (GameManager.instance.changeSceneTimes >= 3 || GameManager.instance.changeSceneTimes == 5 || GameManager.instance.changeSceneTimes == 7)
+        else if (GameManager.instance.changeSceneTimes == 3 || GameManager.instance.changeSceneTimes == 5 || GameManager.instance.changeSceneTimes == 7)
         {
             //out of TV
             anim.SetBool("LoadingJuice", true);

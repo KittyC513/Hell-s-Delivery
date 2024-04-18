@@ -961,6 +961,7 @@ public class SceneControl : MonoBehaviour
         {
             normalPackage.SetActive(true);
             showPackage1 = true;
+            TextControl();
             
         }
         else if (!wertherdialogueEnds)
@@ -973,6 +974,7 @@ public class SceneControl : MonoBehaviour
         {
             heavyPackage.SetActive(true);
             showHeavyPackage = true;
+            TextControl();
         }
         else if (!LalahdialogueEnds)
         {
@@ -988,7 +990,7 @@ public class SceneControl : MonoBehaviour
         //    LalahLeave();
         //}
 
-        TextControl();
+        //TextControl();
 
         if(GameManager.instance.p1.turnOnTV || GameManager.instance.p2.turnOnTV)
         {
@@ -999,7 +1001,6 @@ public class SceneControl : MonoBehaviour
             }
             else
             {
-
                 if (!minigameUIIsOn)
                 {
                     StartCoroutine(ShowMiniGameUI());
