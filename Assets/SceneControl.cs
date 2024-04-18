@@ -238,9 +238,11 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private bool tutorialUIisShowed;
     [SerializeField]
+    private bool isSkipped;
+    [SerializeField]
     private bool skipTutorial1;
     [SerializeField]
-    private bool isSkipped;
+    private bool isSkipped1;
     [SerializeField]
     private bool isntSkipped;
     [SerializeField]
@@ -1463,55 +1465,85 @@ public class SceneControl : MonoBehaviour
         {
             tutorialSkipUI.SetActive(true);
             tutorialUIisShowed = true;
-
+            GameManager.instance.changeSceneTimes += 1;
+            GameManager.instance.timesEnterHub += 1;
         }
+    }
+
+    public void SkipTutorialUI()
+    {
+        nameTag.SetActive(false);
+        radialUI.SetActive(false);
+        phoneRingText.SetActive(false);
+        tutorialSkipUI.SetActive(true);
+        tutorialUIisShowed = true;
+        GameManager.instance.changeSceneTimes += 1;
+        GameManager.instance.timesEnterHub += 1;
+        SkipChoice();
 
     }
 
     public void SkipChoice()
     {
-        if (tutorialUIisShowed)
+        //Player can make choice either skip or not the tutorial session
+        //if (tutorialUIisShowed)
+        //{
+        //    GameManager.instance.p1.isFreeze = true;
+        //    GameManager.instance.p2.isFreeze = true;
+
+        //    if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+        //    {
+        //        if (!skipTutorial)
+        //        {
+        //            GameManager.instance.timesEnterHub += 1;
+        //            GameManager.instance.changeSceneTimes += 1;
+        //            skipTutorial = true;
+
+        //        }
+
+
+        //    }
+
+        //    if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+        //    {
+        //        notSkipTutorial = true;
+        //    }
+
+        //    if (notSkipTutorial)
+        //    {
+        //        StartCoroutine(SwitchCamToTutorialLevel());
+        //    }
+
+        //    if (skipTutorial)
+        //    {
+        //        GameManager.instance.changeSceneTimes += 1;
+        //        tutorialSkipUI.SetActive(false);
+        //        GameManager.instance.p1.isFreeze = false;
+        //        GameManager.instance.p2.isFreeze = false;
+        //    }
+
+
+        //}
+        if (tutorialUIisShowed && !isSkipped1)
         {
-            GameManager.instance.p1.isFreeze = true;
-            GameManager.instance.p2.isFreeze = true;
-
-            if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
-            {
-                if (!skipTutorial)
-                {
-                    GameManager.instance.timesEnterHub += 1;
-                    GameManager.instance.changeSceneTimes += 1;
-                    skipTutorial = true;
-
-                }
-
-
-            }
-
-            if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
-            {
-                notSkipTutorial = true;
-            }
-
-            if (notSkipTutorial)
-            {
-                StartCoroutine(SwitchCamToTutorialLevel());
-            }
-
-            if (skipTutorial)
-            {
-                GameManager.instance.changeSceneTimes += 1;
-                tutorialSkipUI.SetActive(false);
-                GameManager.instance.p1.isFreeze = false;
-                GameManager.instance.p2.isFreeze = false;
-            }
-
+            StartCoroutine(TutorialSkip());
 
         }
 
 
 
 
+    }
+
+    IEnumerator TutorialSkip()
+    {
+        GameManager.instance.p1.isFreeze = true;
+        GameManager.instance.p2.isFreeze = true;
+        yield return new WaitForSeconds(3f);
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+        tutorialSkipUI.SetActive(false);
+        isSkipped1 = true;
     }
 
 

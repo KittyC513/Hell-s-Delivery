@@ -949,6 +949,28 @@ public class GameManager : MonoBehaviour
             WertherLeft = false;
             p1.isFreeze = false;
             p2.isFreeze = false;
+            p1.slotFull = false;
+            p2.slotFull = false;
+            p1.turnOnTV = false;
+            p2.turnOnTV = false;
+            p1.onTv = false;
+            p2.onTv = false;
+            p1.Dialogue1 = false;
+            p2.Dialogue1 = false;
+            p1.Dialogue1_2 = false;
+            p2.Dialogue1_2 = false;
+            p1.Dialogue2 = false;
+            p2.Dialogue2 = false;
+            p1.Dialogue3 = false;
+            p2.Dialogue3 = false;
+            p1.Dialogue3_2 = false;
+            p2.Dialogue3_2 = false;
+            p1.isAnswered = false;
+            p2.isAnswered = false;
+            p1.bM = null;
+            p2.bM = null;
+
+
 
         }
     }

@@ -18,6 +18,10 @@ public class LoadingProgressBar : MonoBehaviour
     private bool loadingMVP;
     [SerializeField]
     private Animator anim;
+    [SerializeField]
+    private bool level1Completed;
+    [SerializeField]
+    private bool level2Completed;
 
     // Start is called before the first frame update
     void Start()
@@ -65,21 +69,76 @@ public class LoadingProgressBar : MonoBehaviour
                     anim.SetBool("LoadingJuice", true);
                 }
             }
-        }else if (GameManager.instance.timesEnterHub == 2)
+        }
+        else if (GameManager.instance.timesEnterHub == 2)
         {
             if (GameManager.instance.WertherRequestWasCompleted)
             {
-                anim.SetBool("LoadingLalah", true);
+                if (!GameManager.instance.acceptLalahOrder)
+                {
+                    anim.SetBool("LoadingMVP", true);
+                    level2Completed = true;
+                }
+                else
+                {
+                    anim.SetBool("LoadingLalah", true);
+                }
+
             }
-            if (GameManager.instance.LalahRequestWasCompleted)
+            else if (GameManager.instance.LalahRequestWasCompleted )
+            {
+                if (!GameManager.instance.accepWertherOrder)
+                {
+                    anim.SetBool("LoadingLalah", true);
+                    level1Completed = true;
+                }
+                else
+                {
+                    anim.SetBool("LoadingMVP", true);
+                }
+
+            }
+            else
+            {
+                anim.SetBool("LoadingFight", true);
+            }
+            
+        }
+        else if (GameManager.instance.timesEnterHub == 3)
+        {
+            if (GameManager.instance.WertherRequestWasCompleted && !level1Completed)
+            {
+                anim.SetBool("LoadingLalah", true);
+                level2Completed = true;
+            }
+            else if (GameManager.instance.LalahRequestWasCompleted && !level2Completed)
             {
                 anim.SetBool("LoadingMVP", true);
+                level1Completed = true;
             }
-            if(GameManager.instance.WertherRequestWasCompleted && GameManager.instance.LalahRequestWasCompleted)
+            else
             {
                 anim.SetBool("LoadingJuice", true);
             }
+
         }
+        else if (GameManager.instance.timesEnterHub == 4)
+        {
+            if (GameManager.instance.WertherRequestWasCompleted && level1Completed)
+            {
+                anim.SetBool("LoadingMVP", true);
+            }
+            else if (GameManager.instance.LalahRequestWasCompleted && level2Completed)
+            {
+                anim.SetBool("LoadingLalah", true);
+            }
+            else
+            {
+                anim.SetBool("LoadingFight", true);
+            }
+
+        }
+
         //else if (GameManager.instance.changeSceneTimes == 3)
         //{
         //    //out of TV
