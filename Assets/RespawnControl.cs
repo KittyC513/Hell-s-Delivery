@@ -169,6 +169,10 @@ public class RespawnControl : MonoBehaviour
     [SerializeField]
     private bool isTriggered;
 
+    [Header("Barrier")]
+    [SerializeField]
+    private GameObject barrierUI;
+
 
 
     //CheckpointControl activateFCP;
