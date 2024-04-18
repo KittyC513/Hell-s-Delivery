@@ -913,9 +913,18 @@ public class SceneControl : MonoBehaviour
             if (!NPCTrigger.isLeaving)
             {
                 //WertherTalkUI.SetActive(true);
-                LalahUI.SetActive(false);
-                print("1");
-                lalahCollider.enabled = false;
+                if (!wertherdialogueEnds)
+                {
+                    LalahUI.SetActive(false);
+                    print("1");
+                    lalahCollider.enabled = false;
+                }
+                else
+                {
+                    LalahUI.SetActive(true);
+                    lalahCollider.enabled = true;
+                }
+
             }
             else
             {

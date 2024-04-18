@@ -13,6 +13,10 @@ public class packageBarrier : MonoBehaviour
     Renderer rend;
     [SerializeField]
     private GameObject instruction;
+    [SerializeField]
+    private bool isAccessed;
+    [SerializeField]
+    private bool turnOff;
 
     [SerializeField]
     PackagePass packagePass;
@@ -30,7 +34,11 @@ public class packageBarrier : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (isAccessed && !turnOff)
+        {
+            instruction.SetActive(false);
+            turnOff = true;
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -40,7 +48,7 @@ public class packageBarrier : MonoBehaviour
             Bc.enabled = false;
             blocking = false;
             rend.material = passable;
-
+            isAccessed = true;
             instruction.SetActive(false);
         }
     }
@@ -48,7 +56,7 @@ public class packageBarrier : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player" && !isAccessed)
         {
             instruction.SetActive(true);
         }
@@ -65,9 +73,7 @@ public class packageBarrier : MonoBehaviour
                 rend.material = solid;
                 
             }
-
             instruction.SetActive(false);
-
         }
     }
 }
