@@ -36,27 +36,66 @@ public class LoadingProgressBar : MonoBehaviour
 
     public void LoadingScreens()
     {
-        if (GameManager.instance.changeSceneTimes == 1)
+        if (GameManager.instance.timesEnterHub == 0)
         {
             anim.SetBool("LoadingFight", true);
         }
-        else if (GameManager.instance.changeSceneTimes == 2)
+        else if (GameManager.instance.timesEnterHub == 1)
         {
-            anim.SetBool("LoadingTV", true);
-        }
-        else if (GameManager.instance.changeSceneTimes == 3 || GameManager.instance.changeSceneTimes == 5 || GameManager.instance.changeSceneTimes == 7)
+            if (GameManager.instance.changeSceneTimes != 3 && !GameManager.instance.acceptLalahOrder && !GameManager.instance.accepWertherOrder)
+            {
+                anim.SetBool("LoadingTV", true);
+            }
+            if(GameManager.instance.changeSceneTimes == 3 && !GameManager.instance.acceptLalahOrder && !GameManager.instance.accepWertherOrder)
+            {
+                anim.SetBool("LoadingJuice", true);
+            }
+            if (GameManager.instance.accepWertherOrder)
+            {
+                anim.SetBool("LoadingMVP", true);
+            }
+            if (GameManager.instance.acceptLalahOrder)
+            {
+                anim.SetBool("LoadingLalah", true);
+            }
+            if(GameManager.instance.changeSceneTimes == 5)
+            {
+                if(GameManager.instance.LalahRequestWasCompleted || GameManager.instance.WertherRequestWasCompleted)
+                {
+                    anim.SetBool("LoadingJuice", true);
+                }
+            }
+        }else if (GameManager.instance.timesEnterHub == 2)
         {
-            //out of TV
-            anim.SetBool("LoadingJuice", true);
+            if (GameManager.instance.WertherRequestWasCompleted)
+            {
+                anim.SetBool("LoadingLalah", true);
+            }
+            if (GameManager.instance.LalahRequestWasCompleted)
+            {
+                anim.SetBool("LoadingMVP", true);
+            }
+            if(GameManager.instance.WertherRequestWasCompleted && GameManager.instance.LalahRequestWasCompleted)
+            {
+                anim.SetBool("LoadingJuice", true);
+            }
         }
-        else if (GameManager.instance.acceptLalahOrder && !GameManager.instance.LalahRequestWasCompleted)
-        {
-            anim.SetBool("LoadingLalah", true);
-        }
-        else if (GameManager.instance.accepWertherOrder && !GameManager.instance.WertherRequestWasCompleted)
-        {
-            anim.SetBool("LoadingMVP", true);
-        }
+        //else if (GameManager.instance.changeSceneTimes == 3)
+        //{
+        //    //out of TV
+        //    if(!GameManager.instance.acceptLalahOrder && !GameManager.instance.accepWertherOrder)
+        //    {
+        //        anim.SetBool("LoadingJuice", true);
+        //    }
+        //}
+        //else if (GameManager.instance.acceptLalahOrder && !GameManager.instance.LalahRequestWasCompleted)
+        //{
+        //    anim.SetBool("LoadingLalah", true);
+        //}
+        //else if (GameManager.instance.accepWertherOrder && !GameManager.instance.WertherRequestWasCompleted)
+        //{
+        //    anim.SetBool("LoadingMVP", true);
+        //}
 
     }
 }

@@ -152,12 +152,12 @@ public class boxingMinigame : MonoBehaviour
                 if (p1pushedcount >= maxDamage)
                 {
 
-                    GameManager.instance.p2.rC.endminigamep1();
+                    GameManager.instance.p2.rC.endminigamep2();
                     endMinigame();
                 }
                 if (p2pushedcount >= maxDamage)
                 {
-                    GameManager.instance.p1.rC.endminigamep2();
+                    GameManager.instance.p1.rC.endminigamep1();
                     endMinigame();
                 }
             }
@@ -440,7 +440,7 @@ public class boxingMinigame : MonoBehaviour
         if (SelectMinigame.instance.chooseTwo)
         {
             boxingCam1.gameObject.SetActive(true);
-            StartCoroutine(movingCam());
+            //StartCoroutine(movingCam());
         }
         else
         {

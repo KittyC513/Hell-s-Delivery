@@ -632,9 +632,9 @@ public class TestCube : MonoBehaviour
 
     private void OnEnable()
     {
-        pauseGame = pause.FindAction("Pause/Unpause");
-        pauseGame.Enable();
-        pauseJoystick = pause.FindAction("MenuJoystick");
+        //pauseGame = pause.FindAction("Pause/Unpause");
+        //pauseGame.Enable();
+        //pauseJoystick = pause.FindAction("MenuJoystick");
         selectOption = pause.FindAction("SelectOption");
 
         player.FindAction("Pick").started += DoDrop;
@@ -672,8 +672,8 @@ public class TestCube : MonoBehaviour
     private void OnDisable()
     {
 
-        pauseGame.Disable();
-        pauseJoystick.Disable();
+        //pauseGame.Disable();
+        //pauseJoystick.Disable();
         selectOption.Disable();
 
         player.FindAction("Pick").started -= DoDrop;
@@ -722,6 +722,21 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(bM != null)
+        {
+            if (isPlayer1 && !bM.isboxing && !rC.Player1Die)
+            {
+                p1Indicator.SetActive(true);
+                p2Indicator.SetActive(false);
+            }
+
+            if (isPlayer2 && !bM.isboxing && !rC.Player2Die)
+            {
+                p1Indicator.SetActive(false);
+                p2Indicator.SetActive(true);
+            }
+        }
+
         P1Damage();
         P2Damage();
         DetectDirectionBetweenPlayerAndObject();
@@ -3099,16 +3114,16 @@ public class TestCube : MonoBehaviour
     IEnumerator StopBeingPushedP1()
     {
         OutlineActivate();
-        pushCDSlider.gameObject.SetActive(true);
+        //pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
         
         if (pushCDtimer < 1)
         {
-            pushCDSlider.value = pushCDtimer;
+            //pushCDSlider.value = pushCDtimer;
         }
         else
         {
-            pushCDSlider.value = 1;
+            //pushCDSlider.value = 1;
         }
         yield return new WaitForSeconds(0.2f);
         gameManager.p2.p2Anim.SetBool("isPushing", false);
@@ -3135,16 +3150,16 @@ public class TestCube : MonoBehaviour
     IEnumerator StopBeingPushedP2()
     {
         OutlineActivate();
-        pushCDSlider.gameObject.SetActive(true);
+        //pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
         
         if (pushCDtimer < 1)
         {
-            pushCDSlider.value = pushCDtimer;
+            //pushCDSlider.value = pushCDtimer;
         }
         else
         {
-            pushCDSlider.value = maxCDTimer;
+            //pushCDSlider.value = maxCDTimer;
         }
         yield return new WaitForSeconds(0.2f);
         gameManager.p1.p1Anim.SetBool("isPushing", false);
@@ -4189,7 +4204,11 @@ public class TestCube : MonoBehaviour
                         }
 
 
-                        // Update the materials on the Renderer
+                        //
+                        //
+                        //
+                        //
+                        // the materials on the Renderer
                         renderer.materials = newMaterials;
                     }
                 }
