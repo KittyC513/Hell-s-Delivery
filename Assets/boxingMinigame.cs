@@ -492,6 +492,8 @@ public class boxingMinigame : MonoBehaviour
         mainCam.SetActive(true);
     }
 
+
+
     IEnumerator ShowPackage()
     {
         yield return new WaitForSeconds(2f);

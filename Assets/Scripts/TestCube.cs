@@ -2247,14 +2247,19 @@ public class TestCube : MonoBehaviour
 
     void Interacte()
     {
-        if (bM.minigameStart)
+        if(bM != null)
         {
-            isFreeze = false;
+            if (bM.minigameStart)
+            {
+                isFreeze = false;
+            }
         }
+
         if (withinTVRange && !onTv)
         {
             if (ReadActionButton())
             {
+                SelectMinigame.instance.firstEnter = true;
                 gameManager.p1.turnOnTV = true;
                 gameManager.p2.turnOnTV = true;
                 //SceneControl.instance.LoadScene("MVPLevel");
@@ -2592,14 +2597,18 @@ public class TestCube : MonoBehaviour
 
             if (onTv && !bM.isboxing)
             {
-
+                isFreeze = true;
                 if (jump.ReadValue<float>() == 1)
                 {
                     SelectMinigame.instance.SelectItem();
                 }
                 if (ReadActionButton())
                 {
+                    SelectMinigame.instance.oriShop = false;
                     SelectMinigame.instance.firstEnter = false;
+                    SelectMinigame.instance.selectedItem = 0;
+                    SelectMinigame.instance.pressingTimes = 1;
+
                     gameManager.p1.turnOnTV = false;
                     gameManager.p2.turnOnTV = false;
                     bM.EndGameInHub();
@@ -2619,12 +2628,12 @@ public class TestCube : MonoBehaviour
             }
 
         }
-        else if(!onTv)
+        else if(!onTv || !bM.isboxing)
         {
-            if (!SceneControl.instance.notSkipTutorial)
+            if (!SceneControl.instance.notSkipTutorial && !SceneControl.instance.level1Overview && !SceneControl.instance.level2Overview)
             {
                 StartCoroutine(MovingCameraTVBack());
-                if (withinTVRange && !Dialogue1 && !Dialogue1_2 && !Dialogue2 && !Dialogue3 && bM.minigameStart)
+                if (withinTVRange && !Dialogue1 && !Dialogue1_2 && !Dialogue2 && !Dialogue3)
                 {
                     isFreeze = false;
                 }
@@ -2682,13 +2691,12 @@ public class TestCube : MonoBehaviour
     IEnumerator MovingCameraTV()
     {
         print("CAM Forward");
-        isFreeze = true;
         SceneControl.instance.MoveCamera(SceneControl.instance.closeShootTV);
         yield return new WaitForSecondsRealtime(0.7f);
         onTv = true;
     }
 
-    IEnumerator MovingCameraTVBack()
+    public IEnumerator MovingCameraTVBack()
     {
         SceneControl.instance.MoveCamera(SceneControl.instance.camPos);
         yield return new WaitForSecondsRealtime(2f);

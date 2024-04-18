@@ -33,11 +33,16 @@ public class SelectMinigame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //SelectItem();
+        if (!chooseOne && !chooseTwo)
+        {
+            shopItem[0].SetActive(false);
+            shopItem[1].SetActive(false);
+        }
     }
 
     public void SelectItem()
     {
+
         if (oriShop)
         {
             if(timer >= 0.1)
@@ -74,6 +79,7 @@ public class SelectMinigame : MonoBehaviour
                 {
                     pressingTimes += 1;
                 }
+
             }
             else
             {
