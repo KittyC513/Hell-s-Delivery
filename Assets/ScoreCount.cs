@@ -112,9 +112,9 @@ public class ScoreCount : MonoBehaviour
     private bool useBigScore = false;
 
     [Space, Header("Scene Names")]
-    [SerializeField] private string level1 = "Level1";
-    [SerializeField] private string level2 = "MVPLevel";
-    [SerializeField] private string level3 = "Level3";
+    private string level1 = "Level1";
+    private string level2 = "MVPLevel";
+    private string level3 = "Level3";
     //need score for each value
     //need an expected outcome for each player
     //need a final value for each player
@@ -127,9 +127,9 @@ public class ScoreCount : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        gameManager = Object.FindAnyObjectByType<GameManager>();
+        gameManager = GameManager.instance;
 
-        StartLevel();
+        //StartLevel();
     }
 
     
@@ -165,17 +165,17 @@ public class ScoreCount : MonoBehaviour
     public void StartLevel()
     {
         StartLevelTime();
+        Scene currentLevel = SceneManager.GetActiveScene();
 
-
-        if (gameManager.curSceneName == level1)
+        if (currentLevel.name == level1)
         {
             lvlData = lvl1Data;
         }
-        else if (gameManager.curSceneName == level2)
+        else if (currentLevel.name == level2)
         {
             lvlData = lvl2Data;
         }
-        else if (gameManager.curSceneName == level3)
+        else if (currentLevel.name == level3)
         {
             lvlData = lvl3Data;
         }
