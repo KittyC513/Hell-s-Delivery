@@ -2450,6 +2450,12 @@ public class TestCube : MonoBehaviour
                         gameManager.p2.isFreeze = true;
                     }
 
+                    if (SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
+                    {
+                        SceneControl.instance.level1Overview = true;
+                        SceneControl.instance.level2Overview = false;
+                        SceneControl.instance.UI2turnOff = true;
+                    }
                 }               
             }
             if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1 && !SceneControl.instance.wertherdialogueEnds)
@@ -2502,6 +2508,13 @@ public class TestCube : MonoBehaviour
                         SceneControl.instance.level1Overview = true;
                         gameManager.p1.isFreeze = true;
                         gameManager.p2.isFreeze = true;
+                    }
+                    
+                    if(SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
+                    {
+                        SceneControl.instance.level1Overview = true;
+                        SceneControl.instance.level2Overview = false;
+                        SceneControl.instance.UI2turnOff = true;
                     }
 
 

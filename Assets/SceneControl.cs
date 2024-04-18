@@ -1134,6 +1134,7 @@ public class SceneControl : MonoBehaviour
     #region Lalah Event
     public void ShowLevel1Overview()
     {
+        TurnOffModel1();
         if (accept)
         {
             GameManager.instance.p1.isFreeze = false;
@@ -1233,6 +1234,14 @@ public class SceneControl : MonoBehaviour
 
     }
 
+    void TurnOffModel1()
+    {
+        if (UITurnOff)
+        {
+            LalahOverviewUI.SetActive(false);
+        }
+    }
+
     //IEnumerator CameraSwitchLalah()
     //{
     //    GameManager.instance.p1.isFreeze = true;
@@ -1252,6 +1261,7 @@ public class SceneControl : MonoBehaviour
     #region Werther Event
     public void ShowLevel2Overview()
     {
+        TurnOffModel2();
         if (accept1)
         {
             GameManager.instance.p1.isFreeze = false;
@@ -1348,6 +1358,13 @@ public class SceneControl : MonoBehaviour
 
     }
 
+    void TurnOffModel2()
+    {
+        if (UI2turnOff)
+        {
+            WertherOverviewUI.SetActive(false);
+        }
+    }
     #endregion
 
     #region TitlePage
