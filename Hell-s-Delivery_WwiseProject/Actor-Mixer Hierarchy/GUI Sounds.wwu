@@ -95,7 +95,7 @@
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-9</Value>
+								<Value>-12</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -124,7 +124,7 @@
 					<PropertyList>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-11</Value>
+								<Value>-12</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -269,7 +269,7 @@
 					<PropertyList>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>1</Value>
+								<Value>-1</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -298,7 +298,7 @@
 					<PropertyList>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-9</Value>
+								<Value>-11</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -408,6 +408,96 @@
 					</ChildrenList>
 					<ActiveSourceList>
 						<ActiveSource Name="FightClank2" ID="{A4122857-F34E-471C-BD5C-8B9F4598D738}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="BoxOpen" ID="{8A7B2E86-07A5-4C4E-82F2-38A813F38580}" ShortID="982338714">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-9</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="BoxOpen" ID="{D928FBBD-AC79-4552-9FF4-18104CC1215D}">
+							<Language>SFX</Language>
+							<AudioFile>BoxOpen.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="289971853"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="BoxOpen" ID="{D928FBBD-AC79-4552-9FF4-18104CC1215D}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Sparkle" ID="{95EA1FEE-130E-4142-9752-8F8AC0AFC194}" ShortID="933577495">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-18</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Sparkle" ID="{8ED4A332-4D10-4F3E-8249-C5EA6A95B98B}">
+							<Language>SFX</Language>
+							<AudioFile>Sparkle.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="401327135"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Sparkle" ID="{8ED4A332-4D10-4F3E-8249-C5EA6A95B98B}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="StinkySound1" ID="{FA4ADD77-6B54-4269-A61D-4B0CEBE46C88}" ShortID="111146872">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-14</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="StinkySound1" ID="{8B1ABD19-9C3E-45C4-BB48-40E5DCB14F57}">
+							<PropertyList>
+								<Property Name="TrimBegin" Type="Real64" Value="0.486"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>StinkySound1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1028657272"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="StinkySound1" ID="{8B1ABD19-9C3E-45C4-BB48-40E5DCB14F57}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>

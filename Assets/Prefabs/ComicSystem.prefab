@@ -1441,7 +1441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7754465517223635773
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5829,7 +5829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4364427210500371782
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8903,43 +8903,125 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b91d09ac9729e94fbda89f1aed2dab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 690d9024227d21a47b65b657bfda7bea, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 0adfe188563031f4ea7152744ffcbd2f, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 26f4baed069ae8e47874fbc65aed8929, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 6764e3f3ba95553479c38480b8629bb8, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 690d9024227d21a47b65b657bfda7bea, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 0adfe188563031f4ea7152744ffcbd2f, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 79b09967688daf742b9784ba21fc06f8, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 26f4baed069ae8e47874fbc65aed8929, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 6a721560d2c6a104f981b4be20b36f28, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: abefb02d2983e6e4eb95f26737557074, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 8fed6a2989e0fa24c9e0d6ed92fcb499, type: 2}
-  - idInternal: 0
-    valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: fc10bd5309e42cf41806feb3331da84d, type: 2}
+  currentBankNum: 0
+  soundCollections:
+  - bankName: Intro
+    sounds:
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 690d9024227d21a47b65b657bfda7bea, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 0adfe188563031f4ea7152744ffcbd2f, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 26f4baed069ae8e47874fbc65aed8929, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 6764e3f3ba95553479c38480b8629bb8, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 690d9024227d21a47b65b657bfda7bea, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 0adfe188563031f4ea7152744ffcbd2f, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 79b09967688daf742b9784ba21fc06f8, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 26f4baed069ae8e47874fbc65aed8929, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 6a721560d2c6a104f981b4be20b36f28, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: abefb02d2983e6e4eb95f26737557074, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 8fed6a2989e0fa24c9e0d6ed92fcb499, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: fc10bd5309e42cf41806feb3331da84d, type: 2}
+    order: 0
+  - bankName: Lahlah
+    sounds:
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 690d9024227d21a47b65b657bfda7bea, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 0adfe188563031f4ea7152744ffcbd2f, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 26f4baed069ae8e47874fbc65aed8929, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 6764e3f3ba95553479c38480b8629bb8, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 690d9024227d21a47b65b657bfda7bea, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 0adfe188563031f4ea7152744ffcbd2f, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 79b09967688daf742b9784ba21fc06f8, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 26f4baed069ae8e47874fbc65aed8929, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 6a721560d2c6a104f981b4be20b36f28, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: abefb02d2983e6e4eb95f26737557074, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 8fed6a2989e0fa24c9e0d6ed92fcb499, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: fc10bd5309e42cf41806feb3331da84d, type: 2}
+    order: 0
+  - bankName: Werther
+    sounds:
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 1f9d615acfaba0043b0eb2517c00c428, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 100d130cd211e014889f01bfd2c4e350, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 690d9024227d21a47b65b657bfda7bea, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 0adfe188563031f4ea7152744ffcbd2f, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 262dfb51dba53ff4c91eb46436c36040, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 12e0ddbaa385a2749a035ba1177d22ec, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 262dfb51dba53ff4c91eb46436c36040, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 6df02b41bd2e59544ab557d0079475da, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 690d9024227d21a47b65b657bfda7bea, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 0adfe188563031f4ea7152744ffcbd2f, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 26f4baed069ae8e47874fbc65aed8929, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 262dfb51dba53ff4c91eb46436c36040, type: 2}
+    order: 0
 --- !u!1 &9017086193135511416
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,12 +15,12 @@ namespace AK
     {
         static const AkUniqueID PLAY_APARTMENT_COMPLEX_V1 = 359343595U;
         static const AkUniqueID PLAY_BADGESEQUENCE = 3272596896U;
+        static const AkUniqueID PLAY_BOXOPEN = 2128467797U;
         static const AkUniqueID PLAY_CARTOONFIGHT = 4008188558U;
         static const AkUniqueID PLAY_CHECKPOINT_GET = 1359342141U;
         static const AkUniqueID PLAY_CITYLEVELFINAL = 4177256649U;
         static const AkUniqueID PLAY_CROWNSEQUENCE = 2686563660U;
         static const AkUniqueID PLAY_DEVIL_THEME = 2640074606U;
-        static const AkUniqueID PLAY_DIZZY = 1634870884U;
         static const AkUniqueID PLAY_FAN_ALL = 452465945U;
         static const AkUniqueID PLAY_HAT_REALIZATION_REVERB = 2182026627U;
         static const AkUniqueID PLAY_HIGHUPAMBIENCE = 1431564541U;
@@ -51,7 +51,9 @@ namespace AK
         static const AkUniqueID PLAY_SHMONKTHROW = 1729994058U;
         static const AkUniqueID PLAY_SMONKPUSHED = 4031885603U;
         static const AkUniqueID PLAY_SNIFF = 913401646U;
+        static const AkUniqueID PLAY_SPARKLE = 3595246800U;
         static const AkUniqueID PLAY_SQUEAKYBITE = 3018288467U;
+        static const AkUniqueID PLAY_STINKYSOUND1 = 1712731588U;
         static const AkUniqueID PLAY_STRETCH = 1150790929U;
         static const AkUniqueID PLAY_SUMMONING_CIRCLE_ALL = 2914340836U;
         static const AkUniqueID PLAY_TUTORIALMUSIC = 2086825057U;

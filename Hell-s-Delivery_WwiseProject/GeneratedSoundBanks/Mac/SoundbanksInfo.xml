@@ -93,7 +93,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{400CE495-1C8D-5619-EC3F-5BF107941559}">
+		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{9AF7C8B4-12C0-427C-B9CD-3D5A2EE11B84}">
 			<ShortName>PlayerSFX</ShortName>
 			<Path>PlayerSFX.bnk</Path>
 			<Media>
@@ -189,6 +189,10 @@
 					<ShortName>ShmonkDeath2.wav</ShortName>
 					<CachePath>SFX/ShmonkDeath2_10C4C929.wem</CachePath>
 				</File>
+				<File Id="289971853" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>BoxOpen.wav</ShortName>
+					<CachePath>SFX/BoxOpen_10C4C929.wem</CachePath>
+				</File>
 				<File Id="313094469" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShminkDeath1.wav</ShortName>
 					<CachePath>SFX/ShminkDeath1_10C4C929.wem</CachePath>
@@ -200,6 +204,10 @@
 				<File Id="375462586" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShmonkJump1.wav</ShortName>
 					<CachePath>SFX/ShmonkJump1_10C4C929.wem</CachePath>
+				</File>
+				<File Id="401327135" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Sparkle.wav</ShortName>
+					<CachePath>SFX/Sparkle_10C4C929.wem</CachePath>
 				</File>
 				<File Id="423408521" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Sniff.wav</ShortName>
@@ -369,6 +377,10 @@
 					<ShortName>ShminkThrow1.wav</ShortName>
 					<CachePath>SFX/ShminkThrow1_10C4C929.wem</CachePath>
 				</File>
+				<File Id="1028657272" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>StinkySound1.wav</ShortName>
+					<CachePath>SFX/StinkySound1_B78F4916.wem</CachePath>
+				</File>
 				<File Id="1047220916" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>PhoneRIng.wav</ShortName>
 					<CachePath>SFX/PhoneRIng_10C4C929.wem</CachePath>
@@ -390,6 +402,11 @@
 				<Event Id="3272596896" Name="Play_BadgeSequence" DurationType="OneShot" DurationMin="3.6666667" DurationMax="3.6666667">
 					<MediaRefs>
 						<MediaRef Id="428943920"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2128467797" Name="Play_BoxOpen" DurationType="OneShot" DurationMin="2" DurationMax="2">
+					<MediaRefs>
+						<MediaRef Id="289971853"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="4008188558" Name="Play_CartoonFIght" DurationType="OneShot" DurationMin="6" DurationMax="6">
@@ -582,9 +599,19 @@
 						<MediaRef Id="423408521"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="3595246800" Name="Play_Sparkle" DurationType="OneShot" DurationMin="4" DurationMax="4">
+					<MediaRefs>
+						<MediaRef Id="401327135"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="3018288467" Name="Play_SqueakyBite" DurationType="OneShot" DurationMin="2" DurationMax="2">
 					<MediaRefs>
 						<MediaRef Id="906178935"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1712731588" Name="Play_StinkySound1" DurationType="OneShot" DurationMin="4.1389885" DurationMax="4.1389885">
+					<MediaRefs>
+						<MediaRef Id="1028657272"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1150790929" Name="Play_Stretch" DurationType="OneShot" DurationMin="2" DurationMax="2">
@@ -676,5 +703,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{6095EF04-7EFA-336F-7EB9-48E1C0E8F562}</FileHash>
+	<FileHash>{75C678D2-6344-34A8-2C7C-6466A3B4309C}</FileHash>
 </SoundBanksInfo>
