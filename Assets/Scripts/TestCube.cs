@@ -391,7 +391,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool Dialogue1_2;
     [SerializeField]
-    private bool Dialogue2;
+    public bool Dialogue2;
     [SerializeField]
     public bool Dialogue3;
     [SerializeField]
@@ -524,7 +524,7 @@ public class TestCube : MonoBehaviour
     private Camera boxcam;
     [SerializeField]
     private GameObject boxcamHolder;
-    private boxingMinigame bM;
+    public boxingMinigame bM;
     private GameObject minigame;
     [SerializeField]
     public bool damageApplied;

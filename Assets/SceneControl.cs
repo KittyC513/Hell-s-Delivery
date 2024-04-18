@@ -1465,8 +1465,21 @@ public class SceneControl : MonoBehaviour
         {
             tutorialSkipUI.SetActive(true);
             tutorialUIisShowed = true;
-
+            GameManager.instance.changeSceneTimes += 1;
+            GameManager.instance.timesEnterHub += 1;
         }
+    }
+
+    public void SkipTutorialUI()
+    {
+        nameTag.SetActive(false);
+        radialUI.SetActive(false);
+        phoneRingText.SetActive(false);
+        tutorialSkipUI.SetActive(true);
+        tutorialUIisShowed = true;
+        GameManager.instance.changeSceneTimes += 1;
+        GameManager.instance.timesEnterHub += 1;
+        SkipChoice();
 
     }
 
@@ -1524,11 +1537,11 @@ public class SceneControl : MonoBehaviour
 
     IEnumerator TutorialSkip()
     {
+        GameManager.instance.p1.isFreeze = true;
+        GameManager.instance.p2.isFreeze = true;
         yield return new WaitForSeconds(3f);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
-        GameManager.instance.changeSceneTimes += 1;
-        GameManager.instance.timesEnterHub += 1;
         tutorialSkipUI.SetActive(false);
         isSkipped1 = true;
     }
