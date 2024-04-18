@@ -234,7 +234,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private bool skipTutorial;
     [SerializeField]
-    private bool notSkipTutorial;
+    public bool notSkipTutorial;
     [SerializeField]
     private bool tutorialUIisShowed;
     [SerializeField]

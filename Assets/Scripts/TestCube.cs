@@ -2603,7 +2603,10 @@ public class TestCube : MonoBehaviour
         }
         else
         {
-            StartCoroutine(MovingCameraTVBack());
+            if (!SceneControl.instance.notSkipTutorial)
+            {
+                StartCoroutine(MovingCameraTVBack());
+            }
         }
     }
 
