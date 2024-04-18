@@ -37,10 +37,14 @@ public class SelectMinigame : MonoBehaviour
     {
         if (!chooseOne && !chooseTwo)
         {
-            shopItem[0].SetActive(false);
-            shopItem[1].SetActive(false);
-            anim.SetBool("Boxing", false);
-            anim.SetBool("Pushing", false);
+            if(GameManager.instance.p1.turnOnTV || GameManager.instance.p2.turnOnTV)
+            {
+                shopItem[0].SetActive(false);
+                shopItem[1].SetActive(false);
+                anim.SetBool("Boxing", false);
+                anim.SetBool("Pushing", false);
+            }
+
         }
     }
 
