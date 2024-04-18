@@ -23,7 +23,8 @@ public class NPCTrigger : MonoBehaviour
     [SerializeField]
     public BoxCollider bc;
     [SerializeField]
-    public GameObject model;
+    public CapsuleCollider bc1;
+
 
     // Start is called before the first frame update
 
@@ -108,8 +109,9 @@ public class NPCTrigger : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
         //smoke.SetActive(false);
         //anim.SetBool("Arrived", false);
-        model.SetActive(false);
-        bc.enabled == false;
+        npc.SetActive(false);
+        bc.enabled = false;
+        bc1.enabled = false;
         isLeaving = true;
 
     }
