@@ -12,6 +12,8 @@ public class Ending : MonoBehaviour
     private GameObject comicCanvas;
     [SerializeField]
     private Animator comicAnim;
+    [SerializeField]
+    private GameObject skipUI;
 
     // Start is called before the first frame update
     void Start()
@@ -31,33 +33,16 @@ public class Ending : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.E) && GameManager.instance.curSceneName == "Level1")
+        if (Input.GetKey(KeyCode.E))
         {
-            GameManager.instance.changeSceneTimes += 1;
-            GameManager.instance.LalahRequestWasCompleted = true;
-
-            if(badgeManager != null)
-            {
-                badgeManager.RunFinalCheck();
-            }
-
-            Loader.Load(Loader.Scene.ScoreCards);
-
+            CompleteTask();
         }
 
-        if (Input.GetKey(KeyCode.E) && GameManager.instance.curSceneName == "MVPLevel")
+        if(GameManager.instance.LalahRequestWasCompleted || GameManager.instance.WertherRequestWasCompleted)
         {
-            GameManager.instance.changeSceneTimes += 1;
-            GameManager.instance.WertherRequestWasCompleted = true;
-            
-            if(badgeManager != null)
-            {
-                badgeManager.RunFinalCheck();
-            }
-
-            Loader.Load(Loader.Scene.ScoreCards);
-
+            SkipComic();
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -81,15 +66,16 @@ public class Ending : MonoBehaviour
                 canvas.gameObject.SetActive(true);
             }
 
-
-            if (badgeManager != null)
-            {
-                badgeManager.RunFinalCheck();
-            }
+            GameManager.instance.p1.isFreeze = true;
+            GameManager.instance.p2.isFreeze = true;
 
 
+            //if (badgeManager != null)
+            //{
+            //    badgeManager.RunFinalCheck();
+            //}
 
-            Loader.Load(Loader.Scene.ScoreCards);
+            StartCoroutine(ComicStartEndLevel1());
 
         }
 
@@ -108,11 +94,12 @@ public class Ending : MonoBehaviour
             //{
             //    badgeManager.RunFinalCheck();
             //}
+
             GameManager.instance.changeSceneTimes += 1;
             GameManager.instance.WertherRequestWasCompleted = true;
             StartCoroutine(ComicStart());
         }
-        SkipComic();
+
     }
 
     IEnumerator ComicStart()
@@ -125,12 +112,32 @@ public class Ending : MonoBehaviour
         Loader.Load(Loader.Scene.ScoreCards);
     }
 
+    IEnumerator ComicStartEndLevel1()
+    {
+        comicCanvas.SetActive(true);
+        comicAnim.SetTrigger("Level1");
+        yield return new WaitForSeconds(29);
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+        Loader.Load(Loader.Scene.ScoreCards);
+    }
+
     void SkipComic()
     {
         if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
         {
             print("StopComic");
-            StopCoroutine(ComicStart());
+            if(GameManager.instance.curSceneName == "MVPLevel")
+            {
+                StopCoroutine(ComicStart());
+            }
+
+            if (GameManager.instance.curSceneName == "Level1")
+            {
+                StopCoroutine(ComicStartEndLevel1());
+            }
+
+            skipUI.SetActive(false);
             comicCanvas.SetActive(false);
             GameManager.instance.UnfreezePlayer();
             Loader.Load(Loader.Scene.ScoreCards);

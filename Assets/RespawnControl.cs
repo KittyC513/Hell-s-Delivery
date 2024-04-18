@@ -618,7 +618,7 @@ public class RespawnControl : MonoBehaviour
         //p1DeadScreen.SetActive(true);
         P1Indicator.SetActive(false);
         P1Shade.SetActive(false);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2f);
 
         if(p1Anim != null)
         {
@@ -638,7 +638,7 @@ public class RespawnControl : MonoBehaviour
         //p1DeadScreen.SetActive(false);
         P1Indicator.SetActive(true);
         P1Shade.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1f);
         GameManager.instance.p1.isFreeze = false;
         if(p1Anim != null)
         {
@@ -677,7 +677,7 @@ public class RespawnControl : MonoBehaviour
         //p2DeadScreen.SetActive(true);
         P2Indicator.SetActive(false);
         P2Shade.SetActive(false);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2f);
 
         if(p2Anim != null)
         {
@@ -697,7 +697,7 @@ public class RespawnControl : MonoBehaviour
         //p2DeadScreen.SetActive(false);
         P2Indicator.SetActive(true);
         P2Shade.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1f);
         GameManager.instance.p2.isFreeze = false;
 
         if(p2Anim != null)

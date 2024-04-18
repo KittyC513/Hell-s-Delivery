@@ -1446,6 +1446,7 @@ public class SceneControl : MonoBehaviour
 
             if (skipTutorial)
             {
+                GameManager.instance.changeSceneTimes += 1;
                 tutorialSkipUI.SetActive(false);
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;

@@ -49,7 +49,7 @@ public class SelectMinigame : MonoBehaviour
 
         if (oriShop)
         {
-            if(timer >= 0.1)
+            if(timer >= 0.17)
             {
                 selectedItem += 1;
 

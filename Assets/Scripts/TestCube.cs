@@ -632,9 +632,9 @@ public class TestCube : MonoBehaviour
 
     private void OnEnable()
     {
-        pauseGame = pause.FindAction("Pause/Unpause");
-        pauseGame.Enable();
-        pauseJoystick = pause.FindAction("MenuJoystick");
+        //pauseGame = pause.FindAction("Pause/Unpause");
+        //pauseGame.Enable();
+        //pauseJoystick = pause.FindAction("MenuJoystick");
         selectOption = pause.FindAction("SelectOption");
 
         player.FindAction("Pick").started += DoDrop;
@@ -672,8 +672,8 @@ public class TestCube : MonoBehaviour
     private void OnDisable()
     {
 
-        pauseGame.Disable();
-        pauseJoystick.Disable();
+        //pauseGame.Disable();
+        //pauseJoystick.Disable();
         selectOption.Disable();
 
         player.FindAction("Pick").started -= DoDrop;
@@ -722,6 +722,21 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(bM != null)
+        {
+            if (isPlayer1 && !bM.isboxing && !rC.Player1Die)
+            {
+                p1Indicator.SetActive(true);
+                p2Indicator.SetActive(false);
+            }
+
+            if (isPlayer2 && !bM.isboxing && !rC.Player2Die)
+            {
+                p1Indicator.SetActive(false);
+                p2Indicator.SetActive(true);
+            }
+        }
+
         P1Damage();
         P2Damage();
         DetectDirectionBetweenPlayerAndObject();
@@ -4189,7 +4204,11 @@ public class TestCube : MonoBehaviour
                         }
 
 
-                        // Update the materials on the Renderer
+                        //
+                        //
+                        //
+                        //
+                        // the materials on the Renderer
                         renderer.materials = newMaterials;
                     }
                 }
