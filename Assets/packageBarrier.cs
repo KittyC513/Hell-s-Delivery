@@ -12,7 +12,7 @@ public class packageBarrier : MonoBehaviour
     public Material solid;
     Renderer rend;
     [SerializeField]
-    private Transform instruction;
+    private GameObject instruction;
 
     [SerializeField]
     PackagePass packagePass;
@@ -23,7 +23,7 @@ public class packageBarrier : MonoBehaviour
         blocking = true;
         Bc = gameObject.GetComponent<MeshCollider>();
         rend = gameObject.GetComponent<Renderer>();
-        instruction = this.gameObject.transform.Find("Canvas").transform;
+        //instruction = this.gameObject.transform.Find("Canvas").transform;
 
     }
 
@@ -41,7 +41,7 @@ public class packageBarrier : MonoBehaviour
             blocking = false;
             rend.material = passable;
 
-            instruction.gameObject.SetActive(false);
+            instruction.SetActive(false);
         }
     }
 
@@ -50,7 +50,7 @@ public class packageBarrier : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            instruction.gameObject.SetActive(true);
+            instruction.SetActive(true);
         }
     }
 
@@ -63,6 +63,7 @@ public class packageBarrier : MonoBehaviour
                 Bc.enabled = true;
                 blocking = true;
                 rend.material = solid;
+                instruction.SetActive(false);
             }
 
         }
