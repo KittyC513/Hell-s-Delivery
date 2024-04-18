@@ -476,6 +476,8 @@ public class SceneControl : MonoBehaviour
         {
             if (!LalahdialogueEnds && LalahConversationStart)
             {
+                GameManager.instance.p1.isFreeze = true;
+                GameManager.instance.p2.isFreeze = true;
                 radialUI.SetActive(true);
                 //devilSprite.SetActive(false);
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
@@ -534,6 +536,8 @@ public class SceneControl : MonoBehaviour
         {
             if (!wertherdialogueEnds && WertherConversationStart)
             {
+                GameManager.instance.p1.isFreeze = true;
+                GameManager.instance.p2.isFreeze = true;
                 radialUI.SetActive(true);
                 if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
                 {
@@ -1136,7 +1140,7 @@ public class SceneControl : MonoBehaviour
     public void ShowLevel1Overview()
     {
         TurnOffModel1();
-        if (accept)
+        if (accept && !LalahConversationStart)
         {
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
@@ -1263,7 +1267,7 @@ public class SceneControl : MonoBehaviour
     public void ShowLevel2Overview()
     {
         TurnOffModel2();
-        if (accept1)
+        if (accept1 && !WertherConversationStart)
         {
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;

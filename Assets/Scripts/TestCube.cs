@@ -2247,6 +2247,10 @@ public class TestCube : MonoBehaviour
 
     void Interacte()
     {
+        if (bM.minigameStart)
+        {
+            isFreeze = false;
+        }
         if (withinTVRange && !onTv)
         {
             if (ReadActionButton())
@@ -2580,6 +2584,7 @@ public class TestCube : MonoBehaviour
 
     void OnTV()
     {
+
         if (turnOnTV)
         {
             //gameManager.sceneChanged = true;
@@ -2614,11 +2619,16 @@ public class TestCube : MonoBehaviour
             }
 
         }
-        else
+        else if(!onTv)
         {
             if (!SceneControl.instance.notSkipTutorial)
             {
                 StartCoroutine(MovingCameraTVBack());
+                if (withinTVRange && !Dialogue1 && !Dialogue1_2 && !Dialogue2 && !Dialogue3 && bM.minigameStart)
+                {
+                    isFreeze = false;
+                }
+
             }
         }
     }
@@ -2680,11 +2690,9 @@ public class TestCube : MonoBehaviour
 
     IEnumerator MovingCameraTVBack()
     {
-        print("CAM BACK");
         SceneControl.instance.MoveCamera(SceneControl.instance.camPos);
         yield return new WaitForSecondsRealtime(2f);
         onTv = false;
-
     }
 
 

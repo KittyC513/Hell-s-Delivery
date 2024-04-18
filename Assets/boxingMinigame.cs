@@ -64,7 +64,7 @@ public class boxingMinigame : MonoBehaviour
     public Camera boxingCamObject1;
     [SerializeField]
     public Transform boxingSwitchCam;
-    private bool minigameStart;
+    public bool minigameStart;
 
 
 
