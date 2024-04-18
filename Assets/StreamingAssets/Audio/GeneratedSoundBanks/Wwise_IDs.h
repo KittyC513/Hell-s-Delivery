@@ -20,6 +20,7 @@ namespace AK
         static const AkUniqueID PLAY_CITYLEVELFINAL = 4177256649U;
         static const AkUniqueID PLAY_CROWNSEQUENCE = 2686563660U;
         static const AkUniqueID PLAY_DEVIL_THEME = 2640074606U;
+        static const AkUniqueID PLAY_DIZZY = 1634870884U;
         static const AkUniqueID PLAY_FAN_ALL = 452465945U;
         static const AkUniqueID PLAY_HAT_REALIZATION_REVERB = 2182026627U;
         static const AkUniqueID PLAY_HIGHUPAMBIENCE = 1431564541U;
@@ -36,6 +37,8 @@ namespace AK
         static const AkUniqueID PLAY_PLATFORMSMOVE = 2752324885U;
         static const AkUniqueID PLAY_PLATFORMSPHASEIN = 2281964030U;
         static const AkUniqueID PLAY_PLATFORMSPHASEOUT = 123604001U;
+        static const AkUniqueID PLAY_PUSHCHARGE = 1312932426U;
+        static const AkUniqueID PLAY_PUSHRELEASE = 3357210845U;
         static const AkUniqueID PLAY_RANDWOODLAND = 415850775U;
         static const AkUniqueID PLAY_SCORECARD_SEQUENCE = 342527874U;
         static const AkUniqueID PLAY_SCORESCENEMUSIC = 613185981U;
@@ -61,6 +64,7 @@ namespace AK
         static const AkUniqueID STOP_COMICSFX = 4150189060U;
         static const AkUniqueID STOP_FAN_ALL = 3708642647U;
         static const AkUniqueID STOP_PARACHUTE = 2017739505U;
+        static const AkUniqueID STOP_PUSHCHARGE = 22663848U;
         static const AkUniqueID STOP_SUMMONING_CIRCLE_ALL = 222428266U;
         static const AkUniqueID STOP_WINDCATCH = 1676944771U;
         static const AkUniqueID STOP_YAPPING = 1587897726U;

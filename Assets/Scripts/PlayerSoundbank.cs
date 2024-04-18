@@ -19,6 +19,10 @@ public class PlayerSoundbank : MonoBehaviour
     [SerializeField] public AK.Wwise.Event packageToss;
     [SerializeField] public AK.Wwise.Event windCatch;
     [SerializeField] public AK.Wwise.Event windExit;
+    [SerializeField] public AK.Wwise.Event pushCharge;
+    [SerializeField] public AK.Wwise.Event pushStop;
+    [SerializeField] public AK.Wwise.Event pushRelease;
+    [SerializeField] public AK.Wwise.Event dizzy;
 
     [Space, Header("Shmink")]
     [SerializeField] public AK.Wwise.Event shminkJump;
