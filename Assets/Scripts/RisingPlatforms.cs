@@ -249,7 +249,7 @@ public class RisingPlatforms : MonoBehaviour
         {
             foreach (Renderer renderer in renderers)
             {
-                if (renderer.gameObject.tag != "noOutline" && renderer.gameObject.tag != "Character")
+                if (renderer.gameObject.tag != "noOutline" && renderer.gameObject.tag != "Character" && renderer.gameObject.tag != "pushParticle")
                 {
                     // Get the existing materials
                     Material[] materials = renderer.materials;
