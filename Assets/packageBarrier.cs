@@ -63,8 +63,10 @@ public class packageBarrier : MonoBehaviour
                 Bc.enabled = true;
                 blocking = true;
                 rend.material = solid;
-                instruction.SetActive(false);
+                
             }
+
+            instruction.SetActive(false);
 
         }
     }
