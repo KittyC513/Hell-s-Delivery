@@ -879,6 +879,7 @@ public class SceneControl : MonoBehaviour
         else if (LalahdialogueEnds || !GameManager.instance.showLalahInstruction || GameManager.instance.LalahRequestWasCompleted || showPackage1)
         {
             LalahUI.SetActive(false);
+            print("3");
             lalahCollider.enabled = false;
         }
 
@@ -911,6 +912,7 @@ public class SceneControl : MonoBehaviour
             {
                 //WertherTalkUI.SetActive(true);
                 LalahUI.SetActive(false);
+                print("1");
                 lalahCollider.enabled = false;
             }
             else
@@ -1162,50 +1164,102 @@ public class SceneControl : MonoBehaviour
 
         if (level1Overview)
         {
-            if (!LalahdialogueEnds && !wertherdialogueEnds)
+            if (!LalahdialogueEnds)
             {
-                if (!accept && !reject)
+                if(GameManager.instance.WertherRequestWasCompleted && wertherdialogueEnds)
                 {
-                    werther.SetActive(false);
-                    SwitchCameraToLalahCam();
-                    //MoveCameraLalah(overviewCamLalah);
-                    //yield return new WaitForSeconds(1f);
-                    LalahOverviewUI.SetActive(true);
-                    
-
-                    LalahUI.SetActive(false);
-                    lalahCollider.enabled = false;
-                    UITurnOff = false;
-
-
-                }
-
-                if(delayTimer <= 0.2f)
-                {
-                    delayTimer += Time.deltaTime;
-                }
-
-
-                if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
-                {
-                    if (!accept && delayTimer > 0.2f && !reject)
+                    if (!accept && !reject)
                     {
-                        accept = true;
-                        startLevel1 = true;
-                        GameManager.instance.acceptLalahOrder = true;
+                        werther.SetActive(false);
+                        SwitchCameraToLalahCam();
+                        //MoveCameraLalah(overviewCamLalah);
+                        //yield return new WaitForSeconds(1f);
+                        LalahOverviewUI.SetActive(true);
+
+
+                        LalahUI.SetActive(false);
+                        print("2");
+                        lalahCollider.enabled = false;
+                        UITurnOff = false;
+
+
+                    }
+
+                    if (delayTimer <= 0.2f)
+                    {
+                        delayTimer += Time.deltaTime;
                     }
 
 
-                }
-
-                if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
-                {
-                    if (!reject && delayTimer > 0.2f && !accept)
+                    if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
                     {
-                        print("Reject"); 
-                        reject = true;
+                        if (!accept && delayTimer > 0.2f && !reject)
+                        {
+                            accept = true;
+                            startLevel1 = true;
+                            GameManager.instance.acceptLalahOrder = true;
+                        }
+
+
+                    }
+
+                    if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+                    {
+                        if (!reject && delayTimer > 0.2f && !accept)
+                        {
+                            print("Reject");
+                            reject = true;
+                        }
+                    }
+
+                }
+                else if (!GameManager.instance.WertherRequestWasCompleted && !wertherdialogueEnds)
+                {
+                    if (!accept && !reject)
+                    {
+                        werther.SetActive(false);
+                        SwitchCameraToLalahCam();
+                        //MoveCameraLalah(overviewCamLalah);
+                        //yield return new WaitForSeconds(1f);
+                        LalahOverviewUI.SetActive(true);
+
+
+                        LalahUI.SetActive(false);
+                        print("2");
+                        lalahCollider.enabled = false;
+                        UITurnOff = false;
+
+
+                    }
+
+                    if (delayTimer <= 0.2f)
+                    {
+                        delayTimer += Time.deltaTime;
+                    }
+
+
+                    if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+                    {
+                        if (!accept && delayTimer > 0.2f && !reject)
+                        {
+                            accept = true;
+                            startLevel1 = true;
+                            GameManager.instance.acceptLalahOrder = true;
+                        }
+
+
+                    }
+
+                    if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+                    {
+                        if (!reject && delayTimer > 0.2f && !accept)
+                        {
+                            print("Reject");
+                            reject = true;
+                        }
                     }
                 }
+
             }
             //StartCoroutine(CameraSwitchLalah());
 
