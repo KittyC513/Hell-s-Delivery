@@ -39,7 +39,7 @@ public class BadgeManager : MonoBehaviour
         p2CompletedBadges = new List<BadgeInfo>();
         p1CompletedGoldBadges = new List<BadgeInfo>();
         p2CompletedGoldBadges = new List<BadgeInfo>();
-        lvlData = ScoreCount.instance.lvlData;
+       
 
         foreach (var badge in allBadges)
         {
@@ -58,6 +58,11 @@ public class BadgeManager : MonoBehaviour
         //this is temporary, normally we want this to run on level start only
         ChooseLevelBadges();
            
+    }
+
+    private void Update()
+    {
+        lvlData = ScoreCount.instance.lvlData;
     }
     private void ChooseLevelBadges()
     {
