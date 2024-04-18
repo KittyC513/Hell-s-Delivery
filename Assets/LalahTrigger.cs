@@ -42,6 +42,11 @@ public class LalahTrigger : MonoBehaviour
         //{
         //    Repeat();
         //}
+
+        if (isLeaving)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
     public void Repeat()
     {
@@ -102,13 +107,11 @@ public class LalahTrigger : MonoBehaviour
 
     IEnumerator Leaving()
     {
-        
         anim.SetTrigger("isLeaving");
         yield return new WaitForSeconds(1.2f);
         //smoke.SetActive(false);
         //anim.SetBool("Arrived", false);
         //isLeaving = true;
-        this.gameObject.SetActive(false);
         isLeaving = true;
     }
     #endregion

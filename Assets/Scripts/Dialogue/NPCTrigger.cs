@@ -20,6 +20,10 @@ public class NPCTrigger : MonoBehaviour
     public bool dialogueEnd;
     [SerializeField]
     public bool isLeaving;
+    [SerializeField]
+    public BoxCollider bc;
+    [SerializeField]
+    public GameObject model;
 
     // Start is called before the first frame update
 
@@ -44,6 +48,7 @@ public class NPCTrigger : MonoBehaviour
         //{
         //    Repeat();
         //}
+
     }
     public void Repeat()
     {
@@ -103,8 +108,10 @@ public class NPCTrigger : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
         //smoke.SetActive(false);
         //anim.SetBool("Arrived", false);
-        this.gameObject.SetActive(false);
+        model.SetActive(false);
+        bc.enabled == false;
         isLeaving = true;
+
     }
     #endregion
 
