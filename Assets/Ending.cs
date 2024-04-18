@@ -38,10 +38,22 @@ public class Ending : MonoBehaviour
             CompleteTask();
         }
 
-        if(GameManager.instance.LalahRequestWasCompleted || GameManager.instance.WertherRequestWasCompleted)
+        if(GameManager.instance.curSceneName == "Level1")
         {
-            SkipComic();
+            if (GameManager.instance.LalahRequestWasCompleted)
+            {
+                SkipComic();
+            }
         }
+
+        if (GameManager.instance.curSceneName == "MVPLevel")
+        {
+            if (GameManager.instance.WertherRequestWasCompleted)
+            {
+                SkipComic();
+            }
+        }
+
 
     }
 

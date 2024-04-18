@@ -193,28 +193,18 @@ public class RespawnControl : MonoBehaviour
         "DyingPurpose",
         "NotLiving",
         "Unaliving",
-        "USuck",
-        "GetGud",
-        "Avoid",
         "Womp",
         "Recurring",
         "Disappointing",
         "DoYourJob",
-        "Goal",
-        "Good",
-        "Sigh",
-        "SlayedThat",
         "Slay",
-        "Talent",
-        "GotSlayed",
-        "Icon",
         "DoIt",
-        "Juice",
-        "Bruh",
         "Nothing",
         "Embarrassing",
         "Zero",
-        "Hug"
+        "Hug",
+        "Entertaining",
+        "DeliveringDisappointment"
     };
 
     List<string> SabotageChoice = new List<string>

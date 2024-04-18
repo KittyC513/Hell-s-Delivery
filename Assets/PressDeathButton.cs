@@ -43,63 +43,81 @@ public class PressDeathButton : MonoBehaviour
             {
                 if (GameManager.instance.p1.ReadActionButton())
                 {
-                    timer1 += Time.deltaTime;
                     isKilling = true;
-                  
+                    if (!hasTriggered1)
+                    {
+                        timer1 += Time.deltaTime;
+                    }
+
                 }
                 else
                 {
                     isKilling = false;
                     timer1 = 0;
                     SceneControl.instance.p1isKilling = false;
+                    hasTriggered1 = false;
                 }
             }  
             
             if(other.gameObject.layer == LayerMask.NameToLayer("P1Collider") && this.gameObject.tag == "OnSavingButton")
             {
+
                 if (GameManager.instance.p1.ReadActionButton())
                 {
-                    timer1 += Time.deltaTime;
                     isSaving = true;
+                    if (!hasTriggered1)
+                    {
+                        timer1 += Time.deltaTime;
+                    }
                 }
                 else
                 {
                     isSaving = false;
                     timer1 = 0;
-                    SceneControl.instance.p1IsSaving = false;             
+                    SceneControl.instance.p1IsSaving = false;
+                    hasTriggered1 = false;
                 }
             }
 
             if (other.gameObject.layer == LayerMask.NameToLayer("P2Collider") && this.gameObject.tag == "OnDeathButton")
             {
+
                 if (GameManager.instance.p2.ReadActionButton())
                 {
                     isKilling1 = true;
-                    timer2 += Time.deltaTime;
+                    if (!hasTriggered2)
+                    {
+                        timer2 += Time.deltaTime;
+                    }
                 }
                 else
                 {
                     isKilling1 = false;
                     timer2 = 0;
                     SceneControl.instance.p2isKilling = false;
+                    hasTriggered2 = false;
                 }
             }
-            if(other.gameObject.layer == LayerMask.NameToLayer("P2Collider") && this.gameObject.tag == "OnSavingButton")
+            if (other.gameObject.layer == LayerMask.NameToLayer("P2Collider") && this.gameObject.tag == "OnSavingButton")
             {
                 if (GameManager.instance.p2.ReadActionButton())
                 {
                     isSaving1 = true;
-                    timer2 += Time.deltaTime;
+                    if (!hasTriggered2)
+                    {
+                        timer2 += Time.deltaTime;
+                    }
+
                 }
                 else
                 {
                     isSaving1 = false;
                     timer2 = 0;
                     SceneControl.instance.p2IsSaving = false;
+                    hasTriggered2 = false;
                 }
+
             }
-
-
 
         }
     }
@@ -136,7 +154,7 @@ public class PressDeathButton : MonoBehaviour
     {
         if (isKilling)
         {
-            if (timer1 >= pressingTimer && !hasTriggered1)
+            if (!hasTriggered1)
             {
                 SceneControl.instance.p1isKilling = true;
                 timer1 = 0;
@@ -154,7 +172,7 @@ public class PressDeathButton : MonoBehaviour
 
         if (isKilling1)
         {
-            if (timer2 >= pressingTimer && !hasTriggered2)
+            if (!hasTriggered2)
             {
                 SceneControl.instance.p2isKilling = true;
                 timer2 = 0;

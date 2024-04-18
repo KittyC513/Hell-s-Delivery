@@ -102,8 +102,6 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("TutorialSkipOption")]
     public static void TutorialSkipChoice()
     {
-        GameManager.instance.p1.isFreeze = true;
-        GameManager.instance.p2.isFreeze = true;
         SceneControl.instance.SkipTutorialUI();
         SceneControl.instance.dialogueFin = true;
     }
