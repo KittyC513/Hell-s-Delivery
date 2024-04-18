@@ -70,12 +70,13 @@ public class Ending : MonoBehaviour
             GameManager.instance.p2.isFreeze = true;
 
 
-            //if (badgeManager != null)
-            //{
-            //    badgeManager.RunFinalCheck();
-            //}
+            if (badgeManager != null)
+            {
+               badgeManager.RunFinalCheck();
+            }
 
             StartCoroutine(ComicStartEndLevel1());
+
 
         }
 
@@ -90,10 +91,10 @@ public class Ending : MonoBehaviour
             GameManager.instance.p2.isFreeze = true;
 
 
-            //if (badgeManager != null)
-            //{
-            //    badgeManager.RunFinalCheck();
-            //}
+            if (badgeManager != null)
+            {
+               badgeManager.RunFinalCheck();
+            }
 
             GameManager.instance.changeSceneTimes += 1;
             GameManager.instance.WertherRequestWasCompleted = true;
