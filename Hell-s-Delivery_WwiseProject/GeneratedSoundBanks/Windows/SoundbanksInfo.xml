@@ -93,7 +93,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{6789C33D-12AF-DF8F-CEA0-BAD68546957F}">
+		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{765AA3F0-E6BF-BC65-5A17-0932A819C426}">
 			<ShortName>PlayerSFX</ShortName>
 			<Path>PlayerSFX.bnk</Path>
 			<Media>
@@ -128,6 +128,10 @@
 				<File Id="118421452" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShminkPushed.wav</ShortName>
 					<CachePath>SFX/ShminkPushed_10C4C929.wem</CachePath>
+				</File>
+				<File Id="138224766" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Dizzy.wav</ShortName>
+					<CachePath>SFX/Dizzy_10C4C929.wem</CachePath>
 				</File>
 				<File Id="140954416" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShminkThrow3.wav</ShortName>
@@ -232,6 +236,10 @@
 				<File Id="556158382" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>PackageImpact.wav</ShortName>
 					<CachePath>SFX/PackageImpact_10C4C929.wem</CachePath>
+				</File>
+				<File Id="564844651" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PushRelease.wav</ShortName>
+					<CachePath>SFX/PushRelease_10C4C929.wem</CachePath>
 				</File>
 				<File Id="576488523" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShminkDeath3.wav</ShortName>
@@ -357,6 +365,10 @@
 					<ShortName>Stretch.wav</ShortName>
 					<CachePath>SFX/Stretch_10C4C929.wem</CachePath>
 				</File>
+				<File Id="996592063" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PushCharge.wav</ShortName>
+					<CachePath>SFX/PushCharge_7E0D1A76.wem</CachePath>
+				</File>
 				<File Id="1022386017" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShminkThrow1.wav</ShortName>
 					<CachePath>SFX/ShminkThrow1_10C4C929.wem</CachePath>
@@ -397,6 +409,11 @@
 				<Event Id="2686563660" Name="Play_CrownSequence" DurationType="OneShot" DurationMin="7.2" DurationMax="7.2">
 					<MediaRefs>
 						<MediaRef Id="143031910"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1634870884" Name="Play_Dizzy" DurationType="OneShot" DurationMin="1.5" DurationMax="1.5">
+					<MediaRefs>
+						<MediaRef Id="138224766"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="452465945" Name="Play_Fan_All" MaxAttenuation="40" DurationType="Infinite">
@@ -485,6 +502,16 @@
 				<Event Id="123604001" Name="Play_PlatformsPhaseOut" MaxAttenuation="75" DurationType="OneShot" DurationMin="1.5" DurationMax="1.5">
 					<MediaRefs>
 						<MediaRef Id="40513669"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1312932426" Name="Play_PushCharge" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="996592063"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3357210845" Name="Play_PushRelease" DurationType="OneShot" DurationMin="0.29842263" DurationMax="0.39834648">
+					<MediaRefs>
+						<MediaRef Id="564844651"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="415850775" Name="Play_RandWoodLand" DurationType="OneShot" DurationMin="0.2558957" DurationMax="0.29855272">
@@ -635,6 +662,11 @@
 						<MediaRef Id="648574403"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="22663848" Name="Stop_PushCharge" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<MediaRefs>
+						<MediaRef Id="996592063"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="222428266" Name="Stop_Summoning_Circle_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
 					<MediaRefs>
 						<MediaRef Id="271139115"/>
@@ -653,5 +685,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{FEEA6280-14D2-98DA-24AF-CEA4C2CDA003}</FileHash>
+	<FileHash>{90C17849-BC1E-C6E9-FD5D-626FA34C6195}</FileHash>
 </SoundBanksInfo>

@@ -93,7 +93,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{6789C33D-12AF-DF8F-CEA0-BAD68546957F}">
+		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{400CE495-1C8D-5619-EC3F-5BF107941559}">
 			<ShortName>PlayerSFX</ShortName>
 			<Path>PlayerSFX.bnk</Path>
 			<Media>
@@ -233,6 +233,10 @@
 					<ShortName>PackageImpact.wav</ShortName>
 					<CachePath>SFX/PackageImpact_10C4C929.wem</CachePath>
 				</File>
+				<File Id="564844651" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PushRelease.wav</ShortName>
+					<CachePath>SFX/PushRelease_10C4C929.wem</CachePath>
+				</File>
 				<File Id="576488523" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShminkDeath3.wav</ShortName>
 					<CachePath>SFX/ShminkDeath3_10C4C929.wem</CachePath>
@@ -356,6 +360,10 @@
 				<File Id="995731348" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Stretch.wav</ShortName>
 					<CachePath>SFX/Stretch_10C4C929.wem</CachePath>
+				</File>
+				<File Id="996592063" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>PushCharge.wav</ShortName>
+					<CachePath>SFX/PushCharge_7E0D1A76.wem</CachePath>
 				</File>
 				<File Id="1022386017" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShminkThrow1.wav</ShortName>
@@ -485,6 +493,16 @@
 				<Event Id="123604001" Name="Play_PlatformsPhaseOut" MaxAttenuation="75" DurationType="OneShot" DurationMin="1.5" DurationMax="1.5">
 					<MediaRefs>
 						<MediaRef Id="40513669"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1312932426" Name="Play_PushCharge" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="996592063"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3357210845" Name="Play_PushRelease" DurationType="OneShot" DurationMin="0.29842263" DurationMax="0.39834648">
+					<MediaRefs>
+						<MediaRef Id="564844651"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="415850775" Name="Play_RandWoodLand" DurationType="OneShot" DurationMin="0.2558957" DurationMax="0.29855272">
@@ -635,6 +653,11 @@
 						<MediaRef Id="648574403"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="22663848" Name="Stop_PushCharge" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<MediaRefs>
+						<MediaRef Id="996592063"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="222428266" Name="Stop_Summoning_Circle_All" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
 					<MediaRefs>
 						<MediaRef Id="271139115"/>
@@ -653,5 +676,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{E80C3197-66F5-5A2B-9491-A7C7E2987E31}</FileHash>
+	<FileHash>{6095EF04-7EFA-336F-7EB9-48E1C0E8F562}</FileHash>
 </SoundBanksInfo>

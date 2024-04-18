@@ -763,6 +763,7 @@ public class TestCube : MonoBehaviour
             }
             chargeToggle = true;
             OutlineDeActivate();
+            playerSounds.pushRelease.Post(this.gameObject);
         }
 
         EmoteDetection();
@@ -4032,7 +4033,7 @@ public class TestCube : MonoBehaviour
                         pushStartTimer = false;
                         p1Anim.SetBool("isPushing", true);
                         playerSounds.shminkPushed.Post(this.gameObject);
-
+                        playerSounds.dizzy.Post(this.gameObject);
                         if (ScoreCount.instance != null)
                         {
                             ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, true);
@@ -4055,7 +4056,7 @@ public class TestCube : MonoBehaviour
                         pushStartTimer = false;
                         p2Anim.SetBool("isPushing", true);
                         playerSounds.shmonkPushed.Post(this.gameObject);
-
+                        playerSounds.dizzy.Post(this.gameObject);
                         if (ScoreCount.instance != null)
                         {
                             ScoreCount.instance.AddBadgeValue(BadgeManager.BadgeValues.numPushes, 1, false);
@@ -4130,6 +4131,7 @@ public class TestCube : MonoBehaviour
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         if (toggle == false)
         {
+            playerSounds.pushCharge.Post(this.gameObject);
             foreach (Renderer renderer in renderers)
             {
                 if (renderer.gameObject.tag != "pushParticle")
@@ -4193,7 +4195,7 @@ public class TestCube : MonoBehaviour
         }
         }
 
-
+        playerSounds.pushStop.Post(this.gameObject);
         toggle = false;
     }
 

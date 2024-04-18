@@ -13991,6 +13991,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  comicCanvas: {fileID: 0}
+  comicAnim: {fileID: 0}
 --- !u!135 &1396613138
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15980,6 +15982,7 @@ MonoBehaviour:
   addScore2: 0
   previousIndex: 0
   isTriggered: 0
+  soundBank: {fileID: 0}
   p1dead: 0
   p2dead: 0
 --- !u!114 &1566921897
@@ -17553,6 +17556,54 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 529c312562c470a4d993bc400ebab09f, type: 2}
+  pushCharge:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  pushStop:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  pushRelease:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  dizzy:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  shminkJump:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  shminkPushed:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  shminkThrow:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  shminkDeath:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  shmonkJump:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  shmonkPushed:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  shmonkThrow:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  shmonkDeath:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!114 &1736135491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17749,6 +17800,42 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  EmoteUp:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 976dfc58-73ab-4661-8681-0df6e10cf116
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  EmoteRight:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: dc0d2f6b-84e8-47a3-9b5f-dde52ae3ee3f
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  EmoteDown:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5444198c-b86f-41d3-9c2b-b5810a38aeac
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  EmoteLeft:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: cb3f197d-53b4-477c-94c3-c2c8615315bc
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   isPicking: 0
   useNewMovement: 1
   movementForce: 1
@@ -17854,6 +17941,7 @@ MonoBehaviour:
   pushIsIntervinedP1: 0
   pushIsIntervinedP2: 0
   pushInstruction: {fileID: 0}
+  pushInstruction2: {fileID: 0}
   interactDistance: 2
   interactRadius: 0.5
   interactableMask:
@@ -17912,6 +18000,7 @@ MonoBehaviour:
   switchPuzzle2CamRP2: 0
   footstepRate: 115
   groundMaterial: nothing
+  playerSounds: {fileID: 0}
   geiserForce: 100
   wasFoundLV: 0
   bounceForce: 100
@@ -18014,6 +18103,7 @@ MonoBehaviour:
   itemIsFull: 0
   facialAnim1: {fileID: 0}
   facialAnim2: {fileID: 0}
+  curseParticles: {fileID: 0}
   pushParticle: {fileID: 0}
   chargeParticle: {fileID: 0}
   tc: {fileID: 0}
@@ -22099,29 +22189,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1194042218538432971, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: EmoteUp.m_Name
+      value: Emote Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 1194042218538432971, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: EmoteDown.m_Name
+      value: Emote Down
+      objectReference: {fileID: 0}
+    - target: {fileID: 1194042218538432971, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: EmoteLeft.m_Name
+      value: Emote Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 1194042218538432971, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
+      propertyPath: EmoteRight.m_Name
+      value: Emote Right
+      objectReference: {fileID: 0}
     - target: {fileID: 2677690114730804654, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9882838
+      value: 0.98828375
       objectReference: {fileID: 0}
     - target: {fileID: 2677690114730804654, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.041390676
+      value: -0.04139071
       objectReference: {fileID: 0}
     - target: {fileID: 2677690114730804654, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.12553753
+      value: 0.12553772
       objectReference: {fileID: 0}
     - target: {fileID: 2677690114730804654, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.076303534
+      value: -0.076303676
       objectReference: {fileID: 0}
     - target: {fileID: 3194900856001540980, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.4640803
+      value: -4.464075
       objectReference: {fileID: 0}
     - target: {fileID: 3194900856001540980, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.374374
+      value: 11.374377
       objectReference: {fileID: 0}
     - target: {fileID: 3194900856001540980, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22145,27 +22251,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5378363313791952369, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.8240805
+      value: -3.8240752
       objectReference: {fileID: 0}
     - target: {fileID: 5378363313791952369, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.374374
+      value: 11.374377
       objectReference: {fileID: 0}
     - target: {fileID: 5378363313791952369, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.15452719
+      value: 0.15452702
       objectReference: {fileID: 0}
     - target: {fileID: 5378363313791952369, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.04678708
+      value: 0.04678702
       objectReference: {fileID: 0}
     - target: {fileID: 5378363313791952369, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9445351
+      value: 0.94453514
       objectReference: {fileID: 0}
     - target: {fileID: 5378363313791952369, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.2859823
+      value: -0.28598225
       objectReference: {fileID: 0}
     - target: {fileID: 5721425956201530182, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_Name
@@ -22181,15 +22287,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7989845018757749681, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00000006146728
+      value: -9.313226e-10
       objectReference: {fileID: 0}
     - target: {fileID: 7989845018757749681, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.12223469
+      value: 0.122234866
       objectReference: {fileID: 0}
     - target: {fileID: 7989845018757749681, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0814898
+      value: -0.08148992
       objectReference: {fileID: 0}
     - target: {fileID: 8116381467192240774, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22209,15 +22315,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8116381467192240774, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.082138546
+      value: -0.08213861
       objectReference: {fileID: 0}
     - target: {fileID: 8116381467192240774, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.12857941
+      value: 0.12857962
       objectReference: {fileID: 0}
     - target: {fileID: 8116381467192240774, guid: 016e72f7e7bb1364483d4c23b445b84c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.071058035
+      value: -0.07105816
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -811,6 +811,42 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_PushCharge" ID="{232B994B-1C92-4DC0-AF2B-75FD96D895B9}">
+					<ChildrenList>
+						<Action Name="" ID="{53BB3FD5-E232-43E6-AD42-F27B11E1F2A0}" ShortID="108525551">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PushCharge" ID="{CA1394D8-A464-4A43-BBD4-3DB359B516C4}" WorkUnitID="{6D4AB400-C6A1-48E0-9D5B-EA030FA487CA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_PushCharge" ID="{064DBB77-478F-40DD-AD9C-FE5637BF93A3}">
+					<ChildrenList>
+						<Action Name="" ID="{F0367C41-8C08-49A2-8C6A-FA07645A7262}" ShortID="950436423">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PushCharge" ID="{CA1394D8-A464-4A43-BBD4-3DB359B516C4}" WorkUnitID="{6D4AB400-C6A1-48E0-9D5B-EA030FA487CA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_PushRelease" ID="{B98585CB-A483-4989-8500-834012D03460}">
+					<ChildrenList>
+						<Action Name="" ID="{0B9D1741-D7BF-4097-A72B-18A669F602F1}" ShortID="159574224">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PushRelease" ID="{C70A878A-BD93-43AC-BD87-1B70D5964454}" WorkUnitID="{6D4AB400-C6A1-48E0-9D5B-EA030FA487CA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
