@@ -3099,16 +3099,16 @@ public class TestCube : MonoBehaviour
     IEnumerator StopBeingPushedP1()
     {
         OutlineActivate();
-        pushCDSlider.gameObject.SetActive(true);
+        //pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
         
         if (pushCDtimer < 1)
         {
-            pushCDSlider.value = pushCDtimer;
+            //pushCDSlider.value = pushCDtimer;
         }
         else
         {
-            pushCDSlider.value = 1;
+            //pushCDSlider.value = 1;
         }
         yield return new WaitForSeconds(0.2f);
         gameManager.p2.p2Anim.SetBool("isPushing", false);
@@ -3135,16 +3135,16 @@ public class TestCube : MonoBehaviour
     IEnumerator StopBeingPushedP2()
     {
         OutlineActivate();
-        pushCDSlider.gameObject.SetActive(true);
+        //pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
         
         if (pushCDtimer < 1)
         {
-            pushCDSlider.value = pushCDtimer;
+            //pushCDSlider.value = pushCDtimer;
         }
         else
         {
-            pushCDSlider.value = maxCDTimer;
+            //pushCDSlider.value = maxCDTimer;
         }
         yield return new WaitForSeconds(0.2f);
         gameManager.p1.p1Anim.SetBool("isPushing", false);

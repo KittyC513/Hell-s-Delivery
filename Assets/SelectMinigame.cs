@@ -20,6 +20,8 @@ public class SelectMinigame : MonoBehaviour
     [SerializeField]
     public bool chooseTwo;
     private float timer;
+    [SerializeField]
+    private Animator anim;
 
 
     // Start is called before the first frame update
@@ -37,6 +39,8 @@ public class SelectMinigame : MonoBehaviour
         {
             shopItem[0].SetActive(false);
             shopItem[1].SetActive(false);
+            anim.SetBool("Boxing", false);
+            anim.SetBool("Pushing", false);
         }
     }
 
@@ -66,12 +70,16 @@ public class SelectMinigame : MonoBehaviour
                 {
                     shopItem[0].SetActive(true);
                     shopItem[1].SetActive(false);
+                    anim.SetBool("Boxing", true);
+                    anim.SetBool("Pushing", false);
                 }
 
                 if (chooseTwo)
                 {
                     shopItem[0].SetActive(false);
                     shopItem[1].SetActive(true);
+                    anim.SetBool("Boxing", false);
+                    anim.SetBool("Pushing", true);
 
                 }
 
@@ -97,7 +105,9 @@ public class SelectMinigame : MonoBehaviour
             chooseOne = false;
             chooseTwo = false;
             oriShop = true;
-           
+            anim.SetBool("Boxing", false);
+            anim.SetBool("Pushing", false);
+
         }
 
     }
