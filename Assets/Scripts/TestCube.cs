@@ -2613,7 +2613,7 @@ public class TestCube : MonoBehaviour
             if (onTv && !bM.isboxing)
             {
                 isFreeze = true;
-                if (jump.ReadValue<float>() == 1)
+                if (ReadPushButton())
                 {
                     SelectMinigame.instance.SelectItem();
                 }
@@ -2631,12 +2631,12 @@ public class TestCube : MonoBehaviour
                     GameManager.instance.p2.transform.position = SceneControl.instance.originalPos2.position;
 
                 }
-                if(SelectMinigame.instance.chooseOne && ReadPushButton())
+                if(SelectMinigame.instance.chooseOne && jump.ReadValue<float>() == 1)
                 {
                     bM.StartGameHub();
                 }
 
-                if (SelectMinigame.instance.chooseTwo && ReadPushButton())
+                if (SelectMinigame.instance.chooseTwo && jump.ReadValue<float>() == 1)
                 {
                     bM.StartGameHub();
                 }
