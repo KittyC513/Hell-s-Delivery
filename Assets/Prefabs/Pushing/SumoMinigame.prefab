@@ -10951,6 +10951,7 @@ MonoBehaviour:
   boxingCam1: {fileID: 0}
   boxingCamObject1: {fileID: 0}
   boxingSwitchCam: {fileID: 0}
+  minigameStart: 0
   crowd: {fileID: 0}
 --- !u!114 &722824362528533348
 MonoBehaviour:
@@ -11125,6 +11126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5779787607425166950}
   - component: {fileID: 5007743581275625343}
+  - component: {fileID: 8190996867647252192}
   m_Layer: 0
   m_Name: Cutscene
   m_TagString: Untagged
@@ -11180,6 +11182,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8190996867647252192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8070287381048945749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b91d09ac9729e94fbda89f1aed2dab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentBankNum: 0
+  soundCollections:
+  - bankName: Fight Cutscene
+    sounds:
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 675a3675327be0c44848627ab71bd8b7, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: a4333597429c4f74ba163caa4d4506b6, type: 2}
+    - idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 11400000, guid: 72d4739e77e28c942a4a3f5ea66e56af, type: 2}
+    order: 0
 --- !u!1 &8325544284469740072
 GameObject:
   m_ObjectHideFlags: 0
