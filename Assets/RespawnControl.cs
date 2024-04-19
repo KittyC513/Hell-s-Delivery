@@ -2007,21 +2007,29 @@ public class RespawnControl : MonoBehaviour
 
     public void endminigamep2()
     {
-        //endminigametimerp1();
+        
         P2Respawn();
-        //if (isPlayer1)
-       // {
-           // player.transform.position = bM.spawnpointExit;
-      //  }
+        if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+        {
+            if (isPlayer2)
+            {
+                endminigamep1();
+                player.transform.position = bM.spawnpointExit;
+            }
+        }
+
 
     }
     public void endminigamep1()
     {
-       // endminigametimerp2();
         P1Respawn();
-       // if (isPlayer2)
-       // {
-            //player.transform.position = bM.spawnpointExit;
-     //   }
+        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+        {
+            if (isPlayer1)
+            {
+                endminigamep2();
+                player.transform.position = bM.spawnpointExit;
+            }
+        }
     }
 }
