@@ -93,7 +93,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{614E5E24-03F8-A5CC-95BB-22D4713C3311}">
+		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{BC91283D-917D-284A-13E5-BBC4F6E0542D}">
 			<ShortName>PlayerSFX</ShortName>
 			<Path>PlayerSFX.bnk</Path>
 			<Media>
@@ -404,6 +404,11 @@
 						<MediaRef Id="428943920"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="1089375233" Name="Play_BellDing" DurationType="OneShot" DurationMin="1" DurationMax="1">
+					<MediaRefs>
+						<MediaRef Id="821185113"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="2128467797" Name="Play_BoxOpen" DurationType="OneShot" DurationMin="2" DurationMax="2">
 					<MediaRefs>
 						<MediaRef Id="289971853"/>
@@ -427,6 +432,16 @@
 				<Event Id="452465945" Name="Play_Fan_All" MaxAttenuation="40" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="431873265"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1236609236" Name="Play_FightClank1" DurationType="OneShot" DurationMin="2" DurationMax="2">
+					<MediaRefs>
+						<MediaRef Id="831164335"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1236609239" Name="Play_FightClank2" DurationType="OneShot" DurationMin="1.5738776" DurationMax="1.5738776">
+					<MediaRefs>
+						<MediaRef Id="156577457"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="2182026627" Name="Play_Hat_Realization_Reverb" DurationType="OneShot" DurationMin="2.5" DurationMax="2.5">
@@ -703,5 +718,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{7CC050E6-6B7F-B7BD-B970-622D5F9D24C4}</FileHash>
+	<FileHash>{4F255163-8F85-8284-9F21-4FA2D9A79653}</FileHash>
 </SoundBanksInfo>

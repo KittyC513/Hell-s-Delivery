@@ -15,6 +15,7 @@ namespace AK
     {
         static const AkUniqueID PLAY_APARTMENT_COMPLEX_V1 = 359343595U;
         static const AkUniqueID PLAY_BADGESEQUENCE = 3272596896U;
+        static const AkUniqueID PLAY_BELLDING = 1089375233U;
         static const AkUniqueID PLAY_BOXOPEN = 2128467797U;
         static const AkUniqueID PLAY_CARTOONFIGHT = 4008188558U;
         static const AkUniqueID PLAY_CHECKPOINT_GET = 1359342141U;
@@ -22,6 +23,8 @@ namespace AK
         static const AkUniqueID PLAY_CROWNSEQUENCE = 2686563660U;
         static const AkUniqueID PLAY_DEVIL_THEME = 2640074606U;
         static const AkUniqueID PLAY_FAN_ALL = 452465945U;
+        static const AkUniqueID PLAY_FIGHTCLANK1 = 1236609236U;
+        static const AkUniqueID PLAY_FIGHTCLANK2 = 1236609239U;
         static const AkUniqueID PLAY_HAT_REALIZATION_REVERB = 2182026627U;
         static const AkUniqueID PLAY_HIGHUPAMBIENCE = 1431564541U;
         static const AkUniqueID PLAY_HUB_MUSIC = 4050862303U;
