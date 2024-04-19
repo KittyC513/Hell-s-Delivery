@@ -59,6 +59,7 @@ public class packageBarrier : MonoBehaviour
         if(other.gameObject.tag == "Player" && !isAccessed)
         {
             instruction.SetActive(true);
+            print("1");
         }
     }
 
@@ -73,7 +74,13 @@ public class packageBarrier : MonoBehaviour
                 rend.material = solid;
                 
             }
+        }
+
+        if (other.gameObject.tag == "Player")
+        {
             instruction.SetActive(false);
         }
+
+
     }
 }

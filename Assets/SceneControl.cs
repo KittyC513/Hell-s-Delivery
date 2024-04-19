@@ -1562,11 +1562,13 @@ public class SceneControl : MonoBehaviour
     public void ShowPackageInstruction()
     {
         packageInstruction.SetActive(true);
+        print("11");
     }
 
     public void ShowPackageInstruction2()
     {
         packageInstruction2.SetActive(true);
+        print("22");
     }
 
     public void ClosePackageInstruction()

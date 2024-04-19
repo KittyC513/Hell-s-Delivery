@@ -45,6 +45,7 @@ public class InstructionTrigger : MonoBehaviour
             canvasUI.SetActive(false);
             SceneControl.instance.firstButtonIsTriggered = false;
             SceneControl.instance.TurnOffJumpOverUI();
+            SceneControl.instance.inDropArea = false;
         }
     }
 }

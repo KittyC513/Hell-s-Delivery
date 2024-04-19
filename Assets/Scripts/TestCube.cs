@@ -2467,7 +2467,7 @@ public class TestCube : MonoBehaviour
                         gameManager.p1.isFreeze = true;
                         gameManager.p2.isFreeze = true;
                     
-                    }else if (!gameManager.LalahRequestWasCompleted)
+                    }else if (!gameManager.LalahRequestWasCompleted && !GameManager.instance.acceptLalahOrder)
                     {
                         SceneControl.instance.level2Overview = true;
                         gameManager.p1.isFreeze = true;
@@ -2527,7 +2527,7 @@ public class TestCube : MonoBehaviour
                         gameManager.p1.isFreeze = true;
                         gameManager.p2.isFreeze = true;
                     }
-                    else if (!gameManager.WertherRequestWasCompleted)
+                    else if (!gameManager.WertherRequestWasCompleted && !GameManager.instance.accepWertherOrder)
                     {
                         SceneControl.instance.level1Overview = true;
                         gameManager.p1.isFreeze = true;

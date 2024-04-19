@@ -43,7 +43,7 @@ public class FollowP2Cam : MonoBehaviour
         //}
         if (p2Cam == null)
         {
-            p2Cam = GameManager.instance.cam1.GetComponent<Camera>();
+            p2Cam = GameManager.instance.cam2.GetComponent<Camera>();
         }
         if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
         {
@@ -67,7 +67,7 @@ public class FollowP2Cam : MonoBehaviour
                 }
                 else
                 {
-                    p2Cam = GameManager.instance.cam1.GetComponent<Camera>();
+                    p2Cam = GameManager.instance.cam2.GetComponent<Camera>();
                 }
 
             }
@@ -109,7 +109,7 @@ public class FollowP2Cam : MonoBehaviour
                 }
                 else
                 {
-                    p2Cam = GameManager.instance.cam1.GetComponent<Camera>();
+                    p2Cam = GameManager.instance.cam2.GetComponent<Camera>();
                 }
             }
             else
