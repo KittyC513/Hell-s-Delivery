@@ -144,20 +144,32 @@ public class boxingMinigame : MonoBehaviour
 
             if (sceneString == "Level1")
             {
-                packagePiece1.SetActive(false);
-                packagePiece2.SetActive(false);
-                packagePiece3.SetActive(false);
-                packagePiece4.SetActive(false);
+                if(packagePiece1 != null)
+                {
+                    packagePiece1.SetActive(false);
+                }
+                if (packagePiece2 != null)
+                {
+                    packagePiece2.SetActive(false);
+                }
+                if (packagePiece3 != null)
+                {
+                    packagePiece3.SetActive(false);
+                }
+                if (packagePiece4 != null)
+                {
+                    packagePiece4.SetActive(false);
+                }
 
                 if (p1pushedcount >= maxDamage)
                 {
 
-                    GameManager.instance.p1.rC.endminigamep1();
+                    GameManager.instance.p2.rC.endminigamep2();
                     endMinigame();
                 }
                 if (p2pushedcount >= maxDamage)
                 {
-                    GameManager.instance.p2.rC.endminigamep2();
+                    GameManager.instance.p1.rC.endminigamep1();
                     endMinigame();
                 }
             }
