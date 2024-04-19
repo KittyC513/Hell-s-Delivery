@@ -93,7 +93,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{BC91283D-917D-284A-13E5-BBC4F6E0542D}">
+		<SoundBank Id="4283257371" Type="User" Language="SFX" Hash="{DBBB0986-D6ED-5328-7F98-636BA2A73887}">
 			<ShortName>PlayerSFX</ShortName>
 			<Path>PlayerSFX.bnk</Path>
 			<Media>
@@ -128,6 +128,10 @@
 				<File Id="118421452" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShminkPushed.wav</ShortName>
 					<CachePath>SFX/ShminkPushed_10C4C929.wem</CachePath>
+				</File>
+				<File Id="119090132" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Dizzy.wav</ShortName>
+					<CachePath>SFX/Dizzy_10C4C929.wem</CachePath>
 				</File>
 				<File Id="140954416" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>ShminkThrow3.wav</ShortName>
@@ -429,6 +433,11 @@
 						<MediaRef Id="143031910"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="1634870884" Name="Play_Dizzy" DurationType="OneShot" DurationMin="1.2254367" DurationMax="1.8360804">
+					<MediaRefs>
+						<MediaRef Id="119090132"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="452465945" Name="Play_Fan_All" MaxAttenuation="40" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="431873265"/>
@@ -718,5 +727,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{1DEBFC18-08C7-AB3F-C48D-3EB44E89DE45}</FileHash>
+	<FileHash>{2E1AB794-6F1C-6F64-9C29-64E29B379ABB}</FileHash>
 </SoundBanksInfo>

@@ -22,6 +22,7 @@ namespace AK
         static const AkUniqueID PLAY_CITYLEVELFINAL = 4177256649U;
         static const AkUniqueID PLAY_CROWNSEQUENCE = 2686563660U;
         static const AkUniqueID PLAY_DEVIL_THEME = 2640074606U;
+        static const AkUniqueID PLAY_DIZZY = 1634870884U;
         static const AkUniqueID PLAY_FAN_ALL = 452465945U;
         static const AkUniqueID PLAY_FIGHTCLANK1 = 1236609236U;
         static const AkUniqueID PLAY_FIGHTCLANK2 = 1236609239U;
