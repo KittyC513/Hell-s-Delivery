@@ -1074,6 +1074,48 @@
 						<ActiveSource Name="PushRelease" ID="{FFA14C68-17EE-4A54-A3C9-74BA28A3616C}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="Dizzy" ID="{43406036-2618-418C-8869-48E92FF00D8E}" ShortID="694534356">
+					<PropertyList>
+						<Property Name="Pitch" Type="int32">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{0FC2A833-BA50-41C2-839F-A38D416A15C2}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="350"/>
+											<Property Name="Min" Type="Real64" Value="-350"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-3</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2884BD2F-E86F-42CD-82A6-0C7090E101E2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{481653E3-CAFB-4C5B-80C0-D7FC24F52E57}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Dizzy" ID="{1D9B1FE9-544B-4469-9612-06C314C7AEBA}">
+							<Language>SFX</Language>
+							<AudioFile>Dizzy.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="119090132"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Dizzy" ID="{1D9B1FE9-544B-4469-9612-06C314C7AEBA}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>
