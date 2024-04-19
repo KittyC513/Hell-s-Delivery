@@ -325,6 +325,7 @@ public class ShowDialogue :DialogueViewBase
     public static void WeatherLeaving()
     {
         SceneControl.instance.wertherLeave();
+        SceneControl.instance.wertherdialogueEnds = true;
     }
 
     [YarnCommand("PackageDialogueEndDetect")]

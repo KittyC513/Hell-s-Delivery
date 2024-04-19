@@ -22,6 +22,8 @@ public class SelectMinigame : MonoBehaviour
     private float timer;
     [SerializeField]
     private Animator anim;
+    [SerializeField]
+    private GameObject devPanel;
 
 
     // Start is called before the first frame update
@@ -45,6 +47,11 @@ public class SelectMinigame : MonoBehaviour
                 anim.SetBool("Pushing", false);
             }
 
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            devPanel.SetActive(true);
         }
     }
 

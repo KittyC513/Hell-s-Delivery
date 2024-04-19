@@ -21870,6 +21870,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: 1e83a641137567840aedf8d31d149b59, type: 3}
+--- !u!1 &545401078 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4154400626026498167, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
+  m_PrefabInstance: {fileID: 2796402176970801402}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &557431385
 GameObject:
   m_ObjectHideFlags: 0
@@ -31610,6 +31615,7 @@ MonoBehaviour:
   chooseOne: 0
   chooseTwo: 0
   anim: {fileID: 165259020}
+  devPanel: {fileID: 545401078}
 --- !u!1001 &839521161
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84507,7 +84513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4154400626026498167, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4189556221064037466, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_IsActive
@@ -84545,6 +84551,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8570125119896691127, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
+      propertyPath: useResourcesFolders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570125119896691127, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
+      propertyPath: loadSprites.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570125119896691127, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
+      propertyPath: 'loadSprites.Array.data[5]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 5073989ade69fc148ba4400a26394a33, type: 3}
+    - target: {fileID: 8570125119896691127, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
+      propertyPath: 'loadSprites.Array.data[21]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 5073989ade69fc148ba4400a26394a33, type: 3}
     - target: {fileID: 8735343089067886010, guid: 955df16caee02de40beaf43f8f3d7d4b, type: 3}
       propertyPath: m_SizeDelta.x
       value: 256

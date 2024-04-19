@@ -969,6 +969,12 @@ public class GameManager : MonoBehaviour
             p2.isAnswered = false;
             p1.bM = null;
             p2.bM = null;
+            showWertherInstruction = false;
+            showLalahInstruction = false;
+            answeredPhone = false;
+            showTVInstruction = false;
+            mainCam.gameObject.SetActive(true);
+
 
 
 

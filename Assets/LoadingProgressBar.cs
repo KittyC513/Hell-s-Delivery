@@ -56,7 +56,7 @@ public class LoadingProgressBar : MonoBehaviour
             }
             if (GameManager.instance.accepWertherOrder)
             {
-                anim.SetBool("LoadingMVP", true);
+                anim.SetBool("LoadingFight", true);
             }
             if (GameManager.instance.acceptLalahOrder)
             {
@@ -76,7 +76,7 @@ public class LoadingProgressBar : MonoBehaviour
             {
                 if (!GameManager.instance.acceptLalahOrder)
                 {
-                    anim.SetBool("LoadingMVP", true);
+                    anim.SetBool("LoadingFight", true);
                     level2Completed = true;
                 }
                 else
@@ -94,7 +94,7 @@ public class LoadingProgressBar : MonoBehaviour
                 }
                 else
                 {
-                    anim.SetBool("LoadingMVP", true);
+                    anim.SetBool("LoadingTV", true);
                 }
 
             }
@@ -113,7 +113,7 @@ public class LoadingProgressBar : MonoBehaviour
             }
             else if (GameManager.instance.LalahRequestWasCompleted && !level2Completed)
             {
-                anim.SetBool("LoadingMVP", true);
+                anim.SetBool("LoadingTV", true);
                 level1Completed = true;
             }
             else
@@ -126,7 +126,7 @@ public class LoadingProgressBar : MonoBehaviour
         {
             if (GameManager.instance.WertherRequestWasCompleted && level1Completed)
             {
-                anim.SetBool("LoadingMVP", true);
+                anim.SetBool("LoadingTV", true);
             }
             else if (GameManager.instance.LalahRequestWasCompleted && level2Completed)
             {
