@@ -17,6 +17,7 @@ public class DontDestroy : MonoBehaviour
         if(ResetGame.instance.destroy)
         {
             Destroy(this.gameObject);
+            ResetGame.instance.destroy = false;
         }
 
     }

@@ -84,7 +84,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     [Header("Pick and Drop")]
     [SerializeField]
-    private LayerMask pickableMask;
+    private LayerMask 
+        Mask;
     [SerializeField]
     private Transform playerPos;
     [SerializeField]

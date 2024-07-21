@@ -2277,6 +2277,7 @@ public class TestCube : MonoBehaviour
                 SelectMinigame.instance.firstEnter = true;
                 gameManager.p1.turnOnTV = true;
                 gameManager.p2.turnOnTV = true;
+                isFreeze = true;
                 //SceneControl.instance.LoadScene("MVPLevel");
                 //change scene and enter tutorial level, set gameManger.sceneChanged to true               
             }
@@ -2624,11 +2625,13 @@ public class TestCube : MonoBehaviour
                     SelectMinigame.instance.selectedItem = 0;
                     SelectMinigame.instance.pressingTimes = 1;
 
-                    gameManager.p1.turnOnTV = false;
-                    gameManager.p2.turnOnTV = false;
+
                     bM.EndGameInHub();
                     GameManager.instance.p1.transform.position = SceneControl.instance.originalPos1.position;
                     GameManager.instance.p2.transform.position = SceneControl.instance.originalPos2.position;
+                    isFreeze = false;
+                    gameManager.p1.turnOnTV = false;
+                    gameManager.p2.turnOnTV = false;
 
                 }
                 if(SelectMinigame.instance.chooseOne && jump.ReadValue<float>() == 1)

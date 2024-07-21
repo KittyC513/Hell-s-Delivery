@@ -458,7 +458,7 @@ public class boxingMinigame : MonoBehaviour
         {
             boxingCam.gameObject.SetActive(true);
         }
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(4f);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
         minigameStart = true;
