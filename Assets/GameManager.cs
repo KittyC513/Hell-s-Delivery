@@ -598,18 +598,8 @@ public class GameManager : MonoBehaviour
     {
         p1.isFreeze = true;
         p2.isFreeze = true;
-        if(closeShoot != null)
-        {
-            MoveCamera(closeShoot, 5);
-        }
-        enterOffice = true;
-        sceneChanged = true;
-        firstTimeEnterHub = true;
-        print("Enter Office");
-        yield return new WaitForSecondsRealtime(1f);
-        //changeSceneTimes += 1;
-        p1.isEntered = false;
-        p2.isEntered = false;
+        MoveCamera(closeShoot, 5);
+        yield return new WaitForSecondsRealtime(2f);
         camChanged1 = true;
     }
 

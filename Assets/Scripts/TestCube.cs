@@ -2677,6 +2677,11 @@ public class TestCube : MonoBehaviour
 
         if (isEntered)
         {
+            gameManager.enterOffice = true;
+            //print("Enter Office");
+            gameManager.sceneChanged = true;
+            gameManager.firstTimeEnterHub = true;
+
             StartCoroutine(gameManager.MovingCamera1());
 
             if (!lightsOn)
@@ -2684,15 +2689,18 @@ public class TestCube : MonoBehaviour
                 StartCoroutine(TurnOnLight());
             }
 
+
             if (gameManager.camChanged1)
             {
+                GameManager.instance.changeSceneTimes += 1;
                 Loader.Load(Loader.Scene.HubStart);
+
+                isEntered = false;
                 gameManager.camChanged1 = false;
+
             }
+
         }
-
-
-
 
     }
 
