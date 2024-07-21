@@ -266,7 +266,7 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("SwitchCamNPC")]
     public static void SwitchCamera1()
     {
-        SceneControl.instance.SwitchCameraToNpc();
+        //SceneControl.instance.SwitchCameraToNpc();
 
     }
 
@@ -281,7 +281,7 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("SwitchCamNPC3")]
     public static void SwitchCamera4()
     {
-        SceneControl.instance.SwitchCameraToNpc3();
+        //SceneControl.instance.SwitchCameraToNpc3();
 
 
     }
@@ -324,7 +324,7 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("WeatherIsLeaving")]
     public static void WeatherLeaving()
     {
-        SceneControl.instance.wertherLeave();
+        //SceneControl.instance.wertherLeave();
         SceneControl.instance.wertherdialogueEnds = true;
     }
 
@@ -397,25 +397,25 @@ public class ShowDialogue :DialogueViewBase
     [YarnCommand("WertherNautral")]
     public static void WertherActNautral()
     {
-        SceneControl.instance.Nautral();
+        //SceneControl.instance.Nautral();
     }
 
     [YarnCommand("WertherHappy")]
     public static void WertherActHappy()
     {
-        SceneControl.instance.Happy();
+        //SceneControl.instance.Happy();
     }
 
     [YarnCommand("WertherConstupated")]
     public static void WertherActConstupated()
     {
-        SceneControl.instance.Constupated();
+       //SceneControl.instance.Constupated();
     }
 
     [YarnCommand("WertherDefault")]
     public static void WertherActDefault()
     {
-        SceneControl.instance.Default();
+        //SceneControl.instance.Default();
     }
 
     [YarnCommand("LalahNautral")]

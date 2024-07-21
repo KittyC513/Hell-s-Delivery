@@ -329,11 +329,11 @@ public class SceneControl : MonoBehaviour
                 nameTag.SetActive(false);
                 SkipLalahDialogue();
                 ShowLevel1Overview();
-                ShowLevel2Overview();
-                SkipwertherDialogue();
+                //ShowLevel2Overview();
+                //SkipwertherDialogue();
                 SkipLalahEndDialogue();
-                SkipwertherDialogue();
-                SkipwertherEndDialogue();
+                //SkipwertherDialogue();
+                //SkipwertherEndDialogue();
             }
         }
 
@@ -342,10 +342,10 @@ public class SceneControl : MonoBehaviour
             Lalah.SetActive(false);
         }
 
-        if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.WertherLeft)
-        {
-            werther.SetActive(false);
-        }
+        //if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.WertherLeft)
+        //{
+        //    werther.SetActive(false);
+        //}
 
         if(GameManager.instance.timesEnterHub >= 2 && !secondTimeStarts)
         {
@@ -374,11 +374,11 @@ public class SceneControl : MonoBehaviour
             SkipTutorialLevelOverview();
         }
 
-        if (GameManager.instance.curSceneName == "MVPLevel")
-        {
-            SkipMVPLevelOverviewCutscene();
-            //print("SkipMVPLevel");
-        }
+        //if (GameManager.instance.curSceneName == "MVPLevel")
+        //{
+        //    SkipMVPLevelOverviewCutscene();
+        //    //print("SkipMVPLevel");
+        //}
 
 
 
@@ -559,35 +559,35 @@ public class SceneControl : MonoBehaviour
             if (wertherdialogueEnds || !WertherConversationStart)
             {
                 radialUI.SetActive(false);
-                Default();
+                //Default();
             }
         }
     }
 
-    void SkipwertherEndDialogue()
-    {
-        if (GameManager.instance.p1.Dialogue1_2 || GameManager.instance.p2.Dialogue1_2)
-        {
-            if (!wertherdialogueEnds && WertherConversationStart)
-            {
-                radialUI.SetActive(true);
-                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
-                {
-                    dR.Stop();
-                    SwitchCameraToMain();
-                    radialUI.SetActive(false);
-                    wertherdialogueEnds = true;
-                    wertherLeave();
-                }
-            }
+    //void SkipwertherEndDialogue()
+    //{
+    //    if (GameManager.instance.p1.Dialogue1_2 || GameManager.instance.p2.Dialogue1_2)
+    //    {
+    //        if (!wertherdialogueEnds && WertherConversationStart)
+    //        {
+    //            radialUI.SetActive(true);
+    //            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+    //            {
+    //                dR.Stop();
+    //                SwitchCameraToMain();
+    //                radialUI.SetActive(false);
+    //                wertherdialogueEnds = true;
+    //                wertherLeave();
+    //            }
+    //        }
 
-            if (wertherdialogueEnds || !WertherConversationStart)
-            {
-                radialUI.SetActive(false);
-                Default();
-            }
-        }
-    }
+    //        if (wertherdialogueEnds || !WertherConversationStart)
+    //        {
+    //            radialUI.SetActive(false);
+    //            Default();
+    //        }
+    //    }
+    //}
 
     void SkipLevel1OverviewCutScene()
     {
@@ -642,22 +642,22 @@ public class SceneControl : MonoBehaviour
         dialogueFin = false;
     }
 
-    public void SwitchCameraToNpc()
-    {
-        mainCamera.SetActive(false);
-        WertherCam.SetActive(true);
+    //public void SwitchCameraToNpc()
+    //{
+    //    mainCamera.SetActive(false);
+    //    WertherCam.SetActive(true);
 
-        if (overviewCamWerther.gameObject != null)
-        {
-            overviewCamWerther.gameObject.SetActive(false);
-        }
-        if (WertherOverviewDescriptionUI != null)
-        {
-            WertherOverviewDescriptionUI.SetActive(false);
-        }
+    //    if (overviewCamWerther.gameObject != null)
+    //    {
+    //        overviewCamWerther.gameObject.SetActive(false);
+    //    }
+    //    if (WertherOverviewDescriptionUI != null)
+    //    {
+    //        WertherOverviewDescriptionUI.SetActive(false);
+    //    }
 
 
-    }
+    //}
 
     public void SwitchCameraToNpc2()
     {
@@ -683,22 +683,22 @@ public class SceneControl : MonoBehaviour
 
     }
 
-    public void SwitchCameraToWertherCam()
-    {
-        mainCamera.SetActive(false);
-        overviewCamWerther.gameObject.SetActive(true);
-        WertherCam.SetActive(false);
-        WertherOverviewDescriptionUI.SetActive(true);
+    //public void SwitchCameraToWertherCam()
+    //{
+    //    mainCamera.SetActive(false);
+    //    overviewCamWerther.gameObject.SetActive(true);
+    //    WertherCam.SetActive(false);
+    //    WertherOverviewDescriptionUI.SetActive(true);
 
-    }
+    //}
 
 
-    public void SwitchCameraToNpc3()
-    {
-        mainCamera.SetActive(false);
-        Npc3Cam.SetActive(true);
+    //public void SwitchCameraToNpc3()
+    //{
+    //    mainCamera.SetActive(false);
+    //    Npc3Cam.SetActive(true);
 
-    }
+    //}
 
     public void SwitchCameraToMain()
     {
@@ -801,20 +801,20 @@ public class SceneControl : MonoBehaviour
                 firstCustomer = false;
             }
 
-            if (!wertherIsGone)
-            {
-                if (!level1Overview && !GameManager.instance.WertherLeft)
-                {
-                    werther.SetActive(true);
-                }
-                secondCustomer = true;
+            //if (!wertherIsGone)
+            //{
+            //    if (!level1Overview && !GameManager.instance.WertherLeft)
+            //    {
+            //        werther.SetActive(true);
+            //    }
+            //    secondCustomer = true;
 
-            }
-            else
-            {
-                secondCustomer = false;
-                werther.SetActive(false);
-            }
+            //}
+            //else
+            //{
+            //    secondCustomer = false;
+            //    werther.SetActive(false);
+            //}
 
         }
         else
@@ -822,40 +822,40 @@ public class SceneControl : MonoBehaviour
             Lalah.SetActive(false);
             firstCustomer = false;
             secondCustomer = false;
-            werther.SetActive(false);
+            //werther.SetActive(false);
 
         }
 
 
-        if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds && !GameManager.instance.WertherRequestWasCompleted && !showHeavyPackage)
-        {
-            if(GameManager.instance.LalahRequestWasCompleted && lalahIsGone)
-            {
-                if(!level1Overview && !level2Overview)
-                {
-                    WertherUI.SetActive(true);
-                    wertherCollider.enabled = true;
-                }
-            } 
-            else if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
-            {
-                if (!level1Overview && !level2Overview)
-                {
-                    WertherUI.SetActive(true);
-                    wertherCollider.enabled = true;
-                }
+        //if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds && !GameManager.instance.WertherRequestWasCompleted && !showHeavyPackage)
+        //{
+        //    if(GameManager.instance.LalahRequestWasCompleted && lalahIsGone)
+        //    {
+        //        if(!level1Overview && !level2Overview)
+        //        {
+        //            WertherUI.SetActive(true);
+        //            wertherCollider.enabled = true;
+        //        }
+        //    } 
+        //    else if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+        //    {
+        //        if (!level1Overview && !level2Overview)
+        //        {
+        //            WertherUI.SetActive(true);
+        //            wertherCollider.enabled = true;
+        //        }
 
-            }
+        //    }
 
 
-            //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
-        }
-        else if (!GameManager.instance.showWertherInstruction || wertherdialogueEnds || GameManager.instance.WertherRequestWasCompleted || showHeavyPackage)
-        {
-            WertherUI.SetActive(false);
-            wertherCollider.enabled = false;
-            //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
-        }
+        //    //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
+        //}
+        //else if (!GameManager.instance.showWertherInstruction || wertherdialogueEnds || GameManager.instance.WertherRequestWasCompleted || showHeavyPackage)
+        //{
+        //    WertherUI.SetActive(false);
+        //    wertherCollider.enabled = false;
+        //    //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
+        //}
 
         if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds && !GameManager.instance.LalahRequestWasCompleted && !showPackage1)
         {
@@ -907,35 +907,35 @@ public class SceneControl : MonoBehaviour
             LalahTalkUi.SetActive(false);
         }
 
-        if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted && !WertherConversationStart)
-        {
-            WertherTalkUI.SetActive(true);
-            if (!NPCTrigger.isLeaving)
-            {
-                //WertherTalkUI.SetActive(true);
-                if (!wertherdialogueEnds || !wertherIsGone)
-                {
-                    LalahUI.SetActive(false);
-                    print("1");
-                    lalahCollider.enabled = false;
-                }
-                else if(wertherIsGone)
-                {
-                    NPCTrigger.isLeaving = true;
-                }
+        //if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted && !WertherConversationStart)
+        //{
+        //    WertherTalkUI.SetActive(true);
+        //    if (!NPCTrigger.isLeaving)
+        //    {
+        //        //WertherTalkUI.SetActive(true);
+        //        if (!wertherdialogueEnds || !wertherIsGone)
+        //        {
+        //            LalahUI.SetActive(false);
+        //            print("1");
+        //            lalahCollider.enabled = false;
+        //        }
+        //        else if(wertherIsGone)
+        //        {
+        //            NPCTrigger.isLeaving = true;
+        //        }
 
-            }
-            else if(NPCTrigger.isLeaving)
-            {
-                //WertherTalkUI.SetActive(false);
-                LalahUI.SetActive(true);
-                lalahCollider.enabled = true;
-            }
-        }
-        else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted || WertherConversationStart)
-        {
-            WertherTalkUI.SetActive(false);
-        }
+        //    }
+        //    else if(NPCTrigger.isLeaving)
+        //    {
+        //        //WertherTalkUI.SetActive(false);
+        //        LalahUI.SetActive(true);
+        //        lalahCollider.enabled = true;
+        //    }
+        //}
+        //else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted || WertherConversationStart)
+        //{
+        //    WertherTalkUI.SetActive(false);
+        //}
 
         //if (GameManager.instance.showMichaelInstruction)
         //{
@@ -1328,112 +1328,112 @@ public class SceneControl : MonoBehaviour
     #endregion
 
     #region Werther Event
-    public void ShowLevel2Overview()
-    {
-        TurnOffModel2();
-        if (accept1 && !WertherConversationStart)
-        {
-            GameManager.instance.p1.isFreeze = false;
-            GameManager.instance.p2.isFreeze = false;
-        }
+    //public void ShowLevel2Overview()
+    //{
+    //    TurnOffModel2();
+    //    if (accept1 && !WertherConversationStart)
+    //    {
+    //        GameManager.instance.p1.isFreeze = false;
+    //        GameManager.instance.p2.isFreeze = false;
+    //    }
 
-        if (accept1 && !wertherdialogueEnds)
-        {
-            Lalah.SetActive(true);
-            SwitchCameraToNpc();
-            WertherOverviewUI.SetActive(false);
+    //    if (accept1 && !wertherdialogueEnds)
+    //    {
+    //        Lalah.SetActive(true);
+    //        SwitchCameraToNpc();
+    //        WertherOverviewUI.SetActive(false);
 
-        }
+    //    }
 
-        if (reject1 && !UI2turnOff)
-        {
-            StartCoroutine(TurnOffUIWerther());
-        }
-
-
-        if (level2Overview)
-        {
-            if (!LalahdialogueEnds && !wertherdialogueEnds)
-            {
-                if (!accept1 && !reject1)
-                {
-                    Lalah.SetActive(false);
-                    SwitchCameraToWertherCam();
-                    //MoveCameraLalah(overviewCamLalah);
-                    //yield return new WaitForSeconds(1f);
-                    WertherOverviewUI.SetActive(true);
+    //    if (reject1 && !UI2turnOff)
+    //    {
+    //        StartCoroutine(TurnOffUIWerther());
+    //    }
 
 
-                    WertherUI.SetActive(false);
-                    wertherCollider.enabled = false;
-                    UI2turnOff = false;
+    //    if (level2Overview)
+    //    {
+    //        if (!LalahdialogueEnds && !wertherdialogueEnds)
+    //        {
+    //            if (!accept1 && !reject1)
+    //            {
+    //                Lalah.SetActive(false);
+    //                SwitchCameraToWertherCam();
+    //                //MoveCameraLalah(overviewCamLalah);
+    //                //yield return new WaitForSeconds(1f);
+    //                WertherOverviewUI.SetActive(true);
 
 
-                }
-
-                if (delayTimer1 <= 0.2f)
-                {
-                    delayTimer1 += Time.deltaTime;
-                }
+    //                WertherUI.SetActive(false);
+    //                wertherCollider.enabled = false;
+    //                UI2turnOff = false;
 
 
-                if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
-                {
-                    if (!accept1 && delayTimer1 > 0.2f && !reject1)
-                    {
-                        accept1 = true;
-                        startLevel2 = true;
-                        GameManager.instance.accepWertherOrder = true;
-                    }
+    //            }
+
+    //            if (delayTimer1 <= 0.2f)
+    //            {
+    //                delayTimer1 += Time.deltaTime;
+    //            }
 
 
-                }
-
-                if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
-                {
-                    if (!reject1 && delayTimer1 > 0.2f && !accept1)
-                    {
-                        print("Reject");
-                        reject1 = true;
-                    }
-                }
-            }
-            //StartCoroutine(CameraSwitchLalah());
+    //            if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+    //            {
+    //                if (!accept1 && delayTimer1 > 0.2f && !reject1)
+    //                {
+    //                    accept1 = true;
+    //                    startLevel2 = true;
+    //                    GameManager.instance.accepWertherOrder = true;
+    //                }
 
 
-        }
-        else
-        {
-            delayTimer1 = 0;
-            accept1 = false;
-            reject1 = false;
-        }
+    //            }
 
-    }
+    //            if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+    //            {
+    //                if (!reject1 && delayTimer1 > 0.2f && !accept1)
+    //                {
+    //                    print("Reject");
+    //                    reject1 = true;
+    //                }
+    //            }
+    //        }
+    //        //StartCoroutine(CameraSwitchLalah());
 
-    IEnumerator TurnOffUIWerther()
-    {
-        if (!GameManager.instance.LalahLeft)
-        {
-            Lalah.SetActive(true);
-        }
-        WertherOverviewUI.SetActive(false);
-        yield return new WaitForSeconds(0.2f);
-        SwitchCameraToMain();
-        GameManager.instance.p1.isFreeze = false;
-        GameManager.instance.p2.isFreeze = false;
-        level2Overview = false;
-        UI2turnOff = true;
 
-    }
+    //    }
+    //    else
+    //    {
+    //        delayTimer1 = 0;
+    //        accept1 = false;
+    //        reject1 = false;
+    //    }
 
-    void TurnOffModel2()
-    {
-        if (UI2turnOff)
-        {
-            WertherOverviewUI.SetActive(false);
-        }
-    }
+    //}
+
+    //IEnumerator TurnOffUIWerther()
+    //{
+    //    if (!GameManager.instance.LalahLeft)
+    //    {
+    //        Lalah.SetActive(true);
+    //    }
+    //    WertherOverviewUI.SetActive(false);
+    //    yield return new WaitForSeconds(0.2f);
+    //    SwitchCameraToMain();
+    //    GameManager.instance.p1.isFreeze = false;
+    //    GameManager.instance.p2.isFreeze = false;
+    //    level2Overview = false;
+    //    UI2turnOff = true;
+
+    //}
+
+    //void TurnOffModel2()
+    //{
+    //    if (UI2turnOff)
+    //    {
+    //        WertherOverviewUI.SetActive(false);
+    //    }
+    //}
     #endregion
 
     #region TitlePage
@@ -1664,16 +1664,16 @@ public class SceneControl : MonoBehaviour
 
     #region MVP Level
 
-    public void wertherLeave()
-    {
-        NPCTrigger.dialogueEnd = true;
-        wertherIsGone = true;
-        SwitchCameraToMain();
-        GameManager.instance.p1.isFreeze = false;
-        GameManager.instance.p2.isFreeze = false;
-        WertherConversationStart = false;
-        //TurnOnCanvas();
-    }
+    //public void wertherLeave()
+    //{
+    //    NPCTrigger.dialogueEnd = true;
+    //    wertherIsGone = true;
+    //    SwitchCameraToMain();
+    //    GameManager.instance.p1.isFreeze = false;
+    //    GameManager.instance.p2.isFreeze = false;
+    //    WertherConversationStart = false;
+    //    //TurnOnCanvas();
+    //}
     #endregion
 
     #region Bark
@@ -1749,33 +1749,33 @@ public class SceneControl : MonoBehaviour
 
 
     #region Werther Facial Animation
-    public void Nautral()
-    {
-        WertherAnim.SetBool("isNeutral", true); ;
-        WertherAnim.SetBool("isConstupated", false);
-        WertherAnim.SetBool("isHappy", false);
-    }
+    //public void Nautral()
+    //{
+    //    WertherAnim.SetBool("isNeutral", true); ;
+    //    WertherAnim.SetBool("isConstupated", false);
+    //    WertherAnim.SetBool("isHappy", false);
+    //}
 
-    public void Happy()
-    {
-        WertherAnim.SetBool("isNeutral", false); ;
-        WertherAnim.SetBool("isConstupated", false);
-        WertherAnim.SetBool("isHappy", true);
-    }
+    //public void Happy()
+    //{
+    //    WertherAnim.SetBool("isNeutral", false); ;
+    //    WertherAnim.SetBool("isConstupated", false);
+    //    WertherAnim.SetBool("isHappy", true);
+    //}
 
-    public void Constupated()
-    {
-        WertherAnim.SetBool("isNeutral", false); ;
-        WertherAnim.SetBool("isConstupated", true);
-        WertherAnim.SetBool("isHappy", false);
-    }
+    //public void Constupated()
+    //{
+    //    WertherAnim.SetBool("isNeutral", false); ;
+    //    WertherAnim.SetBool("isConstupated", true);
+    //    WertherAnim.SetBool("isHappy", false);
+    //}
 
-    public void Default()
-    {
-        WertherAnim.SetBool("isNeutral", false); ;
-        WertherAnim.SetBool("isConstupated", false);
-        WertherAnim.SetBool("isHappy", false);
-    }
+    //public void Default()
+    //{
+    //    WertherAnim.SetBool("isNeutral", false); ;
+    //    WertherAnim.SetBool("isConstupated", false);
+    //    WertherAnim.SetBool("isHappy", false);
+    //}
 
     #endregion
 

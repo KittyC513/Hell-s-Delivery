@@ -2494,7 +2494,7 @@ public class TestCube : MonoBehaviour
                 SceneControl.instance.nameTag.SetActive(false);
                 SceneControl.instance.nameTagNPC2.SetActive(false);
                 SceneControl.instance.nameTagNPC3.SetActive(false);
-                SceneControl.instance.SwitchCameraToNpc();
+                //SceneControl.instance.SwitchCameraToNpc();
                 gameManager.p1.isFreeze = true;
                 gameManager.p2.isFreeze = true;
                 //SceneControl.instance.WertherTalkUI.SetActive(false);
@@ -3663,19 +3663,19 @@ public class TestCube : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("NPC3"))
-        {
-            if (!SceneControl.instance.lalahIsGone)
-            {
-                withinNPC2Range = true;
-            }
-            else
-            {
-                withinNPC2Range = false;
-            }
+        //if (other.CompareTag("NPC3"))
+        //{
+        //    if (!SceneControl.instance.lalahIsGone)
+        //    {
+        //        withinNPC2Range = true;
+        //    }
+        //    else
+        //    {
+        //        withinNPC2Range = false;
+        //    }
 
             
-        }
+        //}
 
         if (other.CompareTag("NPC4"))
         {
