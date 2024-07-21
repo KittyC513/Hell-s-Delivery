@@ -290,11 +290,22 @@ public class SceneControl : MonoBehaviour
         {
             if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
             {
-                phonePiece.SetActive(false);
-                phoneRingText.SetActive(false);
+                if(phonePiece != null)
+                {
+                    phonePiece.SetActive(false);
+                }
+                if(phoneRingText != null)
+                {
+                    phoneRingText.SetActive(false);
+                }
+
             }
 
-            deliveryText.SetActive(false);
+            if(deliveryText != null)
+            {
+                deliveryText.SetActive(false);
+            }
+
             CompleteLevel1();
             CompleteLevel2();
         }
@@ -770,12 +781,12 @@ public class SceneControl : MonoBehaviour
     void HubStart()
     {
         //Comic
-        if (GameManager.instance.firstTimeEnterHub == true)
+        if (GameManager.instance.firstTimeEnterHub == true || GameManager.instance.gameIsReset)
         {
             StartComic();
-
             GameManager.instance.firstTimeEnterHub = false;
-
+            GameManager.instance.gameIsReset = false;
+            print("StartConmic");
         }
 
         if (GameManager.instance.timesEnterHub >= 1)
@@ -1160,7 +1171,7 @@ public class SceneControl : MonoBehaviour
 
         if (accept && !LalahdialogueEnds)
         {
-            werther.SetActive(true);
+            //werther.SetActive(true);
             SwitchCameraToNpc2();
             LalahOverviewUI.SetActive(false);
             
@@ -1180,7 +1191,7 @@ public class SceneControl : MonoBehaviour
                 {
                     if (!accept && !reject)
                     {
-                        werther.SetActive(false);
+                        //werther.SetActive(false);
                         SwitchCameraToLalahCam();
                         //MoveCameraLalah(overviewCamLalah);
                         //yield return new WaitForSeconds(1f);
@@ -1227,7 +1238,7 @@ public class SceneControl : MonoBehaviour
                 {
                     if (!accept && !reject)
                     {
-                        werther.SetActive(false);
+                       //werther.SetActive(false);
                         SwitchCameraToLalahCam();
                         //MoveCameraLalah(overviewCamLalah);
                         //yield return new WaitForSeconds(1f);
@@ -1292,7 +1303,7 @@ public class SceneControl : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         if (!GameManager.instance.WertherLeft)
         {
-            werther.SetActive(true);
+            //werther.SetActive(true);
         }
         SwitchCameraToMain();
 

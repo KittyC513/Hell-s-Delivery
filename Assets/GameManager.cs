@@ -218,6 +218,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool barkTriggered;
 
+    [Header("Game Reset")]
+    [SerializeField]
+    public bool gameIsReset = false;
+
 
 
     public LevelData lastLevelData;
@@ -317,11 +321,15 @@ public class GameManager : MonoBehaviour
                     {
                         Maincanvas.gameObject.SetActive(false);
                     }
-
                     MoveCamera(cameraPosition, 1f);
                     //animTitle.SetBool("isEnded", true);
                     StartCoroutine(TurnOnLight());
-                    text.SetActive(false);
+
+                    if(text != null)
+                    {
+                        text.SetActive(false);
+                    }
+
                 }
 
             }
@@ -332,9 +340,17 @@ public class GameManager : MonoBehaviour
     IEnumerator TurnOnLight()
     {
         yield return new WaitForSeconds(1f);
-        animTitle.SetBool("isEnded", true);
+        if(animTitle != null)
+        {
+            animTitle.SetBool("isEnded", true);
+        }
         yield return new WaitForSeconds(1f);
-        sign.SetActive(true);
+
+        if(sign != null)
+        {
+            sign.SetActive(true);
+        }
+
     }
 
 
@@ -582,10 +598,19 @@ public class GameManager : MonoBehaviour
     {
         p1.isFreeze = true;
         p2.isFreeze = true;
-        MoveCamera(closeShoot,5);
-        yield return new WaitForSecondsRealtime(2f);
+        if(closeShoot != null)
+        {
+            MoveCamera(closeShoot, 5);
+        }
+        enterOffice = true;
+        sceneChanged = true;
+        firstTimeEnterHub = true;
+        print("Enter Office");
+        yield return new WaitForSecondsRealtime(1f);
+        //changeSceneTimes += 1;
+        p1.isEntered = false;
+        p2.isEntered = false;
         camChanged1 = true;
-
     }
 
     //public IEnumerator MovingCamera2()
@@ -603,10 +628,12 @@ public class GameManager : MonoBehaviour
 
     public void MoveCamera(Transform newPos, float lerpSpeed)
     {
-        
-        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
-        //mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
-
+        //mainCam = UnityEngine.Object.FindAnyObjectByType<Camera>();
+        if (mainCam != null)
+        {
+            mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos.position, Time.deltaTime * lerpSpeed);
+            //mainCam.transform.rotation = Quaternion.Lerp(mainCam.transform.rotation, newPos.rotation, Time.deltaTime * lerpSpeed);
+        }
     }
 
 
@@ -925,58 +952,91 @@ public class GameManager : MonoBehaviour
 
     void ResetGame()
     {
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl) && !gameIsReset)
         {
-            SceneManager.LoadScene("TitleScene");
-            instructionText.SetActive(false);
-            instance = this;
-            lighting1.SetActive(false);
-            lighting2.SetActive(false);
-            lighting3.SetActive(false);
-            sign.SetActive(false);
-            sceneChanged = false;
-            currentScene = SceneManager.GetActiveScene();
-            curSceneName = currentScene.name;
-            changeSceneTimes = 0;
-            firstTimeEnterHub = false;
-            timesEnterHub = 0;
-            WertherRequestWasCompleted = false;
-            LalahRequestWasCompleted = false; 
-            enterOffice = false;
-            acceptLalahOrder = false;
-            accepWertherOrder = false;
-            LalahLeft = false;
-            WertherLeft = false;
-            p1.isFreeze = false;
-            p2.isFreeze = false;
-            p1.slotFull = false;
-            p2.slotFull = false;
-            p1.turnOnTV = false;
-            p2.turnOnTV = false;
-            p1.onTv = false;
-            p2.onTv = false;
-            p1.Dialogue1 = false;
-            p2.Dialogue1 = false;
-            p1.Dialogue1_2 = false;
-            p2.Dialogue1_2 = false;
-            p1.Dialogue2 = false;
-            p2.Dialogue2 = false;
-            p1.Dialogue3 = false;
-            p2.Dialogue3 = false;
-            p1.Dialogue3_2 = false;
-            p2.Dialogue3_2 = false;
-            p1.isAnswered = false;
-            p2.isAnswered = false;
-            p1.bM = null;
-            p2.bM = null;
-            showWertherInstruction = false;
-            showLalahInstruction = false;
-            answeredPhone = false;
-            showTVInstruction = false;
-            mainCam.gameObject.SetActive(true);
+            SceneManager.LoadScene("ResetMenu");
+            
+            //if(instructionText != null)
+            //{
+            //    instructionText.SetActive(false);
+            //}
 
+            //if(lighting1 != null)
+            //{
+            //    lighting1.SetActive(false);
+            //}
 
+            //if (lighting2 != null)
+            //{
+            //    lighting2.SetActive(false);
+            //}
 
+            //if (lighting3 != null)
+            //{
+            //    lighting3.SetActive(false);
+            //}
+
+            //if (sign != null)
+            //{
+            //    sign.SetActive(false);
+            //}
+
+            //sceneChanged = false;
+            //currentScene = SceneManager.GetActiveScene();
+            //curSceneName = currentScene.name;
+            //changeSceneTimes = 0;
+            //firstTimeEnterHub = false;
+            //timesEnterHub = 0;
+            //WertherRequestWasCompleted = false;
+            //LalahRequestWasCompleted = false; 
+            //enterOffice = false;
+            //acceptLalahOrder = false;
+            //accepWertherOrder = false;
+            //LalahLeft = false;
+            //WertherLeft = false;
+            //p1.isFreeze = false;
+            //p2.isFreeze = false;
+            //p1.slotFull = false;
+            //p2.slotFull = false;
+            //p1.turnOnTV = false;
+            //p2.turnOnTV = false;
+            //p1.onTv = false;
+            //p2.onTv = false;
+            //p1.Dialogue1 = false;
+            //p2.Dialogue1 = false;
+            //p1.Dialogue1_2 = false;
+            //p2.Dialogue1_2 = false;
+            //p1.Dialogue2 = false;
+            //p2.Dialogue2 = false;
+            //p1.Dialogue3 = false;
+            //p2.Dialogue3 = false;
+            //p1.Dialogue3_2 = false;
+            //p2.Dialogue3_2 = false;
+            //p1.isAnswered = false;
+            //p2.isAnswered = false;
+            //p1.isEntered = false;
+            //p2.isEntered = false;
+            //p1.bM = null;
+            //p2.bM = null;
+            //p1.withinEntranceRange = false;
+            //p2.withinEntranceRange = false;
+            //p1.withinNPC3Range = false;
+            //p2.withinNPC3Range = false;
+            //showWertherInstruction = false;
+            //showLalahInstruction = false;
+            //answeredPhone = false;
+            //showTVInstruction = false;
+            //camChanged1 = false;
+            //SceneControl.instance.comicShowed = false;
+
+            ////if(mainCam.gameObject == null)
+            ////{
+            ////    mainCam = UnityEngine.Object.FindAnyObjectByType<Camera>();
+            ////    mainCam.gameObject.SetActive(true);
+            ////}
+
+            //gameIsReset = true;
+            //print("Reset");
 
         }
     }
