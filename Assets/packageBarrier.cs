@@ -36,7 +36,11 @@ public class packageBarrier : MonoBehaviour
     {
         if (isAccessed && !turnOff)
         {
-            instruction.SetActive(false);
+            if(instruction != null)
+            {
+                instruction.SetActive(false);
+            }
+
             turnOff = true;
         }
     }
@@ -49,7 +53,11 @@ public class packageBarrier : MonoBehaviour
             blocking = false;
             rend.material = passable;
             isAccessed = true;
-            instruction.SetActive(false);
+            if(instruction != null)
+            {
+                instruction.SetActive(false);
+            }
+
         }
     }
 
@@ -58,8 +66,12 @@ public class packageBarrier : MonoBehaviour
     {
         if(other.gameObject.tag == "Player" && !isAccessed)
         {
-            instruction.SetActive(true);
-            print("1");
+            if(instruction != null)
+            {
+                instruction.SetActive(true);
+                print("1");
+            }
+
         }
     }
 
@@ -78,7 +90,11 @@ public class packageBarrier : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
-            instruction.SetActive(false);
+            if(instruction != null)
+            {
+                instruction.SetActive(false);
+            }
+
         }
 
 

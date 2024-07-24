@@ -14,10 +14,10 @@ public class DontDestroy : MonoBehaviour
     void Update()
     {
 
-        if(ResetGame.instance.destroy)
+        if(GameManager.instance.gameIsReset)
         {
             Destroy(this.gameObject);
-            ResetGame.instance.destroy = false;
+            GameManager.instance.gameIsReset = false;
         }
 
     }

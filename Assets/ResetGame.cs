@@ -26,6 +26,7 @@ public class ResetGame : MonoBehaviour
 
     IEnumerator Reset()
     {
+        GameManager.instance.gameIsReset = true;
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("TitleScene");
         destroy = false;
