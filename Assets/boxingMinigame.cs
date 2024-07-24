@@ -13,6 +13,7 @@ public class boxingMinigame : MonoBehaviour
     public GameObject waypointp3;
     public GameObject waypointp4;
     public GameObject waypointExit;
+    public GameObject waypointExit2;
     public Vector3 spawnpointp1;
     public Vector3 spawnpointp2;
     public Vector3 spawnpoint1;
@@ -20,9 +21,11 @@ public class boxingMinigame : MonoBehaviour
     public Vector3 spawnpointp3;
     public Vector3 spawnpointp4;
     public Vector3 spawnpointExit;
+    public Vector3 spawnpointExit2;
     public GameObject[] players;
     public Level1CamControl cm;
     public bool isboxing = false;
+    public bool gameEnd = false;
     public float p1pushedcount = 0;
     public float p2pushedcount = 0;
     public float maxDamage;
@@ -124,6 +127,11 @@ public class boxingMinigame : MonoBehaviour
             spawnpointExit = waypointExit.transform.position;
         }
 
+        if (spawnpointExit2 != null)
+        {
+            spawnpointExit2 = waypointExit2.transform.position;
+        }
+
 
         Scene scene = SceneManager.GetActiveScene();
         if (crowd != null)
@@ -166,11 +174,14 @@ public class boxingMinigame : MonoBehaviour
 
                     GameManager.instance.p2.rC.endminigamep2();
                     endMinigame();
+                    //StartCoroutine(ExitGameP1());
+
                 }
                 if (p2pushedcount >= maxDamage)
                 {
                     GameManager.instance.p1.rC.endminigamep1();
                     endMinigame();
+                    //StartCoroutine(ExitGameP2());
                 }
             }
 
@@ -370,7 +381,7 @@ public class boxingMinigame : MonoBehaviour
         }
 
         StartCoroutine(removeCrowd());
-        
+        gameEnd = true;
     }
 
     IEnumerator removeCrowd()
@@ -464,6 +475,16 @@ public class boxingMinigame : MonoBehaviour
         minigameStart = true;
     }
 
+    IEnumerator ExitGameP1()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManager.instance.p1.transform.position = spawnpointExit;
+    }
+    IEnumerator ExitGameP2()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManager.instance.p2.transform.position = spawnpointExit2;
+    }
     IEnumerator movingCam()
     {
         print("MovingCam");

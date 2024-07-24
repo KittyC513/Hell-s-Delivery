@@ -481,6 +481,25 @@ public class RespawnControl : MonoBehaviour
 
         }
 
+        if (bM != null)
+        {
+            if (bM.gameEnd)
+            {
+                if (isPlayer1 && respawnPoint != bM.spawnpointExit)
+                {
+                    respawnPoint = bM.spawnpointExit;
+                    print("1");
+                }
+
+                if (isPlayer2 && respawnPoint != bM.spawnpointExit2)
+                {
+                    respawnPoint = bM.spawnpointExit2;
+                    print("2");
+                }
+            }
+
+        }
+
         Partner = GameObject.FindGameObjectsWithTag("FindScript");
         //FindDR();
         SceneCheck();
@@ -564,6 +583,14 @@ public class RespawnControl : MonoBehaviour
                 GameManager.instance.p1.rC.P1RespawnRotation.rotation = P2RespawnRotation.rotation;
             }
 
+            if(bM != null)
+            {
+                if (bM.gameEnd)
+                {
+                    bM.gameEnd = false;
+                }
+            }
+
         }
         else if (curSceneName != scene4 && curSceneName != scene5 && curSceneName != scene9)
         {
@@ -632,7 +659,7 @@ public class RespawnControl : MonoBehaviour
         //p1DeadScreen.SetActive(false);
         P1Indicator.SetActive(true);
         P1Shade.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         GameManager.instance.p1.isFreeze = false;
         if(p1Anim != null)
         {
@@ -868,6 +895,7 @@ public class RespawnControl : MonoBehaviour
         {
 
             respawnPoint = other.transform.position;
+            print("3");
             if (isPlayer1)
             {
                 P1RespawnRotation = other.transform.Find("Rotation").transform;
@@ -1129,6 +1157,7 @@ public class RespawnControl : MonoBehaviour
 
             GameManager.instance.p1.rC.respawnPoint = other.transform.position;
             GameManager.instance.p2.rC.respawnPoint = other.transform.position;
+            print("4");
 
             if (objectGrabbable != null)
             {
@@ -2006,29 +2035,11 @@ public class RespawnControl : MonoBehaviour
     }
 
     public void endminigamep2()
-    {
-        
+    {       
         P2Respawn();
-        //if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
-        //{
-        //    if (isPlayer2)
-        //    {
-        //        player.transform.position = bM.spawnpointExit;
-        //    }
-        //}
-
-
     }
     public void endminigamep1()
     {
         P1Respawn();
-        //if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
-        //{
-        //    if (isPlayer1)
-        //    {
-                
-        //        player.transform.position = bM.spawnpointExit;
-        //    }
-        //}
     }
 }
