@@ -27,13 +27,18 @@ public class packageBarrier : MonoBehaviour
         blocking = true;
         Bc = gameObject.GetComponent<MeshCollider>();
         rend = gameObject.GetComponent<Renderer>();
-        //instruction = this.gameObject.transform.Find("Canvas").transform;
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(instruction == null && GameManager.instance.curSceneName == "Tutorial")
+        {
+            Transform canvasTransform = this.gameObject.transform.Find("Canvas");
+            instruction = canvasTransform.gameObject;
+        }
         if (isAccessed && !turnOff)
         {
             if(instruction != null)
