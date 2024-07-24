@@ -14,6 +14,10 @@ public class SkipProgressionBar : MonoBehaviour
     private Image radialUI;
     [SerializeField]
     private bool origiTimer;
+    [SerializeField]
+    private GameObject Entext;
+    [SerializeField]
+    private GameObject Chtext;
 
 
     // Start is called before the first frame update
@@ -25,11 +29,28 @@ public class SkipProgressionBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        switchText();
     }
     private void FixedUpdate()
     {
         ButtonTrigger();
+    }
+
+    private void switchText()
+    {
+        if(Entext != null && Chtext != null)
+        {
+            if (!GameManager.instance.isCh)
+            {
+                Entext.SetActive(true);
+                Chtext.SetActive(false);
+            }
+            else
+            {
+                Entext.SetActive(false);
+                Chtext.SetActive(true);
+            }
+        }
     }
 
 

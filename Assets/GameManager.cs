@@ -222,7 +222,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool gameIsReset = false;
 
-
+    [Header("Game Reset")]
+    [SerializeField]
+    public bool isCh = false;
 
     public LevelData lastLevelData;
 

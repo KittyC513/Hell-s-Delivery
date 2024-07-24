@@ -485,17 +485,7 @@ public class RespawnControl : MonoBehaviour
         {
             if (bM.isboxing)
             {
-                if (isPlayer1 && respawnPoint != bM.spawnpointExit)
-                {
-                    respawnPoint = bM.spawnpointExit;
-                    print("1");
-                }
-
-                if (isPlayer2 && respawnPoint != bM.spawnpointExit2)
-                {
-                    respawnPoint = bM.spawnpointExit2;
-                    print("2");
-                }
+                StartCoroutine(endBoxing());
             }
 
         }
@@ -524,6 +514,23 @@ public class RespawnControl : MonoBehaviour
 
         //Debug.Log("p1dead" + p1dead);
         //Debug.Log("p2dead" + p2dead);
+    }
+
+    IEnumerator endBoxing()
+    {
+        yield return new WaitForSeconds(2);
+        if(bM != null)
+        {
+            if (bM.gameEnd && isPlayer1)
+            {
+                player.transform.position = bM.spawnpointExit;
+            }
+            if (bM.gameEnd && isPlayer2)
+            {
+                player.transform.position = bM.spawnpointExit2;
+            }
+            bM.gameEnd = false;
+        }
     }
 
     private void FixedUpdate()
@@ -569,11 +576,23 @@ public class RespawnControl : MonoBehaviour
         }
         else if (curSceneName == scene4 || curSceneName == scene9)
         {
-            player.transform.position = respawnPos;
+            //player.transform.position = respawnPos;
             if (isPlayer1 && P1RespawnRotation != null)
             {
                 player.transform.rotation = P1RespawnRotation.rotation;
                 GameManager.instance.p2.rC.P2RespawnRotation.rotation = P1RespawnRotation.rotation;
+                if (bM != null)
+                {
+                    if (bM.isboxing)
+                    {
+                        respawnPos = bM.spawnpointExit;
+                        player.transform.position = respawnPos;
+                    }
+                }
+                else
+                {
+                    player.transform.position = respawnPos;
+                }
             }
 
             if (isPlayer2 && P2RespawnRotation != null)
@@ -581,6 +600,18 @@ public class RespawnControl : MonoBehaviour
 
                 player.transform.rotation = P2RespawnRotation.rotation;
                 GameManager.instance.p1.rC.P1RespawnRotation.rotation = P2RespawnRotation.rotation;
+                if (bM != null)
+                {
+                    if (bM.isboxing)
+                    {
+                        respawnPos = bM.spawnpointExit2;
+                        player.transform.position = respawnPos;
+                    }
+                }
+                else
+                {
+                    player.transform.position = respawnPos;
+                }
             }
 
             if(bM != null)

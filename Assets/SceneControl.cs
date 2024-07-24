@@ -230,7 +230,7 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     public GameObject packageTutorial;
     [SerializeField]
-    private GameObject tutorialSkipUI;
+    private GameObject tutorialSkipUI, tutorialSkipUI1;
     [SerializeField]
     private bool skipTutorial;
     [SerializeField]
@@ -646,7 +646,15 @@ public class SceneControl : MonoBehaviour
 
     IEnumerator SwitchCamToTutorialLevel()
     {
-        tutorialSkipUI.SetActive(false);
+        if (!GameManager.instance.isCh)
+        {
+            tutorialSkipUI.SetActive(false);
+        }
+        else
+        {
+            tutorialSkipUI1.SetActive(false);
+        }
+
         SwitchCameraToTV();
         yield return new WaitForSeconds(3f);
         ShowDialogue.TutorialLevel();
@@ -1482,9 +1490,15 @@ public class SceneControl : MonoBehaviour
 
         if (!isSkipped && !isntSkipped)
         {
-            tutorialSkipUI.SetActive(true);
+            if (!GameManager.instance.isCh)
+            {
+                tutorialSkipUI.SetActive(true);
+            }
+            else
+            {
+                tutorialSkipUI1.SetActive(true);
+            }
             tutorialUIisShowed = true;
-
             //GameManager.instance.changeSceneTimes += 1;
             //GameManager.instance.timesEnterHub += 1;
         }
@@ -1495,7 +1509,14 @@ public class SceneControl : MonoBehaviour
         nameTag.SetActive(false);
         radialUI.SetActive(false);
         phoneRingText.SetActive(false);
-        tutorialSkipUI.SetActive(true);
+        if (!GameManager.instance.isCh)
+        {
+            tutorialSkipUI.SetActive(true);
+        }
+        else
+        {
+            tutorialSkipUI1.SetActive(true);
+        }
         tutorialUIisShowed = true;
         GameManager.instance.changeSceneTimes += 1;
         GameManager.instance.timesEnterHub += 1;
@@ -1537,7 +1558,14 @@ public class SceneControl : MonoBehaviour
             if (skipTutorial)
             {
                 GameManager.instance.changeSceneTimes += 1;
-                tutorialSkipUI.SetActive(false);
+                if (!GameManager.instance.isCh)
+                {
+                    tutorialSkipUI.SetActive(false);
+                }
+                else
+                {
+                    tutorialSkipUI1.SetActive(false);
+                }
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
             }
@@ -1558,7 +1586,14 @@ public class SceneControl : MonoBehaviour
         yield return new WaitForSeconds(3f);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
-        tutorialSkipUI.SetActive(false);
+        if (!GameManager.instance.isCh)
+        {
+            tutorialSkipUI.SetActive(false);
+        }
+        else
+        {
+            tutorialSkipUI1.SetActive(false);
+        }
         isSkipped1 = true;
     }
 
@@ -1570,13 +1605,13 @@ public class SceneControl : MonoBehaviour
     public void ShowPackageInstruction()
     {
         packageInstruction.SetActive(true);
-        print("11");
+        //print("11");
     }
 
     public void ShowPackageInstruction2()
     {
         packageInstruction2.SetActive(true);
-        print("22");
+        //print("22");
     }
 
     public void ClosePackageInstruction()
