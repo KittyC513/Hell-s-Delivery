@@ -483,7 +483,7 @@ public class RespawnControl : MonoBehaviour
 
         if (bM != null)
         {
-            if (bM.gameEnd)
+            if (bM.isboxing)
             {
                 if (isPlayer1 && respawnPoint != bM.spawnpointExit)
                 {
