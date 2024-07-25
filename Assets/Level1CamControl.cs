@@ -227,7 +227,11 @@ public class Level1CamControl : MonoBehaviour
     IEnumerator movingCamBack()
     {
         yield return new WaitForSeconds(1f);
-        MoveCamera(oriCam);
+        if (oriCam != null)
+        {
+            MoveCamera(oriCam);
+        }
+
     }
 
     public void MoveCamera(Transform newPos)

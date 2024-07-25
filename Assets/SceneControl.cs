@@ -185,6 +185,8 @@ public class SceneControl : MonoBehaviour
     [SerializeField]
     private GameObject LalahOverviewDescriptionUI;
     [SerializeField]
+    private GameObject LalahOverviewDescriptionUI1;
+    [SerializeField]
     private BoxCollider lalahCollider;
     [SerializeField]
     public Transform overviewCamLalah;
@@ -686,10 +688,23 @@ public class SceneControl : MonoBehaviour
         {
             overviewCamLalah.gameObject.SetActive(false);
         }
-        if (LalahOverviewDescriptionUI != null)
+
+        if (GameManager.instance.isCh)
         {
-            LalahOverviewDescriptionUI.SetActive(false);
+            if (LalahOverviewDescriptionUI1 != null)
+            {
+                LalahOverviewDescriptionUI1.SetActive(false);
+            }
         }
+        else
+        {
+            if (LalahOverviewDescriptionUI!= null)
+            {
+                LalahOverviewDescriptionUI.SetActive(false);
+            }
+        }
+
+
 
     }
 
@@ -698,7 +713,21 @@ public class SceneControl : MonoBehaviour
         mainCamera.SetActive(false);
         overviewCamLalah.gameObject.SetActive(true);
         Npc2Cam.SetActive(false);
-        LalahOverviewDescriptionUI.SetActive(true);
+        if (GameManager.instance.isCh)
+        {
+            if (LalahOverviewDescriptionUI1 != null)
+            {
+                LalahOverviewDescriptionUI1.SetActive(true);
+            }
+        }
+        else
+        {
+            if (LalahOverviewDescriptionUI != null)
+            {
+                LalahOverviewDescriptionUI.SetActive(true);
+            }
+        }
+
 
     }
 
@@ -733,12 +762,22 @@ public class SceneControl : MonoBehaviour
             overviewCamLalah.gameObject.SetActive(false);
         }
 
-        if(LalahOverviewDescriptionUI != null)
+        if (GameManager.instance.isCh)
         {
-            LalahOverviewDescriptionUI.SetActive(false);
+            if (LalahOverviewDescriptionUI1 != null)
+            {
+                LalahOverviewDescriptionUI1.SetActive(false);
+            }
+        }
+        else
+        {
+            if (LalahOverviewDescriptionUI != null)
+            {
+                LalahOverviewDescriptionUI.SetActive(false);
+            }
         }
 
-        if(overviewCamWerther.gameObject != null)
+        if (overviewCamWerther.gameObject != null)
         {
             overviewCamWerther.gameObject.SetActive(false);
         }
