@@ -505,6 +505,7 @@ public class boxingMinigame : MonoBehaviour
         boxingCanvas.SetActive(false);
         boxingCanvas1.SetActive(false);
         StartCoroutine(SwitchCam());
+        print("111");
         p1pushedcount = 0;
         p2pushedcount = 0;
         if (!packageIsShowed)
@@ -552,21 +553,24 @@ public class boxingMinigame : MonoBehaviour
             packagePiece4.SetActive(true);
         }
 
-        if(package1 != null)
-        {
-            package1.SetActive(true);
-        }
 
-        if (package2 != null)
-        {
-            package2.SetActive(true);
-        }
 
-        packageIsShowed = true;
+        //if (package1 != null)
+        //{
+        //    package1.SetActive(true);
+        //}
 
         if(GameManager.instance.curSceneName == "HubStart")
         {
-            isboxing = false;
+            if (SceneControl.instance.showHeavyPackage)
+            {
+                if (package2 != null)
+                {
+                    package2.SetActive(true);
+                }
+
+            }
+
             if (GameManager.instance.p1.isFreeze == true)
             {
                 GameManager.instance.p1.isFreeze = false;
@@ -577,6 +581,8 @@ public class boxingMinigame : MonoBehaviour
                 GameManager.instance.p2.isFreeze = false;
             }
         }
+        isboxing = false;
+        packageIsShowed = true;
 
     }
 

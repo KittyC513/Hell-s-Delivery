@@ -993,8 +993,9 @@ public class TestCube : MonoBehaviour
         if (curSceneName == scene1 || curSceneName == scene3)
         {
             Interacte();
-            OnTV();
             Talk();
+            OnTV();
+ 
         }
         if (curSceneName == scene6)
         {
@@ -2270,7 +2271,7 @@ public class TestCube : MonoBehaviour
             }
         }
 
-        if (withinTVRange && !onTv)
+        if (withinTVRange && !onTv && gameManager.LalahRequestWasCompleted)
         {
             if (ReadActionButton())
             {
@@ -2625,7 +2626,6 @@ public class TestCube : MonoBehaviour
                     SelectMinigame.instance.selectedItem = 0;
                     SelectMinigame.instance.pressingTimes = 1;
 
-
                     bM.EndGameInHub();
                     GameManager.instance.p1.transform.position = SceneControl.instance.originalPos1.position;
                     GameManager.instance.p2.transform.position = SceneControl.instance.originalPos2.position;
@@ -2718,6 +2718,7 @@ public class TestCube : MonoBehaviour
     public IEnumerator MovingCameraTVBack()
     {
         SceneControl.instance.MoveCamera(SceneControl.instance.camPos);
+        print("222");
         yield return new WaitForSecondsRealtime(2f);
         onTv = false;
     }

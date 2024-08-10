@@ -1107,10 +1107,7 @@ public class SceneControl : MonoBehaviour
             SelectMinigame.instance.chooseOne = false;
             SelectMinigame.instance.chooseTwo = false;
             minigameUIIsOn = false;
-
         }
-
-
 
         if (GameManager.instance.showTVInstruction)
         {
