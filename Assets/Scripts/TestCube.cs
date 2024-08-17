@@ -760,7 +760,7 @@ public class TestCube : MonoBehaviour
             initBoxing();
         }
 
-        if (ReadPushButton())
+        if (ReadPushButtonArcade())
         {
             OutlineActivate();
             if (chargeToggle == true)
@@ -769,7 +769,7 @@ public class TestCube : MonoBehaviour
             }
             chargeToggle = false;
             
-        } else if (ReadPushReleaseButton())
+        } else if (ReadPushReleaseButtonArcade())
         {
             pushParticle.Play();
             if(chargeToggle == false)
@@ -2273,7 +2273,7 @@ public class TestCube : MonoBehaviour
 
         if (withinTVRange && !onTv && gameManager.LalahRequestWasCompleted)
         {
-            if (ReadActionButton())
+            if (ReadActionButtonArcade())
             {
                 SelectMinigame.instance.firstEnter = true;
                 gameManager.p1.turnOnTV = true;
@@ -2295,7 +2295,7 @@ public class TestCube : MonoBehaviour
             }
 
 
-            if (ReadActionButton())
+            if (ReadActionButtonArcade())
             {
                 NPCInteracting = true;
                 //SceneControl.LV.SetActive(false);
@@ -2323,7 +2323,7 @@ public class TestCube : MonoBehaviour
             }
 
 
-            if (ReadActionButton())
+            if (ReadActionButtonArcade())
             {
                 NPC2Interacting = true;
                 //SceneControl.LV.SetActive(false);
@@ -2351,7 +2351,7 @@ public class TestCube : MonoBehaviour
             }
 
 
-            if (ReadActionButton())
+            if (ReadActionButtonArcade())
             {
                 NPC3Interacting = true;
                 //SceneControl.LV.SetActive(false);
@@ -2390,7 +2390,7 @@ public class TestCube : MonoBehaviour
 
         if (withinPhoneRange)
         {
-            if (ReadActionButton() && !isAnswered)
+            if (ReadActionButtonArcade() && !isAnswered)
             {
                 //SceneControl.instance.nameTag.SetActive(true);
                 SceneControl.instance.dR.StartDialogue("HubStart");
@@ -2620,11 +2620,11 @@ public class TestCube : MonoBehaviour
             if (onTv && !bM.isboxing)
             {
                 isFreeze = true;
-                if (ReadPushButton())
+                if (ReadPushButtonArcade())
                 {
                     SelectMinigame.instance.SelectItem();
                 }
-                if (ReadActionButton())
+                if (ReadActionButtonArcade())
                 {
                     SelectMinigame.instance.oriShop = false;
                     SelectMinigame.instance.firstEnter = false;
@@ -3516,6 +3516,22 @@ public class TestCube : MonoBehaviour
         else return false;
 
     }
+
+    public bool ReadPushReleaseButtonArcade()
+    {
+        if (isPlayer1)
+        {
+            return Input.GetKeyUp(KeyCode.R);
+        }
+
+        if (isPlayer2)
+        {
+            return Input.GetKeyUp(KeyCode.O);
+        }
+
+        return false;
+    } 
+
     public bool ReadActionButton()
     {
         if (triggerButton.ReadValue<float>() == 1) return true;
@@ -3543,6 +3559,21 @@ public class TestCube : MonoBehaviour
         else return false;
     }
 
+    public bool ReadPushButtonArcade()
+    {
+        if (isPlayer1)
+        {
+            return Input.GetKey(KeyCode.R);
+        }
+
+        if (isPlayer2)
+        {
+            return Input.GetKey(KeyCode.O);
+        }
+
+        return false;
+    }
+
     public bool ReadCloseTagButton()
     {
         if (close.triggered) return true;
@@ -3555,10 +3586,40 @@ public class TestCube : MonoBehaviour
         else return false;
     }
 
+    public bool ReadSkipButtonArcade()
+    {
+        if (isPlayer1)
+        {
+            return Input.GetKey(KeyCode.V);
+        }
+
+        if (isPlayer2)
+        {
+            return Input.GetKey(KeyCode.Period);
+        }
+
+        return false;
+    }
+
     public bool ReadSkipTriggerButton()
     {
         if (skipTrigger.ReadValue<float>() == 1) return true;
         else return false;
+    }
+
+    public bool ReadSkipTriggerButtonArcade()
+    {
+        if (isPlayer1)
+        {
+            return Input.GetKey(KeyCode.V);
+        }
+
+        if (isPlayer2)
+        {
+            return Input.GetKey(KeyCode.Period);
+        }
+
+        return false;
     }
 
     public bool ReadEmoteUpButton()
@@ -3600,22 +3661,22 @@ public class TestCube : MonoBehaviour
         //move player towards
         isOnCircle = true;
         activeCircle = circle;
-        if (isPlayer1 && !summoningAnimIsTriggered && ReadActionButton())
+        if (isPlayer1 && !summoningAnimIsTriggered && ReadActionButtonArcade())
         {
             //playerAnimator.SetBool("TriggerSummoningButton", true);
             summoningAnimIsTriggered = true;
-        } else if (!ReadActionButton())
+        } else if (!ReadActionButtonArcade())
         {
             playerAnimator.SetBool("TriggerSummoningButton", false);
             summoningAnimIsTriggered = false;
         }
 
-        if (isPlayer2 && !summoningAnimIsTriggered2 && ReadActionButton())
+        if (isPlayer2 && !summoningAnimIsTriggered2 && ReadActionButtonArcade())
         {
             playerAnimator2.SetBool("TriggerSummoningButton", true);
             summoningAnimIsTriggered2 = true;
         }
-        else if (!ReadActionButton())
+        else if (!ReadActionButtonArcade())
         {
             playerAnimator.SetBool("TriggerSummoningButton", false);
             summoningAnimIsTriggered2 = false;
@@ -3989,7 +4050,7 @@ public class TestCube : MonoBehaviour
     #endregion
     private void NewPush()
     {
-        if (ReadPushButton())
+        if (ReadPushButtonArcade())
         {
 
             holdPush = true;
@@ -4093,7 +4154,7 @@ public class TestCube : MonoBehaviour
     private void Push()
     {
         //if (ReadPushButton())
-        if(ReadPushReleaseButton())
+        if(ReadPushReleaseButtonArcade())
         {
             if(pushTimer >= pushCd)
             {

@@ -78,7 +78,7 @@ public class SummoningCircle : MonoBehaviour
             if (players[i] != null)
             {
                 //if the player presses the action button (run)
-                if (players[i].ReadActionButton() && !summoningActive)
+                if (players[i].ReadActionButtonArcade() && !summoningActive)
                 {
                     //activate summoning for this script at the player script
                     summoningActive = true;         
@@ -114,7 +114,7 @@ public class SummoningCircle : MonoBehaviour
         }
 
 
-        if (activePlayer != null && summoningActive && !activePlayer.ReadActionButton())
+        if (activePlayer != null && summoningActive && !activePlayer.ReadActionButtonArcade())
         {
             //if summoning is active and we let go of the action button exit the summon
             summoningActive = false;

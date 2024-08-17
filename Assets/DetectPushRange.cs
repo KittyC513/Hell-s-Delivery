@@ -163,7 +163,7 @@ public class DetectPushRange : MonoBehaviour
 
     private void TakeToy()
     {
-        if(testCube.withinToyRange && testCube.ReadActionButton() && !dropToy)
+        if(testCube.withinToyRange && testCube.ReadActionButtonArcade() && !dropToy)
         {
             toyIsPicked = true;
 
@@ -212,7 +212,7 @@ public class DetectPushRange : MonoBehaviour
             toyCollider.enabled = false;
             rb.isKinematic = true;
 
-            if (testCube.ReadActionButton() && timer >= 0.3f)
+            if (testCube.ReadActionButtonArcade() && timer >= 0.3f)
             {
                 dropToy = true;
             }
@@ -226,7 +226,7 @@ public class DetectPushRange : MonoBehaviour
             rb.isKinematic = true;
             
 
-            if (testCube.ReadActionButton() && timer >= 0.3f)
+            if (testCube.ReadActionButtonArcade() && timer >= 0.3f)
             {
                 dropToy = true;
             }
@@ -256,7 +256,7 @@ public class DetectPushRange : MonoBehaviour
 
     private void TakeBox()
     {
-        if (withinBoxRange && testCube.ReadActionButton() && !dropBox)
+        if (withinBoxRange && testCube.ReadActionButtonArcade() && !dropBox)
         {
             boxIsPicked = true;
 
@@ -305,7 +305,7 @@ public class DetectPushRange : MonoBehaviour
             boxCollider.enabled = false;
             rbBox.isKinematic = true;
 
-            if (testCube.ReadActionButton() && timerBox >= 0.3f)
+            if (testCube.ReadActionButtonArcade() && timerBox >= 0.3f)
             {
                 dropBox = true;
             }
@@ -319,7 +319,7 @@ public class DetectPushRange : MonoBehaviour
             rbBox.isKinematic = true;
 
 
-            if (testCube.ReadActionButton() && timerBox >= 0.3f)
+            if (testCube.ReadActionButtonArcade() && timerBox >= 0.3f)
             {
                 dropBox = true;
             }

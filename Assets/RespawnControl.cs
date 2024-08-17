@@ -1247,7 +1247,7 @@ public class RespawnControl : MonoBehaviour
                     }
                     SceneControl.instance.CloseDeliveryText();
                     SceneControl.instance.p1AtDoor = true;
-                    if (gameManager.p1.ReadActionButton())
+                    if (gameManager.p1.ReadActionButtonArcade())
                     {
                         if (SceneControl.instance.firstCustomer)
                         {
@@ -1273,7 +1273,7 @@ public class RespawnControl : MonoBehaviour
                     }
                     SceneControl.instance.CloseDeliveryText();
                     SceneControl.instance.p2AtDoor = true;
-                    if (gameManager.p2.ReadActionButton())
+                    if (gameManager.p2.ReadActionButtonArcade())
                     {
                         if (SceneControl.instance.firstCustomer)
                         {
@@ -1301,7 +1301,7 @@ public class RespawnControl : MonoBehaviour
                     SceneControl.instance.CloseDeliveryText();
                     SceneControl.instance.p1AtDoor = true;
 
-                    if (gameManager.p1.ReadActionButton())
+                    if (gameManager.p1.ReadActionButtonArcade())
                     {
                         if (SceneControl.instance.secondCustomer)
                         {
@@ -1328,7 +1328,7 @@ public class RespawnControl : MonoBehaviour
                     SceneControl.instance.CloseDeliveryText();
                     SceneControl.instance.p2AtDoor = true;
 
-                    if (gameManager.p2.ReadActionButton())
+                    if (gameManager.p2.ReadActionButtonArcade())
                     {
                         if (SceneControl.instance.secondCustomer)
                         {

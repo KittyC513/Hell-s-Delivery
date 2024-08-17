@@ -41,7 +41,7 @@ public class PressDeathButton : MonoBehaviour
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("P1Collider") && this.gameObject.tag == "OnDeathButton")
             {
-                if (GameManager.instance.p1.ReadActionButton())
+                if (GameManager.instance.p1.ReadActionButtonArcade())
                 {
                     isKilling = true;
                     if (!hasTriggered1)
@@ -62,7 +62,7 @@ public class PressDeathButton : MonoBehaviour
             if(other.gameObject.layer == LayerMask.NameToLayer("P1Collider") && this.gameObject.tag == "OnSavingButton")
             {
 
-                if (GameManager.instance.p1.ReadActionButton())
+                if (GameManager.instance.p1.ReadActionButtonArcade())
                 {
                     isSaving = true;
                     if (!hasTriggered1)
@@ -82,7 +82,7 @@ public class PressDeathButton : MonoBehaviour
             if (other.gameObject.layer == LayerMask.NameToLayer("P2Collider") && this.gameObject.tag == "OnDeathButton")
             {
 
-                if (GameManager.instance.p2.ReadActionButton())
+                if (GameManager.instance.p2.ReadActionButtonArcade())
                 {
                     isKilling1 = true;
                     if (!hasTriggered2)
@@ -100,7 +100,7 @@ public class PressDeathButton : MonoBehaviour
             }
             if (other.gameObject.layer == LayerMask.NameToLayer("P2Collider") && this.gameObject.tag == "OnSavingButton")
             {
-                if (GameManager.instance.p2.ReadActionButton())
+                if (GameManager.instance.p2.ReadActionButtonArcade())
                 {
                     isSaving1 = true;
                     if (!hasTriggered2)

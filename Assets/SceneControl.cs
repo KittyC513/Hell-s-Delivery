@@ -411,7 +411,7 @@ public class SceneControl : MonoBehaviour
             phoneRingText.SetActive(true);
         }
 
-        if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+        if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
         {           
             if (GameManager.instance.timesEnterHub < 1 && comicShowed)
             {
@@ -444,7 +444,7 @@ public class SceneControl : MonoBehaviour
                     StartCoroutine(SwitchCamToTutorialLevel());
                 }
 
-                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
                 {
                     dR.Stop();
                     radialUI.SetActive(false);
@@ -1256,7 +1256,7 @@ public class SceneControl : MonoBehaviour
                     }
 
 
-                    if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+                    if (GameManager.instance.p1.ReadPushButtonArcade() || GameManager.instance.p2.ReadPushButtonArcade())
                     {
                         if (!accept && delayTimer > 0.2f && !reject)
                         {
@@ -1268,7 +1268,7 @@ public class SceneControl : MonoBehaviour
 
                     }
 
-                    if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+                    if (GameManager.instance.p1.ReadActionButtonArcade() || GameManager.instance.p2.ReadActionButtonArcade())
                     {
                         if (!reject && delayTimer > 0.2f && !accept)
                         {
@@ -1303,7 +1303,7 @@ public class SceneControl : MonoBehaviour
                     }
 
 
-                    if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+                    if (GameManager.instance.p1.ReadPushButtonArcade() || GameManager.instance.p2.ReadPushButtonArcade())
                     {
                         if (!accept && delayTimer > 0.2f && !reject)
                         {
@@ -1315,7 +1315,7 @@ public class SceneControl : MonoBehaviour
 
                     }
 
-                    if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+                    if (GameManager.instance.p1.ReadActionButtonArcade() || GameManager.instance.p2.ReadActionButtonArcade())
                     {
                         if (!reject && delayTimer > 0.2f && !accept)
                         {
@@ -1568,7 +1568,7 @@ public class SceneControl : MonoBehaviour
             GameManager.instance.p1.isFreeze = true;
             GameManager.instance.p2.isFreeze = true;
 
-            if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+            if (GameManager.instance.p1.ReadPushButtonArcade() || GameManager.instance.p2.ReadPushButtonArcade())
             {
                 if (!skipTutorial)
                 {
@@ -1581,7 +1581,7 @@ public class SceneControl : MonoBehaviour
 
             }
 
-            if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+            if (GameManager.instance.p1.ReadActionButtonArcade() || GameManager.instance.p2.ReadActionButtonArcade())
             {
                 notSkipTutorial = true;
             }
