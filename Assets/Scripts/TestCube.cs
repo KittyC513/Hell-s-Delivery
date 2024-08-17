@@ -2372,14 +2372,19 @@ public class TestCube : MonoBehaviour
         {
             if(gameManager.player1 != null && gameManager.player2 != null)
             {
-                if (ReadActionButton())
-                {
-                    //print("Enter");
-                    isEntered = true;
+                //if (ReadActionButton())
+                //{
+                //    //print("Enter");
+                //    isEntered = true;
 
-                    //SceneControl.instance.LoadScene("MVPLevel");
-                    //change scene and enter tutorial level, set gameManger.sceneChanged to true               
+                //    //SceneControl.instance.LoadScene("MVPLevel");
+                //    //change scene and enter tutorial level, set gameManger.sceneChanged to true               
+                //}
+                if (ReadActionButtonArcade())
+                {
+                    isEntered = true;         
                 }
+                
             }
         }
 
@@ -3515,6 +3520,21 @@ public class TestCube : MonoBehaviour
     {
         if (triggerButton.ReadValue<float>() == 1) return true;
         else return false;
+    }
+
+    public bool ReadActionButtonArcade()
+    {
+        if (isPlayer1)
+        {
+            return Input.GetKey(KeyCode.Y);
+        }
+
+        if (isPlayer2)
+        {
+            return Input.GetKey(KeyCode.LeftBracket);
+        }
+
+        return false;
     }
 
     public bool ReadPushButton()
