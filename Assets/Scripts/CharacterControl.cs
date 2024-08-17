@@ -133,7 +133,17 @@ public class CharacterControl : MonoBehaviour
     private InputActionMap player, dialogue, pause;
     private InputAction move, run, parachute, cancelParachute, triggerButton;
 
- 
+    [Header("Arcade Movement")]
+    [SerializeField]
+    public float walkingSpeed;
+    [SerializeField]
+    public float runningSpeed;
+    [SerializeField]
+    public float movementSpeed;
+    [SerializeField]
+    public float buttonHoldingTime;
+
+
     private Camera camera;
 
     #region Initialization
@@ -182,7 +192,8 @@ public class CharacterControl : MonoBehaviour
         camera = cam;
 
         StateMachineUpdate();
-        GetStickInputs(camera, input);
+        //GetStickInputs(camera, input);
+        Movement();
         ApplyGravity();
         CheckSlope();
         //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
@@ -532,7 +543,96 @@ public class CharacterControl : MonoBehaviour
         }
         
     }
+    public void Movement() 
+    {
+        if (isPlayer1)
+        {
+            float inputH = Input.GetAxis("Horizontal");
+            float inputV = Input.GetAxis("Vertical");
+            if (inputH != 0 || inputV != 0)
+            {
+                buttonHoldingTime += Time.deltaTime;
+            } 
+            else if (inputH == 0 && inputV == 0)
+            {
+                buttonHoldingTime = 0;
+            }
 
+            if(buttonHoldingTime < 0.7f)
+            {
+                movementSpeed = walkingSpeed;
+            }
+            else
+            {
+                movementSpeed = runningSpeed;
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+
+            rb.velocity = new Vector3(inputH * movementSpeed, rb.velocity.y, inputV * movementSpeed);
+        }
+
+        if (isPlayer2)
+        {
+            float inputH = Input.GetAxis("Horizontal2");
+            float inputV = Input.GetAxis("Vertical2");
+            if (inputH != 0 || inputV != 0)
+            {
+                buttonHoldingTime += Time.deltaTime;
+            }
+            else if (inputH == 0 && inputV == 0)
+            {
+                buttonHoldingTime = 0;
+            }
+
+            if (buttonHoldingTime < 0.7f)
+            {
+                movementSpeed = walkingSpeed;
+            }
+            else
+            {
+                movementSpeed = runningSpeed;
+            }
+
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+
+            rb.velocity = new Vector3(inputH * movementSpeed, rb.velocity.y, inputV * movementSpeed);
+        }
+
+
+    }
     public void GetStickInputs(Camera cam, Vector2 input)
     {
 
