@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public GameObject player2;
     [SerializeField]
+    public GameObject player1Pref;
+    [SerializeField]
+    public GameObject player2Pref;
+    [SerializeField]
     private Transform startPoint1;
     [SerializeField]
     private Transform startPoint2;
@@ -251,14 +255,13 @@ public class GameManager : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         curSceneName = currentScene.name;
         //playerScore.p1Overall = 0;
-        //playerScore.p2Overall = 0;
-
-        
+        //playerScore.p2Overall = 0; 
 
     }
 
     private void Update()
     {
+        JoinGame();
         FindPlayer();
         
         //FindCamera();
@@ -279,8 +282,21 @@ public class GameManager : MonoBehaviour
 
         ShowDirection();
 
+    }
 
+    private void JoinGame()
+    {
+        if (Input.GetKey(KeyCode.Alpha1) && player1 == null)
+        {
+            Instantiate(player1Pref, startPoint1.position, startPoint1.rotation);
+            print("PLAYER1 JOIN");
+        }
 
+        if (Input.GetKey(KeyCode.Alpha2) && player2 == null)
+        {
+            Instantiate(player2Pref, startPoint2.position, startPoint2.rotation);
+            print("PLAYER2 JOIN");
+        }
     }
 
 
