@@ -263,7 +263,7 @@ public class GameManager : MonoBehaviour
     {
         JoinGame();
         FindPlayer();
-        
+        FindCamera();
         //FindCamera();
         DetectScene();
         PushCheck();
@@ -381,7 +381,39 @@ public class GameManager : MonoBehaviour
         player2.transform.rotation = P2rotation.rotation;
     }
 
+    void FindCamera()
+    {
+        int layerToFind1 = LayerMask.NameToLayer("Player1");
+        int layerToFind2 = LayerMask.NameToLayer("Player2");
 
+        if(cam1 == null)
+        {
+            objectsInScene = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+            foreach(GameObject obj in objectsInScene)
+            {
+                if(obj.layer == layerToFind1 && !camFound1)
+                {
+                    cam1 = obj;
+                    camFound1 = true;
+                }
+            }
+        }
+
+        if (cam2 == null)
+        {
+            objectsInScene = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+            foreach (GameObject obj in objectsInScene)
+            {
+                if (obj.layer == layerToFind2 && !camFound2)
+                {
+                    cam2 = obj;
+                    camFound2 = true;
+                }
+            }
+        }
+    }
 
 
 
@@ -396,7 +428,7 @@ public class GameManager : MonoBehaviour
 
             foreach (GameObject obj in objectsInScene)
             {
-                if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1 && !isNoisy1 && !camFound1)
+                if (obj.layer == layerToFind1 && p1 == null && !p1AnimFound && !p1UIFound && !p1UIFound1 && !isNoisy1)
                 {
                     player1 = obj;
                     p1 = obj.GetComponent<TestCube>();
@@ -431,18 +463,18 @@ public class GameManager : MonoBehaviour
                             noisy1.SetActive(false);
                         }
 
-                        if (child.CompareTag("Camera"))
-                        {
-                            cam1 = child.gameObject;
-                            camFound1 = true;
-                        }
+                        //if (child.CompareTag("Camera"))
+                        //{
+                        //    cam1 = child.gameObject;
+                        //    camFound1 = true;
+                        //}
 
                     }
 
 
                 }
 
-                if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2 && !isNoisy2 && !camFound2)
+                if (obj.layer == layerToFind2 && p2 == null && !p2AnimFound && !p2UIFound && !p2UIFound2 && !isNoisy2)
                 {
                     player2 = obj;
                     p2 = obj.GetComponent<TestCube>();
@@ -476,11 +508,11 @@ public class GameManager : MonoBehaviour
                             noisy2.SetActive(false);
                         }
 
-                        if (child.CompareTag("Camera"))
-                        {
-                            cam2 = child.gameObject;
-                            camFound2 = true;
-                        }
+                        //if (child.CompareTag("Camera"))
+                        //{
+                        //    cam2 = child.gameObject;
+                        //    camFound2 = true;
+                        //}
                     }
                 }
             }
@@ -786,6 +818,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         FindPlayer();
+        
         isBegin = false;
     }
 

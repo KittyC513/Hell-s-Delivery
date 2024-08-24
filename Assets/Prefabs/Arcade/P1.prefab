@@ -22967,7 +22967,6 @@ Transform:
   - {fileID: 5799165454817065925}
   - {fileID: 5833295307811076831}
   - {fileID: 2104986263188469152}
-  - {fileID: 5378363313791952369}
   - {fileID: 7702921713814562177}
   - {fileID: 2098256298170624910}
   - {fileID: 5997666380363426880}
@@ -23549,6 +23548,7 @@ MonoBehaviour:
   itemIsFull: 0
   facialAnim1: {fileID: 7950034225360510653}
   facialAnim2: {fileID: 4566007047213637302}
+  buttonTriggerTimer: 0
   curseParticles: {fileID: 1300184171627168018}
   pushParticle: {fileID: 7710601429064123696}
   chargeParticle: {fileID: 5546196213070680028}
@@ -24037,6 +24037,14 @@ MonoBehaviour:
   runningSpeed: 12
   movementSpeed: 0
   buttonHoldingTime: 0
+  jumpInput: 0
+  jumpHasBeenPressed: 0
+  inputH: 0
+  movementRotationSpeed: 700
+  inputV: 0
+  movementDirection: {x: 0, y: 0, z: 0}
+  desiredRotation: {x: 0, y: 0, z: 0, w: 0}
+  model: {fileID: 0}
 --- !u!114 &8618830420507679178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51660,7 +51668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1000986402882707267}
   - component: {fileID: 286071584916634141}
-  m_Layer: 27
+  m_Layer: 0
   m_Name: P1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -51676,7 +51684,7 @@ Transform:
   m_GameObject: {fileID: 5721425956201530182}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 13, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -51684,6 +51692,7 @@ Transform:
   - {fileID: 3056140121759277923}
   - {fileID: 8324715084138697135}
   - {fileID: 2418014029234597843}
+  - {fileID: 5378363313791952369}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &286071584916634141
@@ -57345,7 +57354,8 @@ GameObject:
   - component: {fileID: 4563032128126447613}
   - component: {fileID: 5903581330965990655}
   - component: {fileID: 574850115488040}
-  m_Layer: 0
+  - component: {fileID: 6075793538385285351}
+  m_Layer: 8
   m_Name: P1Cam
   m_TagString: Camera
   m_Icon: {fileID: 0}
@@ -57360,13 +57370,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6258548748242453789}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.046787035, y: 0.94453514, z: -0.28598228, w: 0.15452704}
-  m_LocalPosition: {x: -3.8240747, y: 7.9999995, z: 11.374377}
+  m_LocalRotation: {x: 0.08715578, y: -0, z: -0, w: 0.9961947}
+  m_LocalPosition: {x: -0.64, y: 11.73, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2665975483670654211}
-  m_LocalEulerAnglesHint: {x: 33.69, y: 0, z: 0}
+  m_Father: {fileID: 1000986402882707267}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!20 &2878398648056779871
 Camera:
   m_ObjectHideFlags: 0
@@ -57477,7 +57487,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6258548748242453789}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -57504,6 +57514,21 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6075793538385285351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6258548748242453789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b87a51708e4034d846a232be6c0674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2665975483670654211}
+  offset: {x: 0, y: 5, z: -10}
+  smoothSpeed: 0.125
 --- !u!1 &6262496114816067434
 GameObject:
   m_ObjectHideFlags: 0

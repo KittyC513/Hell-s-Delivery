@@ -146,7 +146,18 @@ public class CharacterControl : MonoBehaviour
     public bool jumpInput;
     [SerializeField]
     public bool jumpHasBeenPressed;
-
+    [SerializeField]
+    public float inputH;
+    [SerializeField]
+    public float movementRotationSpeed;
+    [SerializeField]
+    public float inputV;
+    [SerializeField]
+    public Vector3 movementDirection;
+    [SerializeField]
+    public Quaternion desiredRotation;
+    [SerializeField]
+    public GameObject model;
 
     private Camera camera;
 
@@ -552,22 +563,23 @@ public class CharacterControl : MonoBehaviour
         }
         
     }
-    public void Movement() 
+    public void Movement()
     {
         if (isPlayer1)
         {
             float inputH = Input.GetAxis("Horizontal");
             float inputV = Input.GetAxis("Vertical");
+
             if (inputH != 0 || inputV != 0)
             {
                 buttonHoldingTime += Time.deltaTime;
-            } 
+            }
             else if (inputH == 0 && inputV == 0)
             {
                 buttonHoldingTime = 0;
             }
 
-            if(buttonHoldingTime < 0.7f)
+            if (buttonHoldingTime < 0.7f)
             {
                 movementSpeed = walkingSpeed;
             }
@@ -575,25 +587,21 @@ public class CharacterControl : MonoBehaviour
             {
                 movementSpeed = runningSpeed;
             }
+            
+            movementDirection = new Vector3(inputH, 0, inputV);
 
-            if (Input.GetKey(KeyCode.W))
+            // Check if there is any movement input
+            if (movementDirection != Vector3.zero)
             {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                transform.rotation = Quaternion.Euler(0, 180, 0);
+                // Normalize direction to ensure consistent speed
+                movementDirection = movementDirection.normalized;
+                // Move the player
+                rb.velocity = new Vector3(movementDirection.x * movementSpeed, rb.velocity.y, movementDirection.z * movementSpeed);
+                desiredRotation = Quaternion.LookRotation(movementDirection);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+
             }
 
-            if (Input.GetKey(KeyCode.A))
-            {
-                transform.rotation = Quaternion.Euler(0, -90, 0);
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                transform.rotation = Quaternion.Euler(0, 90, 0);
-            }
-            rb.velocity = new Vector3(inputH * movementSpeed, rb.velocity.y, inputV * movementSpeed);
         }
 
         if (isPlayer2)
@@ -618,27 +626,21 @@ public class CharacterControl : MonoBehaviour
                 movementSpeed = runningSpeed;
             }
 
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-            }
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                transform.rotation = Quaternion.Euler(0, 180, 0);
-            }
+            movementDirection = new Vector3(inputH, 0, inputV);
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+            // Check if there is any movement input
+            if (movementDirection != Vector3.zero)
             {
-                transform.rotation = Quaternion.Euler(0, -90, 0);
-            }
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                transform.rotation = Quaternion.Euler(0, 90, 0);
-            }
+                // Normalize direction to ensure consistent speed
+                movementDirection = movementDirection.normalized;
+                // Move the player
+                rb.velocity = new Vector3(movementDirection.x * movementSpeed, rb.velocity.y, movementDirection.z * movementSpeed);
+                desiredRotation = Quaternion.LookRotation(movementDirection);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
 
-            rb.velocity = new Vector3(inputH * movementSpeed, rb.velocity.y, inputV * movementSpeed);
-        }
-
+            }
+                      
+        }   
 
     }
     public void GetStickInputs(Camera cam, Vector2 input)

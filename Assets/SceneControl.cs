@@ -473,7 +473,7 @@ public class SceneControl : MonoBehaviour
             radialUI.SetActive(true);
             if (!TutorialCamControl.instance.cutsceneIsCompleted)
             {
-                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
                 {
                     StartCoroutine(TutorialCamControl.instance.StopMoveCamStart1());
                     TutorialCamControl.instance.endTutorial = true;
@@ -495,7 +495,7 @@ public class SceneControl : MonoBehaviour
                 GameManager.instance.p2.isFreeze = true;
                 radialUI.SetActive(true);
                 //devilSprite.SetActive(false);
-                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
                 {
                     if (!GameManager.instance.p1.Dialogue3_2 && !GameManager.instance.p2.Dialogue3_2)
                     {
@@ -526,7 +526,7 @@ public class SceneControl : MonoBehaviour
             if (!LalahdialogueEnds && LalahConversationStart)
             {
                 radialUI.SetActive(true);
-                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
                 {
                     dR.Stop();
                     SwitchCameraToMain();
@@ -554,7 +554,7 @@ public class SceneControl : MonoBehaviour
                 GameManager.instance.p1.isFreeze = true;
                 GameManager.instance.p2.isFreeze = true;
                 radialUI.SetActive(true);
-                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
                 {
                     if (!GameManager.instance.p1.Dialogue1_2 && !GameManager.instance.p2.Dialogue1_2)
                     {
@@ -608,7 +608,7 @@ public class SceneControl : MonoBehaviour
         {
             radialUI.SetActive(true);
 
-            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+            if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
             {
                 StartCoroutine(Level1CamControl.instance.StopMoveCam1());
                 radialUI.SetActive(false);       
@@ -626,7 +626,7 @@ public class SceneControl : MonoBehaviour
         {
             radialUI.SetActive(true);
 
-            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+            if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
             {
                 StartCoroutine(Level1CamControl.instance.StopMoveCam1());
                 radialUI.SetActive(false);

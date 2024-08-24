@@ -3605,7 +3605,7 @@ public class TestCube : MonoBehaviour
                 buttonTriggerTimer = 0;
             }
 
-            if(buttonTriggerTimer >= 1.5f)
+            if(buttonTriggerTimer >= 1.3f)
             {
                 return true;
             }
@@ -3626,7 +3626,7 @@ public class TestCube : MonoBehaviour
                 buttonTriggerTimer = 0;
             }
 
-            if (buttonTriggerTimer >= 1.5f)
+            if (buttonTriggerTimer >= 1.3f)
             {
                 return true;
             }
