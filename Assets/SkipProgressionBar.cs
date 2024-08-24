@@ -58,7 +58,7 @@ public class SkipProgressionBar : MonoBehaviour
     {
         if(GameManager.instance.curSceneName == "Tutorial")
         {
-            if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
+            if (GameManager.instance.p1.ReadSkipTriggerButtonArcade() || GameManager.instance.p2.ReadSkipTriggerButtonArcade())
             {
                 timer += Time.deltaTime;
                 radialUI.enabled = true;
@@ -71,7 +71,7 @@ public class SkipProgressionBar : MonoBehaviour
                     radialUI.fillAmount = maxTimer;
                 }
             }
-            else if (!GameManager.instance.p1.ReadSkipTriggerButton() && !GameManager.instance.p2.ReadSkipTriggerButton())
+            else if (!GameManager.instance.p1.ReadSkipTriggerButtonArcade() && !GameManager.instance.p2.ReadSkipTriggerButtonArcade())
             {
                 timer = 0;
                 radialUI.fillAmount = timer;
@@ -79,7 +79,7 @@ public class SkipProgressionBar : MonoBehaviour
         }
         else if (GameManager.instance.curSceneName == "HubStart")
         {
-            if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
+            if (GameManager.instance.p1.ReadSkipTriggerButtonArcade() || GameManager.instance.p2.ReadSkipTriggerButtonArcade())
             {
                 timer += Time.deltaTime;
                 //print("timer" + timer);
@@ -94,7 +94,7 @@ public class SkipProgressionBar : MonoBehaviour
                     radialUI.fillAmount = maxTimer;
                 }
             }
-            else if(!GameManager.instance.p1.ReadSkipTriggerButton() && !GameManager.instance.p2.ReadSkipTriggerButton())
+            else if(!GameManager.instance.p1.ReadSkipTriggerButtonArcade() && !GameManager.instance.p2.ReadSkipTriggerButtonArcade())
             {
                 timer = 0;
                 radialUI.fillAmount = timer;
@@ -102,7 +102,7 @@ public class SkipProgressionBar : MonoBehaviour
         }
         else if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
         {
-            if (GameManager.instance.p1.ReadSkipTriggerButton() || GameManager.instance.p2.ReadSkipTriggerButton())
+            if (GameManager.instance.p1.ReadSkipTriggerButtonArcade() || GameManager.instance.p2.ReadSkipTriggerButtonArcade())
             {
                 timer += Time.deltaTime;
                 //print("timer" + timer);
@@ -117,7 +117,7 @@ public class SkipProgressionBar : MonoBehaviour
                     radialUI.fillAmount = maxTimer;
                 }
             }
-            else if (!GameManager.instance.p1.ReadSkipTriggerButton() && !GameManager.instance.p2.ReadSkipTriggerButton())
+            else if (!GameManager.instance.p1.ReadSkipTriggerButtonArcade() && !GameManager.instance.p2.ReadSkipTriggerButtonArcade())
             {
                 timer = 0;
                 radialUI.fillAmount = timer;

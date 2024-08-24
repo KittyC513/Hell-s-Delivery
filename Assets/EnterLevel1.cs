@@ -26,25 +26,25 @@ public class EnterLevel1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.R))
-        {
-            GameManager.instance.changeSceneTimes = 4;
-            EnterLevel();
+        //if (Input.GetKey(KeyCode.Alpha1))
+        //{
+        //    GameManager.instance.changeSceneTimes = 4;
+        //    EnterLevel();
 
-        }
-        if (Input.GetKey(KeyCode.T))
-        {
-            GameManager.instance.changeSceneTimes = 2;
-            EnterTutorial();
+        //}
+        //if (Input.GetKey(KeyCode.Alpha0))
+        //{
+        //    GameManager.instance.changeSceneTimes = 2;
+        //    EnterTutorial();
 
-        }
+        //}
 
-        if (Input.GetKey(KeyCode.Y))
-        {
-            GameManager.instance.changeSceneTimes = 6;
-            EnterMVPLevel();
+        //if (Input.GetKey(KeyCode.Alpha2))
+        //{
+        //    GameManager.instance.changeSceneTimes = 6;
+        //    EnterMVPLevel();
 
-        }
+        //}
     }
 
     public void EnterLevel()

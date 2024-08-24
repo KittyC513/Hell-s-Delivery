@@ -14,13 +14,13 @@ public class mvpSwitcher : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SceneManager.LoadScene("MVPLevel");
-        }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            SceneManager.LoadScene("Level3");
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    SceneManager.LoadScene("MVPLevel");
+        //}
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    SceneManager.LoadScene("Level3");
+        //}
     }
 }

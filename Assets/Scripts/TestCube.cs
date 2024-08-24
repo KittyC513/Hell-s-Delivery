@@ -33,7 +33,7 @@ public class TestCube : MonoBehaviour
 
     [SerializeField] private InputActionAsset inputAsset;
     [SerializeField] private InputActionMap player, dialogue, pause;
-    [SerializeField] public InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger,pushRelease, EmoteUp, EmoteRight, EmoteDown, EmoteLeft;
+    [SerializeField] public InputAction move, dash, jump, parachute, cancelParachute, triggerButton, pull, close, push, skip, skipTrigger, pushRelease, EmoteUp, EmoteRight, EmoteDown, EmoteLeft;
     [SerializeField] public bool isPicking;
 
     private bool isOnCircle;
@@ -270,7 +270,7 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool pushStartTimer;
     [SerializeField]
-    private float pushDuration; 
+    private float pushDuration;
     [SerializeField]
     private float pushHoldDuration;
     [SerializeField]
@@ -436,8 +436,8 @@ public class TestCube : MonoBehaviour
 
     [Header("Geiser")]
     public float geiserForce;
-    
-    
+
+
     [SerializeField]
     private bool wasFoundLV;
 
@@ -606,6 +606,11 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     private Animator facialAnim2;
 
+    [Header("Skip Button")]
+    [SerializeField]
+    private float buttonTriggerTimer;
+
+
     private void Awake()
     {
         isFreeze = false;
@@ -722,7 +727,7 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(bM != null)
+        if (bM != null)
         {
             if (isPlayer1 && !bM.isboxing && !rC.Player1Die)
             {
@@ -755,7 +760,7 @@ public class TestCube : MonoBehaviour
         if (curSceneName == "Level1" || curSceneName == "MVPLevel")
         {
             initBoxing();
-        } else if(curSceneName == "HubStart")
+        } else if (curSceneName == "HubStart")
         {
             initBoxing();
         }
@@ -768,11 +773,11 @@ public class TestCube : MonoBehaviour
                 chargeParticle.Play();
             }
             chargeToggle = false;
-            
+
         } else if (ReadPushReleaseButtonArcade())
         {
             pushParticle.Play();
-            if(chargeToggle == false)
+            if (chargeToggle == false)
             {
                 chargeParticle.Stop();
             }
@@ -797,9 +802,9 @@ public class TestCube : MonoBehaviour
 
                 if (curSceneName == "TitleScene" || curSceneName == "HubStart")
                 {
-                    if(charController.rb != null)
+                    if (charController.rb != null)
                     {
-                        if(bM != null)
+                        if (bM != null)
                         {
                             if (bM.isboxing)
                             {
@@ -828,19 +833,19 @@ public class TestCube : MonoBehaviour
                     }
 
                     //print("use new movementCal");
-                }else if (curSceneName == "Level1" && bM.isboxing || curSceneName == "MVPLevel" && bM.isboxing)
+                } else if (curSceneName == "Level1" && bM.isboxing || curSceneName == "MVPLevel" && bM.isboxing)
                 {
                     if (charController.rb != null)
-                        {
-                            charController.RunMovement(boxcam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
-                        }
-                    
+                    {
+                        charController.RunMovement(boxcam, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
+                    }
+
                 }
                 else
                 {
                     if (charController.rb != null)
                     {
-                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1,isPlayer2, holdPush);
+                        charController.RunMovement(playerCamera, canParachute, move.ReadValue<Vector2>(), jump, parachuteObj, tooHeavy, isOnCircle, isFreeze, isPlayer1, isPlayer2, holdPush);
                     }
 
                 }
@@ -856,6 +861,7 @@ public class TestCube : MonoBehaviour
                     }
                     else
                     {
+                        charController.movementSpeed = 0;
                         charController.ApplyGravity();
                         playerAnimator.SetFloat("speed", 0f);
                     }
@@ -876,7 +882,7 @@ public class TestCube : MonoBehaviour
                 }
             }
 
-            if(curSceneName != "LeveL1")
+            if (curSceneName != "LeveL1")
             {
                 JumpOverIntruction.SetActive(false);
             }
@@ -890,19 +896,19 @@ public class TestCube : MonoBehaviour
             //pushShaderSetup();
 
 
-         }
+        }
 
         DetectPushRange();
 
         if (curSceneName == scene3 || curSceneName == scene6)
         {
-            package = null; 
+            package = null;
         }
 
         if (curSceneName == scene5 || curSceneName == scene7 || curSceneName == scene9 || curSceneName == scene1 || curSceneName == "New CC" || curSceneName == scene10)
         {
             package = GameObject.FindGameObjectWithTag("Package");
-            
+
         }
 
         if (curSceneName == "Level1" || curSceneName == "Tutorial" || curSceneName == "MVPLevel" || curSceneName == "Level3")
@@ -921,14 +927,14 @@ public class TestCube : MonoBehaviour
             {
                 canParachute = true;
             }
-            
+
         }
         else
         {
             canParachute = false;
         }
 
-            JoinGameTitle();
+        JoinGameTitle();
         //PlayerPosition();
 
 
@@ -940,7 +946,7 @@ public class TestCube : MonoBehaviour
 
         GetPullObjects();
 
-        if(startTimer)
+        if (startTimer)
         {
             dashCdTimer += Time.deltaTime;
         }
@@ -964,7 +970,7 @@ public class TestCube : MonoBehaviour
         {
             charController.LateUpdateFunctions();
         }
-       
+
     }
 
     private void FixedUpdate()
@@ -995,7 +1001,7 @@ public class TestCube : MonoBehaviour
             Interacte();
             Talk();
             OnTV();
- 
+
         }
         if (curSceneName == scene6)
         {
@@ -1069,7 +1075,7 @@ public class TestCube : MonoBehaviour
                 parachuteObj.SetActive(false);
             }
         }
-     
+
 
 
     }
@@ -1144,7 +1150,7 @@ public class TestCube : MonoBehaviour
                 currentSpeed += accel * Time.deltaTime;
 
             }
-            else if (!isRunning && !isGliding && !isPulling && !isDashing) 
+            else if (!isRunning && !isGliding && !isPulling && !isDashing)
             {
                 float accel = (maxSpeed / timeToWalk);
                 currentSpeed += accel * Time.deltaTime;
@@ -1224,7 +1230,7 @@ public class TestCube : MonoBehaviour
 
                             if (!isDashing)
                             {
-                                if(mainCam != null)
+                                if (mainCam != null)
                                 {
                                     forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
 
@@ -1234,7 +1240,7 @@ public class TestCube : MonoBehaviour
                             }
                             else
                             {
-                                if(mainCam != null)
+                                if (mainCam != null)
                                 {
                                     forceDirection += faceDir.z * GetCameraForward(mainCam) * dashSpeed;
 
@@ -1272,7 +1278,7 @@ public class TestCube : MonoBehaviour
 
                             if (!isDashing)
                             {
-                                if(playerCamera != null)
+                                if (playerCamera != null)
                                 {
                                     forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                                     forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
@@ -1281,7 +1287,7 @@ public class TestCube : MonoBehaviour
                             }
                             else
                             {
-                                if(playerCamera != null)
+                                if (playerCamera != null)
                                 {
                                     forceDirection += faceDir.x * GetCameraRight(playerCamera) * dashSpeed;
                                     forceDirection += faceDir.z * GetCameraForward(playerCamera) * dashSpeed;
@@ -1293,7 +1299,7 @@ public class TestCube : MonoBehaviour
                         }
                         else
                         {
-                            if(playerCamera != null)
+                            if (playerCamera != null)
                             {
 
                                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
@@ -1315,19 +1321,19 @@ public class TestCube : MonoBehaviour
                     {
                         if (!isDashing)
                         {
-                            if(camManager.instance.puzzle1Cam != null)
+                            if (camManager.instance.puzzle1Cam != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1Cam) * currentSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1Cam) * currentSpeed;
                             }
-                            
-                            if(camManager.instance.puzzle2Cam != null)
+
+                            if (camManager.instance.puzzle2Cam != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2Cam) * currentSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2Cam) * currentSpeed;
                             }
-                            
-                            if(camManager.instance.puzzle2CamP1 != null)
+
+                            if (camManager.instance.puzzle2CamP1 != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2CamP1) * currentSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2CamP1) * currentSpeed;
@@ -1384,7 +1390,7 @@ public class TestCube : MonoBehaviour
                         {
                             if (!isDashing)
                             {
-                                if(mainCam != null)
+                                if (mainCam != null)
                                 {
                                     forceDirection += faceDir.x * GetCameraRight(mainCam) * currentSpeed;
                                     forceDirection += faceDir.z * GetCameraForward(mainCam) * currentSpeed;
@@ -1393,7 +1399,7 @@ public class TestCube : MonoBehaviour
                             }
                             else
                             {
-                                if(mainCam != null)
+                                if (mainCam != null)
                                 {
                                     forceDirection += faceDir.x * GetCameraRight(mainCam) * dashSpeed;
                                     forceDirection += faceDir.z * GetCameraForward(mainCam) * dashSpeed;
@@ -1427,7 +1433,7 @@ public class TestCube : MonoBehaviour
                         {
                             if (!isDashing)
                             {
-                                if(playerCamera != null)
+                                if (playerCamera != null)
                                 {
                                     forceDirection += faceDir.x * GetCameraRight(playerCamera) * currentSpeed;
                                     forceDirection += faceDir.z * GetCameraForward(playerCamera) * currentSpeed;
@@ -1436,7 +1442,7 @@ public class TestCube : MonoBehaviour
                             }
                             else
                             {
-                                if(playerCamera != null)
+                                if (playerCamera != null)
                                 {
                                     forceDirection += faceDir.x * GetCameraRight(playerCamera) * dashSpeed;
                                     forceDirection += faceDir.z * GetCameraForward(playerCamera) * dashSpeed;
@@ -1449,7 +1455,7 @@ public class TestCube : MonoBehaviour
                         }
                         else
                         {
-                            if(playerCamera != null)
+                            if (playerCamera != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(playerCamera) * pullingSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(playerCamera) * pullingSpeed;
@@ -1467,18 +1473,18 @@ public class TestCube : MonoBehaviour
                     {
                         if (!isDashing)
                         {
-                            if(camManager.instance.puzzle1CamP2 != null)
+                            if (camManager.instance.puzzle1CamP2 != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle1CamP2) * currentSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle1CamP2) * currentSpeed;
                             }
-                            
+
                             if (camManager.instance.puzzle2Cam2 != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2Cam2) * currentSpeed;
                                 forceDirection += faceDir.z * GetCameraForward(camManager.instance.puzzle2Cam2) * currentSpeed;
                             }
-                            
+
                             if (camManager.instance.puzzle2CamP2 != null)
                             {
                                 forceDirection += faceDir.x * GetCameraRight(camManager.instance.puzzle2CamP2) * currentSpeed;
@@ -1599,7 +1605,7 @@ public class TestCube : MonoBehaviour
 
         }
 
-       
+
 
 
     }
@@ -1827,8 +1833,8 @@ public class TestCube : MonoBehaviour
 
 
                             playerSounds.packagePick.Post(this.gameObject);
-                            
-                            if(GameManager.instance.p2.objectGrabbable != null)
+
+                            if (GameManager.instance.p2.objectGrabbable != null)
                             {
                                 GameManager.instance.p2.objectGrabbable = null;
                             }
@@ -1849,7 +1855,7 @@ public class TestCube : MonoBehaviour
                             //    objectGrabbable.Grab(itemContainer);
                             //}
                             playerSounds.packagePick.Post(this.gameObject);
-                            
+
                             if (GameManager.instance.p1.objectGrabbable != null)
                             {
                                 GameManager.instance.p1.objectGrabbable = null;
@@ -1864,7 +1870,7 @@ public class TestCube : MonoBehaviour
         {
             if (objectGrabbable == null)
             {
-                if(Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistanceHeavy, pickableMask))
+                if (Physics.SphereCast(playerPos.position, pickRadiusHeavy, playerPos.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 //if(Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistanceHeavy, pickableMask))
                 {
                     //print("Package");
@@ -1918,18 +1924,18 @@ public class TestCube : MonoBehaviour
     {
         if (isPlayer1)
         {
-            if (objectGrabbable != null) 
+            if (objectGrabbable != null)
             {
                 if (objectGrabbable.isHeavy && rC.Player1isCarrying)
                 {
                     tooHeavy = true;
                 }
-                else if(!objectGrabbable.isHeavy || !rC.Player1isCarrying)
+                else if (!objectGrabbable.isHeavy || !rC.Player1isCarrying)
                 {
                     tooHeavy = false;
                 }
             }
-            else 
+            else
             {
                 tooHeavy = false;
             }
@@ -1943,7 +1949,7 @@ public class TestCube : MonoBehaviour
                 {
                     tooHeavy = true;
                 }
-                else if(!objectGrabbable.isHeavy || !rC.Player2isCarrying)
+                else if (!objectGrabbable.isHeavy || !rC.Player2isCarrying)
                 {
                     tooHeavy = false;
                 }
@@ -2184,7 +2190,7 @@ public class TestCube : MonoBehaviour
 
     public void TakePackageFunction()
     {
-        if(objectGrabbable == null)
+        if (objectGrabbable == null)
         {
             isDropped = false;
         }
@@ -2256,14 +2262,14 @@ public class TestCube : MonoBehaviour
         }
     }
 
-      
+
 
     #endregion
 
 
     void Interacte()
     {
-        if(bM != null)
+        if (bM != null)
         {
             if (bM.minigameStart)
             {
@@ -2370,7 +2376,7 @@ public class TestCube : MonoBehaviour
 
         if (withinEntranceRange && curSceneName == "TitleScene")
         {
-            if(gameManager.player1 != null && gameManager.player2 != null)
+            if (gameManager.player1 != null && gameManager.player2 != null)
             {
                 //if (ReadActionButton())
                 //{
@@ -2382,9 +2388,9 @@ public class TestCube : MonoBehaviour
                 //}
                 if (ReadActionButtonArcade())
                 {
-                    isEntered = true;         
+                    isEntered = true;
                 }
-                
+
             }
         }
 
@@ -2404,7 +2410,7 @@ public class TestCube : MonoBehaviour
 
     void Talk()
     {
-        if(SceneControl.instance.startLevel2 && !Dialogue1)
+        if (SceneControl.instance.startLevel2 && !Dialogue1)
         {
             SceneControl.instance.WertherConversationStart = true;
             //print("interactiNPC1");
@@ -2468,13 +2474,13 @@ public class TestCube : MonoBehaviour
             {
                 if (!SceneControl.instance.startLevel2 && SceneControl.instance.UI2turnOff)
                 {
-                    if(gameManager.LalahRequestWasCompleted && gameManager.LalahLeft)
+                    if (gameManager.LalahRequestWasCompleted && gameManager.LalahLeft)
                     {
                         SceneControl.instance.level2Overview = true;
                         gameManager.p1.isFreeze = true;
                         gameManager.p2.isFreeze = true;
-                    
-                    }else if (!gameManager.LalahRequestWasCompleted && !GameManager.instance.acceptLalahOrder)
+
+                    } else if (!gameManager.LalahRequestWasCompleted && !GameManager.instance.acceptLalahOrder)
                     {
                         SceneControl.instance.level2Overview = true;
                         gameManager.p1.isFreeze = true;
@@ -2487,7 +2493,7 @@ public class TestCube : MonoBehaviour
                         SceneControl.instance.level2Overview = false;
                         SceneControl.instance.UI2turnOff = true;
                     }
-                }               
+                }
             }
             if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1 && !SceneControl.instance.wertherdialogueEnds)
             {
@@ -2516,8 +2522,8 @@ public class TestCube : MonoBehaviour
                 }
                 if (isPlayer2)
                 {
-                    gameManager.p1.Dialogue1_2 = true; 
-                    Dialogue1_2 = true;;
+                    gameManager.p1.Dialogue1_2 = true;
+                    Dialogue1_2 = true; ;
                 }
             }
         }
@@ -2525,10 +2531,10 @@ public class TestCube : MonoBehaviour
         if (NPC2Interacting)
         {
             if (!Dialogue3 && gameManager.timesEnterHub >= 1 && !Dialogue3_2)
-            {               
+            {
                 if (!SceneControl.instance.startLevel1 && SceneControl.instance.UITurnOff)
                 {
-                    if(gameManager.WertherRequestWasCompleted && gameManager.WertherLeft)
+                    if (gameManager.WertherRequestWasCompleted && gameManager.WertherLeft)
                     {
                         SceneControl.instance.level1Overview = true;
                         gameManager.p1.isFreeze = true;
@@ -2540,8 +2546,8 @@ public class TestCube : MonoBehaviour
                         gameManager.p1.isFreeze = true;
                         gameManager.p2.isFreeze = true;
                     }
-                    
-                    if(SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
+
+                    if (SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
                     {
                         SceneControl.instance.level1Overview = true;
                         SceneControl.instance.level2Overview = false;
@@ -2552,7 +2558,7 @@ public class TestCube : MonoBehaviour
                 }
             }
 
-            if(!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3 && !SceneControl.instance.LalahdialogueEnds)
+            if (!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3 && !SceneControl.instance.LalahdialogueEnds)
             {
                 SceneControl.instance.LalahConversationStart = true;
                 print("interactiNPC23_2");
@@ -2639,7 +2645,7 @@ public class TestCube : MonoBehaviour
                     gameManager.p2.turnOnTV = false;
 
                 }
-                if(SelectMinigame.instance.chooseOne && jump.ReadValue<float>() == 1)
+                if (SelectMinigame.instance.chooseOne && jump.ReadValue<float>() == 1)
                 {
                     bM.StartGameHub();
                 }
@@ -2651,7 +2657,7 @@ public class TestCube : MonoBehaviour
             }
 
         }
-        else if(!onTv || !bM.isboxing)
+        else if (!onTv || !bM.isboxing)
         {
             if (!SceneControl.instance.notSkipTutorial && !SceneControl.instance.level1Overview && !SceneControl.instance.level2Overview)
             {
@@ -2851,12 +2857,12 @@ public class TestCube : MonoBehaviour
             }
 
         }
-        
+
     }
 
     private void DoPush()
     {
-        if(isPlayer1 && p1pushed && !pushIsIntervinedP1)
+        if (isPlayer1 && p1pushed && !pushIsIntervinedP1)
         {
             P1Push();
 
@@ -2922,7 +2928,7 @@ public class TestCube : MonoBehaviour
                 }
 
             }
-            else if(gameManager.curSceneName != "Level1" && gameManager.curSceneName != "MVPLevel")
+            else if (gameManager.curSceneName != "Level1" && gameManager.curSceneName != "MVPLevel")
             {
                 p1Steal = true;
                 gameManager.p2.objectGrabbable = null;
@@ -3000,7 +3006,7 @@ public class TestCube : MonoBehaviour
 
         // Calculate force direction and distance
         Vector3 forceDir = otherRB.transform.position - transform.position;
-        
+
         float distance = forceDir.magnitude;
 
         // Normalize the force direction to get the unit vector
@@ -3013,12 +3019,12 @@ public class TestCube : MonoBehaviour
         if (forceMagnitude2 <= oriPushForce)
         {
             forceMagnitude2 = oriPushForce;
-        } 
+        }
         else
         {
             forceMagnitude2 = pushForce * pushHoldTime;
         }
-        
+
         //print("ForceMagnitude2" + forceMagnitude2);
 
         float elapsedTime = 0f;
@@ -3026,7 +3032,7 @@ public class TestCube : MonoBehaviour
 
         p1Anim.SetBool("beingPush", true);
         gameManager.p1.facialAnim1.SetBool("isShocked", true);
-        
+
         if (isPlayer1)
         {
             curseParticles.SetActive(true);
@@ -3046,14 +3052,14 @@ public class TestCube : MonoBehaviour
                     gameManager.p1.objectGrabbable = null;
                 }
 
-            } 
+            }
             else if (gameManager.curSceneName != "Level1" && gameManager.curSceneName != "MVPLevel")
             {
                 p2Steal = true;
                 gameManager.p1.objectGrabbable = null;
             }
 
-            
+
 
         }
 
@@ -3084,12 +3090,12 @@ public class TestCube : MonoBehaviour
     void P2Push()
     {
         StartCoroutine(P2PushCoroutine());
-        
+
     }
 
     void P2Damage()
     {
-        
+
         if ((gameManager.curSceneName == "Level1" || gameManager.curSceneName == "HubStart") && bM != null)
         {
             if (bM.isboxing && isPlayer2 && p2pushed)
@@ -3126,7 +3132,7 @@ public class TestCube : MonoBehaviour
         OutlineActivate();
         //pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
-        
+
         if (pushCDtimer < 1)
         {
             //pushCDSlider.value = pushCDtimer;
@@ -3154,7 +3160,7 @@ public class TestCube : MonoBehaviour
         {
             curseParticles.SetActive(false);
         }
-        
+
     }
 
     IEnumerator StopBeingPushedP2()
@@ -3162,7 +3168,7 @@ public class TestCube : MonoBehaviour
         OutlineActivate();
         //pushCDSlider.gameObject.SetActive(true);
         pushCDtimer += Time.deltaTime;
-        
+
         if (pushCDtimer < 1)
         {
             //pushCDSlider.value = pushCDtimer;
@@ -3189,10 +3195,10 @@ public class TestCube : MonoBehaviour
         {
             curseParticles.SetActive(false);
         }
-        
+
     }
 
-    
+
     #endregion
 
 
@@ -3207,7 +3213,7 @@ public class TestCube : MonoBehaviour
                 //GameManager.instance.p2.objectGrabbable = null;
 
             }
-            
+
             if (rC.Player1Die && rC.Player2isCarrying)
             {
                 //Debug.Log("Player1die" + rC.Player1Die);
@@ -3216,7 +3222,7 @@ public class TestCube : MonoBehaviour
 
             }
         }
-       
+
         if (isPlayer2 && p1rc != null)
         {
             if (p1rc.Player1Die && rC.Player1isCarrying)
@@ -3225,7 +3231,7 @@ public class TestCube : MonoBehaviour
                 //p1rc.Player1Die = false;
                 GameManager.instance.p1.objectGrabbable = null;
             }
-            
+
             if (rC.Player2Die && rC.Player1isCarrying)
             {
                 //Debug.Log("Player2die" + rC.Player2Die);
@@ -3272,7 +3278,7 @@ public class TestCube : MonoBehaviour
             //jumpSpeed = jumpForce;
             //isJumping = true;
             //canJump = false;
-            
+
             jumpButtonPressedTime = Time.time;
 
         }
@@ -3393,7 +3399,7 @@ public class TestCube : MonoBehaviour
     {
         if (curSceneName == scene5 || curSceneName == "New CC" || curSceneName == scene10)
         {
-            if (!bM.isboxing) { 
+            if (!bM.isboxing) {
             }
             canParachute = true;
             if (isInAir || isJumping)
@@ -3401,14 +3407,14 @@ public class TestCube : MonoBehaviour
 
                 if (!isGliding)
                 {
-                    
+
                 }
 
                 if (!useNewMovement)
                 {
                     forceDirection += Vector3.up * parachuteSpeed;
                 }
-           
+
 
                 //forceDirection += Vector3.up * parachuteSpeed;
 
@@ -3436,12 +3442,12 @@ public class TestCube : MonoBehaviour
 
     void ShowParachuteInstruction()
     {
-        if(curSceneName == "MVPLevel")
+        if (curSceneName == "MVPLevel")
         {
             if (inParachuteArea)
             {
                 parachuteInstruction.SetActive(true);
-            } 
+            }
             else
             {
                 parachuteInstruction.SetActive(false);
@@ -3530,7 +3536,7 @@ public class TestCube : MonoBehaviour
         }
 
         return false;
-    } 
+    }
 
     public bool ReadActionButton()
     {
@@ -3590,15 +3596,48 @@ public class TestCube : MonoBehaviour
     {
         if (isPlayer1)
         {
-            return Input.GetKey(KeyCode.V);
+            if (ReadSkipTriggerButtonArcade())
+            {
+                buttonTriggerTimer += Time.deltaTime;
+            }
+            else
+            {
+                buttonTriggerTimer = 0;
+            }
+
+            if(buttonTriggerTimer >= 1.5f)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         if (isPlayer2)
         {
-            return Input.GetKey(KeyCode.Period);
+            if (ReadSkipTriggerButtonArcade())
+            {
+                buttonTriggerTimer += Time.deltaTime;
+            }
+            else
+            {
+                buttonTriggerTimer = 0;
+            }
+
+            if (buttonTriggerTimer >= 1.5f)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         return false;
+
     }
 
     public bool ReadSkipTriggerButton()
@@ -4050,9 +4089,9 @@ public class TestCube : MonoBehaviour
     #endregion
     private void NewPush()
     {
-        if (ReadPushButtonArcade())
-        {
 
+        if (ReadPushButtonArcade() && !isFreeze)
+        {
             holdPush = true;
             isCameraLocked = true;
             //pushSlider.gameObject.SetActive(true);

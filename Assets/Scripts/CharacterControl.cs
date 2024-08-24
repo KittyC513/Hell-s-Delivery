@@ -142,6 +142,10 @@ public class CharacterControl : MonoBehaviour
     public float movementSpeed;
     [SerializeField]
     public float buttonHoldingTime;
+    [SerializeField]
+    public bool jumpInput;
+    [SerializeField]
+    public bool jumpHasBeenPressed;
 
 
     private Camera camera;
@@ -193,7 +197,12 @@ public class CharacterControl : MonoBehaviour
 
         StateMachineUpdate();
         //GetStickInputs(camera, input);
-        Movement();
+
+        if (!isFreeze)
+        {
+            Movement();
+        }
+
         ApplyGravity();
         CheckSlope();
         //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
@@ -203,7 +212,7 @@ public class CharacterControl : MonoBehaviour
             if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
         }
 
-        if(isSlow && jump.ReadValue<float>() == 1 && !boxingMinigame.instance.isboxing)
+        if(isSlow && jumpInput && !boxingMinigame.instance.isboxing)
         {
             if (isPlayer1 && !UITurnOn)
             {
@@ -584,7 +593,6 @@ public class CharacterControl : MonoBehaviour
             {
                 transform.rotation = Quaternion.Euler(0, 90, 0);
             }
-
             rb.velocity = new Vector3(inputH * movementSpeed, rb.velocity.y, inputV * movementSpeed);
         }
 
@@ -1016,6 +1024,44 @@ public class CharacterControl : MonoBehaviour
 
     private void JumpCalculations(InputAction jump)
     {
+
+        if (isPlayer1)
+        {
+            if (jumpInput && !readJumpValue && canJump)
+            {
+                readJumpValue = true;
+                graceTimer = 0;
+            }
+
+            if (Input.GetKey(KeyCode.T))
+            {
+                jumpInput = true;
+            }
+            else
+            {
+                jumpInput = false;
+            }
+
+        }
+
+        if (isPlayer2)
+        {
+            if (jumpInput && !readJumpValue && canJump)
+            {
+                readJumpValue = true;
+                graceTimer = 0;
+            }
+
+            if (Input.GetKey(KeyCode.P))
+            {
+                jumpInput = true;
+            }
+            else
+            {
+                jumpInput = false;
+            }
+        }
+
         //if the jump button is pressed
         if (readJumpValue && shouldJump && !isJumping && canJump)
         {
@@ -1044,7 +1090,7 @@ public class CharacterControl : MonoBehaviour
             }
 
         }
-        else if (jump.ReadValue<float>() == 0 && !isGrounded && isJumping && reachedMinJump)
+        else if (!jumpInput && !isGrounded && isJumping && reachedMinJump)
         {
 
             //if we let go of jump while not in the air, while jumping and if we have reached the minimum jump requirements
@@ -1096,21 +1142,26 @@ public class CharacterControl : MonoBehaviour
         //    graceTimer = 0;
         //}
 
-        if (jump.ReadValue<float>() == 0)
+        //if (jump.ReadValue<float>() == 0)
+        //{
+        //    canJump = true;
+        //}
+
+        if (!jumpInput)
         {
             canJump = true;
         }
 
         //when the player presses the jump button, read that input for a few extra frames until it no longer works
         //player presses jump, the jump value is set to true for x seconds, jump is now set to false
-        if (jump.ReadValue<float>() == 1 && !readJumpValue && canJump)
-        {
-            //set jump to true for a few seconds
-            //read jump for 0.3 frames
-            readJumpValue = true;
-            graceTimer = 0;
+        //if (jump.ReadValue<float>() == 1 && !readJumpValue && canJump)
+        //{
+        //    //set jump to true for a few seconds
+        //    //read jump for 0.3 frames
+        //    readJumpValue = true;
+        //    graceTimer = 0;
 
-        }
+        //}
    
         //we want the player's jump input to stay there for a little longer than they pressed
         //it makes jumping as soon as you reach the ground a lot easier

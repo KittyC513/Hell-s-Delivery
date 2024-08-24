@@ -49,10 +49,10 @@ public class SelectMinigame : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            devPanel.SetActive(true);
-        }
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    devPanel.SetActive(true);
+        //}
     }
 
     public void SelectItem()
