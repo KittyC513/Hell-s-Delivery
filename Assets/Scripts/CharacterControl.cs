@@ -158,6 +158,8 @@ public class CharacterControl : MonoBehaviour
     public Quaternion desiredRotation;
     [SerializeField]
     public GameObject model;
+    [SerializeField]
+    public bool inLevel;
 
     private Camera camera;
 
@@ -218,10 +220,10 @@ public class CharacterControl : MonoBehaviour
         CheckSlope();
         //if there is some stick input lets rotate, this means that weird inputs right before letting go of the stick wont have time to rotate
 
-        if (!freezeState)
-        {
-            if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
-        }
+        //if (!freezeState)
+        //{
+        //    if (stickValue.x != 0 || stickValue.y != 0) RotateTowards(lookDir.normalized);
+        //}
 
         if(isSlow && jumpInput && !boxingMinigame.instance.isboxing)
         {
@@ -260,11 +262,13 @@ public class CharacterControl : MonoBehaviour
 
         if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel" || GameManager.instance.curSceneName == "HubStart")
         {
+
             if (!boxingMinigame.instance.isboxing)
             {
                 if (!isOnCircle && !isFreeze)
                 {
-                    MovementCalculations(camera);
+                    Movement();
+                    //MovementCalculations(camera);
 
                     if (!isSlow)
                     {
@@ -284,7 +288,8 @@ public class CharacterControl : MonoBehaviour
             }
             else
             {
-                MovementCalculations(camera);
+                Movement();
+                //MovementCalculations(camera);
                 JumpCalculations(jump);
             }
         }
@@ -292,7 +297,8 @@ public class CharacterControl : MonoBehaviour
         {
             if (!isOnCircle && !isFreeze)
             {
-                MovementCalculations(camera);
+                Movement();
+                //MovementCalculations(camera);
 
                 if (!isSlow)
                 {
@@ -567,79 +573,164 @@ public class CharacterControl : MonoBehaviour
     {
         if (isPlayer1)
         {
-            float inputH = Input.GetAxis("Horizontal");
-            float inputV = Input.GetAxis("Vertical");
+            if(GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
+            {
+                float inputH = Input.GetAxis("Vertical");
+                float inputV = -Input.GetAxis("Horizontal");
 
-            if (inputH != 0 || inputV != 0)
-            {
-                buttonHoldingTime += Time.deltaTime;
+                if (inputH != 0 || inputV != 0)
+                {
+                    buttonHoldingTime += Time.deltaTime;
+                }
+                else if (inputH == 0 && inputV == 0)
+                {
+                    buttonHoldingTime = 0;
+                }
+
+                if (buttonHoldingTime < 0.7f)
+                {
+                    movementSpeed = walkingSpeed;
+                }
+                else
+                {
+                    movementSpeed = runningSpeed;
+                }
+
+                movementDirection = new Vector3(inputH, 0, inputV);
+
+                // Check if there is any movement input
+                if (movementDirection != Vector3.zero)
+                {
+                    // Normalize direction to ensure consistent speed
+                    movementDirection = movementDirection.normalized;
+                    // Move the player
+                    rb.velocity = new Vector3(movementDirection.x * movementSpeed, rb.velocity.y, movementDirection.z * movementSpeed);
+                    desiredRotation = Quaternion.LookRotation(movementDirection);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+
+                }
             }
-            else if (inputH == 0 && inputV == 0)
+            else if(GameManager.instance.curSceneName != "Tutorial" && GameManager.instance.curSceneName != "Level1" && GameManager.instance.curSceneName != "MVPLevel")
             {
-                buttonHoldingTime = 0;
+
+                float inputH = Input.GetAxis("Horizontal");
+                float inputV = Input.GetAxis("Vertical");
+
+                if (inputH != 0 || inputV != 0)
+                {
+                    buttonHoldingTime += Time.deltaTime;
+                }
+                else if (inputH == 0 && inputV == 0)
+                {
+                    buttonHoldingTime = 0;
+                }
+
+                if (buttonHoldingTime < 0.7f)
+                {
+                    movementSpeed = walkingSpeed;
+                }
+                else
+                {
+                    movementSpeed = runningSpeed;
+                }
+
+                movementDirection = new Vector3(inputH, 0, inputV);
+
+                // Check if there is any movement input
+                if (movementDirection != Vector3.zero)
+                {
+                    // Normalize direction to ensure consistent speed
+                    movementDirection = movementDirection.normalized;
+                    // Move the player
+                    rb.velocity = new Vector3(movementDirection.x * movementSpeed, rb.velocity.y, movementDirection.z * movementSpeed);
+                    desiredRotation = Quaternion.LookRotation(movementDirection);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+
+                }
             }
 
-            if (buttonHoldingTime < 0.7f)
-            {
-                movementSpeed = walkingSpeed;
-            }
-            else
-            {
-                movementSpeed = runningSpeed;
-            }
+
             
-            movementDirection = new Vector3(inputH, 0, inputV);
-
-            // Check if there is any movement input
-            if (movementDirection != Vector3.zero)
-            {
-                // Normalize direction to ensure consistent speed
-                movementDirection = movementDirection.normalized;
-                // Move the player
-                rb.velocity = new Vector3(movementDirection.x * movementSpeed, rb.velocity.y, movementDirection.z * movementSpeed);
-                desiredRotation = Quaternion.LookRotation(movementDirection);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
-
-            }
 
         }
 
         if (isPlayer2)
         {
-            float inputH = Input.GetAxis("Horizontal2");
-            float inputV = Input.GetAxis("Vertical2");
-            if (inputH != 0 || inputV != 0)
+            if (GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
             {
-                buttonHoldingTime += Time.deltaTime;
-            }
-            else if (inputH == 0 && inputV == 0)
-            {
-                buttonHoldingTime = 0;
-            }
+                float inputH = Input.GetAxis("Vertical2");
+                float inputV = -Input.GetAxis("Horizontal2");
 
-            if (buttonHoldingTime < 0.7f)
-            {
-                movementSpeed = walkingSpeed;
-            }
-            else
-            {
-                movementSpeed = runningSpeed;
-            }
+                if (inputH != 0 || inputV != 0)
+                {
+                    buttonHoldingTime += Time.deltaTime;
+                }
+                else if (inputH == 0 && inputV == 0)
+                {
+                    buttonHoldingTime = 0;
+                }
 
-            movementDirection = new Vector3(inputH, 0, inputV);
+                if (buttonHoldingTime < 0.7f)
+                {
+                    movementSpeed = walkingSpeed;
+                }
+                else
+                {
+                    movementSpeed = runningSpeed;
+                }
 
-            // Check if there is any movement input
-            if (movementDirection != Vector3.zero)
-            {
-                // Normalize direction to ensure consistent speed
-                movementDirection = movementDirection.normalized;
-                // Move the player
-                rb.velocity = new Vector3(movementDirection.x * movementSpeed, rb.velocity.y, movementDirection.z * movementSpeed);
-                desiredRotation = Quaternion.LookRotation(movementDirection);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+                movementDirection = new Vector3(inputH, 0, inputV);
 
+                // Check if there is any movement input
+                if (movementDirection != Vector3.zero)
+                {
+                    // Normalize direction to ensure consistent speed
+                    movementDirection = movementDirection.normalized;
+                    // Move the player
+                    rb.velocity = new Vector3(movementDirection.x * movementSpeed, rb.velocity.y, movementDirection.z * movementSpeed);
+                    desiredRotation = Quaternion.LookRotation(movementDirection);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+
+                }
             }
-                      
+            else if (GameManager.instance.curSceneName != "Tutorial" && GameManager.instance.curSceneName != "Level1" && GameManager.instance.curSceneName != "MVPLevel")
+            {
+                float inputH = Input.GetAxis("Horizontal2");
+                float inputV = Input.GetAxis("Vertical2");
+
+                if (inputH != 0 || inputV != 0)
+                {
+                    buttonHoldingTime += Time.deltaTime;
+                }
+                else if (inputH == 0 && inputV == 0)
+                {
+                    buttonHoldingTime = 0;
+                }
+
+                if (buttonHoldingTime < 0.7f)
+                {
+                    movementSpeed = walkingSpeed;
+                }
+                else
+                {
+                    movementSpeed = runningSpeed;
+                }
+
+                movementDirection = new Vector3(inputH, 0, inputV);
+
+                // Check if there is any movement input
+                if (movementDirection != Vector3.zero)
+                {
+                    // Normalize direction to ensure consistent speed
+                    movementDirection = movementDirection.normalized;
+                    // Move the player
+                    rb.velocity = new Vector3(movementDirection.x * movementSpeed, rb.velocity.y, movementDirection.z * movementSpeed);
+                    desiredRotation = Quaternion.LookRotation(movementDirection);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+
+                }
+            }
+                    
         }   
 
     }
