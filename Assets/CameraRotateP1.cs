@@ -16,15 +16,24 @@ public class CameraRotateP1 : MonoBehaviour
     private float maxZoom = 80f;
     [SerializeField]
     private float currentZoomDistance;
+    [SerializeField]
+    private Vector3 offset = new Vector3(0, 5, -10);
+    [SerializeField]
+    private float smoothSpeed = 0.125f;
+    [SerializeField]
+    Vector3 desiredPosition;
+    [SerializeField]
+    Vector3 smoothedPosition;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        currentZoomDistance = Vector3.Distance(transform.position, target.position);
+        currentZoomDistance = 5;
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         RotateCam();
     }
@@ -53,13 +62,18 @@ public class CameraRotateP1 : MonoBehaviour
                 transform.position = target.position + direction * currentZoomDistance;
             }
 
-            transform.LookAt(target);
 
         }
         else
         {
             GameManager.instance.p1.isFreeze = false;
         }
+        
+        desiredPosition = target.position + (transform.position - target.position).normalized * currentZoomDistance;
+        smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+
+        transform.position = smoothedPosition;
+        transform.LookAt(target);
     }
 
 
