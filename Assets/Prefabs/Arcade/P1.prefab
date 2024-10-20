@@ -24045,6 +24045,7 @@ MonoBehaviour:
   movementDirection: {x: 0, y: 0, z: 0}
   desiredRotation: {x: 0, y: 0, z: 0, w: 0}
   model: {fileID: 0}
+  inLevel: 0
 --- !u!114 &8618830420507679178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57354,6 +57355,7 @@ GameObject:
   - component: {fileID: 4563032128126447613}
   - component: {fileID: 5903581330965990655}
   - component: {fileID: 6075793538385285351}
+  - component: {fileID: 7454994777798910869}
   m_Layer: 8
   m_Name: P1Cam
   m_TagString: Camera
@@ -57369,13 +57371,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6258548748242453789}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalRotation: {x: 0.18301274, y: -0.6830127, z: 0.18301274, w: 0.6830127}
   m_LocalPosition: {x: -0.64, y: 11.73, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1000986402882707267}
-  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: -90, z: 0}
 --- !u!20 &2878398648056779871
 Camera:
   m_ObjectHideFlags: 0
@@ -57492,8 +57494,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2665975483670654211}
-  offset: {x: -5, y: 5, z: 0}
+  offset: {x: 10, y: 10, z: 0}
   smoothSpeed: 0.5
+--- !u!114 &7454994777798910869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6258548748242453789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0059dd4cb22fd4741b17e79763e50842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2665975483670654211}
+  rotationSpeed: 100
+  zoomSpeed: 10
+  minZoom: 2
+  maxZoom: 60
+  currentZoomDistance: 0
 --- !u!1 &6262496114816067434
 GameObject:
   m_ObjectHideFlags: 0

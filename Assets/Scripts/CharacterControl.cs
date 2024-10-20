@@ -575,11 +575,12 @@ public class CharacterControl : MonoBehaviour
         {
             if(GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
             {
-                float inputH = Input.GetAxis("Vertical");
-                float inputV = -Input.GetAxis("Horizontal");
+                float inputH = -Input.GetAxis("Vertical");
+                float inputV = Input.GetAxis("Horizontal");
 
                 if (inputH != 0 || inputV != 0)
                 {
+
                     buttonHoldingTime += Time.deltaTime;
                 }
                 else if (inputH == 0 && inputV == 0)
@@ -658,8 +659,8 @@ public class CharacterControl : MonoBehaviour
         {
             if (GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
             {
-                float inputH = Input.GetAxis("Vertical2");
-                float inputV = -Input.GetAxis("Horizontal2");
+                float inputH = -Input.GetAxis("Vertical2");
+                float inputV = Input.GetAxis("Horizontal2");
 
                 if (inputH != 0 || inputV != 0)
                 {

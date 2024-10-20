@@ -20,6 +20,6 @@ public class CameraFollowPlayer : MonoBehaviour
         transform.position = smoothedPosition;
 
         // Ensure the camera is looking at the player
-        transform.LookAt(player);
+        //transform.LookAt(player);
     }
 }
