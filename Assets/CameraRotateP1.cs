@@ -17,19 +17,21 @@ public class CameraRotateP1 : MonoBehaviour
     [SerializeField]
     private float currentZoomDistance;
     [SerializeField]
-    private Vector3 offset = new Vector3(0, 5, -10);
+    private Vector3 offset;
     [SerializeField]
     private float smoothSpeed = 0.125f;
     [SerializeField]
     Vector3 desiredPosition;
     [SerializeField]
     Vector3 smoothedPosition;
+    [SerializeField]
+    private Vector3 cameraFollowVeclocity = Vector3.zero;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        currentZoomDistance = 5;
+
     }
 
     // Update is called once per frame
@@ -40,27 +42,32 @@ public class CameraRotateP1 : MonoBehaviour
 
     void RotateCam()
     {
+        desiredPosition = target.position + offset;
+        smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
+        transform.LookAt(target);
+
         if (Input.GetKey(KeyCode.B))
         {
             GameManager.instance.p1.isFreeze = true;
-            float inputH = -Input.GetAxis("Horizontal");
-            if (inputH != 0)
-            {
-                // Rotate around the Y-axis (up) of the target
-                transform.RotateAround(target.position, Vector3.up, inputH * rotationSpeed * Time.deltaTime);
-            }
+            //float inputH = -Input.GetAxis("Horizontal");
+            //if (inputH != 0)
+            //{
+            //    // Rotate around the Y-axis (up) of the target
+            //    transform.RotateAround(target.position, Vector3.up, inputH * rotationSpeed * Time.deltaTime);
+            //}
 
-            float inputV = Input.GetAxis("Vertical");
-            if (inputV != 0)
-            {
-                // Adjust the zoom distance based on the input
-                currentZoomDistance -= inputV * zoomSpeed * Time.deltaTime;
-                currentZoomDistance = Mathf.Clamp(currentZoomDistance, minZoom, maxZoom);
+            //float inputV = Input.GetAxis("Vertical");
+            //if (inputV != 0)
+            //{
+            //    // Adjust the zoom distance based on the input
+            //    currentZoomDistance -= inputV * zoomSpeed * Time.deltaTime;
+            //    currentZoomDistance = Mathf.Clamp(currentZoomDistance, minZoom, maxZoom);
 
-                // Update the camera position to reflect the new zoom distance
-                Vector3 direction = (transform.position - target.position).normalized;
-                transform.position = target.position + direction * currentZoomDistance;
-            }
+            //    // Update the camera position to reflect the new zoom distance
+            //    Vector3 direction = (transform.position - target.position).normalized;
+            //    transform.position = target.position + direction * currentZoomDistance;
+            //}
 
 
         }
@@ -68,13 +75,9 @@ public class CameraRotateP1 : MonoBehaviour
         {
             GameManager.instance.p1.isFreeze = false;
         }
-        
-        desiredPosition = target.position + (transform.position - target.position).normalized * currentZoomDistance;
-        smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
-        transform.position = smoothedPosition;
-        transform.LookAt(target);
     }
+
 
 
 }
