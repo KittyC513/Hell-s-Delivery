@@ -25,13 +25,15 @@ public class CameraRotateP1 : MonoBehaviour
     [SerializeField]
     Vector3 smoothedPosition;
     [SerializeField]
-    private Vector3 cameraFollowVeclocity = Vector3.zero;
+    private float yaw = 0.0f;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        yaw = -90;
+        currentZoomDistance = 10f;
     }
 
     // Update is called once per frame
@@ -42,14 +44,29 @@ public class CameraRotateP1 : MonoBehaviour
 
     void RotateCam()
     {
-        desiredPosition = target.position + offset;
-        smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        transform.position = smoothedPosition;
-        transform.LookAt(target);
 
         if (Input.GetKey(KeyCode.B))
         {
             GameManager.instance.p1.isFreeze = true;
+            if (Input.GetKey(KeyCode.A))  // Rotate left
+            {
+                yaw -= rotationSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.D))  // Rotate right
+            {
+                yaw += rotationSpeed * Time.deltaTime;
+            }
+
+            //if (Input.GetKey(KeyCode.W))  // Zoom in
+            //{
+            //    currentZoom -= zoomSpeed * Time.deltaTime;
+            //}
+            //if (Input.GetKey(KeyCode.S))  // Zoom out
+            //{
+            //    currentZoom += zoomSpeed * Time.deltaTime;
+            //}
+            //currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+            //GameManager.instance.p1.isFreeze = true;
             //float inputH = -Input.GetAxis("Horizontal");
             //if (inputH != 0)
             //{
@@ -57,17 +74,17 @@ public class CameraRotateP1 : MonoBehaviour
             //    transform.RotateAround(target.position, Vector3.up, inputH * rotationSpeed * Time.deltaTime);
             //}
 
-            //float inputV = Input.GetAxis("Vertical");
-            //if (inputV != 0)
-            //{
-            //    // Adjust the zoom distance based on the input
-            //    currentZoomDistance -= inputV * zoomSpeed * Time.deltaTime;
-            //    currentZoomDistance = Mathf.Clamp(currentZoomDistance, minZoom, maxZoom);
+            float inputV = Input.GetAxis("Vertical");
+            if (inputV != 0)
+            {
+                // Adjust the zoom distance based on the input
+                currentZoomDistance -= inputV * zoomSpeed * Time.deltaTime;
+                currentZoomDistance = Mathf.Clamp(currentZoomDistance, minZoom, maxZoom);
 
-            //    // Update the camera position to reflect the new zoom distance
-            //    Vector3 direction = (transform.position - target.position).normalized;
-            //    transform.position = target.position + direction * currentZoomDistance;
-            //}
+                // Update the camera position to reflect the new zoom distance
+                Vector3 direction = (transform.position - target.position).normalized;
+                transform.position = target.position + direction * currentZoomDistance;
+            }
 
 
         }
@@ -75,6 +92,13 @@ public class CameraRotateP1 : MonoBehaviour
         {
             GameManager.instance.p1.isFreeze = false;
         }
+
+        Quaternion rotation = Quaternion.Euler(30, yaw, 0);
+        offset = new Vector3(0, 0, -currentZoomDistance);
+        desiredPosition = target.position + rotation * offset;
+        smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
+        transform.LookAt(target);
 
     }
 
