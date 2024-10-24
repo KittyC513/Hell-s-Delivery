@@ -160,6 +160,8 @@ public class CharacterControl : MonoBehaviour
     public GameObject model;
     [SerializeField]
     public bool inLevel;
+    [SerializeField]
+    private Transform cameraTransform;
 
     private Camera camera;
 
@@ -575,8 +577,8 @@ public class CharacterControl : MonoBehaviour
         {
             if(GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
             {
-                float inputH = -Input.GetAxis("Vertical");
-                float inputV = Input.GetAxis("Horizontal");
+                float inputH = Input.GetAxis("Horizontal");
+                float inputV = Input.GetAxis("Vertical");
 
                 if (inputH != 0 || inputV != 0)
                 {
@@ -597,7 +599,18 @@ public class CharacterControl : MonoBehaviour
                     movementSpeed = runningSpeed;
                 }
 
-                movementDirection = new Vector3(inputH, 0, inputV);
+                //movementDirection = new Vector3(inputH, 0, inputV);
+
+                Vector3 camForward = cameraTransform.forward;
+                Vector3 cameraRight = cameraTransform.right;
+
+                camForward.y = 0;
+                cameraRight.y = 0;
+
+                camForward.Normalize();
+                cameraRight.Normalize();
+
+                movementDirection = (camForward * inputV) + (cameraRight * inputH); 
 
                 // Check if there is any movement input
                 if (movementDirection != Vector3.zero)
@@ -659,8 +672,8 @@ public class CharacterControl : MonoBehaviour
         {
             if (GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
             {
-                float inputH = -Input.GetAxis("Vertical2");
-                float inputV = Input.GetAxis("Horizontal2");
+                float inputH = Input.GetAxis("Horizontal2");
+                float inputV = Input.GetAxis("Vertical2");
 
                 if (inputH != 0 || inputV != 0)
                 {
@@ -680,8 +693,18 @@ public class CharacterControl : MonoBehaviour
                     movementSpeed = runningSpeed;
                 }
 
-                movementDirection = new Vector3(inputH, 0, inputV);
+                Vector3 camForward = cameraTransform.forward;
+                Vector3 cameraRight = cameraTransform.right;
 
+                camForward.y = 0;
+                cameraRight.y = 0;
+
+                camForward.Normalize();
+                cameraRight.Normalize();
+
+                //movementDirection = new Vector3(inputH, 0, inputV);
+
+                movementDirection = (camForward * inputV) + (cameraRight * inputH);
                 // Check if there is any movement input
                 if (movementDirection != Vector3.zero)
                 {
