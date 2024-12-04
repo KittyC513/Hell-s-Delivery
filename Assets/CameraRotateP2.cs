@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraRotateP1 : MonoBehaviour
+public class CameraRotateP2 : MonoBehaviour
 {
     [SerializeField]
     private Transform target;
@@ -27,8 +27,6 @@ public class CameraRotateP1 : MonoBehaviour
     [SerializeField]
     private float yaw = 0.0f;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -44,14 +42,14 @@ public class CameraRotateP1 : MonoBehaviour
 
     void RotateCam()
     {
-        if (Input.GetKey(KeyCode.H))
+        if (Input.GetKey(KeyCode.Quote))
         {
-            GameManager.instance.p1.isFreeze = true;
-            if (Input.GetKey(KeyCode.A))  // Rotate left
+            GameManager.instance.p2.isFreeze = true;
+            if (Input.GetKey(KeyCode.LeftArrow))  // Rotate left
             {
                 yaw -= rotationSpeed * Time.deltaTime;
             }
-            if (Input.GetKey(KeyCode.D))  // Rotate right
+            if (Input.GetKey(KeyCode.RightArrow))  // Rotate right
             {
                 yaw += rotationSpeed * Time.deltaTime;
             }
@@ -73,7 +71,7 @@ public class CameraRotateP1 : MonoBehaviour
             //    transform.RotateAround(target.position, Vector3.up, inputH * rotationSpeed * Time.deltaTime);
             //}
 
-            float inputV = Input.GetAxis("Vertical");
+            float inputV = Input.GetAxis("Vertical2");
             if (inputV != 0)
             {
                 // Adjust the zoom distance based on the input
@@ -89,7 +87,7 @@ public class CameraRotateP1 : MonoBehaviour
         }
         else
         {
-            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
         }
 
         Quaternion rotation = Quaternion.Euler(30, yaw, 0);
@@ -100,7 +98,4 @@ public class CameraRotateP1 : MonoBehaviour
         transform.LookAt(target);
 
     }
-
-
-
 }

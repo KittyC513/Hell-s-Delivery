@@ -3527,12 +3527,12 @@ public class TestCube : MonoBehaviour
     {
         if (isPlayer1)
         {
-            return Input.GetKeyUp(KeyCode.R);
+            return Input.GetKeyUp(KeyCode.T);
         }
 
         if (isPlayer2)
         {
-            return Input.GetKeyUp(KeyCode.O);
+            return Input.GetKeyUp(KeyCode.P);
         }
 
         return false;
@@ -3569,12 +3569,12 @@ public class TestCube : MonoBehaviour
     {
         if (isPlayer1)
         {
-            return Input.GetKey(KeyCode.R);
+            return Input.GetKey(KeyCode.T);
         }
 
         if (isPlayer2)
         {
-            return Input.GetKey(KeyCode.O);
+            return Input.GetKey(KeyCode.P);
         }
 
         return false;
@@ -3599,20 +3599,21 @@ public class TestCube : MonoBehaviour
             if (ReadSkipTriggerButtonArcade())
             {
                 buttonTriggerTimer += Time.deltaTime;
+
+                if (buttonTriggerTimer >= 1.3f)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
                 buttonTriggerTimer = 0;
             }
 
-            if(buttonTriggerTimer >= 1.3f)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         if (isPlayer2)
@@ -3620,20 +3621,23 @@ public class TestCube : MonoBehaviour
             if (ReadSkipTriggerButtonArcade())
             {
                 buttonTriggerTimer += Time.deltaTime;
+
+                if (buttonTriggerTimer >= 1.3f)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
             else
             {
                 buttonTriggerTimer = 0;
             }
 
-            if (buttonTriggerTimer >= 1.3f)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
         }
 
         return false;
@@ -3650,12 +3654,12 @@ public class TestCube : MonoBehaviour
     {
         if (isPlayer1)
         {
-            return Input.GetKey(KeyCode.V);
+            return Input.GetKey(KeyCode.B);
         }
 
         if (isPlayer2)
         {
-            return Input.GetKey(KeyCode.Period);
+            return Input.GetKey(KeyCode.Slash);
         }
 
         return false;

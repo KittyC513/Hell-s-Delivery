@@ -1150,7 +1150,7 @@ public class CharacterControl : MonoBehaviour
                 graceTimer = 0;
             }
 
-            if (Input.GetKey(KeyCode.T))
+            if (Input.GetKey(KeyCode.G))
             {
                 jumpInput = true;
             }
@@ -1169,7 +1169,7 @@ public class CharacterControl : MonoBehaviour
                 graceTimer = 0;
             }
 
-            if (Input.GetKey(KeyCode.P))
+            if (Input.GetKey(KeyCode.Semicolon))
             {
                 jumpInput = true;
             }
