@@ -609,6 +609,8 @@ public class TestCube : MonoBehaviour
     [Header("Skip Button")]
     [SerializeField]
     private float buttonTriggerTimer;
+    [SerializeField]
+    public bool skipTriggered;
 
 
     private void Awake()
@@ -642,7 +644,7 @@ public class TestCube : MonoBehaviour
         //pauseJoystick = pause.FindAction("MenuJoystick");
         selectOption = pause.FindAction("SelectOption");
 
-        player.FindAction("Pick").started += DoDrop;
+        //player.FindAction("Pick").started += DoDrop;
         move = player.FindAction("Move");
         pull = player.FindAction("Pull");
         dash = player.FindAction("Dash");
@@ -681,7 +683,7 @@ public class TestCube : MonoBehaviour
         //pauseJoystick.Disable();
         selectOption.Disable();
 
-        player.FindAction("Pick").started -= DoDrop;
+        //player.FindAction("Pick").started -= DoDrop;
 
         player.Disable();
         //player.FindAction("Join").started -= DoTalk;
@@ -727,6 +729,7 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DoDrop();
         if (bM != null)
         {
             if (isPlayer1 && !bM.isboxing && !rC.Player1Die)
@@ -998,7 +1001,7 @@ public class TestCube : MonoBehaviour
         TakePackage();
         if (curSceneName == scene1 || curSceneName == scene3)
         {
-            Interacte();
+            Interact();
             Talk();
             OnTV();
 
@@ -1006,7 +1009,7 @@ public class TestCube : MonoBehaviour
         if (curSceneName == scene6)
         {
             EnterOffice();
-            Interacte();
+            Interact();
         }
 
         Pull();
@@ -2042,7 +2045,7 @@ public class TestCube : MonoBehaviour
 
     }
 
-    private void DoDrop(InputAction.CallbackContext obj)
+    private void DoDrop()
     {
         if (curSceneName == scene9)
         {
@@ -2054,7 +2057,7 @@ public class TestCube : MonoBehaviour
                 //if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistance, pickableMask))
                 if (withinPackageRange)
                 {
-                    if (isPlayer1)
+                    if (isPlayer1 && Input.GetKey(KeyCode.F))
                     {
                         if (targetObject == null)
                         {
@@ -2075,7 +2078,7 @@ public class TestCube : MonoBehaviour
                         }
                     }
 
-                    if (isPlayer2)
+                    if (isPlayer2 && Input.GetKey(KeyCode.L))
                     {
                         if (targetObject == null)
                         {
@@ -2100,7 +2103,7 @@ public class TestCube : MonoBehaviour
 
             if (objectGrabbable != null)
             {
-                if (isPlayer1 && rC.Player1isCarrying)
+                if (isPlayer1 && rC.Player1isCarrying && Input.GetKey(KeyCode.F))
                 {
                     if (targetObject == null)
                     {
@@ -2119,7 +2122,7 @@ public class TestCube : MonoBehaviour
                 }
 
 
-                if (isPlayer2 && rC.Player2isCarrying)
+                if (isPlayer2 && rC.Player2isCarrying && Input.GetKey(KeyCode.L))
                 {
                     if (targetObject == null)
                     {
@@ -2147,7 +2150,7 @@ public class TestCube : MonoBehaviour
             if (objectGrabbable != null)
             {
                 playerSounds.packageToss.Post(this.gameObject);
-                if (isPlayer1 && rC.Player1isCarrying)
+                if (isPlayer1 && rC.Player1isCarrying && Input.GetKey(KeyCode.F))
                 {
                     if (targetObject == null)
                     {
@@ -2164,7 +2167,7 @@ public class TestCube : MonoBehaviour
                 }
 
 
-                if (isPlayer2 && rC.Player2isCarrying)
+                if (isPlayer2 && rC.Player2isCarrying && Input.GetKey(KeyCode.L))
                 {
                     if (targetObject == null)
                     {
@@ -2267,7 +2270,7 @@ public class TestCube : MonoBehaviour
     #endregion
 
 
-    void Interacte()
+    void Interact()
     {
         if (bM != null)
         {
@@ -3548,12 +3551,12 @@ public class TestCube : MonoBehaviour
     {
         if (isPlayer1)
         {
-            return Input.GetKey(KeyCode.Y);
+            return Input.GetKey(KeyCode.F);
         }
 
         if (isPlayer2)
         {
-            return Input.GetKey(KeyCode.LeftBracket);
+            return Input.GetKey(KeyCode.L);
         }
 
         return false;
@@ -3596,51 +3599,74 @@ public class TestCube : MonoBehaviour
     {
         if (isPlayer1)
         {
-            if (ReadSkipTriggerButtonArcade())
+            if(ReadSkipTriggerButtonArcade() && skipTriggered)
             {
-                buttonTriggerTimer += Time.deltaTime;
-
-                if (buttonTriggerTimer >= 1.3f)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
             else
             {
-                buttonTriggerTimer = 0;
+                return false;
             }
-
-        }
-
-        if (isPlayer2)
+        } else if (isPlayer2)
         {
-            if (ReadSkipTriggerButtonArcade())
+            if (ReadSkipTriggerButtonArcade() && skipTriggered)
             {
-                buttonTriggerTimer += Time.deltaTime;
-
-                if (buttonTriggerTimer >= 1.3f)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-
+                return true;
             }
             else
             {
-                buttonTriggerTimer = 0;
+                return false;
             }
-
-
         }
 
         return false;
+        //if (isPlayer1)
+        //{
+        //    if (ReadSkipTriggerButtonArcade())
+        //    {
+        //        buttonTriggerTimer += Time.deltaTime;
+
+        //        //if (buttonTriggerTimer >= 1.3f)
+        //        //{
+        //        //    return true;
+        //        //}
+        //        //else
+        //        //{
+        //        //    return false;
+        //        //}
+        //    }
+        //    else
+        //    {
+        //        buttonTriggerTimer = 0;
+        //    }
+
+        //}
+
+        //if (isPlayer2)
+        //{
+        //    if (ReadSkipTriggerButtonArcade())
+        //    {
+        //        buttonTriggerTimer += Time.deltaTime;
+
+        //        if (buttonTriggerTimer >= 1.3f)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        buttonTriggerTimer = 0;
+        //    }
+
+
+        //}
+
+        //return false;
 
     }
 

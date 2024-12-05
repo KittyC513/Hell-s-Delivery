@@ -23,7 +23,7 @@ public class SkipProgressionBar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-   
+
     }
 
     // Update is called once per frame
@@ -69,10 +69,15 @@ public class SkipProgressionBar : MonoBehaviour
                 {
                     timer = maxTimer;
                     radialUI.fillAmount = maxTimer;
+                    GameManager.instance.p1.skipTriggered = true;
+                    GameManager.instance.p2.skipTriggered = true;
+
                 }
             }
             else if (!GameManager.instance.p1.ReadSkipTriggerButtonArcade() && !GameManager.instance.p2.ReadSkipTriggerButtonArcade())
             {
+                GameManager.instance.p1.skipTriggered = false;
+                GameManager.instance.p2.skipTriggered = false;
                 timer = 0;
                 radialUI.fillAmount = timer;
             }
@@ -92,10 +97,14 @@ public class SkipProgressionBar : MonoBehaviour
                 {
                     timer = maxTimer;
                     radialUI.fillAmount = maxTimer;
+                    GameManager.instance.p1.skipTriggered = true;
+                    GameManager.instance.p2.skipTriggered = true;
                 }
             }
             else if(!GameManager.instance.p1.ReadSkipTriggerButtonArcade() && !GameManager.instance.p2.ReadSkipTriggerButtonArcade())
             {
+                GameManager.instance.p1.skipTriggered = false;
+                GameManager.instance.p2.skipTriggered = false;
                 timer = 0;
                 radialUI.fillAmount = timer;
             }
@@ -115,10 +124,14 @@ public class SkipProgressionBar : MonoBehaviour
                 {
                     timer = maxTimer;
                     radialUI.fillAmount = maxTimer;
+                    GameManager.instance.p1.skipTriggered = true;
+                    GameManager.instance.p2.skipTriggered = true;
                 }
             }
             else if (!GameManager.instance.p1.ReadSkipTriggerButtonArcade() && !GameManager.instance.p2.ReadSkipTriggerButtonArcade())
             {
+                GameManager.instance.p1.skipTriggered = false;
+                GameManager.instance.p2.skipTriggered = false;
                 timer = 0;
                 radialUI.fillAmount = timer;
             }
