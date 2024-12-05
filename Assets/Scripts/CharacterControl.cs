@@ -322,8 +322,8 @@ public class CharacterControl : MonoBehaviour
         
        
         //Debug.Log(directionSpeed);
-        CheckParachute(jump, canParachute);
-
+        //CheckParachute(jump, canParachute);
+        ParachuteArcade(canParachute);
         if (isParachuting) parachuteObj.SetActive(true);
         else parachuteObj.SetActive(false);
         isSlow = bigPackage;
@@ -1391,6 +1391,63 @@ public class CharacterControl : MonoBehaviour
         }
 
         //Debug.Log(isParachuting);
+    }
+
+    private void ParachuteArcade(bool canParachute)
+    {
+        if (!shouldJump && !isGrounded && canParachute && !isJumping && !isSlow && !boxingMinigame.instance.isboxing && GameManager.instance.curSceneName == "MVPLevel")
+        {
+            if (isPlayer1)
+            {
+                if (Input.GetKey(KeyCode.G))
+                {
+                    if (!isParachuting)
+                    {
+                        soundBank.parachuteOpen.Post(this.gameObject);
+                    }
+
+                    //parachute
+                    isParachuting = true;
+                    parachuteAnim.SetBool("isUsed", true);
+                }
+                else
+                {
+                    if (isParachuting)
+                    {
+                        soundBank.parachuteClose.Post(this.gameObject);
+                    }
+                    StartCoroutine(DedaultParachute());
+                }
+            }
+
+            if (isPlayer2)
+            {
+                if (Input.GetKey(KeyCode.Semicolon))
+                {
+                    if (!isParachuting)
+                    {
+                        soundBank.parachuteOpen.Post(this.gameObject);
+                    }
+
+                    //parachute
+                    isParachuting = true;
+                    parachuteAnim.SetBool("isUsed", true);
+                }
+                else
+                {
+                    if (isParachuting)
+                    {
+                        soundBank.parachuteClose.Post(this.gameObject);
+                    }
+                    StartCoroutine(DedaultParachute());
+                }
+            }
+        }
+        else if (isParachuting)
+        {
+            //isParachuting = false;
+            StartCoroutine(DedaultParachute());
+        }
     }
 
     IEnumerator CloseParachute()

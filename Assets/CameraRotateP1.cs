@@ -39,7 +39,11 @@ public class CameraRotateP1 : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        RotateCam();
+        if(GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "MVPLevel")
+        {
+            RotateCam();
+        }
+
     }
 
     void RotateCam()

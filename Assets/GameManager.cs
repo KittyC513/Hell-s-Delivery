@@ -271,6 +271,7 @@ public class GameManager : MonoBehaviour
         //FindPackage();
         ResetPlayer();
         ResetGame();
+        EnterMVPLevel();
     }
 
     private void FixedUpdate()
@@ -993,7 +994,7 @@ public class GameManager : MonoBehaviour
 
     void ResetGame()
     {
-        if (Input.GetKey(KeyCode.Alpha3) || Input.GetKey(KeyCode.Alpha4) && !gameIsReset)
+        if (Input.GetKey(KeyCode.Alpha3) && !gameIsReset)
         {
             SceneManager.LoadScene("ResetMenu");
             
@@ -1079,6 +1080,15 @@ public class GameManager : MonoBehaviour
             //gameIsReset = true;
             //print("Reset");
 
+        }
+    }
+
+
+    private void EnterMVPLevel()
+    {
+        if (Input.GetKey(KeyCode.Alpha4))
+        {
+            Loader.Load(Loader.Scene.MVPLevel);
         }
     }
 

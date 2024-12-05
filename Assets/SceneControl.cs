@@ -387,11 +387,11 @@ public class SceneControl : MonoBehaviour
             SkipTutorialLevelOverview();
         }
 
-        //if (GameManager.instance.curSceneName == "MVPLevel")
-        //{
-        //    SkipMVPLevelOverviewCutscene();
-        //    //print("SkipMVPLevel");
-        //}
+        if (GameManager.instance.curSceneName == "MVPLevel")
+        {
+            SkipMVPLevelOverviewCutscene();
+            //print("SkipMVPLevel");
+        }
 
 
 
