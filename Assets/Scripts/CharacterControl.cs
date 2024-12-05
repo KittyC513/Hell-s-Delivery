@@ -137,6 +137,8 @@ public class CharacterControl : MonoBehaviour
     [SerializeField]
     public float walkingSpeed;
     [SerializeField]
+    public float heavyPackageSpeed;
+    [SerializeField]
     public float runningSpeed;
     [SerializeField]
     public float movementSpeed;
@@ -215,7 +217,7 @@ public class CharacterControl : MonoBehaviour
 
         if (!isFreeze)
         {
-            Movement();
+            Movement(bigPackage);
         }
 
         ApplyGravity();
@@ -269,7 +271,7 @@ public class CharacterControl : MonoBehaviour
             {
                 if (!isOnCircle && !isFreeze)
                 {
-                    Movement();
+                    Movement(bigPackage);
                     //MovementCalculations(camera);
 
                     if (!isSlow)
@@ -290,7 +292,7 @@ public class CharacterControl : MonoBehaviour
             }
             else
             {
-                Movement();
+                Movement(bigPackage);
                 //MovementCalculations(camera);
                 JumpCalculations(jump);
             }
@@ -299,7 +301,7 @@ public class CharacterControl : MonoBehaviour
         {
             if (!isOnCircle && !isFreeze)
             {
-                Movement();
+                Movement(bigPackage);
                 //MovementCalculations(camera);
 
                 if (!isSlow)
@@ -571,7 +573,7 @@ public class CharacterControl : MonoBehaviour
         }
         
     }
-    public void Movement()
+    public void Movement(bool isHeavy)
     {
         if (isPlayer1)
         {
@@ -594,7 +596,7 @@ public class CharacterControl : MonoBehaviour
                 {
                     movementSpeed = walkingSpeed;
                 }
-                else
+                else if(buttonHoldingTime >= 0.7f && !isHeavy)
                 {
                     movementSpeed = runningSpeed;
                 }
@@ -643,7 +645,7 @@ public class CharacterControl : MonoBehaviour
                 {
                     movementSpeed = walkingSpeed;
                 }
-                else
+                else if(buttonHoldingTime >= 0.7f && !isHeavy)
                 {
                     movementSpeed = runningSpeed;
                 }

@@ -993,7 +993,7 @@ public class GameManager : MonoBehaviour
 
     void ResetGame()
     {
-        if (Input.GetKey(KeyCode.LeftControl) && !gameIsReset)
+        if (Input.GetKey(KeyCode.Alpha3) || Input.GetKey(KeyCode.Alpha4) && !gameIsReset)
         {
             SceneManager.LoadScene("ResetMenu");
             
