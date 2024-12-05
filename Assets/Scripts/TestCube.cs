@@ -612,6 +612,14 @@ public class TestCube : MonoBehaviour
     [SerializeField]
     public bool skipTriggered;
 
+    [Header("Package Button")]
+    [SerializeField]
+    private bool packageButtonisTriggered1;
+    [SerializeField]
+    private bool packageButtonisTriggered2;
+    [SerializeField]
+    private float buttonCDTimer = 0.2f;
+
 
     private void Awake()
     {
@@ -729,6 +737,7 @@ public class TestCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PackageButtonDetect();
         DoDrop();
         if (bM != null)
         {
@@ -1834,15 +1843,16 @@ public class TestCube : MonoBehaviour
                             //}
 
 
-
+                            
                             playerSounds.packagePick.Post(this.gameObject);
+                            print("TakePackageSounded1");
 
                             if (GameManager.instance.p2.objectGrabbable != null)
                             {
                                 GameManager.instance.p2.objectGrabbable = null;
                             }
 
-
+                            //targetObject = objectGrabbable.gameObject;
                         }
 
                         if (isPlayer2)
@@ -1858,11 +1868,14 @@ public class TestCube : MonoBehaviour
                             //    objectGrabbable.Grab(itemContainer);
                             //}
                             playerSounds.packagePick.Post(this.gameObject);
+                            print("TakePackageSounded2");
 
                             if (GameManager.instance.p1.objectGrabbable != null)
                             {
                                 GameManager.instance.p1.objectGrabbable = null;
                             }
+
+                            //targetObject = objectGrabbable.gameObject;
                         }
                     }
 
@@ -2045,6 +2058,45 @@ public class TestCube : MonoBehaviour
 
     }
 
+    private void PackageButtonDetect()
+    {
+        if (isPlayer1 && !SceneControl.instance.p1AtDoor)
+        {
+            if (Input.GetKey(KeyCode.F) && buttonCDTimer <= 0)
+            {
+                packageButtonisTriggered1 = true;
+                buttonCDTimer = 0.7f;
+            }
+            else if (Input.GetKeyUp(KeyCode.F))
+            {
+                packageButtonisTriggered1 = false;    
+            }
+
+            if(!packageButtonisTriggered1 && buttonCDTimer > 0)
+            {
+                buttonCDTimer -= Time.deltaTime;
+            }
+
+        }
+
+        if (isPlayer2 && !SceneControl.instance.p2AtDoor)
+        {
+            if (Input.GetKey(KeyCode.L) && buttonCDTimer <= 0)
+            {
+                packageButtonisTriggered2 = true;
+                buttonCDTimer = 0.7f;
+            }
+            else if (Input.GetKeyUp(KeyCode.L))
+            {
+                packageButtonisTriggered2 = false;
+            }
+
+            if (!packageButtonisTriggered2 && buttonCDTimer > 0)
+            {
+                buttonCDTimer -= Time.deltaTime;
+            }
+        }
+    }
     private void DoDrop()
     {
         if (curSceneName == scene9)
@@ -2057,7 +2109,7 @@ public class TestCube : MonoBehaviour
                 //if (Physics.Raycast(this.transform.position, this.transform.forward, out raycastHit, pickDistance, pickableMask))
                 if (withinPackageRange)
                 {
-                    if (isPlayer1 && Input.GetKey(KeyCode.F))
+                    if (isPlayer1 && packageButtonisTriggered1)
                     {
                         if (targetObject == null)
                         {
@@ -2078,7 +2130,7 @@ public class TestCube : MonoBehaviour
                         }
                     }
 
-                    if (isPlayer2 && Input.GetKey(KeyCode.L))
+                    if (isPlayer2 && packageButtonisTriggered2)
                     {
                         if (targetObject == null)
                         {
@@ -2103,7 +2155,7 @@ public class TestCube : MonoBehaviour
 
             if (objectGrabbable != null)
             {
-                if (isPlayer1 && rC.Player1isCarrying && Input.GetKey(KeyCode.F))
+                if (isPlayer1 && rC.Player1isCarrying && packageButtonisTriggered1)
                 {
                     if (targetObject == null)
                     {
@@ -2122,7 +2174,7 @@ public class TestCube : MonoBehaviour
                 }
 
 
-                if (isPlayer2 && rC.Player2isCarrying && Input.GetKey(KeyCode.L))
+                if (isPlayer2 && rC.Player2isCarrying && packageButtonisTriggered2)
                 {
                     if (targetObject == null)
                     {
@@ -2149,14 +2201,16 @@ public class TestCube : MonoBehaviour
         {
             if (objectGrabbable != null)
             {
-                playerSounds.packageToss.Post(this.gameObject);
-                if (isPlayer1 && rC.Player1isCarrying && Input.GetKey(KeyCode.F))
+                //playerSounds.packageToss.Post(this.gameObject);
+                
+                if (isPlayer1 && rC.Player1isCarrying && packageButtonisTriggered1)
                 {
                     if (targetObject == null)
                     {
                         objectGrabbable.P1Drop();
                         print("DoDrop1");
                         isDropped = true;
+                        playerSounds.packageToss.Post(this.gameObject);
                     }
                     else
                     {
@@ -2167,7 +2221,7 @@ public class TestCube : MonoBehaviour
                 }
 
 
-                if (isPlayer2 && rC.Player2isCarrying && Input.GetKey(KeyCode.L))
+                if (isPlayer2 && rC.Player2isCarrying && packageButtonisTriggered2)
                 {
                     if (targetObject == null)
                     {
@@ -2175,6 +2229,7 @@ public class TestCube : MonoBehaviour
                         //print("Drop");
                         print("DoDrop2");
                         isDropped = true;
+                        playerSounds.packageToss.Post(this.gameObject);
                     }
                     else
                     {
