@@ -164,6 +164,8 @@ public class CharacterControl : MonoBehaviour
     public bool inLevel;
     [SerializeField]
     private Transform cameraTransform;
+    [SerializeField]
+    private bool isMoving; 
 
     private Camera camera;
 
@@ -579,8 +581,8 @@ public class CharacterControl : MonoBehaviour
         {
             if(GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
             {
-                float inputH = Input.GetAxis("Horizontal");
-                float inputV = Input.GetAxis("Vertical");
+                float inputH = Input.GetAxisRaw("Horizontal");
+                float inputV = Input.GetAxisRaw("Vertical");
 
                 if (inputH != 0 || inputV != 0)
                 {
@@ -600,6 +602,7 @@ public class CharacterControl : MonoBehaviour
                 {
                     movementSpeed = runningSpeed;
                 }
+
 
                 //movementDirection = new Vector3(inputH, 0, inputV);
 
@@ -629,12 +632,20 @@ public class CharacterControl : MonoBehaviour
             else if(GameManager.instance.curSceneName != "Tutorial" && GameManager.instance.curSceneName != "Level1" && GameManager.instance.curSceneName != "MVPLevel")
             {
 
-                float inputH = Input.GetAxis("Horizontal");
-                float inputV = Input.GetAxis("Vertical");
+                float inputH = Input.GetAxisRaw("Horizontal");
+                float inputV = Input.GetAxisRaw("Vertical");
 
                 if (inputH != 0 || inputV != 0)
                 {
-                    buttonHoldingTime += Time.deltaTime;
+                    if(buttonHoldingTime < 0.7f)
+                    {
+                        buttonHoldingTime += Time.deltaTime;
+                    }
+                    else
+                    {
+                        buttonHoldingTime = 1;
+                    }
+
                 }
                 else if (inputH == 0 && inputV == 0)
                 {
@@ -663,6 +674,7 @@ public class CharacterControl : MonoBehaviour
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
 
                 }
+ 
             }
 
 
@@ -674,8 +686,8 @@ public class CharacterControl : MonoBehaviour
         {
             if (GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "MVPLevel")
             {
-                float inputH = Input.GetAxis("Horizontal2");
-                float inputV = Input.GetAxis("Vertical2");
+                float inputH = Input.GetAxisRaw("Horizontal2");
+                float inputV = Input.GetAxisRaw("Vertical2");
 
                 if (inputH != 0 || inputV != 0)
                 {
@@ -684,6 +696,7 @@ public class CharacterControl : MonoBehaviour
                 else if (inputH == 0 && inputV == 0)
                 {
                     buttonHoldingTime = 0;
+                   
                 }
 
                 if (buttonHoldingTime < 0.7f)
@@ -721,8 +734,8 @@ public class CharacterControl : MonoBehaviour
             }
             else if (GameManager.instance.curSceneName != "Tutorial" && GameManager.instance.curSceneName != "Level1" && GameManager.instance.curSceneName != "MVPLevel")
             {
-                float inputH = Input.GetAxis("Horizontal2");
-                float inputV = Input.GetAxis("Vertical2");
+                float inputH = Input.GetAxisRaw("Horizontal2");
+                float inputV = Input.GetAxisRaw("Vertical2");
 
                 if (inputH != 0 || inputV != 0)
                 {
@@ -731,6 +744,8 @@ public class CharacterControl : MonoBehaviour
                 else if (inputH == 0 && inputV == 0)
                 {
                     buttonHoldingTime = 0;
+                    
+
                 }
 
                 if (buttonHoldingTime < 0.7f)

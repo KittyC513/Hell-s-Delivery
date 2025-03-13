@@ -229,6 +229,10 @@ public class GameManager : MonoBehaviour
     [Header("Game Reset")]
     [SerializeField]
     public bool isCh = false;
+    [SerializeField]
+    private float timeToReset;
+    [SerializeField]
+    private float resetTimer;
 
     public LevelData lastLevelData;
 
@@ -994,6 +998,20 @@ public class GameManager : MonoBehaviour
 
     void ResetGame()
     {
+        if (!Input.anyKey)
+        {
+            resetTimer += Time.deltaTime;
+        }
+        else
+        {
+            resetTimer = 0;
+        }
+
+        if(resetTimer >= timeToReset)
+        {
+            SceneManager.LoadScene("ResetMenu");
+        }
+
         if (Input.GetKey(KeyCode.Alpha3) && !gameIsReset)
         {
             SceneManager.LoadScene("ResetMenu");
