@@ -240,6 +240,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool player2Joined;
 
+
     public LevelData lastLevelData;
 
 
