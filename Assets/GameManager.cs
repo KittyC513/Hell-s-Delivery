@@ -234,6 +234,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float resetTimer;
 
+    [Header("Join")]
+    [SerializeField]
+    public bool player1Joined;
+    [SerializeField]
+    public bool player2Joined;
+
     public LevelData lastLevelData;
 
 
@@ -294,12 +300,15 @@ public class GameManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha1) && player1 == null)
         {
             Instantiate(player1Pref, startPoint1.position, startPoint1.rotation);
+            player1Joined = true;
             print("PLAYER1 JOIN");
         }
 
         if (Input.GetKey(KeyCode.Alpha2) && player2 == null)
         {
             Instantiate(player2Pref, startPoint2.position, startPoint2.rotation);
+            player2Joined = true;
+
             print("PLAYER2 JOIN");
         }
     }
@@ -326,7 +335,8 @@ public class GameManager : MonoBehaviour
 
     void DetectScene()
     {
-        if (p1 != null || p2 != null)
+        // moving camera when both players join 
+        if (p1 != null && p2 != null)
         {
 
             currentScene = SceneManager.GetActiveScene();
@@ -344,7 +354,8 @@ public class GameManager : MonoBehaviour
                     {
                         Maincanvas.gameObject.SetActive(false);
                     }
-                    MoveCamera(cameraPosition, 1f);
+                    StartCoroutine(MoveMainCam());
+                    //MoveCamera(cameraPosition, 1f);
                     //animTitle.SetBool("isEnded", true);
                     StartCoroutine(TurnOnLight());
 
@@ -359,6 +370,12 @@ public class GameManager : MonoBehaviour
 
         }
 
+    }
+
+    IEnumerator MoveMainCam()
+    {
+        yield return new WaitForSeconds(5f);
+        MoveCamera(cameraPosition, 1f);
     }
     IEnumerator TurnOnLight()
     {
@@ -998,7 +1015,7 @@ public class GameManager : MonoBehaviour
 
     void ResetGame()
     {
-        if (!Input.anyKey)
+        if (!Input.anyKey && curSceneName != "TitleScene")
         {
             resetTimer += Time.deltaTime;
         }
