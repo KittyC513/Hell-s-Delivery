@@ -45,7 +45,7 @@ public class CameraRotateP2 : MonoBehaviour
 
     void RotateCam()
     {
-        if (Input.GetKey(KeyCode.Quote))
+        if (Input.GetKey(KeyCode.Quote) && target.GetComponent<CharacterControl>().isGrounded)
         {
             GameManager.instance.p2.isFreeze = true;
             if (Input.GetKey(KeyCode.LeftArrow))  // Rotate left

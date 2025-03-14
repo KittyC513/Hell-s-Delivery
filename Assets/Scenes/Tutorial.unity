@@ -38354,6 +38354,7 @@ MonoBehaviour:
   lighting1: {fileID: 0}
   lighting2: {fileID: 0}
   lighting3: {fileID: 0}
+  camMoved: 0
   LalahRequestWasCompleted: 0
   acceptLalahOrder: 0
   WertherRequestWasCompleted: 0
@@ -38363,6 +38364,10 @@ MonoBehaviour:
   barkTriggered: 0
   gameIsReset: 0
   isCh: 0
+  timeToReset: 0
+  resetTimer: 0
+  player1Joined: 0
+  player2Joined: 0
   lastLevelData: {fileID: 0}
   playerScore: {fileID: 0}
 --- !u!4 &671034072
@@ -41313,7 +41318,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 856421318607087279, guid: 65a746bb9f7a03c47ba0e832dfe2afc8, type: 3}
       propertyPath: maxTimer
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1668086906045056779, guid: 65a746bb9f7a03c47ba0e832dfe2afc8, type: 3}
       propertyPath: m_Name

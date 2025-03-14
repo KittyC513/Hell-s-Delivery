@@ -389,6 +389,7 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.curSceneName == "Tutorial")
         {
             SkipTutorialLevelOverview();
+            
         }
 
         if (GameManager.instance.curSceneName == "MVPLevel")
@@ -475,13 +476,16 @@ public class SceneControl : MonoBehaviour
         if (!TutorialCamControl.instance.endTutorial)
         {
             radialUI.SetActive(true);
+
             if (!TutorialCamControl.instance.cutsceneIsCompleted)
             {
                 if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
                 {
+
                     StartCoroutine(TutorialCamControl.instance.StopMoveCamStart1());
                     TutorialCamControl.instance.endTutorial = true;
                     radialUI.SetActive(false);
+                    print("Skip");
                 }
             }
         }
