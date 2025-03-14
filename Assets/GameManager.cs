@@ -363,6 +363,10 @@ public class GameManager : MonoBehaviour
                     {
                         StartCoroutine(MoveMainCam());
                     }
+                    else
+                    {
+                        StopCoroutine(MoveMainCam());
+                    }
                     
                     //MoveCamera(cameraPosition, 1f);
                     //animTitle.SetBool("isEnded", true);
@@ -383,9 +387,10 @@ public class GameManager : MonoBehaviour
 
     IEnumerator MoveMainCam()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         MoveCamera(cameraPosition, 1f);
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1f);
+        print("CameraMoving");
         camMoved = true;
     }
     IEnumerator TurnOnLight()
@@ -596,20 +601,20 @@ public class GameManager : MonoBehaviour
         {
             p1.isFreeze = false;
             p2.isFreeze = false;
-            print("p2Unfreezed");
+            //print("p2Unfreezed");
 
         }
 
         if (p1 != null && p2 == null)
         {
             p1.isFreeze = false;
-            print("p1Unfreezed");
+            //print("p1Unfreezed");
         }
 
         if (p1 == null && p2 != null)
         {
             p2.isFreeze = false;
-            print("p2Unfreezed");
+            //print("p2Unfreezed");
         }
     }
 
@@ -682,11 +687,13 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MovingCamera1()
     {
+        StopCoroutine(MoveMainCam());
         p1.isFreeze = true;
         p2.isFreeze = true;
         MoveCamera(closeShoot, 5);
         yield return new WaitForSecondsRealtime(2f);
         camChanged1 = true;
+        //print("CameraMovingToCloseShoot");
     }
 
     //public IEnumerator MovingCamera2()

@@ -267,10 +267,13 @@ public class SceneControl : MonoBehaviour
     public bool play1WithoutPackageDialogue;
     public bool play2WithoutPackageDialogue;
 
+    [Header("Arcade")]
+    [SerializeField]
+    private bool isArcadeVersion = true;
+
     private void Awake()
     {
         instance = this;
-
     }
     private void Start()
     {
@@ -331,72 +334,138 @@ public class SceneControl : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.curSceneName == GameManager.instance.scene1)
+
+        if (!isArcadeVersion)
         {
-            HubStart();
-            SkipComic();
-            SkipDevilDialogue();
-            SkipChoice();
-
-
-            if(GameManager.instance.timesEnterHub >= 1)
+            if (GameManager.instance.curSceneName == GameManager.instance.scene1)
             {
+                HubStart();
+                SkipComic();
+                SkipDevilDialogue();
+                SkipChoice();
+
+
+                if (GameManager.instance.timesEnterHub >= 1)
+                {
+                    nameTag.SetActive(false);
+                    SkipLalahDialogue();
+                    ShowLevel1Overview();
+                    //ShowLevel2Overview();
+                    //SkipwertherDialogue();
+                    SkipLalahEndDialogue();
+                    //SkipwertherDialogue();
+                    //SkipwertherEndDialogue();
+                }
+            }
+
+            if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.LalahLeft)
+            {
+                Lalah.SetActive(false);
+                print("Lalah");
+            }
+
+            //if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.WertherLeft)
+            //{
+            //    werther.SetActive(false);
+            //}
+
+            if (GameManager.instance.timesEnterHub >= 2 && !secondTimeStarts)
+            {
+                radialUI.SetActive(false);
+                GameManager.instance.p1.isFreeze = false;
+                GameManager.instance.p2.isFreeze = false;
+                print("p2Unfreezed");
+
+                secondTimeStarts = true;
+            }
+
+
+
+            if (GameManager.instance.curSceneName == GameManager.instance.scene3)
+            {
+                ShowHightlightedDoor();
+            }
+
+            if (GameManager.instance.curSceneName == "Level1")
+            {
+                PackageInstructionControl();
+                SkipLevel1OverviewCutScene();
+                DetectPackgeScore();
+            }
+
+            if (GameManager.instance.curSceneName == "Tutorial")
+            {
+                SkipTutorialLevelOverview();
+
+            }
+
+            if (GameManager.instance.curSceneName == "MVPLevel")
+            {
+                SkipMVPLevelOverviewCutscene();
+                //print("SkipMVPLevel");
+            }
+        }
+        else
+        {
+            if (GameManager.instance.curSceneName == GameManager.instance.scene1)
+            {
+                HubStart();
+                SkipComic();
+                SkipDevilDialogue();
+                SkipChoice();
+
                 nameTag.SetActive(false);
                 SkipLalahDialogue();
                 ShowLevel1Overview();
-                //ShowLevel2Overview();
-                //SkipwertherDialogue();
+                ShowLevel2Overview();
+                SkipwertherDialogue();
                 SkipLalahEndDialogue();
-                //SkipwertherDialogue();
-                //SkipwertherEndDialogue();
+                SkipwertherDialogue();
+                SkipwertherEndDialogue();
+
+                if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.LalahLeft)
+                {
+                    Lalah.SetActive(false);
+                    print("Lalah");
+                }
+
+                if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.WertherLeft)
+                {
+                    werther.SetActive(false);
+                }
+
+                if (GameManager.instance.curSceneName == GameManager.instance.scene3)
+                {
+                    ShowHightlightedDoor();
+                }
+
+                if (GameManager.instance.curSceneName == GameManager.instance.scene3)
+                {
+                    ShowHightlightedDoor();
+                }
+
+                if (GameManager.instance.curSceneName == "Level1")
+                {
+                    PackageInstructionControl();
+                    SkipLevel1OverviewCutScene();
+                    DetectPackgeScore();
+                }
+
+                if (GameManager.instance.curSceneName == "Tutorial")
+                {
+                    SkipTutorialLevelOverview();
+
+                }
+
+                if (GameManager.instance.curSceneName == "MVPLevel")
+                {
+                    SkipMVPLevelOverviewCutscene();
+                    //print("SkipMVPLevel");
+                }
+
             }
         }
-
-        if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.LalahLeft)
-        {
-            Lalah.SetActive(false);
-        }
-
-        //if (GameManager.instance.curSceneName == "HubStart" && GameManager.instance.WertherLeft)
-        //{
-        //    werther.SetActive(false);
-        //}
-
-        if(GameManager.instance.timesEnterHub >= 2 && !secondTimeStarts)
-        {
-            radialUI.SetActive(false);
-            GameManager.instance.p1.isFreeze = false;
-            GameManager.instance.p2.isFreeze = false;
-            print("p2Unfreezed");
-
-            secondTimeStarts = true;
-        }
-
-
-
-        if (GameManager.instance.curSceneName == GameManager.instance.scene3)
-        {
-            ShowHightlightedDoor();
-        }
-
-        if (GameManager.instance.curSceneName == "Level1")
-        {
-            PackageInstructionControl();
-            SkipLevel1OverviewCutScene();
-            DetectPackgeScore();
-        }
-
-        if (GameManager.instance.curSceneName == "Tutorial")
-        {
-            SkipTutorialLevelOverview();
-            
-        }
-
-        if (GameManager.instance.curSceneName == "MVPLevel")
-        {
-            SkipMVPLevelOverviewCutscene();
-            //print("SkipMVPLevel");
-        }
+       
 
 
 
@@ -414,6 +483,8 @@ public class SceneControl : MonoBehaviour
 
             phonePiece.SetActive(true);
             phoneRingText.SetActive(true);
+            Lalah.SetActive(true);
+            werther.SetActive(true);
         }
 
         if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
@@ -427,6 +498,8 @@ public class SceneControl : MonoBehaviour
 
                 phonePiece.SetActive(true);
                 phoneRingText.SetActive(true);
+                Lalah.SetActive(true);
+                werther.SetActive(true);
                 comicShowed = false;
             }           
         }
@@ -587,30 +660,30 @@ public class SceneControl : MonoBehaviour
         }
     }
 
-    //void SkipwertherEndDialogue()
-    //{
-    //    if (GameManager.instance.p1.Dialogue1_2 || GameManager.instance.p2.Dialogue1_2)
-    //    {
-    //        if (!wertherdialogueEnds && WertherConversationStart)
-    //        {
-    //            radialUI.SetActive(true);
-    //            if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
-    //            {
-    //                dR.Stop();
-    //                SwitchCameraToMain();
-    //                radialUI.SetActive(false);
-    //                wertherdialogueEnds = true;
-    //                wertherLeave();
-    //            }
-    //        }
+    void SkipwertherEndDialogue()
+    {
+        if (GameManager.instance.p1.Dialogue1_2 || GameManager.instance.p2.Dialogue1_2)
+        {
+            if (!wertherdialogueEnds && WertherConversationStart)
+            {
+                radialUI.SetActive(true);
+                if (GameManager.instance.p1.ReadSkipButton() || GameManager.instance.p2.ReadSkipButton())
+                {
+                    dR.Stop();
+                    SwitchCameraToMain();
+                    radialUI.SetActive(false);
+                    wertherdialogueEnds = true;
+                    wertherLeave();
+                }
+            }
 
-    //        if (wertherdialogueEnds || !WertherConversationStart)
-    //        {
-    //            radialUI.SetActive(false);
-    //            Default();
-    //        }
-    //    }
-    //}
+            if (wertherdialogueEnds || !WertherConversationStart)
+            {
+                radialUI.SetActive(false);
+                Default();
+            }
+        }
+    }
 
     void SkipLevel1OverviewCutScene()
     {
@@ -673,22 +746,22 @@ public class SceneControl : MonoBehaviour
         dialogueFin = false;
     }
 
-    //public void SwitchCameraToNpc()
-    //{
-    //    mainCamera.SetActive(false);
-    //    WertherCam.SetActive(true);
+    public void SwitchCameraToNpc()
+    {
+        mainCamera.SetActive(false);
+        WertherCam.SetActive(true);
 
-    //    if (overviewCamWerther.gameObject != null)
-    //    {
-    //        overviewCamWerther.gameObject.SetActive(false);
-    //    }
-    //    if (WertherOverviewDescriptionUI != null)
-    //    {
-    //        WertherOverviewDescriptionUI.SetActive(false);
-    //    }
+        if (overviewCamWerther.gameObject != null)
+        {
+            overviewCamWerther.gameObject.SetActive(false);
+        }
+        if (WertherOverviewDescriptionUI != null)
+        {
+            WertherOverviewDescriptionUI.SetActive(false);
+        }
 
 
-    //}
+    }
 
     public void SwitchCameraToNpc2()
     {
@@ -741,22 +814,22 @@ public class SceneControl : MonoBehaviour
 
     }
 
-    //public void SwitchCameraToWertherCam()
-    //{
-    //    mainCamera.SetActive(false);
-    //    overviewCamWerther.gameObject.SetActive(true);
-    //    WertherCam.SetActive(false);
-    //    WertherOverviewDescriptionUI.SetActive(true);
+    public void SwitchCameraToWertherCam()
+    {
+        mainCamera.SetActive(false);
+        overviewCamWerther.gameObject.SetActive(true);
+        WertherCam.SetActive(false);
+        WertherOverviewDescriptionUI.SetActive(true);
 
-    //}
+    }
 
 
-    //public void SwitchCameraToNpc3()
-    //{
-    //    mainCamera.SetActive(false);
-    //    Npc3Cam.SetActive(true);
+    public void SwitchCameraToNpc3()
+    {
+        mainCamera.SetActive(false);
+        Npc3Cam.SetActive(true);
 
-    //}
+    }
 
     public void SwitchCameraToMain()
     {
@@ -833,6 +906,8 @@ public class SceneControl : MonoBehaviour
         GameManager.instance.UnfreezePlayer();
         phonePiece.SetActive(true);
         phoneRingText.SetActive(true);
+        Lalah.SetActive(true);
+        werther.SetActive(true);
     }
 
     void HubStart()
@@ -847,287 +922,504 @@ public class SceneControl : MonoBehaviour
             //print("StartConmic");
         }
 
-        if (GameManager.instance.timesEnterHub >= 1)
-        {
-            phonePiece.SetActive(false);
-        }
 
-        if(GameManager.instance.timesEnterHub >= 1)
+        if (!isArcadeVersion) 
         {
-            tutorialUIisShowed = false;
-
-            if (!lalahIsGone)
+            if (GameManager.instance.timesEnterHub >= 1)
             {
-                if(!level2Overview && !GameManager.instance.LalahLeft)
+                phonePiece.SetActive(false);
+            }
+
+
+            if (GameManager.instance.timesEnterHub >= 1)
+            {
+                tutorialUIisShowed = false;
+
+                if (!lalahIsGone)
                 {
-                    Lalah.SetActive(true);
+                    if (!level2Overview && !GameManager.instance.LalahLeft)
+                    {
+                        Lalah.SetActive(true);
+                    }
+                    firstCustomer = true;
                 }
-                firstCustomer = true;
+                else
+                {
+                    Lalah.SetActive(false);
+                    print("Lalah");
+                    firstCustomer = false;
+                }
+
+                //if (!wertherIsGone)
+                //{
+                //    if (!level1Overview && !GameManager.instance.WertherLeft)
+                //    {
+                //        werther.SetActive(true);
+                //    }
+                //    secondCustomer = true;
+
+                //}
+                //else
+                //{
+                //    secondCustomer = false;
+                //    werther.SetActive(false);
+                //}
+
             }
             else
             {
                 Lalah.SetActive(false);
+                print("Lalah");
+                firstCustomer = false;
+                secondCustomer = false;
+                //werther.SetActive(false);
+
+            }
+
+
+            //if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds && !GameManager.instance.WertherRequestWasCompleted && !showHeavyPackage)
+            //{
+            //    if(GameManager.instance.LalahRequestWasCompleted && lalahIsGone)
+            //    {
+            //        if(!level1Overview && !level2Overview)
+            //        {
+            //            WertherUI.SetActive(true);
+            //            wertherCollider.enabled = true;
+            //        }
+            //    } 
+            //    else if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+            //    {
+            //        if (!level1Overview && !level2Overview)
+            //        {
+            //            WertherUI.SetActive(true);
+            //            wertherCollider.enabled = true;
+            //        }
+
+            //    }
+
+
+            //    //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
+            //}
+            //else if (!GameManager.instance.showWertherInstruction || wertherdialogueEnds || GameManager.instance.WertherRequestWasCompleted || showHeavyPackage)
+            //{
+            //    WertherUI.SetActive(false);
+            //    wertherCollider.enabled = false;
+            //    //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
+            //}
+
+            if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds && !GameManager.instance.LalahRequestWasCompleted && !showPackage1)
+            {
+                if (GameManager.instance.WertherRequestWasCompleted && wertherIsGone)
+                {
+                    if (!level1Overview && !level2Overview)
+                    {
+                        LalahUI.SetActive(true);
+                        lalahCollider.enabled = true;
+                    }
+
+                }
+                else if (!GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+                {
+                    if (!level1Overview && !level2Overview)
+                    {
+                        LalahUI.SetActive(true);
+                        lalahCollider.enabled = true;
+                    }
+                }
+
+            }
+            else if (LalahdialogueEnds || !GameManager.instance.showLalahInstruction || GameManager.instance.LalahRequestWasCompleted || showPackage1)
+            {
+                LalahUI.SetActive(false);
+                lalahCollider.enabled = false;
+            }
+
+
+            if (GameManager.instance.showLalahInstruction && GameManager.instance.LalahRequestWasCompleted && !LalahConversationStart)
+            {
+                LalahTalkUi.SetActive(true);
+
+                if (!lalahTrigger.isLeaving)
+                {
+                    WertherUI.SetActive(false);
+                    wertherCollider.enabled = false;
+                }
+                else
+                {
+                    //LalahTalkUi.SetActive(false);
+                    WertherUI.SetActive(true);
+                    wertherCollider.enabled = true;
+                }
+            }
+            else if (!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted || LalahConversationStart)
+            {
+                LalahTalkUi.SetActive(false);
+            }
+
+            if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted && !WertherConversationStart)
+            {
+                WertherTalkUI.SetActive(true);
+                if (!NPCTrigger.isLeaving)
+                {
+                    //WertherTalkUI.SetActive(true);
+                    if (!wertherdialogueEnds || !wertherIsGone)
+                    {
+                        LalahUI.SetActive(false);
+                        print("1");
+                        lalahCollider.enabled = false;
+                    }
+                    else if (wertherIsGone)
+                    {
+                        NPCTrigger.isLeaving = true;
+                    }
+
+                }
+                else if (NPCTrigger.isLeaving)
+                {
+                    //WertherTalkUI.SetActive(false);
+                    LalahUI.SetActive(true);
+                    lalahCollider.enabled = true;
+                }
+            }
+            else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted || WertherConversationStart)
+            {
+                WertherTalkUI.SetActive(false);
+            }
+
+            if (GameManager.instance.showMichaelInstruction)
+            {
+                MichaelUI.SetActive(true);
+            }
+            else
+            {
+                MichaelUI.SetActive(false);
+            }
+
+            if (GameManager.instance.ShowPhoneInstruction)
+            {
+                phoneInstruction.SetActive(true);
+                if (GameManager.instance.answeredPhone)
+                {
+                    if (!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+                    {
+                        phoneRingText.SetActive(false);
+                        phonePiece.SetActive(false);
+                    }
+
+                }
+            }
+            else
+            {
+                StartCoroutine(ClosePhoneUI());
+            }
+
+            IEnumerator ClosePhoneUI()
+            {
+                phoneAnimator.SetBool("PhoneOut", true);
+                yield return new WaitForSeconds(0.3f);
+                phoneAnimator.SetBool("PhoneOut", false);
+                phoneInstruction.SetActive(false);
+            }
+
+
+            if (wertherdialogueEnds && !showPackage1 && !GameManager.instance.WertherRequestWasCompleted)
+            {
+                normalPackage.SetActive(true);
+                showPackage1 = true;
+                TextControl();
+
+            }
+            else if (!wertherdialogueEnds)
+            {
+                normalPackage.SetActive(false);
+            }
+
+
+            if (!GameManager.instance.LalahRequestWasCompleted && !showHeavyPackage && LalahdialogueEnds)
+            {
+                heavyPackage.SetActive(true);
+                showHeavyPackage = true;
+                TextControl();
+            }
+            else if (!LalahdialogueEnds)
+            {
+                heavyPackage.SetActive(false);
+            }
+
+            //if (LalahdialogueEnds)
+            //{
+            //    GameManager.instance.oriTimesBacktoHub = GameManager.instance.timesEnterHub;
+            //} 
+            //else if (GameManager.instance.oriTimesBacktoHub == GameManager.instance.timesEnterHub + 1 && !lalahTrigger.isLeaving)
+            //{
+            //    LalahLeave();
+            //}
+
+            //TextControl();
+
+            if (GameManager.instance.p1.turnOnTV || GameManager.instance.p2.turnOnTV)
+            {
+                if (boxingMinigame.instance.isboxing)
+                {
+                    minigameUI.SetActive(false);
+                    minigameUIIsOn = false;
+                }
+                else
+                {
+                    if (!minigameUIIsOn)
+                    {
+                        StartCoroutine(ShowMiniGameUI());
+                    }
+                    //if (GameManager.instance.p1.onTv || GameManager.instance.p2.onTv)
+                    //{
+                    //    if (!minigameUIIsOn)
+                    //    {
+                    //        StartCoroutine(ShowMiniGameUI());
+                    //    }
+                    //}
+                    //else if (SelectMinigame.instance.chooseOne || SelectMinigame.instance.chooseTwo)
+                    //{
+                    //    if (!minigameUIIsOn)
+                    //    {
+                    //        StartCoroutine(ShowMiniGameUI());
+                    //    }
+
+                    //}
+
+                }
+
+            }
+            else if (!GameManager.instance.p1.turnOnTV && !GameManager.instance.p2.turnOnTV)
+            {
+                minigameUI.SetActive(false);
+
+                boxingMinigame.instance.boxingCanvas.SetActive(false);
+                boxingMinigame.instance.boxingCanvas1.SetActive(false);
+                SelectMinigame.instance.chooseOne = false;
+                SelectMinigame.instance.chooseTwo = false;
+                minigameUIIsOn = false;
+            }
+
+            if (GameManager.instance.showTVInstruction)
+            {
+                TVinstruction.SetActive(true);
+            }
+            else
+            {
+                TVinstruction.SetActive(false);
+            }
+        }
+        else
+        {
+            if (!lalahIsGone && GameManager.instance.timesEnterHub >= 1)
+            {
+                if (!level2Overview && !GameManager.instance.LalahLeft)
+                {
+                    Lalah.SetActive(true);
+
+                }
+
+            }
+            else if(lalahIsGone)
+            {
+                Lalah.SetActive(false);
+                print("Lalah");
                 firstCustomer = false;
             }
 
-            //if (!wertherIsGone)
-            //{
-            //    if (!level1Overview && !GameManager.instance.WertherLeft)
-            //    {
-            //        werther.SetActive(true);
-            //    }
-            //    secondCustomer = true;
-
-            //}
-            //else
-            //{
-            //    secondCustomer = false;
-            //    werther.SetActive(false);
-            //}
-
-        }
-        else
-        {
-            Lalah.SetActive(false);
-            firstCustomer = false;
-            secondCustomer = false;
-            //werther.SetActive(false);
-
-        }
-
-
-        //if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds && !GameManager.instance.WertherRequestWasCompleted && !showHeavyPackage)
-        //{
-        //    if(GameManager.instance.LalahRequestWasCompleted && lalahIsGone)
-        //    {
-        //        if(!level1Overview && !level2Overview)
-        //        {
-        //            WertherUI.SetActive(true);
-        //            wertherCollider.enabled = true;
-        //        }
-        //    } 
-        //    else if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
-        //    {
-        //        if (!level1Overview && !level2Overview)
-        //        {
-        //            WertherUI.SetActive(true);
-        //            wertherCollider.enabled = true;
-        //        }
-
-        //    }
-
-
-        //    //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
-        //}
-        //else if (!GameManager.instance.showWertherInstruction || wertherdialogueEnds || GameManager.instance.WertherRequestWasCompleted || showHeavyPackage)
-        //{
-        //    WertherUI.SetActive(false);
-        //    wertherCollider.enabled = false;
-        //    //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
-        //}
-
-        if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds && !GameManager.instance.LalahRequestWasCompleted && !showPackage1)
-        {
-            if(GameManager.instance.WertherRequestWasCompleted && wertherIsGone)
+            if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds && !GameManager.instance.LalahRequestWasCompleted && !showPackage1)
             {
-                if (!level1Overview && !level2Overview)
+                if (GameManager.instance.WertherRequestWasCompleted && wertherIsGone)
                 {
-                    LalahUI.SetActive(true);
-                    lalahCollider.enabled = true;
+                    if (!level1Overview && !level2Overview)
+                    {
+                        LalahUI.SetActive(true);
+                        lalahCollider.enabled = true;
+                    }
+
+                }
+                else if (!GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+                {
+                    if (!level1Overview && !level2Overview)
+                    {
+                        LalahUI.SetActive(true);
+                        lalahCollider.enabled = true;
+                    }
                 }
 
-            } 
-            else if (!GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+            }
+            else if (LalahdialogueEnds || !GameManager.instance.showLalahInstruction || GameManager.instance.LalahRequestWasCompleted || showPackage1)
             {
-                if (!level1Overview && !level2Overview)
+                LalahUI.SetActive(false);
+                //print("3");
+                lalahCollider.enabled = false;
+            }
+
+
+            if (GameManager.instance.showLalahInstruction && GameManager.instance.LalahRequestWasCompleted && !LalahConversationStart)
+            {
+                LalahTalkUi.SetActive(true);
+
+                if (!lalahTrigger.isLeaving)
                 {
+                    WertherUI.SetActive(false);
+                    wertherCollider.enabled = false;
+                }
+                else
+                {
+                    //LalahTalkUi.SetActive(false);
+                    WertherUI.SetActive(true);
+                    wertherCollider.enabled = true;
+                }
+            }
+            else if (!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted || LalahConversationStart)
+            {
+                LalahTalkUi.SetActive(false);
+            }
+
+            if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted && !WertherConversationStart)
+            {
+                WertherTalkUI.SetActive(true);
+                if (!NPCTrigger.isLeaving)
+                {
+                    //WertherTalkUI.SetActive(true);
+                    if (!wertherdialogueEnds || !wertherIsGone)
+                    {
+                        LalahUI.SetActive(false);
+                        print("1");
+                        lalahCollider.enabled = false;
+                    }
+                    else if (wertherIsGone)
+                    {
+                        NPCTrigger.isLeaving = true;
+                    }
+
+                }
+                else if (NPCTrigger.isLeaving)
+                {
+                    //WertherTalkUI.SetActive(false);
                     LalahUI.SetActive(true);
                     lalahCollider.enabled = true;
                 }
             }
+            else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted || WertherConversationStart)
+            {
+                WertherTalkUI.SetActive(false);
+            }
 
-        }
-        else if (LalahdialogueEnds || !GameManager.instance.showLalahInstruction || GameManager.instance.LalahRequestWasCompleted || showPackage1)
-        {
-            LalahUI.SetActive(false);
-            print("3");
-            lalahCollider.enabled = false;
-        }
-
-
-        if(GameManager.instance.showLalahInstruction && GameManager.instance.LalahRequestWasCompleted && !LalahConversationStart)
-        {
-            LalahTalkUi.SetActive(true);
-            
-            if (!lalahTrigger.isLeaving)
-            {          
-                WertherUI.SetActive(false);
-                wertherCollider.enabled = false;
-            } 
+            if (GameManager.instance.showMichaelInstruction)
+            {
+                MichaelUI.SetActive(true);
+            }
             else
             {
-                //LalahTalkUi.SetActive(false);
-                WertherUI.SetActive(true);
-                wertherCollider.enabled = true;
+                MichaelUI.SetActive(false);
             }
-        }
-        else if(!GameManager.instance.showLalahInstruction || !GameManager.instance.LalahRequestWasCompleted || LalahConversationStart)
-        {
-            LalahTalkUi.SetActive(false);
-        }
 
-        //if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted && !WertherConversationStart)
-        //{
-        //    WertherTalkUI.SetActive(true);
-        //    if (!NPCTrigger.isLeaving)
-        //    {
-        //        //WertherTalkUI.SetActive(true);
-        //        if (!wertherdialogueEnds || !wertherIsGone)
-        //        {
-        //            LalahUI.SetActive(false);
-        //            print("1");
-        //            lalahCollider.enabled = false;
-        //        }
-        //        else if(wertherIsGone)
-        //        {
-        //            NPCTrigger.isLeaving = true;
-        //        }
-
-        //    }
-        //    else if(NPCTrigger.isLeaving)
-        //    {
-        //        //WertherTalkUI.SetActive(false);
-        //        LalahUI.SetActive(true);
-        //        lalahCollider.enabled = true;
-        //    }
-        //}
-        //else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted || WertherConversationStart)
-        //{
-        //    WertherTalkUI.SetActive(false);
-        //}
-
-        //if (GameManager.instance.showMichaelInstruction)
-        //{
-        //    MichaelUI.SetActive(true);
-        //}
-        //else
-        //{
-        //    MichaelUI.SetActive(false);
-        //}
-
-        if (GameManager.instance.ShowPhoneInstruction)
-        {
-            phoneInstruction.SetActive(true);
-            if (GameManager.instance.answeredPhone)
+            if (GameManager.instance.ShowPhoneInstruction)
             {
-                if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+                phoneInstruction.SetActive(true);
+                if (GameManager.instance.answeredPhone)
                 {
-                    phoneRingText.SetActive(false);
-                    phonePiece.SetActive(false);
+                    if (!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+                    {
+                        phoneRingText.SetActive(false);
+                        phonePiece.SetActive(false);
+                    }
+
+                }
+            }
+            else
+            {
+                StartCoroutine(ClosePhoneUI());
+            }
+
+            IEnumerator ClosePhoneUI()
+            {
+                phoneAnimator.SetBool("PhoneOut", true);
+                yield return new WaitForSeconds(0.3f);
+                phoneAnimator.SetBool("PhoneOut", false);
+                phoneInstruction.SetActive(false);
+            }
+
+
+            if (wertherdialogueEnds && !showPackage1 && !GameManager.instance.WertherRequestWasCompleted)
+            {
+                normalPackage.SetActive(true);
+                showPackage1 = true;
+                TextControl();
+
+            }
+            else if (!wertherdialogueEnds)
+            {
+                normalPackage.SetActive(false);
+            }
+
+
+            if (!GameManager.instance.LalahRequestWasCompleted && !showHeavyPackage && LalahdialogueEnds)
+            {
+                heavyPackage.SetActive(true);
+                showHeavyPackage = true;
+                TextControl();
+            }
+            else if (!LalahdialogueEnds)
+            {
+                heavyPackage.SetActive(false);
+            }
+
+            if (GameManager.instance.p1.turnOnTV || GameManager.instance.p2.turnOnTV)
+            {
+                if (boxingMinigame.instance.isboxing)
+                {
+                    minigameUI.SetActive(false);
+                    minigameUIIsOn = false;
+                }
+                else
+                {
+                    if (!minigameUIIsOn)
+                    {
+                        StartCoroutine(ShowMiniGameUI());
+                    }
+                    //if (GameManager.instance.p1.onTv || GameManager.instance.p2.onTv)
+                    //{
+                    //    if (!minigameUIIsOn)
+                    //    {
+                    //        StartCoroutine(ShowMiniGameUI());
+                    //    }
+                    //}
+                    //else if (SelectMinigame.instance.chooseOne || SelectMinigame.instance.chooseTwo)
+                    //{
+                    //    if (!minigameUIIsOn)
+                    //    {
+                    //        StartCoroutine(ShowMiniGameUI());
+                    //    }
+
+                    //}
+
                 }
 
             }
-        }
-        else
-        {
-            StartCoroutine(ClosePhoneUI());
-        }
-
-        IEnumerator ClosePhoneUI()
-        {
-            phoneAnimator.SetBool("PhoneOut", true);
-            yield return new WaitForSeconds(0.3f);
-            phoneAnimator.SetBool("PhoneOut", false);
-            phoneInstruction.SetActive(false);
-        }
-
-
-        if (wertherdialogueEnds && !showPackage1 && !GameManager.instance.WertherRequestWasCompleted)
-        {
-            normalPackage.SetActive(true);
-            showPackage1 = true;
-            TextControl();
-            
-        }
-        else if (!wertherdialogueEnds)
-        {
-            normalPackage.SetActive(false);
-        }
-
-
-        if (!GameManager.instance.LalahRequestWasCompleted && !showHeavyPackage && LalahdialogueEnds )
-        {
-            heavyPackage.SetActive(true);
-            showHeavyPackage = true;
-            TextControl();
-        }
-        else if (!LalahdialogueEnds)
-        {
-            heavyPackage.SetActive(false);
-        }
-
-        //if (LalahdialogueEnds)
-        //{
-        //    GameManager.instance.oriTimesBacktoHub = GameManager.instance.timesEnterHub;
-        //} 
-        //else if (GameManager.instance.oriTimesBacktoHub == GameManager.instance.timesEnterHub + 1 && !lalahTrigger.isLeaving)
-        //{
-        //    LalahLeave();
-        //}
-
-        //TextControl();
-
-        if(GameManager.instance.p1.turnOnTV || GameManager.instance.p2.turnOnTV)
-        {
-            if (boxingMinigame.instance.isboxing)
+            else if (!GameManager.instance.p1.turnOnTV && !GameManager.instance.p2.turnOnTV)
             {
                 minigameUI.SetActive(false);
+
+                boxingMinigame.instance.boxingCanvas.SetActive(false);
+                boxingMinigame.instance.boxingCanvas1.SetActive(false);
+                SelectMinigame.instance.chooseOne = false;
+                SelectMinigame.instance.chooseTwo = false;
                 minigameUIIsOn = false;
+            }
+
+            if (GameManager.instance.showTVInstruction)
+            {
+                TVinstruction.SetActive(true);
             }
             else
             {
-                if (!minigameUIIsOn)
-                {
-                    StartCoroutine(ShowMiniGameUI());
-                }
-                //if (GameManager.instance.p1.onTv || GameManager.instance.p2.onTv)
-                //{
-                //    if (!minigameUIIsOn)
-                //    {
-                //        StartCoroutine(ShowMiniGameUI());
-                //    }
-                //}
-                //else if (SelectMinigame.instance.chooseOne || SelectMinigame.instance.chooseTwo)
-                //{
-                //    if (!minigameUIIsOn)
-                //    {
-                //        StartCoroutine(ShowMiniGameUI());
-                //    }
-
-                //}
-
+                TVinstruction.SetActive(false);
             }
-
         }
-        else if (!GameManager.instance.p1.turnOnTV && !GameManager.instance.p2.turnOnTV)
-        {
-            minigameUI.SetActive(false);
-
-            boxingMinigame.instance.boxingCanvas.SetActive(false);
-            boxingMinigame.instance.boxingCanvas1.SetActive(false);
-            SelectMinigame.instance.chooseOne = false;
-            SelectMinigame.instance.chooseTwo = false;
-            minigameUIIsOn = false;
-        }
-
-        if (GameManager.instance.showTVInstruction)
-        {
-            TVinstruction.SetActive(true);
-        }
-        else
-        {
-            TVinstruction.SetActive(false);
-        }
+        
 
     }
 
@@ -1397,112 +1689,113 @@ public class SceneControl : MonoBehaviour
     #endregion
 
     #region Werther Event
-    //public void ShowLevel2Overview()
-    //{
-    //    TurnOffModel2();
-    //    if (accept1 && !WertherConversationStart)
-    //    {
-    //        GameManager.instance.p1.isFreeze = false;
-    //        GameManager.instance.p2.isFreeze = false;
-    //    }
+    public void ShowLevel2Overview()
+    {
+        TurnOffModel2();
+        if (accept1 && !WertherConversationStart)
+        {
+            GameManager.instance.p1.isFreeze = false;
+            GameManager.instance.p2.isFreeze = false;
+        }
 
-    //    if (accept1 && !wertherdialogueEnds)
-    //    {
-    //        Lalah.SetActive(true);
-    //        SwitchCameraToNpc();
-    //        WertherOverviewUI.SetActive(false);
+        if (accept1 && !wertherdialogueEnds)
+        {
+            Lalah.SetActive(true);
+            SwitchCameraToNpc();
+            WertherOverviewUI.SetActive(false);
 
-    //    }
+        }
 
-    //    if (reject1 && !UI2turnOff)
-    //    {
-    //        StartCoroutine(TurnOffUIWerther());
-    //    }
-
-
-    //    if (level2Overview)
-    //    {
-    //        if (!LalahdialogueEnds && !wertherdialogueEnds)
-    //        {
-    //            if (!accept1 && !reject1)
-    //            {
-    //                Lalah.SetActive(false);
-    //                SwitchCameraToWertherCam();
-    //                //MoveCameraLalah(overviewCamLalah);
-    //                //yield return new WaitForSeconds(1f);
-    //                WertherOverviewUI.SetActive(true);
+        if (reject1 && !UI2turnOff)
+        {
+            StartCoroutine(TurnOffUIWerther());
+        }
 
 
-    //                WertherUI.SetActive(false);
-    //                wertherCollider.enabled = false;
-    //                UI2turnOff = false;
+        if (level2Overview)
+        {
+            if (!LalahdialogueEnds && !wertherdialogueEnds)
+            {
+                if (!accept1 && !reject1)
+                {
+                    Lalah.SetActive(false);
+                    print("Lalah");
+                    SwitchCameraToWertherCam();
+                    //MoveCameraLalah(overviewCamLalah);
+                    //yield return new WaitForSeconds(1f);
+                    WertherOverviewUI.SetActive(true);
 
 
-    //            }
-
-    //            if (delayTimer1 <= 0.2f)
-    //            {
-    //                delayTimer1 += Time.deltaTime;
-    //            }
+                    WertherUI.SetActive(false);
+                    wertherCollider.enabled = false;
+                    UI2turnOff = false;
 
 
-    //            if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
-    //            {
-    //                if (!accept1 && delayTimer1 > 0.2f && !reject1)
-    //                {
-    //                    accept1 = true;
-    //                    startLevel2 = true;
-    //                    GameManager.instance.accepWertherOrder = true;
-    //                }
+                }
+
+                if (delayTimer1 <= 0.2f)
+                {
+                    delayTimer1 += Time.deltaTime;
+                }
 
 
-    //            }
-
-    //            if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
-    //            {
-    //                if (!reject1 && delayTimer1 > 0.2f && !accept1)
-    //                {
-    //                    print("Reject");
-    //                    reject1 = true;
-    //                }
-    //            }
-    //        }
-    //        //StartCoroutine(CameraSwitchLalah());
+                if (GameManager.instance.p1.ReadPushButton() || GameManager.instance.p2.ReadPushButton())
+                {
+                    if (!accept1 && delayTimer1 > 0.2f && !reject1)
+                    {
+                        accept1 = true;
+                        startLevel2 = true;
+                        GameManager.instance.accepWertherOrder = true;
+                    }
 
 
-    //    }
-    //    else
-    //    {
-    //        delayTimer1 = 0;
-    //        accept1 = false;
-    //        reject1 = false;
-    //    }
+                }
 
-    //}
+                if (GameManager.instance.p1.ReadActionButton() || GameManager.instance.p2.ReadActionButton())
+                {
+                    if (!reject1 && delayTimer1 > 0.2f && !accept1)
+                    {
+                        print("Reject");
+                        reject1 = true;
+                    }
+                }
+            }
+            //StartCoroutine(CameraSwitchLalah());
 
-    //IEnumerator TurnOffUIWerther()
-    //{
-    //    if (!GameManager.instance.LalahLeft)
-    //    {
-    //        Lalah.SetActive(true);
-    //    }
-    //    WertherOverviewUI.SetActive(false);
-    //    yield return new WaitForSeconds(0.2f);
-    //    SwitchCameraToMain();
-    //    GameManager.instance.p1.isFreeze = false;
-    //    GameManager.instance.p2.isFreeze = false;
-    //    level2Overview = false;
-    //    UI2turnOff = true;
 
-    //}
+        }
+        else
+        {
+            delayTimer1 = 0;
+            accept1 = false;
+            reject1 = false;
+        }
 
-    //void TurnOffModel2()
-    //{
-    //    if (UI2turnOff)
-    //    {
-    //        WertherOverviewUI.SetActive(false);
-    //    }
-    //}
+    }
+
+    IEnumerator TurnOffUIWerther()
+    {
+        if (!GameManager.instance.LalahLeft)
+        {
+            Lalah.SetActive(true);
+        }
+        WertherOverviewUI.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        SwitchCameraToMain();
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+        level2Overview = false;
+        UI2turnOff = true;
+
+    }
+
+    void TurnOffModel2()
+    {
+        if (UI2turnOff)
+        {
+            WertherOverviewUI.SetActive(false);
+        }
+    }
     #endregion
 
     #region TitlePage
@@ -1763,16 +2056,16 @@ public class SceneControl : MonoBehaviour
 
     #region MVP Level
 
-    //public void wertherLeave()
-    //{
-    //    NPCTrigger.dialogueEnd = true;
-    //    wertherIsGone = true;
-    //    SwitchCameraToMain();
-    //    GameManager.instance.p1.isFreeze = false;
-    //    GameManager.instance.p2.isFreeze = false;
-    //    WertherConversationStart = false;
-    //    //TurnOnCanvas();
-    //}
+    public void wertherLeave()
+    {
+        NPCTrigger.dialogueEnd = true;
+        wertherIsGone = true;
+        SwitchCameraToMain();
+        GameManager.instance.p1.isFreeze = false;
+        GameManager.instance.p2.isFreeze = false;
+        WertherConversationStart = false;
+        //TurnOnCanvas();
+    }
     #endregion
 
     #region Bark
@@ -1869,12 +2162,12 @@ public class SceneControl : MonoBehaviour
     //    WertherAnim.SetBool("isHappy", false);
     //}
 
-    //public void Default()
-    //{
-    //    WertherAnim.SetBool("isNeutral", false); ;
-    //    WertherAnim.SetBool("isConstupated", false);
-    //    WertherAnim.SetBool("isHappy", false);
-    //}
+    public void Default()
+    {
+        WertherAnim.SetBool("isNeutral", false); ;
+        WertherAnim.SetBool("isConstupated", false);
+        WertherAnim.SetBool("isHappy", false);
+    }
 
     #endregion
 

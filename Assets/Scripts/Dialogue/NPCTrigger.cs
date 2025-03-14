@@ -25,7 +25,9 @@ public class NPCTrigger : MonoBehaviour
     [SerializeField]
     public CapsuleCollider bc1;
 
-
+    [Header("Arcade")]
+    [SerializeField]
+    private bool isArcade = true;
     // Start is called before the first frame update
 
     void Start()
@@ -66,23 +68,53 @@ public class NPCTrigger : MonoBehaviour
     #region Weather
     private void Arrive()
     {
-        if (SceneControl.instance.secondCustomer && !npcArrived && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+        if (!isArcade)
         {
-            StartCoroutine(Walking());
+            if (SceneControl.instance.secondCustomer && !npcArrived && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+            {
+                StartCoroutine(Walking());
+            }
+            if (npcArrived && !dialogueEnd || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
+            {
+                smoke.SetActive(false);
+            }
+            else if (dialogueEnd && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+            {
+                smoke.SetActive(true);
+            }
         }
-        if (npcArrived && !dialogueEnd || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
+        else
         {
-            smoke.SetActive(false);
+            if (!npcArrived && !GameManager.instance.WertherRequestWasCompleted)
+            {
+                StartCoroutine(Walking());
+            }
+
+            if (npcArrived && !dialogueEnd || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
+            {
+                smoke.SetActive(false);
+                StopCoroutine(Walking());
+            }
         }
-        else if (dialogueEnd && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
-        {
-            smoke.SetActive(true);
-        }
+
+
     }
 
     IEnumerator Walking()
     {
-        if(GameManager.instance.timesEnterHub ==1)
+        if (!isArcade)
+        {
+            if (GameManager.instance.timesEnterHub == 1)
+            {
+                anim.SetBool("Arrived", true);
+                yield return new WaitForSeconds(1.2f);
+                smoke.SetActive(false);
+                anim.SetBool("Arrived", false);
+                npcArrived = true;
+            }
+
+        }
+        else
         {
             anim.SetBool("Arrived", true);
             yield return new WaitForSeconds(1.2f);
@@ -90,6 +122,7 @@ public class NPCTrigger : MonoBehaviour
             anim.SetBool("Arrived", false);
             npcArrived = true;
         }
+
     }
 
     public void WeatherLeave()

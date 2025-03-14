@@ -21,10 +21,15 @@ public class LalahTrigger : MonoBehaviour
     [SerializeField]
     public bool isLeaving;
 
+    [Header("Arcade")]
+    [SerializeField]
+    private bool isArcade = true;
+
+
     // Start is called before the first frame update
     void Start()
     {
-
+       
     }
 
     // Update is called once per frame
@@ -67,32 +72,66 @@ public class LalahTrigger : MonoBehaviour
     #region Lalah
     private void Arrive()
     {
-        if (SceneControl.instance.firstCustomer && !npcArrived && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+        if (!isArcade)
         {
-            StartCoroutine(Walking());
+            if (SceneControl.instance.firstCustomer && !npcArrived && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+            {
+                StartCoroutine(Walking());
+            }
+
+            if (npcArrived && !dialogueEnd || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
+            {
+                smoke.SetActive(false);
+                print("SmokeOff");
+            }
+            else if (dialogueEnd && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
+            {
+                smoke.SetActive(true);
+                print("SmokeOn");
+            }
+        }
+        else
+        {
+            if (!GameManager.instance.LalahRequestWasCompleted && !npcArrived)
+            {
+                StartCoroutine(Walking());
+            }
+
+            if (npcArrived && !dialogueEnd || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
+            {
+                smoke.SetActive(false);
+                StopCoroutine(Walking());
+                print("SmokeOff");
+            }
         }
 
-        if (npcArrived && !dialogueEnd || GameManager.instance.WertherRequestWasCompleted || GameManager.instance.LalahRequestWasCompleted)
-        {
-            smoke.SetActive(false);
-        }
-        else if(dialogueEnd && !GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
-        {
-            smoke.SetActive(true);
-        }
     }
 
 
     IEnumerator Walking()
     {
-        if (GameManager.instance.timesEnterHub == 1)
+        if (!isArcade)
+        {
+            if (GameManager.instance.timesEnterHub == 1)
+            {
+                anim.SetBool("Arrived", true);
+                yield return new WaitForSeconds(1.2f);
+                smoke.SetActive(false);
+                print("SmokeOff");
+                anim.SetBool("Arrived", false);
+                npcArrived = true;
+            }
+        }
+        else
         {
             anim.SetBool("Arrived", true);
             yield return new WaitForSeconds(1.2f);
             smoke.SetActive(false);
+            print("SmokeOff");
             anim.SetBool("Arrived", false);
             npcArrived = true;
         }
+
     }
 
     public void LalaLeave()

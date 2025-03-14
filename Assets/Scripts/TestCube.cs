@@ -2788,7 +2788,7 @@ public class TestCube : MonoBehaviour
     public IEnumerator MovingCameraTVBack()
     {
         SceneControl.instance.MoveCamera(SceneControl.instance.camPos);
-        print("222");
+        //print("222");
         yield return new WaitForSecondsRealtime(2f);
         onTv = false;
     }
