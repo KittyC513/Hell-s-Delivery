@@ -213,6 +213,7 @@ public class camManager : MonoBehaviour
         GameManager.instance.p2.isFreeze = true;
         yield return new WaitForSeconds(freezeTimer);
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
         print("Working2");
     }
 
@@ -272,6 +273,7 @@ public class camManager : MonoBehaviour
         switchPuzzle1CamBackCutScene();
         puzzle1ButtonHasTriggered = true;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
     }
 
     #endregion

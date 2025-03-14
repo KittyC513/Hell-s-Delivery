@@ -52,6 +52,7 @@ public class EnterLevel1 : MonoBehaviour
         GameManager.instance.sceneChanged = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
         GameManager.instance.changeSceneTimes = 4;
         Loader.Load(Loader.Scene.Level1);
     }
@@ -71,6 +72,7 @@ public class EnterLevel1 : MonoBehaviour
         GameManager.instance.sceneChanged = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
         Loader.Load(Loader.Scene.Tutorial);
     }
     public void EnterMVPLevel()
@@ -79,6 +81,7 @@ public class EnterLevel1 : MonoBehaviour
         GameManager.instance.sceneChanged = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
 
         Loader.Load(Loader.Scene.MVPLevel);
     }
@@ -89,6 +92,7 @@ public class EnterLevel1 : MonoBehaviour
         GameManager.instance.sceneChanged = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
 
         Loader.Load(Loader.Scene.Level3);
     }

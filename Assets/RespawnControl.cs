@@ -733,6 +733,7 @@ public class RespawnControl : MonoBehaviour
         P2Shade.SetActive(true);
         yield return new WaitForSeconds(1f);
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
 
         if(p2Anim != null)
         {

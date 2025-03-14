@@ -324,6 +324,8 @@ public class SceneControl : MonoBehaviour
         {
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
+            print("p2Unfreezed");
+
         }
     }
 
@@ -365,6 +367,8 @@ public class SceneControl : MonoBehaviour
             radialUI.SetActive(false);
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
+            print("p2Unfreezed");
+
             secondTimeStarts = true;
         }
 
@@ -505,6 +509,7 @@ public class SceneControl : MonoBehaviour
                         LalahdialogueEnds = true;
                         GameManager.instance.p1.isFreeze = false;
                         GameManager.instance.p2.isFreeze = false;
+                        print("p2Unfreezed");
                     }
 
                 }
@@ -564,6 +569,7 @@ public class SceneControl : MonoBehaviour
                         wertherdialogueEnds = true;
                         GameManager.instance.p1.isFreeze = false;
                         GameManager.instance.p2.isFreeze = false;
+                        print("p2Unfreezed");
                     }
 
                 }
@@ -831,9 +837,10 @@ public class SceneControl : MonoBehaviour
         if (GameManager.instance.firstTimeEnterHub == true || GameManager.instance.gameIsReset)
         {
             StartComic();
+            
             GameManager.instance.firstTimeEnterHub = false;
             GameManager.instance.gameIsReset = false;
-            print("StartConmic");
+            //print("StartConmic");
         }
 
         if (GameManager.instance.timesEnterHub >= 1)
@@ -1211,6 +1218,7 @@ public class SceneControl : MonoBehaviour
         {
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
+            print("p2Unfreezed");
         }
 
         if (accept && !LalahdialogueEnds)
@@ -1352,7 +1360,9 @@ public class SceneControl : MonoBehaviour
         SwitchCameraToMain();
 
         GameManager.instance.p1.isFreeze = false;
-        GameManager.instance.p2.isFreeze = false; 
+        GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
+
         level1Overview = false;
         UITurnOff = true;
 
@@ -1604,6 +1614,8 @@ public class SceneControl : MonoBehaviour
                 }
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
+                print("p2Unfreezed");
+
             }
 
 
@@ -1622,6 +1634,8 @@ public class SceneControl : MonoBehaviour
         yield return new WaitForSeconds(3f);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
+
         if (!GameManager.instance.isCh)
         {
             tutorialSkipUI.SetActive(false);
@@ -1737,6 +1751,8 @@ public class SceneControl : MonoBehaviour
         lalahIsGone = true;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
+
         LalahConversationStart = false;
     }
     #endregion

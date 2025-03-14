@@ -173,6 +173,7 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
         Time.timeScale = 1;
     }
 

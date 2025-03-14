@@ -203,6 +203,8 @@ public class GameManager : MonoBehaviour
     public GameObject lighting2;
     [SerializeField]
     public GameObject lighting3;
+    [SerializeField]
+    private bool camMoved = false;
 
     [Header("HubStart")]
     [SerializeField]
@@ -302,7 +304,7 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(player1Pref, startPoint1.position, startPoint1.rotation);
             player1Joined = true;
-            print("PLAYER1 JOIN");
+            print("PLAYER1 JOINED");
         }
 
         if (Input.GetKey(KeyCode.Alpha2) && player2 == null)
@@ -310,7 +312,7 @@ public class GameManager : MonoBehaviour
             Instantiate(player2Pref, startPoint2.position, startPoint2.rotation);
             player2Joined = true;
 
-            print("PLAYER2 JOIN");
+            print("PLAYER2 JOINED");
         }
     }
 
@@ -355,7 +357,13 @@ public class GameManager : MonoBehaviour
                     {
                         Maincanvas.gameObject.SetActive(false);
                     }
-                    StartCoroutine(MoveMainCam());
+                    //Camera moves to the office building view
+
+                    if (!camMoved)
+                    {
+                        StartCoroutine(MoveMainCam());
+                    }
+                    
                     //MoveCamera(cameraPosition, 1f);
                     //animTitle.SetBool("isEnded", true);
                     StartCoroutine(TurnOnLight());
@@ -375,8 +383,10 @@ public class GameManager : MonoBehaviour
 
     IEnumerator MoveMainCam()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         MoveCamera(cameraPosition, 1f);
+        yield return new WaitForSeconds(1.2f);
+        camMoved = true;
     }
     IEnumerator TurnOnLight()
     {
@@ -586,17 +596,20 @@ public class GameManager : MonoBehaviour
         {
             p1.isFreeze = false;
             p2.isFreeze = false;
+            print("p2Unfreezed");
 
         }
 
         if (p1 != null && p2 == null)
         {
             p1.isFreeze = false;
+            print("p1Unfreezed");
         }
 
         if (p1 == null && p2 != null)
         {
             p2.isFreeze = false;
+            print("p2Unfreezed");
         }
     }
 

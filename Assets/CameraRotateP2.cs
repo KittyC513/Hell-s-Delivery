@@ -37,7 +37,10 @@ public class CameraRotateP2 : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        RotateCam();
+        if (GameManager.instance.curSceneName == "Level1" || GameManager.instance.curSceneName == "Tutorial" || GameManager.instance.curSceneName == "MVPLevel")
+        {
+            RotateCam();
+        }
     }
 
     void RotateCam()
@@ -88,6 +91,7 @@ public class CameraRotateP2 : MonoBehaviour
         else
         {
             GameManager.instance.p2.isFreeze = false;
+            
         }
 
         Quaternion rotation = Quaternion.Euler(30, yaw, 0);

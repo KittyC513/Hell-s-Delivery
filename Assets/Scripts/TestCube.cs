@@ -2699,6 +2699,7 @@ public class TestCube : MonoBehaviour
                     GameManager.instance.p1.transform.position = SceneControl.instance.originalPos1.position;
                     GameManager.instance.p2.transform.position = SceneControl.instance.originalPos2.position;
                     isFreeze = false;
+                    print("Unfreezed");
                     gameManager.p1.turnOnTV = false;
                     gameManager.p2.turnOnTV = false;
 
@@ -4687,6 +4688,7 @@ public class TestCube : MonoBehaviour
         isPaused = false;
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
         Time.timeScale = 1;
     }
 
@@ -4729,6 +4731,7 @@ public class TestCube : MonoBehaviour
                 p2Anim.SetBool("Emote1", false);
                 animSwitch2 = true;
                 isFreeze = false;
+                print("p2Unfreezed");
             }
 
         }
@@ -4799,6 +4802,7 @@ public class TestCube : MonoBehaviour
                 p2Anim.SetBool("Emote4", false);
                 animSwitch3 = true;
                 isFreeze = false;
+                print("p2Unfreezed");
             }
         }
     }
@@ -4808,6 +4812,7 @@ public class TestCube : MonoBehaviour
         isFreeze = true;
         yield return new WaitForSeconds(1f);
         isFreeze = false;
+        print("Unfreezed");
         animSwitch = true;
     }
 

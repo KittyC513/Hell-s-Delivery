@@ -472,6 +472,7 @@ public class boxingMinigame : MonoBehaviour
         yield return new WaitForSeconds(4f);
         GameManager.instance.p1.isFreeze = false;
         GameManager.instance.p2.isFreeze = false;
+        print("p2Unfreezed");
         minigameStart = true;
     }
 
@@ -579,6 +580,7 @@ public class boxingMinigame : MonoBehaviour
             if (GameManager.instance.p2.isFreeze == true)
             {
                 GameManager.instance.p2.isFreeze = false;
+                print("p2Unfreezed");
             }
         }
         isboxing = false;
