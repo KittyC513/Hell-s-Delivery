@@ -581,18 +581,17 @@ public class GameManager : MonoBehaviour
             p2.isFreeze = true;
         }
 
-        if (enterOffice)
-        {
-            p1.isFreeze = true;
-            p2.isFreeze = true;
-        }
+        //if (enterOffice)
+        //{
+        //    p1.isFreeze = true;
+        //    p2.isFreeze = true;
+        //}
+
         if (sceneChanged)
         {
             p1.isFreeze = false;
             p2.isFreeze = false;
         }
-
-
     }
 
     public void UnfreezePlayer()
@@ -737,12 +736,12 @@ public class GameManager : MonoBehaviour
             if(p1.withinNPCsRange || p2.withinNPCsRange)
             {
                 showWertherInstruction = true;
-                //print("showWertherInstruction" + showWertherInstruction);
+                print("showWertherInstruction" + showWertherInstruction);
             } 
             else if(!p1.withinNPCsRange && !p2.withinNPCsRange)
             {
                 showWertherInstruction = false;
-                //print("showWertherInstruction" + showWertherInstruction);
+                print("showWertherInstruction" + showWertherInstruction);
             }
 
             if (p1.withinNPC2Range || p2.withinNPC2Range)

@@ -2526,151 +2526,305 @@ public class TestCube : MonoBehaviour
                 Dialogue3 = true;
             }
         }
-        if (NPCInteracting)
+        if (!SceneControl.instance.isArcadeVersion)
         {
-            if (!Dialogue1 && gameManager.timesEnterHub >= 1 && !Dialogue1_2)
+            if (NPCInteracting)
             {
-                if (!SceneControl.instance.startLevel2 && SceneControl.instance.UI2turnOff)
+                if (!Dialogue1 && gameManager.timesEnterHub >= 1 && !Dialogue1_2)
                 {
-                    if (gameManager.LalahRequestWasCompleted && gameManager.LalahLeft)
+                    if (!SceneControl.instance.startLevel2 && SceneControl.instance.UI2turnOff)
                     {
-                        SceneControl.instance.level2Overview = true;
-                        gameManager.p1.isFreeze = true;
-                        gameManager.p2.isFreeze = true;
+                        if (gameManager.LalahRequestWasCompleted && gameManager.LalahLeft)
+                        {
+                            SceneControl.instance.level2Overview = true;
+                            gameManager.p1.isFreeze = true;
+                            gameManager.p2.isFreeze = true;
 
-                    } else if (!gameManager.LalahRequestWasCompleted && !GameManager.instance.acceptLalahOrder)
-                    {
-                        SceneControl.instance.level2Overview = true;
-                        gameManager.p1.isFreeze = true;
-                        gameManager.p2.isFreeze = true;
+                        }
+                        else if (!gameManager.LalahRequestWasCompleted && !GameManager.instance.acceptLalahOrder)
+                        {
+                            SceneControl.instance.level2Overview = true;
+                            gameManager.p1.isFreeze = true;
+                            gameManager.p2.isFreeze = true;
+                        }
+
+                        if (SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
+                        {
+                            SceneControl.instance.level1Overview = true;
+                            SceneControl.instance.level2Overview = false;
+                            SceneControl.instance.UI2turnOff = true;
+                        }
                     }
+                }
+                if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1 && !SceneControl.instance.wertherdialogueEnds)
+                {
+                    SceneControl.instance.WertherConversationStart = true;
+                    print("interactiNPC1");
+                    //SceneControl.LV.SetActive(false);
+                    SceneControl.instance.dR.StopAllCoroutines();
+                    SceneControl.instance.phoneUI.SetActive(false);
+                    SceneControl.instance.dialogueBox.SetActive(true);
+                    SceneControl.instance.nameTag1.SetActive(true);
+                    SceneControl.instance.nameTag.SetActive(false);
+                    SceneControl.instance.nameTagNPC2.SetActive(false);
+                    SceneControl.instance.nameTagNPC3.SetActive(false);
+                    //SceneControl.instance.SwitchCameraToNpc();
+                    gameManager.p1.isFreeze = true;
+                    gameManager.p2.isFreeze = true;
+                    //SceneControl.instance.WertherTalkUI.SetActive(false);
+                    SceneControl.instance.dR.StartDialogue("HubEnd");
 
-                    if (SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
+
+                    NPCInteracting = false;
+                    if (isPlayer1)
                     {
-                        SceneControl.instance.level1Overview = true;
-                        SceneControl.instance.level2Overview = false;
-                        SceneControl.instance.UI2turnOff = true;
+                        gameManager.p2.Dialogue1_2 = true;
+                        Dialogue1_2 = true;
+                    }
+                    if (isPlayer2)
+                    {
+                        gameManager.p1.Dialogue1_2 = true;
+                        Dialogue1_2 = true; ;
                     }
                 }
             }
-            if (!Dialogue1_2 && gameManager.timesEnterHub >= 2 && Dialogue1 && !SceneControl.instance.wertherdialogueEnds)
+
+            if (NPC2Interacting)
             {
-                SceneControl.instance.WertherConversationStart = true;
-                print("interactiNPC1");
-                //SceneControl.LV.SetActive(false);
-                SceneControl.instance.dR.StopAllCoroutines();
-                SceneControl.instance.phoneUI.SetActive(false);
-                SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(true);
-                SceneControl.instance.nameTag.SetActive(false);
-                SceneControl.instance.nameTagNPC2.SetActive(false);
-                SceneControl.instance.nameTagNPC3.SetActive(false);
-                //SceneControl.instance.SwitchCameraToNpc();
-                gameManager.p1.isFreeze = true;
-                gameManager.p2.isFreeze = true;
-                //SceneControl.instance.WertherTalkUI.SetActive(false);
-                SceneControl.instance.dR.StartDialogue("HubEnd");
-
-
-                NPCInteracting = false;
-                if (isPlayer1)
+                if (!Dialogue3 && gameManager.timesEnterHub >= 1 && !Dialogue3_2)
                 {
-                    gameManager.p2.Dialogue1_2 = true;
-                    Dialogue1_2 = true;
+                    if (!SceneControl.instance.startLevel1 && SceneControl.instance.UITurnOff)
+                    {
+                        if (gameManager.WertherRequestWasCompleted && gameManager.WertherLeft)
+                        {
+                            SceneControl.instance.level1Overview = true;
+                            gameManager.p1.isFreeze = true;
+                            gameManager.p2.isFreeze = true;
+                        }
+                        else if (!gameManager.WertherRequestWasCompleted && !GameManager.instance.accepWertherOrder)
+                        {
+                            SceneControl.instance.level1Overview = true;
+                            gameManager.p1.isFreeze = true;
+                            gameManager.p2.isFreeze = true;
+                        }
+
+                        if (SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
+                        {
+                            SceneControl.instance.level1Overview = true;
+                            SceneControl.instance.level2Overview = false;
+                            SceneControl.instance.UI2turnOff = true;
+                        }
+
+
+                    }
                 }
-                if (isPlayer2)
+
+                if (!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3 && !SceneControl.instance.LalahdialogueEnds)
                 {
-                    gameManager.p1.Dialogue1_2 = true;
-                    Dialogue1_2 = true; ;
+                    SceneControl.instance.LalahConversationStart = true;
+                    print("interactiNPC23_2");
+                    SceneControl.instance.dR.StopAllCoroutines();
+                    SceneControl.instance.phoneUI.SetActive(false);
+                    SceneControl.instance.dialogueBox.SetActive(true);
+                    SceneControl.instance.nameTag1.SetActive(false);
+                    SceneControl.instance.nameTag.SetActive(false);
+                    SceneControl.instance.nameTagNPC2.SetActive(true);
+                    SceneControl.instance.nameTagNPC3.SetActive(false);
+                    //SceneControl.instance.LalahTalkUi.SetActive(false);
+                    SceneControl.instance.dR.StartDialogue("LalahEnd");
+                    withinNPC2Range = false;
+                    gameManager.showLalahInstruction = false;
+
+                    gameManager.p1.isFreeze = true;
+                    gameManager.p2.isFreeze = true;
+
+                    NPC2Interacting = false;
+                    if (isPlayer1)
+                    {
+                        gameManager.p2.Dialogue3_2 = true;
+                        Dialogue3_2 = true;
+                    }
+                    if (isPlayer2)
+                    {
+                        gameManager.p1.Dialogue3_2 = true;
+                        Dialogue3_2 = true;
+                    }
+                }
+            }
+
+            if (NPC3Interacting)
+            {
+                if (!Dialogue4)
+                {
+                    print("interactiNPC3");
+                    //SceneControl.LV.SetActive(false);
+                    SceneControl.instance.dR.StopAllCoroutines();
+                    SceneControl.instance.phoneUI.SetActive(false);
+                    SceneControl.instance.dialogueBox.SetActive(true);
+                    SceneControl.instance.nameTag1.SetActive(false);
+                    SceneControl.instance.nameTag.SetActive(false);
+                    SceneControl.instance.nameTagNPC2.SetActive(false);
+                    SceneControl.instance.nameTagNPC3.SetActive(true);
+                    SceneControl.instance.dR.StartDialogue("MichaelQuest");
+
+                    //StartCoroutine(MovingCameraNPC3());
+                    NPC3Interacting = false;
+                    Dialogue4 = true;
+
+
                 }
             }
         }
-
-        if (NPC2Interacting)
+        else
         {
-            if (!Dialogue3 && gameManager.timesEnterHub >= 1 && !Dialogue3_2)
+            if (NPCInteracting)
             {
-                if (!SceneControl.instance.startLevel1 && SceneControl.instance.UITurnOff)
+                if (!Dialogue1 && !Dialogue1_2)
                 {
-                    if (gameManager.WertherRequestWasCompleted && gameManager.WertherLeft)
+                    if (!SceneControl.instance.startLevel2 && SceneControl.instance.UI2turnOff)
                     {
-                        SceneControl.instance.level1Overview = true;
-                        gameManager.p1.isFreeze = true;
-                        gameManager.p2.isFreeze = true;
+                        if (gameManager.LalahRequestWasCompleted && gameManager.LalahLeft)
+                        {
+                            SceneControl.instance.level2Overview = true;
+                            gameManager.p1.isFreeze = true;
+                            gameManager.p2.isFreeze = true;
+
+                        }
+                        else if (!gameManager.LalahRequestWasCompleted && !GameManager.instance.acceptLalahOrder)
+                        {
+                            SceneControl.instance.level2Overview = true;
+                            gameManager.p1.isFreeze = true;
+                            gameManager.p2.isFreeze = true;
+                        }
+
+                        if (SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
+                        {
+                            SceneControl.instance.level1Overview = true;
+                            SceneControl.instance.level2Overview = false;
+                            SceneControl.instance.UI2turnOff = true;
+                        }
                     }
-                    else if (!gameManager.WertherRequestWasCompleted && !GameManager.instance.accepWertherOrder)
+                }
+                if ( Dialogue1 && !SceneControl.instance.wertherdialogueEnds)
+                {
+                    SceneControl.instance.WertherConversationStart = true;
+                    print("interactiNPC1");
+                    //SceneControl.LV.SetActive(false);
+                    SceneControl.instance.dR.StopAllCoroutines();
+                    SceneControl.instance.phoneUI.SetActive(false);
+                    SceneControl.instance.dialogueBox.SetActive(true);
+                    SceneControl.instance.nameTag1.SetActive(true);
+                    SceneControl.instance.nameTag.SetActive(false);
+                    SceneControl.instance.nameTagNPC2.SetActive(false);
+                    SceneControl.instance.nameTagNPC3.SetActive(false);
+                    //SceneControl.instance.SwitchCameraToNpc();
+                    gameManager.p1.isFreeze = true;
+                    gameManager.p2.isFreeze = true;
+                    //SceneControl.instance.WertherTalkUI.SetActive(false);
+                    SceneControl.instance.dR.StartDialogue("HubEnd");
+
+
+                    NPCInteracting = false;
+                    if (isPlayer1)
                     {
-                        SceneControl.instance.level1Overview = true;
-                        gameManager.p1.isFreeze = true;
-                        gameManager.p2.isFreeze = true;
+                        gameManager.p2.Dialogue1_2 = true;
+                        Dialogue1_2 = true;
                     }
-
-                    if (SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
+                    if (isPlayer2)
                     {
-                        SceneControl.instance.level1Overview = true;
-                        SceneControl.instance.level2Overview = false;
-                        SceneControl.instance.UI2turnOff = true;
+                        gameManager.p1.Dialogue1_2 = true;
+                        Dialogue1_2 = true; ;
                     }
-
-
                 }
             }
 
-            if (!Dialogue3_2 && gameManager.timesEnterHub >= 2 && Dialogue3 && !SceneControl.instance.LalahdialogueEnds)
+            if (NPC2Interacting)
             {
-                SceneControl.instance.LalahConversationStart = true;
-                print("interactiNPC23_2");
-                SceneControl.instance.dR.StopAllCoroutines();
-                SceneControl.instance.phoneUI.SetActive(false);
-                SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(false);
-                SceneControl.instance.nameTag.SetActive(false);
-                SceneControl.instance.nameTagNPC2.SetActive(true);
-                SceneControl.instance.nameTagNPC3.SetActive(false);
-                //SceneControl.instance.LalahTalkUi.SetActive(false);
-                SceneControl.instance.dR.StartDialogue("LalahEnd");
-                withinNPC2Range = false;
-                gameManager.showLalahInstruction = false;
-
-                gameManager.p1.isFreeze = true;
-                gameManager.p2.isFreeze = true;
-
-                NPC2Interacting = false;
-                if (isPlayer1)
+                if (!Dialogue3 && !Dialogue3_2)
                 {
-                    gameManager.p2.Dialogue3_2 = true;
-                    Dialogue3_2 = true;
+                    if (!SceneControl.instance.startLevel1 && SceneControl.instance.UITurnOff)
+                    {
+                        if (gameManager.WertherRequestWasCompleted && gameManager.WertherLeft)
+                        {
+                            SceneControl.instance.level1Overview = true;
+                            gameManager.p1.isFreeze = true;
+                            gameManager.p2.isFreeze = true;
+                        }
+                        else if (!gameManager.WertherRequestWasCompleted && !GameManager.instance.accepWertherOrder)
+                        {
+                            SceneControl.instance.level1Overview = true;
+                            gameManager.p1.isFreeze = true;
+                            gameManager.p2.isFreeze = true;
+                        }
+
+                        if (SceneControl.instance.level1Overview && SceneControl.instance.level2Overview)
+                        {
+                            SceneControl.instance.level1Overview = true;
+                            SceneControl.instance.level2Overview = false;
+                            SceneControl.instance.UI2turnOff = true;
+                        }
+
+
+                    }
                 }
-                if (isPlayer2)
+
+                if (!Dialogue3_2 && Dialogue3 && !SceneControl.instance.LalahdialogueEnds)
                 {
-                    gameManager.p1.Dialogue3_2 = true;
-                    Dialogue3_2 = true;
+                    SceneControl.instance.LalahConversationStart = true;
+                    print("interactiNPC23_2");
+                    SceneControl.instance.dR.StopAllCoroutines();
+                    SceneControl.instance.phoneUI.SetActive(false);
+                    SceneControl.instance.dialogueBox.SetActive(true);
+                    SceneControl.instance.nameTag1.SetActive(false);
+                    SceneControl.instance.nameTag.SetActive(false);
+                    SceneControl.instance.nameTagNPC2.SetActive(true);
+                    SceneControl.instance.nameTagNPC3.SetActive(false);
+                    //SceneControl.instance.LalahTalkUi.SetActive(false);
+                    SceneControl.instance.dR.StartDialogue("LalahEnd");
+                    withinNPC2Range = false;
+                    gameManager.showLalahInstruction = false;
+
+                    gameManager.p1.isFreeze = true;
+                    gameManager.p2.isFreeze = true;
+
+                    NPC2Interacting = false;
+                    if (isPlayer1)
+                    {
+                        gameManager.p2.Dialogue3_2 = true;
+                        Dialogue3_2 = true;
+                    }
+                    if (isPlayer2)
+                    {
+                        gameManager.p1.Dialogue3_2 = true;
+                        Dialogue3_2 = true;
+                    }
+                }
+            }
+
+            if (NPC3Interacting)
+            {
+                if (!Dialogue4)
+                {
+                    print("interactiNPC3");
+                    //SceneControl.LV.SetActive(false);
+                    SceneControl.instance.dR.StopAllCoroutines();
+                    SceneControl.instance.phoneUI.SetActive(false);
+                    SceneControl.instance.dialogueBox.SetActive(true);
+                    SceneControl.instance.nameTag1.SetActive(false);
+                    SceneControl.instance.nameTag.SetActive(false);
+                    SceneControl.instance.nameTagNPC2.SetActive(false);
+                    SceneControl.instance.nameTagNPC3.SetActive(true);
+                    SceneControl.instance.dR.StartDialogue("MichaelQuest");
+
+                    //StartCoroutine(MovingCameraNPC3());
+                    NPC3Interacting = false;
+                    Dialogue4 = true;
+
+
                 }
             }
         }
-
-        if (NPC3Interacting)
-        {
-            if (!Dialogue4)
-            {
-                print("interactiNPC3");
-                //SceneControl.LV.SetActive(false);
-                SceneControl.instance.dR.StopAllCoroutines();
-                SceneControl.instance.phoneUI.SetActive(false);
-                SceneControl.instance.dialogueBox.SetActive(true);
-                SceneControl.instance.nameTag1.SetActive(false);
-                SceneControl.instance.nameTag.SetActive(false);
-                SceneControl.instance.nameTagNPC2.SetActive(false);
-                SceneControl.instance.nameTagNPC3.SetActive(true);
-                SceneControl.instance.dR.StartDialogue("MichaelQuest");
-
-                //StartCoroutine(MovingCameraNPC3());
-                NPC3Interacting = false;
-                Dialogue4 = true;
-
-
-            }
-        }
+        
     }
 
     void OnTV()
@@ -3862,17 +4016,17 @@ public class TestCube : MonoBehaviour
             withinEntranceRange = true;
         }
 
-        //if (other.CompareTag("WeatherNPC"))
-        //{
-        //    if (!SceneControl.instance.wertherIsGone)
-        //    {
-        //        withinNPCsRange = true;
-        //    }
-        //    else
-        //    {
-        //        withinNPCsRange = false;
-        //    }
-        //}
+        if (other.CompareTag("WeatherNPC"))
+        {
+            if (!SceneControl.instance.wertherIsGone)
+            {
+                withinNPCsRange = true;
+            }
+            else
+            {
+                withinNPCsRange = false;
+            }
+        }
 
         if (other.CompareTag("NPC3"))
         {

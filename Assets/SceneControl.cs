@@ -269,7 +269,23 @@ public class SceneControl : MonoBehaviour
 
     [Header("Arcade")]
     [SerializeField]
-    private bool isArcadeVersion = true;
+    public bool isArcadeVersion = true;
+    [SerializeField]
+    private bool comicEnd;
+    [SerializeField]
+    GameObject optionYesText;
+    [SerializeField]
+    GameObject optionNoText;
+    [SerializeField]
+    private bool yesIsSelected;
+    [SerializeField]
+    private bool noIsSelected;
+    [SerializeField]
+    private bool yesSizeIsChanged;
+    [SerializeField]
+    private bool noSizeIsChanged;
+    [SerializeField]
+    private Vector3 oriScaleValue;
 
     private void Awake()
     {
@@ -293,7 +309,9 @@ public class SceneControl : MonoBehaviour
 
         if (GameManager.instance.curSceneName == "HubStart")
         {
-            if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+
+
+            if (!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
             {
                 if(phonePiece != null)
                 {
@@ -477,6 +495,7 @@ public class SceneControl : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E) && GameManager.instance.timesEnterHub < 1)
         {
+
             StopCoroutine(StartComicIntro());
             Comic1.SetActive(false);
             GameManager.instance.UnfreezePlayer();
@@ -485,6 +504,8 @@ public class SceneControl : MonoBehaviour
             phoneRingText.SetActive(true);
             Lalah.SetActive(true);
             werther.SetActive(true);
+            comicEnd = true;
+            GameManager.instance.timesEnterHub = 1;
         }
 
         if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
@@ -501,46 +522,88 @@ public class SceneControl : MonoBehaviour
                 Lalah.SetActive(true);
                 werther.SetActive(true);
                 comicShowed = false;
+                comicEnd = true;
+                GameManager.instance.timesEnterHub = 1;
             }           
         }
     }
 
     void SkipDevilDialogue()
     {
-        if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
+        if (!isArcadeVersion)
         {
-            if (!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+            if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
             {
-                phoneRingText.SetActive(false);
+                if (!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+                {
+                    phoneRingText.SetActive(false);
+                }
+
+
+                if (GameManager.instance.timesEnterHub < 1)
+                {
+                    if (isntSkipped)
+                    {
+                        StartCoroutine(SwitchCamToTutorialLevel());
+                    }
+
+                    if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
+                    {
+                        dR.Stop();
+                        radialUI.SetActive(false);
+                        dialogueFin = true;
+                        skipTutorial1 = true;
+                        GameManager.instance.p1.isFreeze = true;
+                        GameManager.instance.p2.isFreeze = true;
+                    }
+
+
+                    if (dialogueFin && skipTutorial1 && !isSkipped && !isntSkipped)
+                    {
+                        radialUI.SetActive(false);
+                        ShowTutorialSkipUI();
+
+                    }
+                }
             }
-
-
-            if (GameManager.instance.timesEnterHub < 1)
+        }
+        else
+        {
+            if (GameManager.instance.p1.isAnswered || GameManager.instance.p2.isAnswered)
             {
-                if (isntSkipped)
+                if (!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
                 {
-                    StartCoroutine(SwitchCamToTutorialLevel());
-                }
-
-                if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
-                {
-                    dR.Stop();
-                    radialUI.SetActive(false);
-                    dialogueFin = true;
-                    skipTutorial1 = true;
-                    GameManager.instance.p1.isFreeze = true;
-                    GameManager.instance.p2.isFreeze = true;
+                    phoneRingText.SetActive(false);
                 }
 
 
-                if (dialogueFin && skipTutorial1 && !isSkipped && !isntSkipped)
+                if (GameManager.instance.timesEnterHub <= 1)
                 {
-                    radialUI.SetActive(false);
-                    ShowTutorialSkipUI();
+                    if (isntSkipped)
+                    {
+                        StartCoroutine(SwitchCamToTutorialLevel());
+                    }
 
+                    if (GameManager.instance.p1.ReadSkipButtonArcade() || GameManager.instance.p2.ReadSkipButtonArcade())
+                    {
+                        dR.Stop();
+                        radialUI.SetActive(false);
+                        dialogueFin = true;
+                        skipTutorial1 = true;
+                        GameManager.instance.p1.isFreeze = true;
+                        GameManager.instance.p2.isFreeze = true;
+                    }
+
+
+
+                    if (dialogueFin && skipTutorial1 && !isSkipped && !isntSkipped)
+                    {
+                        radialUI.SetActive(false);
+                        ShowTutorialSkipUI();
+
+                    }
                 }
             }
-
         }
     }
 
@@ -808,6 +871,7 @@ public class SceneControl : MonoBehaviour
             if (LalahOverviewDescriptionUI != null)
             {
                 LalahOverviewDescriptionUI.SetActive(true);
+                print("interectWithLalah");
             }
         }
 
@@ -908,6 +972,9 @@ public class SceneControl : MonoBehaviour
         phoneRingText.SetActive(true);
         Lalah.SetActive(true);
         werther.SetActive(true);
+        comicEnd = true;
+        GameManager.instance.timesEnterHub = 1;
+
     }
 
     void HubStart()
@@ -977,35 +1044,35 @@ public class SceneControl : MonoBehaviour
             }
 
 
-            //if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds && !GameManager.instance.WertherRequestWasCompleted && !showHeavyPackage)
-            //{
-            //    if(GameManager.instance.LalahRequestWasCompleted && lalahIsGone)
-            //    {
-            //        if(!level1Overview && !level2Overview)
-            //        {
-            //            WertherUI.SetActive(true);
-            //            wertherCollider.enabled = true;
-            //        }
-            //    } 
-            //    else if(!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
-            //    {
-            //        if (!level1Overview && !level2Overview)
-            //        {
-            //            WertherUI.SetActive(true);
-            //            wertherCollider.enabled = true;
-            //        }
+            if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds && !GameManager.instance.WertherRequestWasCompleted && !showHeavyPackage)
+            {
+                if (GameManager.instance.LalahRequestWasCompleted && lalahIsGone)
+                {
+                    if (!level1Overview && !level2Overview)
+                    {
+                        WertherUI.SetActive(true);
+                        wertherCollider.enabled = true;
+                    }
+                }
+                else if (!GameManager.instance.LalahRequestWasCompleted && !GameManager.instance.WertherRequestWasCompleted)
+                {
+                    if (!level1Overview && !level2Overview)
+                    {
+                        WertherUI.SetActive(true);
+                        wertherCollider.enabled = true;
+                    }
 
-            //    }
+                }
 
 
-            //    //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
-            //}
-            //else if (!GameManager.instance.showWertherInstruction || wertherdialogueEnds || GameManager.instance.WertherRequestWasCompleted || showHeavyPackage)
-            //{
-            //    WertherUI.SetActive(false);
-            //    wertherCollider.enabled = false;
-            //    //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
-            //}
+                //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
+            }
+            else if (!GameManager.instance.showWertherInstruction || wertherdialogueEnds || GameManager.instance.WertherRequestWasCompleted || showHeavyPackage)
+            {
+                WertherUI.SetActive(false);
+                wertherCollider.enabled = false;
+                //print("showWertherInstruction" + GameManager.instance.showWertherInstruction);
+            }
 
             if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds && !GameManager.instance.LalahRequestWasCompleted && !showPackage1)
             {
@@ -1211,7 +1278,7 @@ public class SceneControl : MonoBehaviour
         }
         else
         {
-            if (!lalahIsGone && GameManager.instance.timesEnterHub >= 1)
+            if (!lalahIsGone && comicEnd)
             {
                 if (!level2Overview && !GameManager.instance.LalahLeft)
                 {
@@ -1224,7 +1291,7 @@ public class SceneControl : MonoBehaviour
             {
                 Lalah.SetActive(false);
                 print("Lalah");
-                firstCustomer = false;
+                //firstCustomer = false;
             }
 
             if (GameManager.instance.showLalahInstruction && !LalahdialogueEnds && !GameManager.instance.LalahRequestWasCompleted && !showPackage1)
@@ -1277,43 +1344,71 @@ public class SceneControl : MonoBehaviour
                 LalahTalkUi.SetActive(false);
             }
 
-            if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted && !WertherConversationStart)
+            // Werther
+            if (!wertherIsGone && comicEnd)
             {
-                WertherTalkUI.SetActive(true);
-                if (!NPCTrigger.isLeaving)
+                if (!level1Overview && !GameManager.instance.WertherLeft)
                 {
-                    //WertherTalkUI.SetActive(true);
-                    if (!wertherdialogueEnds || !wertherIsGone)
+                    werther.SetActive(true);
+
+                }
+
+            }
+            else if (wertherIsGone)
+            {
+                werther.SetActive(false);
+                print("Lalah");
+                //firstCustomer = false;
+            }
+
+            if (GameManager.instance.showWertherInstruction && !wertherdialogueEnds && !GameManager.instance.WertherRequestWasCompleted && !showHeavyPackage)
+            {
+                if (GameManager.instance.LalahRequestWasCompleted && lalahIsGone)
+                {
+                    if (!level1Overview && !level2Overview)
                     {
-                        LalahUI.SetActive(false);
-                        print("1");
-                        lalahCollider.enabled = false;
-                    }
-                    else if (wertherIsGone)
-                    {
-                        NPCTrigger.isLeaving = true;
+                        WertherUI.SetActive(true);
+                        wertherCollider.enabled = true;
                     }
 
                 }
-                else if (NPCTrigger.isLeaving)
+                else if (!GameManager.instance.WertherRequestWasCompleted && !GameManager.instance.LalahRequestWasCompleted)
                 {
-                    //WertherTalkUI.SetActive(false);
-                    LalahUI.SetActive(true);
-                    lalahCollider.enabled = true;
+                    if (!level1Overview && !level2Overview)
+                    {
+                        WertherUI.SetActive(true);
+                        wertherCollider.enabled = true;
+                    }
+                }
+
+            }
+            else if (wertherdialogueEnds || !GameManager.instance.showWertherInstruction || GameManager.instance.WertherRequestWasCompleted || showHeavyPackage)
+            {
+                WertherUI.SetActive(false);
+                //print("3");
+                wertherCollider.enabled = false;
+            }
+
+
+            if (GameManager.instance.showWertherInstruction && GameManager.instance.WertherRequestWasCompleted && !WertherConversationStart)
+            {
+                WertherTalkUI.SetActive(true);
+
+                if (!NPCTrigger.isLeaving)
+                {
+                    WertherUI.SetActive(false);
+                    wertherCollider.enabled = false;
+                }
+                else
+                {
+                    //LalahTalkUi.SetActive(false);
+                    WertherUI.SetActive(true);
+                    wertherCollider.enabled = true;
                 }
             }
             else if (!GameManager.instance.showWertherInstruction || !GameManager.instance.WertherRequestWasCompleted || WertherConversationStart)
             {
                 WertherTalkUI.SetActive(false);
-            }
-
-            if (GameManager.instance.showMichaelInstruction)
-            {
-                MichaelUI.SetActive(true);
-            }
-            else
-            {
-                MichaelUI.SetActive(false);
             }
 
             if (GameManager.instance.ShowPhoneInstruction)
@@ -1510,19 +1605,18 @@ public class SceneControl : MonoBehaviour
     public void ShowLevel1Overview()
     {
         TurnOffModel1();
+
         if (accept && !LalahConversationStart)
         {
             GameManager.instance.p1.isFreeze = false;
             GameManager.instance.p2.isFreeze = false;
-            print("p2Unfreezed");
         }
 
         if (accept && !LalahdialogueEnds)
         {
             //werther.SetActive(true);
             SwitchCameraToNpc2();
-            LalahOverviewUI.SetActive(false);
-            
+            LalahOverviewUI.SetActive(false);   
         }
 
         if (reject && !UITurnOff)
@@ -1541,14 +1635,15 @@ public class SceneControl : MonoBehaviour
                     {
                         //werther.SetActive(false);
                         SwitchCameraToLalahCam();
+                        print("interectWithLalah");
+
                         //MoveCameraLalah(overviewCamLalah);
                         //yield return new WaitForSeconds(1f);
                         LalahOverviewUI.SetActive(true);
 
 
                         LalahUI.SetActive(false);
-                        print("2");
-                        lalahCollider.enabled = false;
+                                    lalahCollider.enabled = false;
                         UITurnOff = false;
 
 
@@ -1588,6 +1683,7 @@ public class SceneControl : MonoBehaviour
                     {
                        //werther.SetActive(false);
                         SwitchCameraToLalahCam();
+                        print("interectWithLalah");
                         //MoveCameraLalah(overviewCamLalah);
                         //yield return new WaitForSeconds(1f);
                         LalahOverviewUI.SetActive(true);
@@ -1872,26 +1968,85 @@ public class SceneControl : MonoBehaviour
         //Player can make choice either skip or not the tutorial session
         if (tutorialUIisShowed)
         {
+
+
             GameManager.instance.p1.isFreeze = true;
             GameManager.instance.p2.isFreeze = true;
 
-            if (GameManager.instance.p1.ReadPushButtonArcade() || GameManager.instance.p2.ReadPushButtonArcade())
+            if(!yesIsSelected && !noIsSelected)
             {
-                if (!skipTutorial)
+                optionYesText.transform.localScale = oriScaleValue;
+                optionNoText.transform.localScale = oriScaleValue;
+            }
+
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                yesIsSelected = true;
+                noIsSelected = false;
+
+                if (!yesSizeIsChanged)
                 {
-                    GameManager.instance.timesEnterHub += 1;
-                    GameManager.instance.changeSceneTimes += 1;
-                    skipTutorial = true;
-
+                    optionYesText.transform.localScale = new Vector3(oriScaleValue.x * 2, oriScaleValue.y * 2, oriScaleValue.z);
+                    optionNoText.transform.localScale = oriScaleValue;
+                    //add sound effect
+                    yesSizeIsChanged = true;
+                    noSizeIsChanged = false;
                 }
-
-
             }
 
-            if (GameManager.instance.p1.ReadActionButtonArcade() || GameManager.instance.p2.ReadActionButtonArcade())
+
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                notSkipTutorial = true;
+                yesIsSelected = false;
+                noIsSelected = true;
+
+                if (!noSizeIsChanged)
+                {
+                    optionNoText.transform.localScale = new Vector3(oriScaleValue.x * 2, oriScaleValue.y * 2, oriScaleValue.z);
+                    optionYesText.transform.localScale = oriScaleValue;
+                    //add sound effect
+                    noSizeIsChanged = true;
+                    yesSizeIsChanged = false;
+             }
+
             }
+
+            if (yesIsSelected)
+            {
+                if(Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.L))
+                {
+                    
+                    notSkipTutorial = true;
+                    //Add sound effect
+                }
+            }
+
+            if (noIsSelected)
+            {
+                if (Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.L))
+                {
+                    skipTutorial = true;
+                    //Add sound effect
+                }
+            }
+
+            //if (GameManager.instance.p1.ReadPushButtonArcade() || GameManager.instance.p2.ReadPushButtonArcade())
+            //{
+            //    if (!skipTutorial)
+            //    {
+            //        GameManager.instance.timesEnterHub += 1;
+            //        GameManager.instance.changeSceneTimes += 1;
+            //        skipTutorial = true;
+
+            //    }
+
+
+            //}
+
+            //if (GameManager.instance.p1.ReadActionButtonArcade() || GameManager.instance.p2.ReadActionButtonArcade())
+            //{
+            //    notSkipTutorial = true;
+            //}
 
             if (notSkipTutorial)
             {
@@ -1911,7 +2066,6 @@ public class SceneControl : MonoBehaviour
                 }
                 GameManager.instance.p1.isFreeze = false;
                 GameManager.instance.p2.isFreeze = false;
-                print("p2Unfreezed");
 
             }
 
