@@ -7,34 +7,21 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Yarn.Unity;
 
+public enum E_SceneType 
+{
+    Gym,
+    Main,
+    PostOffice,
+    Level1,
+    Level2,
+    Level3,
+    ScoreBoard,
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    [SerializeField]
-    public string curSceneName;
-    public string scene1 = "HubStart";
-    public string scene2 = "PrototypeLevel";
-    public string scene3 = "TitleScene";
-    public string scene4 = "MVPLevel";
-    public string scene5 = "HubEnd";
-    public string scene6 = "ScoreCards";
-    public string scene7 = "Level1";
-    public string scene8= "Tutorial";
-
-    [SerializeField]
-    Camera mainCam;
-    [SerializeField]
-    private Transform cameraPosition;
-    [SerializeField]
-    public Transform closeShoot;
-    [SerializeField]
-    public Animator animTitle;
-    [SerializeField]
-    public GameObject text;
-    [SerializeField]
-    private GameObject instructionText;
-    GameObject[] objectsInScene;
-
+    [Header("Get Player Info")]
+    public PlayerManager playerManager;
 
     public string layerNameToFind1 = "P1Collider";
     public string layerNameToFind2 = "P2Collider";
@@ -106,6 +93,36 @@ public class GameManager : MonoBehaviour
     private bool p1UIFound1;
     [SerializeField]
     private bool p2UIFound2;
+
+    [Header("Scene Control")]
+    [SerializeField]
+    public string curSceneName;
+    public string scene1 = "HubStart";
+    public string scene2 = "PrototypeLevel";
+    public string scene3 = "TitleScene";
+    public string scene4 = "MVPLevel";
+    public string scene5 = "HubEnd";
+    public string scene6 = "ScoreCards";
+    public string scene7 = "Level1";
+    public string scene8= "Tutorial";
+    public E_SceneType sceneType;
+
+    [SerializeField]
+    Camera mainCam;
+    [SerializeField]
+    private Transform cameraPosition;
+    [SerializeField]
+    public Transform closeShoot;
+    [SerializeField]
+    public Animator animTitle;
+    [SerializeField]
+    public GameObject text;
+    [SerializeField]
+    private GameObject instructionText;
+    GameObject[] objectsInScene;
+
+
+   
 
     Scene currentScene;
 
@@ -231,10 +248,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-
+        sceneType = E_SceneType.Main;
     }
     private void Start()
     {
+
         instructionText.SetActive(false);
         instance = this;
         lighting1.SetActive(false);
@@ -253,9 +271,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        ///revised
         FindPlayer();
         
-        //FindCamera();
         DetectScene();
         PushCheck();
         DetectPhone();
@@ -299,6 +317,30 @@ public class GameManager : MonoBehaviour
 
     void DetectScene()
     {
+        switch (sceneType)
+        {
+            case E_SceneType.Gym:
+                //Loader.Load(Loader.Scene.Gym);
+                break;
+            case E_SceneType.Main:
+                Loader.Load(Loader.Scene.TitleScene);
+                break;
+            case E_SceneType.PostOffice:
+                Loader.Load(Loader.Scene.HubStart);
+                break;
+            case E_SceneType.Level1:
+                Loader.Load(Loader.Scene.Level1);
+                break;
+            case E_SceneType.Level2:
+                Loader.Load(Loader.Scene.MVPLevel);
+                break;
+            case E_SceneType.Level3:
+                Loader.Load(Loader.Scene.Level3);
+                break;
+            case E_SceneType.ScoreBoard:
+                Loader.Load(Loader.Scene.ScoreCards);
+                break;
+        }
         if (p1 != null || p2 != null)
         {
 
@@ -350,14 +392,16 @@ public class GameManager : MonoBehaviour
 
 
 
-
+    #region Gain Player Info once a player is joined
     void FindPlayer()
     {
         int layerToFind1 = LayerMask.NameToLayer(layerNameToFind1);
         int layerToFind2 = LayerMask.NameToLayer(layerNameToFind2);
 
-        if (p1 == null || p2 == null)
+        //Detect and get all player infos
+        if (playerManager.players.Count != 0 && (p1 == null || p2 == null))
         {
+
             objectsInScene = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
 
             foreach (GameObject obj in objectsInScene)
@@ -451,14 +495,15 @@ public class GameManager : MonoBehaviour
                 }
             }
 
+
         }
-
-
         //two players join the game, it loads to the Title Scene
 
     }
+    #endregion
 
- 
+
+    #region Freeze/unfreeze player(s)
     public void FreezePlayer()
     {
         if (p1 != null && p2 != null)
@@ -510,36 +555,19 @@ public class GameManager : MonoBehaviour
             p2.isFreeze = false;
         }
     }
+    #endregion
 
-    public void DestroyObject()
-    {
-        if (player != null && player2 != null)
-        {
-            Destroy(player1);
-            Destroy(player2);
-        }
 
-        if (player1 != null && player2 == null)
-        {
-            Destroy(player1);
-        }
+    //IEnumerator DestroyAfterDelay()
+    //{
+    //    // Wait for the specified time
+    //    yield return new WaitForSeconds(destroyTime);
 
-        if (player1 == null && player2 != null)
-        {
-            Destroy(player2);
-        }
-    }
-
-    IEnumerator DestroyAfterDelay()
-    {
-        // Wait for the specified time
-        yield return new WaitForSeconds(destroyTime);
-
-        // Destroy the GameObject this script is attached to
-        Destroy(character1);
-        Destroy(character2);
-        isDestroyed = true;
-    }
+    //    // Destroy the GameObject this script is attached to
+    //    Destroy(character1);
+    //    Destroy(character2);
+    //    isDestroyed = true;
+    //}
 
 
 
@@ -868,36 +896,36 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-    void TutorialControl()
-    {
-        for (int i = 0; i < popUps.Length; i++)
-        {
-            if(i == popUpIndex)
-            {
-                popUps[popUpIndex].SetActive(true);
-            }
-            else
-            {
-                popUps[popUpIndex].SetActive(false);
-            }
-        }
+    //void TutorialControl()
+    //{
+    //    for (int i = 0; i < popUps.Length; i++)
+    //    {
+    //        if(i == popUpIndex)
+    //        {
+    //            popUps[popUpIndex].SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            popUps[popUpIndex].SetActive(false);
+    //        }
+    //    }
 
-        if(popUpIndex == 0)
-        {
-            if(p1.transform != startPoint1 && p1.transform != startPoint2)
-            {
-                popUpIndex++;
+    //    if(popUpIndex == 0)
+    //    {
+    //        if(p1.transform != startPoint1 && p1.transform != startPoint2)
+    //        {
+    //            popUpIndex++;
 
-            } else if(popUpIndex == 1)
-            {
-                //enter office
-            }
-            else if (popUpIndex == 2)
-            {
-                //pick packahge
-            }
-        }
-    }
+    //        } else if(popUpIndex == 1)
+    //        {
+    //            //enter office
+    //        }
+    //        else if (popUpIndex == 2)
+    //        {
+    //            //pick packahge
+    //        }
+    //    }
+    //}
 
     public void DetectPhone()
     {

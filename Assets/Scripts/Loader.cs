@@ -26,7 +26,8 @@ public static class Loader
         LoadingScene,
         ScoreCards,
         Level1,
-        Level3
+        Level3,
+        Gym,
 
     }
 
