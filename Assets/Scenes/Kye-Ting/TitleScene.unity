@@ -8447,6 +8447,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &714079484 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1754083313025936415, guid: 6176676207888f94ab8dfb398b1beefd, type: 3}
+  m_PrefabInstance: {fileID: 466514584482602317}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0f05ce9a1258a43a4e743066251b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &716752531
 GameObject:
   m_ObjectHideFlags: 0
@@ -11674,7 +11685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &972791660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11810,8 +11821,9 @@ MonoBehaviour:
   skipTutorial: 0
   notSkipTutorial: 0
   tutorialUIisShowed: 0
-  skipTutorial1: 0
   isSkipped: 0
+  skipTutorial1: 0
+  isSkipped1: 0
   isntSkipped: 0
   canRespawn: 0
   multiple: 0
@@ -11867,21 +11879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962a4d1782baf5a46a4f21dfb5c653ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curSceneName: 
-  scene1: HubStart
-  scene2: PrototypeLevel
-  scene3: TitleScene
-  scene4: MVPLevel
-  scene5: HubEnd
-  scene6: ScoreCards
-  scene7: Level1
-  scene8: Tutorial
-  mainCam: {fileID: 1034765984}
-  cameraPosition: {fileID: 1505317392}
-  closeShoot: {fileID: 340756829}
-  animTitle: {fileID: 1003284812}
-  text: {fileID: 433648902}
-  instructionText: {fileID: 1642737323}
+  playerManager: {fileID: 714079484}
   layerNameToFind1: P1Collider
   layerNameToFind2: P2Collider
   p1: {fileID: 0}
@@ -11916,6 +11914,22 @@ MonoBehaviour:
   p2UIMinus: {fileID: 0}
   p1UIFound1: 0
   p2UIFound2: 0
+  curSceneName: 
+  scene1: HubStart
+  scene2: PrototypeLevel
+  scene3: TitleScene
+  scene4: MVPLevel
+  scene5: HubEnd
+  scene6: ScoreCards
+  scene7: Level1
+  scene8: Tutorial
+  sceneType: 0
+  mainCam: {fileID: 1034765984}
+  cameraPosition: {fileID: 1505317392}
+  closeShoot: {fileID: 340756829}
+  animTitle: {fileID: 1003284812}
+  text: {fileID: 433648902}
+  instructionText: {fileID: 1642737323}
   skyboxScene1: {fileID: 2100000, guid: c82a334cf5a5e47978749c210cee72a7, type: 2}
   skyboxScene2: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   waitingTime: 1
@@ -13916,7 +13930,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000041733, y: 231}
+  m_AnchoredPosition: {x: 0.000041733, y: 230.99998}
   m_SizeDelta: {x: 2170, y: 1854.248}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!95 &1117989380
