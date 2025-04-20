@@ -323,7 +323,7 @@ public class GameManager : MonoBehaviour
                 //Loader.Load(Loader.Scene.Gym);
                 break;
             case E_SceneType.Main:
-                Loader.Load(Loader.Scene.TitleScene);
+                //Loader.Load(Loader.Scene.TitleScene);
                 break;
             case E_SceneType.PostOffice:
                 Loader.Load(Loader.Scene.HubStart);
